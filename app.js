@@ -1,10 +1,10 @@
 var express = require('express')
-	, routes = require('./routes')
+//	, routes = require('./routes')
 	, http = require('http')
 	, path = require('path')
 	, mongoose = require('mongoose')
-	, util = require('./util')
-	, restricted = util.restricted
+//	, util = require('./util')
+//	, restricted = util.restricted
 	, MongoStore = require('connect-mongo')(express);
 
 var app = exports.app = express();
@@ -22,7 +22,7 @@ if (process.env.NODE_ENV == 'production') {
 	
 	console.log("Production, mode "+mode);
 	
-	var db = "mongodb://reprographics:chahhexoh5Ju7ui8be0T@127.0.0.1/reprographics"+mode;
+	var db = "mongodb://127.0.0.1/eventmost"+mode;
 	mongoose.connect(db);
 	sessionStore = new MongoStore({
 		url: db
@@ -30,7 +30,7 @@ if (process.env.NODE_ENV == 'production') {
 } else {
 	// development mode
 	console.log("Development");
-	var db = "mongodb://127.0.0.1/reprographics";
+	var db = "mongodb://127.0.0.1/eventmost";
 	mongoose.connect(db);
 	sessionStore = new MongoStore({
 		url: db
@@ -38,7 +38,7 @@ if (process.env.NODE_ENV == 'production') {
 }
 
 // all environments
-app.set('port', process.env.PORT);
+app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
 app.set('view cache', true);
@@ -57,6 +57,7 @@ app.use(function(req, res, next) {
 	// request middleware
 	
 	// navigation bar
+	next();
 });
 
 app.use(app.router);
@@ -69,6 +70,9 @@ if ('development' == app.get('env')) {
 }
 
 // routes
+app.get('/',	function(req, res) {
+	res.render('login');
+})
 
 http.createServer(app).listen(app.get('port'), function(){
 	console.log('Express server listening on port ' + app.get('port'));

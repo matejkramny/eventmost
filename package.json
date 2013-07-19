@@ -1,0 +1,19 @@
+{
+  "name": "EventMost",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "*",
+    "jade": "*",
+    "mongoose": "*",
+    "csv": "*",
+    "crypto": "*",
+    "async": "*",
+    "validator": "*",
+    "connect-mongo": "*",
+	"nodemailer": "*"
+  }
+}
