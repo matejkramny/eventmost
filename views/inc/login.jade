@@ -2,12 +2,12 @@ form.form-horizontal.form-horizontal-short(action='/login', method='POST', accep
 	.page-header.moveLeft.moveRight
 		h1 Log in
 	.control-group
-		label.control-label E-Mail
+		label.control-label(for="logEmail") E-Mail
 		.controls
-			input.span10(name='email', placeholder='Your E-Mail address', maxlength='128', type='email', required)
+			input#logEmail(name='email', placeholder='Your E-Mail address', maxlength='128', type='email', required)
 	.control-group
-		label.control-label Password
+		label.control-label(for="logPassword") Password
 		.controls
-			input.span10(name='password', placeholder='Password', type='password', required)
+			input#logPassword(name='password', placeholder='Password', type='password', required)
 	.control-group.noBottomMargin
 		input.btn.btn-large.btn-block.btn-red(type='submit', value='Log in')

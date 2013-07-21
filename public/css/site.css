@@ -2,10 +2,17 @@ body {
 	background: #CCCCCC;
 }
 
+@media (max-width: 767px) {
+	body {
+		padding-right: 10px;
+		padding-left: 10px;
+	}
+}
+
 .well {
 	min-height: 20px;
 	padding: 0px;
-	margin-bottom: 20px;
+	margin-bottom: 25px;
 	background-color: #f5f5f5;
 	outline: 1px #e3e3e3;
 	border: none;
@@ -29,10 +36,21 @@ body {
 .moveBottom {
 	margin-bottom: 20px;
 }
+.padLeft {
+	padding-left: 20px;
+}
+.padRight {
+	padding-right: 20px;
+}
+.padTop {
+	padding-top: 20px;
+}
+.padBottom {
+	padding-bottom: 20px;
+}
 
 .bgTopLine {
 	background: #464646;
-	min-width: 940px;
 	width: 100%;
 	height: 100px;
 	position:absolute;
@@ -44,7 +62,6 @@ body {
 }
 .bgMiddleLine {
 	background: #EB005A;
-	min-width: 940px;
 	width: 100%;
 	height: 30px;
 	position:absolute;
@@ -53,13 +70,19 @@ body {
 	overflow:visible;
 	z-index:1;
 }
+
 .containerTopMargin {
 	position:relative;
 	z-index:0;
-	margin-top:130px;
+	margin-top:150px;
 }
 .container {
 	position:relative;
+}
+
+.noMargin {
+	margin-left:0;
+	margin-right: 0;
 }
 
 .content {
@@ -87,7 +110,7 @@ body {
 	right: 5px;
 }
 .siteHeader header {
-	margin-top: 25px;
+	margin-top: 35px;
 }
 .siteHeader header h1 {
 	font-size: 4em;
@@ -103,7 +126,7 @@ body {
 }
 
 footer {
-	margin-top: 35px;
+	margin-top: 10px;
 	background: #4F4F4F;
 	box-shadow: inset 0px 3px 5px -2px #333, inset 0px -3px 5px -2px #333;
 	webkit-box-shadow: inset 0px 3px 5px -2px #333, inset 0px -3px 5px -2px #333;
@@ -111,6 +134,8 @@ footer {
 	outline: 0px solid #000;
 	padding-top: 10px;
 	text-shadow:0 1px 1px rgba(0,0,0,0.75);
+	width: 100%;
+	overflow: visible;
 }
 footer a {
 	color: #EEE;
@@ -137,11 +162,18 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
 	outline: 1px solid #DDD;
 }
 
-.form-horizontal-short label.control-label {
+.form-horizontal-short .control-label {
 	width: 125px;
 }
 .form-horizontal-short .controls {
 	margin-left: 145px;
+}
+
+.form-horizontal .control-label {
+	font-size: 16px;
+}
+.form-horizontal .controls {
+	font-size: 16px;
 }
 
 form, .noBottomMargin, .noBottomMargin input {
@@ -162,4 +194,89 @@ input[type="button"].btn-red, input[type="submit"].btn-red, button.btn-red {
 	border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) rgba(0,0,0,0.25);
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffee5f5b',endColorstr='#ffbd362f',GradientType=0);
 	filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+	
+	-webkit-transition: background-image 0.25s ease-out;
+}
+input[type="button"].btn-red:hover, input[type="submit"].btn-red:hover, button.btn-red:hover {
+	background-color: #EB005A;
+	background-image: -moz-linear-gradient(top,#EE005A,#EB005A);
+	background-image: -webkit-gradient(linear,0 0,0 100%,from(#EE005A),to(#EB005A));
+	background-image: -webkit-linear-gradient(top,#EE005A,#EB005A);
+	background-image: -o-linear-gradient(top,#EE005A,#EB005A);
+	background-image: linear-gradient(to bottom,#EE005A,#EB005A);
+}
+
+@media (min-width: 1199px) {
+	form.form-horizontal .control-label {
+		width: 200px;
+	}
+	form.form-horizontal .controls {
+		margin-left: 220px;
+	}
+	form.form-horizontal .controls input {
+		width: 270px;
+	}
+}
+@media (min-width: 979px, max-width: 1200px) {
+	form.form-horizontal .control-label {
+		width: 170px;
+	}
+	form.form-horizontal .controls {
+		margin-left: 190px;
+	}
+	form.form-horizontal .controls input {
+		width: 200px;
+	}
+}
+@media (max-width: 980px) {
+	form.form-horizontal .control-label {
+		width: 120px;
+	}
+	form.form-horizontal .controls {
+		margin-left: 130px;
+	}
+	form.form-horizontal .controls input {
+		width: 160px;
+	}
+}
+@media (max-width: 767px) {
+	form.form-horizontal .control-label {
+		width: 250px;
+	}
+	form.form-horizontal .controls {
+		margin-left: 270px;
+	}
+	form.form-horizontal .controls input {
+		width: 300px;
+	}
+	
+	.page-header {
+		padding-top: 10px;
+	}
+}
+@media (max-width: 640px) {
+	form.form-horizontal .control-label {
+		width: 170px;
+	}
+	form.form-horizontal .controls {
+		margin-left: 190px;
+	}
+	form.form-horizontal .controls input {
+		width: 200px;
+	}
+}
+@media (max-width: 480px) {
+	form.form-horizontal .control-label {
+		float: none;
+		width: auto;
+		margin: 0 20px;
+	}
+	form.form-horizontal .controls {
+		margin: 0 20px;
+	}
+}
+
+img {
+	width: 100%;
+	height: 100%;
 }
