@@ -1,53 +1,6 @@
-!!! 5
-html
-	head
-		title EventMost - Login
-		meta(http-equiv='Content-Type', content='text/html; charset=utf-8')
-		link(rel='stylesheet', href='/css/bootstrap.min.css')
-		link(rel='stylesheet', href='/css/site.css')
-		link(rel='stylesheet', href='/css/login.css')
-	body
-		.bgTopLine
-			.container.siteHeader
-				header.text-center
-					h1 Event
-						span Most
-				.pull-right
-					button.btn.btn-link Login
-					span /
-					button.btn.btn-link Register
-		.bgMiddleLine
-		.container.containerTopMargin
-			.row-fluid
-				.well.offset3.span6.content
-					form.form-horizontal(action='/login', method='POST', accept-charset='utf-8')
-						legend Log in with
-						.control-group
-							label.control-label E-Mail
-							.controls
-								input(name='email', placeholder='Your E-Mail address', maxlength='128', type='email', required)
-						.control-group
-							label.control-label Password
-							.controls
-								input(name='password', placeholder='Password', type='password', required)
-						.control-group
-							.controls
-								input.btn.btn-large.btn-primary(type='submit', value='Log in')
-		footer
-			.container
-				p.text-center.muted
-						a(href='#') About us
-						|  | 
-						a(href='#') Features
-						|  | 
-						a(href='#') Terms and Conditions
-						|  | 
-						a(href='#') Press
-						|  | 
-						a(href='#') Contact us
-						br
-						span &copy; 2013 EventMost
-		script(src='/js/jquery.min.js')
-		script(src='/js/bootstrap.min.js')
-		script.
-			IP = {"lat":"51.7522","lng":"-1.25596"};
+extends layout
+
+append content
+	.row-fluid
+		.well.offset3.span6.content
+			include inc/login

@@ -71,7 +71,7 @@ if ('development' == app.get('env')) {
 
 // routes
 app.get('/',	function(req, res) {
-	res.render('login');
+	res.render('features');
 })
 
 http.createServer(app).listen(app.get('port'), function(){

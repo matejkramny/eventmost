@@ -1,0 +1,12 @@
+form.form-horizontal.form-horizontal-short(action='/login', method='POST', accept-charset='utf-8')
+	legend Log in
+	.control-group
+		label.control-label E-Mail
+		.controls
+			input.span10(name='email', placeholder='Your E-Mail address', maxlength='128', type='email', required)
+	.control-group
+		label.control-label Password
+		.controls
+			input.span10(name='password', placeholder='Password', type='password', required)
+	.control-group.noBottomMargin
+		input.btn.btn-large.btn-block.btn-danger(type='submit', value='Log in')
