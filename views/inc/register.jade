@@ -1,16 +1,17 @@
 form.form-horizontal.form-horizontal-short(action='/register', method='POST', accept-charset='utf-8')
-	legend Register
+	.page-header.moveLeft.moveRight
+		h1 Register
 	.control-group
 		label.control-label Full Name
 		.controls
-			input(name='name', placeholder='What is your name?', maxlength='128', type='text', required)
+			input.span10(name='name', placeholder='What is your name?', maxlength='128', type='text', required)
 	.control-group
 		label.control-label E-Mail
 		.controls
-			input(name='email', placeholder='Your E-Mail address', maxlength='128', type='email', required)
+			input.span10(name='email', placeholder='Your E-Mail address', maxlength='128', type='email', required)
 	.control-group
 		label.control-label Password
 		.controls
-			input(name='password', placeholder='Password', type='password', required)
+			input.span10(name='password', placeholder='Password', type='password', required)
 	.control-group.noBottomMargin
-		input.btn.btn-large.btn-block.btn-danger(type='submit', value='Register for free')
+		input.btn.btn-large.btn-block.btn-red(type='submit', value='Register for free')

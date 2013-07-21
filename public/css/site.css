@@ -147,3 +147,19 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
 form, .noBottomMargin, .noBottomMargin input {
 	margin-bottom: 0px !important;
 }
+
+input[type="button"].btn-red, input[type="submit"].btn-red, button.btn-red {
+	color: #fff;
+	text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
+	background-color: #EB005A;
+	background-image: -moz-linear-gradient(top,#EB005A,#EE005A);
+	background-image: -webkit-gradient(linear,0 0,0 100%,from(#EB005A),to(#EE005A));
+	background-image: -webkit-linear-gradient(top,#EB005A,#EE005A);
+	background-image: -o-linear-gradient(top,#EB005A,#EE005A);
+	background-image: linear-gradient(to bottom,#EB005A,#EE005A);
+	background-repeat: repeat-x;
+	border-color: #bd362f #bd362f #802420;
+	border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) rgba(0,0,0,0.25);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffee5f5b',endColorstr='#ffbd362f',GradientType=0);
+	filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+}
