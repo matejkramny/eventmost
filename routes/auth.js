@@ -2,6 +2,7 @@ var mongoose = require('mongoose')
 	, everyauth = require('everyauth')
 	, models = require('../models');
 
+// TODO after login with service X, allow to link the account to service XY
 everyauth.everymodule.findUserById(function(id, cb) {
 	console.log("Asking id "+id)
 	models.User.findOne({ _id: mongoose.Types.ObjectId(id) }, function(err, user) {
@@ -65,6 +66,36 @@ everyauth.github
 		
 		return promise;
 	})
+	.redirectPath('/auth/finish');
+everyauth.facebook
+	.entryPath('/auth/facebook')
+	.callbackPath('/auth/facebook/callback')
+	.appId('532240236843933')
+	.appSecret('61e367fbe3aae28d49c788229aaa4464')
+	.findOrCreateUser(function(session, accessToken, accessSecret, meta) {
+		console.log(meta);
+		
+		var promise = this.Promise();
+		
+		models.User.findOne({
+			'facebook.userid': meta.id,
+			'facebook.token': accessToken
+		}, function(err, user) {
+			if (err) promise.fulfill(err);
+			
+			if (user != null) {
+				promise.fulfill(user);
+			} else {
+				// create user
+				models.User.createWithFacebook(meta, accessToken, accessTokenSecret, function(err, fbUser) {
+					promise.fulfill(fbUser);
+				});
+			}
+		});
+		
+		return promise;
+	})
+	.redirectPath('/auth/finish')
 
 exports.display = function(req, res) {
 	res.render('login');
@@ -77,6 +108,7 @@ exports.checkFinished = function (req, res) {
 		res.redirect('/')
 	}
 }
+
 exports.doFinished = function (req, res) {
 	
 }

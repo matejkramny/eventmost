@@ -45,20 +45,60 @@ var scheme = schema({
 	hash_expiry: Date
 });
 
-scheme.statics.createWithTwitter = function(twitterUserMetadata, accessToken, accessTokenSecret, cb) {
+scheme.statics.createWithTwitter = function(meta, accessToken, accessTokenSecret, cb) {
+	console.log("Twitter meta: " + meta)
+	
 	var user = new exports.User({
 		created: Date().now,
 		incomplete: true,
 		twitter: {
 			token: accessToken,
-			userid: twitterUserMetadata.id
+			userid: meta.id
 		},
-		avatar: twitterUserMetadata.profile_image_url,
-		location: twitterUserMetadata.location
+		avatar: meta.profile_image_url,
+		location: meta.location
 	});
 	
-	user.save();
-	cb(null, user);
+	user.save(function(err) {
+		cb(err, user);
+	});
+}
+scheme.statics.createWithGithub = function(meta, accessToken, accessTokenSecret, cb) {
+	console.log("Github meta: " + meta)
+	
+	var user = new exports.User({
+		created: Date().now,
+		incomplete: true,
+		github: {
+			token: accessToken,
+			userid: meta.id
+		},
+		avatar: meta.avatar_url,
+		location: meta.location,
+		email: meta.email
+	})
+	
+	user.save(function(err) {
+		cb(err, user)
+	})
+}
+scheme.statics.createWithFacebook = function (meta, accessToken, accessTokenSecret, cb) {
+	console.log("Facebook meta: " + meta)
+	
+	var user = new exports.User({
+		created: Date().now,
+		incomplete: true,
+		facebook: {
+			token: accessToken,
+			userid: meta.id
+		},
+		location: meta.location,
+		//untested idk whats in meta
+	})
+	
+	user.save(function(err) {
+		cb(err, user);
+	})
 }
 
 exports.User = mongoose.model("User", scheme);
