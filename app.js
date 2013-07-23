@@ -1,11 +1,12 @@
 var express = require('express')
-//	, routes = require('./routes')
+	, routes = require('./routes')
 	, http = require('http')
 	, path = require('path')
 	, mongoose = require('mongoose')
-//	, util = require('./util')
-//	, restricted = util.restricted
-	, MongoStore = require('connect-mongo')(express);
+	, util = require('./util')
+	, MongoStore = require('connect-mongo')(express)
+	, everyauth = require('everyauth')
+	, authmethods = require('./routes/auth')
 
 var app = exports.app = express();
 
@@ -21,7 +22,6 @@ if (process.env.NODE_ENV == 'production') {
 	}
 	
 	console.log("Production, mode "+mode);
-	
 	var db = "mongodb://eventmost:OwaP0daelaek2aephi1phai9mopocah3Dakie9fi@127.0.0.1/eventmost"+mode;
 	mongoose.connect(db);
 	sessionStore = new MongoStore({
@@ -35,6 +35,7 @@ if (process.env.NODE_ENV == 'production') {
 	sessionStore = new MongoStore({
 		url: db
 	});
+	everyauth.debug = true;
 }
 
 // all environments
@@ -45,14 +46,15 @@ app.set('view cache', true);
 app.set('app version', '0.0.2');
 app.use(express.favicon());
 app.use(express.logger('dev'));
+app.use(express.bodyParser());
+app.use(express.methodOverride());
 app.use(express.cookieParser());
 app.use(express.session({
 	secret: "K3hsadkasdoijqwpoie",
 	store: sessionStore
 }));
-app.use(express.bodyParser());
 app.use(express.csrf()); // csrf protection
-app.use(express.methodOverride());
+app.use(everyauth.middleware(app));
 app.use(function(req, res, next) {
 	// request middleware
 	
@@ -70,9 +72,7 @@ if ('development' == app.get('env')) {
 }
 
 // routes
-app.get('/',	function(req, res) {
-	res.render('features');
-})
+routes.router(app);
 
 http.createServer(app).listen(app.get('port'), function(){
 	console.log('Express server listening on port ' + app.get('port'));

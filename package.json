@@ -14,6 +14,7 @@
     "async": "*",
     "validator": "*",
     "connect-mongo": "*",
-	"nodemailer": "*"
+	"nodemailer": "*",
+	"mongoose-auth": "*"
   }
 }

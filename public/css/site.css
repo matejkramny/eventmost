@@ -109,6 +109,10 @@ body {
 	top: 5px;
 	right: 5px;
 }
+.siteHeader header a:hover {
+	text-decoration: none;
+	border-bottom: 1px dashed #FFF;
+}
 .siteHeader header {
 	margin-top: 35px;
 }

@@ -15,12 +15,13 @@ html
 			.bgTopLine
 				.container.siteHeader
 					header.text-center
-						h1 Event
-							span Most
+						a(href="/")
+							h1 Event
+								span Most
 					.pull-right
-						button.btn.btn-link Login
+						a.btn.btn-link(href="/auth") Login
 						span /
-						button.btn.btn-link Register
+						a.btn.btn-link(href="/auth") Register
 			.bgMiddleLine
 			.container.containerTopMargin
 				block content
