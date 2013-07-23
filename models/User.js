@@ -35,7 +35,7 @@ var scheme = schema({
 	github: {
 		token: String,
 		userid: String
-	}
+	},
 	new_mail: Number,
 	new_cards: Number,
 	device: {
