@@ -5,12 +5,5 @@ var features = require('./features'),
 exports.router = function(app) {
 	app.get('/', features.displayFeatures)
 		.get('/auth', auth.display)
-		.get('/auth/finish', function(req, res) {
-			console.log(everyauth.user)
-			if (req.user.incomplete == true) {
-				res.render('finishreg');
-			} else {
-				res.redirect('/')
-			}
-		})
+		.get('/auth/finish', auth.checkFinished)
 }

@@ -44,17 +44,18 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
 app.set('view cache', true);
 app.set('app version', '0.0.2');
-app.use(express.favicon());
+
 app.use(express.logger('dev'));
+app.use(express.favicon());
 app.use(express.bodyParser());
-app.use(express.methodOverride());
 app.use(express.cookieParser());
+app.use(express.methodOverride());
 app.use(express.session({
 	secret: "K3hsadkasdoijqwpoie",
 	store: sessionStore
 }));
 app.use(express.csrf()); // csrf protection
-app.use(everyauth.middleware(app));
+
 app.use(function(req, res, next) {
 	// request middleware
 	
@@ -62,7 +63,11 @@ app.use(function(req, res, next) {
 	next();
 });
 
-app.use(app.router);
+app.use(everyauth.middleware());
+
+// routes
+routes.router(app);
+
 app.use("/", express.static(path.join(__dirname, 'public'))); // serve static files
 
 // development only
@@ -70,9 +75,6 @@ if ('development' == app.get('env')) {
 	app.use(express.errorHandler());
 	app.set('view cache', false);
 }
-
-// routes
-routes.router(app);
 
 http.createServer(app).listen(app.get('port'), function(){
 	console.log('Express server listening on port ' + app.get('port'));

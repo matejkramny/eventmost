@@ -32,6 +32,10 @@ var scheme = schema({
 		token: String,
 		userid: String
 	},
+	github: {
+		token: String,
+		userid: String
+	}
 	new_mail: Number,
 	new_cards: Number,
 	device: {

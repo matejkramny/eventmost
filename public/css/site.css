@@ -173,10 +173,7 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
 	margin-left: 145px;
 }
 
-.form-horizontal .control-label {
-	font-size: 16px;
-}
-.form-horizontal .controls {
+.form-horizontal .control-label, .form-horizontal .controls, .form-horizontal .checkbox {
 	font-size: 16px;
 }
 
