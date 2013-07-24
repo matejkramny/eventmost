@@ -4,7 +4,10 @@ var schema = mongoose.Schema;
 var ObjectId = schema.ObjectId;
 
 var scheme = schema({
-	created: Date,
+	created: {
+		type: Date,
+		default: Date.now
+	},
 	incomplete: Boolean,
 	email: String,
 	password: String,
@@ -45,11 +48,30 @@ var scheme = schema({
 	hash_expiry: Date
 });
 
+scheme.methods.setName = function (name) {
+	var split = name.split(' ');
+	this.name = split[0];
+	this.surname = split[split.length -1];
+}
+
+scheme.statics.createWithPassword = function (login, password, cb) {
+	console.log("Registering with login/password");
+	
+	var user = new exports.User({
+		email: login,
+		password: password,
+		incomplete: true
+	});
+	
+	user.save(function(err) {
+		cb(err, user);
+	})
+}
+
 scheme.statics.createWithTwitter = function(meta, accessToken, accessTokenSecret, cb) {
 	console.log("Twitter meta: " + meta)
 	
 	var user = new exports.User({
-		created: Date().now,
 		incomplete: true,
 		twitter: {
 			token: accessToken,
@@ -58,6 +80,7 @@ scheme.statics.createWithTwitter = function(meta, accessToken, accessTokenSecret
 		avatar: meta.profile_image_url,
 		location: meta.location
 	});
+	user.setName(meta.name);
 	
 	user.save(function(err) {
 		cb(err, user);
@@ -67,7 +90,6 @@ scheme.statics.createWithGithub = function(meta, accessToken, accessTokenSecret,
 	console.log("Github meta: " + meta)
 	
 	var user = new exports.User({
-		created: Date().now,
 		incomplete: true,
 		github: {
 			token: accessToken,
@@ -76,7 +98,8 @@ scheme.statics.createWithGithub = function(meta, accessToken, accessTokenSecret,
 		avatar: meta.avatar_url,
 		location: meta.location,
 		email: meta.email
-	})
+	});
+	user.setName(meta.name)
 	
 	user.save(function(err) {
 		cb(err, user)
@@ -86,7 +109,6 @@ scheme.statics.createWithFacebook = function (meta, accessToken, accessTokenSecr
 	console.log("Facebook meta: " + meta)
 	
 	var user = new exports.User({
-		created: Date().now,
 		incomplete: true,
 		facebook: {
 			token: accessToken,
@@ -95,10 +117,30 @@ scheme.statics.createWithFacebook = function (meta, accessToken, accessTokenSecr
 		location: meta.location,
 		//untested idk whats in meta
 	})
+	user.setName(meta.name);
 	
 	user.save(function(err) {
 		cb(err, user);
 	})
 }
+scheme.statics.createWithLinkedIn = function (meta, accessToken, accessTokenSecret, cb) {
+	console.log("Facebook meta: " + meta)
+	
+	var user = new exports.User({
+		incomplete: true,
+		facebook: {
+			token: accessToken,
+			userid: meta.id
+		},
+		location: meta.location,
+		//untested idk whats in meta
+	})
+	user.setName(meta.name);
+	
+	user.save(function(err) {
+		cb(err, user);
+	})
+}
+
 
 exports.User = mongoose.model("User", scheme);

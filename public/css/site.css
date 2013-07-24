@@ -58,7 +58,6 @@ body {
 	left:0;
 	overflow:visible;
 	z-index:1;
-	outline: 1px solid #000;
 }
 .bgMiddleLine {
 	background: #EB005A;
@@ -68,7 +67,6 @@ body {
 	top:100px;
 	left:0;
 	overflow:visible;
-	z-index:1;
 }
 
 .containerTopMargin {
@@ -280,4 +278,30 @@ input[type="button"].btn-red:hover, input[type="submit"].btn-red:hover, button.b
 img {
 	width: 100%;
 	height: 100%;
+}
+
+ul.sidenav {
+	
+}
+ul.sidenav li {
+	height: 50px;
+	width: 100%;
+	background: #CDE;
+	list-style: none;
+	margin-bottom: 5px;
+}
+ul.sidenav li img {
+	width: 50px;
+	height: 100%;
+	background: #333;
+	display: inline;
+}
+ul.sidenav li a {
+	height: 100%;
+	width: 100%;
+	display: inline;
+	padding-left: 15px;
+	font-size: 1.5em;
+	line-height: 50px;
+	color: #000;
 }

@@ -32,8 +32,9 @@ append content
 					p.lead.moveLeft.moveRight Share your presentation with others wirelessly, without asking a single question
 				.span5.noMargin
 					img(src="/img/upload.png")
-	.row-fluid
-		.well.span6.content
-			include inc/login
-		.well.span6.content
-			include inc/register
+	unless everyauth.loggedIn
+		.row-fluid
+			.well.span6.content
+				include inc/auth
+			.span6
+				include inc/authMethods

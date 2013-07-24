@@ -47,6 +47,7 @@ app.set('app version', '0.0.2');
 
 app.use(express.logger('dev'));
 app.use(express.favicon());
+app.use("/", express.static(path.join(__dirname, 'public'))); // serve static files
 app.use(express.bodyParser());
 app.use(express.cookieParser());
 app.use(express.methodOverride());
@@ -59,16 +60,15 @@ app.use(express.csrf()); // csrf protection
 app.use(function(req, res, next) {
 	// request middleware
 	
+	res.locals.token = req.session._csrf
+	
 	// navigation bar
 	next();
 });
 
 app.use(everyauth.middleware());
-
 // routes
 routes.router(app);
-
-app.use("/", express.static(path.join(__dirname, 'public'))); // serve static files
 
 // development only
 if ('development' == app.get('env')) {

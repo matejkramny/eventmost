@@ -19,9 +19,33 @@ html
 							h1 Event
 								span Most
 					.pull-right
-						a.btn.btn-link(href="/auth") Login
-						span /
-						a.btn.btn-link(href="/auth") Register
+						if everyauth.loggedIn
+							.btn-group
+								a.btn.btn-link(href="/user")
+									if user.name != null && user.surname != null
+										= user.name
+										|  
+										= user.surname
+									else
+										= user.email
+								a.btn.btn-link(data-toggle="dropdown")
+									i.icon-chevron-down.icon-white
+								ul.dropdown-menu
+									li
+										a(href="/account")
+											i.icon-user
+											|  Account
+									li
+										a(href="/edit")
+											i.icon-cog
+											|  Edit
+									li.divider
+									li
+										a(href="/logout") Logout
+						else
+							a.btn.btn-link(href="/auth") Login
+							span /
+							a.btn.btn-link(href="/auth") Register
 			.bgMiddleLine
 			.container.containerTopMargin
 				block content
@@ -30,5 +54,3 @@ html
 			block js
 				script(src='/js/jquery.min.js')
 				script(src='/js/bootstrap.min.js')
-				script.
-					IP = {"lat":"51.7522","lng":"-1.25596"};

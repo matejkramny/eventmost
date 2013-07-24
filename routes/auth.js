@@ -10,6 +10,43 @@ everyauth.everymodule.findUserById(function(id, cb) {
 		cb(err, user);
 	})
 });
+everyauth.password
+	.getLoginPath('/auth')
+	.postLoginPath('/auth/password')
+	.loginView('login')
+	.authenticate(function(login, password) {
+		var promise = this.Promise();
+		
+		models.User.findOne({
+			email: login
+		}, function(err, user) {
+			if (err) return promise.fulfill([err])
+			
+			if (user == null) {
+				// register user
+				models.User.createWithPassword(login, password, function(err, regUser) {
+					promise.fulfill(user);
+				});
+			} else {
+				// check if password is ok
+				if (user.password == password) {
+					promise.fulfill(user);
+				} else {
+					promise.fulfill(["Invalid password"]);
+				}
+			}
+		})
+		
+		return promise;
+	})
+	.loginSuccessRedirect('/')
+	.getRegisterPath('/auth')
+	.postRegisterPath('/auth/password')
+	.registerView('login')
+	.validateRegistration(function(){})
+	.registerUser(function(userAttrs) {})
+	.registerSuccessRedirect('/')
+	
 everyauth.twitter
 	.entryPath('/auth/twitter')
 	.callbackPath('/auth/twitter/callback')
@@ -96,6 +133,35 @@ everyauth.facebook
 		return promise;
 	})
 	.redirectPath('/auth/finish')
+everyauth.linkedin
+	.entryPath('/auth/linkedin')
+	.callbackPath('/auth/linkedin/callback')
+	.consumerKey('rklpzzr92ztv')
+	.consumerSecret('H0y6fL9dAa4WEhzd')
+	.findOrCreateUser(function(session, accessToken, accessSecret, meta) {
+		console.log(meta);
+		
+		var promise = this.Promise();
+		
+		models.User.findOne({
+			'linkedin.userid': meta.id,
+			'linkedin.token': accessToken
+		}, function(err, user) {
+			if (err) promise.fulfill(err);
+			
+			if (user != null) {
+				promise.fulfill(user);
+			} else {
+				// create user
+				models.User.createWithLinkedIn(meta, accessToken, accessTokenSecret, function(err, inUser) {
+					promise.fulfill(inUser);
+				});
+			}
+		});
+		
+		return promise;
+	})
+	.redirectPath('/auth/finish')
 
 exports.display = function(req, res) {
 	res.render('login');
@@ -107,19 +173,4 @@ exports.checkFinished = function (req, res) {
 	} else {
 		res.redirect('/')
 	}
-}
-
-exports.doFinished = function (req, res) {
-	
-}
-
-
-exports.authenticateProvider = function(req, res) {
-	
-}
-
-exports.doLogin = function(req, res) {
-}
-exports.doRegister = function(req, res) {
-	
 }

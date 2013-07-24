@@ -1,0 +1,18 @@
+extends layout
+
+append content
+	.row-fluid
+		.span4
+			ul.sidenav
+				li
+					img.picture
+					a(href="#") User profile
+				li
+					img.picture
+					a(href="#") Inbox
+				li
+					img.picture
+					a(href="/logout") Logout
+		.span8
+			a.btn.btn-block.btn-red(href="/event/add") Add event
+			p.lead Events nearby

@@ -1,0 +1,51 @@
+extends ../layout
+
+mixin input(label, type, name, placeholder, required, tabindex)
+	.control-group
+		label.control-label(for=name)= label
+		.controls
+			input(type= type, id= name, tabindex= tabindex, name= name, placeholder= placeholder, required=required)
+mixin checkbox(label, name, checked, tabindex, required)
+	label.checkbox= label
+		input(type="checkbox", checked= checked, name= name, required= required, tabindex= tabindex)
+
+append content
+	.row-fluid
+		.span12.content.well
+			.text-center.moveLeft.moveRight.moveTop.moveBottom
+				h1 Create an event
+	form.form-horizontal
+		.row-fluid
+			.span6.content.well
+				.page-header.moveLeft.moveRight
+					h1 Event information
+				mixin input("Event name", "text", "name", "Event name", "required", 1)
+				.control-group
+					label.control-label(for="description") Description
+					.controls
+						textarea#description(name="description", placeholder="Event description")
+			.span6.content.well
+				.page-header.moveLeft.moveRiht
+					h1 Date & Time
+				mixin input("Start date", "date", "startDate", null, "required")
+				mixin input("Start date", "time", "startTime", null, "required")
+				
+				mixin input("End date", "date", "startDate", null, "required")
+				mixin input("End time", "time", "startTime", null, "required")
+		.row-fluid
+			.span6.content.well
+				.page-header.moveLeft.moveRight
+					h1 Privacy
+				.control-group
+					.controls
+						mixin checkbox("Private event (unlisted)", "private")
+				mixin input("Password protection (optional)", "text", "password", "Require password for entering the event (optional)")
+			.span6.content.well
+				.page-header.moveLeft.moveRight
+					h1 Location
+				mixin input("Street", "text", "street", "Street name (optional)")
+				mixin input("City", "text", "city", "City name (optional)")
+				.control-group
+					label.control-label(for="specialinstructions") Special Instructions
+					.controls
+						textarea#specialinstructions(name="specialinstructions", placeholder="Give people special instructions to entering this event (optional)")
