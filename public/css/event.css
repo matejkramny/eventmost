@@ -435,6 +435,7 @@ label[for=UserGenderF]{
 .logged  .avatar img{
 	border-radius: 25px 25px 25px 25px;
     max-width: 50px;
+	max-height: 50px;
 }
 .loggeddesc{
 	width:125px;

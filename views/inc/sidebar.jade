@@ -3,13 +3,15 @@
 		if everyauth.loggedIn == true
 			.logged.user-short-info
 				.avatar.left
-					a(href="/users/edit/132")
-						img(src="/img/avatar.jpg", alt="")
+					a(href="/profile")
+						img(src=user.avatar, alt="")
 				.left.loggeddesc
 					.name
-						a(href="/users/edit/132")
+						a(href="/profile")
 							= user.getName()
-					.role
+					.role= user.position
+						| , 
+						= user.company
 				.clear
 			.element
 				ul.menu-list
@@ -41,7 +43,7 @@
 			.element
 				ul.menu-list
 					li
-						a(href="/users/edit/132", class="profile") Your profile
+						a(href="/profile", class="profile") Your profile
 					li
 						a(href="/cards", class="cards") Your bussines card
 			.element

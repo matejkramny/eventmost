@@ -1,0 +1,51 @@
+extends ../layout
+
+block content
+	include ../inc/sidebar
+	
+	#main-content.red-line-border
+		.sear-box#bigred
+			.search-content
+				p
+					span.title Your profile
+		form#UserEditForm(action="/profile/edit", enctype="multipart/form-data", method="POST", accept-charset="utf-8", name="UserEditForm", autocomplete="off")
+			input(type="hidden", name="_csrf", value=token)
+			.user-short-info#upload
+				.avatar
+					img.left(src=user.avatar, style="margin-right: 10px;")
+					.input.file
+						label(for="UserAvatar") Avatar
+						input#UserAvatar(type="file", name="avatar")
+				.smalltext.mandatory * - mandatory field
+				.smalltext.mandatory
+					include ../inc/flash
+			.input.email
+				input#UserEmail.input-item.rounded-input(name="email", placeholder="Email", maxlength="128", type="email", value=user.email)
+				.small Either Email, First name or Last name is required
+			.input.text
+				input#UserFirstName.input-item.rounded-input(name="name", placeholder="First name", maxlength="256", type="text", value=user.name)
+			.input.text
+				input#UserLastName.input-item.rounded-input(name="surname", placeholder="Last name", maxlength="256", type="text", value=user.surname)
+			.input.text
+				input#UserCompany.input-item.rounded-input(name="company", placeholder="Company", maxlength="256", type="text", value=user.company)
+			.input.text
+				input#UserPosition.input-item.rounded-input(name="position", placeholder="Position", maxlength="256", type="text", value=user.position)
+			.input.text
+				input#UserLocation.input-item.rounded-input(name="location", placeholder="Location", maxlength="256", type="text", value=user.location)
+			.input.text
+				input#UserInterests.input-item.rounded-input(name="interests", placeholder="Interests", maxlength="256", type="text", value=user.interests)
+			.input.text
+				input#UserWebsite.input-item.rounded-input(name="website", placeholder="Website", maxlength="256", type="url", value=user.website)
+			.input.text
+				input#UserEducation.input-item.rounded-input(name="education", placeholder="Education", maxlength="256", type="text", value=user.education)
+			.input.textarea
+				textarea#UserDesc.input-item.rounded-input(name="desc", placeholder="Description", value=user.description, cols=30, rows=6)= user.desc
+			.input.password
+				input.input-item.rounded-input#UserPassword(name="password", autocomplete="off", placeholder="New password", type="password")
+				.small Do not edit if you don't want to change your password
+			.input.password
+				input.input-item.rounded-input#UserOldPassword(name="password_old", autocomplete="off", placeholder="Old password (required if you change password)", type="password")
+				.small Do not edit if you are not changing your password
+			.submit
+				input.submit-btn(type="submit", value="Update")
+	.clear

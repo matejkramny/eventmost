@@ -29,7 +29,7 @@ everyauth.password
 				});
 			} else {
 				// check if password is ok
-				if (user.password == password) {
+				if (user.password == models.User.getHash(password)) {
 					promise.fulfill(user);
 				} else {
 					promise.fulfill(["Invalid password"]);

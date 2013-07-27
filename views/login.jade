@@ -26,6 +26,13 @@ append content
 				.line-or or
 				.line
 				.clear
+			if typeof errors !== "undefined" && errors.length
+				ul
+					for error in errors
+						li - 
+							= error
+				br
+				.clear
 			.input.email.required
 				input.input-item.rounded-input(name="login", placeholder="E-mail", maxlength="128", type="email", id="UserEmail", required="required")
 			.input.password.required

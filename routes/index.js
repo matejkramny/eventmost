@@ -4,7 +4,8 @@ var features = require('./features'),
 	home = require('./home'),
 	contact = require('./contact'),
 	events = require('./events'),
-	maps = require('./maps')
+	maps = require('./maps'),
+	profile = require('./profile')
 
 exports.router = function(app) {
 	app.get('/', function(req, res) {
@@ -23,4 +24,6 @@ exports.router = function(app) {
 	events.router(app);
 	// Maps
 	maps.router(app);
+	// profile
+	profile.router(app);
 }

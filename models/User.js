@@ -1,4 +1,5 @@
-var mongoose = require('mongoose');
+var mongoose = require('mongoose')
+	,crypto = require('crypto')
 
 var schema = mongoose.Schema;
 var ObjectId = schema.ObjectId;
@@ -65,6 +66,15 @@ scheme.methods.getName = function () {
 	return name;
 }
 
+scheme.methods.setPassword = function(password) {
+	var shasum = crypto.createHash('sha1');
+	this.password = shasum.update("aßas155"+password+"90124*)SADZ~<").digest('hex');
+}
+
+scheme.statics.getHash = function (password) {
+	var shasum = crypto.createHash('sha1');
+	return shasum.update("aßas155"+password+"90124*)SADZ~<").digest('hex');
+}
 
 scheme.statics.createWithPassword = function (login, password, cb) {
 	console.log("Registering with login/password");

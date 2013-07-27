@@ -1,3 +1,4 @@
 node_modules
 .DS_STORE
-public/avatars/*
+public/avatars/*.*
+public/profileavatars/*.*
