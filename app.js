@@ -62,6 +62,12 @@ app.use(function(req, res, next) {
 	
 	res.locals.token = req.session._csrf
 	
+	// flash
+	if (req.session.flash) {
+		res.locals.flash = req.session.flash;
+	}
+	req.session.flash = []
+	
 	// navigation bar
 	next();
 });

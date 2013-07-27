@@ -25,7 +25,7 @@ everyauth.password
 			if (user == null) {
 				// register user
 				models.User.createWithPassword(login, password, function(err, regUser) {
-					promise.fulfill(user);
+					promise.fulfill(regUser);
 				});
 			} else {
 				// check if password is ok
@@ -168,6 +168,9 @@ exports.display = function(req, res) {
 }
 
 exports.checkFinished = function (req, res) {
+	res.redirect('/')
+	return;
+	// maybe later
 	if (req.user.incomplete == true) {
 		res.render('finishreg');
 	} else {

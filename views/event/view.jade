@@ -1,0 +1,40 @@
+extends ../layout
+
+block content
+	include ../inc/sidebar
+	#main-content
+		.search-box
+			.search-content
+				p
+					span.title= event.name
+		.event-info
+			include ../inc/flash
+			.eavatar
+				img.event-icon-large(src=event.avatar)
+			.event-desc
+				.label2
+				.text= event.description
+				.label2 Starts:
+				.text= event.start
+				.label2 Ends:
+				.text= event.end
+				.label2 Address:
+				.text= event.location.address
+				.label2 Created by:
+				.text
+					a(href="/user/#{event.user._id}")= event.user.getName()
+				
+				if !attending
+					form#EventViewForm(action="/event/#{event._id}/join", method="POST", accept-charset="utf-8")
+						input(type="hidden", name="_csrf", value=token)
+						if event.password.enabled
+							.input.password
+								label(for="EventPassword") Password
+								input#EventPassword(name="password", type="password", placeholder="Password required to attend this event", required="required")
+						input.submit-btn(type="submit", value="Attend this event")
+				else
+					.label2 You are attending this event
+				.clear
+			.clear
+		.clear
+	.clear

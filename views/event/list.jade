@@ -1,0 +1,27 @@
+extends ../layout
+
+block content
+	include ../inc/sidebar
+	#main-content
+		.search-box
+			.search-content
+				p
+					span.title= pagename
+		for event in events
+			.users-spacer.event-item
+				.user-short-info.single-item
+					.event-ico.left
+						img.event-icon(src=event.avatar)
+					.left
+						.name= event.name
+						.role= event.start
+							|  - 
+							= event.end
+						.options-btn-box
+							if event.password.enabled
+								a.password-ico.margin-x-5(href="/events")
+							else if event.location.lat || event.location.address
+								a.geolocalization-ico.margin-x-5(href="/events")
+							a.grey-dot.margin-left-25.golink(href="/event/"+event._id)
+					.clear
+	.clear

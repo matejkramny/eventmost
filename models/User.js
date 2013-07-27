@@ -53,6 +53,18 @@ scheme.methods.setName = function (name) {
 	this.name = split[0];
 	this.surname = split[split.length -1];
 }
+scheme.methods.getName = function () {
+	var name;
+	
+	if ((this.name != null && this.name.length != 0) || (this.surname != null && this.surname.length != 0)) {
+		name = this.name + " " + this.surname;
+	} else {
+		name = this.email;
+	}
+	
+	return name;
+}
+
 
 scheme.statics.createWithPassword = function (login, password, cb) {
 	console.log("Registering with login/password");

@@ -4,7 +4,8 @@ var schema = mongoose.Schema;
 var ObjectId = schema.ObjectId;
 
 var scheme = schema({
-	created: Date,
+	name: String,
+	created: { type: Date, default: Date.now },
 	start: Date,
 	end: Date,
 	user: {
@@ -14,25 +15,28 @@ var scheme = schema({
 	description: String,
 	avatar: String,
 	location: {
-		lat: Number,
-		lng: Number,
-		address: String
+		lat: { type: Number },
+		lng: { type: Number },
+		address: String,
 	},
 	geolocation: Boolean,
 	password: {
-		enabled: Boolean,
+		enabled: { type: Boolean, default: false },
 		password: String
 	},
 	settings: {
-		allowPublicComments: Boolean,
-		allowCommunicationAttendee: Boolean,
-		allowCommunicationSpeaker: Boolean,
-		moderatePublicComments: Boolean,
-		allowForumComments: Boolean,
-		moderateForumComments: Boolean,
-		upload: Boolean
+		allowPublicComments: { type: Boolean, default: true },
+		allowCommunicationAttendee: { type: Boolean, default: true },
+		allowCommunicationSpeaker: { type: Boolean, default: true },
+		moderatePublicComments: { type: Boolean, default: false },
+		allowForumComments: { type: Boolean, default: true },
+		moderateForumComments: { type: Boolean, default: false },
+		upload: { type: Boolean, default: true }
 	},
 	defaultTweet: String
+})
+scheme.index({
+	location: '2d'
 })
 
 exports.Event = mongoose.model("Event", scheme);

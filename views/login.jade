@@ -1,8 +1,52 @@
 extends layout
 
+block addonjs
+	script(src="/js/geoLogin.js")
+
 append content
-	.row-fluid
-		.well.span6.content
-			include inc/auth
-		.span6
-			include inc/authMethods
+	#users-form.users
+		form#UserLoginForm(action="/auth/password", method="post", accept-charset="utf-8")
+			div(style="display:none;")
+				input(type="hidden", name="_method", value="POST")
+				input(type="hidden", name="_csrf", value=token)
+			.legend Log in / Register
+			.login-buttons
+				.login-btn
+					a(href="/auth/twitter", alt="Log in with twitter", title="Log in with twitter")
+						img(src="/img/twitter-btn.png")
+				.login-btn
+					a(href="/auth/linkedin", alt="Log in with linkedin", title="Log in with linkedin")
+						img(src="/img/linkedin-btn.png")
+				.login-btn
+					a(href="/auth/facebook", alt="Log in with facebook", title="Log in with facebook")
+						img(src="/img/facebook-btn.png", alt="")
+				.clear
+			.spacer
+				.line
+				.line-or or
+				.line
+				.clear
+			.input.email.required
+				input.input-item.rounded-input(name="login", placeholder="E-mail", maxlength="128", type="email", id="UserEmail", required="required")
+			.input.password.required
+				input.input-item.rounded-input(name="password", placeholder="Password", type="password", id="UserPassword", required="required")
+			.text-right.margin-top-20
+				input.submit-btn(type="submit", value="Log in / Register now")
+		.forgot
+			a(href="/users/forgot", class="register-info")
+				| Can't login?
+	#bottom-login-box
+		#events-in-range.bottom-login-box-item.bottom-border
+			.left Events in range
+				span#events-number2
+					span#events-number.event-circle
+			.red-arrow
+				a(href="/events/near")
+					img(src="/img/red-arrow.png", alt="")
+			.clear
+		.bottom-login-box-item
+			.left Contact us
+			.grey-arrow
+				a(href="/contact/send", class="grey-dot margin-left-25")
+			.clear
+	.clear
