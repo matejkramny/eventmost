@@ -7,6 +7,11 @@ block content
 			.search-content
 				p
 					span.title= pagename
+		include ../inc/flash
+		
+		unless events.length
+			p No events found.. 
+				a(href="/event/add") Add one
 		for event in events
 			.users-spacer.event-item
 				.user-short-info.single-item

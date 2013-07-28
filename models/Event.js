@@ -4,6 +4,7 @@ var schema = mongoose.Schema;
 var ObjectId = schema.ObjectId;
 
 var scheme = schema({
+	deleted: { type: Boolean, default: false },
 	name: String,
 	created: { type: Date, default: Date.now },
 	start: Date,
@@ -25,10 +26,8 @@ var scheme = schema({
 		password: String
 	},
 	settings: {
-		allowPublicComments: { type: Boolean, default: true },
-		allowCommunicationAttendee: { type: Boolean, default: true },
-		allowCommunicationSpeaker: { type: Boolean, default: true },
-		moderatePublicComments: { type: Boolean, default: false },
+		allowAttToGuest: { type: Boolean, default: true },
+		allowAttToAtt: { type: Boolean, default: true },
 		allowForumComments: { type: Boolean, default: true },
 		moderateForumComments: { type: Boolean, default: false },
 		upload: { type: Boolean, default: true }

@@ -4,9 +4,7 @@ var mongoose = require('mongoose')
 
 // TODO after login with service X, allow to link the account to service XY
 everyauth.everymodule.findUserById(function(id, cb) {
-	console.log("Asking id "+id)
 	models.User.findOne({ _id: mongoose.Types.ObjectId(id) }, function(err, user) {
-		console.log("Returning "+user);
 		cb(err, user);
 	})
 });

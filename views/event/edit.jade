@@ -1,0 +1,123 @@
+extends ../layout
+
+block content
+	include ../inc/sidebar
+	#main-content
+		.search-box
+			.search-content
+				p
+					span.title Event details
+		.delete-event
+			a(href="/event/#{event._id}/delete", onclick="if(!confirm('Are you sure you want to delete this event?')) { event.returnValue = false; return false; }") Delete event&nbsp;&nbsp;
+				img(src="/img/trash-icon.png")
+		include ../inc/flash
+		form#EventEditForm(action="/event/#{event._id}/edit", enctype="multipart/form-data", method="POST", accept-charset="utf-8", novalidate="novalidate")
+			input(type="hidden", name="_csrf", value=token)
+			.users-spacer
+				.user-short-info.single-item
+					.event-def-ico.event-name-ico.left
+					.left
+						.input.text.required
+							input.rounded-input#EventName(type="text", name="name", placeholder="Event name", maxlength="255", value=event.name, required="required")
+					.clear
+			.users-spacer
+				.user-short-info.single-item
+					.event-def-ico.event-avatar-ico.left
+						img.avatar-icon(src=event.avatar)
+					.left
+						.input.file
+							input.rounded-input#EventAvatar(type="file", placeholder="Event Avatar", name="avatar")
+					.clear
+			.users-spacer
+				.user-short-info.single-item
+					.event-def-ico.event-start-ico.left
+					.left
+						.input.text.required
+							input#EventDateStart.rounded-input.datepicker(name="start", placeholder="Start date", type="text", value=event.start, required="required")
+					.clear
+			.users-spacer
+				.user-short-info.single-item
+					.event-def-ico.event-end-ico.left
+					.left
+						.input.text.required
+							input#EventDateStart.rounded-input.datepicker(name="end", placeholder="End date", type="text", value=event.end, required="required")
+					.clear
+			.users-spacer
+				.user-short-info.single-item
+					.event-def-ico.event-desc-ico.left
+					.left
+						.input.textarea
+							textarea#EventDesc.rounded-input(cols="30", rows="6", name="desc", placeholder="Description")= event.description
+					.clear
+			.users-spacer
+				.user-short-info.single-item
+					.event-def-ico.event-def-geo.left
+					.left
+						.input.text
+							input#EventAddress.rounded-input(name="address", placeholder="Address", type="text", value=event.location.address)
+							input#lat(type="hidden", name="lat", value=event.location.lat)
+							input#lng(type="hidden", name="lng", value=event.location.lng)
+					.clear
+					#latlng
+						span#formatted_address
+			.users-spacer
+				.user-short-info.single-item
+					.event-def-ico.event-def-pass.left
+					.left
+						.event-checkbox
+							input#EventPasswordProtected(type="checkbox", name="password_protected", checked=event.password.enabled ? "checked" : null)
+							label(for="EventPasswordProtected") Password
+						.grey-arrow
+							div.checkbox-switcher#PasswordProtected-switch-password
+								.left.switch-btn.switch-off(class=event.password.enabled ? null :  "switch-active")#PasswordProtected-off OFF
+								.left.switch-btn.switch-on(class=event.password.enabled ? "switch-active" : null)#PasswordProtected-on ON
+								.clear
+					.clear
+			.users-spacer#password-cont(style=event.password.enabled ? "display: block;" : null)
+				.user-short-info.single-item
+					.event-def-ico.event-def-empty.left
+					.left
+						.input.password
+							input.rounded-input#EventPassword(type="password", name="password", placeholder="Set new password", disabled=event.password.enabled ? null : "disabled", value=event.password.password)
+			.users-spacer
+				.user-short-info.single-item
+					.event-def-ico.event-def-comments.left
+					.left
+						.event-checkbox
+							input#EventAllowPublicAtt2spk(type="checkbox", name="allowAtt2Guest", checked=event.settings.allowAttToGuest ? "checked" : null)
+							label(for="EventAllowPublicAtt2spk") Allow attendees to post public comments about guest speakers
+					.grey-arrow
+						.checkbox-switcher#AllowPublicAtt2spk-switch-checkbox
+							.left.switch-btn.switch-off#AllowPublicAtt2spk-off(class=event.settings.allowAttToGuest ? null : "switch-active") OFF
+							.left.switch-btn.switch-on#AllowPublicAtt2spk-on(class=event.settings.allowAttToGuest ? "switch-active" : null) ON
+							.clear
+					.clear
+			.users-spacer
+				.user-short-info.single-item
+					.event-def-ico.event-def-comments.left
+					.left
+						.event-checkbox
+							input#EventAllowPublicAtt2att(type="checkbox", name="allowAtt2Att", checked=event.settings.allowAttToAtt ? "checked" : null)
+							label(for="EventAllowPublicAtt2att") Allow attendees to post public comments about other attendees
+					.grey-arrow
+						.checkbox-switcher#AllowPublicAtt2att-switch-checkbox
+							.left.switch-btn.switch-off#AllowPublicAtt2att-off(class=event.settings.allowAttToAtt ? null : "switch-active") OFF
+							.left.switch-btn.switch-on#AllowPublicAtt2att-on(class=event.settings.allowAttToAtt ? "switch-active" : null) ON
+							.clear
+					.clear
+			.users-spacer
+				.user-short-info.single-item
+					.event-def-ico.event-def-settings.left
+					.left
+						.event-checkbox
+							input#EventFilesUpload(type="checkbox", name="upload", checked=event.settings.upload ? "checked" : null)
+							label(for="EventFilesUpload") Enable dropbox functionality
+					.grey-arrow
+						.checkbox-switcher#FilesUpload-switch-checkbox
+							.left.switch-btn.switch-off#FilesUpload-off(class=event.settings.upload ? null : "switch-active") OFF
+							.left.switch-btn.switch-on#FilesUpload-on(class=event.settings.upload ? "switch-active" : null) ON
+							.clear
+					.clear
+			.submit
+				input.submit-btn(type="submit", value="Save settings")
+	.clear

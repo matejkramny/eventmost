@@ -32,7 +32,6 @@ exports.doEditProfile = doEditProfile = function (req, res) {
 	if (req.body.email.length == 0 && req.body.name.length == 0 && req.body.surname.length == 0) {
 		errors.push("You must enter an email address, your first name or your last name.");
 	} else {
-		console.log("all good")
 		u.name = req.body.name;
 		u.surname = req.body.surname;
 		
@@ -60,7 +59,7 @@ exports.doEditProfile = doEditProfile = function (req, res) {
 	u.website = req.body.website;
 	u.education = req.body.education;
 	u.desc = req.body.desc;
-	console.log(req.body)
+	
 	if (req.body.password.length > 0) {
 		// user wants to change password
 		if (req.body.password == req.body.password_old) {

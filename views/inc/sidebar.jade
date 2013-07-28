@@ -27,7 +27,7 @@
 							a.filebox(href="/event/"+event._id+"/forum") Forum
 						li
 							a.filebox(href="/event/"+event._id+"/dropbox") Dropbox
-						if event.user._id.equals(user._id)
+						if event.user && event.user._id.equals(user._id)
 							li
 								a.event-details(href="/event/"+event._id+"/edit") Edit event
 							li

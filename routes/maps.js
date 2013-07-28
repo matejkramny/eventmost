@@ -35,7 +35,6 @@ exports.reverseGeoCode = reverseGeoCode = function (req, res) {
 }
 
 exports.geoCode = geoCode = function (req, res) {
-	console.log(req.query)
 	var address = req.query.address;
 	if (!address) {
 		res.status(200);
@@ -55,7 +54,6 @@ exports.geoCode = geoCode = function (req, res) {
 		})
 		.on('end', function() {
 			res.status(200);
-			console.log(data)
 			res.send(JSON.stringify(JSON.parse(data).results))
 		});
 	}
@@ -70,8 +68,8 @@ exports.near = near = function (req, res) {
 		,distance = req.query.distance
 	
 	models.Event.find(
-		{ 'location':
-			{
+		{ deleted: false,
+			'location': {
 				$near: {
 					$geometry: {
 						type: "Point",
@@ -83,7 +81,7 @@ exports.near = near = function (req, res) {
 		},
 		function(err, evs) {
 			if (err) throw err;
-			console.log(evs);
+			
 			if (evs) {
 				res.status(200);
 				res.send(JSON.stringify(evs))

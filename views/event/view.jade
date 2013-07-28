@@ -21,8 +21,9 @@ block content
 				.label2 Address:
 				.text= event.location.address
 				.label2 Created by:
-				.text
-					a(href="/user/#{event.user._id}")= event.user.getName()
+				if event.user
+					.text
+						a(href="/user/#{event.user._id}")= event.user.getName()
 				
 				if !attending
 					form#EventViewForm(action="/event/#{event._id}/join", method="POST", accept-charset="utf-8")
