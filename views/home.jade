@@ -1,37 +1,34 @@
 extends layout
 
 block content
-	include inc/sidebar
-	.red-line-border#main-content
-		.search-box#bigred
-			.search-content
-				p
-					span.title Home
-		.home-box-item.bottom-border
-			.left Create an event
-			.red-arrow
-				a(href="/event/add", class="golink")
-					img(src="/img/red-arrow.png", alt="")
-			.clear
-		.home-box-item.bottom-border
-			.left My events
-			.red-arrow
-				a(href="/events/my", class="golink")
-					img(src="/img/red-arrow.png", alt="")
-			.clear
-		.home-box-item.bottom-border
-			.left All events
-			.red-arrow
-				a(href="/events", class="golink")
-					img(src="/img/red-arrow.png", alt="")
-			.clear
-		.home-box-item.bottom-border.location-item
-			.left Events in range
-				span#events-number2
-					span#events-number.event-circle
-			.red-arrow
-				a(href="/events/near", class="golink")
-					img(src="/img/red-arrow.png", id="arrow-red", alt="")
-			.clear
-	.options-btn-box
-	.clear
+	.row-fluid
+		include inc/sidebar
+		.span9
+			.red-line-border#main-content
+				.search-box#bigred
+					.search-content
+						p
+							span.title Home
+				.home-box-item.bottom-border
+					.left Create an event
+					.red-arrow
+						a(href="/event/add", class="golink")
+							img(src="/img/red-arrow.png", alt="")
+				.home-box-item.bottom-border
+					.left My events
+					.red-arrow
+						a(href="/events/my", class="golink")
+							img(src="/img/red-arrow.png", alt="")
+				.home-box-item.bottom-border
+					.left All events
+					.red-arrow
+						a(href="/events", class="golink")
+							img(src="/img/red-arrow.png", alt="")
+				.home-box-item.bottom-border.location-item
+					.left Events in range
+						span#events-number2
+							span#events-number.event-circle
+					.red-arrow
+						a(href="/events/near", class="golink")
+							img(src="/img/red-arrow.png", id="arrow-red", alt="")
+			.options-btn-box

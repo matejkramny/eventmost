@@ -17,72 +17,22 @@ exports.router = function (app) {
 		.get('/events/near', listNearEvents)
 }
 
-// TODO add methods to Event model, getEvent, listEvents etc.. some stuff is repeating in the methods below.
-
 exports.addEvent = addEvent = function (req, res) {
 	res.render('event/add')
 }
 
 exports.doAddEvent = doAddEvent = function (req, res) {
-	if (req.body.name == null || req.body.name.length == 0) {
-		req.session.flash = ["Event name is missing"]; // TODO flash messages
-		res.redirect('/event/add');
-		return;
-	}
+	var newEvent = new models.Event({});
 	
-	var password_enabled = req.body.password_protected != null ? true : false;
-	var newEvent = new models.Event({
-		deleted: false,
-		name: req.body.name,
-		created: Date().now,
-		start: Date.parse(req.body.date_start),
-		end: Date.parse(req.body.date_end),
-		user: req.user._id,
-		description: req.body.desc,
-		password: {
-			enabled: password_enabled,
-			password: password_enabled ? req.body.password : ""
-		},
-		location: {
-			address: req.body.address
+	newEvent.edit(req.body, req.user, req.files, function(err, ev) {
+		if (err) {
+			req.session.flash = err;
+			res.redirect('/event/add');
+			return;
 		}
-	});
-	
-	var lat = parseFloat(req.body.lat),
-		lng = parseFloat(req.body.lng);
-	if (!isNaN(lat) && !isNaN(lng)) {
-		// good lat/lng
-		var geo = new models.Geolocation({
-			geo: {
-				lat: lat,
-				lng: lng
-			},
-			event: newEvent._id
-		}).save();
-	}
-	
-	if (req.files.avatar != null && req.files.avatar.name.length != 0) {
-		var ext = req.files.avatar.type.split('/');
-		var ext = ext[ext.length-1];
-		newEvent.avatar = "/avatars/"+newEvent._id+"."+ext;
-		fs.readFile(req.files.avatar.path, function(err, avatar) {
-			fs.writeFile(__dirname + "/../public"+newEvent.avatar, avatar, function(err) {
-				if (err) throw err;
-				
-				newEvent.save(function(err) {
-					if (err) throw err;
-					res.redirect('/event/'+newEvent._id);
-				})
-			});
-		});
-		return;
-	} else {
-		newEvent.avatar = "/img/event.png";
-	}
-	
-	newEvent.save(function(err) {
+		
 		res.redirect('/event/'+newEvent._id);
-	})
+	});
 }
 
 exports.viewEvent = viewEvent = function (req, res) {
@@ -152,7 +102,10 @@ exports.editEvent = editEvent = function (req, res) {
 exports.doEditEvent = doEditEvent = function (req, res) {
 	var errors = [];
 	
-	models.Event.findOne({ _id: mongoose.Types.ObjectId(req.params.id), deleted: false }, function(err, ev) {
+	models.Event.findOne({
+		_id: mongoose.Types.ObjectId(req.params.id),
+		deleted: false
+	}, function(err, ev) {
 		if (err) throw err;
 		
 		if (!ev) {
@@ -161,73 +114,17 @@ exports.doEditEvent = doEditEvent = function (req, res) {
 			return;
 		}
 		
-		ev.name = req.body.name;
-		ev.start = Date.parse(req.body.start);
-		ev.end = Date.parse(req.body.end);
-		ev.description = req.body.desc;
-		
-		var lat = parseFloat(req.body.lat);
-		var lng = parseFloat(req.body.lng);
-		
-		// if found existing event location, edit it. otherwise create new
-		models.Geolocation.findOne({ event: mongoose.Types.ObjectId(ev._id) }, function(err, geo) {
-			if (err) throw err;
-			
-			if (!geo) {
-				geo = new models.Geolocation({});
-			}
-			
-			if (!isNaN(lat) && !isNaN(lng)) {
-				geo.geo.lat = lat;
-				geo.geo.lng = lng;
-				geo.event = ev._id;
-				
-				geo.save();
+		ev.edit(req.body, req.user, req.files, function(err) {
+			if (err) {
+				req.session.flash = err;
 			} else {
-				geo.remove();
-			}
-		});
-		
-		ev.location.address = req.body.address;
-		
-		ev.password.enabled = req.body.password_protected ? true : false;
-		ev.password.password = ev.password.enabled ? req.body.password : "";
-		
-		ev.settings.allowAttToGuest = req.body.allowAtt2Guest ? true : false;
-		ev.settings.allowAttToAtt = req.body.allowAtt2Att ? true : false;
-		ev.settings.upload = req.body.upload ? true : false;
-		
-		if (req.files.avatar != null && req.files.avatar.name.length != 0) {
-			var ext = req.files.avatar.type.split('/');
-			var ext = ext[ext.length-1];
-			
-			ev.avatar = "/avatars/"+ev._id+"."+ext;
-			
-			fs.readFile(req.files.avatar.path, function(err, avatar) {
-				fs.writeFile(__dirname + "/../public"+ev.avatar, avatar, function(err) {
-					if (err) throw err;
-					
-					ev.save(function(err) {
-						if (err) throw err;
-						
-						req.session.flash.push("Event avatar updated")
-						req.session.flash.push("Event settings updated");
-						res.redirect('/event/'+ev._id+'/edit');
-					})
-				});
-			});
-			return;
-		} else {
-			ev.save(function(err) {
-				if (err) throw err;
-				
 				req.session.flash.push("Event settings updated");
-				res.redirect('/event/'+ev._id+"/edit");
-			})
-		}
+			}
+			
+			res.redirect('/event/'+ev._id+"/edit");
+		})
 	})
 }
-
 
 exports.deleteEvent = deleteEvent = function (req, res) {
 	models.Event.findOne({ _id: mongoose.Types.ObjectId(req.params.id), deleted: false }, function(err, ev) {
@@ -294,6 +191,9 @@ exports.listNearEvents = listNearEvents = function (req, res) {
 			if (geos) {
 				var events = [];
 				for (var i = 0; i < geos.length; i++) {
+					if (geos[i].event == null) {
+						continue;
+					}
 					if (geos[i].event.deleted != true) {
 						geos[i].event.geo = geos[i].geo;
 						events.push(geos[i].event);

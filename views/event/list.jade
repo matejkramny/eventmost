@@ -1,25 +1,26 @@
 extends ../layout
 
 block content
-	include ../inc/sidebar
-	#main-content
-		.search-box
-			.search-content
-				p
-					span.title= pagename
-		include ../inc/flash
-		
-		unless events.length
-			p No events found.. 
-				a(href="/event/add") Add one
-		
-		for event in events
-			.users-spacer.event-item
-				.user-short-info.single-item
-					.event-ico.left
-						img.event-icon(src=event.avatar)
-					.left
-						.name= event.name
+	.row-fluid
+		include ../inc/sidebar
+		.span9
+			.search-box
+				.search-content
+					p
+						span.title= pagename
+			include ../inc/flash
+	
+			unless events.length
+				p No events found.. 
+					a(href="/event/add") Add one
+	
+			for event in events
+				.row-fluid
+					.span2
+						img.avatar(src=event.avatar)
+					.span8
+						a(href="/event/"+event._id)
+							h6= event.name
 						.role= event.start
 							|  - 
 							= event.end
@@ -29,5 +30,3 @@ block content
 							else if event.geo || event.address
 								a.geolocalization-ico.margin-x-5(href="/events")
 							a.grey-dot.margin-left-25.golink(href="/event/"+event._id)
-					.clear
-	.clear

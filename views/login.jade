@@ -1,59 +1,24 @@
 extends layout
 
-block addonjs
-	script(src="/js/geoLogin.js")
-
 append content
-	#users-form.users
-		form#UserLoginForm(action="/auth/password", method="post", accept-charset="utf-8")
-			div(style="display:none;")
-				input(type="hidden", name="_method", value="POST")
+	.row
+		.span4.offset2
+			h4 Login / Register
+			form#UserLoginForm(action="/auth/password", method="post", accept-charset="utf-8")
 				input(type="hidden", name="_csrf", value=token)
-			.legend Log in / Register
-			.login-buttons
-				.login-btn
-					a(href="/auth/twitter", alt="Log in with twitter", title="Log in with twitter")
-						img(src="/img/twitter-btn.png")
-				.login-btn
-					a(href="/auth/linkedin", alt="Log in with linkedin", title="Log in with linkedin")
-						img(src="/img/linkedin-btn.png")
-				.login-btn
-					a(href="/auth/facebook", alt="Log in with facebook", title="Log in with facebook")
-						img(src="/img/facebook-btn.png", alt="")
-				.clear
-			.spacer
-				.line
-				.line-or or
-				.line
-				.clear
-			if typeof errors !== "undefined" && errors.length
-				ul
-					for error in errors
-						li - 
-							= error
-				br
-				.clear
-			.input.email.required
-				input.input-item.rounded-input(name="login", placeholder="E-mail", maxlength="128", type="email", id="UserEmail", required="required")
-			.input.password.required
-				input.input-item.rounded-input(name="password", placeholder="Password", type="password", id="UserPassword", required="required")
-			.text-right.margin-top-20
-				input.submit-btn(type="submit", value="Log in / Register now")
-		.forgot
-			a(href="/users/forgot", class="register-info")
-				| Can't login?
-	#bottom-login-box
-		#events-in-range.bottom-login-box-item.bottom-border
-			.left Events in range
-				span#events-number2
-					span#events-number.event-circle
-			.red-arrow
-				a(href="/events/near")
-					img(src="/img/red-arrow.png", alt="")
-			.clear
-		.bottom-login-box-item
-			.left Contact us
-			.grey-arrow
-				a(href="/contact/send", class="grey-dot margin-left-25")
-			.clear
-	.clear
+				input.large(name="login", placeholder="E-mail", type="email", required="required")
+				input.large(name="password", placeholder="Password", type="password", required="required")
+				input.btn.btn-primary(type="submit", value="Log in / Register now")
+				a.btn(href="#") Can't login?
+		.span4#login
+			h4 Social
+			a.btn.btn-large.btn-social-twitter(href="/auth/twitter")
+				i.fui-twitter
+				|  Connect with twitter
+			a.btn.btn-large.btn-social-facebook(href="/auth/facebook")
+				i.fui-facebook
+				|  Connect with facebook
+			a.btn.btn-large.btn-social-linkedin(href="/auth/linkedin")
+				i.fui-linkedin
+				|  Connect with LinkedIn
+			

@@ -1,5 +1,4 @@
 module.exports = {
-	Attendee: require('./Attendee').Attendee,
 	Card: require('./Card').Card,
 	CardType: require('./CardType').CardType,
 	Event: require('./Event').Event,

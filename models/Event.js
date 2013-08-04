@@ -3,7 +3,6 @@ var mongoose = require('mongoose');
 var schema = mongoose.Schema;
 var ObjectId = schema.ObjectId;
 var Geolocation = require('./Geolocation').Geolocation;
-var Attendee = require('./Attendee').Attendee;
 
 var scheme = schema({
 	deleted: { type: Boolean, default: false },
@@ -21,7 +20,7 @@ var scheme = schema({
 	}],
 	geo: {}, // don't store anything here.
 	description: String,
-	avatar: String,
+	avatar: { type: String, default: "/img/event.png" },
 	address: String,
 	geolocation: Boolean,
 	password: {
@@ -55,6 +54,79 @@ scheme.statics.getEvent = function (id, cb) {
 			})
 		}
 	)
+}
+
+scheme.methods.edit = function (body, user, files, cb) {
+	if (body.name == null || body.name.length == 0) {
+		cb([["Event name is missing"]])
+		return;
+	}
+	
+	var password_enabled = body.password_protected != null ? true : false;
+	
+	this.deleted = false;
+	this.name = body.name;
+	this.created = Date().now;
+	this.start = Date.parse(body.date_start);
+	this.end = Date.parse(body.date_end);
+	this.user = user._id;
+	this.description = body.desc;
+	this.password = {
+		enabled: password_enabled,
+		password: password_enabled ? body.password : ""
+	};
+	this.address = body.address;
+	
+	this.settings.allowAttToGuest = body.allowAtt2Guest ? true : false;
+	this.settings.allowAttToAtt = body.allowAtt2Att ? true : false;
+	this.settings.upload = body.upload ? true : false;
+	
+	Geolocation.findOne({ event: this._id }, function(err, geo) {
+		if (err) throw err;
+		
+		var lat = parseFloat(body.lat);
+		var lng = parseFloat(body.lng);
+		
+		if (!geo) {
+			geo = new Geolocation({});
+		}
+		
+		if (!isNaN(lat) && !isNaN(lng)) {
+			geo.geo.lat = lat;
+			geo.geo.lng = lng;
+			geo.event = this._id;
+			
+			geo.save();
+		} else {
+			geo.remove();
+		}
+	});
+	
+	if (files.avatar != null && files.avatar.name.length != 0) {
+		var ext = files.avatar.type.split('/');
+		var ext = ext[ext.length-1];
+		
+		ev.avatar = "/avatars/"+ev._id+"."+ext;
+		
+		fs.readFile(files.avatar.path, function(err, avatar) {
+			fs.writeFile(__dirname + "/../public"+ev.avatar, avatar, function(err) {
+				if (err) throw err;
+				
+				this.save(function(err) {
+					if (err) throw err;
+					
+					cb(null);
+				})
+			});
+		});
+		return;
+	} else {
+		this.save(function(err) {
+			if (err) throw err;
+			
+			cb(null);
+		})
+	}
 }
 
 scheme.methods.getGeo = function (cb) {
