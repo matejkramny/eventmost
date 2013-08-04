@@ -12,14 +12,14 @@ block content
 			.eavatar
 				img.event-icon-large(src=event.avatar)
 			.event-desc
-				.label2
+				.label2 Description:
 				.text= event.description
 				.label2 Starts:
 				.text= event.start
 				.label2 Ends:
 				.text= event.end
 				.label2 Address:
-				.text= event.location.address
+				.text= event.address
 				.label2 Created by:
 				if event.user
 					.text

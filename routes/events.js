@@ -10,10 +10,14 @@ exports.router = function (app) {
 		.post('/event/:id/edit', doEditEvent)
 		.get('/event/:id/delete', deleteEvent)
 		.post('/event/:id/join', joinEvent)
+		.get('/event/:id/attendees', listAttendees)
+		.get('/event/:id/speakers', listSpeakers)
 		.get('/events', listEvents)
 		.get('/events/my', listMyEvents)
 		.get('/events/near', listNearEvents)
 }
+
+// TODO add methods to Event model, getEvent, listEvents etc.. some stuff is repeating in the methods below.
 
 exports.addEvent = addEvent = function (req, res) {
 	res.render('event/add')
@@ -34,19 +38,30 @@ exports.doAddEvent = doAddEvent = function (req, res) {
 		start: Date.parse(req.body.date_start),
 		end: Date.parse(req.body.date_end),
 		user: req.user._id,
-		description: req.body.description,
+		description: req.body.desc,
 		password: {
 			enabled: password_enabled,
 			password: password_enabled ? req.body.password : ""
 		},
 		location: {
-			lat: req.body.lat,
-			lng: req.body.lng,
 			address: req.body.address
 		}
 	});
 	
-	if (req.files.avatar != null) {
+	var lat = parseFloat(req.body.lat),
+		lng = parseFloat(req.body.lng);
+	if (!isNaN(lat) && !isNaN(lng)) {
+		// good lat/lng
+		var geo = new models.Geolocation({
+			geo: {
+				lat: lat,
+				lng: lng
+			},
+			event: newEvent._id
+		}).save();
+	}
+	
+	if (req.files.avatar != null && req.files.avatar.name.length != 0) {
 		var ext = req.files.avatar.type.split('/');
 		var ext = ext[ext.length-1];
 		newEvent.avatar = "/avatars/"+newEvent._id+"."+ext;
@@ -85,36 +100,29 @@ exports.viewEvent = viewEvent = function (req, res) {
 		}
 	}
 	
-	
-	models.Event
-		.findOne({ deleted: false, _id: mongoose.Types.ObjectId(id) })
-		.populate('user')
-		.exec(function(err, ev) {
-			if (err) throw err;
-			
-			if (ev.user) {
-				if (ev.user._id.equals(req.user._id)) {
-					// owns the event, no need to search if the user is attending
-					draw(ev, true);
-					return;
+	models.Event.getEvent(id, function(ev) {
+		if (!ev) {
+			req.session.flash.push("Event not found");
+			res.redirect('/');
+			return;
+		}
+		console.log(ev);
+		
+		var attending = false;
+		if (ev.user && ev.user._id.equals(req.user._id)) {
+			// owns the event, no need to search if the user is attending
+			attending = true;
+		} else {
+			for (var i = 0; i < ev.attendees.length; i++) {
+				if (ev.attendees[i]._id.equals(req.user._id)) {
+					attending = true;
+					break;
 				}
 			}
-			models.Attendee
-				.findOne({
-					event: ev._id,
-					user: req.user._id
-				}, function(err, attendee) {
-					if (err) throw err;
-					
-					if (attendee) {
-						// is attending.
-						draw(ev, true);
-					} else {
-						draw(ev, false);
-					}
-				});
 		}
-	)
+		
+		draw(ev, attending);
+	});
 }
 
 exports.editEvent = editEvent = function (req, res) {
@@ -127,17 +135,18 @@ exports.editEvent = editEvent = function (req, res) {
 				_id: mongoose.Types.ObjectId(id)
 			})
 		.populate('user')
-		.exec(
-			function(err, ev) {
-				if (err) throw err;
-				
-				if (ev) {
+		.exec(function(err, ev) {
+			if (err) throw err;
+			
+			if (ev) {
+				models.Geolocation.findOne({ event: ev._id }, function(err, geo) {
+					ev.geo = geo;
 					res.render('event/edit', { event: ev });
-				} else {
-					res.redirect('/')
-				}
+				})
+			} else {
+				res.redirect('/')
 			}
-		)
+		})
 }
 
 exports.doEditEvent = doEditEvent = function (req, res) {
@@ -157,8 +166,28 @@ exports.doEditEvent = doEditEvent = function (req, res) {
 		ev.end = Date.parse(req.body.end);
 		ev.description = req.body.desc;
 		
-		ev.location.lat = req.body.lat;
-		ev.location.lng = req.body.lng;
+		var lat = parseFloat(req.body.lat);
+		var lng = parseFloat(req.body.lng);
+		
+		// if found existing event location, edit it. otherwise create new
+		models.Geolocation.findOne({ event: mongoose.Types.ObjectId(ev._id) }, function(err, geo) {
+			if (err) throw err;
+			
+			if (!geo) {
+				geo = new models.Geolocation({});
+			}
+			
+			if (!isNaN(lat) && !isNaN(lng)) {
+				geo.geo.lat = lat;
+				geo.geo.lng = lng;
+				geo.event = ev._id;
+				
+				geo.save();
+			} else {
+				geo.remove();
+			}
+		});
+		
 		ev.location.address = req.body.address;
 		
 		ev.password.enabled = req.body.password_protected ? true : false;
@@ -242,11 +271,14 @@ exports.listNearEvents = listNearEvents = function (req, res) {
 		,limit = req.query.limit
 		,distance = req.query.distance
 	
-	// TODO check lat & lng
-
-	models.Event.find(
-		{ deleted: false,
-			'location': {
+	if (!lat || !lng) {
+		// render a blank page, and tell it to ask user for browser positioning
+		res.render('event/list', { events: [], pagename: "Events near you" });
+		return;
+	}
+	
+	models.Geolocation.find(
+		{ 'geo': {
 				$near: {
 					$geometry: {
 						type: "Point",
@@ -255,12 +287,19 @@ exports.listNearEvents = listNearEvents = function (req, res) {
 					$maxDistance: 0.09009009009
 				}
 			}
-		},
-		function(err, evs) {
+		}).populate('event')
+		.exec(function(err, geos) {
 			if (err) throw err;
-			
-			if (evs) {
-				res.render('event/list', { events: evs, pagename: "Events near you" })
+		
+			if (geos) {
+				var events = [];
+				for (var i = 0; i < geos.length; i++) {
+					if (geos[i].event.deleted != true) {
+						geos[i].event.geo = geos[i].geo;
+						events.push(geos[i].event);
+					}
+				}
+				res.render('event/list', { events: events, pagename: "Events near you" })
 			}
 		}
 	);
@@ -271,36 +310,36 @@ exports.joinEvent = joinEvent = function (req, res) {
 		,password = req.body.password;
 	
 	var joinEvent = function (ev) {
-		var attendee = new models.Attendee({
-			event: ev._id,
-			user: req.user._id
-		}).save();
+		ev.attendees.push(req.user._id);
+		ev.save();
 	}
 	
-	models.Event
-		.findOne({
-			deleted: false,
-			_id: mongoose.Types.ObjectId(id)
-		}, function(err, ev) {
-			if (err) throw err;
-			
-			if (ev) {
-				if (ev.password.enabled) {
-					if (ev.password.password == password) {
-						// join event.
-						joinEvent(ev);
-					} else {
-						// display flash stating they got the password wrong.
-						req.session.flash.push("Event password incorrect.")
-					}
-				} else {
+	models.Event.getEvent(id, function(ev) {
+		if (ev) {
+			if (ev.password.enabled) {
+				if (ev.password.password == password) {
 					// join event.
 					joinEvent(ev);
+				} else {
+					// display flash stating they got the password wrong.
+					req.session.flash.push("Event password incorrect.")
 				}
-				
-				res.redirect('/event/'+ev._id);
 			} else {
-				// TODO 404
+				// join event.
+				joinEvent(ev);
 			}
-		})
+			
+			res.redirect('/event/'+ev._id);
+		} else {
+			// TODO 404
+		}
+	})
+}
+
+exports.listSpeakers = listSpeakers = function (req, res) {
+	
+}
+
+exports.listAttendees = listAttendees = function (req, res) {
+	
 }

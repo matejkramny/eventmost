@@ -67,9 +67,8 @@ exports.near = near = function (req, res) {
 		,limit = req.query.limit
 		,distance = req.query.distance
 	
-	models.Event.find(
-		{ deleted: false,
-			'location': {
+	models.Geolocation.find(
+		{ 'geo': {
 				$near: {
 					$geometry: {
 						type: "Point",
@@ -78,13 +77,24 @@ exports.near = near = function (req, res) {
 					$maxDistance: 0.09009009009
 				}
 			}
-		},
-		function(err, evs) {
+		}).populate('event')
+		.exec(function(err, geos) {
 			if (err) throw err;
 			
-			if (evs) {
+			if (geos) {
+				var events = [];
+				for (var i = 0; i < geos.length; i++) {
+					if (geos[i].event.deleted != true) {
+						geos[i].event.geo = geos[i].geo;
+						events.push(geos[i].event);
+					}
+				}
+				
 				res.status(200);
-				res.send(JSON.stringify(evs))
+				res.send(JSON.stringify(events))
+			} else {
+				res.status(200);
+				res.send("[]");
 			}
 		}
 	);

@@ -10,8 +10,9 @@
 						a(href="/profile")
 							= user.getName()
 					.role= user.position
-						| , 
-						= user.company
+						if user.company
+							| , 
+							= user.company
 				.clear
 			.element
 				ul.menu-list
@@ -23,6 +24,10 @@
 						li= event.name
 						li
 							a.filebox(href="/event/"+event._id) Details
+						li
+							a.filebox(href="/event/"+event._id+"/attendees") Attendees
+						li
+							a.filebox(href="/event/"+event._id+"/speakers") Speakers
 						li
 							a.filebox(href="/event/"+event._id+"/forum") Forum
 						li

@@ -2,7 +2,7 @@ function updateNear(params){
 	var link =  $('.location-item a').attr('href')
     link+="?lat="+params.lat+"&lng="+params.lng;
     $('.location-item a').attr('href',link);
-    
+	
     AjaxClient.eventsNear(params,function(data){
       $('#events-number').html(data.length);
       $('#events-number2').show();
@@ -19,11 +19,7 @@ if(Geo.isSupported()){
     params.limit=50;
     params.distance = 30;
     updateNear(params);
-    
-    
-    
   },function(error){
-	  
 	  if(IP.lat && IP.lng){
 		    params = {};
 		    params.lat = IP.lat;

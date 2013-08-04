@@ -12,6 +12,7 @@ block content
 		unless events.length
 			p No events found.. 
 				a(href="/event/add") Add one
+		
 		for event in events
 			.users-spacer.event-item
 				.user-short-info.single-item
@@ -25,7 +26,7 @@ block content
 						.options-btn-box
 							if event.password.enabled
 								a.password-ico.margin-x-5(href="/events")
-							else if event.location.lat || event.location.address
+							else if event.geo || event.address
 								a.geolocalization-ico.margin-x-5(href="/events")
 							a.grey-dot.margin-left-25.golink(href="/event/"+event._id)
 					.clear

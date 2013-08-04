@@ -12,4 +12,5 @@ module.exports = {
 	Upload: require('./Upload').Upload,
 	User: require('./User').User,
 	UserFile: require('./UserFile').UserFile,
+	Geolocation: require('./Geolocation').Geolocation
 }
