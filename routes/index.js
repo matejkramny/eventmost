@@ -5,7 +5,8 @@ var features = require('./features'),
 	contact = require('./contact'),
 	events = require('./events'),
 	maps = require('./maps'),
-	profile = require('./profile')
+	profile = require('./profile'),
+	cards = require('./cards')
 
 exports.router = function(app) {
 	app.get('/', function(req, res) {
@@ -26,4 +27,6 @@ exports.router = function(app) {
 	maps.router(app);
 	// profile
 	profile.router(app);
+	// business cards
+	cards.router(app)
 }

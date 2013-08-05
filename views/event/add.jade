@@ -13,80 +13,84 @@ append js
 	script(src="/js/geoField.js")
 
 block content
-	.row-fluid
-		include ../inc/sidebar
-		.span9
-			.search-box
-				.search-content
-					p
-						span.title Create an event
-			form(action="/event/add", id="EventAddForm", enctype="multipart/form-data", method="post", accept-charset="utf-8", novalidate="novalidate")
-				div(style="display:none;")
-					input(type="hidden", name="_method", value="POST")
-					input(type="hidden", name="_csrf", value=token)
-				#step1
-					.users-spacer
-						.user-short-info.single-item
-							.event-def-ico.event-name-ico.left
-							.left
-								.input.text.required
-									input(name="name", placeholder="Event name", class="rounded-input", maxlength="255", type="text", id="EventName", required="required")
+	include ../inc/sidebar
+	#main-content
+		.search-box
+			.search-content
+				p
+					span.title Create an event
+		form(action="/event/add", id="EventAddForm", enctype="multipart/form-data", method="post", accept-charset="utf-8", novalidate="novalidate")
+			div(style="display:none;")
+				input(type="hidden", name="_method", value="POST")
+				input(type="hidden", name="_csrf", value=token)
+			#step1
+				.users-spacer
+					.user-short-info.single-item
+						.event-def-ico.event-name-ico.left
+						.left
+							.input.text.required
+								input(name="name", placeholder="Event name", class="rounded-input", maxlength="255", type="text", id="EventName", required="required")
+					.clear
+				.users-spacer
+					.user-short-info.single-item
+						.event-def-ico.event-avatar-ico.left
+							img(src="", style="display:none;width:50px;")
+						.left
+							.input.file
+								input(type="file", name="avatar", placeholder="Event avatar", class="rounded-input ", id="EventAvatar")
+					.clear
+				.users-spacer
+					.user-short-info.single-item
+						.event-def-ico.event-start-ico.left
+						.left
+							.input.text.required
+								input(name="date_start", placeholder="Start date", class="rounded-input datepicker", type="text", id="EventDateStart", required="required")
 						.clear
-					.users-spacer
-						.user-short-info.single-item
-							.event-def-ico.event-avatar-ico.left
-								img(src="", style="display:none;width:50px;")
-							.left
-								.input.file
-									input(type="file", name="avatar", placeholder="Event avatar", class="rounded-input ", id="EventAvatar")
+				.users-spacer
+					.user-short-info.single-item
+						.event-def-ico.event-end-ico.left
+						.left
+							.input.text.required
+								input(name="date_end", timeformat="24", placeholder="End date", class="rounded-input datepicker", type="text", id="EventDateEnd", required="required")
 						.clear
-					.users-spacer
-						.user-short-info.single-item
-							.event-def-ico.event-start-ico.left
-							.left
-								.input.text.required
-									input(name="date_start", placeholder="Start date", class="rounded-input datepicker", type="text", id="EventDateStart", required="required")
-							.clear
-					.users-spacer
-						.user-short-info.single-item
-							.event-def-ico.event-end-ico.left
-							.left
-								.input.text.required
-									input(name="date_end", timeformat="24", placeholder="End date", class="rounded-input datepicker", type="text", id="EventDateEnd", required="required")
-							.clear
-					.users-spacer
-						.user-short-info.single-item
-							.event-def-ico.event-def-pass.left
-							.left
-								.event-checkbox
-									input(type="checkbox", name="password_protected", value="1", id="EventPasswordProtected")
-									label(for="EventPasswordProtected") Password
-								.grey-arrow
-									.checkbox-switcher#PasswordProtected-switch-password
-										.left.switch-btn.switch-off.switch-active#PasswordProtected-off OFF
-										.left.switch-btn.switch-on#PasswordProtected-on ON
-					#password-cont.users-spacer
-						.user-short-info.single-item
-							.event-def-ico.event-def-empty.left
-							.left
-								.input.password
-									input(name="password", placeholder="Set Password", class="rounded-input", disabled="disabled", type="password", id="EventPassword")
-					.users-spacer
-						.user-short-info.single-item
-							.event-def-ico.event-def-empty.left
-							.left
-								.input.text
-									input(name="address", placeholder="Address", class="rounded-input", maxlength="255", type="text", id="EventAddress")
-							.clear
-							#latlng
-								#formatted_address
-							input(type="hidden", name="lat", id="lat") 
-							input(type="hidden", name="lng", id="lng")
-					.users-spacer
-						.user-short-info.single-item
-							.event-def-ico.event-desc-ico.left
-							.left
-								.input.textarea
-									textarea(name="desc", placeholder="Description", class="rounded-input", cols="30", rows="6", id="EventDesc")
-				.submit
-					input.btn.btn-primary(class="submit-btn", type="submit", value="Create event")
+				.users-spacer
+					.user-short-info.single-item
+						.event-def-ico.event-def-pass.left
+						.left
+							.event-checkbox
+								input(type="checkbox", name="password_protected", value="1", id="EventPasswordProtected")
+								label(for="EventPasswordProtected") Password
+							.grey-arrow
+								.checkbox-switcher#PasswordProtected-switch-password
+									.left.switch-btn.switch-off.switch-active#PasswordProtected-off OFF
+									.left.switch-btn.switch-on#PasswordProtected-on ON
+									.clear
+						.clear
+				#password-cont.users-spacer
+					.user-short-info.single-item
+						.event-def-ico.event-def-empty.left
+						.left
+							.input.password
+								input(name="password", placeholder="Set Password", class="rounded-input", disabled="disabled", type="password", id="EventPassword")
+						.clear
+				.users-spacer
+					.user-short-info.single-item
+						.event-def-ico.event-def-empty.left
+						.left
+							.input.text
+								input(name="address", placeholder="Address", class="rounded-input", maxlength="255", type="text", id="EventAddress")
+						.clear
+						#latlng
+							#formatted_address
+						input(type="hidden", name="lat", id="lat") 
+						input(type="hidden", name="lng", id="lng")
+				.users-spacer
+					.user-short-info.single-item
+						.event-def-ico.event-desc-ico.left
+						.left
+							.input.textarea
+								textarea(name="desc", placeholder="Description", class="rounded-input", cols="30", rows="6", id="EventDesc")
+						.clear
+			.submit
+				input(class="submit-btn", type="submit", value="Create event")
+	.clear

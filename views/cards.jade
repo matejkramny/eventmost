@@ -1,0 +1,66 @@
+extends layout
+
+append content
+	include inc/sidebar
+	#main-content
+		.search-box
+			.search-content
+				form#CardIndexForm(action="/cards", method="POST", accept-charset="utf-8", novalidate="novalidate")
+					p
+						span.title Your business cards
+						span.relative
+							input#CardSearch(name="search", placeholder="Search business cards", type="text")
+							button.search-btn.round-button(label="Search", type="submit") Search
+						span.right
+							a#addCard.round-button(href="#") Add new
+		.cards-scroll-bar
+			.prev-card
+			.scroll-box
+			.next-card
+		#card-1.cardform.card-item
+			.left.card-bar.azure
+			.left.card-main
+				.pad-area
+					form#CardIndexForm(action='/cards/add', enctype='multipart/form-data', method='post', accept-charset='utf-8')
+						input#CardId(type='hidden', name='data[Card][id]')
+						.input.text
+							input#CardFirstname(name='name', placeholder='firstname', maxlength='80', type='text')
+						.input.text
+							input#CardLastname(name='surname', placeholder='lastname', maxlength='80', type='text')
+						.input.text
+							input#CardAdress(name='address', placeholder='address', maxlength='80', type='text')
+						.input.text
+							input#CardZip(name='zipcode', placeholder='zip', maxlength='10', type='text')
+						.input.text
+							input#CardCity(name='city', placeholder='city', maxlength='40', type='text')
+						.input.tel
+							input#CardPhone(name='phone', placeholder='phone', maxlength='20', type='tel')
+						.input.email
+							input#CardEmail(name='email', placeholder='email', maxlength='80', type='email')
+						.input.text
+							input#CardTwitter(name='twitter', placeholder='twitter', maxlength='40', type='text')
+						.input.text
+							input#CardWeb(name='website', placeholder='web', maxlength='255', type='text')
+						.input.text
+							input#CardPosition(name='position', placeholder='position', maxlength='255', type='text')
+						input#CardCardTypeId(type='hidden', name='card_type', value='1')
+			.left.card-image
+				.ciavatar
+					img(src=everyauth.user.avatar, alt='')
+				.input.file
+					label(for='CardPicture') Picture
+					input#CardPicture(type='file', name='avatar')
+			.colors
+				#ct1.color(data-id='1')
+				#ct2.color(data-id='2')
+				#ct3.color(data-id='3')
+			.clear
+			.sendcard
+				input.submit-btn(type='submit', value='Save')
+			.clear
+		
+	.clear
+
+append addonjs
+	script.
+		var loggedUser = {"User":!{JSON.stringify(everyauth.user)}};

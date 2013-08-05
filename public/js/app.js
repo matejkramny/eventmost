@@ -196,14 +196,14 @@ App = {
 					field=i.replace("first_name",'firstname');
 					field=field.replace("last_name",'lastname');
 					field=field.replace("website",'web');
-					$('#CardIndexForm input[name="data[Card]['+field+']"]').val(loggedUser.User[i]);
+					$('#CardIndexForm input[name="'+field+'"]').val(loggedUser.User[i]);
 				}
 				
-				$('#CardIndexForm input[name="data[Card][adress]"]').val('');
-				$('#CardIndexForm input[name="data[Card][city]"]').val('');
-				$('#CardIndexForm input[name="data[Card][zip]"]').val('');
-				$('#CardIndexForm input[name="data[Card][phone]"]').val('');
-				$('#CardIndexForm input[name="data[Card][twitter]"]').val('');
+				$('#CardIndexForm input[name="address"]').val('');
+				$('#CardIndexForm input[name="city"]').val('');
+				$('#CardIndexForm input[name="zipcode"]').val('');
+				$('#CardIndexForm input[name="phone"]').val('');
+				$('#CardIndexForm input[name="twitter"]').val('');
 				
 			}
 			
