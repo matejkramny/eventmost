@@ -106,10 +106,10 @@ scheme.methods.edit = function (body, user, files, cb) {
 		var ext = files.avatar.type.split('/');
 		var ext = ext[ext.length-1];
 		
-		ev.avatar = "/avatars/"+ev._id+"."+ext;
+		this.avatar = "/avatars/"+this._id+"."+ext;
 		
 		fs.readFile(files.avatar.path, function(err, avatar) {
-			fs.writeFile(__dirname + "/../public"+ev.avatar, avatar, function(err) {
+			fs.writeFile(__dirname + "/../public"+this.avatar, avatar, function(err) {
 				if (err) throw err;
 				
 				this.save(function(err) {

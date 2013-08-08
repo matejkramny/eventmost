@@ -158,26 +158,26 @@ App = {
 		editCard:function(){
 			AjaxClient.getCard($(this).attr('rel'),function(data){
 				App.addCard();
-				$('.ciavatar img').attr('src',data.Card.picture);
-				$('.cardform').attr('id','card-'+data.Card.card_type_id);
-				$('.pad-area form').attr('action',$(this).attr('href'));
+				$('.ciavatar img').attr('src',data.Card.avatar);
+				$('.cardform').attr('id','card-'+data.Card.card_type);
+				$('#CardEditId').attr('value', data.Card._id);
 				$('#CardId').val(data.Card.id);
-				$('#CardFirstname').val(data.Card.firstname);
-				$('#CardLastname').val(data.Card.lastname);
+				$('#CardFirstname').val(data.Card.name);
+				$('#CardLastname').val(data.Card.surname);
 				$('#CardPosition').val(data.Card.position);
-				$('#CardAdress').val(data.Card.adress);
+				$('#CardAdress').val(data.Card.address);
 				$('#CardZip').val(data.Card.zip);
 				$('#CardCity').val(data.Card.city);
 				$('#CardPhone').val(data.Card.phone);
 				$('#CardEmail').val(data.Card.email);
 				$('#CardTwitter').val(data.Card.twitter);
-				$('#CardWeb').val(data.Card.web);
+				$('#CardWeb').val(data.Card.website);
 			})
 			
 			return false;
 		},
 		addCard:function(){
-			$('.pad-area form').attr('action','/cards/add');
+			$('#CardIndexForm').get(0).setAttribute('action','/card/new');
 			left = 88;
 			App.cardWidth = $(".card-item").width() + parseInt($(".card-item").css('margin-left')) + parseInt($(".card-item").css('margin-right'));
 			$('.scroll-box .card-item').hide();
@@ -192,7 +192,7 @@ App = {
 			$("#black").show();
 			
 			for(i in loggedUser.User){
-				if(i!='id'){
+				if(i!='id' && i != 'avatar'){
 					field=i.replace("first_name",'firstname');
 					field=field.replace("last_name",'lastname');
 					field=field.replace("website",'web');
@@ -484,7 +484,7 @@ AjaxClient = {
 		getCard:function(id,onsuccess){
 			var params = {};
 			try {
-				var options = AjaxClient.initOptions('cards/'+id,params,onsuccess);
+				var options = AjaxClient.initOptions('card/'+id+"/view",params,onsuccess);
 				options.data.params = Array.prototype.slice.call(arguments,0,-1);
 				options.data = options.data;
 		        $.ajax(options);

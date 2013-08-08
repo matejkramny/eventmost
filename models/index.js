@@ -1,6 +1,5 @@
 module.exports = {
 	Card: require('./Card').Card,
-	CardType: require('./CardType').CardType,
 	Event: require('./Event').Event,
 	Favourite: require('./Favourite').Favourite,
 	Message: require('./Message').Message,

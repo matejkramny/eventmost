@@ -13,16 +13,30 @@ append content
 							button.search-btn.round-button(label="Search", type="submit") Search
 						span.right
 							a#addCard.round-button(href="#") Add new
+		for card in cards
+			.users-spacer
+				.user-short-info.single-item
+					.avatar.left.card-slide(rel=card._id)
+						img(src=card.avatar)
+					.left
+						.name.card-slide(rel=card._id)= card.getName()
+						.role.card-slide(rel=card._id)= card.position
+						.grey-arrow(style="width: 100px;")
+							form(action="/card/"+card._id+"/delete", method="POST", novalidate="novalidate")
+							a.carddel(href="#", rel=card._id)
+								img(src="/img/minus.png")
+							a.editCard.grey-dot.margin-left-25(href="/cards/"+card._id+"/edit", rel=card._id)
+					.clear
 		.cards-scroll-bar
 			.prev-card
 			.scroll-box
 			.next-card
 		#card-1.cardform.card-item
-			.left.card-bar.azure
-			.left.card-main
-				.pad-area
-					form#CardIndexForm(action='/cards/add', enctype='multipart/form-data', method='post', accept-charset='utf-8')
-						input#CardId(type='hidden', name='data[Card][id]')
+			form#CardIndexForm(action='/card/new', enctype='multipart/form-data', method='post', accept-charset='utf-8')
+				input#CardEditId(name='editId', type="hidden")
+				.left.card-bar.azure
+				.left.card-main
+					.pad-area
 						.input.text
 							input#CardFirstname(name='name', placeholder='firstname', maxlength='80', type='text')
 						.input.text
@@ -44,21 +58,22 @@ append content
 						.input.text
 							input#CardPosition(name='position', placeholder='position', maxlength='255', type='text')
 						input#CardCardTypeId(type='hidden', name='card_type', value='1')
-			.left.card-image
-				.ciavatar
-					img(src=everyauth.user.avatar, alt='')
-				.input.file
-					label(for='CardPicture') Picture
-					input#CardPicture(type='file', name='avatar')
-			.colors
-				#ct1.color(data-id='1')
-				#ct2.color(data-id='2')
-				#ct3.color(data-id='3')
+						input(type="hidden", name="_csrf", value=token)
+				.left.card-image
+					.ciavatar
+						img(src=everyauth.user.avatar, alt='')
+					.input.file
+						label(for='CardPicture') Picture
+						input#CardPicture(type='file', name='avatar')
+				.colors
+					#ct1.color(data-id='1')
+					#ct2.color(data-id='2')
+					#ct3.color(data-id='3')
+				.clear
+				.sendcard
+					input.submit-btn(type='submit', value='Save')
+				.clear
 			.clear
-			.sendcard
-				input.submit-btn(type='submit', value='Save')
-			.clear
-		
 	.clear
 
 append addonjs
