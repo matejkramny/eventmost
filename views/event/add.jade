@@ -9,72 +9,95 @@ mixin checkbox(label, name, checked, tabindex, required)
 	label.checkbox= label
 		input(type="checkbox", checked= checked, name= name, required= required, tabindex= tabindex)
 
-mixin step1()
-	p1 hello
-	.submit
-		input(class="submit-btn", type="submit", value="> Step 2")
-mixin step2()
-	.submit
-		input(class="submit-btn", type="submit", value="> Step 3")
-mixin step3()
-	.submit
-		input(class="submit-btn", type="submit", value="> Step 4")
-mixin step4()
-	.submit
-		input(class="submit-btn", type="submit", value="> Step 5")
-mixin step5()
-	.submit
-		input(class="submit-btn", type="submit", value="> Step 6")
-mixin step6()
-	.submit
-		input(class="submit-btn", type="submit", value="> Step 7")
-mixin step7()
-	p hello
-
 append js
 	script(src="/js/geoField.js")
+	script(src="/js/addEvent.js")
 
 block content
 	include ../inc/sidebar
 	#main-content
-		.search-box
+		.search-box#bigred
 			.search-content
 				p
 					span.title Create an event
-		.clear
-		p
-			u 1 - Basic Details
-			|  / 
-			| 2 - Date
-			|  / 
-			| 3 - Location
-			|  / 
-			| 4 - Protection
-			|  / 
-			| 5 - Protection 2
-			|  / 
-			| 6 - Attendee Registration
-			|  / 
-			| 7 - Done
-		.clear
+		
 		form(action="/event/add", id="EventAddForm", enctype="multipart/form-data", method="post", accept-charset="utf-8", novalidate="novalidate")
-			div(style="display:none;")
-				input(type="hidden", name="_method", value="POST")
-				input(type="hidden", name="_csrf", value=token)
+			input(type="hidden", name="_csrf", value=token)
+			.home-box-item.bottom-border
+				.left Step 1
+				.red-arrow
+					a#step1Link(href="/event/add")
+						img(src="/img/red-arrow.png", alt="")
+				.clear
 			#step1
-				case step
-					when 1
-						mixin step1()
-					when 2
-						mixin step2()
-					when 3
-						mixin step3()
-					when 4
-						mixin step4()
-					when 5
-						mixin step5()
-					when 6
-						mixin step6()
-					when 7
-						mixin step7()
+				.users-spacer
+					.user-short-info.single-item
+						.event-def-ico.event-name-ico.left
+						.left
+							.input.text.required
+								input.rounded-input#EventName(type="text", name="name", placeholder="Event name", maxlength="255", required="required")
+						.clear
+				.users-spacer
+					.user-short-info.single-item
+						.event-def-ico.event-avatar-ico.left
+							img
+						.left
+							.input.file
+								input.rounded-input#EventAvatar(type="file", placeholder="Event Avatar", name="avatar")
+						.clear
+				.submit
+					input(class="submit-btn", type="button", value="Next Step")
+			.home-box-item.bottom-border.border-top
+				.left Step 2
+				.red-arrow
+					a#step2Link(href="/event/add")
+						img(src="/img/red-arrow.png", alt="")
+				.clear
+			#step2.stepClosed
+				.submit
+					input(class="submit-btn", type="button", value="Next Step")
+			.home-box-item.bottom-border.border-top
+				.left Step 3
+				.red-arrow
+					a#step3Link(href="/event/add")
+						img(src="/img/red-arrow.png", alt="")
+				.clear
+			#step3.stepClosed
+				.submit
+					input(class="submit-btn", type="button", value="Next Step")
+			.home-box-item.bottom-border.border-top
+				.left Step 4
+				.red-arrow
+					a#step4Link(href="/event/add")
+						img(src="/img/red-arrow.png", alt="")
+				.clear
+			#step4.stepClosed
+				.submit
+					input(class="submit-btn", type="button", value="Next Step")
+			.home-box-item.bottom-border.border-top
+				.left Step 5
+				.red-arrow
+					a#step5Link(href="/event/add")
+						img(src="/img/red-arrow.png", alt="")
+				.clear
+			#step5.stepClosed
+				.submit
+					input(class="submit-btn", type="button", value="Next Step")
+			.home-box-item.bottom-border.border-top
+				.left Step 6
+				.red-arrow
+					a#step6Link(href="/event/add")
+						img(src="/img/red-arrow.png", alt="")
+				.clear
+			#step6.stepClosed
+				.submit
+					input(class="submit-btn", type="button", value="Submit")
+			.home-box-item.bottom-border.border-top
+				.left Step 7
+				.red-arrow
+					a#step7Link(href="/event/add")
+						img(src="/img/red-arrow.png", alt="")
+				.clear
+			#step7.stepClosed
+				p You are done!
 	.clear

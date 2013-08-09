@@ -1201,6 +1201,12 @@ label[for=UserGenderF]{
 .select-area select {
 	-webkit-appearance: none;
 }
+.stepClosed {
+	display: none;
+}
+.border-top {
+	border-top: 1px solid #CCCCCC;
+}
 .border-bottom {
 	border-bottom: 1px solid #CCCCCC;
 }
