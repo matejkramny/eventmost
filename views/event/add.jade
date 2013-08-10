@@ -1,14 +1,5 @@
 extends ../layout
 
-mixin input(label, type, name, placeholder, required, tabindex)
-	.control-group
-		label.control-label(for=name)= label
-		.controls
-			input(type= type, id= name, tabindex= tabindex, name= name, placeholder= placeholder, required=required)
-mixin checkbox(label, name, checked, tabindex, required)
-	label.checkbox= label
-		input(type="checkbox", checked= checked, name= name, required= required, tabindex= tabindex)
-
 append js
 	script(src="/js/geoField.js")
 	script(src="/js/addEvent.js")
@@ -23,13 +14,15 @@ block content
 		
 		form(action="/event/add", id="EventAddForm", enctype="multipart/form-data", method="post", accept-charset="utf-8", novalidate="novalidate")
 			input(type="hidden", name="_csrf", value=token)
+			//- Step 1
 			.home-box-item.bottom-border
-				.left Step 1
+				.left Basic Details (required)
 				.red-arrow
 					a#step1Link(href="/event/add")
 						img(src="/img/red-arrow.png", alt="")
 				.clear
 			#step1
+				.errors
 				.users-spacer
 					.user-short-info.single-item
 						.event-def-ico.event-name-ico.left
@@ -45,59 +38,210 @@ block content
 							.input.file
 								input.rounded-input#EventAvatar(type="file", placeholder="Event Avatar", name="avatar")
 						.clear
+				.users-spacer
+					.user-short-info.single-item
+						.event-def-ico.event-desc-ico.left
+							img
+						.left
+							.input.textarea
+								textarea.rounded-input#EventDesc(rows="4", placeholder="Event description", name="desc")
+						.clear
 				.submit
-					input(class="submit-btn", type="button", value="Next Step")
+					input(class="submit-btn next-step", type="button", value="Next Step")
+			
+			//- Step 2
 			.home-box-item.bottom-border.border-top
-				.left Step 2
+				.left Calendar (required)
 				.red-arrow
 					a#step2Link(href="/event/add")
 						img(src="/img/red-arrow.png", alt="")
 				.clear
 			#step2.stepClosed
+				.errors
+				p Please indicate the period for which users can access your event. (This should probably be before your event starts and after it is concludes).
+				.users-spacer
+					.user-short-info.single-item
+						.event-def-ico.event-start-ico.left
+						.left
+							.input.text.required
+								input#EventDateStart.rounded-input.datepicker(name="date_start", placeholder="Start date", type="text", required="required")
+						.clear
+				.users-spacer
+					.user-short-info.single-item
+						.event-def-ico.event-end-ico.left
+						.left
+							.input.text.required
+								input#EventDateEnd.rounded-input.datepicker(name="date_end", placeholder="End date", type="text", required="required")
+						.clear
 				.submit
-					input(class="submit-btn", type="button", value="Next Step")
+					input(class="submit-btn next-step", type="button", value="Next Step")
+			
+			//- Step 3
 			.home-box-item.bottom-border.border-top
-				.left Step 3
+				.left Location Restrictions
 				.red-arrow
 					a#step3Link(href="/event/add")
 						img(src="/img/red-arrow.png", alt="")
 				.clear
 			#step3.stepClosed
+				.errors
+				p Please choose how close users must be in order to access your event
+				.users-spacer
+					.user-short-info.single-item
+						.event-def-ico.event-end-ico.left
+						.left
+							.input.radio
+								label(for="LocationResNo") No Location Restrictions
+								input#LocationResNo(type="radio", name="locationRestriction", value="none", checked="checked")
+								br
+								label(for="LocationRes1km") 1 KM
+								input#LocationRes1km(type="radio", name="locationRestriction", value="1km")
+								br
+								label(for="LocationRes5km") 5 KM
+								input#LocationRes5km(type="radio", name="locationRestriction", value="5km")
+								br
+								label(for="LocationRes10km") 10 KM
+								input#LocationRes10km(type="radio", name="locationRestriction", value="10km")
+								br
+								label(for="LocationRes50km") 50 KM
+								input#LocationRes50km(type="radio", name="locationRestriction", value="50km")
+						.clear
+				.users-spacer
+					.user-short-info.single-item
+						.event-def-ico.event-def-geo.left
+						.left
+							.input.text
+								input#EventAddress.rounded-input(name="address", placeholder="Address", type="text")
+								input#lat(type="hidden", name="lat")
+								input#lng(type="hidden", name="lng")
+						.clear
+						#latlng
+							span#formatted_address
 				.submit
-					input(class="submit-btn", type="button", value="Next Step")
+					input(class="submit-btn skip", type="button", value="Skip")
+					input(class="submit-btn next-step", type="button", value="Next Step")
+			
+			//- Step 4
 			.home-box-item.bottom-border.border-top
-				.left Step 4
+				.left Password protection
 				.red-arrow
 					a#step4Link(href="/event/add")
 						img(src="/img/red-arrow.png", alt="")
 				.clear
 			#step4.stepClosed
+				.errors
+				p Would you like to password protect your event? (You will have to inform attendees as to what the password is before they can access the event.  Also, adding a password will make your other restrictions go away. They need not be within range or time period if you add a password)
+				.users-spacer
+					.user-short-info.single-item
+						.event-def-ico.event-def-pass.left
+						.left
+							.event-checkbox
+								input#EventPasswordProtected(type="checkbox", name="password_protected")
+								label(for="EventPasswordProtected") Password
+							.grey-arrow
+								div.checkbox-switcher#PasswordProtected-switch-password
+									.left.switch-btn.switch-off(class="switch-active")#PasswordProtected-off OFF
+									.left.switch-btn.switch-on#PasswordProtected-on ON
+									.clear
+						.clear
+				.users-spacer#password-cont
+					.user-short-info.single-item
+						.event-def-ico.event-def-empty.left
+						.left
+							.input.password
+								input.rounded-input#EventPassword(type="password", name="password", placeholder="Set new password")
 				.submit
-					input(class="submit-btn", type="button", value="Next Step")
+					input(class="submit-btn skip", type="button", value="Skip")
+					input(class="submit-btn next-step", type="button", value="Next Step")
+			
+			//- Step 5
 			.home-box-item.bottom-border.border-top
-				.left Step 5
+				.left Settings
 				.red-arrow
 					a#step5Link(href="/event/add")
 						img(src="/img/red-arrow.png", alt="")
 				.clear
 			#step5.stepClosed
+				.errors
+				p Would you like to give users the ability to access the event through a request to you even if they don't meet your restriction requirements or don't have the password?  (you will get a notification asking you to accept their request for access)
+				.users-spacer
+					.user-short-info.single-item
+						.event-def-ico.event-def.left
+						.left
+							.event-checkbox
+								input#EventTimePeriod(type="checkbox", name="timePeriod")
+								label(for="EventTimePeriod") Time Period - Enable attendees to request to join the event even though the event has expired
+						.clear
+				.users-spacer
+					.user-short-info.single-item
+						.event-def-ico.event-def.left
+						.left
+							.event-checkbox
+								input#EventPasswordRestriction(type="checkbox", name="passwordRestriction")
+								label(for="EventPasswordRestriction") Password - Let attendees request to join the event if they do not know the password
+						.clear
+				.users-spacer
+					.user-short-info.single-item
+						.event-def-ico.event-def.left
+						.left
+							.event-checkbox
+								input#EventLocationRestriction(type="checkbox", name="locationRestriction")
+								label(for="EventLocationRestriction") Location - Show the event to all attendees regardless of their current location
+						.clear
 				.submit
-					input(class="submit-btn", type="button", value="Next Step")
+					input(class="submit-btn skip", type="button", value="Skip")
+					input(class="submit-btn next-step", type="button", value="Next Step")
+			
+			//- Step 6
 			.home-box-item.bottom-border.border-top
-				.left Step 6
+				.left Attendees
 				.red-arrow
 					a#step6Link(href="/event/add")
 						img(src="/img/red-arrow.png", alt="")
 				.clear
 			#step6.stepClosed
+				.errors
+				p  Attendee registration:  Provide categories for the attendees to define their position within this event. Choose from our list, create your own, or let them create their own.
+				.users-spacer
+					.user-short-info.single-item
+						.event-def-ico.event-dev.left
+						.left(style="width: 300px;")
+							p Selected Categories:
+							select#selectedCategories(name="categories", multiple="multiple", style="width: 250px;")
+							input#removeCategories(type="button", value="Remove selected categories")
+							br
+							input#customCategory(type="text", placeholder="Custom category")
+							input#addCustomCategory(type="button", value="Add custom category")
+						.left(style="width: 300px;")
+							p Available categories:
+							select#availableCategories(multiple="multiple", style="width: 250px;")
+								option(value="Guest Speaker") Guest Speaker
+								option(value="Investor") Investor
+							input#addCategories(type="button", value="Add selected categories")
+						.clear
+				.users-spacer
+					.user-short-info.single-item
+						.event-def-ico.event-def.left
+						.left
+							.event-checkbox
+								input#EventAllowCreateCategories(type="checkbox", name="allowCreateCategories")
+								label(for="EventAllowCreateCategories") Allow Attendees create their own categories
+						.clear
 				.submit
-					input(class="submit-btn", type="button", value="Submit")
+					input(class="submit-btn skip", type="button", value="Skip")
+					input(class="submit-btn next-step", type="button", value="Finish")
+			
+			//- Step 7
 			.home-box-item.bottom-border.border-top
-				.left Step 7
+				.left Create event - Finish!
 				.red-arrow
 					a#step7Link(href="/event/add")
 						img(src="/img/red-arrow.png", alt="")
 				.clear
 			#step7.stepClosed
-				p You are done!
+				.errors
+				p Overview:
+				ul#overview
+				.submit
+					input(class="submit-btn", type="submit", value="Create event")
 	.clear

@@ -83,7 +83,7 @@ exports.near = near = function (req, res) {
 			
 			if (geos) {
 				var events = [];
-				console.log(geos);
+				
 				for (var i = 0; i < geos.length; i++) {
 					if (geos[i].event == null) {
 						continue;
