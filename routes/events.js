@@ -241,5 +241,14 @@ exports.listSpeakers = listSpeakers = function (req, res) {
 }
 
 exports.listAttendees = listAttendees = function (req, res) {
+	var id = req.params.id;
+	if (!id) {
+		res.redirect('/events');
+	}
 	
+	models.Event.getEvent(id, function(ev) {
+		if (ev) {
+			res.render('event/attendees', { event: ev })
+		}
+	})
 }

@@ -1,0 +1,29 @@
+extends ../layout
+
+append content
+	include ../inc/sidebar
+	#main-content
+		.search-box
+			.search-content
+				p
+					span.title Attendees
+		for attendee in event.attendees
+			.users-spacer
+				.user-short-info.border-bottom
+					.avatar.left(data-big-picture=attendee.avatar)
+						a(href="/messages/userpublic/55/52")
+							img(src=attendee.avatar)
+					.usersaid said: Hi, everybody
+					.left
+						.planner Planner
+						.name
+							a(href="/messages/userpublic/55/52")= attendee.getName()
+							.role= user.position
+								if user.company
+									| , 
+									= user.company
+						.grey-arrow
+							a.grey-dot.margin-left-25.golink(href="/messages/userpublic/55/52")
+					.clear
+			.clear
+	.clear

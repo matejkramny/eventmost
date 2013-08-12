@@ -40,7 +40,7 @@ block content
 					.event-def-ico.event-end-ico.left
 					.left
 						.input.text.required
-							input#EventDateStart.rounded-input.datepicker(name="end", placeholder="End date", type="text", value=event.end, required="required")
+							input#EventDateEnd.rounded-input.datepicker(name="end", placeholder="End date", type="text", value=event.end, required="required")
 					.clear
 			.users-spacer
 				.user-short-info.single-item
@@ -54,9 +54,9 @@ block content
 					.event-def-ico.event-def-geo.left
 					.left
 						.input.text
-							input#EventAddress.rounded-input(name="address", placeholder="Address", type="text", value=event.location.address)
-							input#lat(type="hidden", name="lat", value=event.location.lat)
-							input#lng(type="hidden", name="lng", value=event.location.lng)
+							input#EventAddress.rounded-input(name="address", placeholder="Address", type="text", value=event.address)
+							input#lat(type="hidden", name="lat", value=event.lat)
+							input#lng(type="hidden", name="lng", value=event.lng)
 					.clear
 					#latlng
 						span#formatted_address
