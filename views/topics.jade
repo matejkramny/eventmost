@@ -1,0 +1,29 @@
+extends layout
+
+block content
+	include inc/sidebar
+	#main-content
+		.search-box
+			.search-content
+				p
+					span.title= pageName
+					span.right
+						a.submit-btn(href="/topics/new") New topic
+		for topic in topics
+			.users-spacer
+				.user-short-info.single-item
+					.left
+						.name
+							a(href="/topic/"+topic._id)
+								if topic.name && topic.name.length > 0
+									= topic.name
+								else
+									| Chat
+						.role Last updated 
+							= topic.lastUpdated
+							br
+							| With: 
+							for u in topic.users
+								a(href="/user/"+u._id)= u.getName()
+								| , 
+	.clear

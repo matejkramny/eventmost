@@ -34,7 +34,20 @@ var scheme = schema({
 		moderateForumComments: { type: Boolean, default: false },
 		upload: { type: Boolean, default: true }
 	},
-	defaultTweet: String
+	defaultTweet: String,
+	files: [{
+		created: {
+			type: Date,
+			default: Date.now
+		},
+		user: {
+			type: ObjectId,
+			ref: 'User'
+		},
+		file: String,
+		size: String,
+		name: String
+	}]
 })
 
 scheme.statics.getEvent = function (id, cb) {

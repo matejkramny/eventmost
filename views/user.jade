@@ -1,0 +1,19 @@
+extends layout
+
+block content
+	include inc/sidebar
+	#main-content
+		.search-box
+			.search-content
+				p
+					span.title= prof.getName()
+					if !prof._id.equals(user._id)
+						span.right
+							if saved
+								| already in saved profiles.
+							else
+								a.submit-btn(href="/user/"+prof._id+"/save") Save profile
+							a.submit-btn(href="/topics?with="+prof._id) Private message
+					else
+						span.right This is you!
+	.clear

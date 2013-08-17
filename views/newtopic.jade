@@ -1,0 +1,68 @@
+extends layout
+
+block content
+	include inc/sidebar
+	#main-content
+		.search-box
+			.search-content
+				p
+					span.title New topic
+					span.right
+						a.submit-btn(href="#", onclick="$('#submitform').submit()") Create
+		form#submitform(action="/topics/new", method="GET")
+			.users-spacer
+				.user-short-info.single-item
+					.left
+						.input.text.required
+							input.rounded-input#TopicPerson(type="text", placeholder="Search for people", maxlength="255", required="required")
+							input#TopicPersonID(type="hidden", name="with", value="")
+					.clear
+			.users-spacer
+				table#people
+	.clear
+
+append addonjs
+	script.
+		function findPeople() {
+			var $person = $("#TopicPerson")
+			var $table = $("#people")
+			$table.html('<tr><td>Loading...</td></tr>');
+			
+			$.ajax({
+				url: "/search/person/"+$person.val(),
+				method: "GET",
+				data: "",
+				accept: "application/json",
+				success: function(data) {
+					var users = data.users;
+					var html = "";
+					for (var i = 0; i < users.length; i++) {
+						var user = users[i];
+						if (user._id == data.user._id) continue;
+						
+						user.role = "";
+						if (typeof user.position !== "undefined") {
+							user.role = user.position
+						}
+						if (typeof user.company !== "undefined") {
+							user.role += ", " + user.company;
+						}
+						html += "<tr><td style='width: 742px;'><div class='users-spacer'><div class='single-item user-short-info'><div class='event-ico left'><img class='event-icon' src='"+user.avatar+"'/></div><div class='left'><div class='name'><a href='/user/"+user._id+"'>"+user.name+" "+user.surname+"</a></div><div class='role'>"+user.role+"</div><div class='options-btn-box'><a class='grey-dot margin-left-25 golink' href='/topics/new?with="+user._id+"'></a></div></div><div class='clear'></div></div></div>"
+					}
+					
+					$table.html(html)
+				},
+				error: function(data) {
+					$table.html('<tr><td>Error!</td></tr>')
+				}
+			});
+		}
+		$(document).ready(function() {
+			$('#TopicPerson').bind('keypress', function(ev) {
+				if (ev.charCode == 13) {
+					ev.preventDefault()
+					findPeople();
+					return false;
+				}
+			})
+		})

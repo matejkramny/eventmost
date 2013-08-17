@@ -1,0 +1,26 @@
+extends layout
+
+block content
+	include inc/sidebar
+	#main-content
+		.search-box
+			.search-content
+				p
+					span.title Your saved profiles
+		for profile in profiles
+			.users-spacer
+				.user-short-info.border-bottom
+					.avatar.left
+						a(href="/user/"+profile._id)
+							img(src=profile.avatar)
+					.left
+						.name
+							a(href="/user/"+profile._id)= profile.getName()
+						.role= profile.position
+							if profile.company
+								| , 
+								= profile.company
+						.grey-arrow
+							form(action="/user/"+profile._id+"/remove", method="GET")
+								a.minus-dot.margin-left-25(href="#", onclick="$(this).parent().submit();")
+	.clear

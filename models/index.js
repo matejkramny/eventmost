@@ -9,6 +9,7 @@ module.exports = {
 	Topic: require('./Topic').Topic,
 	Upload: require('./Upload').Upload,
 	User: require('./User').User,
+	Message: require('./Message').Message,
 	UserFile: require('./UserFile').UserFile,
 	Geolocation: require('./Geolocation').Geolocation
 }

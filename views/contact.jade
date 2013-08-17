@@ -3,5 +3,15 @@ extends layout
 block content
 	include inc/sidebar
 	#main-content
-		h1 Contact Us
+		#contact-form.users.form
+			form#ContactSendForm(action="/contact", method="POST", novalidate="novalidate")
+				input(type="hidden", name="_csrf", value=token)
+				.legend Contact Form
+				.clear
+				.input.text.required
+					input#ContactSubject.input-item.rounded-input(type="text", placeholder="Subject", required="required", name="subject")
+				.input.textarea.required
+					textarea#ContactMessage.input-item.rounded-input(cols="30", rows="6", required="required", name="message", placeholder="Message")
+				.text-right.margin-top-20
+					input.submit-btn(type="submit", value="Send")
 	.clear

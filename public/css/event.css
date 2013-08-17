@@ -604,7 +604,7 @@ label[for=UserGenderF]{
 	font-family: dax-regular;
 }
 
-#main-content .search-content input {
+#main-content .search-content input.search {
 	 background: url("/img/mglass.png") no-repeat scroll 10px center #FFFFFF;
     border: medium none;
     border-radius: 15px 15px 15px 15px;
@@ -1495,4 +1495,7 @@ margin-top:10px;
 }
 .event-icon-large {
 	max-width: 90px;
+}
+#info-page p {
+	text-align: justify;
 }

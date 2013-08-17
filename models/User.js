@@ -9,7 +9,6 @@ var scheme = schema({
 		type: Date,
 		default: Date.now
 	},
-	incomplete: Boolean,
 	email: String,
 	password: String,
 	name: String,
@@ -21,9 +20,7 @@ var scheme = schema({
 	website: String,
 	education: String,
 	interests: String,
-	avatar: String,
-	session_id: String,
-	session_expiration: Date,
+	avatar: { type: String, default: "/img/avatar.jpg" },
 	facebook: {
 		token: String,
 		userid: String
@@ -42,11 +39,12 @@ var scheme = schema({
 	},
 	new_mail: Number,
 	new_cards: Number,
-	device: {
-		token: String
-	},
-	hash: String,
-	hash_expiry: Date
+	savedProfiles: [
+		{
+			type: ObjectId,
+			ref: 'User'
+		}
+	]
 });
 
 scheme.methods.setName = function (name) {
@@ -80,10 +78,9 @@ scheme.statics.createWithPassword = function (login, password, cb) {
 	console.log("Registering with login/password");
 	
 	var user = new exports.User({
-		email: login,
-		password: password,
-		incomplete: true
+		email: login
 	});
+	user.setPassword(password)
 	
 	user.save(function(err) {
 		cb(err, user);

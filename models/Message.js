@@ -4,20 +4,17 @@ var schema = mongoose.Schema;
 var ObjectId = schema.ObjectId;
 
 var scheme = schema({
-	created: Date,
-	user: {
-		type: ObjectId,
-		ref: 'User'
-	},
 	topic: {
 		type: ObjectId,
-		ref: 'Topic'
+		ref: "Topic"
 	},
-	moderated: Boolean,
-	public: Boolean,
-	forum: Boolean,
 	message: String,
-	read: Boolean
+	read: Boolean,
+	timeSent: Date,
+	sentBy: {
+		type: ObjectId,
+		ref: 'User'
+	}
 })
 
 exports.Message = mongoose.model("Message", scheme);

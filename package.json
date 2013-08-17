@@ -15,6 +15,7 @@
     "validator": "*",
     "connect-mongo": "*",
 	"nodemailer": "*",
-	"everyauth": "*"
+	"everyauth": "*",
+	"socket.io": "*"
   }
 }

@@ -1,14 +1,130 @@
 var fs = require('fs'),
 	models = require('../models')
+	, mongoose = require('mongoose')
 
 exports.router = function (app) {
 	app.get('/profile', profile)
 		.post('/profile/edit', doEditProfile)
+		.get('/user/:id', viewUser)
+		.get('/user/:id/save', saveUser)
+		.get('/profiles', showProfiles)
+		.get('/user/:id/remove', removeProfile)
 }
 
+function showProfiles (req, res) {
+	req.user.populate('savedProfiles', function() {
+		res.format({
+			html: function() {
+				res.render('profiles', { profiles: req.user.savedProfiles || [] })
+			},
+			json: function() {
+				res.json({
+					profiles: req.user.savedProfiles
+				})
+			}
+		})
+	})
+}
+
+function removeProfile (req, res) {
+	var id = req.params.id;
+	
+	var removeIndex = -1;
+	for (var i = 0; i < req.user.savedProfiles.length; i++) {
+		var uid = req.user.savedProfiles[i];
+		if (uid.equals(mongoose.Types.ObjectId(id))) {
+			removeIndex = i;
+			break;
+		}
+	}
+	
+	if (removeIndex != -1) {
+		req.user.savedProfiles.splice(removeIndex, 1);
+		req.user.save(function(err) {
+			if (err) throw err;
+		})
+	}
+	
+	res.redirect('/profiles')
+}
 
 exports.profile = profile = function (req, res) {
-	res.render('profile/view')
+	res.format({
+		html: function() {
+			res.render('profile/view')
+		},
+		json: function() {
+			res.json({
+				user: req.user
+			})
+		}
+	});
+}
+
+function viewUser (req, res) {
+	var id = req.params.id;
+	
+	models.User.findOne({
+		_id: mongoose.Types.ObjectId(id)
+	}, function(err, user) {
+		if (err) throw err;
+		
+		// check if user is self or user is 
+		console.log(req.user.savedProfiles)
+		var saved = false;
+		for (var i = 0; i < req.user.savedProfiles.length; i++) {
+			var uid = req.user.savedProfiles[i];
+			if (uid.equals(user._id)) {
+				saved = true;
+				break;
+			}
+		}
+		
+		console.log("Saved "+saved)
+		
+		res.format({
+			html: function() {
+				console.log(user.getName());
+				if (user != null) {
+					res.locals.prof = user;
+					res.locals.saved = saved;
+					res.render('user');
+				} else {
+					res.status(404);
+					res.redirect('/')
+				}
+			},
+			json: function() {
+				if (user != null) {
+					res.send({
+						user: user
+					})
+				} else {
+					res.status(404);
+					res.send({
+						message: "not found"
+					})
+				}
+			}
+		})
+	})
+}
+
+function saveUser (req, res) {
+	var id = req.params.id;
+	
+	models.User.findOne({
+		_id: mongoose.Types.ObjectId(id)
+	}, function(err, user) {
+		if (err) throw err;
+		
+		req.user.savedProfiles.push({
+			_id: user._id
+		})
+		req.user.save(function() {
+			res.redirect('/profiles')
+		})
+	});
 }
 
 exports.doEditProfile = doEditProfile = function (req, res) {
@@ -27,7 +143,6 @@ exports.doEditProfile = doEditProfile = function (req, res) {
 		req.session.flash.push("Profile updated!")
 		res.redirect('/profile');
 	}
-	
 	
 	if (req.body.email.length == 0 && req.body.name.length == 0 && req.body.surname.length == 0) {
 		errors.push("You must enter an email address, your first name or your last name.");

@@ -1,0 +1,29 @@
+extends layout
+
+block content
+	include inc/sidebar
+	#main-content
+		form(action="/topic/"+topic._id+"/update", method="POST")
+			input(type="hidden", name="_csrf", value=token)
+			.search-box
+				.search-content
+					p
+						span.title
+							input.rounded-input.left(placeholder="Topic title", name="title", value= topic.name || "Chat", name="topicname", style="width: 500px;")
+							input.submit-btn.left(type="submit", value="Update title")
+		form(action="/topic/"+topic._id+"/new", method="POST")
+			input(type="hidden", name="_csrf", value=token)
+			.left(style="width: 100%;")
+				input.rounded-input#message(type="text", name="message", value="", placeholder="Enter a message", required="required", style="width: 75%; float: left;")
+				input.submit-btn.left#messageSubmit(type="submit", value="Send", style="width: 19%; float: right;")
+		for message in messages
+			.users-spacer
+				.avatar.left
+					img(src=message.sentBy.avatar)
+				.left
+					p= message.message
+				.right
+					if message.read
+						p Read
+			.clear
+	.clear

@@ -175,3 +175,11 @@ exports.checkFinished = function (req, res) {
 		res.redirect('/')
 	}
 }
+
+function doJSONLogin (req, res) {
+	// TODO this
+}
+
+exports.router = function (app) {
+	app.post('/login.json', doJSONLogin)
+}

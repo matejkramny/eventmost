@@ -34,10 +34,8 @@ function doNewCard (req, res) {
 		card.edit(card, req.body, req.user, req.files, function(err) {
 			if (err && err.length) {
 				req.session.flash = err;
-				res.redirect('/cards');
-				return;
 			}
-		
+			
 			res.redirect('/cards');
 		})
 	}
@@ -50,8 +48,18 @@ function doNewCard (req, res) {
 			if (theCard) {
 				cb(theCard);
 			} else {
-				res.status(404);
-				res.send("")
+				res.format({
+					html: function() {
+						res.status(404);
+						res.send("")
+					},
+					json: function() {
+						res.status(404);
+						res.send({
+							
+						})
+					}
+				})
 			}
 		})
 	} else {

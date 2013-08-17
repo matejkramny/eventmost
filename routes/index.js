@@ -1,12 +1,13 @@
-var features = require('./features'),
-	auth = require('./auth'),
+var auth = require('./auth'),
 	everyauth = require('everyauth'),
 	home = require('./home'),
 	contact = require('./contact'),
 	events = require('./events'),
 	maps = require('./maps'),
 	profile = require('./profile'),
-	cards = require('./cards')
+	cards = require('./cards'),
+	topics = require('./topics'),
+	search = require('./search')
 
 exports.router = function(app) {
 	app.get('/', function(req, res) {
@@ -17,10 +18,12 @@ exports.router = function(app) {
 		}
 	})
 		.get('/auth/finish', auth.checkFinished)
-		.get('/features', features.displayFeatures)
 		.get('/about', contact.about)
 		.get('/contact', contact.contactus)
+		.post('/contact', contact.doContact)
 	
+	// Used for JSON/XML auth responses
+	//auth.router(app)
 	// Events..
 	events.router(app);
 	// Maps
@@ -29,4 +32,8 @@ exports.router = function(app) {
 	profile.router(app);
 	// business cards
 	cards.router(app)
+	// topics
+	topics.router(app)
+	// search API
+	search.router(app)
 }
