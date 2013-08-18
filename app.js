@@ -46,7 +46,6 @@ app.set('view cache', true);
 app.set('app version', '0.0.2');
 
 app.use(express.logger('dev'));
-app.use(express.favicon());
 app.use("/", express.static(path.join(__dirname, 'public'))); // serve static files
 app.use(express.bodyParser());
 app.use(express.cookieParser());
