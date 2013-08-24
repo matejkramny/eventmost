@@ -14,6 +14,12 @@ exports.editEvent = function (req, res) {
 			if (err) throw err;
 			
 			if (ev) {
+				if (!ev.user._id.equals(req.user._id)) {
+					req.session.flash.push("Unauthorized")
+					res.redirect('/');
+					return;
+				}
+				
 				models.Geolocation.findOne({ event: ev._id }, function(err, geo) {
 					ev.geo = geo;
 					res.render('event/edit', { event: ev });
@@ -39,6 +45,12 @@ exports.doEditEvent = function (req, res) {
 			return;
 		}
 		
+		if (!ev.user.equals(req.user._id)) {
+			req.session.flash.push("Unauthorized")
+			res.redirect('/');
+			return;
+		}
+		
 		ev.edit(req.body, req.user, req.files, function(err) {
 			if (err) {
 				req.session.flash = err;
@@ -56,6 +68,12 @@ exports.deleteEvent = function (req, res) {
 		if (err) throw err;
 		
 		if (ev) {
+			if (!ev.user.equals(req.user._id)) {
+				req.session.flash.push("Unauthorized")
+				res.redirect('/');
+				return;
+			}
+			
 			ev.deleted = true;
 			ev.save(function(err) {
 				if (err) throw err;

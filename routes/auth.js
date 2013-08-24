@@ -15,26 +15,11 @@ everyauth.password
 	.authenticate(function(login, password) {
 		var promise = this.Promise();
 		
-		models.User.findOne({
-			email: login
-		}, function(err, user) {
-			if (err) return promise.fulfill([err])
-			
-			if (user == null) {
-				// register user
-				models.User.createWithPassword(login, password, function(err, regUser) {
-					promise.fulfill(regUser);
-				});
-			} else {
-				// check if password is ok
-				if (user.password == models.User.getHash(password)) {
-					promise.fulfill(user);
-				} else {
-					promise.fulfill(["Invalid password"]);
-				}
-			}
-		})
-		
+		models.User.authenticatePassword(login, password, function(err, user) {
+			if (err) promise.fulfill([err]);
+			else promise.fulfill(user);
+		});
+				
 		return promise;
 	})
 	.loginSuccessRedirect('/')
@@ -53,109 +38,44 @@ everyauth.twitter
 	.findOrCreateUser(function(session, accessToken, accessTokenSecret, meta) {
 		var promise = this.Promise();
 		
-		models.User.findOne({
-			'twitter.userid': meta.id,
-			'twitter.token': accessToken
-		}, function(err, user) {
-			if (err) promise.fulfill(err);
-			
-			if (user != null) {
-				promise.fulfill(user);
-			} else {
-				// create user
-				models.User.createWithTwitter(meta, accessToken, accessTokenSecret, function(err, twUser) {
-					promise.fulfill(twUser);
-				});
-			}
+		models.User.authenticateTwitter(session, accessToken, accessTokenSecret, meta, function(err, user) {
+			if (err) promise.fulfill([err]);
+			else promise.fulfill(user);
 		});
 		
 		return promise;
 	})
 	.redirectPath('/auth/finish');
-everyauth.github
-	.entryPath('/auth/github')
-	.callbackPath('/auth/github/callback')
-	.appId('81f5773eed44dee03218')
-	.appSecret('84cb8f94ad6e8f50b71508d46fb120496c90e545')
-	.scope("user:email")
-	.findOrCreateUser(function(session, accessToken, accessTokenSecret, meta) {
-		console.log(meta);
-		
-		var promise = this.Promise();
-		
-		models.User.findOne({
-			'github.userid': meta.id,
-			'github.token': accessToken
-		}, function(err, user) {
-			if (err) promise.fulfill(err);
-			
-			if (user != null) {
-				promise.fulfill(user);
-			} else {
-				// create user
-				models.User.createWithGithub(meta, accessToken, accessTokenSecret, function(err, ghUser) {
-					promise.fulfill(ghUser);
-				});
-			}
-		});
-		
-		return promise;
-	})
-	.redirectPath('/auth/finish');
+
 everyauth.facebook
 	.entryPath('/auth/facebook')
 	.callbackPath('/auth/facebook/callback')
 	.appId('532240236843933')
 	.appSecret('61e367fbe3aae28d49c788229aaa4464')
 	.findOrCreateUser(function(session, accessToken, accessSecret, meta) {
-		console.log(meta);
-		
 		var promise = this.Promise();
 		
-		models.User.findOne({
-			'facebook.userid': meta.id,
-			'facebook.token': accessToken
-		}, function(err, user) {
-			if (err) promise.fulfill(err);
-			
-			if (user != null) {
-				promise.fulfill(user);
-			} else {
-				// create user
-				models.User.createWithFacebook(meta, accessToken, accessTokenSecret, function(err, fbUser) {
-					promise.fulfill(fbUser);
-				});
-			}
-		});
+		models.User.authenticateFacebook(session, accessToken, accessSecret, meta, function(err, user) {
+			if (err) promise.fulfill([err])
+			else promise.fulfill(user);
+		})
 		
 		return promise;
 	})
 	.redirectPath('/auth/finish')
+
 everyauth.linkedin
 	.entryPath('/auth/linkedin')
 	.callbackPath('/auth/linkedin/callback')
 	.consumerKey('rklpzzr92ztv')
 	.consumerSecret('H0y6fL9dAa4WEhzd')
 	.findOrCreateUser(function(session, accessToken, accessSecret, meta) {
-		console.log(meta);
-		
 		var promise = this.Promise();
 		
-		models.User.findOne({
-			'linkedin.userid': meta.id,
-			'linkedin.token': accessToken
-		}, function(err, user) {
-			if (err) promise.fulfill(err);
-			
-			if (user != null) {
-				promise.fulfill(user);
-			} else {
-				// create user
-				models.User.createWithLinkedIn(meta, accessToken, accessTokenSecret, function(err, inUser) {
-					promise.fulfill(inUser);
-				});
-			}
-		});
+		models.User.authenticateLinkedIn(session, accessToken, accessSecret, meta, function(err, user) {
+			if (err) promise.fulfill([err])
+			else promise.fulfill(user)
+		})
 		
 		return promise;
 	})
@@ -166,18 +86,54 @@ exports.display = function(req, res) {
 }
 
 exports.checkFinished = function (req, res) {
-	res.redirect('/')
-	return;
-	// maybe later
-	if (req.user.incomplete == true) {
+	if (req.user.requestEmail == true) {
 		res.render('finishreg');
+		
+		req.user.requestEmail = false;
+		req.user.save(function(err) {
+			if (err) throw err;
+		});
 	} else {
 		res.redirect('/')
 	}
 }
+exports.doCheckFinished = function (req, res) {
+	var email = req.body.email;
+	
+	if (email.length != 0) {
+		req.user.email = email;
+		req.user.save(function(err) {
+			if (err) throw err;
+		})
+	}
+	
+	res.redirect('/')
+}
 
-function doJSONLogin (req, res) {
-	// TODO this
+exports.doPasswordJSON = function (req, res) {
+	models.User.authenticatePassword(req.body.email, req.body.password, function(err, user) {
+		user.password = null;
+		user.twitter = null;
+		user.facebook = null;
+		user.linkedin = null;
+		
+		if (err) {
+			res.status(404);
+			res.send({})
+		} else {
+			res.send({
+				user: user
+			})
+		}
+	})
+}
+exports.doTwitterJSON = function (req, res) {
+	
+}
+exports.doFacebookJSON = function (req, res) {
+	
+}
+exports.doLinkedInJSON = function (req, res) {
 }
 
 exports.router = function (app) {

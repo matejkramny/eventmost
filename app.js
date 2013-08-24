@@ -78,6 +78,12 @@ if ('development' == app.get('env')) {
 	app.use(express.errorHandler());
 	app.set('view cache', false);
 }
+if ('production' == app.get('env')) {
+	require('nodetime').profile({
+		accountKey: '5e94cba9ea3c85ec07684aa2ebca56885184bfb1', 
+		appName: 'EventMost'
+	});
+}
 
 var server = http.createServer(app)
 server.listen(app.get('port'), function(){

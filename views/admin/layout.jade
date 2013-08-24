@@ -1,0 +1,27 @@
+!!! 5
+html
+	head
+		meta(http-equiv="Content-Type", content="text/html; charset=utf-8;")
+		title EventMost Admin
+		link(href="/favicon.ico", type="image/x-icon", rel="icon")
+		link(href="/favicon.ico", type="image/x-icon", rel="shortcut icon")
+		block css
+			link(rel="stylesheet", href="/css/bootstrap.css")
+	body
+		block container
+			.row
+				.col-md-3
+					ul.nav
+						li
+							a(href="/admin/") Dashboard
+						li
+							a(href="/admin/users") Users
+						li
+							a(href="/admin/events") Events
+				.col-md-9
+					block content
+		block js
+			script(src="/js/jquery.min.js")
+			script(src="/js/jquery-ui.custom.min.js")
+			script(src="/js/jquery-ui-timepicker-addon.js")
+			

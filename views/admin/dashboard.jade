@@ -1,0 +1,22 @@
+extends layout
+
+block content
+	h1 Dashboard
+	h3= users.length
+		|  Users total
+	h3= twitterUsers
+		|  Users with <code>Twitter</code>
+	h3= facebookUsers
+		|  Users with <code>Facebook</code>
+	h3= linkedinUsers
+		|  Users with <code>LinkedIn</code>
+	h3= last24hours
+		|  Users created in <code>24 hours</code>
+	h3= last48hours
+		|  Users created in <code>48 hours</code>
+	h3= lastWeek
+		|  Users created in <code>week</code>
+	h3= lastMonth
+		|  Users created in <code>month</code>
+	h3= lastYear
+		|  Users created in <code>year</code>

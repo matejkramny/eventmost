@@ -2,13 +2,14 @@ var fs = require('fs'),
 	models = require('../models')
 	, mongoose = require('mongoose')
 	, io = require('../app').io
+	, util = require('../util')
 
 exports.router = function (app) {
-	app.get('/topics/new', newTopic)
-		.get('/topics', show)
-		.get('/topic/:id', showTopic)
-		.post('/topic/:id/new', newMessage)
-		.post('/topic/:id/update', updateTopic)
+	app.get('/topics/new', util.authorized, newTopic)
+		.get('/topics', util.authorized, show)
+		.get('/topic/:id', util.authorized, showTopic)
+		.post('/topic/:id/new', util.authorized, newMessage)
+		.post('/topic/:id/update', util.authorized, updateTopic)
 	
 	require('../app').io.of('/message').on('connection', function(socket) {
 		console.log("Nw socket")
@@ -103,6 +104,20 @@ function showTopic(req, res) {
 		if (err) throw err;
 		
 		if (topic) {
+			var isUser = false;
+			for (var i = 0; i < topic.users.length; i++) {
+				if (topic.users[i].equals(req.user._id)) {
+					isUser = true;
+					break;
+				}
+			}
+			
+			if (!isUser) {
+				req.session.flash.push("Unauthorized")
+				res.redirect('/')
+				return;
+			}
+			
 			models.Message.find({
 				topic: topic._id
 			}).sort('-timeSent').exec(function(err, messages) {
@@ -152,6 +167,20 @@ function newMessage(req, res) {
 		if (err) throw err;
 		
 		if (topic) {
+			var isUser = false;
+			for (var i = 0; i < topic.users.length; i++) {
+				if (topic.users[i].equals(req.user._id)) {
+					isUser = true;
+					break;
+				}
+			}
+			
+			if (!isUser) {
+				req.session.flash.push("Unauthorized")
+				res.redirect('/')
+				return;
+			}
+			
 			topic.lastUpdated = Date.now();
 			topic.save(function(err) {
 				if (err) throw err;
@@ -177,7 +206,7 @@ function newMessage(req, res) {
 				})
 			})
 		} else {
-			// 404 || Permissions
+			// 404
 			
 			res.format({
 				html: function() {
@@ -197,11 +226,39 @@ function newMessage(req, res) {
 function updateTopic(req, res) {
 	var id = req.params.id;
 	var title = req.body.topicname;
-	console.log(title);
+	
 	models.Topic.findOne({
 		_id: mongoose.Types.ObjectId(id)
 	}, function(err, topic) {
 		if (err) throw err;
+		
+		if (!topic) {
+			res.format({
+				html: function() {
+					res.redirect('/');
+				},
+				json: function() {
+					res.send({
+						status: 404
+					})
+				}
+			})
+			return;
+		}
+		
+		var isUser = false;
+		for (var i = 0; i < topic.users.length; i++) {
+			if (topic.users[i].equals(req.user._id)) {
+				isUser = true;
+				break;
+			}
+		}
+		
+		if (!isUser) {
+			req.session.flash.push("Unauthorized")
+			res.redirect('/')
+			return;
+		}
 		
 		topic.name = title;
 		topic.lastUpdated = Date.now()

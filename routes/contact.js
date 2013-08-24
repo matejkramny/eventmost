@@ -14,6 +14,8 @@ exports.doContact = function (req, res) {
 		message: req.body.message
 	})
 	cont.save(function(err) {
+		// TODO Actually send the email
+		
 		res.format({
 			html: function() {
 				req.session.flash = ["Thank you. We will contact you shortly"]

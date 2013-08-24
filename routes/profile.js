@@ -1,14 +1,15 @@
 var fs = require('fs'),
 	models = require('../models')
 	, mongoose = require('mongoose')
+	, util = require('../util')
 
 exports.router = function (app) {
-	app.get('/profile', profile)
-		.post('/profile/edit', doEditProfile)
-		.get('/user/:id', viewUser)
-		.get('/user/:id/save', saveUser)
-		.get('/profiles', showProfiles)
-		.get('/user/:id/remove', removeProfile)
+	app.get('/profile', util.authorized, profile)
+		.post('/profile/edit', util.authorized, doEditProfile)
+		.get('/user/:id', util.authorized, viewUser)
+		.get('/user/:id/save', util.authorized, saveUser)
+		.get('/profiles', util.authorized, showProfiles)
+		.get('/user/:id/remove', util.authorized, removeProfile)
 }
 
 function showProfiles (req, res) {

@@ -23,10 +23,16 @@ exports.doRemove = function (req, res, next) {
 	var filepath = req.body.file;
 	
 	if (!id) {
-		next(req, res)
+		next()
 	}
 	
 	models.Event.getEvent(id, function(ev) {
+		if (ev.user == null || !ev.user._id.equals(req.user._id)) {
+			req.session.flash.push("Unauthorized")
+			res.redirect('/');
+			return;
+		}
+		
 		if (!ev || !ev.files || ev.files.length == 0) {
 			res.redirect('/event/'+ev._id+'/dropbox')
 			return;

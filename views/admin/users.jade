@@ -1,0 +1,37 @@
+extends layout
+
+block content
+	h2= users.length
+		|  Users
+	table.table
+		thead
+			tr
+				th Name
+				th Surname
+				th Email
+				th Created
+				th Twitter
+				th Facebook
+				th LinkedIn
+		tbody
+			for user in users
+				tr
+					td= user.name
+					td= user.surname
+					td= user.email
+					td= user.created.toString()
+					td
+						if user.twitter.userid == null
+							span.glyphicon.glyphicon-thumbs-down
+						else
+							span.glyphicon.glyphicon-thumbs-up
+					td
+						if user.facebook.userid == null
+							span.glyphicon.glyphicon-thumbs-down
+						else
+							span.glyphicon.glyphicon-thumbs-up
+					td
+						if user.linkedin.userid == null
+							span.glyphicon.glyphicon-thumbs-down
+						else
+							span.glyphicon.glyphicon-thumbs-up

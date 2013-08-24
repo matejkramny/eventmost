@@ -16,6 +16,7 @@
     "connect-mongo": "*",
 	"nodemailer": "*",
 	"everyauth": "*",
-	"socket.io": "*"
+	"socket.io": "*",
+	"nodetime": "*"
   }
 }

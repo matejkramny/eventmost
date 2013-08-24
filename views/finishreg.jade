@@ -1,38 +1,19 @@
 extends layout
 
-mixin input(label, type, name, placeholder, required, tabindex)
-	.control-group
-		label.control-label(for=name)= label
-		.controls
-			input(type= type, id= name, tabindex= tabindex, name= name, placeholder= placeholder, required=required)
-mixin checkbox(label, name, checked, tabindex, required)
-	label.checkbox= label
-		input(type="checkbox", checked= checked, name= name, required= required, tabindex= tabindex)
-
 append content
-	.row-fluid
-		.span12.content.well
-			.moveLeft.moveRight.moveTop.moveBottom
-				h1.text-center Thank you for signing up!
-				h4.text-center We just need some extra bits from you before you shoot off creating events..
-	form.form-horizontal(action="/auth/finish", method="POST")
-		.row-fluid
-			.span6.content.well
-				.page-header.moveLeft.moveRight
-					h1 Personal Information
-				mixin input("Name", "text", "name", "Your first name", "required", 1)
-				mixin input("Surname", "text", "surname", "Your last name", "required", 2)
-				mixin input("Email", "email", "email", "Your email address", "required", 3)
-				.control-group
-					.controls
-						mixin checkbox("Receive notifications", "notifications", "checked", 4)
-						mixin checkbox("Subscribe for newsletter", "newsletter", null, 5)
-						mixin checkbox("I agree with ToS (required)", "tos_agree", null, 6, "required")
-			.span6.content.well
-				.page-header.moveLeft.moveRight
-					h1 Password
-				mixin input("Password", "password", "password", "Your password for this site", "required", 7)
-				mixin input("Password", "password", "passwordAgain", "Repeat password", "required", 8)
-		.row-fluid
-			.span12.content.well
-				input.btn.btn-red.btn-block.btn-large(type="submit", value="Continue", tabindex="9")
+	include inc/sidebar
+	#main-content
+		.search-box#bigred
+			.search-content
+				p
+					span.title Enable email notifications
+		#info-page.users.form
+			.clear
+			p You are nearly done. However, you won't be able to receive email notifications until you enter your email address.
+			br
+			form(action="/auth/finish", method="POST")
+				input(type="hidden", name="_csrf", value=token)
+				input.rounded-input(type="email", name="email", placeholder="Email address (optional)", style="width: 400px;")
+				input.submit-btn(type="submit", value="Submit")
+				a.submit-btn(href="/") No thanks
+	.clear
