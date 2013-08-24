@@ -40,7 +40,8 @@ var scheme = schema({
 		}
 	],
 	requestEmail: { type: Boolean, default: false },
-	admin: { type: Boolean, default: false }
+	admin: { type: Boolean, default: false },
+	mailboxUnread: { type: Number, default: 0 }
 });
 
 scheme.methods.setName = function (name) {
@@ -217,7 +218,8 @@ scheme.statics.createWithPassword = function (login, password, cb) {
 	console.log("Registering with login/password");
 	
 	var user = new exports.User({
-		email: login
+		email: login,
+		created: Date.now()
 	});
 	user.setPassword(password)
 	
@@ -237,7 +239,8 @@ scheme.statics.createWithTwitter = function(meta, accessToken, accessTokenSecret
 		},
 		avatar: meta.profile_image_url,
 		location: meta.location,
-		requestEmail: true
+		requestEmail: true,
+		created: Date.now()
 	});
 	user.setName(meta.name);
 	
@@ -255,7 +258,8 @@ scheme.statics.createWithFacebook = function (meta, accessToken, accessTokenSecr
 			userid: meta.id
 		},
 		location: meta.location,
-		requestEmail: true
+		requestEmail: true,
+		created: Date.now()
 		//untested idk whats in meta
 	})
 	user.setName(meta.name);
@@ -274,7 +278,8 @@ scheme.statics.createWithLinkedIn = function (meta, accessToken, accessTokenSecr
 			userid: meta.id
 		},
 		location: meta.location,
-		requestEmail: true
+		requestEmail: true,
+		created: Date.now()
 		//untested idk whats in meta
 	})
 	user.setName(meta.name);

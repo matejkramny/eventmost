@@ -37,5 +37,27 @@ block content
 					.label2 You are attending this event
 				.clear
 			.clear
+			br
+			form(action="/event/"+event._id+"/post", method="POST")
+				input(type="hidden", name="_csrf", value=token)
+				.left(style="width: 100%;")
+					input.rounded-input#message(type="text", name="message", value="", placeholder="Enter a message", required="required", style="width: 75%; float: left;")
+					input.submit-btn.left#messageSubmit(type="submit", value="Send", style="width: 19%; float: right;")
+			br
+			br
+			for message in event.messages
+				.users-spacer(style="border-top:1px solid #444;margin-top:10px;")
+					.avatar.left(style="height: 20px;width:20px;")
+						img(src=message.user.avatar, style="width: 20px; height: 20px;")
+					.left
+						p
+							a(href="/user/"+message.user._id)= message.user.getName()
+							|  at 
+							= message.posted.getHours()
+							| :
+							= message.posted.getMinutes()
+					.right
+						p= message.message
+				.clear
 		.clear
 	.clear

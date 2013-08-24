@@ -61,7 +61,6 @@ exports.viewEvent = function (req, res) {
 			res.redirect('/');
 			return;
 		}
-		console.log(ev);
 		
 		var attending = false;
 		if (ev.user && ev.user._id.equals(req.user._id)) {

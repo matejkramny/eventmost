@@ -11,13 +11,29 @@ html
 		block container
 			.row
 				.col-md-3
+					h1(style="padding-left: 10px;") EventMost
 					ul.nav
+						li.active
+							a(href="/admin/")
+								span.glyphicon.glyphicon-dashboard
+								|  Dashboard
 						li
-							a(href="/admin/") Dashboard
+							a(href="/admin/users")
+								span.glyphicon.glyphicon-user
+								|  Users
 						li
-							a(href="/admin/users") Users
+							a(href="/admin/events")
+								span.glyphicon.glyphicon-tower
+								|  Events
 						li
-							a(href="/admin/events") Events
+							a(href="/admin/emails")
+								span.glyphicon.glyphicon-envelope
+								|  Emails
+						br
+						li
+							a(href="/")
+								span.glyphicon.glyphicon-log-out
+								|  Logout
 				.col-md-9
 					block content
 		block js

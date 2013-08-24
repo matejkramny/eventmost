@@ -1,7 +1,9 @@
 models = require('../../models')
 
 exports.listEvents = function (req, res) {
-	models.Event.find({ deleted: false }, function(err, evs) {
+	models.Event.find({ deleted: false })
+		.sort('-start')
+		.exec(function(err, evs) {
 		// TODO limit mount of events received
 		if (err) throw err;
 		if (evs) {
@@ -21,7 +23,9 @@ exports.listEvents = function (req, res) {
 }
 
 exports.listMyEvents = function (req, res) {
-	models.Event.find({ user: req.user._id, deleted: false }, function(err, evs) {
+	models.Event.find({ user: req.user._id, deleted: false })
+		.sort('-start')
+		.exec(function(err, evs) {
 		if (err) throw err;
 		if (evs) {
 			res.format({

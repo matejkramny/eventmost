@@ -16,14 +16,20 @@ block content
 			.left(style="width: 100%;")
 				input.rounded-input#message(type="text", name="message", value="", placeholder="Enter a message", required="required", style="width: 75%; float: left;")
 				input.submit-btn.left#messageSubmit(type="submit", value="Send", style="width: 19%; float: right;")
+		br
+		br
 		for message in messages
-			.users-spacer
-				.avatar.left
-					img(src=message.sentBy.avatar)
+			.users-spacer(style="border-top:1px solid #444;margin-top:10px;")
+				.avatar.left(style="height: 20px;width:20px;")
+					img(src=message.sentBy.avatar, style="width: 20px; height: 20px;")
 				.left
-					p= message.message
+					p
+						a(href="/user/"+message.sentBy._id)= message.sentBy.getName()
+						|  at 
+						= message.timeSent.getHours()
+						| :
+						= message.timeSent.getMinutes()
 				.right
-					if message.read
-						p Read
+					p= message.message
 			.clear
 	.clear

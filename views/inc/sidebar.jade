@@ -18,6 +18,9 @@
 				ul.menu-list
 					li
 						a(href="/", class="profile") Home
+					if user.admin
+						li
+							a(href="/admin") Administration
 			if typeof event !== "undefined" && event != null
 				.element
 					ul.menu-list

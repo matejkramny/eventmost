@@ -17,6 +17,7 @@
 	"nodemailer": "*",
 	"everyauth": "*",
 	"socket.io": "*",
-	"nodetime": "*"
+	"nodetime": "*",
+	"nodemailer": "*"
   }
 }

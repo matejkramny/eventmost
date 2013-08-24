@@ -78,18 +78,25 @@ if ('development' == app.get('env')) {
 	app.use(express.errorHandler());
 	app.set('view cache', false);
 }
-if ('production' == app.get('env')) {
-	require('nodetime').profile({
-		accountKey: '5e94cba9ea3c85ec07684aa2ebca56885184bfb1', 
-		appName: 'EventMost'
-	});
-}
 
 var server = http.createServer(app)
 server.listen(app.get('port'), function(){
 	console.log('Express server listening on port ' + app.get('port'));
 });
-exports.io = require('socket.io').listen(server)
+//exports.io = require('socket.io').listen(server)
 
 // routes
 routes.router(app);
+
+if (process.env.NODE_ENV == 'production') {
+	console.log("Starting nodetime")
+	
+	// Make only one 'agent' running at the same time, free plan on nodetime only allows 1. :/
+	// If EventMost expands the number of processes a larger plan will be required
+	var ntime = require('nodetime')
+	ntime.profile({
+		accountKey: '5e94cba9ea3c85ec07684aa2ebca56885184bfb1', 
+		appName: 'EventMost'
+	});
+	ntime.expressErrorHandler()
+}

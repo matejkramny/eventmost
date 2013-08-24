@@ -2,7 +2,7 @@ var users = require('./users')
 	, models = require('../../models')
 
 function authorize (req, res, next) {
-	if (req.loggedIn && req.user.admin === false) {
+	if (req.loggedIn && req.user.admin === true) {
 		next()
 	} else {
 		res.redirect('/')
@@ -12,6 +12,7 @@ function authorize (req, res, next) {
 exports.router = function (app) {
 	app.get('/admin', authorize, showDashboard)
 	app.get('/admin/users', authorize, users.show)
+	app.get('/admin/emails', authorize, showEmails);
 }
 
 function showDashboard (req, res) {
@@ -59,6 +60,49 @@ function showDashboard (req, res) {
 			twitterUsers: twitterUsers,
 			facebookUsers: fbUsers,
 			linkedinUsers: linkedInUsers,
+			last24hours: last24hours,
+			last48hours: last48hours,
+			lastWeek: lastWeek,
+			lastMonth: lastMonth,
+			lastYear: lastYear
+		})
+	})
+}
+
+function showEmails (req, res) {
+	models.EmailNotification.find({}, function(err, emailNotifications) {
+		if (err) throw err;
+		
+		var now = Date.now();
+		var last24hours = 0,
+		last48hours = 0,
+		lastWeek = 0,
+		lastMonth = 0,
+		lastYear = 0;
+		for (var i = 0; i < emailNotifications.length; i++) {
+			var email = emailNotifications[i];
+			var created = email.created.getTime();
+			
+			if (now - 86400000 < created) {
+				last24hours++;
+			}
+			if (now - 86400000*2 < created) {
+				last48hours++;
+			}
+			if (now - 86400000*7 < created) {
+				lastWeek++;
+			}
+			if (now - 86400000*7*4.3 < created) {
+				lastMonth++;
+			}
+			if (now - 86400000*7*4.3*12 < created) {
+				lastYear++;
+			}
+		}
+		
+		res.render('admin/emails', {
+			layout: 'admin/layout',
+			emails: emailNotifications,
 			last24hours: last24hours,
 			last48hours: last48hours,
 			lastWeek: lastWeek,

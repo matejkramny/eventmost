@@ -1,0 +1,25 @@
+extends layout
+
+block content
+	h2= emails.length
+		|  Emails sent
+	h3= last24hours
+		|  Emails sent in last <code>24 hours</code>
+	h3= last48hours
+		|  Emails sent in last <code>48 hours</code>
+	h3= lastWeek
+		|  Emails sent this <code>week</code>
+	h3= lastMonth
+		|  Emails sent this <code>month</code>
+	h3= lastYear
+		|  Emails sent this <code>year</code>
+	table.table
+		thead
+			tr
+				th Type
+				th To Email
+		tbody
+			for email in emails
+				tr
+					td= email.type
+					td= email.email

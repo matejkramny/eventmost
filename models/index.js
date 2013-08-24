@@ -11,5 +11,6 @@ module.exports = {
 	User: require('./User').User,
 	Message: require('./Message').Message,
 	UserFile: require('./UserFile').UserFile,
-	Geolocation: require('./Geolocation').Geolocation
+	Geolocation: require('./Geolocation').Geolocation,
+	EmailNotification: require('./EmailNotification').EmailNotification
 }
