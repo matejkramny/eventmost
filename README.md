@@ -1,12 +1,10 @@
 EventMost
 =========
 
-EventMost websites
+EventMost website
 
 
 TODO
 ----
 
-1. Create database
-2. Create routing logic
-3. layouts, global template..
+IS ON TRELLO
