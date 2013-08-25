@@ -250,6 +250,8 @@ scheme.statics.createWithTwitter = function(meta, accessToken, accessTokenSecret
 }
 scheme.statics.createWithFacebook = function (meta, accessToken, accessTokenSecret, cb) {
 	console.log("Facebook meta: " + meta)
+	console.log(JSON.stringify(meta));
+	console.log(meta);
 	
 	var user = new exports.User({
 		incomplete: true,
