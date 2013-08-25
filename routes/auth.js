@@ -50,10 +50,12 @@ everyauth.twitter
 everyauth.facebook
 	.entryPath('/auth/facebook')
 	.callbackPath('/auth/facebook/callback')
+	.scope('email')
 	.appId('532240236843933')
 	.appSecret('61e367fbe3aae28d49c788229aaa4464')
 	.findOrCreateUser(function(session, accessToken, accessSecret, meta) {
 		var promise = this.Promise();
+		console.log("Session:"+JSON.stringify(session));
 		
 		models.User.authenticateFacebook(session, accessToken, accessSecret, meta, function(err, user) {
 			if (err) promise.fulfill([err])
@@ -87,11 +89,11 @@ exports.display = function(req, res) {
 
 exports.checkFinished = function (req, res) {
 	if (req.user.requestEmail == true) {
-		res.render('finishreg');
-		
 		req.user.requestEmail = false;
 		req.user.save(function(err) {
 			if (err) throw err;
+			
+			res.render('finishreg');
 		});
 	} else {
 		res.redirect('/')

@@ -125,24 +125,29 @@ scheme.statics.authenticatePassword = function (email, password, cb) {
 }
 scheme.statics.authenticateTwitter = function (session, accessToken, accessTokenSecret, meta, cb) {
 	var query = {
-		'twitter.userid': meta.id,
-		'twitter.token': accessToken
+		'twitter.userid': meta.id
 	}
 	
 	models.User.find(query, function(err, users) {
 		if (err) throw err;
 		
 		if (users.length > 0) {
-			if (users.length > 1 || session.auth.loggedIn == true) {
+			if (users.length > 1 || (session.auth && session.auth.loggedIn == true)) {
 				return cb(["Twitter account already linked"])
 			}
 			
 			cb(null, users[0])
 		} else {
-			if (session.auth.loggedIn == true) {
+			if (session.auth && session.auth.loggedIn == true) {
 				// Update the user's twitter token
-				user.updateTwitter(meta, accessToken, accessTokenSecret, function(err) {
-					cb(null, user);
+				models.User.findOne({
+					_id: mongoose.Types.ObjectId(session.auth.userId)
+				}, function(err, user) {
+					if (err) throw err;
+					
+					user.updateTwitter(meta, accessToken, accessTokenSecret, function(err) {
+						cb(null, user);
+					})
 				})
 			} else {
 				// Create user
@@ -155,28 +160,33 @@ scheme.statics.authenticateTwitter = function (session, accessToken, accessToken
 }
 scheme.statics.authenticateFacebook = function (session, accessToken, accessSecret, meta, cb) {
 	var query = {
-		'facebook.userid': meta.id,
-		'facebook.token': accessToken
+		'facebook.userid': meta.id
 	}
 	
 	models.User.find(query, function(err, users) {
 		if (err) throw err;
 		
 		if (users.length > 0) {
-			if (users.length > 1 || session.auth.loggedIn == true) {
+			if (users.length > 1 || (session.auth && session.auth.loggedIn == true)) {
 				return cb(["Facebook account already linked"])
 			}
 			
 			cb(null, users[0])
 		} else {
-			if (session.auth.loggedIn == true) {
-				// Update the user's twitter token
-				user.updateFacebook(meta, accessToken, accessTokenSecret, function(err) {
-					cb(null, user);
+			if (session.auth && session.auth.loggedIn == true) {
+				// Update the user's facebook token
+				models.User.findOne({
+					_id: mongoose.Types.ObjectId(session.auth.userId)
+				}, function(err, user) {
+					if (err) throw err;
+					
+					user.updateFacebook(meta, accessToken, accessSecret, function(err) {
+						cb(null, user);
+					})
 				})
 			} else {
 				// Create user
-				models.User.createWithFacebook(meta, accessToken, accessTokenSecret, function(err, aUser) {
+				models.User.createWithFacebook(meta, accessToken, accessSecret, function(err, aUser) {
 					cb(null, aUser);
 				});
 			}
@@ -185,24 +195,29 @@ scheme.statics.authenticateFacebook = function (session, accessToken, accessSecr
 }
 scheme.statics.authenticateLinkedIn = function (session, accessToken, accessSecret, meta, cb) {
 	var query = {
-		'linkedin.userid': meta.id,
-		'linkedin.token': accessToken
+		'linkedin.userid': meta.id
 	}
 	
 	models.User.find(query, function(err, users) {
 		if (err) throw err;
 		
 		if (users.length > 0) {
-			if (users.length > 1 || session.auth.loggedIn == true) {
+			if (users.length > 1 || (session.auth && session.auth.loggedIn == true)) {
 				return cb(["LinkedIn account already linked"])
 			}
 			
 			cb(null, users[0])
 		} else {
-			if (session.auth.loggedIn == true) {
-				// Update the user's twitter token
-				user.updateLinkedIn(meta, accessToken, accessSecret, function(err) {
-					cb(null, user);
+			if (session.auth && session.auth.loggedIn == true) {
+				// Update the user's linkedin token
+				models.User.findOne({
+					_id: mongoose.Types.ObjectId(session.auth.userId)
+				}, function(err, user) {
+					if (err) throw err;
+					
+					user.updateLinkedIn(meta, accessToken, accessSecret, function(err) {
+						cb(null, user);
+					})
 				})
 			} else {
 				// Create user
@@ -232,9 +247,7 @@ scheme.statics.createWithTwitter = function(meta, accessToken, accessTokenSecret
 	console.log("Twitter meta: " + meta)
 	
 	var user = new exports.User({
-		incomplete: true,
 		twitter: {
-			token: accessToken,
 			userid: meta.id
 		},
 		avatar: meta.profile_image_url,
@@ -245,36 +258,54 @@ scheme.statics.createWithTwitter = function(meta, accessToken, accessTokenSecret
 	user.setName(meta.name);
 	
 	user.save(function(err) {
+		var smeta = new models.SocialMetadata({
+			type: "twitter",
+			meta: meta,
+			accessToken: accessToken,
+			accessSecret: accessTokenSecret,
+			user: user._id
+		})
+		smeta.save();
+		
 		cb(err, user);
 	});
 }
 scheme.statics.createWithFacebook = function (meta, accessToken, accessTokenSecret, cb) {
-	console.log("Facebook meta: " + meta)
-	console.log(JSON.stringify(meta));
-	console.log(meta);
-	
 	var user = new exports.User({
-		incomplete: true,
 		facebook: {
-			token: accessToken,
 			userid: meta.id
 		},
 		location: meta.location,
-		requestEmail: true,
-		created: Date.now()
-		//untested idk whats in meta
+		requestEmail: false,
+		created: Date.now(),
+		name: meta.first_name,
+		surname: meta.last_name,
+		website: meta.link,
+		email: meta.email
 	})
-	user.setName(meta.name);
+	if (meta.work.length > 0) {
+		user.position = meta.work[0].description;
+	}
+	if (meta.education.length > 0 && meta.education[0].school.name) {
+		user.education = meta.education[0].school.name;
+	}
 	
 	user.save(function(err) {
+		var smeta = new models.SocialMetadata({
+			type: "facebook",
+			meta: meta,
+			accessToken: accessToken,
+			accessSecret: accessTokenSecret,
+			user: user._id
+		})
+		smeta.save();
+		
 		cb(err, user);
 	})
 }
 scheme.statics.createWithLinkedIn = function (meta, accessToken, accessTokenSecret, cb) {
 	var user = new exports.User({
-		incomplete: true,
 		linkedin: {
-			token: accessToken,
 			userid: meta.id
 		},
 		location: meta.location,

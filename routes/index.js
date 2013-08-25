@@ -8,7 +8,8 @@ var auth = require('./auth'),
 	cards = require('./cards'),
 	topics = require('./topics'),
 	search = require('./search'),
-	admin = require('./admin')
+	admin = require('./admin'),
+	util = require('../util')
 
 exports.router = function(app) {
 	app.get('/', function(req, res) {
@@ -18,8 +19,8 @@ exports.router = function(app) {
 			auth.display(req, res)
 		}
 	})
-		.get('/auth/finish', auth.checkFinished)
-		.post('/auth/finish', auth.doCheckFinished)
+		.get('/auth/finish', util.authorized, auth.checkFinished)
+		.post('/auth/finish', util.authorized, auth.doCheckFinished)
 		.get('/about', contact.about)
 		.get('/contact', contact.contactus)
 		.post('/contact', contact.doContact)
