@@ -55,7 +55,9 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
 app.set('view cache', true);
 app.set('app version', '0.0.2');
+app.locals.pretty = process.env.NODE_ENV != 'production'
 
+app.use(express.limit('25mb'))
 app.use(express.logger('dev'));
 app.use("/", express.static(path.join(__dirname, 'public'))); // serve static files
 app.use(express.bodyParser());

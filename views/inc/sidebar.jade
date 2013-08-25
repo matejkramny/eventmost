@@ -27,21 +27,19 @@
 						li= event.name
 						li
 							a.filebox(href="/event/"+event._id) Details
-						li
-							a.filebox(href="/event/"+event._id+"/attendees") Attendees
-						li
-							a.filebox(href="/event/"+event._id+"/speakers") Speakers
-						li
-							a.filebox(href="/event/"+event._id+"/forum") Forum
-						li
-							a.filebox(href="/event/"+event._id+"/dropbox") Dropbox
-						if event.user && event.user._id.equals(user._id)
+						if attending
 							li
-								a.event-details(href="/event/"+event._id+"/edit") Edit event
+								a.filebox(href="/event/"+event._id+"/attendees") Attendees
 							li
 								a.speakers(href="/event/"+event._id+"/speakers") Speakers
 							li
-								a.push(href="/event/"+event._id+"/notifications") Send notifications
+								a.filebox(href="/event/"+event._id+"/dropbox") Dropbox
+							//- Only event planner can see these
+							if event.user && event.user._id.equals(user._id)
+								li
+									a.event-details(href="/event/"+event._id+"/edit") Edit event
+								li
+									a.push(href="/event/"+event._id+"/notifications") Send notifications
 			.element
 				ul.menu-list
 					li

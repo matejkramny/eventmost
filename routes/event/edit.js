@@ -1,87 +1,96 @@
 models = require('../../models')
 
 exports.editEvent = function (req, res) {
-	var id = req.params.id;
+	var ev = res.locals.event;
 	
-	models.Event
-		.findOne(
-			{
-				deleted: false,
-				_id: mongoose.Types.ObjectId(id)
-			})
-		.populate('user')
-		.exec(function(err, ev) {
-			if (err) throw err;
-			
-			if (ev) {
-				if (!ev.user._id.equals(req.user._id)) {
-					req.session.flash.push("Unauthorized")
-					res.redirect('/');
-					return;
-				}
-				
-				models.Geolocation.findOne({ event: ev._id }, function(err, geo) {
-					ev.geo = geo;
-					res.render('event/edit', { event: ev });
-				})
-			} else {
-				res.redirect('/')
-			}
-		})
+	if (!ev.user._id.equals(req.user._id)) {
+		req.session.flash.push("Unauthorized")
+		res.redirect('/');
+		return;
+	}
+	
+	models.Geolocation.findOne({ event: ev._id }, function(err, geo) {
+		ev.geo = geo;
+		res.render('event/edit', { event: ev });
+	})
 }
 
 exports.doEditEvent = function (req, res) {
 	var errors = [];
 	
-	models.Event.findOne({
-		_id: mongoose.Types.ObjectId(req.params.id),
-		deleted: false
-	}, function(err, ev) {
-		if (err) throw err;
-		
-		if (!ev) {
-			req.session.flash.push("Event not found!");
-			res.redirect('/');
-			return;
-		}
-		
-		if (!ev.user.equals(req.user._id)) {
-			req.session.flash.push("Unauthorized")
-			res.redirect('/');
-			return;
-		}
-		
-		ev.edit(req.body, req.user, req.files, function(err) {
-			if (err) {
-				req.session.flash = err;
-			} else {
-				req.session.flash.push("Event settings updated");
+	var ev = res.locals.event;
+	// Only planner can edit
+	if (!ev.user.equals(req.user._id)) {
+		res.format({
+			html: function() {
+				req.session.flash.push("Unauthorized")
+				res.redirect('/');
+			},
+			json: function() {
+				res.send({
+					status: 403,
+					message: "Unauthorized"
+				})
 			}
-			
-			res.redirect('/event/'+ev._id+"/edit");
 		})
+		
+		return;
+	}
+	
+	ev.edit(req.body, req.user, req.files, function(err) {
+		res.format({
+			html: function() {
+				req.session.flash = err || ["Event settings updated"];
+				res.redirect('/event/'+ev._id+"/edit")
+			},
+			json: function() {
+				res.send({
+					status: err ? 403 : 200,
+					message: err || ["Event settings updated"]
+				})
+			}
+		});
 	})
 }
 
 exports.deleteEvent = function (req, res) {
-	models.Event.findOne({ _id: mongoose.Types.ObjectId(req.params.id), deleted: false }, function(err, ev) {
-		if (err) throw err;
-		
-		if (ev) {
-			if (!ev.user.equals(req.user._id)) {
+	var ev = res.locals.event;
+	
+	// Only for event planners
+	if (!ev.user._id.equals(req.user._id)) {
+		res.format({
+			html: function() {
 				req.session.flash.push("Unauthorized")
 				res.redirect('/');
-				return;
+			},
+			json: function() {
+				res.send({
+					status: 403,
+					message: "Unauthorized"
+				})
 			}
-			
-			ev.deleted = true;
-			ev.save(function(err) {
-				if (err) throw err;
-			});
-			req.session.flash.push("Event deleted");
-			res.redirect('/events/my')
-		} else {
-			res.redirect('/');
-		}
-	})
+		})
+		
+		return;
+	}
+	
+	// mark as deleted, don't *actually* delete
+	ev.deleted = true;
+	
+	ev.save(function(err) {
+		if (err) throw err;
+		
+		res.format({
+			html: function() {
+				req.session.flash.push("Event deleted");
+				res.redirect('/events/my')
+			},
+			json: function() {
+				res.send({
+					status: 200,
+					message: "Event deleted"
+				})
+			}
+		})
+	});
 }

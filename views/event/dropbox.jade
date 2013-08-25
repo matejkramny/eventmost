@@ -10,8 +10,11 @@ block content
 					span.right.file-upload
 						form(action="/event/"+event._id+"/dropbox/upload", method="POST",  enctype="multipart/form-data")
 							input(type="hidden", name="_csrf", value=token)
-							input.left(type="file", name="upload")
-							input.submit-btn(type="submit", value="Upload file")
+							input.right.submit-btn(type="submit", value="Upload file")
+							input.right(type="file", name="upload")
+				.clear
+				p
+					include ../inc/flash
 		for file in event.files
 			.users-spacer.single-item
 				.file-short-info
@@ -24,6 +27,7 @@ block content
 							form(method="POST", action="/event/"+event._id+"/dropbox/remove")
 								input(type="hidden", name="_csrf", value=token)
 								input(type="hidden", name="file", value=file.file)
-								a.file-btn.round-button(href="#", onclick="if(confirm('Are you sure you want to delete this file?')){$(this).parent().submit()} event.returnValue = false; return false;") Delete
-								a.file-btn.round-button(href=file.file) View
+								if event.user._id.equals(user._id)
+									a.file-btn.round-button(href="#", onclick="if(confirm('Are you sure you want to delete this file?')){$(this).parent().submit()} event.returnValue = false; return false;") Delete
+								a.file-btn.round-button(href=file.file) Download
 	.clear

@@ -9,180 +9,163 @@ exports.router = function (app) {
 	app.get('/event/add', util.authorized, add.addEvent)
 		.post('/event/add', util.authorized, add.doAddEvent)
 		
-		.get('/event/:id', util.authorized, exports.viewEvent)
-		.get('/event/:id/edit', util.authorized, edit.editEvent)
-		.post('/event/:id/edit', util.authorized, edit.doEditEvent)
-		.get('/event/:id/delete', util.authorized, edit.deleteEvent)
-		.post('/event/:id/join', util.authorized, exports.joinEvent)
-		.get('/event/:id/attendees', util.authorized, list.listAttendees)
-		.get('/event/:id/speakers', util.authorized, list.listSpeakers)
-		.get('/event/:id/dropbox', util.authorized, dropbox.view)
-		.post('/event/:id/dropbox/upload', util.authorized, dropbox.doUpload)
-		.post('/event/:id/dropbox/remove', util.authorized, dropbox.doRemove)
-		.post('/event/:id/post', util.authorized, postMessage)
-		.get('/event/:id/notifications', util.authorized, notifications.display)
+		.get('/event/:id', util.authorized, getEvent, attending, exports.viewEvent)
+		.get('/event/:id/edit', util.authorized, getEvent, attending, edit.editEvent)
+		.post('/event/:id/edit', util.authorized, getEvent, edit.doEditEvent)
+		.get('/event/:id/delete', util.authorized, getEvent, edit.deleteEvent)
+		.post('/event/:id/join', util.authorized, getEvent, exports.joinEvent)
+		.get('/event/:id/attendees', util.authorized, getEvent, attending, list.listAttendees)
+		.get('/event/:id/speakers', util.authorized, getEvent, attending, list.listSpeakers)
+		.get('/event/:id/dropbox', util.authorized, getEvent, attending, dropbox.view)
+		.post('/event/:id/dropbox/upload', util.authorized, getEvent, dropbox.doUpload)
+		.post('/event/:id/dropbox/remove', util.authorized, getEvent, dropbox.doRemove)
+		.post('/event/:id/post', util.authorized, getEvent, postMessage)
+		.get('/event/:id/notifications', util.authorized, getEvent, attending, notifications.display)
 		
 		.get('/events', list.listEvents)
 		.get('/events/my', util.authorized, list.listMyEvents)
 		.get('/events/near', list.listNearEvents)
 }
 
-exports.viewEvent = function (req, res) {
+// Middleware to get :id param into res.local
+function getEvent (req, res, next) {
 	var id = req.params.id;
+	
 	if (!id) {
-		res.redirect('/events');
-	}
-	
-	var draw = function (ev, attending) {
-		if (ev) {
-			res.format({
-				html: function() {
-					res.render('event/view', { event: ev, attending: attending });
-				},
-				json: function() {
-					res.send({
-						event: ev,
-						attending: attending
-					});
-				}
-			});
-		} else {
-			res.format({
-				html: function() {
-					res.status(404)
-					res.send("Not found")
-				},
-				json: function() {
-					res.status(404);
-					res.send({ error: "Not found" });
-				}
-			})
-		}
-	}
-	
-	models.Event.getEvent(id, function(ev) {
-		if (!ev) {
-			req.session.flash.push("Event not found");
-			res.redirect('/');
-			return;
-		}
-		
-		var attending = false;
-		if (ev.user && ev.user._id.equals(req.user._id)) {
-			// owns the event, no need to search if the user is attending
-			attending = true;
-		} else {
-			for (var i = 0; i < ev.attendees.length; i++) {
-				if (ev.attendees[i]._id.equals(req.user._id)) {
-					attending = true;
-					break;
-				}
+		res.format({
+			html: function() {
+				res.redirect('/events');
+			},
+			json: function() {
+				res.send({
+					status: 403,
+					message: "No ID"
+				})
 			}
-		}
-		
-		draw(ev, attending);
-	});
-}
-
-exports.joinEvent = function (req, res) {
-	var id = req.params.id
-		,password = req.body.password;
-	
-	var joinEvent = function (ev) {
-		ev.attendees.push(req.user._id);
-		ev.save();
+		})
+		return;
 	}
-	
-	models.Event.getEvent(id, function(ev) {
-		if (ev) {
-			if (ev.password.enabled) {
-				if (ev.password.password == password) {
-					// join event.
-					joinEvent(ev);
-				} else {
-					// display flash stating they got the password wrong.
-					req.session.flash.push("Event password incorrect.")
-				}
-			} else {
-				// join event.
-				joinEvent(ev);
-			}
-			
-			res.redirect('/event/'+ev._id);
-		} else {
-			// TODO 404
-		}
-	})
-}
-
-function postMessage (req, res) {
-	var id = req.params.id;
-	var message = req.body.message;
 	
 	models.Event.getEvent(id, function(ev) {
 		if (!ev) {
 			res.format({
 				html: function() {
-					res.redirect('/events');
+					req.session.flash.push("Event not found");
+					res.redirect('/');
 				},
 				json: function() {
 					res.send({
 						status: 404,
-						message: "Not found"
+						message: "Event not found"
 					})
 				}
 			})
 			return;
 		}
 		
-		var canPost = false;
-		if (ev.user && ev.user._id.equals(req.user._id)) {
-			canPost = true;
-		} else {
-			for (var i = 0; i < ev.attendees.length; i++) {
-				if (ev.attendees[i]._id.equals(req.user._id)) {
-					canPost = true;
-					break;
-				}
+		res.locals.event = ev;
+		
+		next()
+	})
+}
+
+exports.attending = attending = function (req, res, next) {
+	var ev = res.locals.event;
+	
+	var attending = false;
+	if (ev.user && ev.user._id.equals(req.user._id)) {
+		// owns the event, no need to search if the user is attending
+		attending = true;
+	} else {
+		for (var i = 0; i < ev.attendees.length; i++) {
+			if (ev.attendees[i]._id.equals(req.user._id)) {
+				attending = true;
+				break;
 			}
 		}
-		
-		if (canPost) {
-			ev.messages.unshift({
-				posted: Date.now(),
-				user: req.user._id,
-				upVote: 0,
-				downVote: 0,
-				message: message
+	}
+	
+	res.locals.attending = attending;
+	
+	next()
+}
+
+exports.viewEvent = function (req, res) {
+	res.format({
+		html: function() {
+			res.render('event/view');
+		},
+		json: function() {
+			res.send({
+				event: res.locals.event,
+				attending: res.locals.attending
 			});
-			ev.save(function(err) {
-				if (err) throw err;
-				
-				res.format({
-					html: function() {
-						res.redirect('/event/'+ev._id);
-					},
-					json: function() {
-						res.send({
-							status: 200,
-							message: "Sent"
-						})
-					}
-				})
-			})
+		}
+	});
+}
+
+exports.joinEvent = function (req, res) {
+	var password = req.body.password;
+	
+	var ev = res.locals.event;
+	if (ev.password.enabled) {
+		if (ev.password.password == password) {
+			// join event.
+			ev.attendees.push(req.user._id);
 		} else {
+			// display flash stating they got the password wrong.
+			req.session.flash.push("Event password incorrect.")
+		}
+	} else {
+		// join event.
+		ev.attendees.push(req.user._id);
+	}
+	
+	ev.save(function(err) {
+		if (err) throw err;
+		res.redirect('/event/'+ev._id);
+	});
+}
+
+function postMessage (req, res) {
+	var message = req.body.message;
+	var ev = res.locals.event;
+	
+	if (res.locals.attending) {
+		ev.messages.unshift({
+			posted: Date.now(),
+			user: req.user._id,
+			upVote: 0,
+			downVote: 0,
+			message: message
+		});
+		ev.save(function(err) {
+			if (err) throw err;
+			
 			res.format({
 				html: function() {
-					req.session.flash.push("Cannot post because you are not attending")
 					res.redirect('/event/'+ev._id);
 				},
 				json: function() {
 					res.send({
-						status: 403,
-						message: "Cannot post"
+						status: 200,
+						message: "Sent"
 					})
 				}
 			})
-		}
-	});
+		})
+	} else {
+		res.format({
+			html: function() {
+				req.session.flash.push("Cannot post because you are not attending")
+				res.redirect('/event/'+ev._id);
+			},
+			json: function() {
+				res.send({
+					status: 403,
+					message: "Cannot post"
+				})
+			}
+		})
+	}
 }
