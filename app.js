@@ -7,6 +7,17 @@ var express = require('express')
 	, MongoStore = require('connect-mongo')(express)
 	, everyauth = require('everyauth')
 	, authmethods = require('./routes/auth')
+	, mailer = require('nodemailer')
+
+var transport = mailer.createTransport("sendgrid", {
+	auth: {
+		user: "matej",
+		pass: "Ye1aeph9eex2eghein3ve4foh6aih5"
+	}
+})
+exports.getTransport = function() {
+	return transport;
+}
 
 var app = exports.app = express();
 

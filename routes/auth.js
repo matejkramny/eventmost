@@ -71,7 +71,7 @@ everyauth.linkedin
 	.consumerSecret('H0y6fL9dAa4WEhzd')
 	.findOrCreateUser(function(session, accessToken, accessSecret, meta) {
 		var promise = this.Promise();
-		
+		console.log(meta)
 		models.User.authenticateLinkedIn(session, accessToken, accessSecret, meta, function(err, user) {
 			if (err) promise.fulfill([err])
 			else promise.fulfill(user)

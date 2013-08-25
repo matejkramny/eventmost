@@ -4,11 +4,7 @@ var fs = require('fs')
 	, io = require('../app').io
 	, util = require('../util')
 	, async = require('async')
-	, mailer = require('nodemailer')
-
-var transport = mailer.createTransport("SMTP", {
-	host: "127.0.0.1"
-})
+	, transport = require('../app').transport
 
 exports.router = function (app) {
 	app.get('/topics/new', util.authorized, newTopic)
@@ -255,10 +251,10 @@ function notifyByEmail (people, topic, message, from) {
 		}
 		
 		var options = {
-			from: "noreply@eventmost.com",
+			from: "EventMost <noreply@eventmost.com>",
 			to: person.email,
 			subject: "New message from "+from.getName(),
-			html: "You have a new message on <strong>EventMost</strong>.<br />To view your message, click <a href='http://eventmost.com/topic/"+topic._id+"'>here</a><br/><br/>You can turn off notifications in your settings. Please do not reply to this email, we do not receive correspondence for this email address."
+			html: "You have a new message on <strong>EventMost</strong>.<br />To view your message, click <a href='http://eventmost.com/topic/"+topic._id+"'>here</a><br/><br/>You can turn off notifications in your settings. Please do not reply to this email, as we do not receive correspondence for this email address."
 		}
 		transport.sendMail(options, function(err, response) {
 			if (err) throw err;

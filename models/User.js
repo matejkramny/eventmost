@@ -201,12 +201,12 @@ scheme.statics.authenticateLinkedIn = function (session, accessToken, accessSecr
 		} else {
 			if (session.auth.loggedIn == true) {
 				// Update the user's twitter token
-				user.updateLinkedIn(meta, accessToken, accessTokenSecret, function(err) {
+				user.updateLinkedIn(meta, accessToken, accessSecret, function(err) {
 					cb(null, user);
 				})
 			} else {
 				// Create user
-				models.User.createWithLinkedIn(meta, accessToken, accessTokenSecret, function(err, aUser) {
+				models.User.createWithLinkedIn(meta, accessToken, accessSecret, function(err, aUser) {
 					cb(null, aUser);
 				});
 			}
@@ -269,8 +269,6 @@ scheme.statics.createWithFacebook = function (meta, accessToken, accessTokenSecr
 	})
 }
 scheme.statics.createWithLinkedIn = function (meta, accessToken, accessTokenSecret, cb) {
-	console.log("Facebook meta: " + meta)
-	
 	var user = new exports.User({
 		incomplete: true,
 		linkedin: {
@@ -279,12 +277,26 @@ scheme.statics.createWithLinkedIn = function (meta, accessToken, accessTokenSecr
 		},
 		location: meta.location,
 		requestEmail: true,
-		created: Date.now()
-		//untested idk whats in meta
+		created: Date.now(),
+		name: meta.firstName,
+		surname: meta.lastName,
+		location: meta.location.name,
+		website: meta.publicProfileUrl,
+		interests: meta.industry,
+		position: meta.headline,
+		desc: meta.summary
 	})
-	user.setName(meta.name);
 	
 	user.save(function(err) {
+		var smeta = new models.SocialMetadata({
+			type: "linkedin",
+			meta: meta,
+			accessToken: accessToken,
+			accessSecret: accessTokenSecret,
+			user: user._id
+		})
+		smeta.save();
+		
 		cb(err, user);
 	})
 }

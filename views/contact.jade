@@ -8,6 +8,7 @@ block content
 				input(type="hidden", name="_csrf", value=token)
 				.legend Contact Form
 				.clear
+				include inc/flash
 				.input.text.required
 					input#ContactSubject.input-item.rounded-input(type="text", placeholder="Subject", required="required", name="subject")
 				.input.textarea.required

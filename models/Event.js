@@ -56,7 +56,8 @@ var scheme = schema({
 		},
 		spam: { type: Boolean, default: false },
 		upVote: { type: Number, default: 0 },
-		downVote: { type: Number, default: 0 }
+		downVote: { type: Number, default: 0 },
+		message: String
 	}]
 })
 

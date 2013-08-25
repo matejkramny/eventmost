@@ -3,10 +3,12 @@ var dropbox = require('./dropbox')
 	, edit = require('./edit')
 	, list = require('./list')
 	, util = require('../../util')
+	, notifications = require('./notifications')
 
 exports.router = function (app) {
 	app.get('/event/add', util.authorized, add.addEvent)
 		.post('/event/add', util.authorized, add.doAddEvent)
+		
 		.get('/event/:id', util.authorized, exports.viewEvent)
 		.get('/event/:id/edit', util.authorized, edit.editEvent)
 		.post('/event/:id/edit', util.authorized, edit.doEditEvent)
@@ -17,6 +19,9 @@ exports.router = function (app) {
 		.get('/event/:id/dropbox', util.authorized, dropbox.view)
 		.post('/event/:id/dropbox/upload', util.authorized, dropbox.doUpload)
 		.post('/event/:id/dropbox/remove', util.authorized, dropbox.doRemove)
+		.post('/event/:id/post', util.authorized, postMessage)
+		.get('/event/:id/notifications', util.authorized, notifications.display)
+		
 		.get('/events', list.listEvents)
 		.get('/events/my', util.authorized, list.listMyEvents)
 		.get('/events/near', list.listNearEvents)
@@ -108,4 +113,76 @@ exports.joinEvent = function (req, res) {
 			// TODO 404
 		}
 	})
+}
+
+function postMessage (req, res) {
+	var id = req.params.id;
+	var message = req.body.message;
+	
+	models.Event.getEvent(id, function(ev) {
+		if (!ev) {
+			res.format({
+				html: function() {
+					res.redirect('/events');
+				},
+				json: function() {
+					res.send({
+						status: 404,
+						message: "Not found"
+					})
+				}
+			})
+			return;
+		}
+		
+		var canPost = false;
+		if (ev.user && ev.user._id.equals(req.user._id)) {
+			canPost = true;
+		} else {
+			for (var i = 0; i < ev.attendees.length; i++) {
+				if (ev.attendees[i]._id.equals(req.user._id)) {
+					canPost = true;
+					break;
+				}
+			}
+		}
+		
+		if (canPost) {
+			ev.messages.unshift({
+				posted: Date.now(),
+				user: req.user._id,
+				upVote: 0,
+				downVote: 0,
+				message: message
+			});
+			ev.save(function(err) {
+				if (err) throw err;
+				
+				res.format({
+					html: function() {
+						res.redirect('/event/'+ev._id);
+					},
+					json: function() {
+						res.send({
+							status: 200,
+							message: "Sent"
+						})
+					}
+				})
+			})
+		} else {
+			res.format({
+				html: function() {
+					req.session.flash.push("Cannot post because you are not attending")
+					res.redirect('/event/'+ev._id);
+				},
+				json: function() {
+					res.send({
+						status: 403,
+						message: "Cannot post"
+					})
+				}
+			})
+		}
+	});
 }
