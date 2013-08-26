@@ -8,6 +8,24 @@ block content
 			.search-content
 				p
 					span.title Your profile
+		p Click on a social network to link them to your account. Once that is done, you can use them to log into your account.
+		.login-buttons
+			.login-btn
+				a(href="/auth/twitter", alt="Log in with twitter", title="Link with twitter")
+					img(src="/img/twitter-btn.png")
+					if user.twitter.userid
+						p linked
+			.login-btn
+				a(href="/auth/linkedin", alt="Log in with linkedin", title="Link with linkedin")
+					img(src="/img/linkedin-btn.png")
+					if user.linkedin.userid
+						p linked
+			.login-btn
+				a(href="/auth/facebook", alt="Log in with facebook", title="Link with facebook")
+					img(src="/img/facebook-btn.png", alt="")
+					if user.facebook.userid
+						p linked
+			.clear
 		form#UserEditForm(action="/profile/edit", enctype="multipart/form-data", method="POST", accept-charset="utf-8", name="UserEditForm", autocomplete="off")
 			input(type="hidden", name="_csrf", value=token)
 			.user-short-info#upload
@@ -43,9 +61,10 @@ block content
 			.input.password
 				input.input-item.rounded-input#UserPassword(name="password", autocomplete="off", placeholder="New password", type="password")
 				.small Do not edit if you don't want to change your password
-			.input.password
-				input.input-item.rounded-input#UserOldPassword(name="password_old", autocomplete="off", placeholder="Old password (required if you change password)", type="password")
-				.small Do not edit if you are not changing your password
+			if user.password
+				.input.password
+					input.input-item.rounded-input#UserOldPassword(name="password_old", autocomplete="off", placeholder="Old password (required if you change password)", type="password")
+					.small Do not edit if you are not changing your password
 			.submit
 				input.submit-btn(type="submit", value="Update")
 	.clear

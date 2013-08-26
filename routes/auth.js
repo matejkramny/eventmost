@@ -2,7 +2,6 @@ var mongoose = require('mongoose')
 	, everyauth = require('everyauth')
 	, models = require('../models');
 
-// TODO after login with service X, allow to link the account to service XY
 everyauth.everymodule.findUserById(function(id, cb) {
 	models.User.findOne({ _id: mongoose.Types.ObjectId(id) }, function(err, user) {
 		cb(err, user);
@@ -55,7 +54,6 @@ everyauth.facebook
 	.appSecret('61e367fbe3aae28d49c788229aaa4464')
 	.findOrCreateUser(function(session, accessToken, accessSecret, meta) {
 		var promise = this.Promise();
-		console.log("Session:"+JSON.stringify(session));
 		
 		models.User.authenticateFacebook(session, accessToken, accessSecret, meta, function(err, user) {
 			if (err) promise.fulfill([err])
@@ -73,7 +71,7 @@ everyauth.linkedin
 	.consumerSecret('H0y6fL9dAa4WEhzd')
 	.findOrCreateUser(function(session, accessToken, accessSecret, meta) {
 		var promise = this.Promise();
-		console.log(meta)
+		
 		models.User.authenticateLinkedIn(session, accessToken, accessSecret, meta, function(err, user) {
 			if (err) promise.fulfill([err])
 			else promise.fulfill(user)

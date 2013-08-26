@@ -168,6 +168,7 @@ scheme.statics.authenticateFacebook = function (session, accessToken, accessSecr
 		
 		if (users.length > 0) {
 			if (users.length > 1 || (session.auth && session.auth.loggedIn == true)) {
+				console.log("Already linked")
 				return cb(["Facebook account already linked"])
 			}
 			
