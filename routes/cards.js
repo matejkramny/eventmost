@@ -9,7 +9,7 @@ exports.router = function (app) {
 
 function showCards (req, res) {
 	models.Card.find({ user: req.user._id }, function(err, cards) {
-		res.render('cards', { cards: cards });
+		res.render('cards', { cards: cards, title: "Business cards" });
 	});
 }
 

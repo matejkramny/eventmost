@@ -16,7 +16,7 @@ function showProfiles (req, res) {
 	req.user.populate('savedProfiles', function() {
 		res.format({
 			html: function() {
-				res.render('profiles', { profiles: req.user.savedProfiles || [] })
+				res.render('profiles', { profiles: req.user.savedProfiles || [], title: "Saved profiles" })
 			},
 			json: function() {
 				res.json({
@@ -52,7 +52,7 @@ function removeProfile (req, res) {
 exports.profile = profile = function (req, res) {
 	res.format({
 		html: function() {
-			res.render('profile/view')
+			res.render('profile/view', { title: "Your profile" })
 		},
 		json: function() {
 			res.json({
@@ -85,11 +85,10 @@ function viewUser (req, res) {
 		
 		res.format({
 			html: function() {
-				console.log(user.getName());
 				if (user != null) {
 					res.locals.prof = user;
 					res.locals.saved = saved;
-					res.render('user');
+					res.render('user', { title: user.getName() });
 				} else {
 					res.status(404);
 					res.redirect('/')

@@ -11,7 +11,7 @@ exports.editEvent = function (req, res) {
 	
 	models.Geolocation.findOne({ event: ev._id }, function(err, geo) {
 		ev.geo = geo;
-		res.render('event/edit', { event: ev });
+		res.render('event/edit', { event: ev, title: "Edit event" });
 	})
 }
 

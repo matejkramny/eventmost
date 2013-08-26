@@ -4,7 +4,7 @@ fs = require('fs')
 exports.view = function (req, res) {
 	res.format({
 		html: function() {
-			res.render('event/dropbox')
+			res.render('event/dropbox', { title: "Dropbox" })
 		},
 		json: function() {
 			res.send({

@@ -2,11 +2,11 @@ var contact = require('../models/Contact').Contact,
 	transport
 
 exports.about = function (req, res) {
-	res.render('about')
+	res.render('about', { title: "About us" })
 }
 
 exports.contactus = function (req, res) {
-	res.render('contact')
+	res.render('contact', { title: "Contact us" })
 }
 
 exports.doContact = function (req, res) {

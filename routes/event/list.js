@@ -9,7 +9,7 @@ exports.listEvents = function (req, res) {
 		if (evs) {
 			res.format({
 				html: function() {
-					res.render('event/list', { events: evs, pagename: "Events" });
+					res.render('event/list', { events: evs, pagename: "Events", title: "Events" });
 				},
 				json: function() {
 					res.send({
@@ -30,7 +30,7 @@ exports.listMyEvents = function (req, res) {
 		if (evs) {
 			res.format({
 				html: function() {
-					res.render('event/list', { events: evs, pagename: "My events" });
+					res.render('event/list', { events: evs, pagename: "My events", title: "My Events" });
 				},
 				json: function() {
 					res.send({
@@ -53,7 +53,7 @@ exports.listNearEvents = function (req, res) {
 		// render a blank page, and tell it to ask user for browser positioning
 		res.format({
 			html: function() {
-				res.render('event/list', { events: [], pagename: "Events near you" });
+				res.render('event/list', { events: [], pagename: "Events near you", title: "Events nearby" });
 			},
 			json: function() {
 				res.send({
@@ -93,7 +93,7 @@ exports.listNearEvents = function (req, res) {
 				}
 				res.format({
 					html: function() {
-						res.render('event/list', { events: events, pagename: "Events near you" })
+						res.render('event/list', { events: events, pagename: "Events near you", title: "Events nearby" })
 					},
 					json: function() {
 						res.send({
@@ -114,7 +114,7 @@ exports.listSpeakers = function (req, res) {
 exports.listAttendees = function (req, res) {
 	res.format({
 		html: function() {
-			res.render('event/attendees')
+			res.render('event/attendees', { title: "Attendees at "+res.locals.event.name })
 		},
 		json: function() {
 			res.send({

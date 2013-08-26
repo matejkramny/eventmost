@@ -9,6 +9,7 @@ var express = require('express')
 	, authmethods = require('./routes/auth')
 	, mailer = require('nodemailer')
 
+// Create SMTP transport method
 var transport = mailer.createTransport("sendgrid", {
 	auth: {
 		user: "matej",
@@ -25,6 +26,7 @@ var sessionStore; // session stored in database
 if (process.env.NODE_ENV == 'production') {
 	// production mode
 	
+	// In short, this will ensure a unique database for each environment
 	var mode = process.env.NODE_MODE;
 	if (mode == "dev" || mode == "staging") {
 		mode = "-"+mode;
@@ -50,25 +52,29 @@ if (process.env.NODE_ENV == 'production') {
 }
 
 // all environments
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || 3000); // Port
 app.set('views', __dirname + '/views');
-app.set('view engine', 'jade');
-app.set('view cache', true);
-app.set('app version', '0.0.2');
-app.locals.pretty = process.env.NODE_ENV != 'production'
+app.set('view engine', 'jade'); // Templating engine
+app.set('view cache', true); // Cache views
+app.set('app version', '0.0.2'); // App version
+app.locals.pretty = process.env.NODE_ENV != 'production' // Pretty HTML outside production mode
 
-app.use(express.limit('25mb'))
-app.use(express.logger('dev'));
+app.use(express.logger('dev')); // Pretty log
+app.use(express.limit('25mb')); // File upload limit
 app.use("/", express.static(path.join(__dirname, 'public'))); // serve static files
-app.use(express.bodyParser());
-app.use(express.cookieParser());
+app.use(express.bodyParser()); // Parse the request body
+app.use(express.cookieParser()); // Parse cookies from header
 app.use(express.methodOverride());
-app.use(express.session({
+app.use(express.session({ // Session store
 	secret: "K3hsadkasdoijqwpoie",
-	store: sessionStore
+	store: sessionStore,
+	cookie: {
+		maxAge: 604800000 // 7 days in s * 10^3
+	}
 }));
 app.use(express.csrf()); // csrf protection
 
+// Custom middleware
 app.use(function(req, res, next) {
 	// request middleware
 	
@@ -84,12 +90,12 @@ app.use(function(req, res, next) {
 	next();
 });
 
-app.use(everyauth.middleware());
+app.use(everyauth.middleware()); // Authentication middleware
 
 // development only
 if ('development' == app.get('env')) {
-	app.use(express.errorHandler());
-	app.set('view cache', false);
+	app.use(express.errorHandler()); // Let xpress handle errors
+	app.set('view cache', false); // Tell Jade not to cache views
 }
 
 var server = http.createServer(app)
@@ -111,5 +117,6 @@ if (process.env.NODE_ENV == 'production') {
 		accountKey: '5e94cba9ea3c85ec07684aa2ebca56885184bfb1', 
 		appName: 'EventMost'
 	});
+	// Record errors with nodetime
 	ntime.expressErrorHandler()
 }

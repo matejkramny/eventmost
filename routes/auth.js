@@ -82,7 +82,7 @@ everyauth.linkedin
 	.redirectPath('/auth/finish')
 
 exports.display = function(req, res) {
-	res.render('login');
+	res.render('login', { title: "Login" });
 }
 
 exports.checkFinished = function (req, res) {
@@ -91,7 +91,7 @@ exports.checkFinished = function (req, res) {
 		req.user.save(function(err) {
 			if (err) throw err;
 			
-			res.render('finishreg');
+			res.render('finishreg', { title: "Last step" });
 		});
 	} else {
 		res.redirect('/')

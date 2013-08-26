@@ -1,7 +1,7 @@
 models = require('../../models')
 
 exports.addEvent = function (req, res) {
-	res.render('event/add')
+	res.render('event/add', { title: "Add Event" })
 }
 
 exports.doAddEvent = function (req, res) {

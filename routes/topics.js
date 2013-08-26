@@ -45,7 +45,7 @@ function show (req, res) {
 			res.format({
 				html: function() {
 					res.locals.topics = topics;
-					res.render('topics', { pageName: topic });
+					res.render('topics', { pageName: topic, title: "Topics" });
 				},
 				json: function() {
 					res.send({
@@ -122,7 +122,7 @@ function showTopic(req, res) {
 					html: function() {
 						res.locals.topic = topic;
 						res.locals.messages = messages;
-						res.render('topic')
+						res.render('topic', { title: topic.name })
 					},
 					json: function() {
 						res.send({

@@ -19,7 +19,7 @@ exports.router = function (app) {
 		.get('/event/:id/dropbox', util.authorized, getEvent, attending, dropbox.view)
 		.post('/event/:id/dropbox/upload', util.authorized, getEvent, dropbox.doUpload)
 		.post('/event/:id/dropbox/remove', util.authorized, getEvent, dropbox.doRemove)
-		.post('/event/:id/post', util.authorized, getEvent, postMessage)
+		.post('/event/:id/post', util.authorized, getEvent, attending, postMessage)
 		.get('/event/:id/notifications', util.authorized, getEvent, attending, notifications.display)
 		
 		.get('/events', list.listEvents)
@@ -93,7 +93,7 @@ exports.attending = attending = function (req, res, next) {
 exports.viewEvent = function (req, res) {
 	res.format({
 		html: function() {
-			res.render('event/view');
+			res.render('event/view', { title: res.locals.event.name });
 		},
 		json: function() {
 			res.send({
