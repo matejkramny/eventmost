@@ -1,0 +1,47 @@
+body {
+	background-color: #542437;
+}
+h1, h2, h3, h4, h5, h6 {
+	color: #ecd178;
+}
+
+header {
+	background-color: #ecd178;
+	height: 100px;
+}
+
+header .signin {
+	text-transform: uppercase;
+	font-weight: bold;
+	text-align: right;
+}
+
+header .headerSpacer {
+	margin-top: 10px;
+}
+
+footer {
+	background-color: #ecd178;
+}
+footer .copy {
+	text-align: center;
+}
+
+.well.redbox {
+	border-radius: 0px;
+	border: 1px solid #c22844; /* don't want to break width of the box */
+}
+.redbox {
+	background-color: #c22844;
+	text-transform: uppercase;
+	color: #542437;
+	font-weight: 100;
+}
+.redbox h6 {
+	font-weight: inherit;
+	color: inherit;
+}
+
+.spacer {
+	margin-top: 20px;
+}
