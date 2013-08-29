@@ -7,11 +7,11 @@ var fs = require('fs')
 	, transport = require('../app').transport
 
 exports.router = function (app) {
-	app.get('/topics/new', util.authorized, newTopic)
-		.get('/topics', util.authorized, show)
-		.get('/topic/:id', util.authorized, showTopic)
-		.post('/topic/:id/new', util.authorized, newMessage)
-		.post('/topic/:id/update', util.authorized, updateTopic)
+	app.get('/conversation/new', util.authorized, newTopic)
+		.get('/conversations', util.authorized, show)
+		.get('/conversation/:id', util.authorized, showTopic)
+		.post('/conversation/:id/new', util.authorized, newMessage)
+		.post('/conversation/:id/update', util.authorized, updateTopic)
 }
 
 function show (req, res) {
@@ -33,7 +33,7 @@ function show (req, res) {
 		.exec(function(err, topics) {
 			if (err) throw err;
 			
-			var topic = "Topics";
+			var topic = "Conversation";
 			if (topics.length && withUser) {
 				for (var i = 0; i < topics[0].users.length; i++) {
 					if (topics[0].users[i]._id.equals(withUser)) {
@@ -45,7 +45,7 @@ function show (req, res) {
 			res.format({
 				html: function() {
 					res.locals.topics = topics;
-					res.render('topics', { pageName: topic, title: "Topics" });
+					res.render('conversations', { pageName: topic, title: "Conversations" });
 				},
 				json: function() {
 					res.send({
@@ -79,7 +79,7 @@ function newTopic (req, res) {
 				topic.save(function(err) {
 					if (err) throw err;
 			
-					res.redirect('/topic/'+topic._id);
+					res.redirect('/conversation/'+topic._id);
 				})
 			}
 		})
@@ -87,7 +87,7 @@ function newTopic (req, res) {
 		return;
 	}
 	
-	res.render('newtopic')
+	res.render('newconversation')
 }
 
 function showTopic(req, res) {
@@ -122,7 +122,7 @@ function showTopic(req, res) {
 					html: function() {
 						res.locals.topic = topic;
 						res.locals.messages = messages;
-						res.render('topic', { title: topic.name })
+						res.render('conversation', { title: topic.name })
 					},
 					json: function() {
 						res.send({
@@ -136,7 +136,7 @@ function showTopic(req, res) {
 			res.format({
 				html: function() {
 					res.status(404);
-					res.redirect('/topics')
+					res.redirect('/conversations')
 				},
 				json: function() {
 					res.send({
@@ -154,7 +154,7 @@ function newMessage(req, res) {
 	if (text.length == 0) {
 		res.format({
 			html: function() {
-				res.redirect('/topic/'+id);
+				res.redirect('/conversation/'+id);
 			},
 			json: function() {
 				res.send({
@@ -204,7 +204,7 @@ function newMessage(req, res) {
 			message.save(function(err) {
 				res.format({
 					html: function() {
-						res.redirect('/topic/'+topic._id)
+						res.redirect('/conversation/'+topic._id)
 					},
 					json: function() {
 						res.send({
@@ -229,7 +229,7 @@ function newMessage(req, res) {
 			res.format({
 				html: function() {
 					res.status(403);
-					res.redirect('/topics')
+					res.redirect('/conversations')
 				},
 				json: function() {
 					res.send({
@@ -254,7 +254,7 @@ function notifyByEmail (people, topic, message, from) {
 			from: "EventMost <noreply@eventmost.com>",
 			to: person.email,
 			subject: "New message from "+from.getName(),
-			html: "You have a new message on <strong>EventMost</strong>.<br />To view your message, click <a href='http://eventmost.com/topic/"+topic._id+"'>here</a><br/><br/>You can turn off notifications in your settings. Please do not reply to this email, as we do not receive correspondence for this email address."
+			html: "You have a new message on <strong>EventMost</strong>.<br />To view your message, click <a href='http://eventmost.com/conversation/"+topic._id+"'>here</a><br/><br/>You can turn off notifications in your settings. Please do not reply to this email, as we do not receive correspondence for this email address."
 		}
 		transport.sendMail(options, function(err, response) {
 			if (err) throw err;
@@ -317,7 +317,7 @@ function updateTopic(req, res) {
 		topic.name = title;
 		topic.lastUpdated = Date.now()
 		topic.save(function(err) {
-			res.redirect('/topic/'+topic._id)
+			res.redirect('/conversation/'+topic._id)
 		})
 	});
 }
