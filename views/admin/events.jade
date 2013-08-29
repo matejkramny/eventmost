@@ -3,4 +3,52 @@ extends layout
 block content
 	h2= events.length
 		|  Events
-	
+	h3 X events happening right <code>NOW</code>
+	table.table
+		thead
+			tr
+				th Attendees
+				th Event name
+				th Begins
+				th Ends
+				th Address
+				th Password protected
+				th Messages
+				th Files in dropbox
+				th Removed
+		tbody
+			for event in events
+				tr
+					td= event.attendees.length
+					td= event.name
+					td= event.start.getDay()
+						| /
+						= event.start.getMonth()
+						| /
+						= event.start.getYear()
+						|  
+						= event.start.getHours()
+						| :
+						= event.start.getMinutes()
+					td= event.end.getDay()
+						| /
+						= event.end.getMonth()
+						| /
+						= event.end.getYear()
+						|  
+						= event.end.getHours()
+						| :
+						= event.end.getMinutes()
+					td= event.address
+					td
+						if event.password.enabled == true
+							span.glyphicon.glyphicon-thumbs-up
+						else
+							span.glyphicon.glyphicon-thumbs-down
+					td= event.messages.length
+					td= event.files.length
+					td
+						if event.deleted == true
+							span.glyphicon.glyphicon-thumbs-up
+						else
+							span.glyphicon.glyphicon-thumbs-down

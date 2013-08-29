@@ -34,7 +34,6 @@ var scheme = schema({
 		moderateForumComments: { type: Boolean, default: false },
 		upload: { type: Boolean, default: true }
 	},
-	defaultTweet: String,
 	files: [{
 		created: {
 			type: Date,
