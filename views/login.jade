@@ -10,16 +10,15 @@ append content
 			.well.redbox
 				h6 Sign in
 				h6 Sign up
-			.well.redbox
-				a(href="/auth/twitter", alt="Log in with twitter", title="Log in with twitter")
-					i.fui-twitter
-					img(src="/img/twitter-btn.png")
-			.well.redbox
-				a(href="/auth/linkedin", alt="Log in with linkedin", title="Log in with linkedin")
-					img(src="/img/linkedin-btn.png")
-			.well.redbox
+			.well.redbox.sociallogin
 				a(href="/auth/facebook", alt="Log in with facebook", title="Log in with facebook")
-					img(src="/img/facebook-btn.png", alt="")
+					img(src="/img/facebook.png", alt="")
+			.well.redbox.sociallogin
+				a(href="/auth/linkedin", alt="Log in with linkedin", title="Log in with linkedin")
+					img(src="/img/linkedin.png")
+			.well.redbox.sociallogin
+				a(href="/auth/twitter", alt="Log in with twitter", title="Log in with twitter")
+					img(src="/img/twitter.png")
 		.span10
 			form(method="POST", accept-charset="utf-8")
 				input(type="hidden", name="_csrf", value=token)

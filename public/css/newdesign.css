@@ -1,5 +1,8 @@
+@import url(http://fonts.googleapis.com/css?family=Raleway:400,500);
+
 body {
 	background-color: #542437;
+	font-family: 'Raleway', Arial, sans-serif;
 }
 h1, h2, h3, h4, h5, h6 {
 	color: #ecd178;
@@ -24,7 +27,6 @@ footer {
 	background-color: #ecd178;
 }
 footer .copy {
-	text-align: center;
 }
 
 .well.redbox {
@@ -36,6 +38,7 @@ footer .copy {
 	text-transform: uppercase;
 	color: #542437;
 	font-weight: 100;
+	margin-bottom: 10px;
 }
 .redbox h6 {
 	font-weight: inherit;
@@ -44,4 +47,8 @@ footer .copy {
 
 .spacer {
 	margin-top: 20px;
+}
+
+.sociallogin img {
+	margin: auto;
 }
