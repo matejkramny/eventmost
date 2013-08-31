@@ -6,18 +6,19 @@
     "start": "node app.js"
   },
   "dependencies": {
-    "express": "*",
-    "jade": "*",
-    "mongoose": "*",
-    "csv": "*",
-    "crypto": "*",
-    "async": "*",
-    "validator": "*",
-    "connect-mongo": "*",
-	"nodemailer": "*",
-	"everyauth": "*",
-	"socket.io": "*",
-	"nodetime": "*",
-	"nodemailer": "*"
+    "express": "latest",
+    "jade": "latest",
+    "mongoose": "latest",
+    "csv": "latest",
+    "crypto": "latest",
+    "async": "latest",
+    "validator": "latest",
+    "connect-mongo": "latest",
+	"nodemailer": "latest",
+	"everyauth": "latest",
+	"socket.io": "latest",
+	"nodetime": "latest",
+	"nodemailer": "latest",
+	"bugsnag": "latest"
   }
 }

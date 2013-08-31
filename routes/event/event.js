@@ -85,7 +85,9 @@ exports.attending = attending = function (req, res, next) {
 		}
 	}
 	
-	res.locals.attending = attending;
+	console.log("Attending:"+attending)
+	
+	res.locals.eventattending = attending;
 	
 	next()
 }
@@ -93,12 +95,13 @@ exports.attending = attending = function (req, res, next) {
 exports.viewEvent = function (req, res) {
 	res.format({
 		html: function() {
+			console.log('locals '+res.locals.eventattending)
 			res.render('event/view', { title: res.locals.event.name });
 		},
 		json: function() {
 			res.send({
 				event: res.locals.event,
-				attending: res.locals.attending
+				attending: res.locals.eventattending
 			});
 		}
 	});
@@ -131,7 +134,7 @@ function postMessage (req, res) {
 	var message = req.body.message;
 	var ev = res.locals.event;
 	
-	if (res.locals.attending) {
+	if (res.locals.eventattending) {
 		ev.messages.unshift({
 			posted: Date.now(),
 			user: req.user._id,

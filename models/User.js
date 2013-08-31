@@ -45,9 +45,13 @@ var scheme = schema({
 });
 
 scheme.methods.setName = function (name) {
-	var split = name.split(' ');
-	this.name = split[0];
-	this.surname = split[split.length -1];
+	try {
+		var split = name.split(' ');
+		this.name = split[0];
+		this.surname = split[split.length -1];
+	} catch (exception) {
+		// TODO log this exception
+	}
 }
 scheme.methods.getName = function () {
 	var name;
@@ -276,18 +280,24 @@ scheme.statics.createWithFacebook = function (meta, accessToken, accessTokenSecr
 		facebook: {
 			userid: meta.id
 		},
-		location: meta.location,
 		requestEmail: false,
 		created: Date.now(),
-		name: meta.first_name,
-		surname: meta.last_name,
-		website: meta.link,
-		email: meta.email
 	})
-	if (meta.work.length > 0) {
+	if (meta.location) {
+		user.location = meta.location;
+	} if (meta.first_name) {
+		user.name = meta.first_name;
+	} if (meta.last_name) {
+		user.surname = meta.last_name;
+	} if (meta.link) {
+		user.website = meta.link;
+	} if (meta.email) {
+		user.email = meta.email;
+	}
+	if (meta.work && meta.work.length > 0) {
 		user.position = meta.work[0].description;
 	}
-	if (meta.education.length > 0 && meta.education[0].school.name) {
+	if (meta.education && meta.education.length > 0 && meta.education[0].school.name) {
 		user.education = meta.education[0].school.name;
 	}
 	

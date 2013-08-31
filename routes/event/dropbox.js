@@ -2,6 +2,22 @@ models = require('../../models')
 fs = require('fs')
 
 exports.view = function (req, res) {
+	if (!res.locals.eventattending) {
+		res.format({
+			html: function() {
+				res.redirect('/event/'+res.locals.event._id);
+			},
+			json: function() {
+				res.send({
+					status: 403,
+					message: "Not attending"
+				})
+			}
+		})
+		
+		return;
+	}
+	
 	res.format({
 		html: function() {
 			res.render('event/dropbox', { title: "Dropbox" })
@@ -9,7 +25,7 @@ exports.view = function (req, res) {
 		json: function() {
 			res.send({
 				event: res.locals.event,
-				attending: res.locals.attending
+				attending: res.locals.eventattending
 			})
 		}
 	})
@@ -61,6 +77,22 @@ exports.doRemove = function (req, res, next) {
 }
 
 exports.doUpload = function (req, res) {
+	if (!res.locals.eventattending) {
+		res.format({
+			html: function() {
+				res.redirect('/event/'+res.locals.event._id);
+			},
+			json: function() {
+				res.send({
+					status: 403,
+					message: "Not attending"
+				})
+			}
+		})
+		
+		return;
+	}
+	
 	var ev = res.locals.event;
 	
 	if (req.files.upload == null || req.files.upload.name.length == 0) {

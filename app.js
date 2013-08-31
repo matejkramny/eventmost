@@ -9,6 +9,9 @@ var express = require('express')
 	, authmethods = require('./routes/auth')
 	, mailer = require('nodemailer')
 
+var bugsnag = require("bugsnag");
+bugsnag.register("6c73b59b8d37503c8e8a70d67613d067")
+
 // Create SMTP transport method
 var transport = mailer.createTransport("sendgrid", {
 	auth: {
@@ -59,6 +62,7 @@ app.set('view cache', true); // Cache views
 app.set('app version', '0.0.2'); // App version
 app.locals.pretty = process.env.NODE_ENV != 'production' // Pretty HTML outside production mode
 
+app.use(bugsnag.requestHandler);
 app.use(express.logger('dev')); // Pretty log
 app.use(express.limit('25mb')); // File upload limit
 app.use("/", express.static(path.join(__dirname, 'public'))); // serve static files
@@ -120,3 +124,4 @@ if (process.env.NODE_ENV == 'production') {
 	// Record errors with nodetime
 	ntime.expressErrorHandler()
 }
+app.use(bugsnag.errorHandler);

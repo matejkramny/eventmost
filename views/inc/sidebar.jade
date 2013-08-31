@@ -27,7 +27,7 @@
 						li= event.name
 						li
 							a.filebox(href="/event/"+event._id) Details
-						if attending
+						if eventattending == true
 							li
 								a.filebox(href="/event/"+event._id+"/attendees") Attendees
 							li

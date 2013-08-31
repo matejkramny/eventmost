@@ -5,7 +5,7 @@ exports.editEvent = function (req, res) {
 	
 	if (!ev.user._id.equals(req.user._id)) {
 		req.session.flash.push("Unauthorized")
-		res.redirect('/');
+		res.redirect('/event/'+res.locals.event._id);
 		return;
 	}
 	

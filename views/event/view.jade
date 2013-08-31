@@ -41,7 +41,7 @@ block content
 					.text
 						a(href="/user/#{event.user._id}")= event.user.getName()
 				
-				if !attending
+				if eventattending != true
 					form#EventViewForm(action="/event/#{event._id}/join", method="POST", accept-charset="utf-8")
 						input(type="hidden", name="_csrf", value=token)
 						if event.password.enabled
@@ -54,7 +54,7 @@ block content
 				.clear
 			.clear
 			br
-			if attending
+			if eventattending == true
 				form(action="/event/"+event._id+"/post", method="POST")
 					input(type="hidden", name="_csrf", value=token)
 					.left(style="width: 100%;")

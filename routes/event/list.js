@@ -112,6 +112,22 @@ exports.listSpeakers = function (req, res) {
 }
 
 exports.listAttendees = function (req, res) {
+	if (!res.locals.eventattending) {
+		res.format({
+			html: function() {
+				res.redirect('/event/'+res.locals.event._id);
+			},
+			json: function() {
+				res.send({
+					status: 403,
+					message: "Not attending"
+				})
+			}
+		})
+		
+		return;
+	}
+	
 	res.format({
 		html: function() {
 			res.render('event/attendees', { title: "Attendees at "+res.locals.event.name })
@@ -119,7 +135,7 @@ exports.listAttendees = function (req, res) {
 		json: function() {
 			res.send({
 				event: res.locals.event,
-				attending: res.locals.attending
+				attending: res.locals.eventattending
 			})
 		}
 	});
