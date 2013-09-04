@@ -1,36 +1,59 @@
 extends base
 
-// HomePage for guests
-// Page1.psd i think
 
 block addonjs
 	//script(src="/js/geoLogin.js")
 
+
 append content
 	include inc/flash
 	.row-fluid.spacer
-		.span2
+		.span2p
 			.well.redbox
-				h6 Hello world
+				h6 Sign in
+				img(src="/img/arrow.svg", alt="", class="arrow_redbox")
 				h6 Sign up
 			.well.redbox.sociallogin
+				.sociallogin
 				a(href="/auth/facebook", alt="Log in with facebook", title="Log in with facebook")
-					img(src="/img/facebook.png", alt="")
-			.well.redbox.sociallogin
-				a(href="/auth/linkedin", alt="Log in with linkedin", title="Log in with linkedin")
-					img(src="/img/linkedin.png")
+					img(src="/img/facebook.svg", alt="")
 			.well.redbox.sociallogin
 				a(href="/auth/twitter", alt="Log in with twitter", title="Log in with twitter")
-					img(src="/img/twitter.png")
-		.span10
+					img(src="/img/twitter.svg")
+			.well.redbox.sociallogin
+				a(href="/auth/linkedin", alt="Log in with linkedin", title="Log in with linkedin")
+					img(src="/img/linkedin.svg")
+		.span10p
 			form(method="POST", accept-charset="utf-8")
 				input(type="hidden", name="_csrf", value=token)
 				.row-fluid
-					.span10
-						input(type="text", placeholder="Search")
-					.span2
-						input.btn.btn-primary(type="button", value="Go")
+					.span10p
+						input(type="text", placeholder="SEARCH EVENTS OR PEOPLE", class="file_input_textbox")
+					.right
+						input.gonew(type="button", value="GO")
 			h1 Why use us
+			h7 Not only can you register your event here, you can also:
+
+		#slider1
+			a(href="", alt="", class="buttons prev")
+			.viewport 
+				ul.overview
+					li 
+						img(src="/img/1.svg", alt="", class="slid") 
+						t Create a social network like Facebook or Linkedin surrounding your event.
+					li 
+						img(src="/img/2.svg", alt="", class="slid") 
+						t Create a feedback platform for your guests speakers teams, vendors or other.
+					li 
+						img(src="/img/3.svg", alt="", class="slid") 
+						t Store files here for free that your attendees might use: power point presentations, schedules, pictures, etc.
+					li 
+						img(src="/img/4.svg", alt="", class="slid") 
+						t We will send you <br />and after-event analytics report full of tons <br />of interesting stats (also free... well everything <br />is free).
+					li 
+						img(src="/img/5.svg", alt="", class="slid") 
+						t You can upload logos <br />for your sponsors too (also free), that will be seen during the entire event and after this significantly increasing sponsor revenue!.
+			a(href="", alt="", class="buttons next")
 	.well.redbox
 		form#UserLoginForm(action="/auth/password", method="post", accept-charset="utf-8")
 			input(type="hidden", name="_csrf", value=token)
@@ -39,5 +62,5 @@ append content
 					input(name="login", placeholder="E-mail", maxlength="128", type="email", id="UserEmail", required="required")
 				.span5
 					input(name="password", placeholder="Password", type="password", id="UserPassword", required="required")
-				.span2
+				.left
 					input.btn.btn-primary(type="submit", value="Log in / Register now")

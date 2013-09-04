@@ -6,11 +6,15 @@ html
 		title EventMost - #{title}
 		link(href="/favicon.ico", type="image/x-icon", rel="icon")
 		link(href="/favicon.ico", type="image/x-icon", rel="shortcut icon")
+
 		block css
 			link(rel="stylesheet", href="/bootstrap/css/bootstrap.css")
 			link(rel="stylesheet", href="/bootstrap/css/bootstrap-responsive.css")
 			link(rel="stylesheet", href="/css/flat-ui.css")
 			link(rel="stylesheet", href="/css/newdesign.css")
+			link(rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Raleway")
+
+
 	body
 		block container
 			.row-fluid
@@ -19,9 +23,9 @@ html
 						.row-fluid.headerSpacer
 							.logo.span3
 								a(href="/")
-									img(src="/img/logo.png")
+									img(src="/img/logo.png", class="logo")
 							.signin.span3.offset6
-								a(href="/") Login / Sign up
+								a(href="/", class="link1") Login | Sign up
 			.container
 				block content
 				.row-fluid
@@ -39,4 +43,9 @@ html
 			script(src="js/jquery.tagsinput.js")
 			script(src="js/jquery.placeholder.js")
 			script(src="js/jquery.stacktable.js")
+			script(src="js/jquery.tinycarousel.min.js")
+			script(src="js/tinycarousel2.js")
 			block addonjs
+
+
+  
