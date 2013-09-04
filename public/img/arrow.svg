@@ -5,6 +5,8 @@
 	 width="34px" height="34px" viewBox="0 0 34 34" enable-background="new 0 0 34 34" xml:space="preserve">
 <g>
 	<circle fill="none" stroke="#542437" stroke-miterlimit="10" cx="17" cy="17" r="16"/>
-	<text transform="matrix(1 0 0 1 10.9834 23.9502)" fill="#542437" font-family="'Raleway-Thin'" font-size="25.8707">&gt;</text>
+	<g enable-background="new    ">
+		<path fill="#542437" d="M23.117,17.482L12.329,23.95v-0.569l10.039-6.131l-10.039-6.105v-0.569l10.789,6.441V17.482z"/>
+	</g>
 </g>
 </svg>
