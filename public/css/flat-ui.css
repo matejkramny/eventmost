@@ -1783,7 +1783,7 @@ input[type="tel"],
 input[type="color"],
 .uneditable-input {
   border: 2px solid #bdc3c7;
-  color: #34495e;
+  color: #ecd077;
   font-family: 'Lato', sans-serif;
   font-size: 14px;
   padding: 8px 5px;
@@ -1818,7 +1818,7 @@ input[type="search"]:-moz-placeholder,
 input[type="tel"]:-moz-placeholder,
 input[type="color"]:-moz-placeholder,
 .uneditable-input:-moz-placeholder {
-  color: #b2bcc5;
+  color: #ecd077;
 }
 textarea::-webkit-input-placeholder,
 input[type="text"]::-webkit-input-placeholder,
@@ -1836,8 +1836,9 @@ input[type="search"]::-webkit-input-placeholder,
 input[type="tel"]::-webkit-input-placeholder,
 input[type="color"]::-webkit-input-placeholder,
 .uneditable-input::-webkit-input-placeholder {
-  color: #b2bcc5;
+  color: #ecd077;
 }
+
 textarea.placeholder,
 input[type="text"].placeholder,
 input[type="password"].placeholder,
@@ -1854,7 +1855,7 @@ input[type="search"].placeholder,
 input[type="tel"].placeholder,
 input[type="color"].placeholder,
 .uneditable-input.placeholder {
-  color: #b2bcc5;
+  color: #ecd077;
 }
 @media (max-width: 767px) {
   textarea,

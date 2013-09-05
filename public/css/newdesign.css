@@ -1,4 +1,4 @@
-@import url(http://fonts.googleapis.com/css?family=Raleway:400,500.600);
+@import url(http://fonts.googleapis.com/css?family=Raleway:100,200,400,700,700italic,900,400italic,300);
 
 body {
 	background-color: #542437;
@@ -33,12 +33,34 @@ footer .copy {
 	float: left;
 }
 
+.leftapp {
+	float: left;
+	padding-left: 48px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
 .right {
 	float: right;
 }
+.right_star {
+	float: right;
+	padding-top: 15px;
+	padding-left: 2px;
+	height: 17px;
+}
+.right_votes {
+	float: right;
+	padding-left: 2px;
+	width:270px;
+	text-align: right;
+	color: #ecd077;
+	font-size: 18px;
+	font-weight: 700;
+	margin-top: 3px;
+}
 .well.redbox {
 	border-radius: 0px;
-	width:100px;
+	min-width: 100px;
 	height: 82px;
 	border: none;
 }
@@ -47,6 +69,30 @@ footer .copy {
 	text-transform: uppercase;
 	color: #542437;
 	margin-bottom: 10px;
+}
+
+.in.orangebox {
+	width: 47%;
+	float: left;
+}
+.orangebox {
+	background-color: #d95a42;
+	color: #542437;
+	font-weight: 100;
+	font-size: 86px;
+	margin-bottom: 10px;
+	margin-left: 0px;
+	text-align: center;
+}
+.bluebox {
+	background-color: #53777a;
+	color: #542437;
+	font-weight: 100;
+	font-size: 86px;
+	margin-bottom: 10px;
+	margin-left: 0px;
+	text-align: center;
+	padding: 20px;
 }
 .redbox h6 {
 	color: inherit;
@@ -71,10 +117,13 @@ footer .copy {
 	padding-top: 10px;
 	padding-left: 15px;
 }
-.arrow_redbox {
-	padding-top: 2px;
-	padding-left: 30px;
+.arrow {
 	padding-bottom: 26px;
+	margin: auto;
+	vertical-align:middle;
+	text-align:center;
+	float: none;
+	display: block;
 }
 a.link1{
 	text-decoration: none;
@@ -85,12 +134,26 @@ a.link1:hover {
 	text-decoration: none;
 }
 
+a.link2{
+	text-decoration: none;
+	padding-left: 6px;
+	font-weight: 700;
+	font-size: 14px;
+	color: #ecd077;
+}
+
+a.link2:hover {
+	text-decoration: none;
+	color: #53777a;
+}
+
 .login {
 	color: #542437;
 }
 
 input.file_input_textbox {
 	color:#542437;
+	line-height: 39px;
 	font-size: 32px;
 	font-weight: 100;
 	border: none;
@@ -99,6 +162,41 @@ input.file_input_textbox {
 	border-top-right-radius: 0px;
 	border-bottom-right-radius: 0px;
 }
+
+input.file_input_textbox2 {
+	color:#ecd077;
+	font-size: 32px;
+	font-weight: 100;
+	border: none;
+	border-radius: 5px;
+	margin-top:15px; 
+	line-height: 39px;
+	background:url("../img/email-icon.svg")no-repeat scroll 15px 15px;
+	background-color: #542437;
+	padding-left: 50px;
+	max-width: 429px;
+}
+
+input.file_input_textbox3 {
+	color:#ecd077;
+	line-height: 39px;
+	font-size: 32px;
+	font-weight: 100;
+	border: none;
+	border-radius: 5px;
+	margin-top:15px; 
+	background:url("../img/pass-icon.svg")no-repeat scroll 15px 15px;
+	background-color: #542437;
+	padding-left: 50px;
+	max-width: 429px;
+	margin-left: 19px;
+}
+
+input[type="search"]::-webkit-input-placeholder,
+.uneditable-input::-webkit-input-placeholder {
+  color: #542437;
+}
+
 .gonew {
 	background-color: #c02942;
 	border:none;
@@ -113,11 +211,23 @@ input.file_input_textbox {
 	border-bottom-left-radius: 0px;
 }
 
+.enter {
+	background-color: #542437;
+	border:none;
+	height: 57px;
+	width: 130px !important;
+	float:right;
+	font-size: 30px;
+	font-weight: 700;
+	border-radius: 5px;
+	color: #ecd077;
+	margin-top:15px; 
+}
+
 .span10p h1 {
 	font-weight: 400;
 	font-size: 80px;
 }
-
 h7 {
 	font-weight: 400;
 	font-size: 35px;
@@ -125,23 +235,112 @@ h7 {
 	padding-left:10px;
 
 }
+h8 {
+	font-weight: 700;
+	font-size: 14px;
+	color: #ecd077;
+}
+p.eventtext {
+	font-size: 14px;
+	line-height: 18px;
+	color: #ecd077;
+	padding-top: 7px;
+	font-weight: 200;
+}
 
 /* Tiny Carousel */
 
-#slider1 { height: 1%; overflow:hidden; float: left; padding-top: 55px;}
-#slider1 .viewport { float: left; width:770px; height: 270px; overflow: hidden; position: relative; padding-left: 30px; margin-left: 30px;}
+#slider1 { height: 1%; overflow:hidden; float: left; padding-top: 35px;}
+#slider1 .viewport { float: left; width:770px; height: 230px; overflow: hidden; position: relative; padding-left: 30px; margin-left: 30px;}
 #slider1 .buttons { background:url("../img/buttons.svg") no-repeat scroll 0 0 transparent; display: block; margin: 40px 10px 0 30px;  text-indent: -999em; float: left; width: 70px; height: 70px; overflow: hidden; position: relative; }
 #slider1 .next { background-position: 0px -70px; margin: 53px 0 0 10px; height: 65px;  }
 #slider1 .overview { list-style: none; position: absolute; padding: 0; margin: 0; width: 850px; left: 0 top: 0; }
-#slider1 .overview li{ float: left; margin: 0 40px 0 0; padding: 1px; width: 230px; color:#ecd077; font-size: 18px;}
+#slider1 .overview li{ float: left; margin: 0 40px 0 0; padding: 1px; width: 240px; color:#ecd077; font-size: 18px;}
 
 .slid {margin-bottom: 10px;}
- .row-fluid .span2p {
+.row-fluid .span2p {
     width: 11%;
     *width: 11%;
-  }
+ }
 
-    .row-fluid .span10p {
+.row-fluid .span10p {
     width: 86.29%;
     *width: 86.29%;
+}
+
+.row-fluid .span1p {
+    width: 2%;
+    *width: 2%;
+}
+
+.row-fluid .span8p {
+    width: 65.9574%;
+    *width: 65.9574%;
+    margin-left: 14px;
+}
+.row-fluid .span12p {
+    width: 100%;
+    margin-top: 25px;
+}
+.events {
+  	padding-top: 20px;
+  	margin-bottom: 10px;
+  	height: auto;
   }
+.line {
+	background-color: #ecd077;
+	height: 1px;
+	margin-bottom: 5px;
+}
+
+.pagination2 {
+  position: relative;
+  padding-top: 50px;
+  margin-right: -4px;
+}
+.pagination2 ul {
+  background: none;
+  color: #ecd077;
+  vertical-align: top;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+.pagination2 li {
+  list-style-type:none; 
+  display:inline; 
+  padding-bottom:1px;
+  padding-right: 0px;
+  vertical-align: top;
+  color: #ecd077;
+}
+
+.pagination2 a {
+  float: left;
+  color: #ecd077;
+  padding: 0 4px;
+  line-height: 34px;
+  text-decoration: none;
+  border: none;
+  border-left-width: 0;
+}
+.pagination2 a:hover {
+color: #53777a;
+}
+
+.pagination2 .disabled,
+.pagination2 .disabled a,
+.pagination2 .disabled a:hover {
+  color: #ecd077 !important;
+  background-color: transparent;
+  cursor: default;
+}
+
+.pagination2 .current,
+.pagination2 .current a,
+.pagination2 .current a:hover {
+  color: #53777a !important;
+  background-color: transparent;
+  cursor: default;
+}
+

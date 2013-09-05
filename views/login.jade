@@ -11,7 +11,7 @@ append content
 		.span2p
 			.well.redbox
 				h6 Sign in
-				img(src="/img/arrow.svg", alt="", class="arrow_redbox")
+				img(src="/img/arrow.svg", alt="", class="arrow")
 				h6 Sign up
 			.well.redbox.sociallogin
 				.sociallogin
@@ -28,7 +28,7 @@ append content
 				input(type="hidden", name="_csrf", value=token)
 				.row-fluid
 					.span10p
-						input(type="text", placeholder="SEARCH EVENTS OR PEOPLE", class="file_input_textbox")
+						input(type="search", placeholder="SEARCH EVENTS OR PEOPLE", class="file_input_textbox")
 					.right
 						input.gonew(type="button", value="GO")
 			h1 Why use us
@@ -40,27 +40,154 @@ append content
 				ul.overview
 					li 
 						img(src="/img/1.svg", alt="", class="slid") 
-						t Create a social network like Facebook or Linkedin surrounding your event.
+						| Create a social network like Facebook or Linkedin surrounding your event.
 					li 
 						img(src="/img/2.svg", alt="", class="slid") 
-						t Create a feedback platform for your guests speakers teams, vendors or other.
+						| Create a feedback platform for your guests speakers teams, vendors or other.
 					li 
 						img(src="/img/3.svg", alt="", class="slid") 
-						t Store files here for free that your attendees might use: power point presentations, schedules, pictures, etc.
+						| Store files here for free that your attendees might use: power point presentations, schedules, pictures, etc.
 					li 
 						img(src="/img/4.svg", alt="", class="slid") 
-						t We will send you <br />and after-event analytics report full of tons <br />of interesting stats (also free... well everything <br />is free).
+						| We will send you <br />and after-event analytics report full of tons <br />of interesting stats (also free... well everything <br />is free).
 					li 
 						img(src="/img/5.svg", alt="", class="slid") 
-						t You can upload logos <br />for your sponsors too (also free), that will be seen during the entire event and after this significantly increasing sponsor revenue!.
+						| You can upload logos <br />for your sponsors too (also free), that will be seen during the entire event and after this significantly increasing sponsor revenue!.
 			a(href="", alt="", class="buttons next")
 	.well.redbox
 		form#UserLoginForm(action="/auth/password", method="post", accept-charset="utf-8")
 			input(type="hidden", name="_csrf", value=token)
 			.row-fluid
 				.span5
-					input(name="login", placeholder="E-mail", maxlength="128", type="email", id="UserEmail", required="required")
+					input(name="login", placeholder="email", maxlength="128", type="email", id="UserEmail", required="required", class="file_input_textbox2")
 				.span5
-					input(name="password", placeholder="Password", type="password", id="UserPassword", required="required")
-				.left
-					input.btn.btn-primary(type="submit", value="Log in / Register now")
+					input(name="password", placeholder="password", type="password", id="UserPassword", required="required", class="file_input_textbox3")
+				.right
+					input.enter(type="submit", value="ENTER")
+	a(href="/", class="link1").in.orangebox
+		| Create <br /> your event <br />
+		img(src="/img/arrow_big.svg", alt="", class="arrow")
+	a(href="/", class="link1").leftapp
+		img(src="/img/appstore.svg")
+	a(href="/", class="link1").leftapp
+		img(src="/img/android.svg")
+	.clearfix
+	.bluebox
+		.left 
+			img(src="/img/star.svg", alt="", class="arrow")
+		| Events in range
+		.right
+			img(src="/img/star.svg", alt="", class="arrow")
+	.clearfix
+	.row-fluid
+		.events
+			.span1p
+				img(src="/img/map-icon.svg", alt="",)
+			.span8p
+				h8 Temporibus autem quibusdam et aut officiis
+				p.eventtext At vero eos et accusamus et iusto odio dignissimos ducimus qui <b>blanditiis praesentium</b> voluptatumdeleniti atque corrupti quos <b>dolores et quas molestias</b> excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, <b>id est laborum et</b> dolorum fuga. At vero eos et accusamus et iusto odio dignissimos ducimus qui <b>blanditiis praesentium</b> voluptatumdeleniti atque corrupti
+			.right_star
+				img(src="/img/small_star.svg", alt="", class="arrow")
+			.right_star
+				img(src="/img/small_star.svg", alt="", class="arrow")
+			.right_star
+				img(src="/img/small_star.svg", alt="", class="arrow")
+			.right_star
+				img(src="/img/small_star.svg", alt="", class="arrow")
+			.right_star
+				img(src="/img/small_star.svg", alt="", class="arrow")
+			.right_votes
+				| 5432 votes
+	.line
+	.span8p
+		a(href="/", class="link2") READ MORE >
+	.clearfix
+	.row-fluid
+		.events
+			.span1p
+				img(src="/img/map-icon.svg", alt="",)
+			.span8p
+				h8 Temporibus autem quibusdam et aut officiis
+				p.eventtext At vero eos et accusamus et iusto odio dignissimos ducimus qui <b>blanditiis praesentium</b> voluptatumdeleniti atque corrupti quos <b>dolores et quas molestias</b> excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, <b>id est laborum et</b> dolorum fuga. At vero eos et accusamus et iusto odio dignissimos ducimus qui <b>blanditiis praesentium</b> voluptatumdeleniti atque corrupti
+			.right_star
+				img(src="/img/small_star.svg", alt="", class="arrow")
+			.right_star
+				img(src="/img/small_star.svg", alt="", class="arrow")
+			.right_star
+				img(src="/img/small_star.svg", alt="", class="arrow")
+			.right_star
+				img(src="/img/small_star.svg", alt="", class="arrow")
+			.right_star
+				img(src="/img/small_star.svg", alt="", class="arrow")
+			.right_votes
+				| 5432 votes
+	.line
+	.span8p
+		a(href="/", class="link2") READ MORE >
+	.clearfix
+	.row-fluid
+		.events
+			.span1p
+				img(src="/img/map-icon.svg", alt="",)
+			.span8p
+				h8 Temporibus autem quibusdam et aut officiis
+				p.eventtext At vero eos et accusamus et iusto odio dignissimos ducimus qui <b>blanditiis praesentium</b> voluptatumdeleniti atque corrupti quos <b>dolores et quas molestias</b> excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, <b>id est laborum et</b> dolorum fuga. At vero eos et accusamus et iusto odio dignissimos ducimus qui <b>blanditiis praesentium</b> voluptatumdeleniti atque corrupti
+			.right_star
+				img(src="/img/small_star.svg", alt="", class="arrow")
+			.right_star
+				img(src="/img/small_star.svg", alt="", class="arrow")
+			.right_star
+				img(src="/img/small_star.svg", alt="", class="arrow")
+			.right_star
+				img(src="/img/small_star.svg", alt="", class="arrow")
+			.right_star
+				img(src="/img/small_star.svg", alt="", class="arrow")
+			.right_votes
+				| 5432 votes
+	.line
+	.span8p
+		a(href="/", class="link2") READ MORE >
+	.clearfix
+	.row-fluid
+		.events
+			.span1p
+				img(src="/img/map-icon.svg", alt="",)
+			.span8p
+				h8 Temporibus autem quibusdam et aut officiis
+				p.eventtext At vero eos et accusamus et iusto odio dignissimos ducimus qui <b>blanditiis praesentium</b> voluptatumdeleniti atque corrupti quos <b>dolores et quas molestias</b> excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, <b>id est laborum et</b> dolorum fuga. At vero eos et accusamus et iusto odio dignissimos ducimus qui <b>blanditiis praesentium</b> voluptatumdeleniti atque corrupti
+			.right_star
+				img(src="/img/small_star.svg", alt="", class="arrow")
+			.right_star
+				img(src="/img/small_star.svg", alt="", class="arrow")
+			.right_star
+				img(src="/img/small_star.svg", alt="", class="arrow")
+			.right_star
+				img(src="/img/small_star.svg", alt="", class="arrow")
+			.right_star
+				img(src="/img/small_star.svg", alt="", class="arrow")
+			.right_votes
+				| 5432 votes
+	.line
+	.span8p
+		a(href="/", class="link2") READ MORE >
+	.right
+		.pagination2
+			ul
+				li
+					a(href="/",) Prev
+				li
+					a(href="/",) 1
+				li
+					a(href="/",) 2
+				li
+					a(href="/", class="current") 3
+				li
+					a(href="/",) 4
+				li
+					a(href="/",) 5
+				li
+					a(href="/", class="disabled") ...
+				li
+					a(href="/",) 542
+				li
+					a(href="/",) Next
