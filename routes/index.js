@@ -52,7 +52,7 @@ exports.router = function(app) {
 
 function getToken (req, res) {
 	res.send({
-		token: req.session._csrf
+		token: req.csrfToken()
 	});
 }
 

@@ -82,7 +82,7 @@ app.use(express.csrf()); // csrf protection
 app.use(function(req, res, next) {
 	// request middleware
 	
-	res.locals.token = req.session._csrf
+	res.locals.token = req.csrfToken();
 	
 	// flash
 	if (req.session.flash) {

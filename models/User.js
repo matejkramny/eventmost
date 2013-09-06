@@ -22,15 +22,12 @@ var scheme = schema({
 	interests: String,
 	avatar: { type: String, default: "/img/avatar.jpg" },
 	facebook: {
-		token: String,
 		userid: String
 	},
 	twitter: {
-		token: String,
 		userid: Number
 	},
 	linkedin: {
-		token: String,
 		userid: String
 	},
 	savedProfiles: [

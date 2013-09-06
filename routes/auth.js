@@ -112,17 +112,21 @@ exports.doCheckFinished = function (req, res) {
 
 exports.doPasswordJSON = function (req, res) {
 	models.User.authenticatePassword(req.body.email, req.body.password, function(err, user) {
-		user.password = null;
-		user.twitter = null;
-		user.facebook = null;
-		user.linkedin = null;
-		
-		if (err) {
-			res.status(404);
-			res.send({})
+		if (err == null && user) {
+			user.password = null;
+			user.twitter = null;
+			user.facebook = null;
+			user.linkedin = null;
+			
+			res.send({
+				status: 200,
+				user: user
+			})
 		} else {
 			res.send({
-				user: user
+				status: 404,
+				message: "Bad password",
+				err: err
 			})
 		}
 	})
