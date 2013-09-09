@@ -1,40 +1,234 @@
-extends layout
+extends base
 
-// Homepage for logged in users.
-
-block content
-	include inc/sidebar
-	#main-content.red-line-border
-		include inc/flash
-		.search-box#bigred
-			.search-content
-				p
-					span.title Home
-		.home-box-item.bottom-border
-			.left Create an event
-			.red-arrow
-				a(href="/event/add", class="golink")
-					img(src="/img/red-arrow.png", alt="")
-			.clear
-		.home-box-item.bottom-border
-			.left My events
-			.red-arrow
-				a(href="/events/my", class="golink")
-					img(src="/img/red-arrow.png", alt="")
-			.clear
-		.home-box-item.bottom-border
-			.left All events
-			.red-arrow
-				a(href="/events", class="golink")
-					img(src="/img/red-arrow.png", alt="")
-			.clear
-		.home-box-item.bottom-border.location-item
-			.left Events in range
-				span#events-number2
-					span#events-number.event-circle
-			.red-arrow
-				a(href="/events/near", class="golink")
-					img(src="/img/red-arrow.png", id="arrow-red", alt="")
-			.clear
-	.options-btn-box
-	.clear
+append content
+	include inc/flash
+	.avatar
+		img(src="/img/avatar2.jpg", alt="")
+	.right.span13p
+		.orangebox.inh
+			| Create event 
+			.box
+			.iconbox
+				img(src="/img/people.svg", alt="")
+				.center event
+			.iconbox
+				img(src="/img/meetup.svg", alt="")
+				.center meetup
+			.iconbox
+				img(src="/img/conference.svg", alt="")
+				.center conference
+			.iconbox
+				img(src="/img/other.svg", alt="")
+				.center other
+	.avatar.redbox
+		p.prof Profile name 
+		img(src="/img/card.svg", alt="")
+		a(href="", alt="", title="", class="link4")
+			| Choose your bussines card
+		.headerSpacer
+		.box2
+			.left
+				img(src="/img/i.svg", alt="")
+			.set
+				a(href="", alt="", title="", class="link4")
+					| Privacy settings
+		.clearfix
+		.box2
+			.left
+				img(src="/img/i.svg", alt="")
+			.set
+				a(href="", alt="", title="", class="link4")
+					| Notification settings
+		.clearfix
+		.box2
+			.left
+				img(src="/img/i.svg", alt="")
+			.set
+				a(href="", alt="", title="", class="link4")
+					| Edit profile
+		.clearfix
+		a(href="/logout", class="logout") Logout
+	a(href="",) 
+		.span7p
+			h6 Events<br /> nearby
+			img(src="/img/map-icon2.svg", alt="", class="arrow")
+	a(href="",)
+		.span7p.yellow
+			h5 All<br /> events
+			img(src="/img/arrow_big.svg", alt="", class="arrow")
+	.clearfix
+	.bluebox
+		| My events
+	.row-fluid
+		.events
+			.span1p
+				img(src="/img/map-icon.svg", alt="",)
+			.span1
+				img(src="/img/default_event.svg", alt="", class="minus")
+			.span8p
+				h8 Temporibus autem quibusdam et aut officiis
+				p.eventtext At vero eos et accusamus et iusto odio dignissimos ducimus qui <b>blanditiis praesentium</b> voluptatumdeleniti atque corrupti quos <b>dolores et quas molestias</b> excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, <b>id est laborum et</b> dolorum fuga. At vero eos et accusamus et iusto odio dignissimos ducimus qui <b>blanditiis praesentium</b> voluptatumdeleniti atque corrupti
+			.right_star
+				img(src="/img/small_star.svg", alt="", class="arrow")
+			.right_star
+				img(src="/img/small_star.svg", alt="", class="arrow")
+			.right_star
+				img(src="/img/small_star.svg", alt="", class="arrow")
+			.right_star
+				img(src="/img/small_star.svg", alt="", class="arrow")
+			.right_star
+				img(src="/img/small_star.svg", alt="", class="arrow")
+			.right_votes
+				| 5432 votes
+	.line
+	.span8p
+		a(href="/", class="link2") READ MORE >
+	.clearfix
+	.row-fluid
+		.events
+			.span1p
+				img(src="/img/map-icon.svg", alt="",)
+			.span1
+				img(src="/img/default_event.svg", alt="", class="minus")
+			.span8p
+				h8 Temporibus autem quibusdam et aut officiis
+				p.eventtext At vero eos et accusamus et iusto odio dignissimos ducimus qui <b>blanditiis praesentium</b> voluptatumdeleniti atque corrupti quos <b>dolores et quas molestias</b> excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, <b>id est laborum et</b> dolorum fuga. At vero eos et accusamus et iusto odio dignissimos ducimus qui <b>blanditiis praesentium</b> voluptatumdeleniti atque corrupti
+			.right_star
+				img(src="/img/small_star.svg", alt="", class="arrow")
+			.right_star
+				img(src="/img/small_star.svg", alt="", class="arrow")
+			.right_star
+				img(src="/img/small_star.svg", alt="", class="arrow")
+			.right_star
+				img(src="/img/small_star.svg", alt="", class="arrow")
+			.right_star
+				img(src="/img/small_star.svg", alt="", class="arrow")
+			.right_votes
+				| 5432 votes
+	.line
+	.span8p
+		a(href="/", class="link2") READ MORE >
+	.clearfix
+	.right
+		.pagination2
+			ul
+				li
+					a(href="/",) Prev
+				li
+					a(href="/",) 1
+				li
+					a(href="/",) 2
+				li
+					a(href="/", class="current") 3
+				li
+					a(href="/",) 4
+				li
+					a(href="/",) 5
+				li
+					a(href="/", class="disabled") ...
+				li
+					a(href="/",) 542
+				li
+					a(href="/",) Next
+	.clearfix
+	.bluebox
+		| Events nearby
+		.right
+			p Arrange by
+	.row-fluid
+		.events
+			.span1p
+				img(src="/img/map-icon.svg", alt="",)
+			.span1
+				img(src="/img/default_event.svg", alt="", class="minus")
+			.span8p
+				h8 Temporibus autem quibusdam et aut officiis
+				p.eventtext At vero eos et accusamus et iusto odio dignissimos ducimus qui <b>blanditiis praesentium</b> voluptatumdeleniti atque corrupti quos <b>dolores et quas molestias</b> excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, <b>id est laborum et</b> dolorum fuga. At vero eos et accusamus et iusto odio dignissimos ducimus qui <b>blanditiis praesentium</b> voluptatumdeleniti atque corrupti
+			.right_star
+				img(src="/img/small_star.svg", alt="", class="arrow")
+			.right_star
+				img(src="/img/small_star.svg", alt="", class="arrow")
+			.right_star
+				img(src="/img/small_star.svg", alt="", class="arrow")
+			.right_star
+				img(src="/img/small_star.svg", alt="", class="arrow")
+			.right_star
+				img(src="/img/small_star.svg", alt="", class="arrow")
+			.right_votes
+				| 5432 votes
+	.line
+	.span8p
+		a(href="/", class="link2") READ MORE >
+	.clearfix
+	.row-fluid
+		.events
+			.span1p
+				img(src="/img/map-icon.svg", alt="",)
+			.span1
+				img(src="/img/default_event.svg", alt="", class="minus")
+			.span8p
+				h8 Temporibus autem quibusdam et aut officiis
+				p.eventtext At vero eos et accusamus et iusto odio dignissimos ducimus qui <b>blanditiis praesentium</b> voluptatumdeleniti atque corrupti quos <b>dolores et quas molestias</b> excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, <b>id est laborum et</b> dolorum fuga. At vero eos et accusamus et iusto odio dignissimos ducimus qui <b>blanditiis praesentium</b> voluptatumdeleniti atque corrupti
+			.right_star
+				img(src="/img/small_star.svg", alt="", class="arrow")
+			.right_star
+				img(src="/img/small_star.svg", alt="", class="arrow")
+			.right_star
+				img(src="/img/small_star.svg", alt="", class="arrow")
+			.right_star
+				img(src="/img/small_star.svg", alt="", class="arrow")
+			.right_star
+				img(src="/img/small_star.svg", alt="", class="arrow")
+			.right_votes
+				| 5432 votes
+	.line
+	.span8p
+		a(href="/", class="link2") READ MORE >
+	.clearfix
+	.row-fluid
+		.events
+			.span1p
+				img(src="/img/map-icon.svg", alt="",)
+			.span1
+				img(src="/img/default_event.svg", alt="", class="minus")
+			.span8p
+				h8 Temporibus autem quibusdam et aut officiis
+				p.eventtext At vero eos et accusamus et iusto odio dignissimos ducimus qui <b>blanditiis praesentium</b> voluptatumdeleniti atque corrupti quos <b>dolores et quas molestias</b> excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, <b>id est laborum et</b> dolorum fuga. At vero eos et accusamus et iusto odio dignissimos ducimus qui <b>blanditiis praesentium</b> voluptatumdeleniti atque corrupti
+			.right_star
+				img(src="/img/small_star.svg", alt="", class="arrow")
+			.right_star
+				img(src="/img/small_star.svg", alt="", class="arrow")
+			.right_star
+				img(src="/img/small_star.svg", alt="", class="arrow")
+			.right_star
+				img(src="/img/small_star.svg", alt="", class="arrow")
+			.right_star
+				img(src="/img/small_star.svg", alt="", class="arrow")
+			.right_votes
+				| 5432 votes
+	.line
+	.span8p
+		a(href="/", class="link2") READ MORE >
+	.clearfix
+	.right
+		.pagination2
+			ul
+				li
+					a(href="/",) Prev
+				li
+					a(href="/",) 1
+				li
+					a(href="/",) 2
+				li
+					a(href="/", class="current") 3
+				li
+					a(href="/",) 4
+				li
+					a(href="/",) 5
+				li
+					a(href="/", class="disabled") ...
+				li
+					a(href="/",) 542
+				li
+					a(href="/",) Next
+	.clearfix

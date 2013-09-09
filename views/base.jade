@@ -21,18 +21,77 @@ html
 				header.span12
 					.container
 						.row-fluid.headerSpacer
-							.logo.span3
-								a(href="/")
-									img(src="/img/logo.png", class="logo")
-							.signin.span3.offset6
-								a(href="/", class="link1") Login | Sign up
+							if everyauth.loggedIn != true
+								//- Only displayed when users are guests
+								.logo.span3
+									a(href="/")
+										img(src="/img/logo.png", class="logo")
+								.signin.span3.offset6
+									a(href="/", class="link1") Login 
+									| |
+									a(href="", class="link1")  Sign up
+							else
+								//- Only displayed when user is logged in
+								.logo.span3
+									a(href="/")
+										img(src="/img/logo.png", class="logo")
+								.menu.span7.right
+									a(href="/", class="link1") Home 
+									| |
+									a(href="/", class="link1")  Create event
+								.span7.headerspacer2
+									form(method="POST", accept-charset="utf-8")
+										.right
+											input.gonew2(type="button", value="GO")
+										input(type="hidden", name="_csrf", value=token)
+										input(type="search", placeholder="search events of people", class="file_input_textbox4")
+								img(src="/img/dot.svg", class="purpleline")
+								.right.minus2
+									.right.image
+										img(src="/img/messages.svg") 
+										h5 Inbox
+										h15 3
+
 			.container
 				block content
 				.row-fluid
-					footer.span12p
-						.span6
-							img(src="/img/bubble.svg", class="arrow")
-						.copy.text-center Copyright &copy; 2014 EventMost
+					footer
+						.left.blocks
+							.image
+								img(src="/img/bubble.svg",)
+							| Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut.
+							.right.spacer
+								a(href="/", class="link1") READ MORE >
+						.left.blocks.bigslid
+							.image
+								img(src="/img/calendar-icon.svg") 
+								h15 26
+							| Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut.
+							.right.spacer
+								a(href="/", class="link1") READ MORE >
+						.left.blocks.bigslid
+							h5 FOLLOW US
+							.left.slid
+								a(href="/auth/facebook", alt="Log in with facebook", title="Log in with facebook")
+									img(src="/img/facebook-icon.svg", alt="")
+							.left.smallslid.slid
+								a(href="/auth/twitter", alt="Log in with twitter", title="Log in with twitter")
+									img(src="/img/twitter-icon.svg", alt="")
+							.left.smallslid.slid
+								a(href="/auth/linkedin", alt="Log in with linkedin", title="Log in with linkedin")
+									img(src="/img/linkedin-icon.svg", alt="")
+							.clearfix
+							.left
+								a(href="/auth/rss", alt="", title="")
+									img(src="/img/rss-icon.svg", alt="")
+							.left.smallslid.slid
+								a(href="/auth/google+", alt="Log in with google+", title="Log in with google+")
+									img(src="/img/google-icon.svg", alt="")
+							.left.smallslid.slid
+								a(href="/auth/printerest", alt="Log in with printerest", title="Log in with printerest")
+									img(src="/img/printerest-icon.svg", alt="")
+						.clearfix
+						.copy.text-center Copyright © 2013 <b>EventMost</b>. All rights reserved.
 		block js
 			script(src="js/jquery-1.8.3.min.js")
 			script(src="js/jquery-ui-1.10.3.custom.min.js")
