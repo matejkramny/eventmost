@@ -61,9 +61,10 @@ footer .copy {
 }
 .right_star {
 	float: right;
-	padding-top: 15px;
-	padding-left: 2px;
+	padding-top: 20px;
+	padding-right: 35px;
 	height: 17px;
+	color: #ecd077;
 }
 .land {
 	width: 26% !important;
@@ -126,6 +127,15 @@ footer .copy {
 	font-weight: 600;
 	text-align: center;
 	margin-top: -12px;
+	padding-bottom: 10px;
+}
+.redbox h4 {
+	color: inherit;
+	font-size: 20px;
+	font-weight: 600;
+	text-align: center;
+	margin-top: -12px;
+	padding-bottom: 3px;
 }
 .sociallogin img {
 	margin: auto;
@@ -160,6 +170,16 @@ footer .copy {
 	text-align:left;
 	float: none;
 	display: block;
+	position: relative;
+	color: #ecd077;
+}
+.image2 {
+	width: 55px;
+	vertical-align:middle;
+	text-align:left;
+	float: none;
+	display: block;
+	color: #542437;
 	position: relative;
 }
 a.link1{
@@ -210,7 +230,6 @@ input.file_input_textbox {
 	border-bottom-left-radius: 5px;
 	border-top-right-radius: 0px;
 	border-bottom-right-radius: 0px;
-	padding-left: 10px;
 }
 input.file_input_textbox2 {
 	color:#ecd077;
@@ -274,15 +293,15 @@ input[type="search"]:focus{
 
 input[type="text"]::-webkit-input-placeholder {
 	color:#542437 !important;
-	text-indent: 0px;
 	line-height: 39px;
 	background-color: #fff !important;
+		padding-left: 6px !important;
 }
 input[type="text"]:focus{
   	color:#542437 !important;
-	text-indent: 0px;
 	line-height: 39px;
 	background-color: #fff !important;
+
 }
 
 input[type="search"]::-webkit-input-placeholder,
@@ -381,8 +400,13 @@ h15 {
 	top:15px;
 	left: 11px;
 	width: 100%;
-	color: #ecd077;
 	font-size: 24px;
+}
+h16 {
+	position: absolute;
+	top:15px;
+	left: 11px;
+	font-size: 14px;
 }
 .eventtext {
 	font-size: 14px;
@@ -417,8 +441,8 @@ h15 {
 }
 
 .row-fluid .span8p {
-    width: 65.9574%;
-    *width: 65.9574%;
+    width: 40.9574%;
+    *width: 40.9574%;
     margin-left: 14px;
 }
 .row-fluid .span12p {
@@ -542,6 +566,22 @@ color: #53777a;
 	float: left;
 	margin-bottom: 10px;
 }
-
+.date {
+	font-size: 20px;
+	font-weight: 700;
+	padding-left: 4px;
+}
+.location {
+	font-size: 25px;
+	font-weight: 700;
+	padding-left: 4px;
+	padding-bottom: 0px;
+	padding-top: 8px;
+}
+.location h1 {
+	font-weight: 700;
+	font-size: 14px;
+	margin-top: -2px;
+}
 
 
