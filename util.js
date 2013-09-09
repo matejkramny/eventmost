@@ -8,7 +8,8 @@ exports.authorized = function (req, res, next) {
 			},
 			json: function() {
 				res.send({
-					status: 403
+					status: 403,
+					message: "Unauthorized"
 				})
 			}
 		})

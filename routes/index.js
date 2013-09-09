@@ -30,6 +30,7 @@ exports.router = function(app) {
 		.get('/auth/facebook.json', auth.doFacebookJSON)
 		.get('/auth/linkedin.json', auth.doLinkedInJSON)
 		.get('/logout.json', logoutJSON)
+		.get('/loggedin', isloggedin);
 	
 	// Used for JSON/XML auth responses
 	//auth.router(app)
@@ -60,5 +61,20 @@ function logoutJSON (req, res) {
 	req.logout();
 	res.send({
 		success: true
+	})
+}
+
+function isloggedin(req, res) {
+	res.format({
+		json: function() {
+			var loggedIn = false;
+			if (req.session.auth) {
+				loggedIn = req.session.auth.loggedIn;
+			}
+			
+			res.send({
+				loggedIn: loggedIn,
+			})
+		}
 	})
 }
