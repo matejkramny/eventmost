@@ -46,10 +46,10 @@ html
 										input(type="search", placeholder="search events of people", class="file_input_textbox4")
 								img(src="/img/dot.svg", class="purpleline")
 								.right.minus2
-									.right.image
+									a.right.image(href="/conversations")
 										img(src="/img/messages.svg") 
 										h5 Inbox
-										h15 3
+										h15= user.mailboxUnread
 
 			.container
 				block content
