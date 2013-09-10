@@ -1,6 +1,7 @@
 if flash.length > 0
-	ul(style="list-style: bullet;")
-		for aFlash in flash
-			li= aFlash
-	br
-	.clear
+	.alert(style="margin-top:20px;")
+		button.close.fui-cross(data-dismiss="alert")
+		h3 Alerts:
+		ul(style="list-style: none;")
+			for aFlash in flash
+				li - #{aFlash}

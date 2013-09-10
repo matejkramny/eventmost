@@ -2,7 +2,7 @@
 html
 	head
 		meta(http-equiv="Content-Type", content="text/html; charset=utf-8;")
-		meta(name="viewport", content="width=device-width, initial-scale=1.0")
+		//-		meta(name="viewport", content="width=device-width, initial-scale=1.0")
 		title EventMost - #{title}
 		link(href="/favicon.ico", type="image/x-icon", rel="icon")
 		link(href="/favicon.ico", type="image/x-icon", rel="shortcut icon")
@@ -13,7 +13,6 @@ html
 			link(rel="stylesheet", href="/css/flat-ui.css")
 			link(rel="stylesheet", href="/css/newdesign.css")
 			link(rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Raleway")
-
 
 	body
 		block container
@@ -72,26 +71,27 @@ html
 						.left.blocks.bigslid
 							h5 FOLLOW US
 							.left.slid
-								a(href="/auth/facebook", alt="Log in with facebook", title="Log in with facebook")
+								a(href="http://www.facebook.com/groups/361667753935493/", alt="EventMost on Facebook", title="EventMost on Facebook")
 									img(src="/img/facebook-icon.svg", alt="")
 							.left.smallslid.slid
-								a(href="/auth/twitter", alt="Log in with twitter", title="Log in with twitter")
+								a(href="#", alt="EventMost on Twitter", title="EventMost on Facebook")
 									img(src="/img/twitter-icon.svg", alt="")
 							.left.smallslid.slid
-								a(href="/auth/linkedin", alt="Log in with linkedin", title="Log in with linkedin")
+								a(href="#", alt="EventMost on LinkedIn", title="EventMost on LinkedIn")
 									img(src="/img/linkedin-icon.svg", alt="")
 							.clearfix
 							.left
-								a(href="/auth/rss", alt="", title="")
+								a(href="#", alt="EventMost RSS Feed", title="EventMost RSS Feed")
 									img(src="/img/rss-icon.svg", alt="")
 							.left.smallslid.slid
-								a(href="/auth/google+", alt="Log in with google+", title="Log in with google+")
+								a(href="#", alt="Google+EventMost", title="Google+EventMost")
 									img(src="/img/google-icon.svg", alt="")
 							.left.smallslid.slid
-								a(href="/auth/printerest", alt="Log in with printerest", title="Log in with printerest")
+								a(href="#", alt="EventMost on Pinterest", title="EventMost on Pinterest")
 									img(src="/img/printerest-icon.svg", alt="")
 						.clearfix
 						.copy.text-center Copyright © 2013 <b>EventMost</b>. All rights reserved.
+		
 		block js
 			script(src="js/jquery-1.8.3.min.js")
 			script(src="js/jquery-ui-1.10.3.custom.min.js")
@@ -113,6 +113,3 @@ html
 					return false;
 				});
 			block addonjs
-
-
-  

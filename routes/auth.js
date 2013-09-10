@@ -163,6 +163,7 @@ exports.doFacebookJSON = function (req, res) {
 						message: "Facebook error"
 					});
 				} else {
+					console.log(req.session)
 					models.User.authenticateFacebook(req.session, access_token, "", js, function(err, user) {
 						if (err) {
 							res.send({
@@ -171,6 +172,10 @@ exports.doFacebookJSON = function (req, res) {
 							});
 							return;
 						}
+						
+						req.session.auth = req.session.auth || {}
+						req.session.auth.userId = user._id;
+						req.session.auth.loggedIn = true;
 						
 						res.send({
 							status: 200,

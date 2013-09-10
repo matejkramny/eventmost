@@ -87,8 +87,11 @@ app.use(function(req, res, next) {
 	// flash
 	if (req.session.flash) {
 		res.locals.flash = req.session.flash;
+	} else {
+		res.locals.flash = [];
 	}
-	res.locals.flash = req.session.flash = []
+	
+	req.session.flash = [];
 	
 	// navigation bar
 	next();
