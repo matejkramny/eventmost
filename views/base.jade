@@ -47,9 +47,13 @@ html
 								img(src="/img/dot.svg", class="purpleline")
 								.right.minus2
 									a.right.image(href="/conversations")
-										img(src="/img/messages.svg") 
+										if user.mailboxUnread == 0
+											img(src="/img/messagesempty.svg")
+										else
+											img(src="/img/messages.svg") 
 										h5 Inbox
-										h15= user.mailboxUnread
+										unless user.mailboxUnread > 0
+											h15= user.mailboxUnread
 
 			.container
 				block content
