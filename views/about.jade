@@ -1,8 +1,33 @@
-extends layout
+extends base
 
 append content
-	include inc/sidebar
-	#main-content
+	include inc/flash
+	.row-fluid.headerSpacer 
+		.span12
+			.redbox
+				.left.well2.redbox
+					| Event <br /> name
+				.row-fluid
+					.left.span10
+						input(name="", placeholder="", type="email", id="", required="required", class="file_input_textbox6")
+	.row-fluid
+		.left.span2.well2.yellow
+			| Logo
+		.left.span4.well2.yellowborder
+			img(src="/img/default_logo.svg", alt="", class="arrow")
+		.left
+			#file_browse_wrapper
+				input(type="file", id="file_browse",)
+		.left
+			#file_browse_wrapper
+				input(type="file", id="file_browse",)
+		.left
+			#file_browse_wrapper
+				input(type="file", id="file_browse",)
+		.clearfix
+
+
+
 		.search-box#bigred
 			.search-content
 				p
