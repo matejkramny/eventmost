@@ -35,6 +35,7 @@ header .menu {
 .bigslid h5 {font-size: 30px; font-weight: 700;}
 .minus2 h5 {font-size: 30px; font-weight: 400; color: #542437; position: absolute; top: 84px; left:-15px;}
 .minus2 h15 {font-size: 25px; font-weight: 400; color: #ecd077; position: absolute; top: 92px; left:83px;}
+p.small {font-size: 17px; font-weight: 400; margin-left: -20px; }
 
 footer {
 	background-color: #ecd178;
@@ -106,6 +107,32 @@ footer .copy {
 	font-weight: 100;
 	text-align: center;
 	text-transform: none;
+}
+.well3 {
+	border-radius: 0px;
+	min-width: 145px;
+	border: none;
+	font-size:40px;
+	padding: 10px;
+	padding-bottom: 7px;
+	padding-left: 40px;
+	font-weight: 100;
+	text-align: left;
+	text-transform: none;
+}
+.well4 {
+	border-radius: 0px;
+	min-width: 138px;
+	border: none;
+	font-size:40px;
+	padding: 10px;
+	padding-bottom: 7px;
+	padding-left: 40px;
+	font-weight: 100;
+	text-align: left;
+	text-transform: none;
+	margin-left: -18px;
+	height: 99px;
 }
 .well2.yellowborder {
 	border-radius: 0px;
@@ -311,6 +338,19 @@ input.file_input_textbox4 {
     height: 24px !important;
     padding-left: 10px;
 }
+input.file_input_textbox5 {
+	color:#ecd077;
+	line-height: 39px;
+	font-size: 32px;
+	font-weight: 100;
+	border: none;
+	border-radius: 0px;
+	margin-top:16px; 
+	background-color: #542437;
+	width: 102% !important;
+	margin-left: 15px;
+	height: 67px !important;
+}
 input.file_input_textbox6 {
 	color:#ecd077;
 	line-height: 39px;
@@ -324,7 +364,19 @@ input.file_input_textbox6 {
 	margin-left: 15px;
 	height: 67px !important;
 }
-
+input.file_input_textbox7 {
+	color:#ecd077;
+	line-height: 39px;
+	font-size: 32px;
+	font-weight: 100;
+	border: none;
+	border-radius: 0px;
+	margin-top:16px; 
+	background-color: #542437;
+	margin-left: 15px;
+	height: 67px !important;
+	width: 106% !important;
+}
 input[type="search"]::-webkit-input-placeholder {
 	color:#542437 !important;
 	height: 24px !important;
@@ -491,11 +543,79 @@ h16 {
 
 /**** DROPDOWN ****/
 
+/**** checkbox1 ****/
+
+p.check > input
+{
+	padding: 0;
+	margin: 0;
+	height: 50px;
+	width: 55px;
+	float: left;
+	position: absolute;
+	left: 0;
+	opacity: 0;
+}
+p.check > label 
+{ 
+	line-height: 50px; 
+	color: #fff; 
+	padding: 0 0 0 50px;
+	padding-top: 35px;
+	-moz-transition: color 1s ease; 
+	-o-transition: color 1s ease; 
+	-webkit-transition: color 1s ease; 
+	transition: color 1s ease; 
+}
+fieldset[dir=rtl] p.check > label {
+	padding: 0 0px 0 0;
+}
+
+p.check:not(#foo) > input + label
+{
+	background: url('../img/check.svg');
+	height: 18px !important;
+	width: 5px;
+	margin-left: 30px;
+}
+
+/* Checked styles */
+p.check:not(#foo) > input[type=checkbox]:checked + label 						{ background-position: 0 50px; }
+p.check:not(#foo) > input[type=checkbox]:hover:checked + label,
+p.check:not(#foo) > input[type=checkbox]:focus:checked + label,
+p.check:not(#foo) > input[type=checkbox]:checked + label:hover,
+p.check:not(#foo) > input[type=checkbox]:focus:checked + label 					{ background-position: 0 -100px; }
+
+/* Hover & Focus styles */
+p.check:not(#foo) > input[type=checkbox]:hover + label,
+p.check:not(#foo) > input[type=checkbox]:focus + label,
+p.check:not(#foo) > input[type=checkbox] + label:hover 							{ background-position: 0 0px; }
+
+/**** checkbox1 ****/
+
 #file_browse_wrapper {
 	margin-left: 10px;
     width: 196px;
     height: 173px;
     background: url('../img/browse_button.svg') 0 0 no-repeat;
+    border:none;
+    overflow:hidden;
+    cursor: pointer !important;
+}
+#file_delete_wrapper {
+	margin-left: 10px;
+    width: 196px;
+    height: 173px;
+    background: url('../img/delete_button.svg') 0 0 no-repeat;
+    border:none;
+    overflow:hidden;
+    cursor: pointer !important;
+}
+#file_upload_wrapper {
+	margin-left: 10px;
+    width: 196px;
+    height: 173px;
+    background: url('../img/upload_button.svg') 0 0 no-repeat;
     border:none;
     overflow:hidden;
     cursor: pointer !important;
@@ -553,6 +673,10 @@ h16 {
 }
 .yellow {
 	background-color: #ecd077;
+	color:#542437 !important;
+}
+.orange {
+	background-color: #d95a42;
 	color:#542437 !important;
 }
 .events {
@@ -675,5 +799,4 @@ color: #53777a;
 	font-size: 14px;
 	margin-top: -2px;
 }
-
 

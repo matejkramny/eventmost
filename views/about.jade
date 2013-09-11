@@ -15,16 +15,52 @@ append content
 			| Logo
 		.left.span4.well2.yellowborder
 			img(src="/img/default_logo.svg", alt="", class="arrow")
-		.left
-			#file_browse_wrapper
-				input(type="file", id="file_browse",)
-		.left
-			#file_browse_wrapper
-				input(type="file", id="file_browse",)
-		.left
+		.right
+			#file_delete_wrapper
+		.right
+			#file_upload_wrapper
+		.right
 			#file_browse_wrapper
 				input(type="file", id="file_browse",)
 		.clearfix
+	.row-fluid.headerSpacer 
+		.span10
+			.yellow
+				.left.well3.yellow
+					| Venue <br /> name
+				.row-fluid
+					.left.span9
+						input(name="", placeholder="", type="email", id="", class="file_input_textbox5")
+		.left.headerspacer2.smallslid
+			img(src="/img/optional.svg", alt="", class="arrow")
+		.clearfix
+	.row-fluid.headerSpacer 
+		.span8
+			.orange
+				.left.well3.orange
+					| Event <br /> address
+				.row-fluid
+					.left.span8
+						input(name="", placeholder="", type="email", id="", class="file_input_textbox7")
+		.span2
+			.orange
+				.left.well4.orange
+					p.check
+						input(name="", placeholder="", type="checkbox", id="css3", value="css3")
+						label(for='css3')
+					p.small use current location
+		.left.headerspacer2.smallslid
+			img(src="/img/optional.svg", alt="", class="arrow")
+		.clearfix
+	.row-fluid.headerSpacer 
+		.span7
+			.orange
+				.left.well3.orange.span5
+					| Event <br /> date
+				.left
+					#datepicker
+	.clearfix
+
 
 
 
