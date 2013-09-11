@@ -2,7 +2,7 @@
 html
 	head
 		meta(http-equiv="Content-Type", content="text/html; charset=utf-8;")
-		//-		meta(name="viewport", content="width=device-width, initial-scale=1.0")
+		meta(name="viewport", content="width=device-width, initial-scale=1.0")
 		title EventMost - #{title}
 		link(href="/favicon.ico", type="image/x-icon", rel="icon")
 		link(href="/favicon.ico", type="image/x-icon", rel="shortcut icon")
@@ -13,6 +13,7 @@ html
 			link(rel="stylesheet", href="/css/flat-ui.css")
 			link(rel="stylesheet", href="/css/newdesign.css")
 			link(rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Raleway")
+
 
 	body
 		block container
@@ -46,14 +47,10 @@ html
 										input(type="search", placeholder="search events of people", class="file_input_textbox4")
 								img(src="/img/dot.svg", class="purpleline")
 								.right.minus2
-									a.right.image(href="/conversations")
-										if user.mailboxUnread == 0
-											img(src="/img/messagesempty.svg")
-										else
-											img(src="/img/messages.svg") 
+									.right.image
+										img(src="/img/messages.svg") 
 										h5 Inbox
-										unless user.mailboxUnread > 0
-											h15= user.mailboxUnread
+										h15 3
 
 			.container
 				block content
@@ -75,27 +72,26 @@ html
 						.left.blocks.bigslid
 							h5 FOLLOW US
 							.left.slid
-								a(href="http://www.facebook.com/groups/361667753935493/", alt="EventMost on Facebook", title="EventMost on Facebook")
+								a(href="/auth/facebook", alt="Log in with facebook", title="Log in with facebook")
 									img(src="/img/facebook-icon.svg", alt="")
 							.left.smallslid.slid
-								a(href="#", alt="EventMost on Twitter", title="EventMost on Facebook")
+								a(href="/auth/twitter", alt="Log in with twitter", title="Log in with twitter")
 									img(src="/img/twitter-icon.svg", alt="")
 							.left.smallslid.slid
-								a(href="#", alt="EventMost on LinkedIn", title="EventMost on LinkedIn")
+								a(href="/auth/linkedin", alt="Log in with linkedin", title="Log in with linkedin")
 									img(src="/img/linkedin-icon.svg", alt="")
 							.clearfix
 							.left
-								a(href="#", alt="EventMost RSS Feed", title="EventMost RSS Feed")
+								a(href="/auth/rss", alt="", title="")
 									img(src="/img/rss-icon.svg", alt="")
 							.left.smallslid.slid
-								a(href="#", alt="Google+EventMost", title="Google+EventMost")
+								a(href="/auth/google+", alt="Log in with google+", title="Log in with google+")
 									img(src="/img/google-icon.svg", alt="")
 							.left.smallslid.slid
-								a(href="#", alt="EventMost on Pinterest", title="EventMost on Pinterest")
+								a(href="/auth/printerest", alt="Log in with printerest", title="Log in with printerest")
 									img(src="/img/printerest-icon.svg", alt="")
 						.clearfix
 						.copy.text-center Copyright © 2013 <b>EventMost</b>. All rights reserved.
-		
 		block js
 			script(src="js/jquery-1.8.3.min.js")
 			script(src="js/jquery-ui-1.10.3.custom.min.js")
@@ -111,10 +107,14 @@ html
 			script(src="js/jquery.tinycarousel.min.js")
 			script(src="js/tinycarousel2.js")
 			script(src="js/three.js")
-			script(src="/js/jquery-ui-timepicker-addon.js")
+			script(src="js/datepicker.js")
+			script(src="js/tiny.editor.packed.js.js")
 			script.
 				$("a[href='#']").bind('click', function(event) {
 					event.preventDefault();
 					return false;
 				});
 			block addonjs
+
+
+  

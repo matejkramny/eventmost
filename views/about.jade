@@ -53,13 +53,37 @@ append content
 			img(src="/img/optional.svg", alt="", class="arrow")
 		.clearfix
 	.row-fluid.headerSpacer 
-		.span7
-			.orange
-				.left.well3.orange.span5
-					| Event <br /> date
-				.left
-					#datepicker
+		.left.well3.orange.span3
+			| Event <br /> date
+		.left
+			.left.orange.well5
+				| FROM:
+				#datepicker
+		.left
+			.left.orange.well5
+				| TO:
+				#datepicker2
 	.clearfix
+	.row-fluid.headerSpacer
+		input(id="tinyeditor",type="textarea", style="width: 1170px; height: 200px")
+			script.
+				var editor = new TINY.editor.edit('editor', {
+					id: 'tinyeditor',
+					width: 1170,
+					height: 175,
+					cssclass: 'tinyeditor',
+					controlclass: 'tinyeditor-control',
+					rowclass: 'tinyeditor-header',
+					dividerclass: 'tinyeditor-divider',
+					controls: ['bold', 'italic', 'underline', 'strikethrough', 'leftalign', 'centeralign', 'rightalign', 'blockjustify', 'font', 'size',],
+					footer: true,
+					fonts: ['Raleway', 'Verdana','Arial','Georgia','Trebuchet MS'],
+					xhtml: true,
+					cssfile: 'custom.css',
+					bodyid: 'editor',
+					footerclass: 'tinyeditor-footer',
+					resize: {cssclass: 'resize'}
+				});
 
 
 
