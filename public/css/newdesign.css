@@ -25,6 +25,7 @@ header .menu {
 }
 
 .headerSpacer {margin-top: 10px;}
+.headerSpacer3 {margin-top: 7px;}
 .headerspacer2 {margin-top: 30px; padding-left-left: 15px;}
 .spacer {margin-top: 20px;}
 .minus {margin-left: -10px;}
@@ -692,8 +693,8 @@ p.check:not(#foo) > input[type=checkbox] + label:hover 							{ background-posit
 
 .pagination2 {
   position: relative;
-  padding-top: 50px;
-  padding-bottom: 50px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   margin-right: -4px;
 }
 .pagination2 ul {
@@ -762,12 +763,17 @@ color: #53777a;
 	min-height: 50px;
 }
 .prof {
-	font-size: 30px;
+	font-size: 22px;
+	word-wrap:break-word;
 	color: #542437;
 	text-transform: none;
 	font-weight: 200;
 	margin-top: 5px;
 	margin-bottom: 0px;
+	width: 195px;
+	line-height: 24px;
+	padding-bottom: 10px;
+	padding-left: 10px;
 }
 .center {
 	text-align: center;
