@@ -3,10 +3,10 @@ extends base
 append content
 	include inc/flash
 	.avatar.headerSpacer 
-		img(src="/img/avatar2.jpg", alt="")
+		img(src=user.avatar, alt="")
 	.right.span13p
 		.orangebox.inh
-			| Create event 
+			a.link4(href="/event/add") Create event 
 			.box
 			.iconbox
 				img(src="/img/people.svg", alt="")
@@ -20,16 +20,18 @@ append content
 			.iconbox
 				img(src="/img/other.svg", alt="")
 				.center other
+	
+	//- User card
 	.avatar.redbox
-		p.prof Profile name 
+		p.prof= user.getName()
 		.box2
 			.left
 				img(src="/img/i.svg", alt="")
 			.set
-				a(href="", alt="", title="", class="link4")
+				a.link4(href="/profile", alt="", title="")
 					| Edit profile
 		img(src="/img/card.svg", alt="")
-		a(href="", alt="", title="", class="link4")
+		a.link4(href="/cards", alt="", title="")
 			| Choose your bussines card
 		.headerSpacer
 		.clearfix
@@ -37,35 +39,42 @@ append content
 			.left
 				img(src="/img/i.svg", alt="")
 			.set
-				a(href="", alt="", title="", class="link4")
+				a.link4(href="", alt="", title="")
 					| Notification settings
 		.clearfix
 		.box2
 			.left
 				img(src="/img/i.svg", alt="")
 			.set
-				a(href="", alt="", title="", class="link4")
+				a.link4(href="", alt="", title="")
 					| Privacy settings
 		.clearfix
 		a(href="/logout", class="logout") Logout
-	a(href="",) 
+	
+	//- Events nearby
+	a(href="/events/near", alt="Events Nearby")
 		.span7p
 			h6 Events<br /> nearby
 			img(src="/img/map-icon2.svg", alt="", class="arrow")
-	a(href="",)
+	//- Events
+	a(href="/events", alt="Events")
 		.span7p.yellow
 			h5 All<br /> events
 			img(src="/img/arrow_big.svg", alt="", class="arrow")
 	.clearfix
+	
+	// TODO 5px spacer between the Events nearby & All events pictures above this. When i have a custom avatar, there is 0px space between My events and the boxes above.
+	
+	//- My Events
 	.bluebox
-		| My events
+		a.link4(href="/events/my") My events
 		.right.arrange
 			| Arrange by
 		.clearfix
 		.right
 			dl.dropdown
 				dt
-					a(href="#", class="dropx") 
+					a.dropx(href="#")
 						| select
 				dd
 					ul
@@ -107,36 +116,7 @@ append content
 	.span8p
 		a(href="/", class="link2") READ MORE >
 	.clearfix
-	.row-fluid
-		.events
-			.span1p
-				img(src="/img/map-icon.svg", alt="",)
-			.span1
-				img(src="/img/default_event.svg", alt="", class="minus")
-			.span8p
-				h8 Temporibus autem quibusdam et aut officiis
-				p.eventtext At vero eos et accusamus et iusto odio dignissimos ducimus qui <b>blanditiis praesentium</b> voluptatumdeleniti atque corrupti quos <b>dolores et quas molestias</b>
-			.right_star
-				img(src="/img/martini.svg", alt="", class="arrow")
-			.right_star
-				.image2
-					img(src="/img/calendar-icony.svg", alt="", class="image2")
-					h16 09.09 2013
-			.right_star
-				.left
-					img(src="/img/clock.svg", alt="", class="arrow")
-				.left.date
-					| 13:00 <br /> (BST)
-			.left.headerSpacer
-				.left
-					img(src="/img/map6.svg", alt="", class="arrow")
-				.left.location
-					| Gdynia,
-					h1 Poland 
-	.line
-	.span8p
-		a(href="/", class="link2") READ MORE >
-	.clearfix
+	
 	.right
 		.pagination2
 			ul
@@ -160,7 +140,7 @@ append content
 					a(href="/",) Next
 	.clearfix
 	.bluebox
-		| Events nearby
+		a.link4(href="/events/near") Events nearby
 		.right.arrange
 			| Arrange by
 		.clearfix
@@ -209,66 +189,8 @@ append content
 	.span8p
 		a(href="/", class="link2") READ MORE >
 	.clearfix
-	.row-fluid
-		.events
-			.span1p
-				img(src="/img/map-icon.svg", alt="",)
-			.span1
-				img(src="/img/default_event.svg", alt="", class="minus")
-			.span8p
-				h8 Temporibus autem quibusdam et aut officiis
-				p.eventtext At vero eos et accusamus et iusto odio dignissimos ducimus qui <b>blanditiis praesentium</b> voluptatumdeleniti atque corrupti quos <b>dolores et quas molestias</b>
-			.right_star
-				img(src="/img/martini.svg", alt="", class="arrow")
-			.right_star
-				.image2
-					img(src="/img/calendar-icony.svg", alt="", class="image2")
-					h16 03.15 2013
-			.right_star
-				.left
-					img(src="/img/clock.svg", alt="", class="arrow")
-				.left.date
-					| 10:00 <br /> (BST)
-			.left.headerSpacer
-				.left
-					img(src="/img/map6.svg", alt="", class="arrow")
-				.left.location
-					| London,
-					h1 United Kingdom 
-	.line
-	.span8p
-		a(href="/", class="link2") READ MORE >
-	.clearfix
-	.row-fluid
-		.events
-			.span1p
-				img(src="/img/map-icon.svg", alt="",)
-			.span1
-				img(src="/img/default_event.svg", alt="", class="minus")
-			.span8p
-				h8 Temporibus autem quibusdam et aut officiis
-				p.eventtext At vero eos et accusamus et iusto odio dignissimos ducimus qui <b>blanditiis praesentium</b> voluptatumdeleniti atque corrupti quos <b>dolores et quas molestias</b>
-			.right_star
-				img(src="/img/martini.svg", alt="", class="arrow")
-			.right_star
-				.image2
-					img(src="/img/calendar-icony.svg", alt="", class="image2")
-					h16 03.15 2013
-			.right_star
-				.left
-					img(src="/img/clock.svg", alt="", class="arrow")
-				.left.date
-					| 10:00 <br /> (BST)
-			.left.headerSpacer
-				.left
-					img(src="/img/map6.svg", alt="", class="arrow")
-				.left.location
-					| London,
-					h1 United Kingdom 
-	.line
-	.span8p
-		a(href="/", class="link2") READ MORE >
-	.clearfix
+
+
 	.right
 		.pagination2
 			ul

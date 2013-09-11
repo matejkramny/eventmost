@@ -72,8 +72,15 @@ function isloggedin(req, res) {
 				loggedIn = req.session.auth.loggedIn;
 			}
 			
+			var user = null;
+			if (loggedIn) {
+				user = req.user;
+				delete user.facebook, user.twitter, user.linkedin, user.password
+			}
+			
 			res.send({
 				loggedIn: loggedIn,
+				user: user
 			})
 		}
 	})
