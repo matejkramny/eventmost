@@ -52,7 +52,7 @@ function formatEvent(event) {
 				<img src="'+event.avatar+'" alt="" class="minus">\
 			</div>\
 			<div class="span8p">\
-				<h8>'+event.name+'</h8>\
+				<h8><a href="/event/'+event._id+'">'+event.name+'</a></h8>\
 				<p class="eventtext">'+event.description+'</p>\
 			</div>\
 			<div class="right_star">\

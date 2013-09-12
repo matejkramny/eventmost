@@ -6,7 +6,8 @@ block addonjs
 append content
 	include inc/flash
 	.avatar.headerSpacer 
-		img(src=user.avatar, alt="")
+		a(href="/profile")
+			img(src=user.avatar, alt="")
 	.right.span13p
 		.orangebox.inh
 			a.link4(href="/event/add") Create event 
@@ -66,8 +67,6 @@ append content
 			img(src="/img/arrow_big.svg", alt="", class="arrow")
 	.clearfix
 	
-
-	
 	//- My Events
 	.bluebox.headerSpacer3
 		a.link4(href="/events/my") My events
@@ -98,7 +97,7 @@ append content
 				.span1
 					img.minus(src=event.avatar, alt="")
 				.span8p
-					a(href="/event/"+event_id)
+					a(href="/event/"+event._id)
 						h8= event.name
 					p.eventtext= event.description
 				.right_star

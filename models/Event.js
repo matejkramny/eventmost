@@ -62,22 +62,26 @@ var scheme = schema({
 })
 
 scheme.statics.getEvent = function (id, cb) {
-	exports.Event
-		.findOne({ deleted: false, _id: mongoose.Types.ObjectId(id) })
-		.populate('user attendees messages.user')
-		.exec(function(err, ev) {
-			if (err) throw err;
+	try {
+		exports.Event
+			.findOne({ deleted: false, _id: mongoose.Types.ObjectId(id) })
+			.populate('user attendees messages.user')
+			.exec(function(err, ev) {
+				if (err) throw err;
 			
-			if (!ev) {
-				cb(ev);
-				return;
+				if (!ev) {
+					cb(ev);
+					return;
+				}
+			
+				ev.getGeo(function(geo) {
+					cb(ev);
+				})
 			}
-			
-			ev.getGeo(function(geo) {
-				cb(ev);
-			})
-		}
-	)
+		)
+	} catch (ex) {
+		cb();
+	}
 }
 
 scheme.methods.edit = function (body, user, files, cb) {
