@@ -6,13 +6,13 @@ $(document).ready(function() {
 	
 	$(".dropdown dd ul li a").click(function() {
 		var text = $(this).html();
-		$(this).parent().parent().parent().find("dt a").html(text);
-		$(this).parent().parent().hide();
+		$(this).parentsUntil('.dropdown').parent().find("dt a").html(text);
+		$(this).parentsUntil('ul').parent().hide();
 	});
 	
 	$(document).bind('click', function(e) {
 		var $clicked = $(e.target);
-		if (! $clicked.parents().hasClass("dropdown")) {
+		if (! $clicked.parent().hasClass("dropdown")) {
 			$(".dropdown dd ul").hide();
 		}
 	});

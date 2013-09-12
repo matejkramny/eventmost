@@ -1,5 +1,9 @@
 @import url(http://fonts.googleapis.com/css?family=Raleway:100,200,400,700,700italic,900,400italic,300);
 
+.container {
+	width: 1200px;
+}
+
 body {
 	background-color: #542437;
 	font-family: 'Raleway', Arial, sans-serif;
