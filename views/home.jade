@@ -32,8 +32,10 @@ append content
 			.left
 				img(src="/img/i.svg", alt="")
 			.set
-				a.link4(href="/profile", alt="", title="")
-					| Edit profile
+				a.link4(href="/profile", alt="", title="") Edit profile
+			if user.admin
+				.set
+					a.link4(href="/admin", alt="", title="") Administration
 		img(src="/img/card.svg", alt="")
 		a.link4(href="/cards", alt="", title="")
 			| Choose your bussines card
@@ -120,8 +122,8 @@ append content
 					.left
 						img(src="/img/map6.svg", alt="", class="arrow")
 					.left.location
-						if event.location && event.location.length > 0
-							= event.location
+						if event.address && event.address.length > 0
+							h1= event.address
 						else
 							h1 Location unavailable
 		- if (++myeventsi < myevents.length)
@@ -129,7 +131,10 @@ append content
 		- else
 			br
 		.clearfix
-	
+	if myevents.length == 0
+		.row-fluid
+			.span12
+				p.text-center.eventtext You have no events
 	.bluebox
 		a.link4(href="/events/near") Events nearby
 		.right.arrange

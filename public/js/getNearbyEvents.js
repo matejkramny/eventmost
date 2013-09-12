@@ -39,8 +39,8 @@ window.Geo = {
 
 function formatEvent(event) {
 	event.start = new Date(event.start);
-	if (event.location == null || event.location.length == 0) {
-		event.location = "<h1>Location unavailable</h1>";
+	if (event.address == null || event.address.length == 0) {
+		event.address = "<h1>Location unavailable</h1>";
 	}
 	var html = '\
 	<div class="row-fluid">\
@@ -77,7 +77,7 @@ function formatEvent(event) {
 					<img src="/img/map6.svg" alt="" class="arrow">\
 				</div>\
 				<div class="left location">\
-					'+event.location+'\
+					'+event.address+'\
 				</div>\
 			</div>\
 		</div>\

@@ -1,7 +1,22 @@
 @import url(http://fonts.googleapis.com/css?family=Raleway:100,200,400,700,700italic,900,400italic,300);
 
+html,body {
+}
 .container {
 	width: 1200px;
+	overflow: scroll;
+}
+
+/* hack to hide unknown overflowing of the page */
+@media (min-width: 1200px) {
+	.container {
+		overflow: hidden;
+	}
+}
+@media (max-width: 1200px) {
+	.container {
+		overflow: scroll;
+	}
 }
 
 body {
@@ -15,6 +30,7 @@ h1 {
 header {
 	background-color: #ecd178;
 	height: 145px;
+	min-width: 1200px;
 }
 
 header .signin {
@@ -816,6 +832,7 @@ color: #53777a;
 	padding-left: 4px;
 	padding-bottom: 0px;
 	padding-top: 8px;
+	max-width: 200px;
 }
 .location h1 {
 	font-weight: 700;
