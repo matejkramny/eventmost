@@ -86,59 +86,44 @@ append content
 							a(href="#",) Events name A-Z
 						li.border_bottom
 							a(href="#") My planned events
-	.row-fluid
-		.events
-			.span1p
-				img(src="/img/map-icon.svg", alt="",)
-			.span1
-				img(src="/img/default_event.svg", alt="", class="minus")
-			.span8p
-				h8 Temporibus autem quibusdam et aut officiis
-				p.eventtext At vero eos et accusamus et iusto odio dignissimos ducimus qui <b>blanditiis praesentium</b> voluptatumdeleniti atque corrupti quos <b>dolores et quas molestias</b>
-			.right_star
-				img(src="/img/martini.svg", alt="", class="arrow")
-			.right_star
-				.image2
-					img(src="/img/calendar-icony.svg", alt="", class="image2")
-					h16 03.15 2013
-			.right_star
-				.left
-					img(src="/img/clock.svg", alt="", class="arrow")
-				.left.date
-					| 12:00 <br /> (BST)
-			.left.headerSpacer
-				.left
-					img(src="/img/map6.svg", alt="", class="arrow")
-				.left.location
-					| Oxford,
-					h1 United Kingdom 
-	.line
-	.span8p
-		a(href="/", class="link2") READ MORE >
-	.clearfix
+	for event in myevents
+		.row-fluid
+			.events
+				.span1p
+					img(src="/img/map-icon.svg", alt="",)
+				.span1
+					img.minus(src=event.avatar, alt="")
+				.span8p
+					a(href="/event/"+event_id)
+						h8= event.name
+					p.eventtext= event.description
+				.right_star
+					img(src="/img/martini.svg", alt="", class="arrow")
+				.right_star
+					.image2
+						img.image2(src="/img/calendar-icony.svg", alt="")
+						h16= event.start.getDate()
+							| .
+							= event.start.getMonth()+1
+							br
+							= event.start.getFullYear()
+				.right_star
+					.left
+						img(src="/img/clock.svg", alt="", class="arrow")
+					.left.date #{event.start.getHours()}:#{event.start.getMinutes()}
+						br
+						| (BST)
+				.left.headerSpacer
+					.left
+						img(src="/img/map6.svg", alt="", class="arrow")
+					.left.location
+						if event.location && event.location.length > 0
+							= event.location
+						else
+							h1 Location unavailable
+		.line
+		.clearfix
 	
-	.right
-		.pagination2
-			ul
-				li
-					a(href="/",) Prev
-				li
-					a(href="/",) 1
-				li
-					a(href="/",) 2
-				li
-					a(href="/", class="current") 3
-				li
-					a(href="/",) 4
-				li
-					a(href="/",) 5
-				li
-					a(href="/", class="disabled") ...
-				li
-					a(href="/",) 542
-				li
-					a(href="/",) Next
-	.clearfix
 	.bluebox
 		a.link4(href="/events/near") Events nearby
 		.right.arrange

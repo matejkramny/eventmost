@@ -19,6 +19,7 @@ var scheme = schema({
 		ref: 'User'
 	}],
 	geo: {}, // don't store anything here. - temporary placeholder when the event is loaded
+	location: String,
 	description: String,
 	avatar: { type: String, default: "/img/event.png" },
 	address: String,
