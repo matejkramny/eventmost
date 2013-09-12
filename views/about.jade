@@ -1,5 +1,27 @@
 extends base
 
+append addonjs
+	script(src="js/datepicker.js")
+	script(src="js/tiny.editor.packed.js")
+	script.
+		var editor = new TINY.editor.edit('editor', {
+			id: 'tinyeditor',
+			width: 1170,
+			height: 175,
+			cssclass: 'tinyeditor',
+			controlclass: 'tinyeditor-control',
+			rowclass: 'tinyeditor-header',
+			dividerclass: 'tinyeditor-divider',
+			controls: ['bold', 'italic', 'underline', 'strikethrough', 'leftalign', 'centeralign', 'rightalign', 'blockjustify', 'font', 'size',],
+			footer: true,
+			fonts: ['Raleway', 'Verdana','Arial','Georgia','Trebuchet MS'],
+			xhtml: true,
+			cssfile: 'custom.css',
+			bodyid: 'editor',
+			footerclass: 'tinyeditor-footer',
+			resize: {cssclass: 'resize'}
+		});
+
 append content
 	include inc/flash
 	.row-fluid.headerSpacer 
@@ -65,28 +87,7 @@ append content
 				#datepicker2
 	.clearfix
 	.row-fluid.headerSpacer
-		input(id="tinyeditor",type="textarea", style="width: 1170px; height: 200px")
-			script.
-				var editor = new TINY.editor.edit('editor', {
-					id: 'tinyeditor',
-					width: 1170,
-					height: 175,
-					cssclass: 'tinyeditor',
-					controlclass: 'tinyeditor-control',
-					rowclass: 'tinyeditor-header',
-					dividerclass: 'tinyeditor-divider',
-					controls: ['bold', 'italic', 'underline', 'strikethrough', 'leftalign', 'centeralign', 'rightalign', 'blockjustify', 'font', 'size',],
-					footer: true,
-					fonts: ['Raleway', 'Verdana','Arial','Georgia','Trebuchet MS'],
-					xhtml: true,
-					cssfile: 'custom.css',
-					bodyid: 'editor',
-					footerclass: 'tinyeditor-footer',
-					resize: {cssclass: 'resize'}
-				});
-
-
-
+		textarea#tinyeditor(style="width: 1170px; height: 200px")
 
 		.search-box#bigred
 			.search-content
