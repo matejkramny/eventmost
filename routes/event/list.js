@@ -46,7 +46,7 @@ exports.listMyEvents = function (req, res) {
 exports.listNearEvents = function (req, res) {
 	var lat = parseFloat(req.query.lat)
 		,lng = parseFloat(req.query.lng)
-		,limit = req.query.limit
+		,limit = parseInt(req.query.limit)
 		,distance = req.query.distance
 	
 	if (!lat || !lng) {
@@ -66,6 +66,10 @@ exports.listNearEvents = function (req, res) {
 		return;
 	}
 	
+	if (limit == NaN) {
+		limit = 10;
+	}
+	
 	models.Geolocation.find(
 		{ 'geo': {
 				$near: {
@@ -77,6 +81,7 @@ exports.listNearEvents = function (req, res) {
 				}
 			}
 		}).populate('event')
+		.limit(limit)
 		.exec(function(err, geos) {
 			if (err) throw err;
 		
@@ -91,11 +96,13 @@ exports.listNearEvents = function (req, res) {
 						events.push(geos[i].event);
 					}
 				}
+				
 				res.format({
 					html: function() {
 						res.render('event/list', { events: events, pagename: "Events near you", title: "Events nearby" })
 					},
 					json: function() {
+						console.log("Returning "+events)
 						res.send({
 							events: events,
 							pagename: "Events near you"

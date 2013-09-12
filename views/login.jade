@@ -2,7 +2,7 @@ extends base
 
 
 block addonjs
-	//script(src="/js/geoLogin.js")
+	script(src="/js/getNearbyEvents.js")
 
 append content
 	include inc/flash
@@ -77,67 +77,12 @@ append content
 	.bluebox.center
 		.left 
 			img.arrow(src="/img/star.svg", alt="")
-		| Events in range
+		a.link4(href="/events/near") Events in range
 		.right
 			img.arrow(src="/img/star.svg", alt="")
 	.clearfix
 	
-	
-	//- to be dynamically replaced by js when the user page loads.. we don't know the user's location right now, so no events can be provided
-	.row-fluid
+	.row-fluid#nearbyEventsPlaceholder
 		.span12
 			p.text-center.eventtext Looking for events..
-	//- how a single event should look like
-	.row-fluid
-		.events
-			.span1p
-				img(src="/img/map-icon.svg", alt="",)
-			.span1
-				img.minus(src="/img/default_event.svg", alt="")
-			.span8p
-				h8 Temporibus autem quibusdam et aut officiis
-				p.eventtext At vero eos et accusamus et iusto odio dignissimos ducimus qui <b>blanditiis praesentium</b> voluptatumdeleniti atque corrupti quos <b>dolores et quas molestias</b>
-			.right_star
-				img.arrow(src="/img/martini.svg", alt="")
-			.right_star
-				.image2
-					img.image2(src="/img/calendar-icony.svg", alt="")
-					h16 03.15 2013
-			.right_star
-				.left
-					img.arrow(src="/img/clock.svg", alt="")
-				.left.date
-					| 10:00 <br /> (BST)
-			.left.headerSpacer
-				.left
-					img.arrow(src="/img/map6.svg", alt="")
-				.left.location
-					| London,
-					h1 United Kingdom 
-	.line
-	.span8p
-		a(href="/", class="link2") READ MORE >
-	.clearfix
 	
-	.right
-		.pagination2
-			ul
-				li
-					a(href="/",) Prev
-				li
-					a(href="/",) 1
-				li
-					a(href="/",) 2
-				li
-					a.current(href="/") 3
-				li
-					a(href="/",) 4
-				li
-					a(href="/",) 5
-				li
-					a.disabled(href="/") ...
-				li
-					a(href="/",) 542
-				li
-					a(href="/",) Next
-	.clearfix
