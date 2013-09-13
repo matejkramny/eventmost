@@ -3,10 +3,25 @@ extends base
 append addonjs
 	script(src="js/datepicker.js")
 	script(src="js/tiny.editor.packed.js")
+	script(src="js/jquery.jcarousel.min.js")
+	script.
+		jQuery(document).ready(function() {
+			jQuery('#mycarousel').jcarousel({
+				vertical: true,
+				scroll: 2
+			});
+		});
+	script.
+		jQuery(document).ready(function() {
+			jQuery('#mycarousel2').jcarousel({
+				vertical: true,
+				scroll: 2
+			});
+		});
 	script.
 		var editor = new TINY.editor.edit('editor', {
 			id: 'tinyeditor',
-			width: 1170,
+			width: 1150,
 			height: 175,
 			cssclass: 'tinyeditor',
 			controlclass: 'tinyeditor-control',
@@ -14,7 +29,7 @@ append addonjs
 			dividerclass: 'tinyeditor-divider',
 			controls: ['bold', 'italic', 'underline', 'strikethrough', 'leftalign', 'centeralign', 'rightalign', 'blockjustify', 'font', 'size',],
 			footer: true,
-			fonts: ['Raleway', 'Verdana','Arial','Georgia','Trebuchet MS'],
+			fonts: ['Verdana','Arial','Georgia','Trebuchet MS'],
 			xhtml: true,
 			cssfile: 'custom.css',
 			bodyid: 'editor',
@@ -75,8 +90,10 @@ append content
 			img(src="/img/optional.svg", alt="", class="arrow")
 		.clearfix
 	.row-fluid.headerSpacer 
-		.left.well3.orange.span3
-			| Event <br /> date
+		.left.span3
+			.orange.well3
+				| Event <br /> date
+			img(src="/img/big_orrange.svg", alt="", class="arrow" style="padding-top:50px;")
 		.left
 			.left.orange.well5
 				| FROM:
@@ -87,19 +104,461 @@ append content
 				#datepicker2
 	.clearfix
 	.row-fluid.headerSpacer
-		textarea#tinyeditor(style="width: 1170px; height: 200px")
+		.bluebox2
+			.left.zero
+				img(src="/img/pencil.svg", alt="", class="pencil")
+			.left.headerSpacer 
+				| Event description
+			.right
+				img(src="/img/optional.svg", alt="", class="pencil1")
+			.clearfix
+		textarea#tinyeditor(style="width: 1150px; height: 200px")
+	.row-fluid.headerSpacer 
+		.span12
+			.redbox.span12
+				.left.span2
+					img(src="/img/people2.svg", alt="", class="arrow" style="padding:15px;")
+				.left.span8.center.big
+					| Choose attendee / ticket categories
+				.right.span2
+					img(src="/img/optional.svg", alt="", class="pencil1" style="float:right; padding-bottom:20px;") 
+				.right
+					.right
+						img(src="/img/arrow.svg", alt="", class="arrow" style="padding-left:10px; margin-right:15px; width:17px; height:17px; padding-bottom:0px;")
+					.right
+						a(href="", alt="", class="link1", style="font-size:12px; padding-bottom:0px;") LEARN MORE
+	.row-fluid
+		.span3.yellow
+			ul#mycarousel.jcarousel-skin-tango
+				li
+					| 1. Guest Speaker
+				li
+					| 2. Attendee
+				li
+					| 3. Vencor
+				li
+					| 4. Entrepreneur
+				li
+					| 5. Team
+				li
+					| 6. Startup Team
+				li
+					| 7. Company
+				li
+					| 8. Mentor
+				li
+					| 9. Educator
+				li
+					| 10. Lorem
+				li
+					| 11. Ipsum
+				li
+					| 12. Dolor
+				li
+					| 13. Erum
+				li
+					| 14. Ipsum
+		.span4.zero2
+			h6 Create <br />your own
+				.headerSpacer
+				input(name="", type="text3", class="file_input_textbox8")
+				img(src="/img/arrows.svg", alt="", style="padding-left:10px; margin-right:5px; padding-top:12px;")
+				input(name="", type="text3", class="file_input_textbox8")
+				img(src="/img/arrows.svg", alt="", style="padding-left:10px; margin-right:5px; padding-top:12px;")
+				input(name="", type="text3", class="file_input_textbox8") 
+				img(src="/img/arrows.svg", alt="", style="padding-left:10px; margin-right:5px; padding-top:12px;")
+				input(name="", type="text3", class="file_input_textbox8")
+				img(src="/img/arrows.svg", alt="", style="padding-left:10px; margin-right:5px; padding-top:12px;")
+				input(name="", type="text3", class="file_input_textbox8")
+				img(src="/img/arrows.svg", alt="", style="padding-left:10px; margin-right:5px; padding-top:12px;")
 
-		.search-box#bigred
-			.search-content
-				p
-					span.title About EventMost
-		#info-page.users.form
-			.clear
-			p Eventmost is the easiest way to make and keep contacts for events or conferences. Once you get to your event, simply open up the app, select the event, and that’s it! Your profile pops up with everyone else’s. You can send attendees your virtual business card, private message them, or comment out in the open.
-			br
-			p Eventmost saves this all, so you can revisit contacts from the past while you’re waiting for the bus or sipping down a latte (it’s a lot better than that jar of business cards!). You can also leave feedback and/or contact information for guest speakers or teams.
-			br
-			p There’s also a dropbox within the app so that the schedule, powerpoint presentations, brochures and more can all be kept in one place. Tell your organizer you don’t like looking all over a dozen different websites!
-			br
-			p Whether you’re a professional planner/organizer or just filling in the role, Eventmost is the simplest way to set up your event. Use “Quick Start Event” if you just want people to be able to reconnect in the future. Use “Start an Event – Planner” if you want the full range of helpful planner options (don’t worry, it’s all free and has only 2 extra steps).
-	.clear
+		.span5p2.zero2.yellow
+			h6 Your categories
+			.left.smallslid4
+				| Attendee
+			.right.smallslid2right
+				| Does he/she pays?
+			ul#mycarousel2.jcarousel-skin-tango2
+				li
+					.right.checks
+						p.check2.left.smallslid2
+							input(name="", placeholder="", type="checkbox", id="css", value="css3",)
+							label(for='css',) 
+						.left.tops  YES
+						p.check2.left.smallslid2
+							input(name="", placeholder="", type="checkbox", id="cs", value="css3",)
+							label(for='cs',)
+						.left.tops  NO 
+
+					.left.purple
+						| Guest Speaker
+				li.tops-minus
+					.right.checks
+						p.check2.left.smallslid2
+							input(name="", placeholder="", type="checkbox", id="1css3", value="css3",)
+							label(for='1css3',) 
+						.left.tops  YES
+						p.check2.left.smallslid2
+							input(name="", placeholder="", type="checkbox", id="2css3", value="css3",)
+							label(for='2css3',)
+						.left.tops  NO 
+
+					.left.purple
+						| Guest Speaker
+				li.tops-minus
+					.right.checks
+						p.check2.left.smallslid2
+							input(name="", placeholder="", type="checkbox", id="3css3", value="css3",)
+							label(for='3css3',) 
+						.left.tops  YES
+						p.check2.left.smallslid2
+							input(name="", placeholder="", type="checkbox", id="5css3", value="css3",)
+							label(for='5css3',)
+						.left.tops  NO 
+
+					.left.purple
+						| Guest Speaker
+				li.tops-minus
+					.right.checks
+						p.check2.left.smallslid2
+							input(name="", placeholder="", type="checkbox", id="6css3", value="css3",)
+							label(for='6css3',) 
+						.left.tops  YES
+						p.check2.left.smallslid2
+							input(name="", placeholder="", type="checkbox", id="8css3", value="css3",)
+							label(for='8css3',)
+						.left.tops  NO 
+
+					.left.purple
+						| Guest Speaker
+				li.tops-minus
+					.right.checks
+						p.check2.left.smallslid2
+							input(name="", placeholder="", type="checkbox", id="pcss3", value="css3",)
+							label(for='pcss3',) 
+						.left.tops  YES
+						p.check2.left.smallslid2
+							input(name="", placeholder="", type="checkbox", id="ocss3", value="css3",)
+							label(for='ocss3',)
+						.left.tops  NO 
+
+					.left.purple
+						| Guest Speaker
+				li.tops-minus
+					.right.checks
+						p.check2.left.smallslid2
+							input(name="", placeholder="", type="checkbox", id="icss3", value="css3",)
+							label(for='icss3', ) 
+						.left.tops  YES
+						p.check2.left.smallslid2
+							input(name="", placeholder="", type="checkbox", id="kcss3", value="css3",)
+							label(for='kcss3',)
+						.left.tops  NO 
+
+					.left.purple
+						| Guest Speaker
+				li.tops-minus
+					.right.checks
+						p.check2.left.smallslid2
+							input(name="", placeholder="", type="checkbox", id="jcss3", value="css3",)
+							label(for='jcss3',) 
+						.left.tops  YES
+						p.check2.left.smallslid2
+							input(name="", placeholder="", type="checkbox", id="mcss3", value="css3",)
+							label(for='mcss3',)
+						.left.tops  NO 
+
+					.left.purple
+						| Guest Speaker
+		.clearfix
+		.row-fluid.headerspacer2.span12.zer
+			.left
+				h12 Allow them to create their own label for self? 
+			.left.tops-minus
+				p.check3.left
+					input(name="", placeholder="", type="checkbox", id="css344", value="css3")
+					label(for='css344',) 
+				.left.tops3  YES
+			.left.tops-minus
+				p.check3.left
+					input(name="", placeholder="", type="checkbox", id="css34", value="css3")
+					label(for='css34',) 
+				.left.tops3  NO
+		.clearfix
+		.row-fluid.headerspacer2.span12.zer
+			.left
+				h12 Iclude priced tickets?  
+			.left.tops-minus
+				p.check3.left
+					input(name="", placeholder="", type="checkbox", id="css3744", value="css3")
+					label(for='css3744',) 
+				.left.tops3  YES
+			.left.tops-minus
+				p.check3.left
+					input(name="", placeholder="", type="checkbox", id="c7ss34", value="css3")
+					label(for='c7ss34',) 
+				.left.tops3  NO
+		.clearfix
+		row-fluid.headerspacer2.span12.zer
+			.left.bluebox2.zero2.zer
+				.tableh
+					| Ticket Type
+			.left.bluebox2.zero2
+				.tableh
+					| Ticket Price
+			.left.bluebox2.zero2
+				.tableh
+					| Number <br /> of tickets
+			.left.bluebox2.zero2
+				.tableh
+					| Fee
+			.left.bluebox2.zero2
+				.tableh
+					| Who pays <br /> the fee?
+			.left.bluebox2.zero2
+				.tableh
+					| VAT
+			.left.bluebox2.tableh.zero2.extra
+				.tableh
+					| Total <br /> Ticket Price:
+			.right.bluebox2.zero2
+				.tableh
+					| What <br /> you’ll recive <br /> per ticket:
+			.clearfix
+		row-fluid.headerspacer.span12.zer
+			.left.zer
+					dl.dropdown2	
+						dt
+							a.dropx2(href="#")
+								| Premium
+						dd
+							ul
+								li
+									a(href="#",) Standard
+			.left
+					input(name="", placeholder="", type="text2", id="", class="file_input_textbox9" style="width:142px;")
+			.left
+					input(name="", placeholder="", type="text2", id="", class="file_input_textbox9" style="width:122px;")
+			.left
+					input(name="", placeholder="", type="text2", id="", class="file_input_textbox9" style="width:70px;")
+			.left
+					dl.dropdown3	
+						dt
+							a.dropx3(href="#")
+								| Me
+						dd
+							ul
+								li
+									a(href="#",) Them
+			.left
+					input(name="", placeholder="", type="text2", id="", class="file_input_textbox9" style="width:72px;")
+			.left
+					input(name="", placeholder="", type="text2", id="", class="file_input_textbox9" style="width:200px;")
+			.left
+					input(name="", placeholder="", type="text2", id="", class="file_input_textbox9" style="width:148px;")
+		row-fluid.span12.zer.minus3
+			.left.zer
+					dl.dropdown2	
+						dt
+							a.dropx2(href="#")
+								| Premium
+						dd
+							ul
+								li
+									a(href="#",) Standard
+			.left
+					input(name="", placeholder="", type="text2", id="", class="file_input_textbox9" style="width:142px;")
+			.left
+					input(name="", placeholder="", type="text2", id="", class="file_input_textbox9" style="width:122px;")
+			.left
+					input(name="", placeholder="", type="text2", id="", class="file_input_textbox9" style="width:70px;")
+			.left
+					dl.dropdown3	
+						dt
+							a.dropx3(href="#")
+								| Me
+						dd
+							ul
+								li
+									a(href="#",) Them
+			.left
+					input(name="", placeholder="", type="text2", id="", class="file_input_textbox9" style="width:72px;")
+			.left
+					input(name="", placeholder="", type="text2", id="", class="file_input_textbox9" style="width:200px;")
+			.left
+					input(name="", placeholder="", type="text2", id="", class="file_input_textbox9" style="width:148px;")
+			.clearfix
+		row-fluid.span12.zer.minus3
+			.left.zer
+					dl.dropdown2	
+						dt
+							a.dropx2(href="#")
+								| Premium
+						dd
+							ul
+								li
+									a(href="#",) Standard
+			.left
+					input(name="", placeholder="", type="text2", id="", class="file_input_textbox9" style="width:142px;")
+			.left
+					input(name="", placeholder="", type="text2", id="", class="file_input_textbox9" style="width:122px;")
+			.left
+					input(name="", placeholder="", type="text2", id="", class="file_input_textbox9" style="width:70px;")
+			.left
+					dl.dropdown3	
+						dt
+							a.dropx3(href="#")
+								| Me
+						dd
+							ul
+								li
+									a(href="#",) Them
+			.left
+					input(name="", placeholder="", type="text2", id="", class="file_input_textbox9" style="width:72px;")
+			.left
+					input(name="", placeholder="", type="text2", id="", class="file_input_textbox9" style="width:200px;")
+			.left
+					input(name="", placeholder="", type="text2", id="", class="file_input_textbox9" style="width:148px;")
+			.clearfix
+		row-fluid.span12.zer.minus3
+			.left.zer
+					dl.dropdown2	
+						dt
+							a.dropx2(href="#")
+								| Premium
+						dd
+							ul
+								li
+									a(href="#",) Standard
+			.left
+					input(name="", placeholder="", type="text2", id="", class="file_input_textbox9" style="width:142px;")
+			.left
+					input(name="", placeholder="", type="text2", id="", class="file_input_textbox9" style="width:122px;")
+			.left
+					input(name="", placeholder="", type="text2", id="", class="file_input_textbox9" style="width:70px;")
+			.left
+					dl.dropdown3	
+						dt
+							a.dropx3(href="#")
+								| Me
+						dd
+							ul
+								li
+									a(href="#",) Them
+			.left
+					input(name="", placeholder="", type="text2", id="", class="file_input_textbox9" style="width:72px;")
+			.left
+					input(name="", placeholder="", type="text2", id="", class="file_input_textbox9" style="width:200px;")
+			.left
+					input(name="", placeholder="", type="text2", id="", class="file_input_textbox9" style="width:148px;")
+		.clearfix
+		a.link1(href="#")
+			img(src="/img/publish.svg", class="arrow")
+
+
+		img(src="/img/success.svg", class="arrow")
+
+
+		row-fluid.span12.zer
+			.left
+				h14 Invite people with this link:
+			.right.span8
+				h14 http://www.sedutperspiciatisundeomnisistenatuserrorsitvoluptatemaccusantium
+		.clearfix
+		row-fluid.span12.headerspacer2.zer.center
+			h14 One last step: <span>Control who can see or access your event</span>
+		row-fluid.span12.headerspacer2.zer
+			h14 Please type your password (there are no stupid restrictions):
+		row-fluid.span12.spacer.zer.redbox
+			input(name="", placeholder="", type="email", id="", required="required", class="file_input_textbox6", style="width:1130px; margin-top:10px;")
+		.clearfix
+
+		.center.headerspacer2
+		a.link1(href="#")
+			img(src="/img/enter.svg", class="arrow")
+
+		.center.headerspacer2
+			h14 <b>SUCCESS!</b> Registration complete. To change any of this at anytime,<br /> just go to “Event settings” within the event page.<br /> Also there you will find how to control other very important functions<br /> such as:
+
+		row-fluid.span12.zer.headerspacer2
+			.left
+				img(src="/img/arrow_yellow.svg", class="arrow")
+			.left.inner
+				h14 Adding inactive profile for guest speakers/teams/companies
+		row-fluid.span12.zer
+			.left
+				img(src="/img/arrow_yellow.svg", class="arrow")
+			.left.inner
+				h14 Adding file to Event’s dropbox
+		row-fluid.span12.zer
+			.left
+				img(src="/img/arrow_yellow.svg", class="arrow")
+			.left.inner
+				h14 View event summary
+		row-fluid.span12.zer
+			.left
+				img(src="/img/arrow_yellow.svg", class="arrow")
+			.left.inner
+				h14 Control who can comment out in the open
+		row-fluid.span12.headerspacer2
+			.left.span6
+				img(src="/img/gotohome.svg", class="arrow")
+			.right.span6
+				img(src="/img/gotoevent.svg", class="arrow")
+		row-fluid.span12.zer.headerspacer2
+			h14 How <br /> restrictive:
+		row-fluid.span12.zer.headerspacer2
+			.left.span2
+				img(src="/img/paddlock.svg", class="arrow")
+			.right.orangebox.span10
+				.left.in_orange22
+					| Allow anyone from any location to access event.
+				.right
+					.right.true
+						img(src="/img/arrow.svg", alt="", class="arrow" style=" padding-left:10px; margin-right:15px; width:30px; height:30px; ")
+					.right.true2
+						a(href="", alt="", class="link1", style="font-size:20px;") LEARN MORE
+		row-fluid.span12.zer.headerspacer
+			.left.span2
+				img(src="/img/paddlock.svg", class="arrow")
+			.right.orangebox.span10
+				.left.in_orange22
+					| Allow people to access event when in range.<br /> <b>No password added.</b>
+				.right
+					.right.true
+						img(src="/img/arrow.svg", alt="", class="arrow" style=" padding-left:10px; margin-right:15px; width:30px; height:30px; ")
+					.right.true2
+						a(href="", alt="", class="link1", style="font-size:20px;") LEARN MORE
+		row-fluid.span12.zer.headerspacer
+			.left.span2
+				img(src="/img/paddlock2.svg", class="arrow")
+			.right.orangebox.span10
+				.left.in_orange22
+					| Allow anyone with any location but <b>with a password</b> <br /> access your event.
+				.right
+					.right.true
+						img(src="/img/arrow.svg", alt="", class="arrow" style=" padding-left:10px; margin-right:15px; width:30px; height:30px; ")
+					.right.true2
+						a(href="", alt="", class="link1", style="font-size:20px;") LEARN MORE
+		row-fluid.span12.zer.headerspacer
+			.left.span2
+				img(src="/img/paddlock2.svg", class="arrow")
+			.right.orangebox.span10
+				.left.in_orange22
+					| Allow people to access event when <b>in range</b> <br /><b>and with a password.</b>
+				.right
+					.right.true
+						img(src="/img/arrow.svg", alt="", class="arrow" style=" padding-left:10px; margin-right:15px; width:30px; height:30px; ")
+					.right.true2
+						a(href="", alt="", class="link1", style="font-size:20px;") LEARN MORE
+		row-fluid.span12.zer.headerspacer
+			.left.span2
+				img(src="/img/paddlock3.svg", class="arrow")
+			.right.orangebox.span10
+				.left.in_orange22
+					| <b>Make private.</b> Attendees can only find event by getting <br /> the link above.
+				.right
+					.right.true
+						img(src="/img/arrow.svg", alt="", class="arrow" style=" padding-left:10px; margin-right:15px; width:30px; height:30px; ")
+					.right.true2
+						a(href="", alt="", class="link1", style="font-size:20px;") LEARN MORE

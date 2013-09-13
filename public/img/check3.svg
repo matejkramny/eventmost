@@ -3,15 +3,17 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 width="55px" height="150px" viewBox="0 0 55 150" enable-background="new 0 0 55 150" xml:space="preserve">
-<rect x="1.886" y="60.514" fill="#542437" width="39.722" height="39.486"/>
-<rect x="6.851" y="65.449" fill="#D95B43" width="29.792" height="29.615"/>
-<path opacity="0.5" fill="#ECD078" enable-background="new    " d="M19.231,90.146L55,50L19.231,77.913
-	C15.386,68.736,7.589,65.679,7.589,65.679L0,72.942C14.231,77.527,19.231,90.146,19.231,90.146z"/>
-<rect x="1.886" y="10.514" fill="#542437" width="39.722" height="39.486"/>
-<rect x="6.851" y="15.449" fill="#D95B43" width="29.792" height="29.615"/>
-<rect x="1.886" y="110.514" fill="#542437" width="39.722" height="39.486"/>
-<rect x="6.851" y="115.449" fill="#D95B43" width="29.792" height="29.615"/>
+<rect x="1.886" y="60.514" fill="#C02943" width="39.722" height="39.486"/>
+<rect x="6.851" y="65.449" fill="#542437" width="29.792" height="29.615"/>
+<rect x="1.886" y="10.514" fill="#C02943" width="39.722" height="39.486"/>
+<rect x="6.851" y="15.449" fill="#542437" width="29.792" height="29.615"/>
+<rect x="1.886" y="110.514" fill="#C02943" width="39.722" height="39.486"/>
+<rect x="6.851" y="115.449" fill="#542437" width="29.792" height="29.615"/>
 <path fill="#ECD078" d="M19.231,140.146L55,100l-35.769,27.913c-3.846-9.177-11.643-12.233-11.643-12.233L0,122.941
 	C14.231,127.527,19.231,140.146,19.231,140.146z"/>
 <rect x="-81.187" y="58.699" fill="#D95B43" width="29.792" height="29.615"/>
+<g>
+	<rect x="86.332" y="45.449" fill="#C02943" width="40" height="40"/>
+	<rect x="91.332" y="50.449" fill="#542437" width="30" height="30"/>
+</g>
 </svg>
