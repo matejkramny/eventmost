@@ -1,24 +1,5 @@
 @import url(http://fonts.googleapis.com/css?family=Raleway:100,200,400,700,700italic,900,400italic,300);
 
-html,body {
-}
-.container {
-	width: 1200px;
-	overflow: scroll;
-}
-
-/* hack to hide unknown overflowing of the page */
-@media (min-width: 1200px) {
-	.container {
-		overflow: hidden;
-	}
-}
-@media (max-width: 1200px) {
-	.container {
-		overflow: scroll;
-	}
-}
-
 body {
 	background-color: #542437;
 	font-family: 'Raleway', Arial, sans-serif;
@@ -30,7 +11,6 @@ h1 {
 header {
 	background-color: #ecd178;
 	height: 145px;
-	min-width: 1200px;
 }
 
 header .signin {
@@ -52,6 +32,7 @@ header .menu {
 .minus {margin-left: -10px;}
 .minus2 {margin-top: -37px; width: 130px;}
 .minus3 {margin-top: -20px;}
+.minus4 {margin-left: -15px;}
 .smallslid {margin-left: 30px;}
 .smallslid2 {margin-left: -15px;}
 .smallslid4 {margin-left: 25px;}
@@ -223,11 +204,13 @@ footer .copy {
 	background-color: #53777a;
 	color: #542437;
 	font-weight: 100;
-	font-size: 86px;
+	font-size: 66px;
 	margin-bottom: 10px;
 	margin-left: 0px;
 	text-align: left;
-	padding: 20px;
+	padding-right: 20px;
+	padding-left: 20px;
+	padding-bottom:5px; 
 }
 .bluebox2 {
 	background-color: #53777a;
@@ -620,7 +603,7 @@ h12 {
 }
 h14 {
 	font-weight: 400;
-	font-size: 30px;
+	font-size: 28px;
 	color: #ecd077;
 	word-wrap:break-word;
 }
@@ -646,12 +629,12 @@ h14 span {
 	font-weight: 400;
 	font-size: 30px;
 	color: #542437;
-	height: 94px;
+	height: 38px;
 	width: 100%;
 	word-wrap:break-word;
 	text-align: left;
 	padding-left: 15px;
-	padding-top: 15px;
+	padding-top: 30px;
 }
 .eventtext {
 	font-size: 14px;
@@ -671,8 +654,8 @@ h14 span {
 #slider1 .overview li{ float: left; margin: 0 40px 0 0; padding: 1px; width: 240px; color:#ecd077; font-size: 18px;}
 
 /**** DROPDOWN ****/
-        .arrange {font-size: 25px; margin-top: -10px; margin-right: 57px; font-weight: 400;}
-        .dropdown {margin-top: -74px; margin-right: -15px;}
+        .arrange {font-size: 23px; margin-top: 4px; margin-right: 67px; font-weight: 400;}
+        .dropdown {margin-top: -50px; margin-right: -15px;}
         .dropdown dd, .dropdown dt, .dropdown ul { margin:0px; padding:0px;  z-index: 799;}
         .dropdown dd { position:relative; }
         .dropdown a, .dropdown a:visited { color:#53777a; text-decoration:none; outline:none; font-size: 14px;}
