@@ -1,6 +1,7 @@
 extends ../base
 
 append addonjs
+	script(src="/js/geo.js")
 	script(src="/js/datepicker.js")
 	script(src="/js/tiny.editor.packed.js")
 	script(src="/js/jquery.jcarousel.min.js")
@@ -78,7 +79,7 @@ append content
 					| Event <br /> address
 				.row-fluid
 					.left.span8
-						input(name="", placeholder="", type="email", id="", class="file_input_textbox7")
+						input(name="", placeholder="", type="email", id="event_location", class="file_input_textbox7")
 		.span2
 			.orange
 				.left.well4.orange
