@@ -28,3 +28,50 @@
 	.clearfix
 	a(href="/", class="close-reveal-modal") 
 		img(src="/img/x.svg")
+
+#PrivacyModal.reveal-modal
+	h1 Privacy settings:
+	.center2
+		| Allow people to private message me?
+	.center2.turn2
+		label.checkbox.toggle.candy(style='width: 100px;', onclick='')
+			input(type='checkbox', class="invisible")
+			span
+				span No
+				span Yes
+			a.slide-button
+		.clearfix
+	.center
+		| Allow people to comment on my wall?
+	.center2.turn2
+		label.checkbox.toggle.candy(style='width: 100px;', onclick='')
+			input(type='checkbox', class="invisible")
+			span
+				span No
+				span Yes
+			a.slide-button
+		.clearfix
+	.center
+		| Turn off location ability <br />(you will not be able to find Events in range)?
+	.center2.turn2
+		label.checkbox.toggle.candy(style='width: 100px;', onclick='')
+			input(type='checkbox', class="invisible")
+			span
+				span No
+				span Yes
+			a.slide-button
+		.clearfix
+	.center
+		| Do not show my profile in events. 
+		h2 !(You will not be able to see other attendees or access event information and documents other than the event description and location.)!
+	.center2.span4
+		.left
+			input.enter3(type="submit", value="Don't show" )
+		.right
+			input.enter3(type="submit", value="Show" )
+	.clearfix
+	.center2
+		input.enter3(type="submit", value="SUMBIT" )
+	.clearfix
+	a(href="/", class="close-reveal-modal") 
+		img(src="/img/x.svg")

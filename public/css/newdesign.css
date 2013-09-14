@@ -695,7 +695,7 @@ h14 span {
 
 /**** DROPDOWN ****/
         .arrange {font-size: 23px; margin-top: 4px; margin-right: 67px; font-weight: 400;}
-        .dropdown {margin-top: -50px; margin-right: -15px;}
+        .dropdown {margin-top: -45px; margin-right: -15px;}
         .dropdown dd, .dropdown dt, .dropdown ul { margin:0px; padding:0px;  z-index: 799;}
         .dropdown dd { position:relative; }
         .dropdown a, .dropdown a:visited { color:#53777a; text-decoration:none; outline:none; font-size: 14px;}
