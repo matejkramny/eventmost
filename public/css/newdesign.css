@@ -544,6 +544,28 @@ input[type="search"]::-webkit-input-placeholder,
 	color: #ecd077;
 	margin-top:15px; 
 }
+.enter2 {
+	background-color: #542437;
+	border:none;
+	height: 57px;
+	width: 210px !important;
+	font-size: 30px;
+	font-weight: 100;
+	border-radius: 5px;
+	color: #ecd077;
+	margin: 0px auto !important;
+}
+.enter3 {
+	background-color: #542437;
+	border:none;
+	height: 40px;
+	width: 160px !important;
+	font-size: 20px;
+	font-weight: 100;
+	border-radius: 5px;
+	color: #ecd077;
+	margin: 0px auto !important;
+}
 .center2 {	margin: auto;
 	margin-top: 20px !important;
 	vertical-align:middle;
@@ -1559,8 +1581,19 @@ body #editor {color: #fff;}
 		} 
 
 	.reveal-modal h1 {color:#542437; width:100%; font-weight:400; text-align: center; font-size: 50px; margin-top: 5px !important;}
+	.reveal-modal h2 {color:#542437; width:100%; font-weight:400; text-align: center; font-size: 14px; margin-top: 5px !important;}
 	.smaller {font-size: 16px;}
-
+.fui-checkbox-unchecked,
+.fui-checkbox-checked, {  font-size: 0.1% !important;}
+.right-al {text-align: right;  width: 300px}
+.switches {margin-left: -60px;}
+.turn {margin-left: 107px ! important;}
+.turn2 {margin-left: 107px ! important; margin-top: 10px ! important;}
 	.pop-input {width: 100%; padding-top: 10px;}
 
 	/**** POP UPS ****/
+
+/**** SWITCH ****/
+
+
+/**** SWITCH ****/
