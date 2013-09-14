@@ -352,7 +352,20 @@ input.file_input_textbox2 {
 	line-height: 39px;
 	background:url("../img/email-icon.svg")no-repeat scroll 15px 15px;
 	background-color: #542437;
-	padding-left: 50px;
+	padding-left: 55px;
+	max-width: 429px;
+}
+input.file_input_textbox0 {
+	color:#ecd077;
+	font-size: 32px;
+	font-weight: 100;
+	border: none;
+	border-radius: 5px;
+	margin-top:15px; 
+	line-height: 39px;
+	background:url("../img/email2-icon.svg")no-repeat scroll 15px 15px;
+	background-color: #542437;
+	padding-left: 55px;
 	max-width: 429px;
 }
 input.file_input_textbox3 {
@@ -365,7 +378,7 @@ input.file_input_textbox3 {
 	margin-top:15px; 
 	background:url("../img/pass-icon.svg")no-repeat scroll 15px 15px;
 	background-color: #542437;
-	padding-left: 50px;
+	padding-left: 55px;
 	max-width: 429px;
 	margin-left: 19px;
 }
