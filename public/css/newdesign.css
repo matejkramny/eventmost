@@ -1559,6 +1559,7 @@ body #editor {color: #fff;}
 		} 
 
 	.reveal-modal h1 {color:#542437; width:100%; font-weight:400; text-align: center; font-size: 50px; margin-top: 5px !important;}
+	.smaller {font-size: 16px;}
 
 	.pop-input {width: 100%; padding-top: 10px;}
 
