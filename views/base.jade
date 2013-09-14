@@ -24,7 +24,7 @@ html
 									a(href="/")
 										img(src="/img/logo.png", class="logo")
 								.signin.span3.offset6
-									a(href="/", class="link1") Login 
+									a(href="/", class="link1" data-reveal-id="loginModal") Login 
 									| |
 									a(href="", class="link1")  Sign up
 							else
@@ -51,6 +51,20 @@ html
 											img(src="/img/messages.svg") 
 										h5 Inbox
 										h15= user.mailboxUnread
+			#loginModal.reveal-modal
+				h1 Hello !
+				.pop-input.center
+					input(name="login", placeholder="email", maxlength="128", type="email", id="UserEmail", required="required", class="file_input_textbox2" 
+						style="margin-top:0px; height:39px; width:350px;")
+					input(name="password", placeholder="password", type="password", id="UserPassword", required="required", class="file_input_textbox3",
+						style=" height:39px; width:350px; margin-left:0px;")
+				.left
+					input.enter(type="submit", value="ENTER" style="margin-left:195px;")
+				.clearfix
+				.center2
+					| Want to create an account? Enter here!
+				a(href="/", class="close-reveal-modal") 
+					img(src="/img/x.svg")
 
 			.container
 				block content
@@ -109,6 +123,7 @@ html
 			script(src="/js/tinycarousel2.js")
 			script(src="/js/three.js")
 			script(src="/js/four.js")
+			script(src="/js/jquery.reveal.js")
 			script(src="/js/jquery.jcarousel.min.js")
 			script.
 				// Temporary
