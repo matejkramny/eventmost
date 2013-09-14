@@ -1,33 +1,68 @@
-extends ../layout
+extends ../base
 
 block content
-	include ../inc/sidebar
-	#main-content
-		.search-box
-			.search-content
-				p
-					span.title= pagename
-		include ../inc/flash
-		
-		unless events.length
-			p No events found.. 
-				a(href="/event/add") Add one
-		
-		for event in events
-			.users-spacer.event-item
-				.user-short-info.single-item
-					.event-ico.left
-						img.event-icon(src=event.avatar)
+	.bluebox(style="margin-top:20px;")
+		a.link4(href="")= pagename
+		.right.arrange
+			| Arrange by
+		.clearfix
+		.right
+			dl.dropdown
+				dt
+					a.dropx(href="#")
+						| select
+				dd
+					ul
+						li
+							a(href="#",) Most recent to latest
+						li
+							a(href="#",) Latest to most recent
+						li
+							a(href="#",) Events name A-Z
+						li.border_bottom
+							a(href="#") My planned events
+	- var eventsi = 0;
+	for event in events
+		.row-fluid
+			.events
+				.span1p
+					img(src="/img/map-icon.svg", alt="",)
+				.span1
+					img.minus(src=event.avatar, alt="")
+				.span8p
+					a(href="/event/"+event._id)
+						h8= event.name
+					p.eventtext= event.description
+				.right_star
+					img(src="/img/martini.svg", alt="", class="arrow")
+				.right_star
+					.image2
+						img.image2(src="/img/calendar-icony.svg", alt="")
+						h16= event.start.getDate()
+							| .
+							= event.start.getMonth()+1
+							br
+							= event.start.getFullYear()
+				.right_star
 					.left
-						.name= event.name
-						.role= event.start
-							|  - 
-							= event.end
-						.options-btn-box
-							if event.password.enabled
-								a.password-ico.margin-x-5(href="/events")
-							else if event.geo || event.address
-								a.geolocalization-ico.margin-x-5(href="/events")
-							a.grey-dot.margin-left-25.golink(href="/event/"+event._id)
-					.clear
-	.clear
+						img(src="/img/clock.svg", alt="", class="arrow")
+					.left.date #{event.start.getHours()}:#{event.start.getMinutes()}
+						br
+						| (BST)
+				.left.headerSpacer
+					.left
+						img(src="/img/map6.svg", alt="", class="arrow")
+					.left.location
+						if event.address && event.address.length > 0
+							h1= event.address
+						else
+							h1 Location unavailable
+		- if (++eventsi < events.length)
+			.line
+		- else
+			br
+		.clearfix
+	if events.length == 0
+		.row-fluid
+			.span12
+				p.text-center.eventtext There are no events

@@ -1,6 +1,7 @@
 extends base
 
 block addonjs
+	script(src="/js/geo.js")
 	script(src="/js/getNearbyEvents.js")
 
 append content
@@ -161,6 +162,8 @@ append content
 							a(href="#") My planned events
 	.row-fluid#nearbyEventsPlaceholder
 		.span12
+			p.text-center.eventtext Looking for events..
+	
 	#NotificationModal.reveal-modal
 		h1 Notification settings:
 		.center2
