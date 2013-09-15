@@ -166,3 +166,4 @@ scheme.methods.getGeo = function (cb) {
 	})
 }
 
+exports.Event = mongoose.model("Event", scheme);

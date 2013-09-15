@@ -1,12 +1,143 @@
 extends ../base
 
 block content
-	#main-content
-		.search-box
-			.search-content
-				p
-					span.title= event.name
-		.event-info
-			.eavatar
-				img.event-icon-large(src=event.avatar)
+
+
+		.row-fluid.span10.headerSpacer.zer
+			.left.span4
+				img(src="/img/default_event2.svg", alt="",)
+			.right.orangebox_title.span8.stable
+				span.title= event.name
+				.right
+					.event-menu
+						ul#menu
+							li
+								a(href="#")
+									| Event <br /> settings <br />
+									img(src="/img/mini_arrow.svg", alt="",)
+								ul
+									li
+										a(href='#') Edit event setup
+									li
+										a(href='#') Create feedback profile
+									li
+										a(href='#') Event summary
+									li
+										a(href='#') Event dropbox
+									li
+										a(href='#') Send push notification
+									li
+										a(href='', data-reveal-id="controlsModal") Comment controls
+				.right
+					img(src="/img/dot.svg", alt="", class="purpleline" style="height:80px; padding-right:21px; 	margin-top: -5px;")
+		.row-fluid.center
+			.headerspacer2
+			h12 <b>Thanks to our sponsors:</b>
+			.clearfix
+			.headerspacer2
+				.left
+					img(src="/img/CEI.png", alt="",style="margin-left:60px;")
+				.right
+					img(src="/img/oxford.png", alt="",style="margin-right:60px;")
+		.row-fluid.headerSpacer
+			.right
+				dl.dropdown4
+					dt
+						img(src="/img/drop4.svg", alt="", style="float:right;")
+						a(href="#", class="dropx4" ) 
+							| Arrange by
+					dd
+						ul
+							li
+								a(href="#",) Most recent to latest
+							li
+								a(href="#",) Latest to most recent
+							li
+								a(href="#",) Events name A-Z
+							li.border_bottom
+								a(href="#") My planned events
+		.clearfix
+		.row-fluid.headerspacer2
+		.left.speaker_title2
+			| Guest speaker
+			.speakerbox
+				.left.speaker_title.inner
+					img(src="/img/default_speaker.svg", alt="", class="circular")
+				.left.speaker_title2.speakerstext
+					.smallslid3
+						| <b>Lucy Cook</b> - Director of Finance, Delloite	<br />
+					.headerSpacer
+						.left
+							img(src="/img/bubble-left.svg", alt="", style="vertical-align:top;")
+						.bubbletext.left
+							| At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores 
+							| et quas molestias excepturi sint occaecati cupiditate non provident,similique sunt.
+							| At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores 
+							| et quas molestias excepturi sint occaecati cupiditate non provident,similique sunt.
+							| At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores 
+							| At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores 
+							| et quas molestias excepturi sint occaecati cupiditate non provident,similique sunt.
+							| At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores 
+							| et quas molestias excepturi sint occaecati cupiditate non provident,similique sunt.
+							| At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores 
+							.delete_button.right
+								input.delete(type="submit", value="DELETE")
+
+				.right
+					.speakerright
+						a(href="#",)
+							img(src="/img/big-yellow-arrow.svg",  )
+		.clearfix
+		.left.speaker_titlerespond22.headerspacer2
+			| Guest speaker
+		.speakerboxrespond
+			.left.speaker_title.inner
+				img(src="/img/default_speaker.svg", alt="", class="circularespond")
+			.left.speaker_titlerespond2.speakerstext
+				.smallslid3
+					| <b>Lucy Cook</b> - Director of Finance, Delloite	<br />
+				.headerSpacer
+					.left
+						img(src="/img/bubble-left.svg", alt="", style="vertical-align:top;")
+					.bubbletextrespond.left
+						| At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores 
+						| et quas molestias excepturi sint occaecati cupiditate non provident,similique sunt.
+			.right
+				.speakerright
+					a(href="#",)
+						img(src="/img/big-yellow-arrow.svg",  )
+		.clearfix
+		.line
+		//- pagination goes here.
+		.headerspacer2
+			.left
+				img(src="/img/bubble-left-red.svg", alt="", style="vertical-align:top;")
+			.comment.left
+				.right.postcomment
+					a(href="#",) 
+						img(src="/img/post.svg", alt="",)
+				textarea.postcommentarea(placeholder="Post a comment here...")
+		.clearfix
+		.row-fluid
+			.right
+				input.enter4(type="submit", value="Exit event")
+		.clearfix
+
+
+
+		#controlsModal.reveal-modal
+			.center2
+				h3 Comment controls
+			.center.headerspacer2
+				| Allow attendees to comment out in the open <br /> (like facebook)? <b>(remember you can always delete comments or attendees)</b>
+			.center2.turn2
+				label.checkbox.toggle.candy(style='width: 100px;', onclick='')
+					input(type='checkbox', class="invisible")
+					span
+						span No
+						span Yes
+					a.slide-button
+			.clearfix
+			a(href="#", class="close-reveal-modal") 
+				img(src="/img/x.svg")
 				

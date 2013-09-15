@@ -1,26 +1,65 @@
-extends layout
+extends base
 
 block content
-	include inc/sidebar
-	#main-content
-		.search-box
-			.search-content
-				p
-					span.title Your saved profiles
-		for profile in profiles
-			.users-spacer
-				.user-short-info.border-bottom
-					.avatar.left
-						a(href="/user/"+profile._id)
-							img(src=profile.avatar)
-					.left
-						.name
-							a(href="/user/"+profile._id)= profile.getName()
-						.role= profile.position
-							if profile.company
-								| , 
-								= profile.company
-						.grey-arrow
-							form(action="/user/"+profile._id+"/remove", method="GET")
-								a.minus-dot.margin-left-25(href="#", onclick="$(this).parent().submit();")
-	.clear
+
+		.row-fluid.headerspacer2
+			.left.span3
+				.speaker_titlerespond2.smallslid3 
+					| Feedback profile of:
+				.speaker_title.inner.smallslid4
+					img(src="/img/default_speaker.svg", alt="", class="circular")
+			.left.speaker_titlerespond2.profile_text.zer
+				img(src="/img/line-dot2.svg", alt="", style="")
+				.overone
+					| <b>Lucy Cook</b> - Director of Finance, Delloite <br />
+					| Guest speaker <br />
+					img(src="/img/email-icon.svg", alt="", style="padding-right:5px; width:32px; height:19px;")
+					a(href="#", class="link3")
+						| lucy.cook@mediaart.com
+
+			.left.smallslid3
+				a(href="#",)
+					img(src="/img/email-icon.svg", alt="", style="padding-right:5px; width:157px; height:92px;")
+				.speaker_titlerespond2
+					a(href="#", class="link3" style="margin-left:50px;")
+						| <b>Inbox</b>
+			.left
+				.left.profile-info
+					| Name: <br />
+					| Position: <br />
+					| Company: <br />
+				.left.profile-info2
+					| Lucy Cook <br />
+					| Guest Speaker <br />
+					| Media Inc. <br />
+			.left.smallslid3
+				.left.profile-info
+					| Website: <br />
+					| Location: <br />
+					| Interests: <br />
+				.left.profile-info2
+					| media.com <br />
+					| London <br />
+					| sport, photography<br />
+			.clearfix
+			.row-fluid
+				.profile-info3.span12.headerspacer2
+					| Description: <br />
+					| Sed ut perspiciatis unde omnis iste natus error sit  voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque 
+					| ipsa quae ab illo inventore veritatis  et quasi<b> architecto beatae </b>vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia 
+					| voluptas sit  aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.  
+					| Neque porro <b>quisquam est</b>, qui dolorem ipsum quia dolo.
+				.headerspacer2
+					.left.headerSpacer.zero2
+						input.profile-button(type="submit", value="View this profile inbox")
+					.left.headerSpacer.zero2
+						input.profile-button(type="submit", value="Invite someone via email to take over this profile")
+					.left.headerSpacer.zero2
+						input.profile-button(type="submit", value="Send this profile’s inbox to an email address")
+					.left.headerSpacer.zero2
+						input.profile-button(type="submit", value="Send this profile’s inbox to another EventMost user")
+				.clearfix
+
+
+
+
