@@ -25,17 +25,17 @@ block content
 	for event in events
 		.row-fluid
 			.events
-				.span1p
+				.span1p.left
 					img(src="/img/map-icon.svg", alt="",)
-				.span1
+				.span1.left
 					img.minus(src=event.avatar, alt="")
 				.span8p
 					a(href="/event/"+event._id)
 						h8= event.name
 					p.eventtext= event.description
-				.right_star
+				.right_star2
 					img(src="/img/martini.svg", alt="", class="arrow")
-				.right_star
+				.right_star2
 					.image2
 						img.image2(src="/img/calendar-icony.svg", alt="")
 						h16= event.start.getDate()
@@ -43,13 +43,13 @@ block content
 							= event.start.getMonth()+1
 							br
 							= event.start.getFullYear()
-				.right_star
+				.right_star2
 					.left
 						img(src="/img/clock.svg", alt="", class="arrow")
 					.left.date #{event.start.getHours()}:#{event.start.getMinutes()}
 						br
 						| (BST)
-				.left.headerSpacer
+				.left
 					.left
 						img(src="/img/map6.svg", alt="", class="arrow")
 					.left.location

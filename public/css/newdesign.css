@@ -89,6 +89,13 @@ footer .copy {
 	height: 17px;
 	color: #ecd077;
 }
+.right_star2 {
+	float: right;
+	padding-top: 0px;
+	padding-right: 35px;
+	height: 17px;
+	color: #ecd077;
+}
 .land {
 	width: 26% !important;
 	float: right;
