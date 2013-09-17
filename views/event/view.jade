@@ -2,7 +2,6 @@ extends ../base
 
 block content
 
-
 		.row-fluid.span10.headerSpacer.zer
 			.left.span4
 				img(src="/img/default_event2.svg", alt="",)
@@ -62,7 +61,8 @@ block content
 			| Guest speaker
 			.speakerbox
 				.left.speaker_title.inner
-					img(src="/img/default_speaker.svg", alt="", class="circular")
+					a(href='', data-reveal-id="profile1Modal")
+						img(src="/img/default_speaker.svg", alt="", class="circular")
 				.left.speaker_title2.speakerstext
 					.smallslid3
 						| <b>Lucy Cook</b> - Director of Finance, Delloite	<br />
@@ -92,7 +92,8 @@ block content
 			| Guest speaker
 		.speakerboxrespond
 			.left.speaker_title.inner
-				img(src="/img/default_speaker.svg", alt="", class="circularespond")
+				a(href='', data-reveal-id="profile2Modal")
+					img(src="/img/default_speaker.svg", alt="", class="circularespond")
 			.left.speaker_titlerespond2.speakerstext
 				.smallslid3
 					| <b>Lucy Cook</b> - Director of Finance, Delloite	<br />
@@ -140,4 +141,101 @@ block content
 			.clearfix
 			a(href="#", class="close-reveal-modal") 
 				img(src="/img/x.svg")
+
+		#profile1Modal.reveal-modal
+			.left.smallslid 
+				img(src="/img/default_speaker2.svg", alt="", class="circularespond")
+			.left.headerspacer2.event-size.text-right.smallslid 
+				| <b>Lucy Cook</b> - Director of Finance, Delloite<br />
+				| Guest speaker<br />
+				img(src="/img/email-icon-small.svg", alt="", style="padding-right:5px;")
+				a(href="#", class="link1")
+					| lucy.cook@mediaart.com
+			.clearfix
+			.left
+				.left.headerSpacer.event-size2.text-right
+					| Name: <br />
+					| Position: <br />
+					| Company: <br />
+				.right.event-size2.headerSpacer.zero2
+					| <b>Lucy Cook</b> <br />
+					| <b>Guest Speaker</b> <br />
+					| <b>Media Inc.</b> <br />
+			.left.smallslid3 
+				.left.headerSpacer.event-size2.text-right
+					| Website: <br />
+					| Location: <br />
+					| Interests: <br />
+					| Educaction: 
+				.right.event-size2.headerSpacer.zero2
+					| <b>media.com</b> <br />
+					| <b>London</b> <br />
+					| <b>sport, photography</b> <br />
+					| <b>MBA, Oxford University</b> 
+			.clearfix
+			.left.event-size3
+				| Description: 
+			.left.event-size
+				| Sed ut perspiciatis <b>unde omnis iste natus error sit  voluptatem accusanti</b> doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo 
+				| inventore veritatis  et quasi architecto beatae vitae dicta sunt explicabo.  <b>Nemo enim ipsam </b>voluptatem quia voluptas sit  aspernatur aut odit 
+				| aut  fugit, sed quia consequuntur  magni dolores eos qui ratione voluptatem  sequi nesciunt. Neque porro quisquam est, qui dolorem.
+			.clearfix
+			.center.headerSpacer
+				a(href="#", class="link1")
+					img(src="/img/send-private.svg", alt="", style="padding-right:5px;")
+				a(href="#", class="link1")
+					img(src="/img/send-card.svg", alt="", style="padding-right:5px;")
+				a(href="#", class="link1")
+					img(src="/img/save-profile.svg", alt="", style="padding-right:5px;")
+			a(href="#", class="close-reveal-modal") 
+				img(src="/img/x.svg")
+
+		#profile2Modal.reveal-modal
+			.left.smallslid 
+				img(src="/img/default_speaker2.svg", alt="", class="circularespond")
+			.left.headerspacer2.event-size.text-right.smallslid 
+				| <b>Lucy Cook</b> - Director of Finance, Delloite<br />
+				| Guest speaker<br />
+				img(src="/img/email-icon-small.svg", alt="", style="padding-right:5px;")
+				a(href="#", class="link1")
+					| lucy.cook@mediaart.com
+			.clearfix
+			.left
+				.left.headerSpacer.event-size2.text-right
+					| Name: <br />
+					| Position: <br />
+					| Company: <br />
+				.right.event-size2.headerSpacer.zero2
+					| <b>Lucy Cook</b> <br />
+					| <b>Guest Speaker</b> <br />
+					| <b>Media Inc.</b> <br />
+			.left.smallslid3 
+				.left.headerSpacer.event-size2.text-right
+					| Website: <br />
+					| Location: <br />
+					| Interests: <br />
+					| Educaction: 
+				.right.event-size2.headerSpacer.zero2
+					| <b>media.com</b> <br />
+					| <b>London</b> <br />
+					| <b>sport, photography</b> <br />
+					| <b>MBA, Oxford University</b> 
+			.clearfix
+			.left.event-size3
+				| Description: 
+			.left.event-size
+				| Sed ut perspiciatis <b>unde omnis iste natus error sit  voluptatem accusanti</b> doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo 
+				| inventore veritatis  et quasi architecto beatae vitae dicta sunt explicabo.  <b>Nemo enim ipsam </b>voluptatem quia voluptas sit  aspernatur aut odit 
+				| aut  fugit, sed quia consequuntur  magni dolores eos qui ratione voluptatem  sequi nesciunt. Neque porro quisquam est, qui dolorem.
+			.clearfix
+			.center.headerSpacer
+				a(href="#", class="link1")
+					img(src="/img/send-private.svg", alt="", style="padding-right:5px;")
+				a(href="#", class="link1")
+					img(src="/img/send-card.svg", alt="", style="padding-right:5px;")
+				a(href="#", class="link1")
+					img(src="/img/save-profile.svg", alt="", style="padding-right:5px;")
+			a(href="#", class="close-reveal-modal") 
+				img(src="/img/x.svg")
+				
 				

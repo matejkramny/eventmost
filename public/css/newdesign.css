@@ -1782,6 +1782,21 @@ background: #d95a42;
     background: #542437; color: #d95a42;
 }
 /**** event menu ****/
+
+.event-size {
+	font-size: 15px;
+}
+.event-size2 {
+	font-size: 16px;
+	line-height: 24px;
+}
+.event-size3 {
+	font-size: 18px;
+	line-height: 24px;
+}
+.text-right {
+	text-align: right;
+}
 .speakerbox {
 	width: 1080px;
 	min-height: 200px;
@@ -1807,12 +1822,12 @@ background: #d95a42;
 	border-radius: 75px;
 	-webkit-border-radius: 75px;
 	-moz-border-radius: 75px;
-	padding-top: 10px;
 	vertical-align:middle;
 	text-align:center;
 	float: none;
 	display: block;
 	margin: auto;
+	margin-top: 10px;
 }
 .speakerright{
 	position: absolute;
@@ -1876,7 +1891,7 @@ background: #d95a42;
 	border-radius: 50px;
 	-webkit-border-radius: 50px;
 	-moz-border-radius: 50px;
-	padding-top: 10px;
+	margin-top: 10px;
 }
 .bubbletextrespond {
 	background-color: #ecd078;
