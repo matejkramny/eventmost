@@ -42,6 +42,7 @@ header .menu {
 .slid {margin-bottom: 10px;}
 .bigslid {margin-left: 140px;}
 .bigslid h5 {font-size: 30px; font-weight: 700;}
+.speaker_titlerespond2 h5 {font-size: 25px; font-weight: 500;}
 .minus2 h5 {font-size: 30px; font-weight: 400; color: #542437; position: absolute; top: 84px; left:-15px;}
 .minus2 h15 {font-size: 25px; font-weight: 400; color: #ecd077; position: absolute; top: 92px; left:83px;}
 p.small {font-size: 17px; font-weight: 400; margin-left: -20px; }
@@ -53,6 +54,8 @@ p.small {font-size: 17px; font-weight: 400; margin-left: -20px; }
 .tops-minus {margin-top: -10px;}
 .small-top {margin-top: 5px;}
 .zer {margin-left: 0px !important;}
+.spacerbig {margin-top: 35px;}
+.spacerbigger {margin-top: 45px;}
 
 .title{
 	font-size: 60px;
@@ -131,6 +134,9 @@ footer .copy {
 	font-weight: 100;
 	text-align: center;
 	text-transform: none;
+}
+.iconsbox {
+	width: 25%;
 }
 .well3 {
 	border-radius: 0px;
@@ -674,11 +680,18 @@ input[type="search"]::-webkit-input-placeholder,
 	word-wrap:break-word !important;
 	white-space: normal;
 }
-.center2 {	margin: auto;
+.center2 {	
+	margin: auto;
 	margin-top: 20px !important;
 	vertical-align:middle;
 	text-align:center;
 	float: none;}
+.center3 {	
+	margin: auto !important; 
+	position: relative;
+	width: 100% !important;
+	float: none;
+}
 .logout {
 	background-color: #542437;
 	border:none;
@@ -1988,16 +2001,20 @@ background: #d95a42;
 	line-height: 30px;
 }
 .prof-pic {
-	min-height: 150px;
+	min-height: 150px;y
 	margin: auto;
 	vertical-align:middle;
 	text-align:center;
 	display: block;
 }
-
+.color {color: #ecd077;}
 .thirty {
-	width: 30%;
+	width: 31%;
 	font-size: 20px;
 	color: #ecd077;
 	margin-bottom: 10px;
+	display: inline-block;
+	text-align: center;
+	vertical-align: middle;
+
 }

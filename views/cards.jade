@@ -1,81 +1,55 @@
-extends layout
+extends base
 
-append content
-	include inc/sidebar
-	#main-content
-		.search-box
-			.search-content
-				form#CardIndexForm(action="/cards", method="POST", accept-charset="utf-8", novalidate="novalidate")
-					p
-						span.title Your business cards
-						span.relative
-							input#CardSearch(name="search", placeholder="Search business cards", type="text")
-							button.search-btn.round-button(label="Search", type="submit") Search
-						span.right
-							a#addCard.round-button(href="#") Add new
-		for card in cards
-			.users-spacer
-				.user-short-info.single-item
-					.avatar.left.card-slide(rel=card._id)
-						img(src=card.avatar)
-					.left
-						.name.card-slide(rel=card._id)= card.getName()
-						.role.card-slide(rel=card._id)= card.position
-						.grey-arrow(style="width: 100px;")
-							form(action="/card/"+card._id+"/delete", method="POST", novalidate="novalidate")
-							a.carddel(href="#", rel=card._id)
-								img(src="/img/minus.png")
-							a.editCard.grey-dot.margin-left-25(href="/cards/"+card._id+"/edit", rel=card._id)
-					.clear
-		.cards-scroll-bar
-			.prev-card
-			.scroll-box
-			.next-card
-		#card-1.cardform.card-item
-			form#CardIndexForm(action='/card/new', enctype='multipart/form-data', method='post', accept-charset='utf-8')
-				input#CardEditId(name='editId', type="hidden")
-				.left.card-bar.azure
-				.left.card-main
-					.pad-area
-						.input.text
-							input#CardFirstname(name='name', placeholder='firstname', maxlength='80', type='text')
-						.input.text
-							input#CardLastname(name='surname', placeholder='lastname', maxlength='80', type='text')
-						.input.text
-							input#CardAdress(name='address', placeholder='address', maxlength='80', type='text')
-						.input.text
-							input#CardZip(name='zipcode', placeholder='zip', maxlength='10', type='text')
-						.input.text
-							input#CardCity(name='city', placeholder='city', maxlength='40', type='text')
-						.input.tel
-							input#CardPhone(name='phone', placeholder='phone', maxlength='20', type='tel')
-						.input.email
-							input#CardEmail(name='email', placeholder='email', maxlength='80', type='email')
-						.input.text
-							input#CardTwitter(name='twitter', placeholder='twitter', maxlength='40', type='text')
-						.input.text
-							input#CardWeb(name='website', placeholder='web', maxlength='255', type='text')
-						.input.text
-							input#CardPosition(name='position', placeholder='position', maxlength='255', type='text')
-						input#CardCardTypeId(type='hidden', name='card_type', value='1')
-						input(type="hidden", name="_csrf", value=token)
-				.left.card-image
-					.ciavatar
-						img(src=everyauth.user.avatar, alt='')
-					.input.file
-						label(for='CardPicture') Picture
-						input#CardPicture(type='file', name='avatar')
-				.colors
-					#ct1.color(data-id='1')
-					#ct2.color(data-id='2')
-					#ct3.color(data-id='3')
-				.clear
-				.sendcard
-					input.submit-btn(type='submit', value='Save')
-				.clear
-			.clear
-	.clear
+block content
 
-append addonjs
-	script.
-		var loggedUser = {"User":!{JSON.stringify(everyauth.user)}};
+
+		.row-fluid.color.spacer
+			.left.smallslid 
+				img(src="/img/default_speaker.svg", alt="", class="circularespond")
+			.left.event-size.text-right.smallslid.spacer
+				| <b>Lucy Cook</b> - Director of Finance, Delloite<br />
+				| Guest speaker<br />
+				img(src="/img/email-icon-small2.svg", alt="", style="padding-right:5px;")
+				a(href="#", class="link3")
+					| lucy.cook@mediaart.com
+			.clearfix
+			.right.iconsbox.spacerbig
+				a(href="#", class="link1")
+					img(src="/img/send-private-rev.svg", alt="", style="padding-right:5px;")
+				a(href="#", class="link1")
+					img(src="/img/send-card-rev.svg", alt="", style="padding-right:5px;")
+				a(href="#", class="link1")
+					img(src="/img/save-profile-rev.svg", alt="", style="padding-right:5px; padding-top:5px;")
+				a(href="#", class="link1")
+					img(src="/img/exit-person.svg", alt="", style="padding-right:5px; padding-top:5px;")
+			.left.spacerbig
+				.left.headerSpacer.event-size2.text-right
+					| Name: <br />
+					|Position: <br />
+					| Company: <br />
+				.right.event-size2.headerSpacer.zero2
+					| <b>Lucy Cook</b> <br />
+					| <b>Guest Speaker</b> <br />
+					| <b>Media Inc.</b> <br />
+			.left.smallslid3.spacerbig
+				.left.headerSpacer.event-size2.text-right
+					| Website: <br />
+					| Location: <br />
+					| Interests: <br />
+					| Educaction: 
+				.right.event-size2.headerSpacer.zero2
+					| <b>media.com</b> <br />
+					| <b>London</b> <br />
+					| <b>sport, photography</b> <br />
+					| <b>MBA, Oxford University</b> 
+			.span8.zer.spacerbigger
+				.left.event-size3
+					| Description: 
+				.left.event-size
+					| Sed ut perspiciatis <b>unde omnis iste natus error sit  voluptatem accusanti</b> doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo 
+					| inventore veritatis  et quasi architecto beatae vitae dicta sunt explicabo.  <b>Nemo enim ipsam </b>voluptatem quia voluptas sit  aspernatur aut odit 
+					| aut  fugit, sed quia consequuntur  magni dolores eos qui ratione voluptatem  sequi nesciunt. Neque porro quisquam est, qui dolorem.
+			.clearfix
+		.speaker_titlerespond2.spacerbig
+			h5 Lucy Cook’s wall
+		.clearfix
