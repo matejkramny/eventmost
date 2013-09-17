@@ -10,7 +10,7 @@ h1 {
 
 header {
 	background-color: #ecd178;
-	height: 145px;
+	height: 100px;
 }
 
 header .signin {
@@ -27,11 +27,11 @@ header .menu {
 .big {font-size: 40px; padding-top: 30px; font-weight: 100; text-transform: none;}
 .headerSpacer {margin-top: 10px;}
 .headerSpacer3 {margin-top: 7px;}
-.headerspacer2 {margin-top: 30px; padding-left-left: 15px;}
+.headerspacer2 {margin-top: 0px; }
 .inner {padding-left: 15px; margin-top: 3px;}
 .spacer {margin-top: 20px;}
 .minus {margin-left: -10px;}
-.minus2 {margin-top: -37px; width: 130px;}
+.minus2 {margin-top: -70px; width: 130px;}
 .minus3 {margin-top: -20px;}
 .minus4 {margin-left: -15px;}
 .smallslid {margin-left: 30px;}
@@ -61,18 +61,13 @@ p.small {font-size: 17px; font-weight: 400; margin-left: -20px; }
 }
 footer {
 	background-color: #ecd178;
-	height: 277px;
+	height: 30px;
 	color: #542437;
 	font-size: 12px;
 }
-footer .blocks {
-	padding: 15px;
-	width: 22%;
-	display: block;
-}
 footer .copy {
 	font-size: 14px;
-	margin-top: 15px;
+	padding-top: 10px;
 }
 .left {float: left;}
 .right {float: right;}
@@ -274,7 +269,7 @@ footer .copy {
 	display: block;
 }
 .logo {
-	padding-top: 10px;
+	padding-top: 0px;
 	padding-left: 15px;
 }
 .arrow {
