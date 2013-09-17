@@ -33,11 +33,19 @@
 	.center
 		| Do not show my profile in events. 
 		h2 !(You will not be able to see other attendees or access event information and documents other than the event description and location.)!
-	.center2.span4
+	.center2.smallslid3
 		.left
-			input.enter3(type="submit", value="Don't show" )
-		.right
-			input.enter3(type="submit", value="Show" )
+			p.check2
+				input(name="", placeholder="", type="checkbox", id="privacy", value="css3")
+				label(for='privacy')
+		.left.small-top
+			h5 Don't Show
+		.left
+			p.check2
+				input(name="", placeholder="", type="checkbox", id="privacy2", value="css3")
+				label(for='privacy2')
+		.left.small-top
+			h5 Show
 	.clearfix
 	.center2
 		input.enter3(type="submit", value="SUMBIT" )
@@ -45,107 +53,107 @@
 	a(href="/", class="close-reveal-modal") 
 		img(src="/img/x.svg")
 
-	#NotificationModal.reveal-modal
-		h1 Notification settings:
-		.center2
-			| <b>My email account can recive notification</b> <br /> <b>of receipt of a ____________ in EventMost:</b>
-		.pop-input.center.headerspacer2
-			.left.right-al
-				| Private message
-			.left.switches
-				label.checkbox.toggle.candy(style='width: 100px;', onclick='')
-					input(type='checkbox', class="invisible")
-					span
-						span No
-						span Yes
-					a.slide-button
-			.clearfix
-			.left.right-al
-				| Business Card
-			.left.switches
-				label.checkbox.toggle.candy(style='width: 100px;', onclick='')
-					input(type='checkbox', class="invisible")
-					span
-						span No
-						span Yes
-					a.slide-button
-			.clearfix
-			.left.right-al
-				| Comment on my wall
-			.left.switches
-				label.checkbox.toggle.candy(style='width: 100px;', onclick='')
-					input(type='checkbox', class="invisible")
-					span
-						span No
-						span Yes
-					a.slide-button
-			.clearfix
-			.left.right-al
-				| Someone saved my profile
-			.left.switches
-				label.checkbox.toggle.candy(style='width: 100px;', onclick='')
-					input(type='checkbox', class="invisible")
-					span
-						span No
-						span Yes
-					a.slide-button
-			.clearfix
-		.center2
-			| <b>My mobile device, via the EventMost app,</b> <br /> <b>can receive a push notification of a ____________ <br /> in EventMost:</b>
-		.pop-input.center.headerspacer2
-			.left.right-al
-				| Private message
-			.left.switches
-				label.checkbox.toggle.candy(style='width: 100px;', onclick='')
-					input(type='checkbox', class="invisible")
-					span
-						span No
-						span Yes
-					a.slide-button
-			.clearfix
-			.left.right-al
-				| Business Card
-			.left.switches
-				label.checkbox.toggle.candy(style='width: 100px;', onclick='')
-					input(type='checkbox', class="invisible")
-					span
-						span No
-						span Yes
-					a.slide-button
-			.clearfix
-			.left.right-al
-				| Comment on my wall
-			.left.switches
-				label.checkbox.toggle.candy(style='width: 100px;', onclick='')
-					input(type='checkbox', class="invisible")
-					span
-						span No
-						span Yes
-					a.slide-button
-			.clearfix
-			.left.right-al
-				| Someone saved my profile
-			.left.switches
-				label.checkbox.toggle.candy(style='width: 100px;', onclick='')
-					input(type='checkbox', class="invisible")
-					span
-						span No
-						span Yes
-					a.slide-button
-			.clearfix
-		.center2
-			| <b>My mobile device, via the EventMost app, can receive push notification of a message deemed important by the Event Planner?</b>
-		.center2.turn
+#NotificationModal.reveal-modal
+	h1 Notification settings:
+	.center2
+		| <b>My email account can recive notification</b> <br /> <b>of receipt of a ____________ in EventMost:</b>
+	.pop-input.center.headerspacer2
+		.left.right-al
+			| Private message
+		.left.switches
 			label.checkbox.toggle.candy(style='width: 100px;', onclick='')
 				input(type='checkbox', class="invisible")
 				span
 					span No
 					span Yes
 				a.slide-button
-			.clearfix
-		.center2
-			input.enter2(type="submit", value="Sumbit" )
 		.clearfix
-		a(href="/", class="close-reveal-modal") 
-			img(src="/img/x.svg")
+		.left.right-al
+			| Business Card
+		.left.switches
+			label.checkbox.toggle.candy(style='width: 100px;', onclick='')
+				input(type='checkbox', class="invisible")
+				span
+					span No
+					span Yes
+				a.slide-button
+		.clearfix
+		.left.right-al
+			| Comment on my wall
+		.left.switches
+			label.checkbox.toggle.candy(style='width: 100px;', onclick='')
+				input(type='checkbox', class="invisible")
+				span
+					span No
+					span Yes
+				a.slide-button
+		.clearfix
+		.left.right-al
+			| Someone saved my profile
+		.left.switches
+			label.checkbox.toggle.candy(style='width: 100px;', onclick='')
+				input(type='checkbox', class="invisible")
+				span
+					span No
+					span Yes
+				a.slide-button
+		.clearfix
+	.center2
+		| <b>My mobile device, via the EventMost app,</b> <br /> <b>can receive a push notification of a ____________ <br /> in EventMost:</b>
+	.pop-input.center.headerspacer2
+		.left.right-al
+			| Private message
+		.left.switches
+			label.checkbox.toggle.candy(style='width: 100px;', onclick='')
+				input(type='checkbox', class="invisible")
+				span
+					span No
+					span Yes
+				a.slide-button
+		.clearfix
+		.left.right-al
+			| Business Card
+		.left.switches
+			label.checkbox.toggle.candy(style='width: 100px;', onclick='')
+				input(type='checkbox', class="invisible")
+				span
+					span No
+					span Yes
+				a.slide-button
+		.clearfix
+		.left.right-al
+			| Comment on my wall
+		.left.switches
+			label.checkbox.toggle.candy(style='width: 100px;', onclick='')
+				input(type='checkbox', class="invisible")
+				span
+					span No
+					span Yes
+				a.slide-button
+		.clearfix
+		.left.right-al
+			| Someone saved my profile
+		.left.switches
+			label.checkbox.toggle.candy(style='width: 100px;', onclick='')
+				input(type='checkbox', class="invisible")
+				span
+					span No
+					span Yes
+				a.slide-button
+		.clearfix
+	.center2
+		| <b>My mobile device, via the EventMost app, can receive push notification of a message deemed important by the Event Planner?</b>
+	.center2.turn
+		label.checkbox.toggle.candy(style='width: 100px;', onclick='')
+			input(type='checkbox', class="invisible")
+			span
+				span No
+				span Yes
+			a.slide-button
+		.clearfix
+	.center2
+		input.enter2(type="submit", value="Sumbit" )
+	.clearfix
+	a(href="/", class="close-reveal-modal") 
+		img(src="/img/x.svg")
 

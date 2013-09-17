@@ -283,144 +283,215 @@ append content
 				.left.tops3  YES
 			.left.tops-minus
 				p.check3.left
-					input(name="", placeholder="", type="checkbox", id="css34", value="css3")
-					label(for='css34',) 
+					input(name="", placeholder="", type="checkbox", id="dontallow", value="css3")
+					label(for='dontallow',) 
 				.left.tops3  NO
 		.clearfix
-		row-fluid.headerspacer2.span12
-			.left
-				.left.zero2.zer.tab1
-					.tableh.bluebox2
-						| Ticket Type
-					.zer
-						dl.dropdown2	
-							dt
-								a.dropx2(href="#")
-									| Premium
-							dd
-								ul
-									li
-										a(href="#",) Standard
-					.zer
-						dl.dropdown2	
-							dt
-								a.dropx2(href="#")
-									| Premium
-							dd
-								ul
-									li
-										a(href="#",) Standard
-					.zer
-						dl.dropdown2	
-							dt
-								a.dropx2(href="#")
-									| Premium
-							dd
-								ul
-									li
-										a(href="#",) Standard
-					.zer
-						dl.dropdown2	
-							dt
-								a.dropx2(href="#")
-									| Premium
-							dd
-								ul
-									li
-										a(href="#",) Standard
-			.left.zero2.tab2
-				.tableh.bluebox2
-					| Ticket Price
-				.minus
-					input(name="", placeholder="", type="text2", id="", class="file_input_textbox9" style="width:131px;")
-					input(name="", placeholder="", type="text2", id="", class="file_input_textbox9" style="width:131px;")
-					input(name="", placeholder="", type="text2", id="", class="file_input_textbox9" style=" width:131px;")
-					input(name="", placeholder="", type="text2", id="", class="file_input_textbox9" style="width:131px;")
-			.left.zero2.tab3
-				.tableh.bluebox2
-					| Number <br /> of tickets
-				.minus
-					input(name="", placeholder="", type="text2", id="", class="file_input_textbox9" style="width:108px;")
-					input(name="", placeholder="", type="text2", id="", class="file_input_textbox9" style="width:108px;")
-					input(name="", placeholder="", type="text2", id="", class="file_input_textbox9" style="width:108px;")
-					input(name="", placeholder="", type="text2", id="", class="file_input_textbox9" style="width:108px;")
-			.left.zero2.tab4
-				.tableh.bluebox2
-					| Fee
-				.minus
-					input(name="", placeholder="", type="text2", id="", class="file_input_textbox9" style="width:67px;")
-					input(name="", placeholder="", type="text2", id="", class="file_input_textbox9" style="width:67px;")
-					input(name="", placeholder="", type="text2", id="", class="file_input_textbox9" style="width:67px;")
-					input(name="", placeholder="", type="text2", id="", class="file_input_textbox9" style="width:67px;")
-			.left.tab5
-				.tableh.bluebox2
-					| Who pays <br /> the fee?
-				.zer.minus
-					dl.dropdown3	
-						dt
-							a.dropx3(href="#")
-								| Me
-						dd
-							ul
-								li
-									a(href="#",) Them
-				.zer.tops-minus
-					dl.dropdown3	
-						dt
-							a.dropx3(href="#")
-								| Me
-						dd
-							ul
-								li
-									a(href="#",) Them
-				.zer.tops-minus
-					dl.dropdown3	
-						dt
-							a.dropx3(href="#")
-								| Me
-						dd
-							ul
-								li
-									a(href="#",) Them
-				.zer.tops-minus
-					dl.dropdown3	
-						dt
-							a.dropx3(href="#")
-								| Me
-						dd
-							ul
-								li
-									a(href="#",) Them
-			.left.zero2.tab6
-				.tableh.bluebox2
-					| VAT
-				.minus
-					input(name="", placeholder="", type="text2", id="", class="file_input_textbox9" style="width:70px;")
-					input(name="", placeholder="", type="text2", id="", class="file_input_textbox9" style="width:70px;")
-					input(name="", placeholder="", type="text2", id="", class="file_input_textbox9" style="width:70px;")
-					input(name="", placeholder="", type="text2", id="", class="file_input_textbox9" style="width:70px;")
-			.left.tab7
-				.tableh.bluebox2
-					| Total <br /> Ticket Price:
-				.minus
-					input(name="", placeholder="", type="text2", id="", class="file_input_textbox9" style="width:146px;")
-					input(name="", placeholder="", type="text2", id="", class="file_input_textbox9" style="width:146px;")
-					input(name="", placeholder="", type="text2", id="", class="file_input_textbox9" style="width:146px;")
-					input(name="", placeholder="", type="text2", id="", class="file_input_textbox9" style="width:146px;")
-			.left.tab8
-				.tableh.bluebox2
-					| What <br /> you’ll recive <br /> per ticket:
-				.minus
-					input(name="", placeholder="", type="text2", id="", class="file_input_textbox9" style="width:147px;")
-					input(name="", placeholder="", type="text2", id="", class="file_input_textbox9" style="width:146px;")
-					input(name="", placeholder="", type="text2", id="", class="file_input_textbox9" style="width:146px;")
-					input(name="", placeholder="", type="text2", id="", class="file_input_textbox9" style="width:146px;")
 		.clearfix
-		a.link1(href="#")
-			img(src="/img/publish.svg", class="arrow")
+		.row-fluid.rel
+			.disabled-image
+			.diabled-lock
+			table.gridtable
+				tr
+					th.drop-arrow
+						| Ticket Type
+					th.drop-arrow
+						| Ticket Price
+					th.drop-arrow
+						| Number <br /> of tickets
+					th.drop-arrow
+						| Fee
+					th.drop-arrow
+						| Who pays <br /> the fee?
+					th.drop-arrow
+						| VAT
+					th.drop-arrow
+						| Total <br /> Ticket Price:
+					th.drop-arrow
+						| What <br /> you’ll recive <br /> per ticket:
+				tr
+					td
+						dl.dropdown2
+								dt
+									a.dropx2(href="#", id="drop-link0")
+										| Premium
+								dd
+									ul
+										li
+											a(href="#") Premium
+										li
+											a(href="#") Standard
+					td
+						input(name="", placeholder="", type="text2", id="table1", class="file_input_textbox10" style="width:110px;")
+					td
+						input(name="", placeholder="", type="text2", id="table2", class="file_input_textbox10" style="width:100px;")
+					td
+						input(name="", placeholder="", type="text2", id="table3", class="file_input_textbox10" style="width:60px;")
+					td
+						dl.dropdown3	
+							dt
+								a.dropx3(href="#", id="drop-link1")
+									| Me
+							dd
+								ul
+									li
+										a(href="#",) Me
+									li
+										a(href="#",) Them
+					td
+						input(name="", placeholder="", type="text2", id="table4", class="file_input_textbox10" style="width:60px;")
+					td
+						input(name="", placeholder="", type="text2", id="table5", class="file_input_textbox10" style="width:90px;")
+					td
+						input(name="", placeholder="", type="text2", id="table6", class="file_input_textbox10" style="width:130px;")
+				tr
+					td
+						dl.dropdown2
+								dt
+									a.dropx2(href="#", id="drop-link2")
+										| Premium
+								dd
+									ul
+										li
+											a(href="#") Premium
+										li
+											a(href="#") Standard
+					td
+						input(name="", placeholder="", type="text2", id="table7", class="file_input_textbox10" style="width:110px;")
+					td
+						input(name="", placeholder="", type="text2", id="table8", class="file_input_textbox10" style="width:100px;")
+					td
+						input(name="", placeholder="", type="text2", id="table9", class="file_input_textbox10" style="width:60px;")
+					td
+						dl.dropdown3	
+							dt
+								a.dropx3(href="#", id="drop-link3")
+									| Me
+							dd
+								ul
+									li
+										a(href="#",) Me
+									li
+										a(href="#",) Them
+					td
+						input(name="", placeholder="", type="text2", id="table10", class="file_input_textbox10" style="width:60px;")
+					td
+						input(name="", placeholder="", type="text2", id="table11", class="file_input_textbox10" style="width:90px;")
+					td
+						input(name="", placeholder="", type="text2", id="table12", class="file_input_textbox10" style="width:130px;")
+				tr
+					td
+						dl.dropdown2
+								dt
+									a.dropx2(href="#", id="drop-link4")
+										| Premium
+								dd
+									ul
+										li
+											a(href="#") Premium
+										li
+											a(href="#") Standard
+					td
+						input(name="", placeholder="", type="text2", id="table13", class="file_input_textbox10" style="width:110px;")
+					td
+						input(name="", placeholder="", type="text2", id="table14", class="file_input_textbox10" style="width:100px;")
+					td
+						input(name="", placeholder="", type="text2", id="table15", class="file_input_textbox10" style="width:60px;")
+					td
+						dl.dropdown3	
+							dt
+								a.dropx3(href="#", id="drop-link5")
+									| Me
+							dd
+								ul
+									li
+										a(href="#",) Me
+									li
+										a(href="#",) Them
+					td
+						input(name="", placeholder="", type="text2", id="table16", class="file_input_textbox10" style="width:60px;")
+					td
+						input(name="", placeholder="", type="text2", id="table17", class="file_input_textbox10" style="width:90px;")
+					td
+						input(name="", placeholder="", type="text2", id="table18", class="file_input_textbox10" style="width:130px;")
+				tr
+					td
+						dl.dropdown2
+								dt
+									a.dropx2(href="#", id="drop-link6")
+										| Premium
+								dd
+									ul
+										li
+											a(href="#") Premium
+										li
+											a(href="#") Standard
+					td
+						input(name="", placeholder="", type="text2", id="table19", class="file_input_textbox10" style="width:110px;")
+					td
+						input(name="", placeholder="", type="text2", id="table20", class="file_input_textbox10" style="width:100px;")
+					td
+						input(name="", placeholder="", type="text2", id="table21", class="file_input_textbox10" style="width:60px;")
+					td
+						dl.dropdown3	
+							dt
+								a.dropx3(href="#", id="drop-link7")
+									| Me
+							dd
+								ul
+									li
+										a(href="#",) Me
+									li
+										a(href="#",) Them
+					td
+						input(name="", placeholder="", type="text2", id="table22", class="file_input_textbox10" style="width:60px;")
+					td
+						input(name="", placeholder="", type="text2", id="table23", class="file_input_textbox10" style="width:90px;")
+					td
+						input(name="", placeholder="", type="text2", id="table24", class="file_input_textbox10" style="width:130px;")
+				tr
+					td
+						dl.dropdown2
+								dt
+									a.dropx2(href="#", id="drop-link6")
+										| Premium
+								dd
+									ul
+										li
+											a(href="#") Premium
+										li
+											a(href="#") Standard
+					td
+						input(name="", placeholder="", type="text2", id="table19", class="file_input_textbox10" style="width:110px;")
+					td
+						input(name="", placeholder="", type="text2", id="table20", class="file_input_textbox10" style="width:100px;")
+					td
+						input(name="", placeholder="", type="text2", id="table21", class="file_input_textbox10" style="width:60px;")
+					td
+						dl.dropdown3	
+							dt
+								a.dropx3(href="#", id="drop-link7")
+									| Me
+							dd
+								ul
+									li
+										a(href="#",) Me
+									li
+										a(href="#",) Them
+					td
+						input(name="", placeholder="", type="text2", id="table22", class="file_input_textbox10" style="width:60px;")
+					td
+						input(name="", placeholder="", type="text2", id="table23", class="file_input_textbox10" style="width:90px;")
+					td
+						input(name="", placeholder="", type="text2", id="table24", class="file_input_textbox10" style="width:130px;")
+
+		.clearfix
+		.headerspacer2
+			a.link1(href="#")
+				img(src="/img/publish.svg", class="arrow")
 
 
-		img(src="/img/success.svg", class="arrow")
+			img(src="/img/success.svg", class="arrow")
 
 
 		row-fluid.span12.zer
