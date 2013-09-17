@@ -364,6 +364,16 @@ a.link5:hover {
 	text-decoration: none;
 	color: #542437;
 }
+a.link6{
+	text-decoration: none;
+	color: #542437;
+	padding-left: 10px;
+	letter-spacing: 15px;
+}
+a.link6:hover {
+	text-decoration: none;
+	color: #ecd077;
+}
 .login {
 	color: #542437;
 }
@@ -562,6 +572,8 @@ input[type="search"]::-webkit-input-placeholder,
 }
 .inh {
 	height: 217px;
+	letter-spacing: 210;
+	padding-left: 0px;
 }
 .gonew {
 	background-color: #c02942;
@@ -1219,7 +1231,14 @@ color: #53777a;
 }
 .iconbox {
 	font-size: 30px;
-	padding-left: 30px;
+	padding-right: 50px;
+	min-width: 60px;
+	display: inline-block;
+	min-height: 50px;
+}
+.iconbox2 {
+	font-size: 30px;
+	padding-right: 0px;
 	min-width: 60px;
 	display: inline-block;
 	min-height: 50px;
