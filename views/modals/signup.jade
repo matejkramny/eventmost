@@ -1,3 +1,6 @@
+append addonjs
+	script(src="/js/signin.js")
+
 #loginModal.reveal-modal
 	h1 Hello !
 	form#LoginForm(action="/auth/password", method="POST")
@@ -11,22 +14,24 @@
 		.clearfix
 	.clearfix
 	.center2
-		| Don't have an account?
+		a#openRegisterModal(href="#") Don't have an account?
 	a(href="/", class="close-reveal-modal") 
 		img(src="/img/x.svg")
 #signModal.reveal-modal
 	h1 Hello !
 	.center2
 		| To create an account please fill our form.
-	.pop-input.center
-		input.file_input_textbox0#RegisterUserName(name="name", placeholder="name", maxlength="128", type="email", required="required", 
-			style="margin-top:0px; height:39px; width:350px;")
-		input.file_input_textbox2#RegisterUserEmail(name="login", placeholder="email", maxlength="128", type="email", required="required", 
-			style="margin-top:10px; height:39px; width:350px;")
-		input.file_input_textbox3#RegisterUserPassword(name="password", placeholder="password", type="password", required="required",
-			style=" height:39px; width:350px; margin-left:0px; margin-top:7px;")
-	.left
-		input.enter(type="submit", value="ENTER" style="margin-left:195px;")
+	form#RegisterForm(action="/auth/password", method="POST")
+		.pop-input.center
+			input.file_input_textbox0#RegisterUserName(name="name", placeholder="name", maxlength="128", type="email", required="required", 
+				style="margin-top:0px; height:39px; width:350px;")
+			input.file_input_textbox2#RegisterUserEmail(name="login", placeholder="email", maxlength="128", type="email", required="required", 
+				style="margin-top:10px; height:39px; width:350px;")
+			input.file_input_textbox3#RegisterUserPassword(name="password", placeholder="password", type="password", required="required",
+				style=" height:39px; width:350px; margin-left:0px; margin-top:7px;")
+		.left
+			input.enter(type="submit", value="ENTER" style="margin-left:195px;")
+		.clearfix
 	.clearfix
 	a(href="/", class="close-reveal-modal") 
 		img(src="/img/x.svg")
