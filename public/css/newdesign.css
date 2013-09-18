@@ -27,7 +27,7 @@ header .menu {
 .big {font-size: 40px; padding-top: 30px; font-weight: 100; text-transform: none;}
 .headerSpacer {margin-top: 10px;}
 .headerSpacer3 {margin-top: 7px;}
-.headerspacer2 {margin-top: 0px; }
+.headerspacer2 {margin-top: 20px; }
 .inner {padding-left: 15px; margin-top: 3px;}
 .spacer {margin-top: 20px;}
 .minus {margin-left: -10px;}
@@ -1836,7 +1836,12 @@ background: #d95a42;
 	min-height: 200px;
 	position: relative;
 	margin-bottom: 10px;
-
+}
+.speakerbox2 {
+	width: 100%;
+	min-height: 200px;
+	position: relative;
+	margin-bottom: 10px;
 }
 .speaker_title {
 	font-size: 25px;
@@ -1848,6 +1853,15 @@ background: #d95a42;
 	color: #ecd077;
 	word-wrap:break-word;
 	max-width: 80%
+}
+.speaker_title3 {
+	font-size: 25px;
+	color: #ecd077;
+	word-wrap:break-word;
+	max-width: 85.5%
+}
+.nin {
+	max-width: 95.5%
 }
 
 .circular {
@@ -1880,6 +1894,13 @@ background: #d95a42;
 	font-weight: 400;
 	padding: 10px;
 	max-width: 91%;
+}
+.bubbletextsmall {
+	background-color: #ecd078;
+	color: #542437;
+	font-size: 16px;
+	font-weight: 400;
+	padding: 10px;
 }
 
 .speakerboxrespond {
@@ -1942,6 +1963,15 @@ background: #d95a42;
 	font-weight: 400;
 	padding: 20px;
 	width: 92.926%;
+	margin-bottom: 10px;
+}
+.comment2 {
+	background-color: #c02943;
+	color: #542437;
+	font-size: 20px;
+	font-weight: 400;
+	padding: 20px;
+	width: 92%;
 	margin-bottom: 10px;
 }
 .postcomment {
