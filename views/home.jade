@@ -9,7 +9,7 @@ append content
 	include modals/homemodals
 	.avatar2.headerSpacer 
 		a(href="/profile")
-			img(src=user.avatar, alt="")
+			img(src=user.avatar, alt="" style="width:100%; height:99.5%;")
 	.right.span13p
 		.orangebox.inh
 			a.link6(href="/event/add") Create event 
@@ -61,13 +61,13 @@ append content
 	
 	//- Events nearby
 	a(href="/events/near", alt="Events Nearby")
-		.span7p
-			h6 Events<br /> nearby
+		.span7p.propermaps
+			h12 Events<br /> nearby
 			img(src="/img/map-icon2.svg", alt="", class="arrow")
 	//- Events
 	a(href="/events", alt="Events")
-		.span7p.yellow
-			h5 All<br /> events
+		.span7p.yellow.propermaps
+			h13 All<br /> events
 			img(src="/img/arrow_big.svg", alt="", class="arrow")
 	.clearfix
 	

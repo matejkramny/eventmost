@@ -134,6 +134,15 @@ input.file_input_textbox3res {
 	font-size: 50px;
 	width: 100%;
 }
+.span7p h13 {
+	padding-top: 10px;
+	font-weight: 100;
+	font-size: 70px;
+	padding-bottom: 13px;
+	width: 100%;
+	color: #542437 !important;
+}
+.propermaps { height: 348px; }
 
 .enteres {
 	background-color: #542437;
@@ -163,7 +172,12 @@ input.file_input_textbox3res {
 	width: 100%;
 	margin-top: 5px;
 }
-
+.span7p h12 {
+	padding-top: 10px;
+	font-weight: 100;
+	font-size: 70px;
+	padding-bottom: 13px;
+}
 
 
 .overone { z-index: 700 !important; margin-top: -105px; margin-left: -25px; width: 98%;}
@@ -357,7 +371,7 @@ footer .copy {
 	font-weight: 100;
 	font-size: 86px;
 	margin-bottom: 10px;
-	margin-left: 0px;
+	margin-left: -2px;
 	text-align: center;
 	width: 100%;
 }
@@ -1379,7 +1393,7 @@ color: #53777a;
 	margin-right: 8px;
 	line-height: 24px;
 	font-size: 15px;
-		height: 378px;
+		height: 348px;
 }
 .avatar2 {
 	float: left;
@@ -2201,6 +2215,7 @@ background: #d95a42;
 	display: block;
 }
 .color {color: #ecd077;}
+.color2 {color: #542437 !important;}
 .thirty {
 	width: 31%;
 	font-size: 20px;
