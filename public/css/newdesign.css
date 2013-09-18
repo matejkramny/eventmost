@@ -572,7 +572,7 @@ input[type="search"]::-webkit-input-placeholder,
 	color:#542437 !important;
 }
 .inh {
-	height: 217px;
+	min-height: 217px;
 	letter-spacing: 210;
 	padding-left: 0px;
 }
@@ -1089,13 +1089,30 @@ p.check3:not(#foo) > input[type=checkbox] + label:hover 							{ background-posi
     overflow:hidden;
     cursor: pointer !important;
 }
-#file_browse_wrapper:hover {
+#file_browse2_wrapper {
+	margin-left: 10px;
+    background: url('../img/browse2.svg') 0 0 no-repeat;
+    border:none;
+    overflow:hidden;
+        width: 130px;
+    height: 130px;
+    cursor: pointer !important;
+}
+#file_browse_wrapper:hover, #file_browse2_wrapper:hover  {
     cursor: pointer !important;
 }
 #file_browse{
     opacity:0.0;
      width: 196px;
     height: 173px;
+    cursor: pointer !important;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+}
+#file_browse2{
+    opacity:0.0;
+    width: 100%;
+    height: 100%;
     cursor: pointer !important;
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
     filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
