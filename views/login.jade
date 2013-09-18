@@ -6,32 +6,33 @@ block addonjs
 
 append content
 	include inc/flash
-	.row-fluid.spacer
+	.row-fluid.smallspacer
 		.span2p
-			.well.redbox
-				h6 Sign in
+			.well.redboxres
+				h4 Sign in
 				h4 Sign up
-				img(src="/img/finger.svg", alt="", class="arrow")
-			.well.redbox.sociallogin
+				.tops-minus-res
+					img(src="/img/finger.svg", alt="", class="arrow")
+			.well.redboxres.sociallogin
 				.sociallogin
 				a(href="/auth/facebook", alt="Log in with facebook", title="Log in with facebook")
 					img(src="/img/facebook.svg", alt="")
-			.well.redbox.sociallogin
+			.well.redboxres.sociallogin
 				a(href="/auth/twitter", alt="Log in with twitter", title="Log in with twitter")
 					img(src="/img/twitter.svg")
-			.well.redbox.sociallogin
+			.well.redboxres.sociallogin
 				a(href="/auth/linkedin", alt="Log in with linkedin", title="Log in with linkedin")
 					img(src="/img/linkedin.svg")
 		.span10p
-			form(method="POST", accept-charset="utf-8")
+			form(method="POST", accept-charset="utf-8" style="height:38px;")
 				input(type="hidden", name="_csrf", value=token)
 				.row-fluid
 					.span10p
-						input(type="text", placeholder="search events of people", class="file_input_textbox")
+						input(type="text", placeholder="search events or people", class="file_input_textboxres")
 					.right
-						input.gonew(type="button", value="GO")
-			h1 Why use us
-			h7 Not only can you register your event here, you can also:
+						input.gonewres(type="button", value="GO")
+			h12 Why use us <br />
+			h17 Not only can you register your event here, you can also:
 
 		#slider1
 			a(href="", alt="", class="buttons prev")
@@ -48,31 +49,34 @@ append content
 						| Store files here for free that your attendees might use: power point presentations, schedules, pictures, etc.
 					li 
 						img(src="/img/4.svg", alt="", class="slid") 
-						| We will send you <br />and after-event analytics report full of tons <br />of interesting stats (also free... well everything <br />is free).
+						| We will send you and after-event analytics report full of tons of interesting stats (also free... well everything <br />is free).
 					li 
 						img(src="/img/5.svg", alt="", class="slid") 
-						| You can upload logos <br />for your sponsors too (also free), that will be seen during the entire event and after this significantly increasing sponsor revenue!.
+						| You can upload logos for your sponsors too (also free), that will be seen during the entire event and after this significantly increasing sponsor revenue!.
 					li
 						img(src="/img/6.svg", alt="", class="slid")
-						| No ticketing Fee! <br />Eventbrite charges £.65 <br />per ticket + 2.5% + 3.5% <br />transaction fee. We only charge the 3.5%  transaction fee so we don’t lose money!
+						| No ticketing Fee! Eventbrite charges £.65 per ticket + 2.5% + 3.5% transaction fee. We only charge the 3.5%  transaction fee so we don’t lose money!
 			a(href="", alt="", class="buttons next")
-	.well.redbox
+	.well.redboxres2
 		form#UserLoginForm(action="/auth/password", method="post", accept-charset="utf-8")
 			input(type="hidden", name="_csrf", value=token)
 			.row-fluid
 				.span5
-					input(name="login", placeholder="email", maxlength="128", type="email", id="UserEmail", required="required", class="file_input_textbox2")
+					input(name="login", placeholder="email", maxlength="128", type="email", id="UserEmail", required="required", class="file_input_textbox2res")
 				.span5
-					input(name="password", placeholder="password", type="password", id="UserPassword", required="required", class="file_input_textbox3")
+					input(name="password", placeholder="password", type="password", id="UserPassword", required="required", class="file_input_textbox3res")
 				.right
-					input.enter(type="submit", value="ENTER")
-	a.in.orangebox.link5(href="/event/add")
-		| Create <br /> your event <br />
-		img(src="/img/arrow_big.svg", alt="", class="arrow")
-	a.link1.leftapp(href="/")
-		img(src="/img/appstore.svg")
-	a.link1.leftapp(href="/")
-		img(src="/img/android.svg")
+					input.enteres(type="submit", value="ENTER")
+	.left.inres.orangeboxres
+		a.link5(href="/event/add")
+			| Create your event <br />
+			img(src="/img/arrow_big.svg", alt="", class="arrow")
+	.right.zero2.smallspacer
+		a.link1(href="/")
+			img(src="/img/appstore.svg" )
+	.right.zero2.smallspacer
+		a.link1(href="/")
+			img(src="/img/android.svg" )
 	.clearfix
 	.bluebox.center
 		.left 
