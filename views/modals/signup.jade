@@ -1,15 +1,17 @@
 #loginModal.reveal-modal
 	h1 Hello !
-	.pop-input.center
-		input(name="login", placeholder="email", maxlength="128", type="email", id="UserEmail", required="required", class="file_input_textbox2" 
-			style="margin-top:0px; height:39px; width:350px;")
-		input(name="password", placeholder="password", type="password", id="UserPassword", required="required", class="file_input_textbox3",
-			style=" height:39px; width:350px; margin-left:0px;")
-	.left
-		input.enter(type="submit", value="ENTER" style="margin-left:195px;")
+	form#LoginForm(action="/auth/password", method="POST")
+		.pop-input.center
+			input.file_input_textbox2#LoginUserEmail(name="login", placeholder="email", maxlength="128", type="email", required="required", 
+				style="margin-top:0px; height:39px; width:350px;")
+			input.file_input_textbox3#LoginUserPassword(name="password", placeholder="password", type="password", required="required",
+				style=" height:39px; width:350px; margin-left:0px;")
+		.left
+			input.enter(type="submit", value="ENTER" style="margin-left:195px;")
+		.clearfix
 	.clearfix
 	.center2
-		| Want to create an account? Enter here!
+		| Don't have an account?
 	a(href="/", class="close-reveal-modal") 
 		img(src="/img/x.svg")
 #signModal.reveal-modal
@@ -17,11 +19,11 @@
 	.center2
 		| To create an account please fill our form.
 	.pop-input.center
-		input(name="name", placeholder="name", maxlength="128", type="email", id="UserEmail", required="required", class="file_input_textbox0" 
+		input.file_input_textbox0#RegisterUserName(name="name", placeholder="name", maxlength="128", type="email", required="required", 
 			style="margin-top:0px; height:39px; width:350px;")
-		input(name="login", placeholder="email", maxlength="128", type="email", id="UserEmail", required="required", class="file_input_textbox2" 
+		input.file_input_textbox2#RegisterUserEmail(name="login", placeholder="email", maxlength="128", type="email", required="required", 
 			style="margin-top:10px; height:39px; width:350px;")
-		input(name="password", placeholder="password", type="password", id="UserPassword", required="required", class="file_input_textbox3",
+		input.file_input_textbox3#RegisterUserPassword(name="password", placeholder="password", type="password", required="required",
 			style=" height:39px; width:350px; margin-left:0px; margin-top:7px;")
 	.left
 		input.enter(type="submit", value="ENTER" style="margin-left:195px;")
