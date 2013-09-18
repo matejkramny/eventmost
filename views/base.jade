@@ -2,18 +2,20 @@
 html
 	head
 		meta(http-equiv="Content-Type", content="text/html; charset=utf-8;")
+		meta(name="csrf-token", content="#{token}")
 		title EventMost - #{title}
 		link(href="/favicon.ico", type="image/x-icon", rel="icon")
 		link(href="/favicon.ico", type="image/x-icon", rel="shortcut icon")
-
+		
+		//- all css goes here
 		block css
 			link(rel="stylesheet", href="/bootstrap/css/bootstrap.css")
 			link(rel="stylesheet", href="/bootstrap/css/bootstrap-responsive.css")
 			link(rel="stylesheet", href="/css/flat-ui.css")
 			link(rel="stylesheet", href="/css/newdesign.css")
 			link(rel="stylesheet", href="/css/toggle-switch.css")
-
 	body
+		//- main container
 		block container
 			.row-fluid
 				header.span12
@@ -53,16 +55,13 @@ html
 										h5 Inbox
 										h15= user.mailboxUnread
 			
-			if everyauth.loggedIn != true
-				//- this popup is only ever used in guest home page..
-				include modals/signup
-			
 			.container
 				block content
 				.row-fluid
 					footer
 						.copy.text-center Copyright &copy; 2013 <b>EventMost</b>. All rights reserved. &nbsp;
 							a(href="http://www.facebook.com/groups/361667753935493/", alt="EventMost on Facebook", title="EventMost on Facebook") Facebook
+		//- usually globally persistent
 		block js
 			script(src="/js/gan.js")
 			script(src="/js/jquery-1.8.3.min.js")
@@ -89,7 +88,6 @@ html
 					event.preventDefault();
 					return false;
 				});
-			block addonjs
-
-
-  
+			
+		//- page-specific
+		block addonjs

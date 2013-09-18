@@ -9,7 +9,26 @@ $(document).ready(function() {
 	$registerUserPassword = $("#RegisterUserPassword")
 	
 	new Form($loginForm, { "email": $loginUserEmail, "password": $loginUserPassword }, {
-		
+		url: "/auth/password",
+		success: function(data, status, jqxhr) {
+			
+		},
+		error: function(jqxhr, status, error) {
+			
+		}
+	});
+	new Form($registerForm, {
+		"name": $registerUserName,
+		"email": $registerUserEmail,
+		"password": $registerUserPassword
+	}, {
+		url: "/auth/password",
+		success: function(data, status, jqxhr) {
+			
+		},
+		error: function(jqxhr, status, error) {
+			
+		}
 	});
 	
 	
@@ -27,6 +46,7 @@ $(document).ready(function() {
 				d += key + "=" + self.elements[key].val() + "&"
 			}
 			
+			
 			return d;
 		}
 		
@@ -35,11 +55,12 @@ $(document).ready(function() {
 			
 			// Perform AJAX signin
 			$.ajax({
-				url: options.url,
-				method: "POST",
+				url: self.options.url,
+				type: "POST",
+				dataType: 'json',
 				data: self.buildData(),
 				success: self.options.success,
-				failure: self.options.failure
+				error: self.options.error
 			});
 			
 			return false;
