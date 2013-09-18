@@ -30,6 +30,10 @@ header .menu {
 .zero2 {margin-left: 10px !important; }
 .eight {width: 80%;}
 .tops-minus-res {margin-top: -5px;}
+h17 { font-weight: 400; font-size: 27px; color: #ecd077; padding-left:10px; width: 100%;}
+h55  { font-size: 25px; margin-top: -10px !important; color: #542437; margin-left: -11px;}
+.minus2 h20 {font-size: 20px; font-weight: 400; color: #ecd077; position: absolute; top: 69px; left:40px; 
+	padding-left: 7px; padding-right: 7px; background-color: #c02943 !important; border-radius: 15px; }
 
 
 input.file_input_textboxres {
@@ -130,7 +134,7 @@ input.file_input_textbox3res {
 	font-size: 50px;
 	width: 100%;
 }
-h17 { font-weight: 400; font-size: 27px; color: #ecd077; padding-left:10px; width: 100%;}
+
 .enteres {
 	background-color: #542437;
 	border:none;
@@ -695,13 +699,13 @@ input[type="search"]:focus{
 }
 input[type="text"]::-webkit-input-placeholder {
 	color:#542437 !important;
-	line-height: 39px;
+	line-height: 30px;
 	background-color: #fff !important;
 		padding-left: 6px !important;
 }
 input[type="text"]:focus{
   	color:#542437 !important;
-	line-height: 39px;
+	line-height: 30px;
 	background-color: #fff !important;
 
 }
