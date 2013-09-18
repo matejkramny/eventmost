@@ -30,7 +30,12 @@ exports.router = function(app) {
 		.get('/auth/facebook.json', auth.doFacebookJSON)
 		.get('/auth/linkedin.json', auth.doLinkedInJSON)
 		.get('/logout.json', logoutJSON)
-		.get('/loggedin', isloggedin);
+		.get('/loggedin', isloggedin)
+		.get('/testroute1', new testRoute(1))
+		.get('/testroute2', new testRoute(2))
+		.get('/testroute3', new testRoute(3))
+		.get('/testroute4', new testRoute(4))
+		.get('/testroute5', new testRoute(5))
 	
 	// Used for JSON/XML auth responses
 	//auth.router(app)
@@ -84,4 +89,14 @@ function isloggedin(req, res) {
 			})
 		}
 	})
+}
+
+function testRoute (number) {
+	this.number = number;
+	var self = this;
+	this.cb = function(req, res) {
+		res.render('testroute/testroute'+self.number);
+	}
+	
+	return this.cb;
 }
