@@ -23,6 +23,8 @@ header .menu {
 	font-size: 18px;
 	text-align: right;
 }
+.container {width: 1200px;
+}
 .overone { z-index: 700 !important; margin-top: -105px; margin-left: -25px; width: 98%;}
 .big {font-size: 40px; padding-top: 30px; font-weight: 100; text-transform: none;}
 .headerSpacer {margin-top: 10px;}
