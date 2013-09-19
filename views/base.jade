@@ -62,6 +62,10 @@ html
 					footer
 						.copy.text-center Copyright &copy; 2013 <b>EventMost</b>. All rights reserved. &nbsp;
 							a(href="http://www.facebook.com/groups/361667753935493/", alt="EventMost on Facebook", title="EventMost on Facebook") Facebook
+			
+			if everyauth.loggedIn != true
+				include modals/signup
+			
 		//- usually globally persistent
 		block js
 			script(src="/js/gan.js")
@@ -89,7 +93,9 @@ html
 					event.preventDefault();
 					return false;
 				});
-			
+			if everyauth.loggedIn != true
+				script(src="/js/signin.js")
+				
 		//- page-specific
 		block addonjs
 
