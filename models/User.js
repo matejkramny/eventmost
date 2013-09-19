@@ -11,15 +11,15 @@ var scheme = schema({
 	},
 	email: String,
 	password: String,
-	name: String,
-	surname: String,
-	position: String,
-	desc: String,
-	company: String,
-	location: String,
-	website: String,
-	education: String,
-	interests: String,
+	name: { type: String, default: "" },
+	surname: { type: String, default: "" },
+	position: { type: String, default: "" },
+	desc: { type: String, default: "" },
+	company: { type: String, default: "" },
+	location: { type: String, default: "" },
+	website: { type: String, default: "" },
+	education: { type: String, default: "" },
+	interests: { type: String, default: "" },
 	avatar: { type: String, default: "/img/avatar.jpg" },
 	facebook: {
 		userid: String
@@ -45,7 +45,11 @@ scheme.methods.setName = function (name) {
 	try {
 		var split = name.split(' ');
 		this.name = split[0];
-		this.surname = split[split.length -1];
+		if (split.length > 1) {
+			this.surname = split[split.length -1];
+		} else {
+			this.surname = "";
+		}
 	} catch (exception) {
 		// TODO log this exception
 	}
@@ -103,7 +107,7 @@ scheme.statics.getHash = function (password) {
 	return shasum.update("aßas155"+password+"90124*)SADZ~<").digest('hex');
 }
 
-scheme.statics.authenticatePassword = function (email, password, cb) {
+scheme.statics.authenticatePassword = function (email, password, cb, extra) {
 	exports.User.findOne({
 		email: email
 	}, function(err, user) {
@@ -113,7 +117,7 @@ scheme.statics.authenticatePassword = function (email, password, cb) {
 			// register user
 			exports.User.createWithPassword(email, password, function(err, regUser) {
 				cb(null, regUser);
-			});
+			}, extra);
 		} else {
 			// check if password is ok
 			if (user.password == exports.User.getHash(password)) {
@@ -231,7 +235,7 @@ scheme.statics.authenticateLinkedIn = function (session, accessToken, accessSecr
 	});
 }
 
-scheme.statics.createWithPassword = function (login, password, cb) {
+scheme.statics.createWithPassword = function (login, password, cb, extra) {
 	console.log("Registering with login/password");
 	
 	var user = new exports.User({
@@ -239,6 +243,11 @@ scheme.statics.createWithPassword = function (login, password, cb) {
 		created: Date.now()
 	});
 	user.setPassword(password)
+	
+	// Extra provided by registration
+	if (extra.name != null) {
+		user.setName(extra.name);
+	}
 	
 	user.save(function(err) {
 		cb(err, user);

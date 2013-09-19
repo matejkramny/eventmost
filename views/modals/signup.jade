@@ -1,6 +1,7 @@
 #loginModal.reveal-modal
 	h1 Hello !
 	form#LoginForm(action="/auth/password", method="POST")
+		.center2.formStatus
 		.pop-input.center
 			input.file_input_textbox2#LoginUserEmail(name="login", placeholder="email", maxlength="128", type="email", required="required", 
 				style="margin-top:0px; height:39px; width:350px;")
@@ -14,13 +15,15 @@
 		a#openRegisterModal(href="#") Don't have an account?
 	a(href="/", class="close-reveal-modal") 
 		img(src="/img/x.svg")
+
 #signModal.reveal-modal
 	h1 Hello !
 	.center2
 		| To create an account please fill our form.
 	form#RegisterForm(action="/auth/password", method="POST")
+		.center2.formStatus
 		.pop-input.center
-			input.file_input_textbox0#RegisterUserName(name="name", placeholder="name", maxlength="128", type="email", required="required", 
+			input.file_input_textbox0#RegisterUserName(name="name", placeholder="name", maxlength="128", type="text",
 				style="margin-top:0px; height:39px; width:350px;")
 			input.file_input_textbox2#RegisterUserEmail(name="login", placeholder="email", maxlength="128", type="email", required="required", 
 				style="margin-top:10px; height:39px; width:350px;")

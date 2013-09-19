@@ -8,62 +8,106 @@ $(document).ready(function() {
 	$registerUserEmail = $("#RegisterUserEmail")
 	$registerUserPassword = $("#RegisterUserPassword")
 	
-	new Form($loginForm, { "email": $loginUserEmail, "password": $loginUserPassword }, {
-		url: "/auth/password",
-		success: function(data, status, jqxhr) {
-			
-		},
-		error: function(jqxhr, status, error) {
-			
+	$registerUserEmail.blur(function() {
+		// Check email availability
+		var $status = $registerForm.find('.formStatus');
+		
+		if ($registerUserEmail.val().length == 0) {
+			return;
 		}
-	});
-	new Form($registerForm, {
-		"name": $registerUserName,
-		"email": $registerUserEmail,
-		"password": $registerUserPassword
-	}, {
-		url: "/auth/password",
-		success: function(data, status, jqxhr) {
-			
-		},
-		error: function(jqxhr, status, error) {
-			
-		}
-	});
-	
+		
+		$status.html("Checking email address availability..");
+		
+		$.ajax({
+			url: "/emailavailable",
+			data: new Form(null, {"email": $registerUserEmail}).buildData(),
+			dataType: 'json',
+			type: "POST",
+			success: function(data) {
+				if (data.available == true) {
+					$status.html("Email is available.");
+				} else {
+					$status.html("Sorry, email is already taken.")
+				}
+			},
+			error: function(jqxhr, status, error) {
+				$status.html("Sorry, we can't complete the request at this time.")
+			}
+		});
+	})
 	
 	function Form($form, $elements, options) {
 		this.form = $form;
 		this.elements = $elements;
 		this.options = options;
+		this.url = "/auth/password.json"
 		
 		var self = this;
 		
-		this.buildData = function() {
-			var d = "?";
-			
-			for (key in self.elements) {
-				d += key + "=" + self.elements[key].val() + "&"
+		this.success = function(data, status, jqxhr) {
+			if (data == null) {
+				// error
+				self.status.html("Server error - Please try again later. Sorry")
+				return;
 			}
 			
+			if (data.status == 200 && data.user != null) {
+				// Logged in
+				self.status.html("Logged in, reloading page.");
+				window.location = "/";
+			} else {
+				// Error
+				self.status.html(data.err)
+			}
+		}
+		this.error = function(jqxhr, status, error) {
+			alert(error);
+		}
+		
+		this.buildData = function() {
+			var d = "";
+			
+			for (key in self.elements) {
+				d += key + "=" + encodeURIComponent(self.elements[key].val()) + "&"
+			}
+			
+			d += "_csrf=" + encodeURIComponent($("head meta[name=_csrf]").attr('content'));
 			
 			return d;
 		}
 		
-		this.form.submit(function(event) {
-			event.preventDefault();
+		if ($form) {
+			this.status = $form.find(".formStatus");
+		
+			this.form.submit(function(event) {
+				event.preventDefault();
 			
-			// Perform AJAX signin
-			$.ajax({
-				url: self.options.url,
-				type: "POST",
-				dataType: 'json',
-				data: self.buildData(),
-				success: self.options.success,
-				error: self.options.error
-			});
+				// Perform AJAX whatever
+				$.ajax({
+					url: self.url,
+					type: "POST",
+					dataType: 'json',
+					data: self.buildData(),
+					success: self.success,
+					error: self.error
+				});
 			
-			return false;
-		})
+				if (typeof self.elements["password"] !== "undefined") {
+					self.elements["password"].val("")
+				}
+			
+				return false;
+			})
+		}
 	}
+	
+	new Form($loginForm, {
+		"login": $loginUserEmail,
+		"password": $loginUserPassword
+	}, {});
+	new Form($registerForm, {
+		"name": $registerUserName,
+		"login": $registerUserEmail,
+		"password": $registerUserPassword
+	}, {});
 })

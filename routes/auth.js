@@ -134,6 +134,8 @@ exports.doPasswordJSON = function (req, res) {
 				err: err
 			})
 		}
+	}, {
+		name: req.body.name
 	})
 }
 exports.doTwitterJSON = function (req, res) {
@@ -143,6 +145,7 @@ exports.doFacebookJSON = function (req, res) {
 	var access_token = req.query.code;
 	
 	if (access_token) {
+		// Manually pull the data from facebook because everyauth sucks cock
 		https.request({
 			host: 'graph.facebook.com',
 			path: '/me?access_token='+access_token

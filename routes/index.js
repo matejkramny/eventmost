@@ -31,6 +31,7 @@ exports.router = function(app) {
 		.get('/auth/linkedin.json', auth.doLinkedInJSON)
 		.get('/logout.json', logoutJSON)
 		.get('/loggedin', isloggedin)
+		.post('/emailavailable', emailAvailable)
 		.get('/testroute1', new testRoute(1))
 		.get('/testroute2', new testRoute(2))
 		.get('/testroute3', new testRoute(3))
@@ -89,6 +90,27 @@ function isloggedin(req, res) {
 			})
 		}
 	})
+}
+
+function emailAvailable(req, res) {
+	models.User.find({
+		email: req.body.email
+	}, function(err, user) {
+		if (err) throw err;
+		
+		var available = true;
+		if (user != null && user.length > 0) {
+			available = false;
+		}
+		
+		res.format({
+			json: function() {
+				res.send({
+					available: available
+				})
+			}
+		})
+	});
 }
 
 function testRoute (number) {

@@ -2,7 +2,7 @@
 html
 	head
 		meta(http-equiv="Content-Type", content="text/html; charset=utf-8;")
-		meta(name="csrf-token", content="#{token}")
+		meta(name="_csrf", content="#{token}")
 		title EventMost - #{title}
 		link(href="/favicon.ico", type="image/x-icon", rel="icon")
 		link(href="/favicon.ico", type="image/x-icon", rel="shortcut icon")
@@ -55,10 +55,6 @@ html
 											img(src="/img/messages.svg") 
 										h55 Inbox
 										h20= user.mailboxUnread
-			
-			if everyauth.loggedIn != true
-				//- this popup is only ever used in guest home page..
-				include modals/signup
 			
 			.container
 				block content
