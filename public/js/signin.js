@@ -34,6 +34,11 @@ $(document).ready(function() {
 				$status.html("Sorry, we can't complete the request at this time.")
 			}
 		});
+	});
+	
+	$("#openRegisterModal").click(function() {
+		$("#loginModal").trigger('reveal:close');
+		$("#signModal").reveal();
 	})
 	
 	function Form($form, $elements, options) {
