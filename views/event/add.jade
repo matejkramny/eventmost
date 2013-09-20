@@ -41,15 +41,14 @@ append addonjs
 append content
 	include ../inc/flash
 	include ../modals/homemodals
-	.row-fluid.headerSpacer 
-		.span12
-			.redbox
-				.left.well2.redbox
+	.row-fluid.smallspacer 
+		.span12.redbox
+				.left.well3.redbox
 					| Event <br /> name
-				.row-fluid
-					.left.span10
-						input(name="", placeholder="", type="email", id="", required="required", class="file_input_textbox6")
-	.row-fluid
+				.left.well3.redbox.outer
+					input(name="", placeholder="", type="email", id="", required="required", class="file_input_textbox6")
+				.clearfix
+	.row-fluid.smallspacer 
 		.left.span2.well2.yellow
 			| Logo
 		.left.span4.well2.yellowborder
@@ -62,40 +61,36 @@ append content
 			#file_browse_wrapper
 				input(type="file", id="file_browse")
 		.clearfix
-	.row-fluid.headerSpacer 
-		.span10
-			.yellow
+	.row-fluid.smallspacer 
+		.span10.yellow
 				.left.well3.yellow
 					| Venue <br /> name
 				.row-fluid
-					.left.span9
+					.left.outer2
 						input(name="", placeholder="", type="email", id="", class="file_input_textbox5")
-		.left.headerspacer2.smallslid
+		.left.headerSpacer.smallslid
 			img(src="/img/optional.svg", alt="", class="arrow")
 		.clearfix
-	.row-fluid.headerSpacer 
-		.span8
-			.orange
-				.left.well3.orange
+	.row-fluid.smallspacer 
+		.span8.orange
+				.left.well3.orangeboxnew
 					| Event <br /> address
 				.row-fluid
-					.left.span8
-						input(name="", placeholder="", type="email", id="event_location", class="file_input_textbox7")
-		.span2
-			.orange
-				.left.well4.orange
-					p.check
+					.left.outer3
+						input(name="", placeholder="", type="email", id="event_location", class="file_input_textbox5")
+		.orange
+				.left.well3.orangeboxnew.smallspacer-left.outer4
+					p.check.smallslid
 						input(name="", placeholder="", type="checkbox", id="css3", value="css3")
 						label(for='css3')
 					p.small use current location
-		.left.headerspacer2.smallslid
+		.left.smallspacer.smallslid5
 			img(src="/img/optional.svg", alt="", class="arrow")
 		.clearfix
 	.row-fluid.headerSpacer 
 		.left.span3
 			.orange.well3
 				| Event <br /> date
-			img(src="/img/big_orrange.svg", alt="", class="arrow" style="padding-top:50px;")
 		.left
 			.left.orange.well5
 				| FROM:

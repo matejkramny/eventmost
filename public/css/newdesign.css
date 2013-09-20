@@ -27,6 +27,7 @@ header .menu {
 }
 /* After resizing */
 .smallspacer {margin-top: 5px;}
+.smallspacer-left {margin-left: 5px;}
 .zero2 {margin-left: 10px !important; }
 .eight {width: 80%;}
 .tops-minus-res {margin-top: -5px;}
@@ -194,6 +195,7 @@ input.file_input_textbox3res {
 .smallslid {margin-left: 30px;}
 .smallslid2 {margin-left: -15px;}
 .smallslid4 {margin-left: 25px;}
+.smallslid5 {margin-left: 20px;}
 .smallslid3 {margin-left: 45px !important;}
 .smallslid2right {margin-right: 114px; }
 .slid {margin-bottom: 10px;}
@@ -202,7 +204,7 @@ input.file_input_textbox3res {
 .speaker_titlerespond2 h5 {font-size: 25px; font-weight: 500;}
 .minus2 h5 {font-size: 30px; font-weight: 400; color: #542437; position: absolute; top: 84px; left:-15px;}
 .minus2 h15 {font-size: 25px; font-weight: 400; color: #ecd077; position: absolute; top: 92px; left:83px;}
-p.small {font-size: 17px; font-weight: 400; margin-left: -20px; }
+p.small {font-size: 17px; font-weight: 400; margin-left: 10px; margin-top: -10px;}
 .zero { margin-bottom: -10px;}
 .zero2 {margin-left: 10px !important; }
 .tops {padding-top: 18px; font-size: 26px;}
@@ -281,28 +283,66 @@ footer .copy {
 	text-align: center;
 	text-transform: none;
 }
+.well3.redbox {
+	border-radius: 0px;
+	min-width: 138px;
+	height: 77px;
+	border: none;
+	padding-top: 3px;
+	font-size:35px;
+	font-weight: 100;
+	text-align: left;
+	padding-left: 10px;
+	text-transform: none;
+}
+.well3.orangeboxnew {
+	border-radius: 0px;
+	min-width: 138px;
+	height: 45px;
+	border: none;
+	padding-top: 3px;
+	margin-right: 9px;
+	font-size:35px;
+	font-weight: 100;
+	text-align: left;
+	padding-left: 10px;
+	text-transform: none;
+	background-color: #d95a42;
+}
+.outer {width: 1000px;}
+.outer2 {width: 795px;}
+.outer3 {width: 590px;}
+.outer4 {width: 181px; min-height: 72px;}
 .well2.yellow {
 	border-radius: 0px;
 	min-width: 108px;
-	height: 173px;
+	height: 133px;
 	border: none;
-	padding-top: 60px;
-	font-size:40px;
+	padding-top: 42px;
+	font-size:35px;
 	font-weight: 100;
-	text-align: center;
+	padding-left: 10px;
+	text-align: left;
 	text-transform: none;
 }
+
 .iconsbox {
 	width: 25%;
+}
+.well3.yellow {
+	padding-top: 0px;
+	padding-bottom: 0px;
+	padding-right: 13px;
+	height: 45px;
 }
 .well3 {
 	border-radius: 0px;
 	min-width: 145px;
 	border: none;
-	font-size:40px;
+	font-size:35px;
 	padding: 10px;
 	padding-bottom: 7px;
-	padding-left: 40px;
+	padding-left: 10px;
 	font-weight: 100;
 	text-align: left;
 	text-transform: none;
@@ -336,21 +376,20 @@ footer .copy {
 .well2.yellowborder {
 	border-radius: 0px;
 	min-width: 108px;
-	height: 173px;
+	height: 133px;
 	border: none;
-	font-size:40px;
+	font-size:35px;
 	font-weight: 100;
-	text-align: center;
+	text-align: left;
 	text-transform: none;
 	background-color: none;
-    border: 10px solid #ecd077 !important;
-    margin-left: 10px !important;
+    border: 5px solid #ecd077 !important;
+    margin-left: 5px !important;
 }
 .redbox {
 	background-color: #c22844;
 	text-transform: uppercase;
 	color: #542437;
-	margin-bottom: 10px;
 }
 .purpleline{
 	width: 6px;
@@ -610,15 +649,16 @@ input.file_input_textbox4 {
 input.file_input_textbox5 {
 	color:#ecd077;
 	line-height: 39px;
+	margin-bottom: 5px;
 	font-size: 32px;
 	font-weight: 100;
 	border: none;
 	border-radius: 0px;
-	margin-top:16px; 
+	margin-top:5px; 
 	background-color: #542437;
-	width: 102% !important;
+	width: 100%;
 	margin-left: 15px;
-	height: 67px !important;
+	height: 57px !important;
 }
 input.file_input_textbox6 {
 	color:#ecd077;
@@ -627,11 +667,11 @@ input.file_input_textbox6 {
 	font-weight: 100;
 	border: none;
 	border-radius: 0px;
-	margin-top:16px; 
+	margin-top:5px; 
 	background-color: #542437;
 	width: 100%;
 	margin-left: 15px;
-	height: 67px !important;
+	height: 57px !important;
 }
 input.file_input_textbox7 {
 	color:#ecd077;
@@ -1216,27 +1256,27 @@ p.check3:not(#foo) > input[type=checkbox] + label:hover 							{ background-posi
 
 
 #file_browse_wrapper {
-	margin-left: 10px;
-    width: 196px;
-    height: 173px;
+	margin-left: 5px;
+    width: 210px;
+    height: 133px;
     background: url('../img/browse_button.svg') 0 0 no-repeat;
     border:none;
     overflow:hidden;
     cursor: pointer !important;
 }
 #file_delete_wrapper {
-	margin-left: 10px;
-    width: 196px;
-    height: 173px;
+	margin-left: 5px;
+    width: 208px;
+    height: 133px;
     background: url('../img/delete_button.svg') 0 0 no-repeat;
     border:none;
     overflow:hidden;
     cursor: pointer !important;
 }
 #file_upload_wrapper {
-	margin-left: 10px;
-    width: 196px;
-    height: 173px;
+	margin-left: 5px;
+    width: 208px;
+    height: 133px;
     background: url('../img/upload_button.svg') 0 0 no-repeat;
     border:none;
     overflow:hidden;
