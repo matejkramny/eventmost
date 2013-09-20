@@ -694,40 +694,34 @@ input[type="text3"]:focus{
   	color:#542437 !important;
 	line-height: 39px;
 	background-color: #ecd077 !important;
-
 }
 input[type="text2"]:focus{
   	color:#542437 !important;
 	background-color: #53777a !important;
+}
 
+
+
+
+input[type="text"]::-webkit-input-placeholder {
+	line-height: 39px;
+}
+input[type="text"]:focus{
+	line-height: 30px;
+}
+
+
+input[type="search"]:focus{
+  	color:#542437 !important;
+    height: 30px !important;
+    	line-height: 5px;
 }
 input[type="search"]::-webkit-input-placeholder {
 	color:#542437 !important;
-	height: 24px !important;
-	line-height: 20px;
-}
-input[type="search"]:focus{
-  	color:#542437 !important;
-	height: 24px !important;
-	line-height: 20px;
-}
-input[type="text"]::-webkit-input-placeholder {
-	color:#542437 !important;
 	line-height: 30px;
-	background-color: #fff !important;
-		padding-left: 6px !important;
-}
-input[type="text"]:focus{
-  	color:#542437 !important;
-	line-height: 30px;
-	background-color: #fff !important;
-
 }
 
-input[type="search"]::-webkit-input-placeholder,
-.uneditable-input::-webkit-input-placeholder {
-	color:#542437 !important;
-}
+
 .inh {
 	min-height: 217px;
 	letter-spacing: 210;
