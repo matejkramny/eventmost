@@ -137,12 +137,12 @@ input.file_input_textbox3res {
 .span7p h13 {
 	padding-top: 10px;
 	font-weight: 100;
-	font-size: 70px;
+	font-size: 65px;
 	padding-bottom: 13px;
 	width: 100%;
 	color: #542437 !important;
 }
-.propermaps { height: 348px; }
+.propermaps { height: 257px; }
 
 .enteres {
 	background-color: #542437;
@@ -175,7 +175,7 @@ input.file_input_textbox3res {
 .span7p h12 {
 	padding-top: 10px;
 	font-weight: 100;
-	font-size: 70px;
+	font-size: 65px;
 	padding-bottom: 13px;
 }
 
@@ -386,6 +386,9 @@ footer .copy {
 	text-align: left;
 	width: 100%;
 }
+.leng {
+	width: 80.7%;
+}
 .bluebox {
 	background-color: #53777a;
 	color: #542437;
@@ -526,7 +529,7 @@ a.link6{
 	text-decoration: none;
 	color: #542437;
 	padding-left: 10px;
-	letter-spacing: 15px;
+	letter-spacing: 22px;
 }
 a.link6:hover {
 	text-decoration: none;
@@ -713,7 +716,6 @@ input[type="text"]:focus{
 
 input[type="search"]:focus{
   	color:#542437 !important;
-    height: 30px !important;
     	line-height: 5px;
 }
 input[type="search"]::-webkit-input-placeholder {
@@ -1407,7 +1409,7 @@ color: #53777a;
 }
 .iconbox {
 	font-size: 30px;
-	padding-right: 50px;
+	padding-right: 70px;
 	min-width: 60px;
 	display: inline-block;
 	min-height: 50px;

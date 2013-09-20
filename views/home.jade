@@ -63,38 +63,40 @@ append content
 	//- Events nearby
 	a(href="/events/near", alt="Events Nearby")
 		.span7p.propermaps
-			h12 Events<br /> nearby
+			h12 Events nearby
 			img(src="/img/map-icon2.svg", alt="", class="arrow")
 	//- Events
 	a(href="/events", alt="Events")
 		.span7p.yellow.propermaps
-			h13 All<br /> events
-			img(src="/img/arrow_big.svg", alt="", class="arrow")
-	.clearfix
+			h13 All events
+			.smallspacer
+				img(src="/img/arrow_big.svg", alt="", class="arrow")
+	
 	
 
 	
 	//- My Events
-	.bluebox
-		a.link4(href="/events/my") My events
-		.right.arrange
-			| Arrange by
-		.clearfix
-		.right
-			dl.dropdown
-				dt
-					a.dropx(href="#")
-						| select
-				dd
-					ul
-						li
-							a(href="#",) Most recent to latest
-						li
-							a(href="#",) Latest to most recent
-						li
-							a(href="#",) Events name A-Z
-						li.border_bottom
-							a(href="#") My planned events
+	.left.smallspacer.leng
+		.bluebox
+			a.link4(href="/events/my") My events
+			.right.arrange
+				| Arrange by
+			.clearfix
+			.right
+				dl.dropdown
+					dt
+						a.dropx(href="#")
+							| select
+					dd
+						ul
+							li
+								a(href="#",) Most recent to latest
+							li
+								a(href="#",) Latest to most recent
+							li
+								a(href="#",) Events name A-Z
+							li.border_bottom
+								a(href="#") My planned events
 	- var myeventsi = 0;
 	for event in myevents
 		.row-fluid
