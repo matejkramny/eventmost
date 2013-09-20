@@ -1,4 +1,134 @@
 extends ../base
 
 block content
-	h1 Hello World
+
+	.eighty-five
+		.center2
+			.half-round
+				| <b>Your order</b>
+		table.gridtable-payment
+			tr
+				th.sixty
+					| REGISTRATION TYPE
+				th
+					| PRICE
+				th
+					| FEE
+				th
+					| QUANTITY
+			tr
+				td
+					| I would like to register as an idividual
+				td
+					| £25.00
+				td
+					| £2.15
+				td
+					dl.dropdown6
+						dt
+							a.dropx6(href="#")
+								| 
+						dd
+							ul
+								li
+									a(href="#",) 1
+								li
+									a(href="#",) 2
+								li
+									a(href="#",) 3
+								li
+									a(href="#",) 4
+								li
+									a(href="#",) 5
+								li
+									a(href="#",) 6
+								li
+									a(href="#",) 7
+								li
+									a(href="#",) 8
+								li
+									a(href="#",) 9
+								li
+									a(href="#",) 10
+								li
+									a(href="#",) 11
+								li
+									a(href="#",) 12
+			tr
+				td
+					| Total
+				td
+					| £50.00
+				td
+					| 
+				td
+					| £54.30
+		.center2
+			.half-round
+				| <b>Choose payment method</b>
+		.headerspacer2
+			.left.span6
+				p.check5.left.smallslid 
+					input(name="", placeholder="", type="checkbox", id="creditcard", value="css3")
+					label(for='creditcard',) 
+				.left.headerSpacer4
+					h17 Credit Card
+			.left.span3
+				p.check5.left
+					input(name="", placeholder="", type="checkbox", id="paypal", value="css3")
+					label(for='paypal',) 
+				.left.headerSpacer4
+					h17 Paypal
+			.clearfix
+		.headerspacer2
+			.left.span5
+				img(src="/img/credit-cards.svg", alt="", class="arrow")
+			.left.span5
+				img(src="/img/paypal.svg", alt="", class="arrow")
+			.clearfix
+		.headerSpacer 
+			.left.text-right.color.headerSpacer.hun
+				| Card owner:
+			.left
+				input(name="", placeholder="", type="text", id="", required="required", class="file_input_textbox_credit")
+			.clearfix
+			.left.color.headerSpacer.text-right.hun 
+				| Card number:
+			.left
+				input(name="", placeholder="", type="text", id="", required="required", class="file_input_textbox_credit")
+			.clearfix
+			.left.text-right.color.headerSpacer.hun 
+				| Expiration date:
+			.left
+				input(name="", placeholder="", type="text", id="", required="required", class="file_input_textbox_credit")
+			.clearfix
+			.left.text-right.color.headerSpacer.hun 
+				| CVV:
+			.left
+				input(name="", placeholder="", type="text", id="", required="required", class="file_input_textbox_credit")
+			.clearfix
+			.left.hun
+			.hun2
+				.right
+					input.pay(type="submit", value="PAY NOW")
+			.clearfix
+		.headerspacer2.center2
+		h5.color.center2
+			<b>Success</b>, you payment has been processed
+		.headerspacer2.center2
+			img(src="/img/bubble-red.svg", alt="", class="arrow")
+		h5.color.center.tops-minus
+			<b>Thank you!</b>
+		h5.color.center.tops-minus.tf
+			| Now you may access the event.
+		.center2.span4
+			.left
+				img(src="/img/accessevent.svg", alt="", class="arrow")
+			.right
+				img(src="/img/goback.svg", alt="", class="arrow")
+			.clearfix
+
+
+			
+
+	

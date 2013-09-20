@@ -11,6 +11,7 @@ h1 {
 header {
 	background-color: #ecd178;
 	height: 85px;
+	width: 1200px;
 }
 
 header .signin {
@@ -74,6 +75,19 @@ input.file_input_textbox3res {
 	background-color: #542437;
 	padding-left: 55px;
 	max-width: 432px;
+	margin-left: 19px;
+}
+input.file_input_textbox_credit {
+	color:#542437;
+	line-height: 30px;
+	font-size: 20px;
+	font-weight: 100;
+	border: none;
+	border-radius: 5px;
+	margin-top:0px; 
+	background-color: #ecd077;
+	max-width: 432px;
+	min-width: 300px;
 	margin-left: 19px;
 }
 .gonewres {
@@ -156,6 +170,31 @@ input.file_input_textbox3res {
 	border-radius: 5px;
 	color: #ecd077;
 }
+.pay {
+	background-color: #ecd077;
+	border:none;
+	width: 110px !important;
+	float:right;
+	font-size: 13px;
+	font-weight: 700;
+	border-radius: 5px;
+	color:#542437;
+	line-height: 30px;
+	height: 35px;
+}
+input.file_input_textbox_credit {
+	color:#542437;
+	line-height: 30px;
+	font-size: 20px;
+	font-weight: 100;
+	border: none;
+	border-radius: 5px;
+	margin-top:0px; 
+	background-color: #ecd077;
+	max-width: 432px;
+	min-width: 300px;
+	margin-left: 19px;
+}
 .inres.orangeboxres {
 	width: 64.6%;
 	float: left;
@@ -185,6 +224,7 @@ input.file_input_textbox3res {
 .big {font-size: 40px; padding-top: 20px; font-weight: 100; text-transform: none;}
 .headerSpacer {margin-top: 10px;}
 .headerSpacer3 {margin-top: 7px;}
+.headerSpacer4 {margin-top: 15px;}
 .headerspacer2 {margin-top: 20px; }
 .inner {padding-left: 15px; margin-top: 3px;}
 .spacer {margin-top: 20px;}
@@ -219,7 +259,9 @@ p.small {font-size: 17px; font-weight: 400; margin-left: 10px; margin-top: -10px
 .align {text-align: left !important;}
 .atendee {margin-left: 62px; padding-top: 32px;}
 .smallt {font-size: 20px; padding-left: 5px;}
-
+.tf {font-size: 25px;}
+.hun {width: 120px;}
+.hun2 {width: 450px;}
 .title{
 	font-size: 60px;
 	font-weight: 100;
@@ -480,7 +522,7 @@ footer .copy {
 }
 .logo {
 	padding-top: 0px;
-	padding-left: 0px;
+	padding-left: 20px;
 }
 .neu { width: 80% !important; margin: 5px auto;}
 .arrow {
@@ -1155,6 +1197,26 @@ h14 span {
         .dropx5 {cursor:pointer; display:block; padding:5px; color: #53777a; padding-top: 12px; margin-left: -15px;}
 
 /**** DROPDOWN ****/
+/**** DROPDOWN ****/
+        .dropdown6 {margin-left: 20px !important; margin-top: 0px; margin-bottom: 4px;}
+        .dropdown6 dd, .dropdown6 dt, .dropdown5 ul { margin:0px; padding:0px;  z-index: 799;}
+        .dropdown6 dd { position:relative; }
+        .dropdown6 a, .dropdown6 a:visited { padding-left: 10px; padding-top:2px; color:#542437; text-decoration:none; outline:none; font-size: 14px;}
+        .dropdown6 a:hover { color:#542437;  }
+        .dropdown6 dt a:hover {  color:#542437; }
+        .dropdown6 dt a {background-image: url('../img/drop6.svg') ; display:block; 
+                      width:68px; height: 24px; }
+        .dropdown6 dt a .dropx6 {cursor:pointer; display:block; padding:0px; color: #53777a; padding-left: 0px; }
+        .dropdown6 dd ul {  color:#542437; display:none; font-weight: 400;
+                          left:-40px; padding:0px; position:absolute; top:2px; width:auto; min-width:48px; list-style:none; }
+        .dropdown6 span.value { display:none;}
+        .dropdown6 dd ul li a { padding:5px; display:block; padding-left: 10px;  border-bottom: none; 
+        	background:#ecd077 none repeat scroll 0 0; color:#542437;}
+        .dropdown6 dd ul li a:hover { background-color:#542437; color:#ecd077;}
+        .dropdown6 .border_bottom a {border-bottom: 4px solid #53777a !important;}
+        .dropx6 {cursor:pointer; display:block; padding:0px; color: #53777a; padding-top: 0px; margin-left: -20px;}
+
+/**** DROPDOWN ****/
 /**** checkbox1 ****/
 
 p.check > input
@@ -1305,6 +1367,57 @@ p.check3:not(#foo) > input[type=checkbox]:focus + label,
 p.check3:not(#foo) > input[type=checkbox] + label:hover 							{ background-position: 0 0px; }
 
 /**** checkbox3 ****/
+
+/**** checkbox5 ****/
+
+p.check5 > input
+{
+	padding: 0;
+	margin: 0;
+	height: 50px;
+	width: 55px;
+	float: left;
+	position: absolute;
+	left: 0;
+	opacity: 0;
+}
+p.check5 > label 
+{ 
+	line-height: 50px; 
+	color: #fff; 
+	padding: 0 0 0 50px;
+	padding-top: 35px;
+	-moz-transition: color 1s ease; 
+	-o-transition: color 1s ease; 
+	-webkit-transition: color 1s ease; 
+	transition: color 1s ease; 
+}
+fieldset[dir=rtl] p.check5 > label {
+	padding: 0 0px 0 0;
+}
+
+p.check5:not(#foo) > input + label
+{
+	background: url('../img/check5.svg');
+	height: 18px !important;
+	width: 5px;
+	margin-left: 30px;
+}
+
+/* Checked styles */
+p.check5:not(#foo) > input[type=checkbox]:checked + label 						{ background-position: 0 50px; }
+p.check5:not(#foo) > input[type=checkbox]:hover:checked + label,
+p.check5:not(#foo) > input[type=checkbox]:focus:checked + label,
+p.check5:not(#foo) > input[type=checkbox]:checked + label:hover,
+p.check5:not(#foo) > input[type=checkbox]:focus:checked + label 					{ background-position: 0 -100px; }
+
+/* Hover & Focus styles */
+p.check5:not(#foo) > input[type=checkbox]:hover + label,
+p.check5:not(#foo) > input[type=checkbox]:focus + label,
+p.check5:not(#foo) > input[type=checkbox] + label:hover 							{ background-position: 0 0px; }
+
+/**** checkbox5 ****/
+
 
 
 #file_browse_wrapper {
@@ -1961,6 +2074,33 @@ table.gridtable td {
 	background-color: #53777a;
 }
 
+
+table.gridtable-payment {
+	color:#ecd077;
+	margin: 5px  auto;
+	width: 100%;
+	text-align: left;
+	border-width: 1px;
+	border-collapse: collapse;
+	font-size: 14px;
+
+}
+table.gridtable-payment tr {
+    border-bottom: 1px solid #ecd077 !important;
+}
+table.gridtable-payment th {
+	border-width: 1px;
+	font-size: 14px;
+	padding: 8px;
+	color: #ecd077;
+}
+table.gridtable-payment td {
+	border-width: 1px;
+	padding: 8px;
+	color: #ecd077;
+	padding-top: 14px;
+}
+.sixty {width: 60%;}
 .one {width: 100px !important;}
 .true { margin-top: 0px;}
 .true2 {margin-top: -60px;}
@@ -2314,6 +2454,21 @@ background: #d95a42;
 
 }
 
+.eighty-five {
+	margin: auto;
+	width: 85%;
+
+}
+.half-round {
+	border-top-left-radius: 10px 5px;
+	border-top-right-radius: 10px 5px;
+	background-color: #ecd077;
+	min-height: 20px;
+	color: #542437;
+	padding: 10px; 
+	text-align: left;
+	font-size: 16px;
+}
 
 @media (min-width: 992px) and (max-width: 1199px) {
  .container {
