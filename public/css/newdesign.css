@@ -182,6 +182,20 @@ input.file_input_textbox_credit {
 	line-height: 30px;
 	height: 35px;
 }
+.card-sumbit {
+	background-color: #ecd077;
+	border:none;
+	width: 130px !important;
+	float:right;
+	margin-right: 141px;
+	margin-top: 24px;
+	font-size: 20px;
+	font-weight: 400;
+	border-radius: 5px;
+	color:#542437;
+	line-height: 30px;
+	height: 35px;
+}
 input.file_input_textbox_credit {
 	color:#542437;
 	line-height: 30px;

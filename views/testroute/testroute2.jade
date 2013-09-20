@@ -1,4 +1,87 @@
 extends ../base
 
 block content
-	h1 Hello World
+	.avatar2.headerSpacer 
+		a(href="/profile")
+			img(src=user.avatar, alt="")
+	.right.span13p
+		.center2
+			img(src="/img/card-template2.svg", alt="")
+		h5.color.center.tf
+			| <b>One last step</b>. Please fill text boxes<br />
+			| and your bussines card is ready!<br />
+			| <b> All fields are optional</b>
+		.left.span4
+			.smallslid5.color.headerSpacer.smallt
+				| Name
+			input(name="", placeholder="", type="text", id="", required="required", class="file_input_textbox_credit")
+		.right.span5.zer
+			.smallslid5.color.headerSpacer.smallt
+				| Company name
+			input(name="", placeholder="", type="text", id="", required="required", class="file_input_textbox_credit")
+		.clearfix
+		.left.span4
+			.smallslid5.color.headerSpacer.smallt
+				| Position
+			input(name="", placeholder="", type="text", id="", required="required", class="file_input_textbox_credit")
+		.right.span5.zer
+			.smallslid5.color.headerSpacer.smallt
+				| Address
+			input(name="", placeholder="", type="text", id="", required="required", class="file_input_textbox_credit")
+		.clearfix
+		.left.span4
+			.smallslid5.color.headerSpacer.smallt
+				| Phone number
+			input(name="", placeholder="", type="text", id="", required="required", class="file_input_textbox_credit")
+		.right.span5.zer
+			.smallslid5.color.headerSpacer.smallt
+				| Email address
+			input(name="", placeholder="", type="text", id="", required="required", class="file_input_textbox_credit")
+		.clearfix
+		.left.span4
+			.smallslid5.color.headerSpacer.smallt
+				| Website address
+			input(name="", placeholder="", type="text", id="", required="required", class="file_input_textbox_credit")
+		.right.span5.zer
+			.smallslid5.color.headerSpacer.smallt
+			input.card-sumbit(type="submit", value="Submit")
+		.clearfix
+
+				.headerspacer2
+	//- User card
+	.avatar.redbox
+		p.prof= user.getName()
+		.box2
+			.left
+				img(src="/img/i.svg", alt="")
+			.set
+				a.link4(href="/profile", alt="", title="") Edit profile
+			if user.admin
+				.set
+					a.link4(href="/admin", alt="", title="") Administration
+		img(src="/img/card.svg", alt="")
+		a.link4(href="/cards", alt="", title="")
+			| Choose your bussines card
+		.headerSpacer
+		.clearfix
+		.box2
+			.left
+				img(src="/img/i.svg", alt="")
+			.set
+				a.link4(href="", alt="", title="", data-reveal-id="NotificationModal")
+					| Notification settings
+		.clearfix
+		.box2
+			.left
+				img(src="/img/i.svg", alt="")
+			.set
+				a.link4(href="", alt="", title="", data-reveal-id="PrivacyModal")
+					| Privacy settings
+		.clearfix
+		a(href="/logout", class="logout") Logout
+
+
+
+	.row-fluid.headerSpacer 
+
+		.clearfix
