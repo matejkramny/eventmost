@@ -182,7 +182,7 @@ input.file_input_textbox3res {
 
 
 .overone { z-index: 700 !important; margin-top: -105px; margin-left: -25px; width: 98%;}
-.big {font-size: 40px; padding-top: 30px; font-weight: 100; text-transform: none;}
+.big {font-size: 40px; padding-top: 20px; font-weight: 100; text-transform: none;}
 .headerSpacer {margin-top: 10px;}
 .headerSpacer3 {margin-top: 7px;}
 .headerspacer2 {margin-top: 20px; }
@@ -215,6 +215,8 @@ p.small {font-size: 17px; font-weight: 400; margin-left: 10px; margin-top: -10px
 .zer {margin-left: 0px !important;}
 .spacerbig {margin-top: 35px;}
 .spacerbigger {margin-top: 45px;}
+.weight {font-weight: 400 !important;}
+.align {text-align: left !important;}
 
 .title{
 	font-size: 60px;
@@ -312,7 +314,8 @@ footer .copy {
 .outer {width: 1000px;}
 .outer2 {width: 795px;}
 .outer3 {width: 590px;}
-.outer4 {width: 181px; min-height: 72px;}
+.outer4 {width: 181px; min-height: 73px;}
+.outer5 {min-height: 80px;}
 .well2.yellow {
 	border-radius: 0px;
 	min-width: 108px;
@@ -371,7 +374,7 @@ footer .copy {
 	font-weight: 100;
 	text-align: center;
 	text-transform: none;
-	margin-left: 10px !important;
+	margin-left: 5px !important;
 }
 .well2.yellowborder {
 	border-radius: 0px;
@@ -1103,6 +1106,26 @@ h14 span {
 
 /**** DROPDOWN ****/
 
+/**** DROPDOWN ****/
+        .dropdown5 {margin-left: 20px !important; margin-top: -10px;}
+        .dropdown5 dd, .dropdown5 dt, .dropdown5 ul { margin:0px; padding:0px;  z-index: 799;}
+        .dropdown5 dd { position:relative; }
+        .dropdown5 a, .dropdown5 a:visited { color:#d95a42; text-decoration:none; outline:none; font-size: 18px;}
+        .dropdown5 a:hover { color:#d95a42;  }
+        .dropdown5 dt a:hover {  color:#d95a42;}
+        .dropdown5 dt a {background-image: url('../img/drop5.svg') ; display:block; 
+                      width:70px; height: 26px; }
+        .dropdown5 dt a .dropx5 {cursor:pointer; display:block; padding:5px; color: #53777a; padding-left: 10px; padding-top: 15px;}
+        .dropdown5 dd ul {  color:#53777a; display:none; font-weight: 400;
+                          left:-15px; padding:0px; position:absolute; top:2px; width:auto; min-width:60px; list-style:none; }
+        .dropdown5 span.value { display:none;}
+        .dropdown5 dd ul li a {  -moz-border-radius: 5px; border-radius: 5px; padding:5px; display:block; padding-left: 10px;  border-bottom: none; 
+        	background:#542437 none repeat scroll 0 0;}
+        .dropdown5 dd ul li a:hover { background-color:#ecd077; color:#542437;}
+        .dropdown5 .border_bottom a {border-bottom: 4px solid #53777a !important;}
+        .dropx5 {cursor:pointer; display:block; padding:5px; color: #53777a; padding-top: 12px; margin-left: -15px;}
+
+/**** DROPDOWN ****/
 /**** checkbox1 ****/
 
 p.check > input

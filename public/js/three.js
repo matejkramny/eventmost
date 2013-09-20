@@ -1,19 +1,19 @@
 $(document).ready(function() {
 	// Dropdown toggles
-	$(".dropdown dt a, .dropdown2 dt a, .dropdown3 dt a, .dropdown4 dt a").click(function() {
+	$(".dropdown dt a, .dropdown2 dt a, .dropdown3 dt a, .dropdown4 dt a, .dropdown5 dt a").click(function() {
 		$(this).parent().parent().find("dd ul").toggle();
 	});
 	
-	$(".dropdown dd ul li a, .dropdown2 dd ul li a, .dropdown3 dd ul li a, .dropdown4 dd ul li a").click(function() {
+	$(".dropdown dd ul li a, .dropdown2 dd ul li a, .dropdown3 dd ul li a, .dropdown4 dd ul li a, .dropdown5 dd ul li a").click(function() {
 		var text = $(this).html();
-		$(this).parentsUntil('.dropdown,.dropdown2,.dropdown3,.dropdown4').parent().find("dt a").html(text);
+		$(this).parentsUntil('.dropdown,.dropdown2,.dropdown3,.dropdown4,.dropdown5').parent().find("dt a").html(text);
 		$(this).parentsUntil('ul').parent().hide();
 	});
 	
 	$(document).bind('click', function(e) {
 		var $clicked = $(e.target);
 		if (! $clicked.parent().hasClass("dropdown")) {
-			$(".dropdown dd ul, .dropdown2 dd ul, .dropdown3 dd ul, .dropdown4 dd ul").hide();
+			$(".dropdown dd ul, .dropdown2 dd ul, .dropdown3 dd ul, .dropdown4 dd ul, .dropdown5 dd ul").hide();
 		}
 	});
 	
