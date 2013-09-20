@@ -217,6 +217,8 @@ p.small {font-size: 17px; font-weight: 400; margin-left: 10px; margin-top: -10px
 .spacerbigger {margin-top: 45px;}
 .weight {font-weight: 400 !important;}
 .align {text-align: left !important;}
+.atendee {margin-left: 62px; padding-top: 32px;}
+.smallt {font-size: 20px; padding-left: 5px;}
 
 .title{
 	font-size: 60px;
@@ -480,6 +482,7 @@ footer .copy {
 	padding-top: 0px;
 	padding-left: 0px;
 }
+.neu { width: 80% !important; margin: 5px auto;}
 .arrow {
 	padding-bottom: 26px;
 	margin: auto;
@@ -577,6 +580,18 @@ a.link6:hover {
 	text-decoration: none;
 	color: #ecd077;
 }
+a.guest{
+	text-decoration: none;
+	color: #542437;
+}
+a.guest:hover {
+	text-decoration: none;
+	color: #c02942;
+}
+.guest-x {
+	background-image: url('../img/ex.svg') no-repeat;
+	margin-top: -18px ;
+}
 .login {
 	color: #542437;
 }
@@ -661,6 +676,20 @@ input.file_input_textbox5 {
 	background-color: #542437;
 	width: 100%;
 	margin-left: 15px;
+	height: 57px !important;
+}
+input.file_input_textbox55 {
+	color:#ecd077;
+	line-height: 39px;
+	margin-bottom: 5px;
+	font-size: 32px;
+	font-weight: 100;
+	border: none;
+	border-radius: 0px;
+	margin-top:5px; 
+	background-color: #542437;
+	width: 100%;
+	margin-left: 0px;
 	height: 57px !important;
 }
 input.file_input_textbox6 {
@@ -984,14 +1013,14 @@ h14 span {
 }
 .in_orange22 {
 	font-weight: 400;
-	font-size: 30px;
+	font-size: 25px;
 	color: #542437;
-	height: 38px;
+	height: 25px;
 	width: 100%;
 	word-wrap:break-word;
 	text-align: left;
 	padding-left: 15px;
-	padding-top: 30px;
+	padding-top: 10px;
 }
 .eventtext {
 	font-size: 14px;
@@ -1114,12 +1143,12 @@ h14 span {
         .dropdown5 a:hover { color:#d95a42;  }
         .dropdown5 dt a:hover {  color:#d95a42;}
         .dropdown5 dt a {background-image: url('../img/drop5.svg') ; display:block; 
-                      width:70px; height: 26px; }
+                      width:68px; height: 26px; }
         .dropdown5 dt a .dropx5 {cursor:pointer; display:block; padding:5px; color: #53777a; padding-left: 10px; padding-top: 15px;}
         .dropdown5 dd ul {  color:#53777a; display:none; font-weight: 400;
                           left:-15px; padding:0px; position:absolute; top:2px; width:auto; min-width:60px; list-style:none; }
         .dropdown5 span.value { display:none;}
-        .dropdown5 dd ul li a {  -moz-border-radius: 5px; border-radius: 5px; padding:5px; display:block; padding-left: 10px;  border-bottom: none; 
+        .dropdown5 dd ul li a { padding:5px; display:block; padding-left: 10px;  border-bottom: none; 
         	background:#542437 none repeat scroll 0 0;}
         .dropdown5 dd ul li a:hover { background-color:#ecd077; color:#542437;}
         .dropdown5 .border_bottom a {border-bottom: 4px solid #53777a !important;}
@@ -1183,7 +1212,7 @@ p.check2 > input
 {
 	padding: 0;
 	margin: 0;
-	height: 50px;
+	height: 30px;
 	width: 55px;
 	float: left;
 	position: absolute;
@@ -1192,10 +1221,10 @@ p.check2 > input
 }
 p.check2 > label 
 { 
-	line-height: 50px; 
+	line-height:20px; 
 	color: #fff; 
-	padding: 0 0 0 50px;
-	padding-top: 35px;
+	padding: 0 0 0 30px;
+	padding-top: 25px;
 	-moz-transition: color 1s ease; 
 	-o-transition: color 1s ease; 
 	-webkit-transition: color 1s ease; 
@@ -1207,7 +1236,7 @@ fieldset[dir=rtl] p.check2 > label {
 
 p.check2:not(#foo) > input + label
 {
-	background: url('../img/check2.svg');
+	background: url('../img/check2new.svg');
 	height: 18px !important;
 	width: 5px;
 	margin-left: 30px;
@@ -1850,11 +1879,11 @@ body #editor {color: #fff;}
 .jcarousel-skin-tango2 .jcarousel-direction-rtl {direction: rtl;}
 .jcarousel-skin-tango2 .jcarousel-container-vertical {width: 475px; height: 216px; padding: 30px 20px; padding-bottom: 80px;}
 .jcarousel-skin-tango2 .jcarousel-clip {overflow: hidden;}
-.jcarousel-skin-tango2 .jcarousel-clip-vertical {width:  475px; height: 216px;}
+.jcarousel-skin-tango2 .jcarousel-clip-vertical {width:  475px; height: 200px; margin-top: 15px;}
 .jcarousel-skin-tango2 .jcarousel-item {
     width: 460px;
     line-height: 24px;
-    height: 60px;
+    height: 45px;
     color: #542437;
     font-size: 22px;
     font-weight: 400;
@@ -1870,7 +1899,7 @@ body #editor {color: #fff;}
 .jcarousel-skin-tango2 .jcarousel-next-vertical {
     position: absolute;
     bottom: 10px;
-    left: 278px;
+    left: 230px;
     width: 51px;
     height: 51px;
     cursor: pointer;
@@ -1886,8 +1915,8 @@ body #editor {color: #fff;}
 .jcarousel-skin-tango2 .jcarousel-next-disabled-vertical:active { cursor: default; background-position: 0 0px;}
 .jcarousel-skin-tango2 .jcarousel-prev-vertical {
     position: absolute;
-    bottom: 10px;
-    left: 188px;
+    top: -10px;
+    left: 230px;
     width: 51px;
     height: 51px;
     cursor: pointer;
@@ -1898,10 +1927,9 @@ body #editor {color: #fff;}
 .jcarousel-skin-tango2 .jcarousel-prev-vertical:focus {background-position: 0 0px;}
 .jcarousel-skin-tango2 .jcarousel-prev-vertical:active {background-position: 0 0px;}
 
-.checks {margin-right: 0px; width: 250px; margin-left: 0px;}
+.checks {margin-right: 0px; width: 250px; margin-left: 0px; max-height: 30px;}
 .purple {background-color: #542437; color: #ecd077; font-size: 20px; padding: 15px; padding:right:0px; width:220px; margin-left: -50px; text-align: center;}
-
-
+.purple2 {max-height: 30px; color: #542437; font-size: 20px; padding: 15px; padding:right:0px; width:220px; margin-left: -50px; text-align: center ; }
 
 
 
@@ -2097,7 +2125,7 @@ background: #d95a42;
 	max-width: 95.5%
 }
 .nin2 {
-	width: 96.6% !important;
+	width: 97.5% !important;
 }
 
 .circular {

@@ -253,7 +253,7 @@ append content
 						img(src="/img/arrow.svg", alt="", class="arrow" style="padding-left:10px; margin-right:15px; width:17px; height:17px; padding-bottom:0px;")
 					.right
 						a(href="", alt="", class="link1", style="font-size:12px; padding-bottom:0px;") LEARN MORE
-	.row-fluid
+	.row-fluid.smallspacer 
 		.span3.yellow
 			ul#mycarousel.jcarousel-skin-tango
 				li
@@ -300,101 +300,102 @@ append content
 
 		.span5p2.zero2.yellow
 			h6 Your categories
-			.left.smallslid4
+			.left.atendee
 				| Attendee
-			.right.smallslid2right
-				| Does he/she pays?
 			ul#mycarousel2.jcarousel-skin-tango2
 				li
 					.right.checks
 						p.check2.left.smallslid2
 							input(name="", placeholder="", type="checkbox", id="css", value="css3",)
 							label(for='css',) 
-						.left.tops  YES
+						.left.tops.smallt  YES
 						p.check2.left.smallslid2
 							input(name="", placeholder="", type="checkbox", id="cs", value="css3",)
 							label(for='cs',)
-						.left.tops  NO 
+						.left.tops.smallt  NO 
 
-					.left.purple
-						| Guest Speaker
+					.left.purple2
+						a.guest(href="", alt="", title="")
+							| Guest Speaker
+							//-the ex.svg image should appear when hovered or clicked I think and it for deleting as far as I know
+							img(src="/img/ex.svg", alt="", class="guest-x")
 				li.tops-minus
 					.right.checks
 						p.check2.left.smallslid2
 							input(name="", placeholder="", type="checkbox", id="1css3", value="css3",)
 							label(for='1css3',) 
-						.left.tops  YES
+						.left.tops.smallt  YES
 						p.check2.left.smallslid2
 							input(name="", placeholder="", type="checkbox", id="2css3", value="css3",)
 							label(for='2css3',)
-						.left.tops  NO 
+						.left.tops.smallt  NO 
 
-					.left.purple
+					.left.purple2
 						| Guest Speaker
 				li.tops-minus
 					.right.checks
 						p.check2.left.smallslid2
 							input(name="", placeholder="", type="checkbox", id="3css3", value="css3",)
 							label(for='3css3',) 
-						.left.tops  YES
+						.left.tops.smallt  YES
 						p.check2.left.smallslid2
 							input(name="", placeholder="", type="checkbox", id="5css3", value="css3",)
 							label(for='5css3',)
-						.left.tops  NO 
+						.left.tops.smallt  NO 
 
-					.left.purple
+					.left.purple2
 						| Guest Speaker
 				li.tops-minus
 					.right.checks
 						p.check2.left.smallslid2
 							input(name="", placeholder="", type="checkbox", id="6css3", value="css3",)
 							label(for='6css3',) 
-						.left.tops  YES
+						.left.tops.smallt  YES
 						p.check2.left.smallslid2
 							input(name="", placeholder="", type="checkbox", id="8css3", value="css3",)
 							label(for='8css3',)
-						.left.tops  NO 
+						.left.tops.smallt  NO 
 
-					.left.purple
+					.left.purple2
 						| Guest Speaker
 				li.tops-minus
 					.right.checks
 						p.check2.left.smallslid2
 							input(name="", placeholder="", type="checkbox", id="pcss3", value="css3",)
 							label(for='pcss3',) 
-						.left.tops  YES
+						.left.tops.smallt  YES
 						p.check2.left.smallslid2
 							input(name="", placeholder="", type="checkbox", id="ocss3", value="css3",)
 							label(for='ocss3',)
-						.left.tops  NO 
+						.left.tops.smallt  NO 
 
-					.left.purple
+					.left.purple2
 						| Guest Speaker
 				li.tops-minus
 					.right.checks
 						p.check2.left.smallslid2
 							input(name="", placeholder="", type="checkbox", id="icss3", value="css3",)
 							label(for='icss3', ) 
-						.left.tops  YES
+						.left.tops.smallt  YES
 						p.check2.left.smallslid2
 							input(name="", placeholder="", type="checkbox", id="kcss3", value="css3",)
 							label(for='kcss3',)
-						.left.tops  NO 
+						.left.tops.smallt  NO 
 
-					.left.purple
+					.left.purple2
 						| Guest Speaker
 				li.tops-minus
 					.right.checks
 						p.check2.left.smallslid2
 							input(name="", placeholder="", type="checkbox", id="jcss3", value="css3",)
 							label(for='jcss3',) 
-						.left.tops  YES
+						.left.tops.smallt  YES
 						p.check2.left.smallslid2
 							input(name="", placeholder="", type="checkbox", id="mcss3", value="css3",)
 							label(for='mcss3',)
-						.left.tops  NO 
+						.left.tops.smallt  NO 
 
-					.left.purple
+					.left.purple2
 						| Guest Speaker
 		.clearfix
 		.row-fluid.headerspacer2.span12.zer
@@ -402,13 +403,27 @@ append content
 				h12 Allow them to create their own label for self? 
 			.left.tops-minus
 				p.check3.left
-					input(name="", placeholder="", type="checkbox", id="allow", value="css3")
+					input(name="", placeholder="", checked="", type="checkbox", id="allow", value="css3")
 					label(for='allow',) 
 				.left.tops3  YES
 			.left.tops-minus
 				p.check3.left
 					input(name="", placeholder="", type="checkbox", id="dontallow", value="css3")
 					label(for='dontallow',) 
+				.left.tops3  NO
+		.clearfix
+		.row-fluid.headerspacer2.span12.zer
+			.left
+				h12 Include priced tickets?
+			.left.tops-minus
+				p.check3.left
+					input(name="", placeholder="", checked="", type="checkbox", id="allow1", value="css3")
+					label(for='allow1',) 
+				.left.tops3  YES
+			.left.tops-minus
+				p.check3.left
+					input(name="", placeholder="", type="checkbox", id="dontallow1", value="css3")
+					label(for='dontallow1',) 
 				.left.tops3  NO
 		.clearfix
 		.clearfix
@@ -626,10 +641,75 @@ append content
 		.clearfix
 		row-fluid.span12.headerspacer2.zer.center
 			h14 One last step: <span>Control who can see or access your event</span>
-		row-fluid.span12.headerspacer2.zer
-			h14 Please type your password (there are no stupid restrictions):
-		row-fluid.span12.spacer.zer.redbox
-			input.nin2(name="", placeholder="", type="email", id="", required="required", class="file_input_textbox6", style="margin-top:10px;")
+
+		row-fluid.span12.zer.headerspacer2
+			h14 How <br /> restrictive:
+		row-fluid.span12.zer.headerspacer2
+			.left.span2
+				a.link1(href="#")
+					img(src="/img/paddlock.svg", class="arrow")
+			.right.orangebox.span10
+				.left.in_orange22
+					| Allow anyone from any location to access event.
+				.right
+					.right.true
+						img(src="/img/arrow.svg", alt="", class="arrow", style=" padding-left:10px; margin-right:15px; width:30px; height:30px; ")
+					.right.true2
+						a(href="", alt="", class="link1",style="font-size:16px; font-weight:400;", data-reveal-id="restricion1Modal") LEARN MORE
+		row-fluid.span12.zer.headerspacer
+			.left.span2
+				a.link1(href="#")
+					img(src="/img/paddlock.svg", class="arrow")
+			.right.orangebox.span10
+				.left.in_orange22
+					| Allow people to access event when in range.<br /> <b>No password added.</b>
+				.right
+					.right.true
+						img(src="/img/arrow.svg", alt="", class="arrow", style=" padding-left:10px; margin-right:15px; width:30px; height:30px; ")
+					.right.true2
+						a(href="", alt="", class="link1", style="font-size:16px; font-weight:400;", data-reveal-id="restricion2Modal") LEARN MORE
+		row-fluid.span12.zer.headerspacer
+			.left.span2
+				a.link1(href="#")
+					img(src="/img/paddlock2.svg", class="arrow")
+			.right.orangebox.span10
+				.left.in_orange22
+					| Allow anyone with any location but <b>with a password</b> <br /> access your event.
+				.right
+					.right.true
+						img(src="/img/arrow.svg", alt="", class="arrow", style=" padding-left:10px; margin-right:15px; width:30px; height:30px; ")
+					.right.true2
+						a(href="", alt="", class="link1", style="font-size:16px; font-weight:400;", data-reveal-id="restricion3Modal") LEARN MORE
+		row-fluid.span12.zer.headerspacer
+			.left.span2
+				a.link1(href="#")
+					img(src="/img/paddlock2.svg", class="arrow")
+			.right.orangebox.span10
+				.left.in_orange22
+					| Allow people to access event when <b>in range</b> <br /><b>and with a password.</b>
+				.right
+					.right.true
+						img(src="/img/arrow.svg", alt="", class="arrow", style=" padding-left:10px; margin-right:15px; width:30px; height:30px; ")
+					.right.true2
+						a(href="", alt="", class="link1", style="font-size:16px; font-weight:400;", data-reveal-id="restricion3Modal") LEARN MORE
+		row-fluid.span12.zer.headerspacer
+			.left.span2
+				a.link1(href="#")
+					img(src="/img/paddlock3.svg", class="arrow")
+			.right.orangebox.span10
+				.left.in_orange22
+					| <b>Make private.</b> Attendees can only find event by <br /> getting the link above.
+				.right
+					.right.true
+						img(src="/img/arrow.svg", alt="", class="arrow", style=" padding-left:10px; margin-right:15px; width:30px; height:30px; ")
+					.right.true2
+						a(href="", alt="", class="link1", style="font-size:16px; font-weight:400;", data-reveal-id="restricion5Modal") LEARN MORE
+		row-fluid.span12.headerspacer2.zer.center
+			row-fluid.span12.headerspacer2.zer
+				h14 Please type your password (there are no stupid restrictions):
+			.clearfix
+			.center.spacer.redbox.neu
+				input.nin2(name="", placeholder="", type="email", id="", required="required", class="file_input_textbox55")
 		.clearfix
 
 		.center.headerspacer2
@@ -664,63 +744,6 @@ append content
 				img(src="/img/gotohome.svg", class="arrow")
 			.right.span6
 				img(src="/img/gotoevent.svg", class="arrow")
-		row-fluid.span12.zer.headerspacer2
-			h14 How <br /> restrictive:
-		row-fluid.span12.zer.headerspacer2
-			.left.span2
-				img(src="/img/paddlock.svg", class="arrow")
-			.right.orangebox.span10
-				.left.in_orange22
-					| Allow anyone from any location to access event.
-				.right
-					.right.true
-						img(src="/img/arrow.svg", alt="", class="arrow", style=" padding-left:10px; margin-right:15px; width:30px; height:30px; ")
-					.right.true2
-						a(href="", alt="", class="link1", style="font-size:20px;", data-reveal-id="restricion1Modal") LEARN MORE
-		row-fluid.span12.zer.headerspacer
-			.left.span2
-				img(src="/img/paddlock.svg", class="arrow")
-			.right.orangebox.span10
-				.left.in_orange22
-					| Allow people to access event when in range.<br /> <b>No password added.</b>
-				.right
-					.right.true
-						img(src="/img/arrow.svg", alt="", class="arrow", style=" padding-left:10px; margin-right:15px; width:30px; height:30px; ")
-					.right.true2
-						a(href="", alt="", class="link1", style="font-size:20px;", data-reveal-id="restricion2Modal") LEARN MORE
-		row-fluid.span12.zer.headerspacer
-			.left.span2
-				img(src="/img/paddlock2.svg", class="arrow")
-			.right.orangebox.span10
-				.left.in_orange22
-					| Allow anyone with any location but <b>with a password</b> <br /> access your event.
-				.right
-					.right.true
-						img(src="/img/arrow.svg", alt="", class="arrow", style=" padding-left:10px; margin-right:15px; width:30px; height:30px; ")
-					.right.true2
-						a(href="", alt="", class="link1", style="font-size:20px;", data-reveal-id="restricion3Modal") LEARN MORE
-		row-fluid.span12.zer.headerspacer
-			.left.span2
-				img(src="/img/paddlock2.svg", class="arrow")
-			.right.orangebox.span10
-				.left.in_orange22
-					| Allow people to access event when <b>in range</b> <br /><b>and with a password.</b>
-				.right
-					.right.true
-						img(src="/img/arrow.svg", alt="", class="arrow", style=" padding-left:10px; margin-right:15px; width:30px; height:30px; ")
-					.right.true2
-						a(href="", alt="", class="link1", style="font-size:20px;", data-reveal-id="restricion3Modal") LEARN MORE
-		row-fluid.span12.zer.headerspacer
-			.left.span2
-				img(src="/img/paddlock3.svg", class="arrow")
-			.right.orangebox.span10
-				.left.in_orange22
-					| <b>Make private.</b> Attendees can only find event by <br /> getting the link above.
-				.right
-					.right.true
-						img(src="/img/arrow.svg", alt="", class="arrow", style=" padding-left:10px; margin-right:15px; width:30px; height:30px; ")
-					.right.true2
-						a(href="", alt="", class="link1", style="font-size:20px;", data-reveal-id="restricion5Modal") LEARN MORE
 
 
 			#restricion1Modal.reveal-modal
