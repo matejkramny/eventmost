@@ -196,6 +196,20 @@ input.file_input_textbox_credit {
 	line-height: 30px;
 	height: 35px;
 }
+.profile-sumbit {
+	background-color: #53777a;
+	border:none;
+	width: 100px !important;
+	float:right;
+	margin-right: 300px;
+	margin-top: 24px;
+	font-size: 20px;
+	font-weight: 400;
+	border-radius: 5px;
+	color:#542437;
+	line-height: 30px;
+	height: 35px;
+}
 input.file_input_textbox_credit {
 	color:#542437;
 	line-height: 30px;
@@ -251,6 +265,7 @@ input.file_input_textbox_credit {
 .smallslid4 {margin-left: 25px;}
 .smallslid5 {margin-left: 20px;}
 .smallslid3 {margin-left: 45px !important;}
+.smallslid6 {margin-left: 70px !important;}
 .smallslid2right {margin-right: 114px; }
 .slid {margin-bottom: 10px;}
 .bigslid {margin-left: 140px;}
@@ -264,7 +279,9 @@ p.small {font-size: 17px; font-weight: 400; margin-left: 10px; margin-top: -10px
 .tops {padding-top: 18px; font-size: 26px;}
 .tops2 {padding-top: 14px; font-size: 35px; color: #ecd077;}
 .tops3 {padding-top: 10px; font-size: 35px; color: #ecd077; margin-left: 5px;}
+.top4 {padding-top: 10px;}
 .tops-minus {margin-top: -10px;}
+.tops-minus2 {margin-top: -20px;}
 .small-top {margin-top: 5px;}
 .zer {margin-left: 0px !important;}
 .spacerbig {margin-top: 35px;}
@@ -273,6 +290,7 @@ p.small {font-size: 17px; font-weight: 400; margin-left: 10px; margin-top: -10px
 .align {text-align: left !important;}
 .atendee {margin-left: 62px; padding-top: 32px;}
 .smallt {font-size: 20px; padding-left: 5px;}
+.smallf {font-size: 14px; padding-top: 5px;}
 .tf {font-size: 25px;}
 .hun {width: 120px;}
 .hun2 {width: 450px;}
@@ -452,6 +470,11 @@ footer .copy {
 	text-transform: uppercase;
 	color: #542437;
 }
+.bluebox-send {
+	background-color: #53777a;
+	text-transform: uppercase;
+	color: #542437;
+}
 .purpleline{
 	width: 6px;
 	height: 100px;
@@ -539,6 +562,8 @@ footer .copy {
 	padding-left: 20px;
 }
 .neu { width: 80% !important; margin: 5px auto;}
+.neu-send { width: 50% !important; margin: 5px auto;}
+.neu-send2 { width: 55% !important; margin: 5px auto;}
 .arrow {
 	padding-bottom: 26px;
 	margin: auto;
@@ -707,6 +732,24 @@ input.file_input_textbox4 {
 	margin-left: 10px;
 	line-height: 20px !important;
 	width: 540px !important;
+	font-size: 18px;
+	font-weight: 100;
+	border: none;
+	float: right;
+	border-top-left-radius: 5px;
+	border-bottom-left-radius: 5px;
+	border-top-right-radius: 0px;
+	border-bottom-right-radius: 0px;
+    display: inline-block;
+    vertical-align: middle;
+    height: 24px !important;
+    padding-left: 10px;
+}
+input.file_input_textbox4-optionD {
+	color:#542437 !important;
+	margin-left: 10px;
+	line-height: 20px !important;
+	width: 340px !important;
 	font-size: 18px;
 	font-weight: 100;
 	border: none;
@@ -946,6 +989,23 @@ input[type="search"]::-webkit-input-placeholder {
 }
 .profile-button {
 	background-color: #53777a;
+	border:none;
+	height: 40px;
+	font-size: 18px;
+	font-weight: 100;
+	border-radius: 5px;
+	padding-left: 40px;
+	padding-right: 40px;
+	height: 94px;
+	color: #542437;
+	margin-top: 10px;
+	margin-bottom: 20px;
+	width: 280px !important;
+	word-wrap:break-word !important;
+	white-space: normal;
+}
+.profile-button-red {
+	background-color: #c02942;
 	border:none;
 	height: 40px;
 	font-size: 18px;
@@ -1433,6 +1493,55 @@ p.check5:not(#foo) > input[type=checkbox] + label:hover 							{ background-posi
 /**** checkbox5 ****/
 
 
+/**** checkbox6 ****/
+
+p.check6 > input
+{
+	padding: 0;
+	margin: 0;
+	height: 50px;
+	width: 55px;
+	float: left;
+	position: absolute;
+	left: 0;
+	opacity: 0;
+}
+p.check6 > label 
+{ 
+	line-height: 50px; 
+	color: #fff; 
+	padding: 0 0 0 50px;
+	padding-top: 35px;
+	-moz-transition: color 1s ease; 
+	-o-transition: color 1s ease; 
+	-webkit-transition: color 1s ease; 
+	transition: color 1s ease; 
+}
+fieldset[dir=rtl] p.check6 > label {
+	padding: 0 0px 0 0;
+}
+
+p.check6:not(#foo) > input + label
+{
+	background: url('../img/check9.svg');
+	height: 18px !important;
+	width: 5px;
+	margin-left: 30px;
+}
+
+/* Checked styles */
+p.check6:not(#foo) > input[type=checkbox]:checked + label 						{ background-position: 0 50px; }
+p.check6:not(#foo) > input[type=checkbox]:hover:checked + label,
+p.check6:not(#foo) > input[type=checkbox]:focus:checked + label,
+p.check6:not(#foo) > input[type=checkbox]:checked + label:hover,
+p.check6:not(#foo) > input[type=checkbox]:focus:checked + label 					{ background-position: 0 -100px; }
+
+/* Hover & Focus styles */
+p.check6:not(#foo) > input[type=checkbox]:hover + label,
+p.check6:not(#foo) > input[type=checkbox]:focus + label,
+p.check6:not(#foo) > input[type=checkbox] + label:hover 							{ background-position: 0 0px; }
+
+/**** checkbox6 ****/
 
 #file_browse_wrapper {
 	margin-left: 5px;
@@ -2275,12 +2384,9 @@ background: #d95a42;
 	word-wrap:break-word;
 	max-width: 85.5%
 }
-.nin {
-	max-width: 95.5%
-}
-.nin2 {
-	width: 97.5% !important;
-}
+.nin {max-width: 95.5%}
+.nin2 {width: 97.5% !important;}
+.nin2-send {width: 97.0% !important;}
 
 .circular {
 	width: 150px;
@@ -2353,6 +2459,7 @@ background: #d95a42;
 	padding-left: 20px;
 	width: 81.3%;
 }
+.four {width: 25%;}
 .circularespond {
 	vertical-align:middle;
 	text-align:center;
