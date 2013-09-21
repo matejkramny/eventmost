@@ -1,6 +1,6 @@
-jQuery(document).ready(function() {
-    jQuery('#mycarousel').jcarousel({
-        vertical: true,
-        scroll: 2
-    });
-});
+$(document).ready(function() {
+	$("#mycarousel").jcarousel({
+		vertical: true,
+		scroll: 2
+	})
+})
