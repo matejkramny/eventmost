@@ -1,5 +1,6 @@
 extends ../base
 
+
 append addonjs
 	script(src="/js/geo.js")
 	script(src="/js/datepicker.js")
@@ -32,7 +33,7 @@ append addonjs
 			footer: true,
 			fonts: ['Verdana','Arial','Georgia','Trebuchet MS'],
 			xhtml: true,
-			cssfile: 'custom.css',
+			cssfile: '/public/css/tinymce.iframe.css',
 			bodyid: 'editor',
 			footerclass: 'tinyeditor-footer',
 			resize: {cssclass: 'resize'}
@@ -100,37 +101,8 @@ append content
 				.headerspacer2.smallslid3
 					.left.weight.align.smallspacer-left 
 						| hour:
-					.left
-						dl.dropdown5
-							dt
-								a.dropx5(href="#")
-									| 
-							dd
-								ul
-									li
-										a(href="#",) 1
-									li
-										a(href="#",) 2
-									li
-										a(href="#",) 3
-									li
-										a(href="#",) 4
-									li
-										a(href="#",) 5
-									li
-										a(href="#",) 6
-									li
-										a(href="#",) 7
-									li
-										a(href="#",) 8
-									li
-										a(href="#",) 9
-									li
-										a(href="#",) 10
-									li
-										a(href="#",) 11
-									li
-										a(href="#",) 12
+					.left.outer7
+						input(name="", placeholder="", type="text", id="event_location", class="file_input_textbox99")
 					.left.weight.align.smallspacer-left.smallslid3
 						| minute:
 					.left

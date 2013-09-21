@@ -405,6 +405,7 @@ footer .copy {
 .outer3 {width: 590px;}
 .outer4 {width: 181px; min-height: 73px;}
 .outer5 {min-height: 80px;}
+.outer7 {width: 90px;}
 .well2.yellow {
 	border-radius: 0px;
 	min-width: 108px;
@@ -787,6 +788,21 @@ input.file_input_textbox5 {
 	width: 100%;
 	margin-left: 15px;
 	height: 57px !important;
+}
+input.file_input_textbox99 {
+	color:#d95a42;
+	line-height: 39px;
+	margin-bottom: 5px;
+	font-weight: 700;
+	border: none;
+	border-radius: 5px;
+	margin-top:5px; 
+	background-color: #542437;
+	width: 100%;
+	margin-left: 15px;
+	margin-top: -11px;
+	height: 27px !important;
+	font-size: 18px;
 }
 input.file_input_textbox55 {
 	color:#ecd077;
