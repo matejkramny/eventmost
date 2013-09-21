@@ -2065,11 +2065,11 @@ color: #53777a;
 .tinyeditor-header {height:31px; background-color:#53777a; height:60px; padding-top:1px; border: }
 .tinyeditor-header select {float:left; margin-top:5px; background-color: #53777a;  border: none;}
 .tinyeditor-font {width:120%; padding-left: 10px !important;  height: 44px; font-weight: 100;  font-size:20px; padding-top: 6px !important;  
-	margin-top:0px !important; margin-left:0px; background:url(../img/tiny_over.svg); }
+	margin-top:0px !important; margin-left:0px; background:url(../img/tiny_over.svg); -webkit-appearance:none; }
 .tinyeditor-font-over2 {margin-top:-44px !important; background:url(../img/tiny_over.svg); width:176px;height: 44px; 
-	margin-left:590px; overflow: hidden; z-index: 700;}	 
+	margin-left:590px; overflow: hidden; z-index: 700; -webkit-appearance:none;}	 
 .tinyeditor-size {width:120%; padding-left: 10px !important;  height: 44px; font-weight: 100;  font-size:20px; padding-top: 6px !important;  
-	margin-top:0px !important; margin-left:0px; background:url(../img/tiny_over.svg); }
+	margin-top:0px !important; margin-left:0px; background:url(../img/tiny_over.svg); -webkit-appearance:none;}
 .tinyeditor-font option  {border: none; font-size: 16px; color: #542437; padding: 5px;}
 .tinyeditor-size option  {border: none; font-size: 16px; color: #542437; padding: 5px;}
 .tinyeditor-font select {width: 120%;}
