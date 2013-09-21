@@ -1,7 +1,3 @@
-
-
-
-
 $(document).ready(function() {
   $('input#dontallow').click(function() {
     if ($(this).is(':checked')) {

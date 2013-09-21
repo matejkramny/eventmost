@@ -20,6 +20,10 @@ $(document).ready(function() {
 	// use current location button
 	$eventlocation = $("#event_location");
 	$("#css3").click(function() {
+		if (!$(this).is(':checked')) {
+			return;
+		}
+		
 		$eventlocation.val("Getting your location..")
 		if (window.Geo.isSupported()) {
 			window.Geo.getLocation(function(coords, pos) {
