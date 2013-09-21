@@ -1,70 +1,110 @@
-extends ../layout
+extends ../base
 
 block content
-	include ../inc/sidebar
-	
-	#main-content.red-line-border
-		.sear-box#bigred
-			.search-content
-				p
-					span.title Your profile
-		p Click on a social network to link them to your account. Once that is done, you can use them to log into your account.
-		.login-buttons
-			.login-btn
-				a(href="/auth/twitter", alt="Log in with twitter", title="Link with twitter")
-					img(src="/img/twitter-btn.png")
-					if user.twitter.userid
-						p linked
-			.login-btn
-				a(href="/auth/linkedin", alt="Log in with linkedin", title="Link with linkedin")
-					img(src="/img/linkedin-btn.png")
-					if user.linkedin.userid
-						p linked
-			.login-btn
-				a(href="/auth/facebook", alt="Log in with facebook", title="Link with facebook")
-					img(src="/img/facebook-btn.png", alt="")
-					if user.facebook.userid
-						p linked
-			.clear
-		form#UserEditForm(action="/profile/edit", enctype="multipart/form-data", method="POST", accept-charset="utf-8", name="UserEditForm", autocomplete="off")
-			input(type="hidden", name="_csrf", value=token)
-			.user-short-info#upload
-				.avatar
-					img.left(src=user.avatar, style="margin-right: 10px;")
-					.input.file
-						label(for="UserAvatar") Avatar
-						input#UserAvatar(type="file", name="avatar")
-				.smalltext.mandatory * - mandatory field
-				.smalltext.mandatory
-					include ../inc/flash
-			.input.email
-				input#UserEmail.input-item.rounded-input(name="email", placeholder="Email", maxlength="128", type="email", value=user.email)
-				.small Either Email, First name or Last name is required
-			.input.text
-				input#UserFirstName.input-item.rounded-input(name="name", placeholder="First name", maxlength="256", type="text", value=user.name)
-			.input.text
-				input#UserLastName.input-item.rounded-input(name="surname", placeholder="Last name", maxlength="256", type="text", value=user.surname)
-			.input.text
-				input#UserCompany.input-item.rounded-input(name="company", placeholder="Company", maxlength="256", type="text", value=user.company)
-			.input.text
-				input#UserPosition.input-item.rounded-input(name="position", placeholder="Position", maxlength="256", type="text", value=user.position)
-			.input.text
-				input#UserLocation.input-item.rounded-input(name="location", placeholder="Location", maxlength="256", type="text", value=user.location)
-			.input.text
-				input#UserInterests.input-item.rounded-input(name="interests", placeholder="Interests", maxlength="256", type="text", value=user.interests)
-			.input.text
-				input#UserWebsite.input-item.rounded-input(name="website", placeholder="Website", maxlength="256", type="url", value=user.website)
-			.input.text
-				input#UserEducation.input-item.rounded-input(name="education", placeholder="Education", maxlength="256", type="text", value=user.education)
-			.input.textarea
-				textarea#UserDesc.input-item.rounded-input(name="desc", placeholder="Description", value=user.description, cols=30, rows=6)= user.desc
-			.input.password
-				input.input-item.rounded-input#UserPassword(name="password", autocomplete="off", placeholder="New password", type="password")
-				.small Do not edit if you don't want to change your password
-			if user.password
-				.input.password
-					input.input-item.rounded-input#UserOldPassword(name="password_old", autocomplete="off", placeholder="Old password (required if you change password)", type="password")
-					.small Do not edit if you are not changing your password
-			.submit
-				input.submit-btn(type="submit", value="Update")
-	.clear
+
+	.eighty-five
+		.center2.dropbox.color
+			img(src="/img/dropbox.svg", alt="" style="padding-right:20px;")
+			| Event dropbox
+	//- photo
+	.eighty-five
+		.headerspacer2.smallslid3
+			.left.well2.yellowborder2
+				img(src="/img/default_logo.svg", alt="", class="arrow")
+			.left
+				#file_browse_wrapper
+					input(type="file", id="file_browse")
+			.left
+				#file_upload_wrapper
+			.left
+				#file_delete_wrapper
+		.clearfix
+	.headerspacer2.center2.color.speaker_title2
+		| Who can view this file:
+	.headerspacer2.center2
+		.smallt.thin.color.smallslid8
+			| All attendees
+		.thirty
+			p.check7.smallslid.checkdropbox
+				input(name="", placeholder="", type="checkbox", id="yhm", value="css3")
+				label(for='yhm')
+	.clearfix
+	.headerspacer2
+	.span6
+		.right
+			.smallt.thin.color.center.smallslid9.outer5
+				| Certain attendee <br />categories
+			dl.dropdown7
+				dt
+					a.dropx7(href="#")
+						| Choose categories
+				dd
+					ul
+						li
+							a(href="#",) guest speaker
+							p.check7.smallslid.checkdropbox2
+								input(name="", placeholder="", type="checkbox", id="yhm2", value="css3")
+								label(for='yhm2')
+						li
+							a(href="#",) guest speaker2
+							p.check7.smallslid.checkdropbox2
+								input(name="", placeholder="", type="checkbox", id="yhm22", value="css3")
+								label(for='yhm22')
+						li
+							a(href="#",) guest speaker
+							p.check7.smallslid.checkdropbox2
+								input(name="", placeholder="", type="checkbox", id="yhm3", value="css3")
+								label(for='yhm3')
+						li.border_bottom2
+							a(href="#", style="height:30px;") guest speaker
+							p.check7.smallslid.checkdropbox2-end
+								input(name="", placeholder="", type="checkbox", id="yhm4", value="css3")
+								label(for='yhm4')
+	.span6
+		.left
+			.smallt.thin.color.center.smallslid9.outer5
+				| Cetrain individuals
+			dl.dropdown8
+				dt
+					a.dropx8(href="#")
+						| Choose individuals
+				dd
+					ul
+						li
+							a(href="#",) guest speaker
+							p.check8.smallslid.checkdropbox2
+								input(name="", placeholder="", type="checkbox", id="1yhm2", value="css3")
+								label(for='1yhm2')
+						li
+							a(href="#",) guest speaker2
+							p.check8.smallslid.checkdropbox2
+								input(name="", placeholder="", type="checkbox", id="2yhm22", value="css3")
+								label(for='2yhm22')
+						li
+							a(href="#",) guest speaker
+							p.check8.smallslid.checkdropbox2
+								input(name="", placeholder="", type="checkbox", id="3yhm3", value="css3")
+								label(for='3yhm3')
+						li.border_bottom2
+							a(href="#", style="height:30px;") guest speaker
+							p.check8.smallslid.checkdropbox2-end
+								input(name="", placeholder="", type="checkbox", id="4yhm4", value="css3")
+								label(for='4yhm4')
+	.clearfix
+	.headerspacer2.center2.smallt.thin.color
+		| File will be viewable <b>but not downloadable</b> for anyone who has acccess to your event. <br />
+		| Would you like to allow general public to also be able to view this file, but not downloand it? <br />
+		| <b>!(such could help with brand promotion)!	</b>
+
+	.center2
+		.toggle-center
+			label.checkbox.toggle.candy(style='width: 100px;', onclick='')
+				input(type='checkbox', class="invisible")
+				span
+					span No
+					span Yes
+				a.slide-button		
+	.center2
+		input.dropbox-add(type="submit", value="Add another file...")
+	.clearfix
+	.headerspacer2

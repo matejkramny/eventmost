@@ -1,6 +1,6 @@
 $(document).ready(function() {
 	// Dropdown toggles
-	$(".dropdown dt a, .dropdown2 dt a, .dropdown3 dt a, .dropdown4 dt a, .dropdown5 dt a, .dropdown6 dt a").click(function() {
+	$(".dropdown dt a, .dropdown2 dt a, .dropdown3 dt a, .dropdown4 dt a, .dropdown5 dt a, .dropdown6 dt a, .dropdown7 dt a, .dropdown8 dt a").click(function() {
 		$(this).parent().parent().find("dd ul").toggle();
 	});
 	
@@ -13,7 +13,7 @@ $(document).ready(function() {
 	$(document).bind('click', function(e) {
 		var $clicked = $(e.target);
 		if (! $clicked.parent().hasClass("dropdown")) {
-			$(".dropdown dd ul, .dropdown2 dd ul, .dropdown3 dd ul, .dropdown4 dd ul, .dropdown5 dd ul, .dropdown6 dd ul").hide();
+			$(".dropdown dd ul, .dropdown2 dd ul, .dropdown3 dd ul, .dropdown4 dd ul, .dropdown5 dd ul, .dropdown6 dd ul, .dropdown7 dd ul, .dropdown8 dd ul").hide();
 		}
 	});
 	

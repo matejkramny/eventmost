@@ -24,16 +24,17 @@ header .menu {
 	font-size: 18px;
 	text-align: right;
 }
-.container {width: 1200px;
-}
+.container {width: 1200px;}
 /* After resizing */
 .smallspacer {margin-top: 5px;}
+.dropbox {font-size: 50px;}
 .smallspacer-left {margin-left: 5px;}
 .zero2 {margin-left: 10px !important; }
 .eight {width: 80%;}
 .iconsbox {width: 25%;}
 .four2 {width: 45%;}
 .four {width: 25%;}
+.thin {font-weight: 100;}
 .thirty {
 	width: 31%;
 	font-size: 20px;
@@ -209,6 +210,18 @@ input.file_input_textbox_credit {
 	line-height: 30px;
 	height: 35px;
 }
+.dropbox-add{
+	background-color: #ecd077;
+	border:none;
+	width: 250px !important;
+	float:none;
+	font-size: 20px;
+	font-weight: 400;
+	border-radius: 5px;
+	color:#542437;
+	line-height: 30px;
+	height: 54px;
+}
 .profile-sumbit {
 	background-color: #53777a;
 	border:none;
@@ -275,6 +288,8 @@ input.file_input_textbox_credit {
 .minus4 {margin-left: -15px;}
 .smallslid {margin-left: 30px;}
 .smallslid2 {margin-left: -15px;}
+.smallslid8 {margin-left: -45px;}
+.smallslid9 {margin-left: -65px;}
 .smallslid4 {margin-left: 25px;}
 .smallslid5 {margin-left: 20px;}
 .smallslid3 {margin-left: 45px !important;}
@@ -471,6 +486,19 @@ footer .copy {
 	border-radius: 0px;
 	min-width: 108px;
 	height: 133px;
+	border: none;
+	font-size:35px;
+	font-weight: 100;
+	text-align: left;
+	text-transform: none;
+	background-color: none;
+    border: 5px solid #ecd077 !important;
+    margin-left: 5px !important;
+}
+.well2.yellowborder2 {
+	border-radius: 0px;
+	min-width: 108px;
+	height: 123px;
 	border: none;
 	font-size:35px;
 	font-weight: 100;
@@ -1325,6 +1353,50 @@ h14 span {
         .dropx6 {cursor:pointer; display:block; padding:0px; color: #53777a; padding-top: 0px; margin-left: -20px;}
 
 /**** DROPDOWN ****/
+        .dropdown7 {margin-top: 0px; margin-bottom: 0px; }
+        .dropdown7 dd, .dropdown7 dt, .dropdown7 ul { margin:0px; padding:0px; z-index: 799;}
+        .dropdown7 dd { position:relative; }
+        .dropdown7 a, .dropdown7 a:visited {  color:#d95a42; text-decoration:none; outline:none; font-size: 18px;}
+        .dropdown7 a:hover { color:#d95a42;  }
+        .dropdown7 dt a:hover {  color:#d95a42;}
+        .dropdown7 dt a {background-image: url('../img/drop7.svg') ; display:block; 
+                      width:230px; height: 30px; background-color: none;}
+        .dropdown7 dt a .dropx {cursor:pointer; display:block; padding:5px; color: #542437; padding-left: 10px; padding-top: 15px;}
+        .dropdown7 dd ul {   color:#53777a; display:none; font-weight: 400;
+                          margin-left:15px; padding:0px;   top:2px;  width:195px; list-style:none; min-height: 40px;}
+        .dropdown7 span.value { display:none;}
+        .dropdown7 dd ul li a { padding:5px; display:block; padding-left: 15px; padding-top: 10px !important; height: 40px; border: 1px solid #d95a42; 
+        	border-bottom: none; font-size: 15px;  }
+        .dropdown7 dd ul li a:hover { }
+        .dropdown7 .border_bottom2 a {border-bottom: 1px solid #d95a42 !important; margin-bottom: -5px;}
+        .dropx7 {margin-top: -5px; cursor:pointer; display:block; font-weight:400; padding:5px; color: #d95a42; padding-left: 15px; padding-top: 0px; padding-bottom: 0px;}
+/**** DROPDOWN ****/
+/**** DROPDOWN ****/
+        .dropdown8 {margin-top: 0px; margin-bottom: 0px; }
+        .dropdown8 dd, .dropdown8 dt, .dropdown8 ul { margin:0px; padding:0px; z-index: 799;}
+        .dropdown8 dd { position:relative; }
+        .dropdown8 a, .dropdown8 a:visited {  color:#53777a; text-decoration:none; outline:none; font-size: 18px;}
+        .dropdown8 a:hover { color:#53777a;  }
+        .dropdown8 dt a:hover {  color:#53777a;}
+        .dropdown8 dt a {background-image: url('../img/drop8.svg') ; display:block; 
+                      width:230px; height: 30px; background-color: none;}
+        .dropdown8 dt a .dropx {cursor:pointer; display:block; padding:5px; color: #542437; padding-left: 10px; padding-top: 15px;}
+        .dropdown8 dd ul {   color:#53777a; display:none; font-weight: 400;
+                          margin-left:15px; padding:0px;   top:2px;  width:195px; list-style:none; min-height: 40px;}
+        .dropdown8 span.value { display:none;}
+        .dropdown8 dd ul li a { padding:5px; display:block; padding-left: 15px; padding-top: 10px !important; height: 40px; border: 1px solid #53777a; 
+        	border-bottom: none; font-size: 15px;  }
+        .dropdown8 dd ul li a:hover { }
+        .dropdown8 .border_bottom2 a {border-bottom: 1px solid #53777a !important; margin-bottom: -5px;}
+        .dropx8 {margin-top: -5px; cursor:pointer; display:block; font-weight:400; padding:5px; color: #d95a42; padding-left: 15px; padding-top: 0px; padding-bottom: 0px;}
+/**** DROPDOWN ****/
+ 
+
+/**** DROPDOWN ****/
+.checkdropbox {margin-left: 204px; margin-top: -50px;}
+.checkdropbox2 {margin-left: 114px; margin-top: -70px; padding-bottom: 0px; margin-bottom: 0px;}
+.checkdropbox2-end {margin-left: 114px; margin-top: -60px; padding-bottom: 0px; margin-bottom: 0px;}
+
 /**** checkbox1 ****/
 
 p.check > input
@@ -1576,7 +1648,104 @@ p.check6:not(#foo) > input[type=checkbox]:focus + label,
 p.check6:not(#foo) > input[type=checkbox] + label:hover 							{ background-position: 0 0px; }
 
 /**** checkbox6 ****/
+/**** checkbox6 ****/
 
+p.check7 > input
+{
+	padding: 0;
+	margin: 0;
+	height: 50px;
+	width: 55px;
+	float: left;
+	position: absolute;
+	left: 0;
+	opacity: 0;
+}
+p.check7 > label 
+{ 
+	line-height: 50px; 
+	color: #fff; 
+	padding: 0 0 0 50px;
+	padding-top: 35px;
+	-moz-transition: color 1s ease; 
+	-o-transition: color 1s ease; 
+	-webkit-transition: color 1s ease; 
+	transition: color 1s ease; 
+}
+fieldset[dir=rtl] p.check7 > label {
+	padding: 0 0px 0 0;
+}
+
+p.check7:not(#foo) > input + label
+{
+	background: url('../img/check7.svg');
+	height: 18px !important;
+	width: 5px;
+	margin-left: 30px;
+}
+
+/* Checked styles */
+p.check7:not(#foo) > input[type=checkbox]:checked + label 						{ background-position: 0 50px; }
+p.check7:not(#foo) > input[type=checkbox]:hover:checked + label,
+p.check7:not(#foo) > input[type=checkbox]:focus:checked + label,
+p.check7:not(#foo) > input[type=checkbox]:checked + label:hover,
+p.check7:not(#foo) > input[type=checkbox]:focus:checked + label 					{ background-position: 0 -100px; }
+
+/* Hover & Focus styles */
+p.check7:not(#foo) > input[type=checkbox]:hover + label,
+p.check7:not(#foo) > input[type=checkbox]:focus + label,
+p.check7:not(#foo) > input[type=checkbox] + label:hover 							{ background-position: 0 0px; }
+
+/**** checkbox7 ****/
+/**** checkbox8 ****/
+
+p.check8 > input
+{
+	padding: 0;
+	margin: 0;
+	height: 50px;
+	width: 55px;
+	float: left;
+	position: absolute;
+	left: 0;
+	opacity: 0;
+}
+p.check8 > label 
+{ 
+	line-height: 50px; 
+	color: #fff; 
+	padding: 0 0 0 50px;
+	padding-top: 35px;
+	-moz-transition: color 1s ease; 
+	-o-transition: color 1s ease; 
+	-webkit-transition: color 1s ease; 
+	transition: color 1s ease; 
+}
+fieldset[dir=rtl] p.check8 > label {
+	padding: 0 0px 0 0;
+}
+
+p.check8:not(#foo) > input + label
+{
+	background: url('../img/check8.svg');
+	height: 18px !important;
+	width: 5px;
+	margin-left: 30px;
+}
+
+/* Checked styles */
+p.check8:not(#foo) > input[type=checkbox]:checked + label 						{ background-position: 0 50px; }
+p.check8:not(#foo) > input[type=checkbox]:hover:checked + label,
+p.check8:not(#foo) > input[type=checkbox]:focus:checked + label,
+p.check8:not(#foo) > input[type=checkbox]:checked + label:hover,
+p.check8:not(#foo) > input[type=checkbox]:focus:checked + label 					{ background-position: 0 -100px; }
+
+/* Hover & Focus styles */
+p.check8:not(#foo) > input[type=checkbox]:hover + label,
+p.check8:not(#foo) > input[type=checkbox]:focus + label,
+p.check8:not(#foo) > input[type=checkbox] + label:hover 							{ background-position: 0 0px; }
+
+/**** checkbox8 ****/
 #file_browse_wrapper {
 	margin-left: 5px;
     width: 210px;
@@ -1632,7 +1801,7 @@ p.check6:not(#foo) > input[type=checkbox] + label:hover 							{ background-posi
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
     filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
 }
-
+.toggle-center {margin-left: 455px;}
 
 .row-fluid .span2p {
     width: 11%;
@@ -2603,7 +2772,7 @@ background: #d95a42;
 	line-height: 30px;
 }
 .prof-pic {
-	min-height: 150px;y
+	min-height: 150px;
 	margin: auto;
 	vertical-align:middle;
 	text-align:center;
