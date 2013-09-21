@@ -13,14 +13,12 @@ append addonjs
 				scroll: 2
 			});
 		});
-	script.
 		jQuery(document).ready(function() {
 			jQuery('#mycarousel2').jcarousel({
 				vertical: true,
 				scroll: 2
 			});
 		});
-	script.
 		var editor = new TINY.editor.edit('editor', {
 			id: 'tinyeditor',
 			width: 1180,
@@ -42,6 +40,8 @@ append addonjs
 append content
 	include ../inc/flash
 	include ../modals/homemodals
+	
+	//- event name
 	.row-fluid.smallspacer 
 		.span12.redbox
 				.left.well3.redbox
@@ -49,6 +49,8 @@ append content
 				.left.well3.redbox.outer
 					input(name="", placeholder="", type="email", id="", required="required", class="file_input_textbox6")
 				.clearfix
+	
+	//- photo
 	.row-fluid.smallspacer 
 		.left.span2.well2.yellow
 			| Logo
@@ -62,6 +64,8 @@ append content
 			#file_browse_wrapper
 				input(type="file", id="file_browse")
 		.clearfix
+	
+	//- venue name
 	.row-fluid.smallspacer 
 		.span10.yellow
 				.left.well3.yellow
@@ -72,6 +76,8 @@ append content
 		.left.headerSpacer.smallslid
 			img(src="/img/optional.svg", alt="", class="arrow")
 		.clearfix
+	
+	//- event location
 	.row-fluid.smallspacer 
 		.span8.orange
 				.left.well3.orangeboxnew
@@ -79,6 +85,8 @@ append content
 				.row-fluid
 					.left.outer3
 						input(name="", placeholder="", type="email", id="event_location", class="file_input_textbox5")
+						input#lat(name="lat", type="hidden")
+						input#lng(name="lng", type="hidden")
 		.orange
 				.left.well3.orangeboxnew.smallspacer-left.outer4
 					p.check.smallslid
@@ -88,55 +96,34 @@ append content
 		.left.smallspacer.smallslid5
 			img(src="/img/optional.svg", alt="", class="arrow")
 		.clearfix
+	
+	//- datepicker
 	.row-fluid.smallspacer
 		.orange.span3
 				.left.well3.orangeboxnew.outer5
 					| Event <br /> date
 		.left
 			.left.orange.well5.weight
-				| FROM:
+				| Start date
 				#datepicker
-				.orange.well5.weight
-					| TIME: 00:00
 				.headerspacer2.smallslid3
 					.left.weight.align.smallspacer-left 
-						| hour:
+						| Time of event:
 					.left.outer7
-						input(name="", placeholder="", type="text", id="event_location", class="file_input_textbox99")
-					.left.weight.align.smallspacer-left.smallslid3
-						| minute:
-					.left
-						dl.dropdown5
-							dt
-								a.dropx5(href="#")
-									| 
-							dd
-								ul
-									li
-										a(href="#",) 10
-									li
-										a(href="#",) 20
-									li
-										a(href="#",) 30
-									li
-										a(href="#",) 40
-									li
-										a(href="#",) 50
-									li
-										a(href="#",) 60
+						input(name="", placeholder="", type="time", class="file_input_textbox99")
 					.clearfix
 				.left
 					a(href="", alt="", title="")
 						img(src="/img/now.svg", alt="", )
+				.left.orange.well5.weight
+					| 18/12/2014 15:24
 				.right
 					a(href="", alt="", title="")
 						img(src="/img/done.svg", alt="", )
 		.left
 			.left.orange.well5.weight
-				| TO:
+				| End date
 				#datepicker2
-				.orange.well5.weight
-					| TIME: 00:00
 				.headerspacer2.smallslid3
 					.left.weight.align.smallspacer-left 
 						| hour:
@@ -181,6 +168,8 @@ append content
 							dd
 								ul
 									li
+										a(href="#",) 00
+									li
 										a(href="#",) 10
 									li
 										a(href="#",) 20
@@ -190,12 +179,13 @@ append content
 										a(href="#",) 40
 									li
 										a(href="#",) 50
-									li
-										a(href="#",) 60
+							
 					.clearfix
 				.left
 					a(href="", alt="", title="")
 						img(src="/img/now.svg", alt="", )
+				.left.orange.well5.weight
+					| 19/12/2014 19:00
 				.right
 					a(href="", alt="", title="")
 						img(src="/img/done.svg", alt="", )

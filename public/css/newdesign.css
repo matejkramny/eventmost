@@ -385,6 +385,7 @@ footer .copy {
 	text-align: left;
 	padding-left: 10px;
 	text-transform: none;
+	line-height: 37px;
 }
 .well3.orangeboxnew {
 	border-radius: 0px;
@@ -399,6 +400,7 @@ footer .copy {
 	padding-left: 10px;
 	text-transform: none;
 	background-color: #d95a42;
+	line-height: 37px;
 }
 .outer {width: 1000px;}
 .outer2 {width: 795px;}
@@ -425,6 +427,7 @@ footer .copy {
 	padding-bottom: 0px;
 	padding-right: 13px;
 	height: 45px;
+	line-height: 37px;
 }
 .well3 {
 	border-radius: 0px;
@@ -776,7 +779,7 @@ input.file_input_textbox4-optionD {
     padding-left: 10px;
 }
 input.file_input_textbox5 {
-	color:#ecd077;
+	color:#ecd077 !important; /* Prevents the stupid animations when you are editing - blame flat-ui */
 	line-height: 39px;
 	margin-bottom: 5px;
 	font-size: 32px;
@@ -819,7 +822,7 @@ input.file_input_textbox55 {
 	height: 57px !important;
 }
 input.file_input_textbox6 {
-	color:#ecd077;
+	color:#ecd077 !important;
 	line-height: 39px;
 	font-size: 32px;
 	font-weight: 100;
