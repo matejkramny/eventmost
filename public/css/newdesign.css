@@ -236,6 +236,20 @@ input.file_input_textbox_credit {
 	line-height: 30px;
 	height: 35px;
 }
+.profile-sumbit2 {
+	background-color: #53777a;
+	border:none;
+	width: 100px !important;
+	float:right;
+	margin-right: -4px;
+	margin-top: 24px;
+	font-size: 20px;
+	font-weight: 400;
+	border-radius: 5px;
+	color:#ecd077;
+	line-height: 30px;
+	height: 35px;
+}
 input.file_input_textbox_credit {
 	color:#542437;
 	line-height: 30px;
@@ -318,6 +332,7 @@ p.small {font-size: 17px; font-weight: 400; margin-left: 10px; margin-top: -10px
 .align {text-align: left !important;}
 .atendee {margin-left: 62px; padding-top: 32px;}
 .smallt {font-size: 20px; padding-left: 5px;}
+.smallt2 {font-size: 16px;}
 .smallf {font-size: 14px; padding-top: 5px;}
 .tf {font-size: 25px;}
 .hun {width: 120px;}
@@ -423,6 +438,8 @@ footer .copy {
 .outer4 {width: 181px; min-height: 73px;}
 .outer5 {min-height: 80px;}
 .outer7 {width: 90px;}
+
+.firstcolumn-popup {width: 250px;}
 .well2.yellow {
 	border-radius: 0px;
 	min-width: 108px;
@@ -935,6 +952,9 @@ input[type="text2"]:focus{
 textarea:focus, input:focus{
     outline: 0;
 }
+textarea.textarea-pop:focus {
+		border: 5px solid #53777a;
+}
 .dh {max-height: 30px !important;}
 
 input[type="text"]::-webkit-input-placeholder {
@@ -1396,6 +1416,9 @@ h14 span {
 .checkdropbox {margin-left: 204px; margin-top: -50px;}
 .checkdropbox2 {margin-left: 114px; margin-top: -70px; padding-bottom: 0px; margin-bottom: 0px;}
 .checkdropbox2-end {margin-left: 114px; margin-top: -60px; padding-bottom: 0px; margin-bottom: 0px;}
+.checkdropbox23 {margin-left: 114px; margin-top: -64px; padding-bottom: 0px; margin-bottom: 0px;}
+.checkdropbox23-end {margin-left: 114px; margin-top: -54px; padding-bottom: 0px; margin-bottom: 0px;}
+.checknote {margin-left: 89px; margin-top: -42px;}
 
 /**** checkbox1 ****/
 
@@ -1746,6 +1769,115 @@ p.check8:not(#foo) > input[type=checkbox]:focus + label,
 p.check8:not(#foo) > input[type=checkbox] + label:hover 							{ background-position: 0 0px; }
 
 /**** checkbox8 ****/
+/**** checkbox2 ****/
+
+p.check10 > input
+{
+	padding: 0;
+	margin: 0;
+	height: 30px;
+	width: 55px;
+	float: left;
+	position: absolute;
+	left: 0;
+	opacity: 0;
+}
+p.check10 > label 
+{ 
+	line-height:20px; 
+	color: #fff; 
+	padding: 0 0 0 30px;
+	padding-top: 25px;
+	-moz-transition: color 1s ease; 
+	-o-transition: color 1s ease; 
+	-webkit-transition: color 1s ease; 
+	transition: color 1s ease; 
+}
+fieldset[dir=rtl] p.check10 > label {
+	padding: 0 0px 0 0;
+}
+
+p.check10:not(#foo) > input + label
+{
+	background: url('../img/check10.svg');
+	height: 18px !important;
+	width: 5px;
+	margin-left: 30px;
+}
+
+/* Checked styles */
+p.check10:not(#foo) > input[type=checkbox]:checked + label 						{ background-position: 0 50px; }
+p.check10:not(#foo) > input[type=checkbox]:hover:checked + label,
+p.check10:not(#foo) > input[type=checkbox]:focus:checked + label,
+p.check10:not(#foo) > input[type=checkbox]:checked + label:hover,
+p.check10:not(#foo) > input[type=checkbox]:focus:checked + label 					{ background-position: 0 -100px; }
+
+/* Hover & Focus styles */
+p.check10:not(#foo) > input[type=checkbox]:hover + label,
+p.check10:not(#foo) > input[type=checkbox]:focus + label,
+p.check10:not(#foo) > input[type=checkbox] + label:hover 							{ background-position: 0 0px; }
+
+/**** checkbox10 ****/
+/**** checkbox2 ****/
+
+p.check11 > input
+{
+	padding: 0;
+	margin: 0;
+	height: 30px;
+	width: 55px;
+	float: left;
+	position: absolute;
+	left: 0;
+	opacity: 0;
+}
+p.check11 > label 
+{ 
+	line-height:20px; 
+	color: #fff; 
+	padding: 0 0 0 30px;
+	padding-top: 25px;
+	-moz-transition: color 1s ease; 
+	-o-transition: color 1s ease; 
+	-webkit-transition: color 1s ease; 
+	transition: color 1s ease; 
+}
+fieldset[dir=rtl] p.check11 > label {
+	padding: 0 0px 0 0;
+}
+
+p.check11:not(#foo) > input + label
+{
+	background: url('../img/check11.svg');
+	height: 18px !important;
+	width: 5px;
+	margin-left: 30px;
+}
+
+/* Checked styles */
+p.check11:not(#foo) > input[type=checkbox]:checked + label 						{ background-position: 0 50px; }
+p.check11:not(#foo) > input[type=checkbox]:hover:checked + label,
+p.check11:not(#foo) > input[type=checkbox]:focus:checked + label,
+p.check11:not(#foo) > input[type=checkbox]:checked + label:hover,
+p.check11:not(#foo) > input[type=checkbox]:focus:checked + label 					{ background-position: 0 -100px; }
+
+/* Hover & Focus styles */
+p.check11:not(#foo) > input[type=checkbox]:hover + label,
+p.check11:not(#foo) > input[type=checkbox]:focus + label,
+p.check11:not(#foo) > input[type=checkbox] + label:hover 							{ background-position: 0 0px; }
+
+/**** checkbox10 ****/
+.textarea-pop {
+	width: 95%;
+	border: 5px solid #53777a;
+	color:#542437;
+	background-color: #ecd077;
+	font-size: 16px;
+	resize:none;
+	overflow: hidden;
+	border-radius: 0px;
+	margin-top: 5px;
+}
 #file_browse_wrapper {
 	margin-left: 5px;
     width: 210px;

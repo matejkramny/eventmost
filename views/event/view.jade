@@ -24,7 +24,7 @@ block content
 									li
 										a(href='#') Event dropbox
 									li
-										a(href='#') Send push notification
+										a(href='', data-reveal-id="pushModal") Send push notification
 									li
 										a(href='', data-reveal-id="controlsModal") Comment controls
 				.right
@@ -70,7 +70,7 @@ block content
 						.left
 							img(src="/img/bubble-left.svg", alt="", style="vertical-align:top;")
 						.bubbletext.left
-							| At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores 
+							| ss At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores 
 							| et quas molestias excepturi sint occaecati cupiditate non provident,similique sunt.
 							| At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores 
 							| et quas molestias excepturi sint occaecati cupiditate non provident,similique sunt.
@@ -190,52 +190,90 @@ block content
 			a(href="#", class="close-reveal-modal") 
 				img(src="/img/x.svg")
 
-		#profile2Modal.reveal-modal
-			.left.smallslid 
-				img(src="/img/default_speaker2.svg", alt="", class="circularespond")
-			.left.headerspacer2.event-size.text-right.smallslid 
-				| <b>Lucy Cook</b> - Director of Finance, Delloite<br />
-				| Guest speaker<br />
-				img(src="/img/email-icon-small.svg", alt="", style="padding-right:5px;")
-				a(href="#", class="link1")
-					| lucy.cook@mediaart.com
+
+		#pushModal.reveal-modal
+			.center2.tf 
+				| <b>Send push notifications</b>
+			.event-size3.headerSpacer
+				| Send push notification to: 
+			.event-size3.headerSpacer
+				| All attendees
+			p.check2.smallslid.checknote
+				input(name="", placeholder="", type="checkbox", id="yhm", value="css3")
+				label(for='yhm')
 			.clearfix
-			.left
-				.left.headerSpacer.event-size2.text-right
-					| Name: <br />
-					| Position: <br />
-					| Company: <br />
-				.right.event-size2.headerSpacer.zero2
-					| <b>Lucy Cook</b> <br />
-					| <b>Guest Speaker</b> <br />
-					| <b>Media Inc.</b> <br />
-			.left.smallslid3 
-				.left.headerSpacer.event-size2.text-right
-					| Website: <br />
-					| Location: <br />
-					| Interests: <br />
-					| Educaction: 
-				.right.event-size2.headerSpacer.zero2
-					| <b>media.com</b> <br />
-					| <b>London</b> <br />
-					| <b>sport, photography</b> <br />
-					| <b>MBA, Oxford University</b> 
+			.headerSpacer
+			.firstcolumn-popup.left
+				.smallt2
+					| Certain attendee categories
+				.headerspacer2
+					.right
+						dl.dropdown7(style='margin-right: -13px;')
+							dt
+								a.dropx7(href="#")
+									| Choose categories
+							dd
+								ul(style='margin-left: -6px;')
+									li
+										a(href="#",) guest speaker
+										p.check10.smallslid.checkdropbox23
+											input(name="", placeholder="", type="checkbox", id="yhm2", value="css3")
+											label(for='yhm2')
+									li
+										a(href="#",) guest speaker2
+										p.check10.smallslid.checkdropbox23
+											input(name="", placeholder="", type="checkbox", id="yhm22", value="css3")
+											label(for='yhm22')
+									li
+										a(href="#",) guest speaker
+										p.check10.smallslid.checkdropbox23
+											input(name="", placeholder="", type="checkbox", id="yhm3", value="css3")
+											label(for='yhm3')
+									li.border_bottom2
+										a(href="#", style="height:30px;") guest speaker
+										p.check10.smallslid.checkdropbox23-end
+											input(name="", placeholder="", type="checkbox", id="yhm4", value="css3")
+											label(for='yhm4')
+			.firstcolumn-popup.left.smallslid5
+				.smallt2
+					| Cetrain individuals
+				.headerspacer2
+					.right
+						dl.dropdown8
+							dt
+								a.dropx8(href="#")
+									| Choose individuals
+							dd
+								ul(style='margin-left: -6px;')
+									li
+										a(href="#",) guest speaker
+										p.check11.smallslid.checkdropbox23
+											input(name="", placeholder="", type="checkbox", id="1yhm2", value="css3")
+											label(for='1yhm2')
+									li
+										a(href="#",) guest speaker2
+										p.check11.smallslid.checkdropbox23
+											input(name="", placeholder="", type="checkbox", id="2yhm22", value="css3")
+											label(for='2yhm22')
+									li
+										a(href="#",) guest speaker
+										p.check11.smallslid.checkdropbox23
+											input(name="", placeholder="", type="checkbox", id="3yhm3", value="css3")
+											label(for='3yhm3')
+									li.border_bottom2
+										a(href="#", style="height:30px;") guest speaker
+										p.check11.smallslid.checkdropbox23-end
+											input(name="", placeholder="", type="checkbox", id="4yhm4", value="css3")
+											label(for='4yhm4')
 			.clearfix
-			.left.event-size3
-				| Description: 
-			.left.event-size
-				| Sed ut perspiciatis <b>unde omnis iste natus error sit  voluptatem accusanti</b> doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo 
-				| inventore veritatis  et quasi architecto beatae vitae dicta sunt explicabo.  <b>Nemo enim ipsam </b>voluptatem quia voluptas sit  aspernatur aut odit 
-				| aut  fugit, sed quia consequuntur  magni dolores eos qui ratione voluptatem  sequi nesciunt. Neque porro quisquam est, qui dolorem.
-			.clearfix
-			.center.headerSpacer
-				a(href="#", class="link1")
-					img(src="/img/send-private.svg", alt="", style="padding-right:5px;")
-				a(href="#", class="link1")
-					img(src="/img/send-card.svg", alt="", style="padding-right:5px;")
-				a(href="#", class="link1")
-					img(src="/img/save-profile.svg", alt="", style="padding-right:5px;")
+			.smallt2.headerspacer2
+				| Message
+				textarea(class="textarea-pop" cols="20" rows="4" placeholder="Enter text here..")
+			.right.tops-minus2
+				input.profile-sumbit2(type="submit", value="SEND")
+			.headerspacer2
+
 			a(href="#", class="close-reveal-modal") 
 				img(src="/img/x.svg")
-				
+
 				
