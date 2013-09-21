@@ -31,6 +31,19 @@ header .menu {
 .smallspacer-left {margin-left: 5px;}
 .zero2 {margin-left: 10px !important; }
 .eight {width: 80%;}
+.iconsbox {width: 25%;}
+.four2 {width: 45%;}
+.four {width: 25%;}
+.thirty {
+	width: 31%;
+	font-size: 20px;
+	color: #ecd077;
+	margin-bottom: 10px;
+	display: inline-block;
+	text-align: center;
+	vertical-align: middle;
+}
+.eighty-five { margin: auto; width: 85%; }
 .tops-minus-res {margin-top: -5px;}
 h17 { font-weight: 400; font-size: 27px; color: #ecd077; padding-left:10px; width: 100%;}
 h55  { font-size: 25px; margin-top: -10px !important; color: #542437; margin-left: -11px;}
@@ -405,9 +418,7 @@ footer .copy {
 	text-transform: none;
 }
 
-.iconsbox {
-	width: 25%;
-}
+
 .well3.yellow {
 	padding-top: 0px;
 	padding-bottom: 0px;
@@ -874,8 +885,10 @@ input[type="text2"]:focus{
 	background-color: #53777a !important;
 }
 
-
-
+textarea:focus, input:focus{
+    outline: 0;
+}
+.dh {max-height: 30px !important;}
 
 input[type="text"]::-webkit-input-placeholder {
 	line-height: 39px;
@@ -883,7 +896,9 @@ input[type="text"]::-webkit-input-placeholder {
 input[type="text"]:focus{
 	line-height: 30px;
 }
-
+input[type="text"]{
+	line-height: 30px;
+}
 
 input[type="search"]:focus{
   	color:#542437 !important;
@@ -1732,6 +1747,19 @@ color: #53777a;
 	height: 218px;
 	padding-bottom: 6px;
 }
+.avatar3 {
+	float: left;
+	width:18.6%;
+	margin-top: 8px;
+	text-align: center;
+	text-transform: none;
+	font-weight: 200;
+	margin-right: 8px;
+	line-height: 24px;
+	font-size: 15px;
+	height: 230px;
+	padding-bottom: 6px;
+}
 .avatar .redbox {
 	min-height: 45px;
 }
@@ -2363,7 +2391,7 @@ background: #d95a42;
 }
 .speakerbox2 {
 	width: 100%;
-	min-height: 200px;
+	min-height: 120px;
 	position: relative;
 	margin-bottom: 10px;
 }
@@ -2459,7 +2487,7 @@ background: #d95a42;
 	padding-left: 20px;
 	width: 81.3%;
 }
-.four {width: 25%;}
+
 .circularespond {
 	vertical-align:middle;
 	text-align:center;
@@ -2564,22 +2592,7 @@ background: #d95a42;
 }
 .color {color: #ecd077;}
 .color2 {color: #542437 !important;}
-.thirty {
-	width: 31%;
-	font-size: 20px;
-	color: #ecd077;
-	margin-bottom: 10px;
-	display: inline-block;
-	text-align: center;
-	vertical-align: middle;
 
-}
-
-.eighty-five {
-	margin: auto;
-	width: 85%;
-
-}
 .half-round {
 	border-top-left-radius: 10px 5px;
 	border-top-right-radius: 10px 5px;
