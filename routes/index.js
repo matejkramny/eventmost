@@ -32,11 +32,7 @@ exports.router = function(app) {
 		.get('/logout.json', logoutJSON)
 		.get('/loggedin', isloggedin)
 		.post('/emailavailable', emailAvailable)
-		.get('/testroute1', new testRoute(1))
-		.get('/testroute2', new testRoute(2))
-		.get('/testroute3', new testRoute(3))
-		.get('/testroute4', new testRoute(4))
-		.get('/testroute5', new testRoute(5))
+		.get('/testroute*', testRoute)
 	
 	// Used for JSON/XML auth responses
 	//auth.router(app)
@@ -113,12 +109,6 @@ function emailAvailable(req, res) {
 	});
 }
 
-function testRoute (number) {
-	this.number = number;
-	var self = this;
-	this.cb = function(req, res) {
-		res.render('testroute/testroute'+self.number);
-	}
-	
-	return this.cb;
+function testRoute (req, res) {
+	res.render('testroute'+req.url);
 }
