@@ -6,18 +6,12 @@ append addonjs
 	script(src="/js/tiny.editor.packed.js")
 	script(src="/js/jquery.jcarousel.min.js")
 	script.
-		jQuery(document).ready(function() {
-			jQuery('#mycarousel').jcarousel({
+		$(document).ready(function() {
+			$("#mycarouse, #mycarousel2").jcarousel({
 				vertical: true,
 				scroll: 2
 			});
-		});
-		jQuery(document).ready(function() {
-			jQuery('#mycarousel2').jcarousel({
-				vertical: true,
-				scroll: 2
-			});
-		});
+		})
 		var editor = new TINY.editor.edit('editor', {
 			id: 'tinyeditor',
 			width: 1180,
@@ -114,7 +108,7 @@ append content
 				.left
 					a(href="", alt="", title="")
 						img(src="/img/now.svg", alt="", )
-				.left.orange.well5.weight
+				.left.orange.well5.weight.datepickerResult
 					| 18/12/2014 15:24
 				.right
 					a(href="", alt="", title="")
