@@ -32,6 +32,8 @@ header .menu {
 .zero2 {margin-left: 10px !important; }
 .eight {width: 80%;}
 .iconsbox {width: 25%;}
+.thirty1 {width: 30%}
+.seventy {width: 70%}
 .four2 {width: 45%;}
 .four {width: 25%;}
 .thin {font-weight: 100;}
@@ -312,6 +314,10 @@ input.file_input_textbox_credit {
 .slid {margin-bottom: 10px;}
 .bigslid {margin-left: 140px;}
 .bigslid h5 {font-size: 30px; font-weight: 700;}
+.description-text-big {font-size: 24px; color: #ecd077;}
+.description-text {font-size: 18px; color: #ecd077;}
+.description-text-medium {font-size: 16px; color: #ecd077; font-weight: 100;}
+.description-text-small {font-size: 14px; color: #ecd077;}
 .speaker_titlerespond2 h5 {font-size: 25px; font-weight: 500;}
 .minus2 h5 {font-size: 30px; font-weight: 400; color: #542437; position: absolute; top: 84px; left:-15px;}
 .minus2 h15 {font-size: 25px; font-weight: 400; color: #ecd077; position: absolute; top: 92px; left:83px;}
@@ -1072,13 +1078,28 @@ input[type="search"]::-webkit-input-placeholder {
 .profile-button {
 	background-color: #53777a;
 	border:none;
-	height: 40px;
 	font-size: 18px;
 	font-weight: 100;
 	border-radius: 5px;
 	padding-left: 40px;
 	padding-right: 40px;
 	height: 94px;
+	color: #542437;
+	margin-top: 10px;
+	margin-bottom: 20px;
+	width: 280px !important;
+	word-wrap:break-word !important;
+	white-space: normal;
+}
+.profile-button-small {
+	background-color: #53777a;
+	border:none;
+	font-size: 18px;
+	font-weight: 700;
+	border-radius: 5px;
+	padding-left: 40px;
+	padding-right: 40px;
+	height: 44px;
 	color: #542437;
 	margin-top: 10px;
 	margin-bottom: 20px;
@@ -1204,6 +1225,13 @@ h16 {
 	top:15px;
 	left:10px;
 	font-size: 14px;
+	text-align: center;
+}
+h18 {
+	position: absolute;
+	top:12px;
+	left:10px;
+	font-size: 12px;
 	text-align: center;
 }
 h14 span {
@@ -2127,6 +2155,11 @@ color: #53777a;
 	font-weight: 700;
 	padding-left: 4px;
 }
+.date2 {
+	font-size: 16px;
+	font-weight: 700;
+	padding-left: 4px;
+}
 .location {
 	color: #ecd077;
 	font-size: 25px;
@@ -2139,6 +2172,18 @@ color: #53777a;
 .location h1 {
 	font-weight: 700;
 	font-size: 14px;
+	margin-top: -2px;
+}
+.location h2 {
+	font-weight: 700;
+	font-size: 18px;
+	margin-left: -10px;
+	margin-top: -4px;
+}
+.location h3 {
+	font-weight: 700;
+	font-size: 12px;
+	margin-left: -10px;
 	margin-top: -2px;
 }
 
