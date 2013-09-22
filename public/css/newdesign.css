@@ -32,6 +32,10 @@ header .menu {
 .zero2 {margin-left: 10px !important; }
 .eight {width: 80%;}
 .iconsbox {width: 25%;}
+.iconsbox2 {width: 40%;}
+.ten {width: 5%; margin: auto; padding-left: 5px;}
+.inten1{ height: 200px; display: table; overflow: hidden;}
+.inten2 {  margin: auto;  display: table-cell; vertical-align: middle; width: 100%; margin: 0 auto; text-align: center; color: #ecd077; font-size: 18px; font-weight: 700;}
 .thirty1 {width: 30%}
 .seventy {width: 70%}
 .four2 {width: 45%;}
@@ -249,6 +253,19 @@ input.file_input_textbox_credit {
 	color:#542437;
 	line-height: 30px;
 	height: 35px;
+}
+.prof-choice {
+	background-color: #ecd077;
+	border:none;
+	width: 190px !important;
+	float:none;
+	margin-top: 10px;
+	font-size: 16px;
+	font-weight: 400;
+	border-radius: 5px;
+	color:#542437;
+	line-height: 30px;
+	height: 40px;
 }
 .dropbox-add{
 	background-color: #ecd077;
@@ -3089,7 +3106,7 @@ background: #d95a42;
 	background-color: #542437;
 	min-height: 20px;
 	position: absolute;
-	width: 62.1%;
+	width: 62.8%;
 	color: #ecd077;
 	padding: 10px; 
 	text-align: left;
