@@ -1,11 +1,12 @@
 // DOM Ready
 $(document).ready(function() {
-	function onselect(date, $this) {
-		var dateString = date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear();
+	function onselect(date, $this, $timePicker) {
+		var dateString = date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear() + " " + $timePicker.val();
 		$($this).parent().find(".datepickerResult").html(dateString);
 	}
 	
 	$('#datepicker, #datepicker2').each(function() {
+		var self = this;
 		$(this).datepicker({
 			inline: true,
 			//nextText: '&rarr;',
@@ -18,10 +19,14 @@ $(document).ready(function() {
 			//buttonImageOnly: true,
 			onSelect: function() {
 				var date = $(this).datepicker('getDate');
-				onselect(date, $(this));
+				onselect(date, $(this), $(this).parent().find("input[type=time]"));
 			}
 		});
 		var date = $(this).datepicker('getDate');
-		onselect(date, $(this));
+		onselect(date, $(this), $(this).parent().find("input[type=time]"));
+		
+		$(this).parent().find("input[type=time]").change(function() {
+			onselect($(self).datepicker('getDate'), $(self), $(this));
+		});
 	});
 });
