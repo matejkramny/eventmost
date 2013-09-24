@@ -102,7 +102,6 @@ exports.listNearEvents = function (req, res) {
 						res.render('event/list', { events: events, pagename: "Events near you", title: "Events nearby" })
 					},
 					json: function() {
-						console.log("Returning "+events)
 						res.send({
 							events: events,
 							pagename: "Events near you"

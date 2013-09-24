@@ -243,7 +243,7 @@ scheme.statics.createWithPassword = function (login, password, cb, extra) {
 	user.setPassword(password)
 	
 	// Extra provided by registration
-	if (extra.name != null) {
+	if (extra && extra.name != null) {
 		user.setName(extra.name);
 	}
 	

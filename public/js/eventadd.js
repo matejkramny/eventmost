@@ -122,6 +122,8 @@ $(document).ready(function() {
 		
 		$("#file_browse").attr("name", "avatar");
 		
+		$("#avatarStatus").html("");
+		
 		$.ajax({
 			url: "/event/"+avId+"/avatar/remove",
 			type: "GET"
@@ -148,4 +150,131 @@ $(document).ready(function() {
 			}
 		}
 	}
+	
+	// Categories
+	$("#selectedCategoriesList").on('mouseover', 'li', function() {
+		$(this).find("a").css("opacity", 1)
+	}).on('mouseout', 'li', function() {
+		$(this).find("a").css("opacity", 0)
+	}).on('click', 'li a', function(e) {
+		e.preventDefault()
+		var cat = $(this).parent();
+		var text = cat.find('.guest').html();
+		removeCategory(cat, text);
+		removeTicket(text)
+		
+		return false;
+	})
+	$("#selectedCategoriesList li").each(function() {
+		$(this).find("a").css("opacity", 0)
+	})
+	
+	var categories = [];
+	var $tickets = $("#tickets");
+	function getTickets () {
+		var tickets = [];
+		$tickets.find("tr").each(function() {
+			$this = $(this);
+			if ($this.attr("id") == "ticketTemplate") return;
+			
+			var ticket = {
+				$t: $this
+			};
+			
+			ticket.name = $this.find(".tickets-ticket-type").val();
+			ticket.price = $this.find(".tickets-ticket-price").val();
+			ticket.number = $this.find(".tickets-ticket-number").val();
+			ticket.fee = $this.find(".tickets-ticket-fee").val();
+			ticket.vat = $this.find(".tickets-ticket-vat").val();
+			ticket.total = $this.find(".tickets-ticket-total").val();
+			ticket.summary = $this.find(".tickets-ticket-summary").val();
+			tickets.push(ticket);
+		});
+		return tickets;
+	}
+	function getTicket (ticket) {
+		var tickets = getTickets();
+		for (var i = 0; i < tickets.length; i++) {
+			var t = tickets[i];
+			if (t.name == ticket) {
+				// gotcha
+				return t;
+			}
+		}
+		return null;
+	}
+	function addTicket (ticket) {
+		var t = getTicket(ticket);
+		if (t != null) return;
+		
+		// copy the template
+		$("#ticketTemplate").find(".tickets-ticket-type").attr("value", ticket)
+		var html = "<tr>" + $("#ticketTemplate").html() + "</tr>";
+		$tickets.append(html);
+	}
+	function removeTicket(ticket) {
+		var t = getTicket(ticket);
+		if (t != null) {
+			t.$t.remove();
+		}
+	}
+	
+	function addCategory (category) {
+		for (var i = 0; i < categories.length; i++) {
+			var cat = categories[i];
+			if (cat == category) {
+				// Duplicate. We don't want two same categories do we.
+				return;
+			}
+		}
+		
+		var template = $("#selectedCategoryListTemplate");
+		template.find(".guest").html(category);
+		template.find("input[type=hidden]").val(category);
+		var html = template.html();
+		$("#selectedCategoriesList").append(html);
+		
+		categories.push(category);
+		
+		if (categories.length > 0) {
+			$("#selectedCategories .noneSelected").hide();
+		}
+	}
+	
+	function removeCategory ($category, category) {
+		for (var i = 0; i < categories.length; i++) {
+			var cat = categories[i];
+			if (cat == category) {
+				// Found it. Remove it.
+				categories.splice(i, 1);
+			}
+		}
+		
+		$category.remove();
+		
+		if (categories.length == 0) {
+			$("#selectedCategories .noneSelected").show();
+		}
+	}
+	
+	$("#predefinedCategories li a").click(function() {
+		var text = $(this).html();
+		addCategory(text);
+		addTicket(text);
+	})
+	$("#createCategory .addCategory").click(function(ev) {
+		ev.preventDefault();
+		
+		var field = $(this).parent().find("input");
+		var val = field.val();
+		if (val.length > 0) {
+			addCategory(val);
+			addTicket(val);
+			field.val("");
+		}
+		
+		field.trigger('focus');
+		
+		return false;
+	});
 });

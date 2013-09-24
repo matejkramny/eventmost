@@ -143,7 +143,7 @@ append content
 	.row-fluid.smallspacer
 		.span3.yellow.spanBigH6
 			h6 Predefined categories
-			ul.jcarousel-skin-tango.predefined-categories-list
+			ul.jcarousel-skin-tango.predefined-categories-list#predefinedCategories
 				li.jcarousel-item
 					a.guest(href="#") Guest Speaker
 				li.jcarousel-item
@@ -162,32 +162,44 @@ append content
 					a.guest(href="#") Mentor
 				li.jcarousel-item
 					a.guest(href="#") Educator
-		.span4.zero2
+		.span4.zero2#createCategory
 			h6 Create <br />your own
 				.headerSpacer
-				input.file_input_textbox8(type="text4")
-				a(href="#")
-					img.right_arrow_ev_add(src="/img/arrows.svg")
+				span
+					input.file_input_textbox8(type="text4")
+					a(href="#").addCategory
+						img.right_arrow_ev_add(src="/img/arrows.svg")
+				span
+					input.file_input_textbox8(type="text4")
+					a(href="#").addCategory
+						img.right_arrow_ev_add(src="/img/arrows.svg")
+				span
+					input.file_input_textbox8(type="text4")
+					a(href="#").addCategory
+						img.right_arrow_ev_add(src="/img/arrows.svg")
+				span
+					input.file_input_textbox8(type="text4")
+					a(href="#").addCategory
+						img.right_arrow_ev_add(src="/img/arrows.svg")
+				span
+					input.file_input_textbox8(type="text4")
+					a(href="#").addCategory
+						img.right_arrow_ev_add(src="/img/arrows.svg")
 
 		.span5p2.zero2.yellow#selectedCategories
 			h6 Selected categories
 			p.noneSelected(style="padding-left:20px;") No selected categories.. Pick one from the 'Predefined categories' or Enter one in the 'Create your own' section
-			ul.jcarousel-skin-tango.predefined-categories-list
+			
+			//- template for js
+			#selectedCategoryListTemplate.hide
 				li.jcarousel-item
-					span.guest Guest Speaker
-					a(href="#")
-						//-the ex.svg image should appear when hovered or clicked I think and it for deleting as far as I know
+					span.guest
+					input(type="hidden", name="categories[]")
+					a(href="#", style="opacity: 0;")
 						img.guest-x(src="/img/ex.svg")
-				li.jcarousel-item
-					span.guest Guest Speaker
-					a(href="#")
-						img.guest-x(src="/img/ex.svg")
-				li.jcarousel-item
-					a.guest(href="#") Guest Speaker
-						img.guest-x(src="/img/ex.svg")
-				li.jcarousel-item
-					a.guest(href="#") Guest Speaker
-						img.guest-x(src="/img/ex.svg")
+
+			ul.jcarousel-skin-tango.predefined-categories-list#selectedCategoriesList
+
 		.clearfix
 		
 		//- allow create their own categories
@@ -224,53 +236,81 @@ append content
 		
 		//- ticket price table
 		.row-fluid.rel#tickets-table
-			//- display:inline becoz its locked by default
+			//- display=inline becoz its locked by default
 			.disabled-image(style="display:inline;")
 			.disabled-lock(style="display:inline;")
 			table.gridtable
-				tr
-					th.drop-arrow
-						| Ticket Type
-					th.drop-arrow
-						| Ticket Price
-					th.drop-arrow
-						| Number <br /> of tickets
-					th.drop-arrow
-						| Fee
-					th.drop-arrow
-						| Who pays <br /> the fee?
-					th.drop-arrow
-						| VAT
-					th.drop-arrow
-						| Total <br /> Ticket Price:
-					th.drop-arrow
-						| What <br /> you’ll recive <br /> per ticket:
-				tr
-					td
-						input.file_input_textbox10(type="text", style="width: 200px;")
-					td
-						input.file_input_textbox10(type="number", value="0.00", style="width:110px; max-height:20px;")
-					td
-						input.file_input_textbox10(type="number", value="1", style="width:100px;")
-					td
-						input.file_input_textbox10(type="text", value="0.00", style="width:60px;")
-					td
-						dl.dropdown3	
-							dt
-								a.dropx3(href="#")
-									| Me
-							dd
-								ul
-									li
-										a(href="#") Me
-									li
-										a(href="#") Attendee
-					td
-						input.file_input_textbox10(type="text", disabled="disabled", style="width:60px;")
-					td
-						input.file_input_textbox10(type="text", disabled="disabled" style="width:90px;")
-					td
-						input.file_input_textbox10(type="text", style="width:130px;")
+				thead
+					tr
+						th.drop-arrow
+							| Ticket Type
+						th.drop-arrow
+							| Ticket Price
+						th.drop-arrow
+							| Number <br /> of tickets
+						th.drop-arrow
+							| Fee
+						th.drop-arrow
+							| Who pays <br /> the fee?
+						th.drop-arrow
+							| VAT
+						th.drop-arrow
+							| Total <br /> Ticket Price:
+						th.drop-arrow
+							| What <br /> you’ll recive <br /> per ticket:
+				tbody#tickets
+					tr#ticketTemplate.hide
+						td
+							input.tickets-ticket-type.file_input_textbox10(type="text", style="width: 200px;")
+						td
+							input.tickets-ticket-price.file_input_textbox10(type="number", value="0.00", style="width:110px; max-height:20px;")
+						td
+							input.tickets-ticket-number.file_input_textbox10(type="number", value="1", style="width:100px;")
+						td
+							input.tickets-ticket-fee.file_input_textbox10(type="text", value="0.00", style="width:60px;")
+						td
+							dl.dropdown3
+								dt
+									a.dropx3(href="#")
+										| Me
+								dd
+									ul
+										li
+											a(href="#") Me
+										li
+											a(href="#") Attendee
+						td
+							input.tickets-ticket-vat.file_input_textbox10(type="text", disabled="disabled", style="width:60px;")
+						td
+							input.tickets-ticket-total.file_input_textbox10(type="text", disabled="disabled" style="width:90px;")
+						td
+							input.tickets-ticket-summary.file_input_textbox10(type="text", style="width:130px;")
+					tr
+						td
+							input.tickets-ticket-type.file_input_textbox10(type="text", style="width: 200px;")
+						td
+							input.tickets-ticket-price.file_input_textbox10(type="number", value="0.00", style="width:110px; max-height:20px;")
+						td
+							input.tickets-ticket-number.file_input_textbox10(type="number", value="1", style="width:100px;")
+						td
+							input.tickets-ticket-fee.file_input_textbox10(type="text", value="0.00", style="width:60px;")
+						td
+							dl.dropdown3	
+								dt
+									a.dropx3(href="#")
+										| Me
+								dd
+									ul
+										li
+											a(href="#") Me
+										li
+											a(href="#") Attendee
+						td
+							input.tickets-ticket-vat.file_input_textbox10(type="text", disabled="disabled", style="width:60px;")
+						td
+							input.tickets-ticket-total.file_input_textbox10(type="text", disabled="disabled" style="width:90px;")
+						td
+							input.tickets-ticket-summary.file_input_textbox10(type="text", style="width:130px;")
 				
 		//- publish button
 		.clearfix
