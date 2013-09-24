@@ -13,5 +13,6 @@ module.exports = {
 	UserFile: require('./UserFile').UserFile,
 	Geolocation: require('./Geolocation').Geolocation,
 	EmailNotification: require('./EmailNotification').EmailNotification,
-	SocialMetadata: require('./SocialMetadata').SocialMetadata
+	SocialMetadata: require('./SocialMetadata').SocialMetadata,
+	Avatar: require('./Avatar').Avatar
 }

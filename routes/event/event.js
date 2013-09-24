@@ -8,6 +8,8 @@ var dropbox = require('./dropbox')
 exports.router = function (app) {
 	app.get('/event/add', util.authorized, add.addEvent)
 		.post('/event/add', util.authorized, add.doAddEvent)
+		.post('/event/add/avatar', util.authorized, add.uploadAvatarAsync)
+		.get('/event/:id/avatar/remove', util.authorized, add.removeAvatar)
 		
 		.get('/event/:id', util.authorized, getEvent, attending, exports.viewEvent)
 		.get('/event/:id/edit', util.authorized, getEvent, attending, edit.editEvent)

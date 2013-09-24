@@ -87,6 +87,9 @@ exports.display = function(req, res) {
 }
 
 exports.checkFinished = function (req, res) {
+	res.redirect('/');
+	return;
+	
 	if (req.user.requestEmail == true) {
 		req.user.requestEmail = false;
 		req.user.save(function(err) {

@@ -24,15 +24,17 @@ append content
 	.row-fluid.smallspacer 
 		.left.span2.well2.yellow
 			| Logo
+			span#avatarStatus(style="font-size:30px;")
 		.left.span4.well2.yellowborder
-			img(src="/img/default_logo.svg", alt="", class="arrow")
+			img#avatar_preview(src="/img/default_logo.svg", alt="", class="arrow")
 		.right
 			#file_delete_wrapper
 		.right
 			#file_upload_wrapper
 		.right
 			#file_browse_wrapper
-				input(type="file", id="file_browse")
+				input#file_browse(name="avatar", type="file")
+				input#avatar_id(type="hidden", name="avatar_id", value="")
 		.clearfix
 	
 	//- venue name
