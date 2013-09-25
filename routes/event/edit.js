@@ -20,7 +20,7 @@ exports.doEditEvent = function (req, res) {
 	
 	var ev = res.locals.event;
 	// Only planner can edit
-	if (!ev.user.equals(req.user._id)) {
+	if (!ev.user._id.equals(req.user._id)) {
 		res.format({
 			html: function() {
 				req.session.flash.push("Unauthorized")

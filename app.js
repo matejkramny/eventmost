@@ -39,7 +39,7 @@ if (process.env.NODE_ENV == 'production') {
 	
 	console.log("Production, mode "+mode);
 	var db = "mongodb://eventmost:OwaP0daelaek2aephi1phai9mopocah3Dakie9fi@127.0.0.1/eventmost"+mode;
-	mongoose.connect(db);
+	mongoose.connect(db, {auto_reconnect: true, native_parser: true});
 	sessionStore = new MongoStore({
 		url: db
 	});
@@ -47,7 +47,7 @@ if (process.env.NODE_ENV == 'production') {
 	// development mode
 	console.log("Development");
 	var db = "mongodb://127.0.0.1/eventmost";
-	mongoose.connect(db);
+	mongoose.connect(db, {auto_reconnect: true, native_parser: true});
 	sessionStore = new MongoStore({
 		url: db
 	});

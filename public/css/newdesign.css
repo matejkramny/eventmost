@@ -860,13 +860,16 @@ a.guest:hover {
 .dimonhover {
 	cursor:pointer;
 }
-.dimonhover.orangebox:hover {
-	background-color: #ea6b53;
+.dimonhover.orangebox:hover, .dimonhover.orangebox.selected {
+	background-color: #ecd178;
 	-webkit-transition: background-color 100ms linear;
 	-moz-transition: background-color 100ms linear;
 	-o-transition: background-color 100ms linear;
 	-ms-transition: background-color 100ms linear;
 	transition: background-color 100ms linear;
+}
+#invitationLink {
+	cursor:pointer;
 }
 input.file_input_textbox {
 	color:#542437;

@@ -6,10 +6,10 @@ var Geolocation = require('./Geolocation').Geolocation;
 
 var scheme = schema({
 	deleted: { type: Boolean, default: false },
-	name: String,
+	name: { type: String, required: true },
 	created: { type: Date, default: Date.now },
-	start: Date,
-	end: Date,
+	start: { type: Date, required: true },
+	end: { type: Date, required: true },
 	user: {
 		type: ObjectId,
 		ref: 'User'
@@ -20,19 +20,23 @@ var scheme = schema({
 	}],
 	geo: {}, // don't store anything here. - temporary placeholder when the event is loaded
 	description: String,
-	avatar: { type: String, default: "/img/default_event.svg" },
+	avatar: { type: ObjectId, ref: 'Avatar' },
 	address: String,
-	geolocation: Boolean,
-	password: {
-		enabled: { type: Boolean, default: false },
-		password: String
-	},
-	settings: {
-		allowAttToGuest: { type: Boolean, default: true },
-		allowAttToAtt: { type: Boolean, default: true },
-		allowForumComments: { type: Boolean, default: true },
-		moderateForumComments: { type: Boolean, default: false },
-		upload: { type: Boolean, default: true }
+	allowAttendeesToCreateCategories: { type: Boolean, default: true },
+	pricedTickets: { type: Boolean, default: false },
+	categories: [],
+	tickets: [{
+		organiserPays: { type: Boolean, default: true, required: true },
+		name: { type: String, required: true },
+		price: { type: Number, required: true },
+		number: { type: Number, required: true },
+		summary: { type: String, required: true }
+	}],
+	accessRequirements: {
+		private: { type: Boolean, default: true },
+		password: { type: Boolean, default: false },
+		passwordString: String,
+		inRange: { type: Boolean, default: false }
 	},
 	files: [{
 		created: {
@@ -84,76 +88,181 @@ scheme.statics.getEvent = function (id, cb) {
 }
 
 scheme.methods.edit = function (body, user, files, cb) {
-	if (body.name == null || body.name.length == 0) {
-		cb([["Event name is missing"]])
-		return;
-	}
-	
-	var password_enabled = body.password_protected != null ? true : false;
-	
-	this.deleted = false;
-	this.name = body.name;
-	this.created = Date().now;
-	this.start = Date.parse(body.date_start);
-	this.end = Date.parse(body.date_end);
 	this.user = user._id;
-	this.description = body.desc;
-	this.password = {
-		enabled: password_enabled,
-		password: password_enabled ? body.password : ""
-	};
-	this.address = body.address;
 	
-	this.settings.allowAttToGuest = body.allowAtt2Guest ? true : false;
-	this.settings.allowAttToAtt = body.allowAtt2Att ? true : false;
-	this.settings.upload = body.upload ? true : false;
-	
-	Geolocation.findOne({ event: this._id }, function(err, geo) {
-		if (err) throw err;
-		
-		var lat = parseFloat(body.lat);
-		var lng = parseFloat(body.lng);
-		
-		if (!geo) {
-			geo = new Geolocation({});
-		}
-		
-		if (!isNaN(lat) && !isNaN(lng)) {
-			geo.geo.lat = lat;
-			geo.geo.lng = lng;
-			geo.event = this._id;
-			
-			geo.save();
-		} else {
-			geo.remove();
-		}
-	});
-	
-	if (files.avatar != null && files.avatar.name.length != 0) {
-		var ext = files.avatar.type.split('/');
-		var ext = ext[ext.length-1];
-		
-		this.avatar = "/avatars/"+this._id+"."+ext;
-		
-		fs.readFile(files.avatar.path, function(err, avatar) {
-			fs.writeFile(__dirname + "/../public"+this.avatar, avatar, function(err) {
-				if (err) throw err;
-				
-				this.save(function(err) {
-					if (err) throw err;
-					
-					cb(null);
-				})
-			});
-		});
-		return;
-	} else {
-		this.save(function(err) {
-			if (err) throw err;
-			
-			cb(null);
-		})
+	if (body.name) {
+		this.name = body.name
 	}
+	if (body.avatar) {
+		try {
+			this.avatar = ObjectId(body.avatar);
+		} catch (ex) {
+			// objectid invalid
+		}
+	}
+	if (body.venue_name) {
+		this.venue_name = body.venue_name
+	}
+	if (body.location) {
+		this.location = body.location
+	}
+	if (body.description) {
+		this.description = body.description
+	}
+	if (body.allowAttendeesToCreateCategories != null) {
+		this.allowAttendeesToCreateCategories = body.allowAttendeesToCreateCategories
+	}
+	if (body.pricedTickets != null) {
+		this.pricedTickets = body.pricedTickets
+	}
+	
+	// restriction settings
+	if (body.restriction != null) {
+		var restriction = parseInt(body.restriction);
+		if (!(isNaN(restriction) || restriction < 0 || restriction > 4)) {
+			this.accessRequirements.private = false;
+			this.accessRequirements.password = false;
+			this.accessRequirements.inRange = false;
+			
+			if (restriction == 1) {
+				this.accessRequirements.inRange = true;
+			} else if (restriction == 2) {
+				this.accessRequirements.password = true;
+			} else if (restriction == 3) {
+				this.accessRequirements.inRange = true;
+				this.accessRequirements.password = true;
+			} else if (restriction == 4) {
+				this.accessRequirements.private = true;
+			}
+		}
+	}
+	
+	if (body.password) {
+		this.accessRequirements.passwordString = body.password;
+	}
+	
+	// dates
+	if (typeof body.start == "string") {
+		this.start = parseInt(body.start);
+		if (this.start == NaN) {
+			this.start = null;
+		}
+	}
+	if (typeof body.end == "string") {
+		this.end = parseInt(body.end);
+		if (this.end == NaN) {
+			this.end = null;
+		}
+	}
+	
+	// categories - check typeof string
+	if (body.categories != null) {
+		this.categories = [];
+		var categories = body.categories || [];
+		for (var i = 0; i < categories.length; i++) {
+			var cat = categories[i];
+		
+			if (typeof cat === "string") {
+				this.categories.push(cat);
+			}
+		}
+	}
+	
+	// do tickets - remove old tickets & create new objectids
+	if (body.tickets != null) {
+		this.tickets = [];
+		var tickets = body.tickets || [];
+		for (var i = 0; i < tickets.length; i++) {
+			var ticket = tickets[i];
+			var t = {};
+		
+			if (typeof ticket.organiserPays === "string" || typeof ticket.organiserPays === "boolean") {
+				if (typeof ticket.organiserPays === "boolean") {
+					t.organiserPays = ticket.organiserPays;
+				} else {
+					t.organiserPays = ticket.organiserPays == "false" ? false : true;
+				}
+			}
+			if (typeof ticket.name === "string") {
+				t.name = ticket.name;
+			}
+			if (typeof ticket.price === "string") {
+				t.price = parseFloat(ticket.price);
+			}
+			if (typeof ticket.number === "string") {
+				t.number = parseInt(ticket.number);
+			}
+			if (typeof ticket.summary === "string") {
+				t.summary = parseFloat(ticket.summary);
+			}
+		
+			this.tickets.push(t);
+		}
+	}
+	
+	if (body.lat != null && body.lng != null) {
+		Geolocation.findOne({ event: this._id }, function(err, geo) {
+			if (err) throw err;
+		
+			var lat = parseFloat(body.lat);
+			var lng = parseFloat(body.lng);
+		
+			if (isNaN(lat) || isNaN(lng)) {
+				// cannot save.
+				return;
+			}
+		
+			if (!geo) {
+				geo = new Geolocation({});
+			}
+		
+			if (!isNaN(lat) && !isNaN(lng)) {
+				geo.geo.lat = lat;
+				geo.geo.lng = lng;
+				geo.event = this._id;
+			
+				geo.save();
+			} else {
+				geo.remove();
+			}
+		});
+	}
+	
+	// Validate the data
+	var self = this;
+	this.validate(function(errors) {
+		if (errors && errors.length > 0) {
+			// has errors
+			cb(errors);
+			return;
+		}
+		
+		self.save(function(err) {
+			if (err) throw err;
+		});
+		
+		cb(null);
+	});
+}
+
+scheme.methods.validate = function (cb) {
+	var errs = [];
+	if (this.name.length == 0) {
+		errs.push("Event Name must not be blank")
+	}
+	
+	if (typeof this.start == "object" && this.start.getTime() == 0) {
+		errs.push("Event Start Date must be valid")
+	}
+	if (typeof this.end == "object" && this.end.getTime() == 0) {
+		errs.push("Event End Date must be valid")
+	}
+	if (this.end < this.start) {
+		// event ends before it starts..
+		errs.push("Event finishes before it begins. End date must be after the start date")
+	}
+	
+	cb(errs);
 }
 
 scheme.methods.getGeo = function (cb) {

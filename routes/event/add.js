@@ -9,13 +9,33 @@ exports.doAddEvent = function (req, res) {
 	var newEvent = new models.Event({});
 	
 	newEvent.edit(req.body, req.user, req.files, function(err, ev) {
-		if (err) {
-			req.session.flash = err;
-			res.redirect('/event/add');
+		if (err && err.length > 0) {
+			res.format({
+				html: function() {
+					req.session.flash = err;
+					res.redirect('/event/add');
+				},
+				json: function() {
+					res.send({
+						status: 400,
+						err: err
+					})
+				}
+			})
 			return;
 		}
 		
-		res.redirect('/event/'+newEvent._id);
+		res.format({
+			html: function() {
+				res.redirect('/event/'+newEvent._id);
+			},
+			json: function() {
+				res.send({
+					status: 200,
+					id: newEvent._id
+				})
+			}
+		});
 	});
 }
 
@@ -61,7 +81,7 @@ exports.uploadAvatarAsync = function(req, res) {
 	}
 }
 exports.removeAvatar = function (req, res) {
-	var id = req.params.id;
+	var id = req.params.avatarid;
 	
 	// Find the avatar
 	try {

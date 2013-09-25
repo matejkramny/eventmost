@@ -17,328 +17,335 @@ append content
 			.left.well3.redbox
 				| Event <br /> name
 			.left.well3.redbox.outer
-				input.file_input_textbox6(name="name", type="email", required="required")
+				input#eventName.file_input_textbox6(name="name", type="text", required="required")
 			.clearfix
 	
-	//- photo
-	.row-fluid.smallspacer 
-		.left.span2.well2.yellow
-			| Logo
-			span#avatarStatus(style="font-size:30px;")
-		.left.span4.well2.yellowborder
-			img#avatar_preview(src="/img/default_logo.svg", alt="", class="arrow")
-		.right
-			#file_delete_wrapper
-		.right
-			#file_upload_wrapper
-		.right
-			#file_browse_wrapper
-				input#file_browse(name="avatar", type="file")
-				input#avatar_id(type="hidden", name="avatar_id", value="")
-		.clearfix
-	
-	//- venue name
-	.row-fluid.smallspacer 
-		.span10.yellow
-				.left.well3.yellow
-					| Venue <br /> name
-				.row-fluid
-					.left.outer2
-						input.file_input_textbox5(name="venue_name", type="text")
-		.left.headerSpacer.smallslid
-			img(src="/img/optional.svg", alt="", class="arrow")
-		.clearfix
-	
-	//- event location
-	.row-fluid.smallspacer 
-		.span8.orange
-				.left.well3.orangeboxnew
-					| Event <br /> address
-				.row-fluid
-					.left.outer3
-						input#event_location.file_input_textbox5(name="location", type="text")
-						input#lat(name="lat", type="hidden")
-						input#lng(name="lng", type="hidden")
-		.orange
-				.left.well3.orangeboxnew.smallspacer-left.outer4
-					p.check.smallslid
-						input#css3(type="checkbox")
-						label(for='css3')
-					p.small use current location
-		.left.smallspacer.smallslid5
-			img.arrow(src="/img/optional.svg")
-		.clearfix
-	
-	//- datepicker
-	.row-fluid.smallspacer
-		.orange.span3
-				.left.well3.orangeboxnew.outer5
-					| Event <br /> date
-		.left
-			.left.orange.well5.weight.datepickerWrapper
-				| Start date
-				#datepicker
-				.headerspacer2.smallslid3
-					.left.weight.align.smallspacer-left 
-						| Time of event:
-					.left.outer7
-						input.file_input_textbox99(name="start_date", type="time", style="width: 100px;")
-					.clearfix
-				.left
-					a.nowButton(href="#")
-						img(src="/img/now.svg")
-				.left.orange.well5.weight.datepickerResult
-				.right
-					a(href="#")
-						img(src="/img/done.svg")
-		.left
-			.left.orange.well5.weight.datepickerWrapper
-				| End date
-				#datepicker2
-				.headerspacer2.smallslid3
-					.left.weight.align.smallspacer-left 
-						| Time of event:
-					.left.outer7
-						input.file_input_textbox99(name="end_date", type="time", style="width: 100px;")
-					.clearfix
-				.left
-					a.nowButton(href="#")
-						img(src="/img/now.svg")
-				.left.orange.well5.weight.datepickerResult
-				.right
-					a(href="#")
-						img(src="/img/done.svg")
-
-	//- Description
-	.clearfix
-	.row-fluid.smallspacer
-		.bluebox2
-			.left.zero
-				img.pencil(src="/img/pencil.svg")
-			.left.headerSpacer 
-				| Event description
+	#afterPublishHide
+		//- photo
+		.row-fluid.smallspacer 
+			.left.span2.well2.yellow
+				| Logo
+				span#avatarStatus(style="font-size:30px;")
+			.left.span4.well2.yellowborder
+				img#avatar_preview(src="/img/default_logo.svg", alt="", class="arrow")
 			.right
-				img.pencil1(src="/img/optional.svg")
+				#file_delete_wrapper
+			.right
+				#file_upload_wrapper
+			.right
+				#file_browse_wrapper
+					input#file_browse(name="avatar", type="file")
+					input#avatar_id(type="hidden", name="avatar_id", value="")
 			.clearfix
-		textarea#tinyeditor(style="height: 200px", name="description")
 	
+		//- venue name
+		.row-fluid.smallspacer 
+			.span10.yellow
+					.left.well3.yellow
+						| Venue <br /> name
+					.row-fluid
+						.left.outer2
+							input#venueName.file_input_textbox5(name="venue_name", type="text")
+			.left.headerSpacer.smallslid
+				img(src="/img/optional.svg", alt="", class="arrow")
+			.clearfix
 	
-	//- Choose attendee labels
-	.row-fluid.smallspacer 
-		.span12
-			.redbox.span12
-				.left.span2
-					img.arrow(src="/img/people2.svg", style="padding:5px;")
-				.left.span8.center.big
-					| Choose attendee / ticket categories
-				.right.span2
-					img.pencil1(src="/img/optional.svg", style="float:right; padding-bottom:20px;") 
-				.right.tops-minus 
+		//- event location
+		.row-fluid.smallspacer 
+			.span8.orange
+					.left.well3.orangeboxnew
+						| Event <br /> address
+					.row-fluid
+						.left.outer3
+							input#event_location.file_input_textbox5(name="location", type="text")
+							input#lat(name="lat", type="hidden")
+							input#lng(name="lng", type="hidden")
+			.orange
+					.left.well3.orangeboxnew.smallspacer-left.outer4
+						p.check.smallslid
+							input#css3(type="checkbox")
+							label(for='css3')
+						p.small use current location
+			.left.smallspacer.smallslid5
+				img.arrow(src="/img/optional.svg")
+			.clearfix
+	
+		//- datepicker
+		.row-fluid.smallspacer
+			.orange.span3
+					.left.well3.orangeboxnew.outer5
+						| Event <br /> date
+			.left
+				.left.orange.well5.weight.datepickerWrapper
+					| Start date
+					#datepicker
+					.headerspacer2.smallslid3
+						.left.weight.align.smallspacer-left 
+							| Time of event:
+						.left.outer7
+							input.file_input_textbox99(name="start_date", type="time", style="width: 100px;")
+						.clearfix
+					.left
+						a.nowButton(href="#")
+							img(src="/img/now.svg")
+					.left.orange.well5.weight.datepickerResult
 					.right
-						img.arrow(src="/img/arrow.svg" style="padding-left:10px; margin-right:15px; width:17px; height:17px; padding-bottom:0px;")
+						a(href="#")
+							img(src="/img/done.svg")
+			.left
+				.left.orange.well5.weight.datepickerWrapper
+					| End date
+					#datepicker2
+					.headerspacer2.smallslid3
+						.left.weight.align.smallspacer-left 
+							| Time of event:
+						.left.outer7
+							input.file_input_textbox99(name="end_date", type="time", style="width: 100px;")
+						.clearfix
+					.left
+						a.nowButton(href="#")
+							img(src="/img/now.svg")
+					.left.orange.well5.weight.datepickerResult
 					.right
-						a.link1(href="#", style="font-size:12px; padding-bottom:0px;") LEARN MORE
-	
-	//- Categories
-	.row-fluid.smallspacer
-		.span3.yellow.spanBigH6
-			h6 Predefined categories
-			ul.jcarousel-skin-tango.predefined-categories-list#predefinedCategories
-				li.jcarousel-item
-					a.guest(href="#") Guest Speaker
-				li.jcarousel-item
-					a.guest(href="#") Attendee
-				li.jcarousel-item
-					a.guest(href="#") Vencor
-				li.jcarousel-item
-					a.guest(href="#") Entrepreneur
-				li.jcarousel-item
-					a.guest(href="#") Team
-				li.jcarousel-item
-					a.guest(href="#") Startup Team
-				li.jcarousel-item
-					a.guest(href="#") Company
-				li.jcarousel-item
-					a.guest(href="#") Mentor
-				li.jcarousel-item
-					a.guest(href="#") Educator
-		.span4.zero2#createCategory
-			h6 Create <br />your own
-				.headerSpacer
-				span
-					input.file_input_textbox8(type="text4")
-					a(href="#").addCategory
-						img.right_arrow_ev_add(src="/img/arrows.svg")
-				span
-					input.file_input_textbox8(type="text4")
-					a(href="#").addCategory
-						img.right_arrow_ev_add(src="/img/arrows.svg")
-				span
-					input.file_input_textbox8(type="text4")
-					a(href="#").addCategory
-						img.right_arrow_ev_add(src="/img/arrows.svg")
-				span
-					input.file_input_textbox8(type="text4")
-					a(href="#").addCategory
-						img.right_arrow_ev_add(src="/img/arrows.svg")
-				span
-					input.file_input_textbox8(type="text4")
-					a(href="#").addCategory
-						img.right_arrow_ev_add(src="/img/arrows.svg")
+						a(href="#")
+							img(src="/img/done.svg")
 
-		.span5p2.zero2.yellow#selectedCategories
-			h6 Selected categories
-			p.noneSelected(style="padding-left:20px;") No selected categories.. Pick one from the 'Predefined categories' or Enter one in the 'Create your own' section
+		//- Description
+		.clearfix
+		.row-fluid.smallspacer
+			.bluebox2
+				.left.zero
+					img.pencil(src="/img/pencil.svg")
+				.left.headerSpacer 
+					| Event description
+				.right
+					img.pencil1(src="/img/optional.svg")
+				.clearfix
+			textarea#tinyeditor(style="height: 200px", name="description")
+	
+	
+		//- Choose attendee labels
+		.row-fluid.smallspacer 
+			.span12
+				.redbox.span12
+					.left.span2
+						img.arrow(src="/img/people2.svg", style="padding:5px;")
+					.left.span8.center.big
+						| Choose attendee / ticket categories
+					.right.span2
+						img.pencil1(src="/img/optional.svg", style="float:right; padding-bottom:20px;") 
+					.right.tops-minus 
+						.right
+							img.arrow(src="/img/arrow.svg" style="padding-left:10px; margin-right:15px; width:17px; height:17px; padding-bottom:0px;")
+						.right
+							a.link1(href="#", style="font-size:12px; padding-bottom:0px;") LEARN MORE
+	
+		//- Categories
+		.row-fluid.smallspacer
+			.span3.yellow.spanBigH6
+				h6 Predefined categories
+				ul.jcarousel-skin-tango.predefined-categories-list#predefinedCategories
+					li.jcarousel-item
+						a.guest(href="#") Guest Speaker
+					li.jcarousel-item
+						a.guest(href="#") Attendee
+					li.jcarousel-item
+						a.guest(href="#") Vencor
+					li.jcarousel-item
+						a.guest(href="#") Entrepreneur
+					li.jcarousel-item
+						a.guest(href="#") Team
+					li.jcarousel-item
+						a.guest(href="#") Startup Team
+					li.jcarousel-item
+						a.guest(href="#") Company
+					li.jcarousel-item
+						a.guest(href="#") Mentor
+					li.jcarousel-item
+						a.guest(href="#") Educator
+			.span4.zero2#createCategory
+				h6 Create <br />your own
+					.headerSpacer
+					span
+						input.file_input_textbox8(type="text4")
+						a(href="#").addCategory
+							img.right_arrow_ev_add(src="/img/arrows.svg")
+					span
+						input.file_input_textbox8(type="text4")
+						a(href="#").addCategory
+							img.right_arrow_ev_add(src="/img/arrows.svg")
+					span
+						input.file_input_textbox8(type="text4")
+						a(href="#").addCategory
+							img.right_arrow_ev_add(src="/img/arrows.svg")
+					span
+						input.file_input_textbox8(type="text4")
+						a(href="#").addCategory
+							img.right_arrow_ev_add(src="/img/arrows.svg")
+					span
+						input.file_input_textbox8(type="text4")
+						a(href="#").addCategory
+							img.right_arrow_ev_add(src="/img/arrows.svg")
+
+			.span5p2.zero2.yellow#selectedCategories
+				h6 Selected categories
+				p.noneSelected(style="padding-left:20px;") No selected categories.. Pick one from the 'Predefined categories' or Enter one in the 'Create your own' section
 			
-			//- template for js
-			#selectedCategoryListTemplate.hide
-				li.jcarousel-item
-					span.guest
-					input(type="hidden", name="categories[]")
-					a(href="#", style="opacity: 0;")
-						img.guest-x(src="/img/ex.svg")
+				//- template for js
+				#selectedCategoryListTemplate.hide
+					li.jcarousel-item
+						span.guest
+						input(type="hidden", name="categories[]")
+						a(href="#", style="opacity: 0;")
+							img.guest-x(src="/img/ex.svg")
 
-			ul.jcarousel-skin-tango.predefined-categories-list#selectedCategoriesList
+				ul.jcarousel-skin-tango.predefined-categories-list#selectedCategoriesList
 
-		.clearfix
+			.clearfix
 		
-		//- allow create their own categories
-		.row-fluid.headerspacer2.span12.zer
-			.left
-				h12 Allow attendees to create their own categories? 
-			.left.tops-minus
-				p.check3.left
-					input#cbox7(checked="", type="checkbox", name="allow_attendees_create_categories", value="yes")
-					label(for='cbox7')
-				.left.tops3  YES
-			.left.tops-minus
-				p.check3.left
-					input#cbox8(type="checkbox", name="allow_attendees_create_categories", value="no")
-					label(for='cbox8')
-				.left.tops3  NO
-		.clearfix
+			//- allow create their own categories
+			.row-fluid.headerspacer2.span12.zer
+				.left
+					h12 Allow attendees to create their own categories? 
+				.left.tops-minus
+					p.check3.left
+						input#cbox7(checked="", type="checkbox", name="allow_attendees_create_categories", value="yes")
+						label(for='cbox7')
+					.left.tops3  YES
+				.left.tops-minus
+					p.check3.left
+						input#cbox8(type="checkbox", name="allow_attendees_create_categories", value="no")
+						label(for='cbox8')
+					.left.tops3  NO
+			.clearfix
 		
-		//- priced tickets
-		.row-fluid.headerspacer2.span12.zer
-			.left
-				h12 Include priced tickets?
-			.left.tops-minus
-				p.check3.left
-					input#cbox9(name="allow_priced_tickets", value="yes", type="checkbox")
-					label(for='cbox9') 
-				.left.tops3  YES
-			.left.tops-minus
-				p.check3.left
-					input#cbox10(name="allow_priced_tickets", value="no", type="checkbox", checked="checked")
-					label(for='cbox10')
-				.left.tops3  NO
-		.clearfix
+			//- priced tickets
+			.row-fluid.headerspacer2.span12.zer
+				.left
+					h12 Include priced tickets?
+				.left.tops-minus
+					p.check3.left
+						input#cbox9(name="allow_priced_tickets", value="yes", type="checkbox")
+						label(for='cbox9') 
+					.left.tops3  YES
+				.left.tops-minus
+					p.check3.left
+						input#cbox10(name="allow_priced_tickets", value="no", type="checkbox", checked="checked")
+						label(for='cbox10')
+					.left.tops3  NO
+			.clearfix
 		
-		//- ticket price table
-		.row-fluid.rel#tickets-table
-			//- display=inline becoz its locked by default
-			.disabled-image(style="display:inline;")
-			.disabled-lock(style="display:inline;")
-			table.gridtable
-				thead
-					tr
-						th.drop-arrow
-							| Ticket Type
-						th.drop-arrow
-							| Ticket Price
-						th.drop-arrow
-							| Number <br /> of tickets
-						th.drop-arrow
-							| Fee
-						th.drop-arrow
-							| Who pays <br /> the fee?
-						th.drop-arrow
-							| VAT
-						th.drop-arrow
-							| Total <br /> Ticket Price:
-						th.drop-arrow
-							| What <br /> you’ll recive <br /> per ticket:
-				tbody#tickets
-					tr#ticketTemplate.hide
-						td
-							input.tickets-ticket-type.file_input_textbox10(type="text", style="width: 200px;")
-						td
-							input.tickets-ticket-price.file_input_textbox10(type="number", value="0.00", style="width:110px; max-height:20px;")
-						td
-							input.tickets-ticket-number.file_input_textbox10(type="number", value="1", style="width:100px;")
-						td
-							input.tickets-ticket-fee.file_input_textbox10(type="text", value="0.00", style="width:60px;")
-						td
-							dl.dropdown3
-								dt
-									a.dropx3(href="#")
-										| Me
-								dd
-									ul
-										li
-											a(href="#") Me
-										li
-											a(href="#") Attendee
-						td
-							input.tickets-ticket-vat.file_input_textbox10(type="text", disabled="disabled", style="width:60px;")
-						td
-							input.tickets-ticket-total.file_input_textbox10(type="text", disabled="disabled" style="width:90px;")
-						td
-							input.tickets-ticket-summary.file_input_textbox10(type="text", style="width:130px;")
-					tr
-						td
-							input.tickets-ticket-type.file_input_textbox10(type="text", style="width: 200px;")
-						td
-							input.tickets-ticket-price.file_input_textbox10(type="number", value="0.00", style="width:110px; max-height:20px;")
-						td
-							input.tickets-ticket-number.file_input_textbox10(type="number", value="1", style="width:100px;")
-						td
-							input.tickets-ticket-fee.file_input_textbox10(type="text", value="0.00", style="width:60px;")
-						td
-							dl.dropdown3	
-								dt
-									a.dropx3(href="#")
-										| Me
-								dd
-									ul
-										li
-											a(href="#") Me
-										li
-											a(href="#") Attendee
-						td
-							input.tickets-ticket-vat.file_input_textbox10(type="text", disabled="disabled", style="width:60px;")
-						td
-							input.tickets-ticket-total.file_input_textbox10(type="text", disabled="disabled" style="width:90px;")
-						td
-							input.tickets-ticket-summary.file_input_textbox10(type="text", style="width:130px;")
-				
+			//- ticket price table
+			.row-fluid.rel#tickets-table
+				//- display=inline becoz its locked by default
+				.disabled-image(style="display:inline;")
+				.disabled-lock(style="display:inline;")
+				table.gridtable
+					thead
+						tr
+							th.drop-arrow
+								| Ticket Type
+							th.drop-arrow
+								| Ticket Price
+							th.drop-arrow
+								| Number <br /> of tickets
+							th.drop-arrow
+								| Fee
+							th.drop-arrow
+								| Who pays <br /> the fee?
+							th.drop-arrow
+								| VAT
+							th.drop-arrow
+								| Total <br /> Ticket Price:
+							th.drop-arrow
+								| What <br /> you’ll recive <br /> per ticket:
+					tbody#tickets
+						tr#ticketTemplate.hide
+							td
+								input.tickets-ticket-type.file_input_textbox10(type="text", style="width: 200px;")
+							td
+								input.tickets-ticket-price.file_input_textbox10(type="number", value="0.00", style="width:110px; max-height:20px;")
+							td
+								input.tickets-ticket-number.file_input_textbox10(type="number", value="1", style="width:100px;")
+							td
+								input.tickets-ticket-fee.file_input_textbox10(type="text", value="0.00", style="width:60px;")
+							td
+								dl.dropdown3
+									dt
+										a.dropx3(href="#")
+											| Me
+									dd
+										ul
+											li
+												a(href="#") Me
+											li
+												a(href="#") Attendee
+							td
+								input.tickets-ticket-vat.file_input_textbox10(type="text", disabled="disabled", style="width:60px;")
+							td
+								input.tickets-ticket-total.file_input_textbox10(type="text", disabled="disabled" style="width:90px;")
+							td
+								input.tickets-ticket-summary.file_input_textbox10(type="text", style="width:130px;")
+						tr
+							td
+								input.tickets-ticket-type.file_input_textbox10(type="text", style="width: 200px;")
+							td
+								input.tickets-ticket-price.file_input_textbox10(type="number", value="0.00", style="width:110px; max-height:20px;")
+							td
+								input.tickets-ticket-number.file_input_textbox10(type="number", value="1", style="width:100px;")
+							td
+								input.tickets-ticket-fee.file_input_textbox10(type="text", value="0.00", style="width:60px;")
+							td
+								dl.dropdown3	
+									dt
+										a.dropx3(href="#")
+											| Me
+									dd
+										ul
+											li
+												a(href="#") Me
+											li
+												a(href="#") Attendee
+							td
+								input.tickets-ticket-vat.file_input_textbox10(type="text", disabled="disabled", style="width:60px;")
+							td
+								input.tickets-ticket-total.file_input_textbox10(type="text", disabled="disabled" style="width:90px;")
+							td
+								input.tickets-ticket-summary.file_input_textbox10(type="text", style="width:130px;")
+		
 		//- publish button
 		.clearfix
 		.headerspacer2
-			a.link1(href="#")
+			a#publishButton.link1(href="#")
+				p.text-center.hide#submitStatus(style="color: #FFF;") Loading
 				img.arrow(src="/img/publish.svg")
-			
-			img.arrow(src="/img/success.svg")
-
-		//- link invitation
-		.row-fluid.span12.zer
-			.left
-				h14 Invite people with this link:
-			.right.span8
-				h14 http://eventmost.com/event/blablablablabla/invite/moreblablabla
 		.clearfix
-		
+	
+	#afterSubmit.hide
+		img.arrow(src="/img/success.svg")
+		//- link invitation
+		.row-fluid.zer
+			.span10.offset1
+				.left
+					h14 Invitation link:
+				.right.span8
+					//- this is auto-replaced by js
+					h14#invitationLink Sorry, an error occured :(. Please let us know
+		.clearfix
+	
 		//- last step: control
 		.row-fluid.span12.headerspacer2.zer.center
 			h14 One last step: <span>Control who can see or access your event</span>
 		
 		.row-fluid.span12.zer.headerspacer2
 			h14 How <br /> restrictive:
+		
+		//- restriction boxes
 		.row-fluid.span12.zer.headerspacer2
 			.left.span2
 				a.link1(href="#")
 					img(src="/img/paddlock.svg", class="arrow")
-			.right.orangebox.span10.dimonhover
+			.right.orangebox.span10.dimonhover#restrictions_none
 				.left.in_orange22
 					| Allow anyone from any location to access event.
 				.right
@@ -350,7 +357,7 @@ append content
 			.left.span2
 				a.link1(href="#")
 					img(src="/img/paddlock.svg", class="arrow")
-			.right.orangebox.span10.dimonhover
+			.right.orangebox.span10.dimonhover#restrictions_in_range
 				.left.in_orange22
 					| Allow people to access event when in range.<br /> <b>No password added.</b>
 				.right
@@ -362,7 +369,7 @@ append content
 			.left.span2
 				a.link1(href="#")
 					img(src="/img/paddlock2.svg", class="arrow")
-			.right.orangebox.span10.dimonhover
+			.right.orangebox.span10.dimonhover#restrictions_password
 				.left.in_orange22
 					| Allow anyone with any location but <b>with a password</b> <br /> access your event.
 				.right
@@ -374,7 +381,7 @@ append content
 			.left.span2
 				a.link1(href="#")
 					img(src="/img/paddlock2.svg", class="arrow")
-			.right.orangebox.span10.dimonhover
+			.right.orangebox.span10.dimonhover#restrictions_in_range_password
 				.left.in_orange22
 					| Allow people to access event when <b>in range</b> <br /><b>and with a password.</b>
 				.right
@@ -386,7 +393,7 @@ append content
 			.left.span2
 				a.link1(href="#")
 					img(src="/img/paddlock3.svg", class="arrow")
-			.right.orangebox.span10.dimonhover
+			.right.orangebox.span10.dimonhover#restrictions_private
 				.left.in_orange22
 					| <b>Make private.</b> Attendees can only find event by <br /> getting the link above.
 				.right
@@ -394,106 +401,117 @@ append content
 						img(src="/img/arrow.svg", alt="", class="arrow", style=" padding-left:10px; margin-right:15px; width:30px; height:30px; ")
 					.right.true2
 						a(href="", alt="", class="link1", style="font-size:16px; font-weight:400;", data-reveal-id="restricion5Modal") LEARN MORE
-		.row-fluid.span12.headerspacer2.zer.center
-			row-fluid.span12.headerspacer2.zer
-				h14 Please type your password (there are no stupid restrictions):
+		
+		p#successStatus.hide.text-center(style="color:#FFF;")
+		
+		//- Event password
+		#passwordFieldWrapper.hide
+			.row-fluid.span12.headerspacer2.zer.center
+				row-fluid.span12.headerspacer2.zer
+					h14 Please enter event password:
+				.clearfix
+				.center.spacer.redbox.neu
+					input#eventPassword.nin2.file_input_textbox55(type="password", required="required")
 			.clearfix
-			.center.spacer.redbox.neu
-				input.nin2(type="password", required="required", class="file_input_textbox55")
-		.clearfix
-
-		.center.headerspacer2
-		a.link1(href="#")
-			img(src="/img/enter.svg", class="arrow")
-
-		.center.headerspacer2
-			h14 <b>SUCCESS!</b> Registration complete. To change any of this at anytime,<br /> just go to “Event settings” within the event page.<br /> Also there you will find how to control other very important functions<br /> such as:
-
-		.row-fluid.span12.zer.headerspacer2
-			.left
-				img(src="/img/arrow_yellow.svg", class="arrow")
-			.left.inner
-				h14 Adding inactive profile for guest speakers/teams/companies
-		.row-fluid.span12.zer
-			.left
-				img(src="/img/arrow_yellow.svg", class="arrow")
-			.left.inner
-				h14 Adding file to Event’s dropbox
-		.row-fluid.span12.zer
-			.left
-				img(src="/img/arrow_yellow.svg", class="arrow")
-			.left.inner
-				h14 View event summary
-		.row-fluid.span12.zer
-			.left
-				img(src="/img/arrow_yellow.svg", class="arrow")
-			.left.inner
-				h14 Control who can comment out in the open
-		.row-fluid.span12.headerspacer2
-			.left.span6
-				img(src="/img/gotohome.svg", class="arrow")
-			.right.span6
-				img(src="/img/gotoevent.svg", class="arrow")
-
-
-			#restricion1Modal.reveal-modal
-				.center2
-					img(src="/img/paddlocks.svg", alt="", style="padding-bottom:10px;")
-				.center.headerspacer.smaller
-					| Anyone from anywhere in the world can see that your event is going on and can “enter” it - their EventMost profile will show up with all the other attendees allowing them to message other attendees. Upside: your event is easy for intended attendees to enter if they did not get the link. It can increase attendance possibly: virtual and physical. It can also boost publicity for you and your sponsors. Also, as the planner you do have admin rights to kick-out any attendee you want and our platform makes it easy for you to do that. <br />
-					| In addition, you can change these settings at anytime – make it more restrictive if you feel it’s being abused. Downside: Attendees might not want their profile to be viewable by those who might not be at the event or might not want to receive correspondence from such. Although Attendees can control this in their personal settings, some people are particular about their privacy. <b>Extra precautionary measures we take:</b> We have special algorithms that are extremely effective in preventing spamming and if any individual appears to be doing such, we automatically freeze his/her account. <br /><br />
-					| Anyone from anywhere can see your event but must be within 2 KM to access it (meaning their EventMost profile will show up with all the other attendees allowing them to message other attendees and such). This is mainly for people that show up to your event that did not initially register via your link. This also could be for more ad-hoc meetups where there wasn’t much of a formal registration. Or this could be used if you don’t give anyone the link, but only want to allow people to be a part of your event network if they really physically attended. As the planner you do have admin rights to kick-out any attendee you want, and our platform makes it easy for you to do that. In addition, you can change these settings at anytime – make it more restrictive if you feel it’s being abused.
-				a(href="#", class="close-reveal-modal") 
-					img(src="/img/x.svg")
-			#restricion2Modal.reveal-modal
-				.center2
-					img(src="/img/paddlocks.svg", alt="", style="padding-bottom:10px;")
-				.center.headerspacer.smaller
-					| Anyone from anywhere in the world can see that your event is going on and can “enter” it - their EventMost profile will show up with all the other attendees allowing them to message other attendees.
-					| Upside: your event is easy for intended attendees to enter if they did not get the link. It can increase attendance possibly: virtual and physical. It can also boost publicity for you and your sponsors.
-					| Also, as the planner you do have admin rights to kick-out any attendee you want and our platform makes it easy for you to do that. In addition, you can change these settings at anytime – make it
-					| more restrictive if you feel it’s being abused. Downside: Attendees might not want their profile to be viewable by those who might not be at the event or might not want to receive correspondence from such.
-					| Although Attendees can control this in their personal settings, some people are particular about their privacy. <b>Extra precautionary measures we take: </b>We have special algorithms
-					| that are extremely effective in preventing spamming and if any individual appears to be doing such, we automatically freeze his/her account.<br /><br />
-					| Anyone from anywhere can see your event but <b>must have the password</b> to access it (meaning their EventMost profile will show up with all the other attendees allowing them to message other attendees and such).
-					| You create any password you want and there will be two ways by which users can access your event:<br />
-					| 1) using the link you provided <br />
-					| 1) or <br />
-					| 2) entering the password you created.
-				a(href="#", class="close-reveal-modal") 
-					img(src="/img/x.svg")
-			#restricion3Modal.reveal-modal
-				.center2
-					img(src="/img/paddlocks.svg", alt="", style="padding-bottom:10px;")
-				.center.headerspacer.smaller
-					| Anyone from anywhere in the world can see that your event is going on and can “enter” it - their EventMost profile will show up with all the other attendees allowing them
-					| to message other attendees. Upside: your event is easy for intended attendees to enter if they did not get the link.
-					| It can increase attendance possibly: virtual and physical. It can also boost publicity for you and your sponsors. Also, as the planner you do have admin rights to kick-out
-					| any attendee you want and our platform makes it easy for you to do that. In addition, you can change these settings at anytime – make it
-					| more restrictive if you feel it’s being abused. Downside: Attendees might not want their profile to be viewable by those who might not be at the event or might not want
-					| to receive correspondence from such. Although Attendees can control this in their personal settings, some people are particular
-					| about their privacy. <b>Extra precautionary measures we take:</b> We have special algorithms that are extremely effective in preventing spamming
-					| and if any individual appears to be doing such, we automatically freeze his/her account. <br /><br />
-					| Anyone from anywhere can see your event, but users that don’t use your link must be within 2KM and know the password
-					| you created in order to access your event (meaning their EventMost profile will show up with all the other attendees
-					| allowing them to message other attendees and such).
-				a(href="#", class="close-reveal-modal") 
-					img(src="/img/x.svg")
-			#restricion5Modal.reveal-modal
-				.center2
-					img(src="/img/paddlocks.svg", alt="", style="padding-bottom:10px;")
-				.center.headerspacer.smaller
-					| Anyone from anywhere in the world can see that your event is going on and can “enter” it - their EventMost profile
-					| will show up with all the other attendees allowing them to message other attendees. Upside: your event is easy for intended
-					| attendees to enter if they did not get the link. It can increase attendance possibly: virtual and physical. It can also boost publicity for you and your sponsors.
-					| Also, as the planner you do have admin rights to kick-out any attendee you want and our platform makes it easy for you
-					| to do that. In addition, you can change these settings at anytime – make it more restrictive if you feel it’s being abused.
-					| Downside: Attendees might not want their profile to be viewable by those who might not be at the event or might not want
-					| to receive correspondence from such. Although Attendees can control this in their personal settings, some people are particular
-					| about their privacy. <b>Extra precautionary measures we take:</b> We have special algorithms that are extremely effective in preventing spamming
-					| and if any individual appears to be doing such, we automatically freeze his/her account. <br /><br />
-					| No one can see or access your event unless they use the link.
-				a(href="#", class="close-reveal-modal") 
-					img(src="/img/x.svg")
-
-
+			//- goes with the password field above
+			.center.headerspacer2
+			a#confirmPassword.link1(href="#")
+				img(src="/img/enter.svg", class="arrow")
+		
+		//- event ok!
+		#finalSuccess.hide
+			.center.headerspacer2
+				h14 <b>SUCCESS!</b> Registration complete. To change any of this at anytime,<br /> just go to “Event settings” within the event page.<br /> Also there you will find how to control other very important functions<br /> such as:
+			//- displayed with the stuff above
+			.row-fluid.span12.zer.headerspacer2
+				a.fillWithEventLink(href="#")
+					.left
+						img.arrow(src="/img/arrow_yellow.svg")
+					.left.inner
+						h14 Add an inactive speaker/team/company profile
+			.row-fluid.span12.zer
+				a.fillWithDropboxLink(href="#")
+					.left
+						img.arrow(src="/img/arrow_yellow.svg")
+					.left.inner
+						h14 Add a file to Event’s dropbox
+			.row-fluid.span12.zer
+				a.fillWithEventLink(href="#")
+					.left
+						img.arrow(src="/img/arrow_yellow.svg")
+					.left.inner
+						h14 View event summary
+			.row-fluid.span12.zer
+				a.fillWithSettingsLink(href="#")
+					.left
+						img.arrow(src="/img/arrow_yellow.svg")
+					.left.inner
+						h14 Event Settings
+			.row-fluid.span12.headerspacer2
+				.left.span6
+					a(href="/")
+						img(src="/img/gotohome.svg", class="arrow")
+				.right.span6
+					a.fillWithEventLink(href="#")
+						img(src="/img/gotoevent.svg", class="arrow")
+	
+	
+	#restricion1Modal.reveal-modal
+		.center2
+			img(src="/img/paddlocks.svg", alt="", style="padding-bottom:10px;")
+		.center.headerspacer.smaller
+			| Anyone from anywhere in the world can see that your event is going on and can “enter” it - their EventMost profile will show up with all the other attendees allowing them to message other attendees. Upside: your event is easy for intended attendees to enter if they did not get the link. It can increase attendance possibly: virtual and physical. It can also boost publicity for you and your sponsors. Also, as the planner you do have admin rights to kick-out any attendee you want and our platform makes it easy for you to do that. <br />
+			| In addition, you can change these settings at anytime – make it more restrictive if you feel it’s being abused. Downside: Attendees might not want their profile to be viewable by those who might not be at the event or might not want to receive correspondence from such. Although Attendees can control this in their personal settings, some people are particular about their privacy. <b>Extra precautionary measures we take:</b> We have special algorithms that are extremely effective in preventing spamming and if any individual appears to be doing such, we automatically freeze his/her account. <br /><br />
+			| Anyone from anywhere can see your event but must be within 2 KM to access it (meaning their EventMost profile will show up with all the other attendees allowing them to message other attendees and such). This is mainly for people that show up to your event that did not initially register via your link. This also could be for more ad-hoc meetups where there wasn’t much of a formal registration. Or this could be used if you don’t give anyone the link, but only want to allow people to be a part of your event network if they really physically attended. As the planner you do have admin rights to kick-out any attendee you want, and our platform makes it easy for you to do that. In addition, you can change these settings at anytime – make it more restrictive if you feel it’s being abused.
+		a(href="#", class="close-reveal-modal") 
+			img(src="/img/x.svg")
+	#restricion2Modal.reveal-modal
+		.center2
+			img(src="/img/paddlocks.svg", alt="", style="padding-bottom:10px;")
+		.center.headerspacer.smaller
+			| Anyone from anywhere in the world can see that your event is going on and can “enter” it - their EventMost profile will show up with all the other attendees allowing them to message other attendees.
+			| Upside: your event is easy for intended attendees to enter if they did not get the link. It can increase attendance possibly: virtual and physical. It can also boost publicity for you and your sponsors.
+			| Also, as the planner you do have admin rights to kick-out any attendee you want and our platform makes it easy for you to do that. In addition, you can change these settings at anytime – make it
+			| more restrictive if you feel it’s being abused. Downside: Attendees might not want their profile to be viewable by those who might not be at the event or might not want to receive correspondence from such.
+			| Although Attendees can control this in their personal settings, some people are particular about their privacy. <b>Extra precautionary measures we take: </b>We have special algorithms
+			| that are extremely effective in preventing spamming and if any individual appears to be doing such, we automatically freeze his/her account.<br /><br />
+			| Anyone from anywhere can see your event but <b>must have the password</b> to access it (meaning their EventMost profile will show up with all the other attendees allowing them to message other attendees and such).
+			| You create any password you want and there will be two ways by which users can access your event:<br />
+			| 1) using the link you provided <br />
+			| 1) or <br />
+			| 2) entering the password you created.
+		a(href="#", class="close-reveal-modal") 
+			img(src="/img/x.svg")
+	#restricion3Modal.reveal-modal
+		.center2
+			img(src="/img/paddlocks.svg", alt="", style="padding-bottom:10px;")
+		.center.headerspacer.smaller
+			| Anyone from anywhere in the world can see that your event is going on and can “enter” it - their EventMost profile will show up with all the other attendees allowing them
+			| to message other attendees. Upside: your event is easy for intended attendees to enter if they did not get the link.
+			| It can increase attendance possibly: virtual and physical. It can also boost publicity for you and your sponsors. Also, as the planner you do have admin rights to kick-out
+			| any attendee you want and our platform makes it easy for you to do that. In addition, you can change these settings at anytime – make it
+			| more restrictive if you feel it’s being abused. Downside: Attendees might not want their profile to be viewable by those who might not be at the event or might not want
+			| to receive correspondence from such. Although Attendees can control this in their personal settings, some people are particular
+			| about their privacy. <b>Extra precautionary measures we take:</b> We have special algorithms that are extremely effective in preventing spamming
+			| and if any individual appears to be doing such, we automatically freeze his/her account. <br /><br />
+			| Anyone from anywhere can see your event, but users that don’t use your link must be within 2KM and know the password
+			| you created in order to access your event (meaning their EventMost profile will show up with all the other attendees
+			| allowing them to message other attendees and such).
+		a(href="#", class="close-reveal-modal") 
+			img(src="/img/x.svg")
+	#restricion5Modal.reveal-modal
+		.center2
+			img(src="/img/paddlocks.svg", alt="", style="padding-bottom:10px;")
+		.center.headerspacer.smaller
+			| Anyone from anywhere in the world can see that your event is going on and can “enter” it - their EventMost profile
+			| will show up with all the other attendees allowing them to message other attendees. Upside: your event is easy for intended
+			| attendees to enter if they did not get the link. It can increase attendance possibly: virtual and physical. It can also boost publicity for you and your sponsors.
+			| Also, as the planner you do have admin rights to kick-out any attendee you want and our platform makes it easy for you
+			| to do that. In addition, you can change these settings at anytime – make it more restrictive if you feel it’s being abused.
+			| Downside: Attendees might not want their profile to be viewable by those who might not be at the event or might not want
+			| to receive correspondence from such. Although Attendees can control this in their personal settings, some people are particular
+			| about their privacy. <b>Extra precautionary measures we take:</b> We have special algorithms that are extremely effective in preventing spamming
+			| and if any individual appears to be doing such, we automatically freeze his/her account. <br /><br />
+			| No one can see or access your event unless they use the link.
+		a(href="#", class="close-reveal-modal") 
+			img(src="/img/x.svg")
