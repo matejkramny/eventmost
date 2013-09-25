@@ -247,7 +247,7 @@ scheme.methods.edit = function (body, user, files, cb) {
 
 scheme.methods.validate = function (cb) {
 	var errs = [];
-	if (this.name && this.name.length == 0) {
+	if (!this.name || this.name.length == 0) {
 		errs.push("Event Name must not be blank")
 	}
 	
@@ -257,7 +257,7 @@ scheme.methods.validate = function (cb) {
 	if (typeof this.end == "object" && this.end.getTime() == 0) {
 		errs.push("Event End Date must be valid")
 	}
-	if (this.start && this.end && this.end < this.start) {
+	if ((this.start && this.end) && this.end < this.start) {
 		// event ends before it starts..
 		errs.push("Event finishes before it begins. End date must be after the start date")
 	}
