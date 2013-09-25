@@ -1,4 +1,10 @@
 $(document).ready(function() {
+	$("body").on('click', "a[href='#']", function(e) {
+		// prevents the page from scrolling up
+		e.preventDefault();
+		return false;
+	})
+	
 	// Dropdown toggles
 	$(".dropdown dt a, .dropdown2 dt a, .dropdown3 dt a, .dropdown4 dt a, .dropdown5 dt a, .dropdown6 dt a, .dropdown7 dt a, .dropdown8 dt a, .dropdown12 dt a").click(function() {
 		$(this).parent().parent().find("dd ul").toggle();

@@ -6,3 +6,8 @@
        url('/fonts/raleway-regular.ttf') format('truetype'),
 	   url('/fonts/raleway-regular.svg#ralewayregular') format('svg');
 }
+
+body {
+	color: #ecd077 !important;
+	font-family: "Raleway", Verdana, Arial, Georgia;
+}

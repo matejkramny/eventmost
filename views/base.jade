@@ -45,7 +45,7 @@ html
 										.right
 											input.gonew2(type="button", value="GO")
 										input(type="hidden", name="_csrf", value=token)
-										input(type="search", placeholder="search events of people", class="file_input_textbox4")
+										input.file_input_textbox4(type="search", placeholder="search events or people", style="line-height:30px !important;")
 								img(src="/img/dot.svg", class="purpleline")
 								.right.minus2
 									a.right.image(href="/conversations")
@@ -86,12 +86,6 @@ html
 			script(src="/js/jquery.jcarousel.min.js")
 			script(src="/js/three.js")
 			script(src="/js/four.js")
-			script.
-				// Temporary
-				$("a[href='#']").bind('click', function(event) {
-					event.preventDefault();
-					return false;
-				});
 			if everyauth.loggedIn != true
 				script(src="/js/signin.js")
 				
