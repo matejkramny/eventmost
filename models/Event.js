@@ -68,15 +68,26 @@ scheme.statics.getEvent = function (id, cb) {
 	try {
 		exports.Event
 			.findOne({ deleted: false, _id: mongoose.Types.ObjectId(id) })
-			.populate('user attendees messages.user')
+			.populate('user attendees messages.user avatar')
 			.exec(function(err, ev) {
 				if (err) throw err;
-			
+				
 				if (!ev) {
 					cb(ev);
 					return;
 				}
-			
+				
+				if (ev.avatar == null || ev.avatar.url == null || ev.avatar.url.length == 0) {
+					var avatar = new models.Avatar({
+						url: "/img/default-logo.svg"
+					})
+					avatar.save();
+					ev.avatar = avatar._id;
+					ev.save();
+				}
+				
+				console.log(ev.avatar.url);
+				
 				ev.getGeo(function(geo) {
 					cb(ev);
 				})
@@ -104,7 +115,7 @@ scheme.methods.edit = function (body, user, files, cb) {
 		this.venue_name = body.venue_name
 	}
 	if (body.location) {
-		this.location = body.location
+		this.address = body.location
 	}
 	if (body.description) {
 		this.description = body.description

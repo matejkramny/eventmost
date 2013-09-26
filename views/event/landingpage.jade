@@ -1,0 +1,78 @@
+.headerspacer2
+.eighty-five
+	.thirty1.left
+		img(src=event.avatar.url)
+	.seventy.right
+		.speaker_titlerespond2
+			.color
+			h5 
+				b= event.name
+		.headerspacer2
+		.left
+			.description-text When
+			.line
+			.left
+				img.arrow(src="/img/clock.svg", style="width:50px; height:50x;")
+			.left.date2.color
+				| 03.15<br />
+				| (BST)
+			.right_star2.smallslid5
+				.image2
+					img.image2(src="/img/calendar-icony.svg", style="width:47px; height:50x;")
+					h18
+						| 19.02 <br />
+						| 2013
+		.left.smallslid3
+			.description-text
+				| Where
+			.line
+			.left
+				img(src="/img/map6.svg", alt="", class="arrow" style="margin-top:-5px; margin-left:-10px;")
+			.left.location
+				h2 London
+				h3 United Kingdom
+		.left.smallslid3
+			.description-text
+				| Event Organizer
+			.line
+			.left.description-text-small
+				b= event.user.getName()
+				if event.user.position
+					|  - #{event.user.position}
+		.clearfix
+		.headerspacer2
+		.left
+			.description-text-big
+				| Event description
+			.line
+			.left.description-text-medium= event.description
+	.clearfix
+
+// tickets required
+if event.pricedTickets
+	include inc/payment
+
+.eighty-five
+	.center2.description-text
+		b Who are you in this event:
+	.center2.fiftyfive
+		.iconsbox2.left
+			input.prof-choice(type="submit", value="Guest Speaker")
+			input.prof-choice(type="submit", value="Guest Speaker")
+			input.prof-choice(type="submit", value="Guest Speaker")
+			input.prof-choice(type="submit", value="Guest Speaker")
+		if event.allowAttendeesToCreateCategories
+			.left.ten
+				.inten1
+					.inten2
+						| or
+			.thirty.left.smallslid3
+				.description-text(style="margin-top:50px;")
+					b Create your own category:
+					input.file_input_textbox55(type="text", style="font-size:18px; margin-top:0px; margin-left:5px;")
+					.line(style="margin-left:20px;")
+	.clearfix
+.eighty-five
+	.center2
+		input.profile-button-small(type="submit", value="Access event")
+		input.profile-button-small.smallslid3(type="button", onclick="window.location='/';return false;", value="Go back to homepage")

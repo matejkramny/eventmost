@@ -97,7 +97,6 @@ exports.attending = attending = function (req, res, next) {
 exports.viewEvent = function (req, res) {
 	res.format({
 		html: function() {
-			console.log('locals '+res.locals.eventattending)
 			res.render('event/view', { title: res.locals.event.name });
 		},
 		json: function() {
