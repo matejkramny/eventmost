@@ -15,8 +15,12 @@ var scheme = schema({
 		ref: 'User'
 	},
 	attendees: [{
-		type: ObjectId,
-		ref: 'User'
+		user: {
+			type: ObjectId,
+			ref: 'User'
+		},
+		category: String
+		// ticket?
 	}],
 	geo: {}, // don't store anything here. - temporary placeholder when the event is loaded
 	description: String,
@@ -68,7 +72,7 @@ scheme.statics.getEvent = function (id, cb) {
 	try {
 		exports.Event
 			.findOne({ deleted: false, _id: mongoose.Types.ObjectId(id) })
-			.populate('user attendees messages.user avatar')
+			.populate('user attendees.user messages.user avatar')
 			.exec(function(err, ev) {
 				if (err) throw err;
 				
@@ -288,7 +292,6 @@ scheme.methods.getGeo = function (cb) {
 	Geolocation.find({ event: this._id }, function(err, geo) {
 		if (err) throw err;
 		
-		console.log(geo);
 		self.geo = geo[0];
 		
 		cb();

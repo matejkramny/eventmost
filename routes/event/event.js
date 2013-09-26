@@ -80,7 +80,9 @@ exports.attending = attending = function (req, res, next) {
 		attending = true;
 	} else {
 		for (var i = 0; i < ev.attendees.length; i++) {
-			if (ev.attendees[i]._id.equals(req.user._id)) {
+			var attendee = ev.attendees[i];
+			
+			if (typeof attendee.user === "object" && attendee.user._id.equals(req.user._id)) {
 				attending = true;
 				break;
 			}
@@ -110,25 +112,78 @@ exports.viewEvent = function (req, res) {
 
 exports.joinEvent = function (req, res) {
 	var password = req.body.password;
+	var category = req.body.category;
 	
 	var ev = res.locals.event;
-	if (ev.password.enabled) {
-		if (ev.password.password == password) {
-			// join event.
-			ev.attendees.push(req.user._id);
-		} else {
+	var attendee = {
+		user: req.user._id
+	};
+	
+	if (ev.accessRequirements.password) {
+		if (ev.accessRequirements.passwordString != password) {
 			// display flash stating they got the password wrong.
-			req.session.flash.push("Event password incorrect.")
+			res.format({
+				html: function() {
+					req.session.flash.push("Event password incorrect.")
+					res.redirect('/event/'+ev._id);
+				},
+				json: function() {
+					res.send({
+						status: 400,
+						message: "Event password incorrect"
+					})
+				}
+			});
+			return;
 		}
-	} else {
-		// join event.
-		ev.attendees.push(req.user._id);
 	}
 	
+	if (category && category.length > 0) {
+		// Check if category exists & is valid
+		var foundCategory = false;
+		for (var i = 0; i < ev.categories.length; i++) {
+			if (category == ev.categories[i]) {
+				// Good
+				foundCategory = true;
+				break;
+			}
+		}
+		
+		if (foundCategory) {
+			attendee.category = category;
+		} else {
+			// reject
+			// display flash stating they got the password wrong.
+			res.format({
+				html: function() {
+					req.session.flash.push("An Invalid category selected.")
+					res.redirect('/event/'+ev._id);
+				},
+				json: function() {
+					res.send({
+						status: 400,
+						mesage: "An Invalid category selected."
+					})
+				}
+			})
+			return;
+		}
+	}
+	
+	ev.attendees.push(attendee);
 	ev.save(function(err) {
 		if (err) throw err;
-		res.redirect('/event/'+ev._id);
 	});
+	res.format({
+		html: function() {
+			res.redirect('/event/'+ev._id);
+		},
+		json: function() {
+			res.send({
+				status: 200
+			})
+		}
+	})
 }
 
 function postMessage (req, res) {

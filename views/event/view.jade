@@ -1,8 +1,12 @@
 extends ../base
 
+append meta
+	meta(name="event_id", content="#{event._id}")
+
 append addonjs
-	script(src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false")
+	script(src="/js/eventLandingPage.js")
 	if event.address != null || event.geo != null
+		script(src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false")
 		script.
 			var map = new google.maps.Map(document.getElementById('eventMap'), {
 				zoom:5,
@@ -27,7 +31,6 @@ append addonjs
 				}
 			
 		script.
-			
 			function initialize(location) {
 				map.setCenter(location);
 				map.setZoom(12);
@@ -55,9 +58,7 @@ append addonjs
 			google.maps.event.addDomListener(window, 'load', preInitialize);
 
 block content
-	include landingpage
-	
-	//if eventattending
-	//	include homepage
-	//else
-	//	include landingpage				
+	if eventattending
+		include homepage
+	else
+		include landingpage				

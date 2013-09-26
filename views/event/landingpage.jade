@@ -62,7 +62,7 @@ br
 mixin createCategory
 	.description-text(style="margin-top:50px;")
 		b Create your own category:
-		input.file_input_textbox55(type="text", style="font-size:18px; margin-top:0px; margin-left:5px;")
+		input#createOwnCategory.file_input_textbox55(type="text", style="font-size:18px; margin-top:0px; margin-left:5px;")
 		.line(style="margin-left:20px;")
 .row-fluid
 	.span6
@@ -71,7 +71,7 @@ mixin createCategory
 		if event.allowAttendeesToCreateCategories && event.categories.length > 0
 			.row-fluid
 				.span5.offset1
-					.iconsbox2.left
+					.iconsbox2.left#eventCategoryList
 						for category in event.categories
 							input.prof-choice(type="button", value=category)
 				if event.allowAttendeesToCreateCategories
@@ -92,5 +92,8 @@ mixin createCategory
 			h4(style="color:#ecd077;") Event does not have a location
 .eighty-five
 	.center2
-		input.profile-button-small(type="submit", value="Access event")
+		p#accessEventWarningMessage.hide(style="color:#FFF; font-size: 16px;") Please select a category, otherwise 
+			font(style="color: #ecd077") click "Access Event" once more
+			|  if you don't like it when computers make you do things :)
+		input#accessEvent.profile-button-small(type="submit", value="Access event")
 		input.profile-button-small.smallslid3(type="button", onclick="window.location='/';return false;", value="Go back to homepage")

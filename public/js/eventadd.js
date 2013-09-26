@@ -87,6 +87,24 @@ $(document).ready(function() {
 			return;
 		}
 		
+		var ext = file.name.split('.');
+		var extensionValid = false;
+		
+		if (ext.length > 0) {
+			ext = ext[ext.length-1];
+			
+			// Check against valid extensions
+			if (ext == 'jpg' || ext == 'jpeg' || ext == 'png' || ext == 'gif') {
+				// valid.
+				extensionValid = true;
+			}
+		}
+		
+		if (!extensionValid) {
+			alert("The file is not valid :/. Please choose an image, thank you.");
+			return;
+		}
+		
 		var reader = new FileReader();
 		reader.onload = function(img) {
 			$("#avatar_preview").attr('src', img.target.result);
@@ -125,6 +143,10 @@ $(document).ready(function() {
 		$("#file_browse").attr("name", "avatar");
 		
 		$("#avatarStatus").html("");
+		
+		if (avId.length == 0) {
+			return;
+		}
 		
 		$.ajax({
 			url: "/event/"+avId+"/avatar/remove",

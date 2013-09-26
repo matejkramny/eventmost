@@ -320,6 +320,11 @@ input.file_input_textbox_credit {
 	line-height: 30px;
 	height: 40px;
 }
+.eventCategorySelected {
+	color: #ecd077;
+	border:1px solid #ecd077;
+	background: #542437;
+}
 .dropbox-add{
 	background-color: #ecd077;
 	border:none;
@@ -1426,9 +1431,9 @@ h14 span {
 
 /**** DROPDOWN ****/
         .dropdown2 {margin-top: 0px; margin-bottom: 0px; }
-        .dropdown2 dd, .dropdown dt, .dropdown ul { margin:0px; padding:0px; z-index: 799;}
+        .dropdown2 dd, .dropdown2 dt, .dropdown2 ul { margin:0px; padding:0px; z-index: 799;}
         .dropdown2 dd { position:relative; }
-        .dropdown2 a, .dropdown a:visited {  color:#542437; text-decoration:none; outline:none; font-size: 18px;}
+        .dropdown2 a, .dropdown2 a:visited {  color:#542437; text-decoration:none; outline:none; font-size: 18px;}
         .dropdown2 a:hover { color:#542437;  }
         .dropdown2 dt a:hover {  color:#542437;}
         .dropdown2 dt a {background-image: url('../img/drop2.svg') ; display:block; 
@@ -1456,9 +1461,9 @@ h14 span {
 /**** DROPDOWN ****/
 
         .dropdown3 {margin-top: 0px; margin-bottom: 0px; }
-        .dropdown3 dd, .dropdown dt, .dropdown ul { margin:0px; padding:0px; z-index: 799;}
+        .dropdown3 dd, .dropdown3 dt, .dropdown3 ul { margin:0px; padding:0px; z-index: 799;}
         .dropdown3 dd { position:relative; }
-        .dropdown3 a, .dropdown a:visited {  color:#542437; text-decoration:none; outline:none; font-size: 18px;}
+        .dropdown3 a, .dropdown3 a:visited {  color:#542437; text-decoration:none; outline:none; font-size: 18px;}
         .dropdown3 a:hover { color:#542437;  }
         .dropdown3 dt a:hover {  color:#542437;}
         .dropdown3 dt a {background-image: url('../img/drop3.svg') ; display:block; 
@@ -1480,9 +1485,9 @@ h14 span {
 
 /**** DROPDOWN ****/
         .dropdown4 {margin-top: 10px; margin-left: 0px;}
-        .dropdown4 dd, .dropdown dt, .dropdown ul { margin:0px; padding:0px; z-index: 799;}
+        .dropdown4 dd, .dropdown4 dt, .dropdown4 ul { margin:0px; padding:0px; z-index: 799;}
         .dropdown4 dd { position:relative; }
-        .dropdown4 a, .dropdown a:visited {  color:#542437; text-decoration:none; outline:none; font-size: 18px;}
+        .dropdown4 a, .dropdown4 a:visited {  color:#542437; text-decoration:none; outline:none; font-size: 18px;}
         .dropdown4 a:hover { color:#542437;  }
         .dropdown4 dt a:hover { color:#53777a;}
         .dropdown4 dt a { display:block; font-size: 30px;  width:380px; height: 25px; color:#53777a; float: right; }

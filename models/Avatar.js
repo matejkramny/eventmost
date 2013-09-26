@@ -32,6 +32,13 @@ scheme.methods.doUpload = function(files, cb) {
 			return;
 		}
 		
+		// Check against valid extensions
+		if (!(ext == 'jpg' || ext == 'jpeg' || ext == 'png' || ext == 'gif')) {
+			// valid.
+			cb("Invalid file");
+			return;
+		}
+		
 		self.url = "/avatars/"+this._id+"."+ext;
 		
 		fs.readFile(files.avatar.path, function(err, avatar) {
