@@ -13,15 +13,17 @@
 			.line
 			.left
 				img.arrow(src="/img/clock.svg", style="width:50px; height:50x;")
-			.left.date2.color
-				| 03.15<br />
+			.left.date2.color #{event.start.getHours()}:#{event.start.getMinutes()}
+				br
 				| (BST)
 			.right_star2.smallslid5
 				.image2
 					img.image2(src="/img/calendar-icony.svg", style="width:47px; height:50x;")
-					h18
-						| 19.02 <br />
-						| 2013
+					h18= event.start.getDate()
+						| .
+						= event.start.getMonth()+1
+						br
+						= event.start.getFullYear()
 		.left.smallslid3
 			.description-text
 				| Where
@@ -29,8 +31,10 @@
 			.left
 				img(src="/img/map6.svg", alt="", class="arrow" style="margin-top:-5px; margin-left:-10px;")
 			.left.location
-				h2 London
-				h3 United Kingdom
+				if event.address && event.address.length > 0
+					h3= event.address
+				else
+					h2 Location unavailable
 		.left.smallslid3
 			.description-text
 				| Event Organizer
@@ -45,33 +49,47 @@
 			.description-text-big
 				| Event description
 			.line
-			.left.description-text-medium= event.description
+			.left.description-text-medium!= event.description
 	.clearfix
 
 // tickets required
 if event.pricedTickets
 	include inc/payment
 
-.eighty-five
-	.center2.description-text
-		b Who are you in this event:
-	.center2.fiftyfive
-		.iconsbox2.left
-			input.prof-choice(type="submit", value="Guest Speaker")
-			input.prof-choice(type="submit", value="Guest Speaker")
-			input.prof-choice(type="submit", value="Guest Speaker")
-			input.prof-choice(type="submit", value="Guest Speaker")
-		if event.allowAttendeesToCreateCategories
-			.left.ten
-				.inten1
-					.inten2
-						| or
-			.thirty.left.smallslid3
-				.description-text(style="margin-top:50px;")
-					b Create your own category:
-					input.file_input_textbox55(type="text", style="font-size:18px; margin-top:0px; margin-left:5px;")
-					.line(style="margin-left:20px;")
-	.clearfix
+.clearfix
+br
+
+mixin createCategory
+	.description-text(style="margin-top:50px;")
+		b Create your own category:
+		input.file_input_textbox55(type="text", style="font-size:18px; margin-top:0px; margin-left:5px;")
+		.line(style="margin-left:20px;")
+.row-fluid
+	.span6
+		.center2.description-text
+			b Who are you in this event:
+		if event.allowAttendeesToCreateCategories && event.categories.length > 0
+			.row-fluid
+				.span5.offset1
+					.iconsbox2.left
+						for category in event.categories
+							input.prof-choice(type="button", value=category)
+				if event.allowAttendeesToCreateCategories
+					.span6
+						.row-fluid
+							.span4
+								.inten1
+									.inten2
+										| or
+							.span8
+								mixin createCategory()
+		else if event.allowAttendeesToCreateCategories
+			mixin createCategory()
+		else
+			| An attendee. Sorry, the event organiser does not allow attendees to choose categories or craete their own.
+	.span6
+		#eventMap(style="height:300px;")
+			h4(style="color:#ecd077;") Event does not have a location
 .eighty-five
 	.center2
 		input.profile-button-small(type="submit", value="Access event")

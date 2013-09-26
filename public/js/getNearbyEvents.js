@@ -3,6 +3,10 @@ function formatEvent(event) {
 	if (event.address == null || event.address.length == 0) {
 		event.address = "<h1>Location unavailable</h1>";
 	}
+	var avatar = event.avatar.url || "/img/default-logo.svg";
+	if (!event.description) {
+		event.description = "";
+	}
 	var html = '\
 	<div class="row-fluid">\
 		<div class="events">\
@@ -10,10 +14,10 @@ function formatEvent(event) {
 				<img src="/img/map-icon.svg" alt="">\
 			</div>\
 			<div class="span1">\
-				<img src="'+event.avatar+'" alt="" class="minus">\
+				<img src="'+avatar +'" alt="" class="minus">\
 			</div>\
 			<div class="span8p">\
-				<h8><a href="/event/'+event._id+'">'+event.name+'</a></h8>\
+				<a href="/event/'+event._id+'"><h8>'+event.name+'</h8></a>\
 				<p class="eventtext">'+event.description+'</p>\
 			</div>\
 			<div class="right_star">\
@@ -38,7 +42,7 @@ function formatEvent(event) {
 					<img src="/img/map6.svg" alt="" class="arrow">\
 				</div>\
 				<div class="left location">\
-					'+event.address+'\
+					<h1>'+event.address+'</h1>\
 				</div>\
 			</div>\
 		</div>\

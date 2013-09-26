@@ -33,6 +33,9 @@ $(document).ready(function() {
 		$eventlocation.val("Getting your location..")
 		if (window.Geo.isSupported()) {
 			window.Geo.getLocation(function(coords, pos) {
+				$("#lat").val(coords.lat)
+				$("#lng").val(coords.lng)
+				
 				$.ajax({
 					url: '/rgeocode.json?latlng='+coords.lat+','+coords.lng,
 					method: 'GET',

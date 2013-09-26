@@ -99,6 +99,7 @@ scheme.statics.getEvent = function (id, cb) {
 }
 
 scheme.methods.edit = function (body, user, files, cb) {
+	var self = this;
 	this.user = user._id;
 	
 	if (body.name) {
@@ -237,7 +238,7 @@ scheme.methods.edit = function (body, user, files, cb) {
 			if (!isNaN(lat) && !isNaN(lng)) {
 				geo.geo.lat = lat;
 				geo.geo.lng = lng;
-				geo.event = this._id;
+				geo.event = self._id;
 			
 				geo.save();
 			} else {
@@ -247,7 +248,6 @@ scheme.methods.edit = function (body, user, files, cb) {
 	}
 	
 	// Validate the data
-	var self = this;
 	this.validate(function(errors) {
 		if (errors && errors.length > 0) {
 			// has errors
@@ -284,10 +284,12 @@ scheme.methods.validate = function (cb) {
 }
 
 scheme.methods.getGeo = function (cb) {
+	var self = this;
 	Geolocation.find({ event: this._id }, function(err, geo) {
 		if (err) throw err;
 		
-		this.geo = geo[0];
+		console.log(geo);
+		self.geo = geo[0];
 		
 		cb();
 	})

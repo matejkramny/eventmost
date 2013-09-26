@@ -3,8 +3,7 @@
   src: url('/fonts/raleway-regular.eot');
   src: local('Raleway'),
   	   url('/fonts/raleway-regular.woff') format('woff'),
-       url('/fonts/raleway-regular.ttf') format('truetype'),
-	   url('/fonts/raleway-regular.svg#ralewayregular') format('svg');
+       url('/fonts/raleway-regular.ttf') format('truetype');
 }
 
 body {
