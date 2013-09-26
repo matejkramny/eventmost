@@ -104,13 +104,20 @@ scheme.methods.edit = function (body, user, files, cb) {
 	if (body.name) {
 		this.name = body.name
 	}
+	console.log("Avatar "+body.avatar);
 	if (body.avatar) {
 		try {
-			this.avatar = ObjectId(body.avatar);
+			console.log("Assigning avatar")
+			this.avatar = mongoose.Types.ObjectId(body.avatar);
+			console.log("ASsigned avatar")
 		} catch (ex) {
 			// objectid invalid
+			if (process.env.NODE_ENV != 'production') {
+				throw ex;
+			}
 		}
 	}
+	console.log(this.avatar);
 	if (body.venue_name) {
 		this.venue_name = body.venue_name
 	}
