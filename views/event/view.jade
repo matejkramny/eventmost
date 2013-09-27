@@ -8,10 +8,14 @@ append addonjs
 	if event.address != null || event.geo != null
 		script(src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false")
 		script.
-			var map = new google.maps.Map(document.getElementById('eventMap'), {
-				zoom:5,
-				mapTypeId: google.maps.MapTypeId.ROADMAP
-			});
+			var mapId = document.getElementById('eventMap');
+			var map;
+			if (mapId) {
+				map = new google.maps.Map(mapId, {
+					zoom:5,
+					mapTypeId: google.maps.MapTypeId.ROADMAP
+				});
+			}
 		if event.geo != null
 			script.
 				function preInitialize() {
@@ -32,6 +36,7 @@ append addonjs
 			
 		script.
 			function initialize(location) {
+				if (!map) return;
 				map.setCenter(location);
 				map.setZoom(12);
 				
@@ -58,6 +63,24 @@ append addonjs
 			google.maps.event.addDomListener(window, 'load', preInitialize);
 
 block content
+	.row-fluid
+		.span12
+			ul.nav.nav-tabs
+				li.active
+					a(href="/event/"+event._id+"/")
+						h8= event.name
+				li
+					a(href="/event/"+event._id+"/")
+						h8 Dropbox
+				li
+					a(href="/event/"+event._id+"/")
+						h8 Attendees
+				li
+					a(href="/event/"+event._id+"/")
+						h8 Conversations
+				li.pull-right
+					a(href="/event/"+event._id+"/")
+						h8 Registration page
 	if eventattending
 		include homepage
 	else

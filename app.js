@@ -55,6 +55,7 @@ if (process.env.NODE_ENV == 'production') {
 }
 
 // all environments
+app.enable('trust proxy');
 app.set('port', process.env.PORT || 3000); // Port
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade'); // Templating engine
