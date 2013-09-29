@@ -32,7 +32,7 @@ block content
 		.span6
 			.bluebox
 				a.link4(href="/event/"+event._id+"/attendees") Attendees
-			mixin attendee({ user: user, category: "Planner" })
+			mixin attendee({ user: event.user, category: "Planner" })
 			- var i = 0;
 			for attendee in event.attendees
 				mixin attendee(attendee)
