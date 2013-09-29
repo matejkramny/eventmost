@@ -2,6 +2,7 @@ $(document).ready(function() {
 	$loginForm = $("#LoginForm")
 	$loginUserEmail = $("#LoginUserEmail")
 	$loginUserPassword = $("#LoginUserPassword")
+	$UserLoginForm = $("#UserLoginForm")
 	
 	$registerForm = $("#RegisterForm")
 	$registerUserName = $("#RegisterUserName")
@@ -50,6 +51,8 @@ $(document).ready(function() {
 		var self = this;
 		
 		this.success = function(data, status, jqxhr) {
+			self.status.removeClass("hide");
+			
 			if (data == null) {
 				// error
 				self.status.html("Server error - Please try again later. Sorry")
@@ -115,4 +118,8 @@ $(document).ready(function() {
 		"login": $registerUserEmail,
 		"password": $registerUserPassword
 	}, {});
+	new Form($UserLoginForm, {
+		"login": $("#UserEmail"),
+		"password": $("#UserPassword")
+	})
 })

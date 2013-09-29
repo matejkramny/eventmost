@@ -2,6 +2,7 @@ models = require('../../models')
 
 exports.listEvents = function (req, res) {
 	models.Event.find({ deleted: false })
+		.populate('avatar user')
 		.sort('-start')
 		.exec(function(err, evs) {
 		// TODO limit mount of events received
@@ -24,6 +25,7 @@ exports.listEvents = function (req, res) {
 
 exports.listMyEvents = function (req, res) {
 	models.Event.find({ user: req.user._id, deleted: false })
+		.populate('avatar user')
 		.sort('-start')
 		.exec(function(err, evs) {
 		if (err) throw err;
@@ -102,7 +104,6 @@ exports.listNearEvents = function (req, res) {
 						res.render('event/list', { events: events, pagename: "Events near you", title: "Events nearby" })
 					},
 					json: function() {
-						console.log("Returning "+events)
 						res.send({
 							events: events,
 							pagename: "Events near you"

@@ -1,33 +1,37 @@
-extends ../layout
+extends ../base
+
+include inc/navbar
 
 block content
-	include ../inc/sidebar
-	#main-content
-		.search-box
-			.search-content
-				p
-					span.title.left Dropbox
-					span.right.file-upload
-						form(action="/event/"+event._id+"/dropbox/upload", method="POST",  enctype="multipart/form-data")
-							input(type="hidden", name="_csrf", value=token)
-							input.right.submit-btn(type="submit", value="Upload file")
-							input.right(type="file", name="upload")
-				.clear
-				p
-					include ../inc/flash
-		for file in event.files
-			.users-spacer.single-item
-				.file-short-info
-					.file-img.left
-					.left
-						.name= file.name
-						.role= file.size
-							span.file-uploaded= file.created.toString()
-						.options-btn-box
-							form(method="POST", action="/event/"+event._id+"/dropbox/remove")
-								input(type="hidden", name="_csrf", value=token)
-								input(type="hidden", name="file", value=file.file)
-								if event.user._id.equals(user._id)
-									a.file-btn.round-button(href="#", onclick="if(confirm('Are you sure you want to delete this file?')){$(this).parent().submit()} event.returnValue = false; return false;") Delete
-								a.file-btn.round-button(href=file.file) Download
-	.clear
+	mixin navbar(1)
+	
+	form#uploadForm(action="/event/"+event._id+"/dropbox/upload", method="POST", enctype="multipart/form-data")
+		input(type="hidden", name="_csrf", value=token)
+		.left
+			#file_browse_wrapper
+				input#file_browse(name="upload", type="file")
+		.left
+			#file_upload_wrapper(onclick="$('#uploadForm').submit()")
+		.clearfix
+	
+	for file in event.files
+		.row-fluid
+			.span2
+				img(src=file.file)
+			.span6
+				h8= file.name
+				br
+				h8 Size: #{file.size}
+				br
+				h8 Created: #{file.created.toString()}
+			.span4
+				.options-btn-box
+					form#deleteForm(method="POST", action="/event/"+event._id+"/dropbox/remove")
+						input(type="hidden", name="_csrf", value=token)
+						input(type="hidden", name="file", value=file.file)
+						
+						a.btn.btn-success(href=file.file) Download
+						if event.user._id.equals(user._id)
+							| &nbsp;
+							a.btn.btn-danger(href="#", onclick="$('#deleteForm').submit()") Delete
+	br

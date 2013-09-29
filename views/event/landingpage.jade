@@ -1,0 +1,115 @@
+extends ../base
+
+include inc/navbar
+
+append meta
+	meta(name="event_id", content="#{event._id}")
+
+append addonjs
+	script(src="/js/eventLandingPage.js", defer="true")
+	include inc/mapjs
+
+block content
+	mixin navbar(4)
+	
+	mixin createCategory
+		.description-text(style="margin-top:50px;")
+			b My Category is:
+			input#createOwnCategory.file_input_textbox55(type="text", placeholder="Create my own category..", style="font-size:18px; margin-top:10px; margin-left:0px; border:1px solid #ecd077;")
+	
+	.row-fluid
+		.span7
+			.row-fluid
+				.span6
+					img(src=event.avatar.url)
+				.span6
+					.row-fluid
+						.span12.speaker_titlerespond2
+							h5
+								b= event.name
+					.row-fluid
+						.span12
+							.description-text-medium(style="word-wrap: break-word;")!= event.description
+			.row-fluid
+				.span12
+					// tickets required
+					if event.pricedTickets
+						include inc/payment
+			.row-fluid
+				.span12
+					.center2.description-text
+						b Who are you in this event:
+					if event.allowAttendeesToCreateCategories && event.categories.length > 0
+						.row-fluid
+							.span5.offset1
+								.iconsbox2.left#eventCategoryList
+									for category in event.categories
+										input.prof-choice(type="button", value=category)
+							if event.allowAttendeesToCreateCategories
+								.span6
+									.row-fluid
+										.span4
+											.inten1
+												.inten2
+													| or
+										.span8
+											mixin createCategory()
+					else if event.allowAttendeesToCreateCategories
+						mixin createCategory()
+					else
+						| An attendee. Sorry, the event organiser does not allow attendees to choose categories or craete their own.
+		.span5
+			.row-fluid
+				.span6
+					.description-text When
+					.line
+					.left
+						img.arrow(src="/img/clock.svg", style="width:50px; height:50x;")
+					.left.date2.color #{event.start.getHours()}:#{event.start.getMinutes()}
+						br
+						| (BST)
+					.right_star2.smallslid5
+						.image2
+							img.image2(src="/img/calendar-icony.svg", style="width:47px; height:50x;")
+							h18= event.start.getDate()
+								| .
+								= event.start.getMonth()+1
+								br
+								= event.start.getFullYear()
+				.span6
+					.description-text
+						| Event Organizer
+					.line
+					.left.description-text-small
+						b= event.user.getName()
+						if event.user.position
+							|  - #{event.user.position}
+			.row-fluid
+				.span12
+					.description-text
+						| Where
+					.line
+					.left
+						img(src="/img/map6.svg", alt="", class="arrow" style="margin-top:-5px; margin-left:-10px;")
+					.left.location
+						h2= event.venue_name
+						if event.address && event.address.length > 0
+							h3= event.address
+						else
+							h2 Location unavailable
+			.row-fluid
+				.span12
+					#eventMap(style="height:300px;")
+						h4(style="color:#ecd077;") Event does not have a location
+	
+	.row-fluid
+		.span12
+			//- bottom buttons access & home page
+			unless eventattending
+				.eighty-five
+					.center2
+						p#accessEventWarningMessage.hide(style="color:#FFF; font-size: 16px;") Please select a category, otherwise 
+							font(style="color: #ecd077") click "Access Event" once more
+							|  if you don't like it when computers make you do things :)
+						input#accessEvent.profile-button-small(type="submit", value="Access event")
+						input.profile-button-small.smallslid3(type="button", onclick="window.location='/';return false;", value="Go back to homepage")

@@ -1,44 +1,14 @@
-extends ../layout
+extends ../base
+
+include inc/navbar
+include inc/attendee
 
 append content
-	include ../inc/sidebar
-	#main-content
-		.search-box
-			.search-content
-				p
-					span.title Attendees
-		.users-spacer
-			.user-short-info.border-bottom
-				.avatar.left(data-big-picture=event.user.avatar)
-					a(href="/user/"+event.user._id)
-						img(src=event.user.avatar)
-				.left
-					.planner Planner
-					.name
-						a(href="/user/"+event.user._id)= event.user.getName()
-						.role= event.user.position
-							if event.user.company
-								| , 
-								= event.user.company
-					.grey-arrow
-						a.grey-dot.margin-left-25.golink(href="/user/"+event.user._id)
-				.clear
-		.clear
-		for attendee in event.attendees
-			.users-spacer
-				.user-short-info.border-bottom
-					.avatar.left(data-big-picture=attendee.avatar)
-						a(href="/user/"+attendee._id)
-							img(src=attendee.avatar)
-					.left
-						.name
-							a(href="/user/"+attendee._id)= attendee.getName()
-							.role= attendee.position
-								if attendee.company
-									| , 
-									= attendee.company
-						.grey-arrow
-							a.grey-dot.margin-left-25.golink(href="/user/"+attendee._id)
-					.clear
-			.clear
-	.clear
+	mixin navbar(2)
+	
+	mixin attendee({ user: event.user, category: "Planner" })
+	
+	for attendee in event.attendees
+		mixin attendee(attendee)
+	
+	br

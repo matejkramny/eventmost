@@ -1,4 +1,57 @@
-@import url(http://fonts.googleapis.com/css?family=Raleway:100,200,400,700,700italic,900,400italic,300);
+@font-face {
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 100;
+  src: url('/fonts/raleway-thin.eot');
+  src: local('Raleway Thin'),
+  	   url('/fonts/raleway-thin.woff') format('woff'),
+       url('/fonts/raleway-thin.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 200;
+  src: url('/fonts/raleway-extralight.eot');
+  src: local('Raleway ExtraLight'),
+  	   url('/fonts/raleway-extralight.woff') format('woff'),
+       url('/fonts/raleway-extralight.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 300;
+  src: url('/fonts/raleway-light.eot');
+  src: local('Raleway Light'),
+  	   url('/fonts/raleway-light.woff') format('woff'),
+       url('/fonts/raleway-light.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/fonts/raleway-regular.eot');
+  src: local('Raleway'),
+  	   url('/fonts/raleway-regular.woff') format('woff'),
+       url('/fonts/raleway-regular.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 700;
+  src: url('/fonts/raleway-bold.eot');
+  src: local('Raleway Bold'),
+  	   url('/fonts/raleway-bold.woff') format('woff'),
+       url('/fonts/raleway-bold.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 900;
+  src: url('/fonts/raleway-extrabold.eot');
+  src: local('Raleway Heavy'),
+  	   url('/fonts/raleway-extrabold.woff') format('woff'),
+       url('/fonts/raleway-extrabold.ttf') format('truetype');
+}
 
 body {
 	background-color: #542437;
@@ -8,10 +61,9 @@ h1 {
 	color: #ecd178;
 }
 
-header {
+.pageHeader, header {
 	background-color: #ecd178;
 	height: 85px;
-	width: 1200px;
 }
 
 header .signin {
@@ -53,8 +105,8 @@ header .menu {
 .eighty-five { margin: auto; width: 85%; }
 .tops-minus-res {margin-top: -5px;}
 h17 { font-weight: 400; font-size: 27px; color: #ecd077; padding-left:10px; width: 100%;}
-h55  { font-size: 25px; margin-top: -10px !important; color: #542437; margin-left: -11px;}
-.minus2 h20 {font-size: 20px; font-weight: 400; color: #ecd077; position: absolute; top: 69px; left:40px; 
+h55  { font-size: 25px; margin-top: -10px !important; color: #542437; margin-left: 10px;}
+.minus2 h20 {font-size: 20px; font-weight: 400; color: #ecd077;
 	padding-left: 7px; padding-right: 7px; background-color: #c02943 !important; border-radius: 15px; }
 
 
@@ -71,7 +123,7 @@ input.file_input_textboxres {
     height: 30px !important;
 }
 input.file_input_textbox2res {
-	color:#ecd077;
+	color:#ecd077 !important;
 	font-size: 25px;
 	font-weight: 100;
 	border: none;
@@ -266,6 +318,11 @@ input.file_input_textbox_credit {
 	color:#542437;
 	line-height: 30px;
 	height: 40px;
+}
+.eventCategorySelected {
+	color: #ecd077;
+	border:1px solid #ecd077;
+	background: #542437;
 }
 .dropbox-add{
 	background-color: #ecd077;
@@ -599,7 +656,6 @@ footer .copy {
 .purpleline{
 	width: 6px;
 	height: 100px;
-	margin-left: 20px;
 	margin-top: -10px;
 }
 .stable {
@@ -702,11 +758,11 @@ footer .copy {
 	display: block;
 }
 .image {
-	padding-bottom: 10px;
+	/*padding-bottom: 10px;*/
 	vertical-align:middle;
 	text-align:left;
-	float: none;
-	display: block;
+	/*float: none;
+	display: block;*/
 	position: relative;
 	color: #ecd077;
 }
@@ -792,10 +848,25 @@ a.guest:hover {
 }
 .guest-x {
 	background-image: url('../img/ex.svg') no-repeat;
-	margin-top: -18px ;
+	margin-top: 0px;
+	margin-left:5px;
 }
 .login {
 	color: #542437;
+}
+.dimonhover {
+	cursor:pointer;
+}
+.dimonhover.orangebox:hover, .dimonhover.orangebox.selected {
+	background-color: #ecd178;
+	-webkit-transition: background-color 100ms linear;
+	-moz-transition: background-color 100ms linear;
+	-o-transition: background-color 100ms linear;
+	-ms-transition: background-color 100ms linear;
+	transition: background-color 100ms linear;
+}
+#invitationLink {
+	cursor:pointer;
 }
 input.file_input_textbox {
 	color:#542437;
@@ -997,8 +1068,8 @@ input.file_input_textbox10 {
 	margin-right: 0px !important;
 }
 input.file_input_textbox10:disabled {
-	background-color: #9cabae !important;
-	color: #97868c !important;
+	/*background-color: #9cabae !important;
+	color: #97868c !important;*/
 }
 input[type="text3"]:focus{
   	color:#542437 !important;
@@ -1037,7 +1108,11 @@ input[type="search"]::-webkit-input-placeholder {
 	line-height: 30px;
 }
 
-
+.right_arrow_ev_add {
+	padding-left:10px;
+	margin-right:5px;
+	padding-top:12px;
+}
 .inh {
 	min-height: 217px;
 	letter-spacing: 210;
@@ -1227,15 +1302,25 @@ input[type="search"]::-webkit-input-placeholder {
 	padding-bottom: 13px;
 }
 .span5p2 {
-	width: 44.4% !important;
+	width: 43.85% !important;
 	margin-left: 0px !important; 
 }
-.span5p2 h6 {	padding-top: 10px;
+.span5p2 h6 {
+	padding-top: 10px;
 	font-weight: 100;
 	font-size: 40px;
 	padding-bottom: 13px;
 	text-align: center;
-	font-weight: 100;}
+	font-weight: 100;
+}
+.spanBigH6 h6 {
+	padding-top: 10px;
+	font-weight: 100;
+	font-size: 40px;
+	padding-bottom: 13px;
+	text-align: center;
+	font-weight: 100;
+}
 .span4 h6 {
 	padding-top: 10px;
 	font-weight: 100;
@@ -1314,8 +1399,8 @@ h14 span {
 /* Tiny Carousel */
 
 #slider1 { height: 1%; overflow:hidden; float: left; padding-top: 10px;}
-#slider1 .viewport { float: left; width:770px; height: 220px; overflow: hidden; position: relative; padding-left: 30px; margin-left: 30px;}
-#slider1 .buttons { background:url("../img/buttons.svg") no-repeat scroll 0 0 transparent; display: block; margin: 40px 10px 0 30px;  text-indent: -999em; float: left; width: 70px; height: 70px; overflow: hidden; position: relative; }
+#slider1 .viewport { float: left; width:770px; height: 220px; overflow: hidden; position: relative; padding-left: 30px; margin-left: 10px;}
+#slider1 .buttons { background:url("../img/buttons.svg") no-repeat scroll 0 0 transparent; display: block; margin: 40px 0px 0 0px;  text-indent: -999em; float: left; width: 70px; height: 70px; overflow: hidden; position: relative; }
 #slider1 .next { background-position: 0px -70px; margin: 53px 0 0 10px; height: 65px;  }
 #slider1 .overview { list-style: none; position: absolute; padding: 0; margin: 0; width: 850px; left: 0 top: 0; }
 #slider1 .overview li{ float: left; margin: 0 40px 0 0; padding: 1px; width: 240px; color:#ecd077; font-size: 16px;}
@@ -1344,9 +1429,9 @@ h14 span {
 
 /**** DROPDOWN ****/
         .dropdown2 {margin-top: 0px; margin-bottom: 0px; }
-        .dropdown2 dd, .dropdown dt, .dropdown ul { margin:0px; padding:0px; z-index: 799;}
+        .dropdown2 dd, .dropdown2 dt, .dropdown2 ul { margin:0px; padding:0px; z-index: 799;}
         .dropdown2 dd { position:relative; }
-        .dropdown2 a, .dropdown a:visited {  color:#542437; text-decoration:none; outline:none; font-size: 18px;}
+        .dropdown2 a, .dropdown2 a:visited {  color:#542437; text-decoration:none; outline:none; font-size: 18px;}
         .dropdown2 a:hover { color:#542437;  }
         .dropdown2 dt a:hover {  color:#542437;}
         .dropdown2 dt a {background-image: url('../img/drop2.svg') ; display:block; 
@@ -1363,7 +1448,7 @@ h14 span {
         .disabled dt a {background-image: url('../img/drop2_dis.svg') ! important; width: 100%; height: 100%;}
         .disabled-image {display:none;   height: 100%; width:100%;  background-image: url('../img/dis-image.svg') ! important; z-index: 900; 
         left:0px; top: 0px; position: absolute;}
-        .diabled-lock {display:none; background-image: url('../img/dis-lock.svg') ! important; 
+        .disabled-lock {display:none; background-image: url('../img/dis-lock.svg') ! important; 
          left:48%; top: 47%; z-index: 950; width: 63px; height: 72px; position:absolute; }
         
         .rel {position: relative; width:100% !important; margin: auto;}
@@ -1374,9 +1459,9 @@ h14 span {
 /**** DROPDOWN ****/
 
         .dropdown3 {margin-top: 0px; margin-bottom: 0px; }
-        .dropdown3 dd, .dropdown dt, .dropdown ul { margin:0px; padding:0px; z-index: 799;}
+        .dropdown3 dd, .dropdown3 dt, .dropdown3 ul { margin:0px; padding:0px; z-index: 799;}
         .dropdown3 dd { position:relative; }
-        .dropdown3 a, .dropdown a:visited {  color:#542437; text-decoration:none; outline:none; font-size: 18px;}
+        .dropdown3 a, .dropdown3 a:visited {  color:#542437; text-decoration:none; outline:none; font-size: 18px;}
         .dropdown3 a:hover { color:#542437;  }
         .dropdown3 dt a:hover {  color:#542437;}
         .dropdown3 dt a {background-image: url('../img/drop3.svg') ; display:block; 
@@ -1398,9 +1483,9 @@ h14 span {
 
 /**** DROPDOWN ****/
         .dropdown4 {margin-top: 10px; margin-left: 0px;}
-        .dropdown4 dd, .dropdown dt, .dropdown ul { margin:0px; padding:0px; z-index: 799;}
+        .dropdown4 dd, .dropdown4 dt, .dropdown4 ul { margin:0px; padding:0px; z-index: 799;}
         .dropdown4 dd { position:relative; }
-        .dropdown4 a, .dropdown a:visited {  color:#542437; text-decoration:none; outline:none; font-size: 18px;}
+        .dropdown4 a, .dropdown4 a:visited {  color:#542437; text-decoration:none; outline:none; font-size: 18px;}
         .dropdown4 a:hover { color:#542437;  }
         .dropdown4 dt a:hover { color:#53777a;}
         .dropdown4 dt a { display:block; font-size: 30px;  width:380px; height: 25px; color:#53777a; float: right; }
@@ -1981,7 +2066,7 @@ p.check11:not(#foo) > input[type=checkbox] + label:hover 							{ background-pos
 }
 #file_browse_wrapper {
 	margin-left: 5px;
-    width: 210px;
+    width: 207px;
     height: 133px;
     background: url('../img/browse_button.svg') 0 0 no-repeat;
     border:none;
@@ -1990,7 +2075,7 @@ p.check11:not(#foo) > input[type=checkbox] + label:hover 							{ background-pos
 }
 #file_delete_wrapper {
 	margin-left: 5px;
-    width: 208px;
+    width: 205px;
     height: 133px;
     background: url('../img/delete_button.svg') 0 0 no-repeat;
     border:none;
@@ -1999,7 +2084,7 @@ p.check11:not(#foo) > input[type=checkbox] + label:hover 							{ background-pos
 }
 #file_upload_wrapper {
 	margin-left: 5px;
-    width: 208px;
+    width: 206px;
     height: 133px;
     background: url('../img/upload_button.svg') 0 0 no-repeat;
     border:none;
@@ -3113,13 +3198,33 @@ background: #d95a42;
 	font-size: 16px;
 
 }
+.predefined-categories-list li {
+	height: 30px !important;
+}
 
-@media (min-width: 992px) and (max-width: 1199px) {
- .container {
-    width: 940px !important;
-  }
- .span10p h1 {
- 	font-size: 60px !important;
- }
+ul.nav.nav-tabs {
+	border-bottom-color: #53777a;
+	background: #333;
+}
+ul.nav.nav-tabs li {
+	
+}
+ul.nav.nav-tabs li a {
+	
+}
+ul.nav.nav-tabs li.active a {
+	border-color: #53777a;
+	background: #53777a;
+	-webkit-border-radius: 0;
+	-moz-border-radius: 0;
+	border-radius: 0;
+}
 
+
+.container {
+	width: 1200px !important;
+	min-width: 1200px !important;
+}
+.span10p h1 {
+	font-size: 60px !important;
 }

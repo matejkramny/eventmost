@@ -1,8 +1,8 @@
 extends base
 
 append addonjs
-	script(src="/js/geo.js")
-	script(src="/js/getNearbyEvents.js")
+	script(src="/js/geo.js", defer="true")
+	script(src="/js/getNearbyEvents.js", defer="true")
 
 append content
 	include inc/flash
@@ -10,7 +10,7 @@ append content
 	
 	.avatar3.smallspacer
 		a(href="/profile")
-			img(src=user.avatar, alt="" style="width:100%; height:100%;")
+			img(src=user.avatar, alt="" style="max-height:230px; margin:auto; width: auto;")
 	.right.span13p
 		.orangebox.inh
 			a.link6(href="/event/add") Create event 
@@ -71,8 +71,6 @@ append content
 			h13 All events
 			.smallspacer
 				img(src="/img/arrow_big.svg", alt="", class="arrow")
-	
-	
 
 	
 	//- My Events
@@ -102,13 +100,16 @@ append content
 		.row-fluid
 			.events
 				.span1p
-					img(src="/img/map-icon.svg", alt="",)
+					img(src="/img/map-icon.svg")
 				.span1
-					img.minus(src=event.avatar, alt="")
+					if event.avatar && event.avatar.url
+						img.minus(src=event.avatar.url, alt="")
+					else
+						img.minus(src="/img/default-logo.svg")
 				.span8p
 					a(href="/event/"+event._id)
 						h8= event.name
-					p.eventtext= event.description
+					p.eventtext!= event.description
 				.right_star
 					img(src="/img/martini.svg", alt="", class="arrow")
 				.right_star
@@ -130,7 +131,8 @@ append content
 						img(src="/img/map6.svg", alt="", class="arrow")
 					.left.location
 						if event.address && event.address.length > 0
-							h1= event.address
+							h1= event.venue_name
+							h3= event.address
 						else
 							h1 Location unavailable
 		- if (++myeventsi < myevents.length)

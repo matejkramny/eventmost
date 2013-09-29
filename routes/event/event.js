@@ -3,11 +3,13 @@ var dropbox = require('./dropbox')
 	, edit = require('./edit')
 	, list = require('./list')
 	, util = require('../../util')
-	, notifications = require('./notifications')
+	, conversations = require('./conversations')
 
 exports.router = function (app) {
 	app.get('/event/add', util.authorized, add.addEvent)
 		.post('/event/add', util.authorized, add.doAddEvent)
+		.post('/event/add/avatar', util.authorized, add.uploadAvatarAsync)
+		.get('/event/:avatarid/avatar/remove', util.authorized, add.removeAvatar)
 		
 		.get('/event/:id', util.authorized, getEvent, attending, exports.viewEvent)
 		.get('/event/:id/edit', util.authorized, getEvent, attending, edit.editEvent)
@@ -15,12 +17,12 @@ exports.router = function (app) {
 		.get('/event/:id/delete', util.authorized, getEvent, edit.deleteEvent)
 		.post('/event/:id/join', util.authorized, getEvent, exports.joinEvent)
 		.get('/event/:id/attendees', util.authorized, getEvent, attending, list.listAttendees)
-		.get('/event/:id/speakers', util.authorized, getEvent, attending, list.listSpeakers)
 		.get('/event/:id/dropbox', util.authorized, getEvent, attending, dropbox.view)
-		.post('/event/:id/dropbox/upload', util.authorized, getEvent, dropbox.doUpload)
+		.post('/event/:id/dropbox/upload', util.authorized, getEvent, attending, dropbox.doUpload)
 		.post('/event/:id/dropbox/remove', util.authorized, getEvent, dropbox.doRemove)
 		.post('/event/:id/post', util.authorized, getEvent, attending, postMessage)
-		.get('/event/:id/notifications', util.authorized, getEvent, attending, notifications.display)
+		.get('/event/:id/conversations', util.authorized, getEvent, attending, conversations.display)
+		.get('/event/:id/registrationpage', util.authorized, getEvent, attending, exports.viewRegistrationPage)
 		
 		.get('/events', list.listEvents)
 		.get('/events/my', util.authorized, list.listMyEvents)
@@ -78,7 +80,9 @@ exports.attending = attending = function (req, res, next) {
 		attending = true;
 	} else {
 		for (var i = 0; i < ev.attendees.length; i++) {
-			if (ev.attendees[i]._id.equals(req.user._id)) {
+			var attendee = ev.attendees[i];
+			
+			if (typeof attendee.user === "object" && attendee.user._id.equals(req.user._id)) {
 				attending = true;
 				break;
 			}
@@ -95,8 +99,11 @@ exports.attending = attending = function (req, res, next) {
 exports.viewEvent = function (req, res) {
 	res.format({
 		html: function() {
-			console.log('locals '+res.locals.eventattending)
-			res.render('event/view', { title: res.locals.event.name });
+			if (res.locals.eventattending) {
+				res.render('event/homepage', { title: res.locals.event.name });
+			} else {
+				res.render('event/landingpage', { title: res.locals.event.name });
+			}
 		},
 		json: function() {
 			res.send({
@@ -107,27 +114,88 @@ exports.viewEvent = function (req, res) {
 	});
 }
 
+exports.viewRegistrationPage = function (req, res) {
+	res.format({
+		html: function() {
+			res.render('event/landingpage', { title: res.locals.event.name });
+		}
+	});
+}
+
 exports.joinEvent = function (req, res) {
 	var password = req.body.password;
+	var category = req.body.category;
 	
 	var ev = res.locals.event;
-	if (ev.password.enabled) {
-		if (ev.password.password == password) {
-			// join event.
-			ev.attendees.push(req.user._id);
-		} else {
+	var attendee = {
+		user: req.user._id
+	};
+	
+	if (ev.accessRequirements.password) {
+		if (ev.accessRequirements.passwordString != password) {
 			// display flash stating they got the password wrong.
-			req.session.flash.push("Event password incorrect.")
+			res.format({
+				html: function() {
+					req.session.flash.push("Event password incorrect.")
+					res.redirect('/event/'+ev._id);
+				},
+				json: function() {
+					res.send({
+						status: 400,
+						message: "Event password incorrect"
+					})
+				}
+			});
+			return;
 		}
-	} else {
-		// join event.
-		ev.attendees.push(req.user._id);
 	}
 	
+	if (category && category.length > 0) {
+		// Check if category exists & is valid
+		var foundCategory = false;
+		for (var i = 0; i < ev.categories.length; i++) {
+			if (category == ev.categories[i]) {
+				// Good
+				foundCategory = true;
+				break;
+			}
+		}
+		
+		if (foundCategory) {
+			attendee.category = category;
+		} else {
+			// reject
+			// display flash stating they got the password wrong.
+			res.format({
+				html: function() {
+					req.session.flash.push("An Invalid category selected.")
+					res.redirect('/event/'+ev._id);
+				},
+				json: function() {
+					res.send({
+						status: 400,
+						mesage: "An Invalid category selected."
+					})
+				}
+			})
+			return;
+		}
+	}
+	
+	ev.attendees.push(attendee);
 	ev.save(function(err) {
 		if (err) throw err;
-		res.redirect('/event/'+ev._id);
 	});
+	res.format({
+		html: function() {
+			res.redirect('/event/'+ev._id);
+		},
+		json: function() {
+			res.send({
+				status: 200
+			})
+		}
+	})
 }
 
 function postMessage (req, res) {

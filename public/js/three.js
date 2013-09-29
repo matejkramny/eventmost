@@ -1,4 +1,10 @@
 $(document).ready(function() {
+	$("body").on('click', "a[href='#']", function(e) {
+		// prevents the page from scrolling up
+		e.preventDefault();
+		return false;
+	})
+	
 	// Dropdown toggles
 	$(".dropdown dt a, .dropdown2 dt a, .dropdown3 dt a, .dropdown4 dt a, .dropdown5 dt a, .dropdown6 dt a, .dropdown7 dt a, .dropdown8 dt a, .dropdown12 dt a").click(function() {
 		$(this).parent().parent().find("dd ul").toggle();
@@ -27,6 +33,9 @@ $(document).ready(function() {
 		$eventlocation.val("Getting your location..")
 		if (window.Geo.isSupported()) {
 			window.Geo.getLocation(function(coords, pos) {
+				$("#lat").val(coords.lat)
+				$("#lng").val(coords.lng)
+				
 				$.ajax({
 					url: '/rgeocode.json?latlng='+coords.lat+','+coords.lng,
 					method: 'GET',

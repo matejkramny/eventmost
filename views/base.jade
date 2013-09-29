@@ -3,6 +3,7 @@ html
 	head
 		meta(http-equiv="Content-Type", content="text/html; charset=utf-8;")
 		meta(name="_csrf", content="#{token}")
+		block meta
 		title EventMost - #{title}
 		link(href="/favicon.ico", type="image/x-icon", rel="icon")
 		link(href="/favicon.ico", type="image/x-icon", rel="shortcut icon")
@@ -10,7 +11,7 @@ html
 		//- all css goes here
 		block css
 			link(rel="stylesheet", href="/bootstrap/css/bootstrap.css")
-			link(rel="stylesheet", href="/bootstrap/css/bootstrap-responsive.css")
+			//-link(rel="stylesheet", href="/bootstrap/css/bootstrap-responsive.css")
 			link(rel="stylesheet", href="/css/flat-ui.css")
 			link(rel="stylesheet", href="/css/newdesign.css")
 			link(rel="stylesheet", href="/css/toggle-switch.css")
@@ -20,41 +21,48 @@ html
 		block container
 			.row-fluid
 				header.span12
-					.container
+					.container.pageHeader
 						.row-fluid.headerSpacer
+							.logo.span3
+								a(href="/")
+									img.logo(src="/img/logo.png")
 							if everyauth.loggedIn != true
 								//- Only displayed when users are guests
-								.logo.span3
-									a(href="/")
-										img(src="/img/logo.png", class="logo")
 								.signin.span3.offset6
 									a(href="", class="link1" data-reveal-id="loginModal") Login 
 									| |
 									a(href="", class="link1" data-reveal-id="signModal")  Sign up
 							else
 								//- Only displayed when user is logged in
-								.logo.span3
-									a(href="/")
-										img(src="/img/logo.png", class="logo")
-								.menu.span7.right
-									a(href="/", class="link1") Home 
-									| |
-									a(href="/event/add", class="link1")  Create event
 								.span7
-									form(method="POST", accept-charset="utf-8")
-										.right
-											input.gonew2(type="button", value="GO")
-										input(type="hidden", name="_csrf", value=token)
-										input(type="search", placeholder="search events of people", class="file_input_textbox4")
-								img(src="/img/dot.svg", class="purpleline")
-								.right.minus2
-									a.right.image(href="/conversations")
-										if user.mailboxUnread == 0
-											img(src="/img/messagesempty.svg" class="minus4")
-										else
-											img(src="/img/messages.svg") 
-										h55 Inbox
-										h20= user.mailboxUnread
+									.row-fluid
+										.menu.span12
+											a(href="/", class="link1") Home 
+											| |
+											a(href="/event/add", class="link1")  Create event
+									.row-fluid
+										.span12
+											form(method="POST", accept-charset="utf-8")
+												.right
+													input.gonew2(type="button", value="GO")
+												input(type="hidden", name="_csrf", value=token)
+												input.file_input_textbox4(type="search", placeholder="search events or people", style="line-height:30px !important;")
+								.span2
+									.row-fluid
+										.span2
+											img(src="/img/dot.svg", class="purpleline")
+										.span10
+											.row-fluid
+												.span12(style="height:45px;")
+													a.image(href="/conversations")
+														if user.mailboxUnread == 0
+															img.minus4(src="/img/messagesempty.svg", style="margin-top:-37px; margin-left:20px;")
+														else
+															img(src="/img/messages.svg") 
+											.row-fluid.minus2
+												.span12
+													h55 Inbox
+													h20= user.mailboxUnread
 			
 			.container
 				block content
@@ -68,32 +76,26 @@ html
 			
 		//- usually globally persistent
 		block js
-			script(src="/js/gan.js")
-			script(src="/js/jquery-1.8.3.min.js")
-			script(src="/js/jquery-ui-1.10.3.custom.min.js")
-			script(src="/js/jquery.ui.touch-punch.min.js")
-			script(src="/js/bootstrap.min.js")
-			script(src="/js/bootstrap-select.js")
-			script(src="/js/bootstrap-switch.js")
-			script(src="/js/flatui-checkbox.js")
-			script(src="/js/flatui-radio.js")
-			script(src="/js/jquery.tagsinput.js")
-			script(src="/js/jquery.placeholder.js")
-			script(src="/js/jquery.stacktable.js")
-			script(src="/js/jquery.tinycarousel.min.js")
-			script(src="/js/tinycarousel2.js")
-			script(src="/js/jquery.reveal.js")
-			script(src="/js/jquery.jcarousel.min.js")
-			script(src="/js/three.js")
-			script(src="/js/four.js")
-			script.
-				// Temporary
-				$("a[href='#']").bind('click', function(event) {
-					event.preventDefault();
-					return false;
-				});
+			script(src="/js/gan.js", async="true")
+			script(src="/js/jquery-1.8.3.min.js", defer="true")
+			script(src="/js/jquery-ui-1.10.3.custom.min.js", defer="true")
+			script(src="/js/jquery.ui.touch-punch.min.js", defer="true")
+			script(src="/js/bootstrap.min.js", defer="true")
+			script(src="/js/bootstrap-select.js", defer="true")
+			script(src="/js/bootstrap-switch.js", defer="true")
+			script(src="/js/flatui-checkbox.js", defer="true")
+			script(src="/js/flatui-radio.js", defer="true")
+			script(src="/js/jquery.tagsinput.js", defer="true")
+			script(src="/js/jquery.placeholder.js", defer="true")
+			script(src="/js/jquery.stacktable.js", defer="true")
+			script(src="/js/jquery.tinycarousel.min.js", defer="true")
+			script(src="/js/tinycarousel2.js", defer="true")
+			script(src="/js/jquery.reveal.js", defer="true")
+			script(src="/js/jquery.jcarousel.min.js", defer="true")
+			script(src="/js/three.js", defer="true")
+			script(src="/js/four.js", defer="true")
 			if everyauth.loggedIn != true
-				script(src="/js/signin.js")
+				script(src="/js/signin.js", defer="true")
 				
 		//- page-specific
 		block addonjs

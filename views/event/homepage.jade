@@ -1,0 +1,43 @@
+extends ../base
+
+include inc/navbar
+include inc/attendee
+
+append meta
+	meta(name="event_id", content="#{event._id}")
+
+append addonjs
+	//-include inc/mapjs
+
+block content
+	mixin navbar(0)
+
+	.row-fluid
+		.span9
+			.row-fluid
+				.span12
+					h12= event.name
+			.row-fluid
+				h8 Thanks to our sponsors
+		.span3
+			if event.avatar && event.avatar.url
+				img(src=event.avatar.url)
+			else
+				img(src="/img/default-logo.svg")
+	
+	.row-fluid.headerspacer2
+		.span6
+			.bluebox
+				a.link4(href="/event/"+event._id+"/conversations") Conversations
+		.span6
+			.bluebox
+				a.link4(href="/event/"+event._id+"/attendees") Attendees
+			mixin attendee({ user: event.user, category: "Planner" })
+			- var i = 0;
+			for attendee in event.attendees
+				mixin attendee(attendee)
+				- if (i > 4) break;
+				- i++
+
+	br
+	.clearfix

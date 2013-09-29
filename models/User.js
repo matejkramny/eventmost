@@ -1,5 +1,6 @@
 var mongoose = require('mongoose')
 	,crypto = require('crypto')
+	,https = require('https')
 
 var schema = mongoose.Schema;
 var ObjectId = schema.ObjectId;
@@ -68,7 +69,6 @@ scheme.methods.getName = function () {
 
 scheme.methods.updateTwitter = function(meta, accessToken, accessTokenSecret, cb) {
 	this.twitter = {
-		token: accessToken,
 		userid: meta.id
 	};
 	
@@ -78,7 +78,6 @@ scheme.methods.updateTwitter = function(meta, accessToken, accessTokenSecret, cb
 }
 scheme.methods.updateFacebook = function(meta, accessToken, accessTokenSecret, cb) {
 	this.facebook = {
-		token: accessToken,
 		userid: meta.id
 	};
 	
@@ -88,7 +87,6 @@ scheme.methods.updateFacebook = function(meta, accessToken, accessTokenSecret, c
 }
 scheme.methods.updateLinkedIn = function(meta, accessToken, accessTokenSecret, cb) {
 	this.linkedin = {
-		token: accessToken,
 		userid: meta.id
 	};
 	
@@ -245,7 +243,7 @@ scheme.statics.createWithPassword = function (login, password, cb, extra) {
 	user.setPassword(password)
 	
 	// Extra provided by registration
-	if (extra.name != null) {
+	if (extra && extra.name != null) {
 		user.setName(extra.name);
 	}
 	
@@ -257,11 +255,16 @@ scheme.statics.createWithPassword = function (login, password, cb, extra) {
 scheme.statics.createWithTwitter = function(meta, accessToken, accessTokenSecret, cb) {
 	console.log("Twitter meta: " + meta)
 	
+	var avatar = meta.profile_image_url;
+	if (avatar.indexOf("_normal") != -1) {
+		avatar = avatar.replace("_normal", "");
+	}
+	
 	var user = new exports.User({
 		twitter: {
 			userid: meta.id
 		},
-		avatar: meta.profile_image_url,
+		avatar: avatar,
 		location: meta.location,
 		requestEmail: true,
 		created: Date.now()
@@ -288,6 +291,7 @@ scheme.statics.createWithFacebook = function (meta, accessToken, accessTokenSecr
 		},
 		requestEmail: false,
 		created: Date.now(),
+		avatar: 'http://graph.facebook.com/'+meta.id+'/picture?type=large'
 	})
 	if (meta.location) {
 		user.location = meta.location;
