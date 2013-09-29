@@ -1,7 +1,23 @@
 extends ../base
 
 block content
-	.bluebox(style="margin-top:20px;")
+	.row-fluid
+		.span12
+			ul.nav.nav-tabs
+				li
+					a(href="/events")
+						h8 All Events
+				li
+					a(href="/events/my")
+						h8 Created Events
+				li
+					a(href="/events/near")
+						h8 Events Nearby
+				li.pull-right
+					a(href="/event/add")
+						h8 Create Event
+	
+	.bluebox
 		a.link4(href="")= pagename
 		.right.arrange
 			| Arrange by

@@ -71,8 +71,6 @@ append content
 			h13 All events
 			.smallspacer
 				img(src="/img/arrow_big.svg", alt="", class="arrow")
-	
-	
 
 	
 	//- My Events
@@ -133,7 +131,8 @@ append content
 						img(src="/img/map6.svg", alt="", class="arrow")
 					.left.location
 						if event.address && event.address.length > 0
-							h1= event.address
+							h1= event.venue_name
+							h3= event.address
 						else
 							h1 Location unavailable
 		- if (++myeventsi < myevents.length)

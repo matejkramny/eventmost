@@ -61,18 +61,17 @@ exports.doRemove = function (req, res, next) {
 	
 	ev.save(function(err) {
 		if (err) throw err;
-		
-		res.format({
-			html: function() {
-				res.redirect('/event/'+ev._id+'/dropbox')
-			},
-			json: function() {
-				res.send({
-					status: 200,
-					message: "Removed"
-				})
-			}
-		})
+	})
+	res.format({
+		html: function() {
+			res.redirect('/event/'+ev._id+'/dropbox')
+		},
+		json: function() {
+			res.send({
+				status: 200,
+				message: "Removed"
+			})
+		}
 	})
 }
 
@@ -168,9 +167,8 @@ exports.doUpload = function (req, res) {
 			ev.files.push(file);
 			ev.save(function(err) {
 				if (err) throw err;
-				
-				res.redirect('/event/'+ev._id+"/dropbox")
-			})
+			});
+			res.redirect('/event/'+ev._id+"/dropbox")
 		});
 	});
 }

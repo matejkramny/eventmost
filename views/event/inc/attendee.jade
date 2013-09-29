@@ -1,0 +1,13 @@
+mixin attendee(attendee)
+	.row-fluid.smallspacer
+		.span1
+			img(src="/img/avatar.jpg", style="max-height: 80px;")
+		.span11
+			h8= attendee.user.getName()
+			br
+			h8 Category: #{attendee.category}
+			br
+			h8
+				if event.user.company
+					| , 
+					= event.user.company

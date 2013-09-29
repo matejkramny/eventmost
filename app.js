@@ -10,7 +10,11 @@ var express = require('express')
 	, mailer = require('nodemailer')
 
 var bugsnag = require("bugsnag");
-bugsnag.register("6c73b59b8d37503c8e8a70d67613d067")
+bugsnag.register("6c73b59b8d37503c8e8a70d67613d067", {
+	releaseStage: process.env.NODE_ENV == "production" ? "production" : "development",
+	notifyReleaseStages: ['production'],
+	appVersion: '0.2.0'
+})
 
 // Create SMTP transport method
 var transport = mailer.createTransport("sendgrid", {
@@ -60,10 +64,10 @@ app.set('port', process.env.PORT || 3000); // Port
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade'); // Templating engine
 app.set('view cache', true); // Cache views
-app.set('app version', '0.0.2'); // App version
+app.set('app version', '0.2.0'); // App version
 app.locals.pretty = process.env.NODE_ENV != 'production' // Pretty HTML outside production mode
 
-app.use(bugsnag.requestHandler);
+//app.use(bugsnag.requestHandler);
 app.use(express.logger('dev')); // Pretty log
 app.use(express.limit('25mb')); // File upload limit
 app.use("/", express.static(path.join(__dirname, 'public'))); // serve static files

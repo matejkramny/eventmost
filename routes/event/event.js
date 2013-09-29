@@ -3,7 +3,7 @@ var dropbox = require('./dropbox')
 	, edit = require('./edit')
 	, list = require('./list')
 	, util = require('../../util')
-	, notifications = require('./notifications')
+	, conversations = require('./conversations')
 
 exports.router = function (app) {
 	app.get('/event/add', util.authorized, add.addEvent)
@@ -17,12 +17,12 @@ exports.router = function (app) {
 		.get('/event/:id/delete', util.authorized, getEvent, edit.deleteEvent)
 		.post('/event/:id/join', util.authorized, getEvent, exports.joinEvent)
 		.get('/event/:id/attendees', util.authorized, getEvent, attending, list.listAttendees)
-		.get('/event/:id/speakers', util.authorized, getEvent, attending, list.listSpeakers)
 		.get('/event/:id/dropbox', util.authorized, getEvent, attending, dropbox.view)
-		.post('/event/:id/dropbox/upload', util.authorized, getEvent, dropbox.doUpload)
+		.post('/event/:id/dropbox/upload', util.authorized, getEvent, attending, dropbox.doUpload)
 		.post('/event/:id/dropbox/remove', util.authorized, getEvent, dropbox.doRemove)
 		.post('/event/:id/post', util.authorized, getEvent, attending, postMessage)
-		.get('/event/:id/notifications', util.authorized, getEvent, attending, notifications.display)
+		.get('/event/:id/conversations', util.authorized, getEvent, attending, conversations.display)
+		.get('/event/:id/registrationpage', util.authorized, getEvent, attending, exports.viewRegistrationPage)
 		
 		.get('/events', list.listEvents)
 		.get('/events/my', util.authorized, list.listMyEvents)
@@ -99,13 +99,25 @@ exports.attending = attending = function (req, res, next) {
 exports.viewEvent = function (req, res) {
 	res.format({
 		html: function() {
-			res.render('event/view', { title: res.locals.event.name });
+			if (res.locals.eventattending) {
+				res.render('event/homepage', { title: res.locals.event.name });
+			} else {
+				res.render('event/landingpage', { title: res.locals.event.name });
+			}
 		},
 		json: function() {
 			res.send({
 				event: res.locals.event,
 				attending: res.locals.eventattending
 			});
+		}
+	});
+}
+
+exports.viewRegistrationPage = function (req, res) {
+	res.format({
+		html: function() {
+			res.render('event/landingpage', { title: res.locals.event.name });
 		}
 	});
 }

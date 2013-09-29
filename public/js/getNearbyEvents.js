@@ -7,6 +7,9 @@ function formatEvent(event) {
 	if (!event.description) {
 		event.description = "";
 	}
+	if (!event.venue_name) {
+		event.venue_name = "";
+	}
 	var html = '\
 	<div class="row-fluid">\
 		<div class="events">\
@@ -42,7 +45,8 @@ function formatEvent(event) {
 					<img src="/img/map6.svg" alt="" class="arrow">\
 				</div>\
 				<div class="left location">\
-					<h1>'+event.address+'</h1>\
+					<h1>'+event.venue_name+'\
+					<h3>'+event.address+'</h3>\
 				</div>\
 			</div>\
 		</div>\

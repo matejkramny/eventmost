@@ -61,10 +61,9 @@ h1 {
 	color: #ecd178;
 }
 
-header {
+.pageHeader, header {
 	background-color: #ecd178;
 	height: 85px;
-	width: 1200px;
 }
 
 header .signin {
@@ -106,8 +105,8 @@ header .menu {
 .eighty-five { margin: auto; width: 85%; }
 .tops-minus-res {margin-top: -5px;}
 h17 { font-weight: 400; font-size: 27px; color: #ecd077; padding-left:10px; width: 100%;}
-h55  { font-size: 25px; margin-top: -10px !important; color: #542437; margin-left: -11px;}
-.minus2 h20 {font-size: 20px; font-weight: 400; color: #ecd077; position: absolute; top: 69px; left:40px; 
+h55  { font-size: 25px; margin-top: -10px !important; color: #542437; margin-left: 10px;}
+.minus2 h20 {font-size: 20px; font-weight: 400; color: #ecd077;
 	padding-left: 7px; padding-right: 7px; background-color: #c02943 !important; border-radius: 15px; }
 
 
@@ -124,7 +123,7 @@ input.file_input_textboxres {
     height: 30px !important;
 }
 input.file_input_textbox2res {
-	color:#ecd077;
+	color:#ecd077 !important;
 	font-size: 25px;
 	font-weight: 100;
 	border: none;
@@ -657,7 +656,6 @@ footer .copy {
 .purpleline{
 	width: 6px;
 	height: 100px;
-	margin-left: 20px;
 	margin-top: -10px;
 }
 .stable {
@@ -760,11 +758,11 @@ footer .copy {
 	display: block;
 }
 .image {
-	padding-bottom: 10px;
+	/*padding-bottom: 10px;*/
 	vertical-align:middle;
 	text-align:left;
-	float: none;
-	display: block;
+	/*float: none;
+	display: block;*/
 	position: relative;
 	color: #ecd077;
 }
@@ -1304,7 +1302,7 @@ input[type="search"]::-webkit-input-placeholder {
 	padding-bottom: 13px;
 }
 .span5p2 {
-	width: 44.4% !important;
+	width: 43.85% !important;
 	margin-left: 0px !important; 
 }
 .span5p2 h6 {
@@ -1401,8 +1399,8 @@ h14 span {
 /* Tiny Carousel */
 
 #slider1 { height: 1%; overflow:hidden; float: left; padding-top: 10px;}
-#slider1 .viewport { float: left; width:770px; height: 220px; overflow: hidden; position: relative; padding-left: 30px; margin-left: 30px;}
-#slider1 .buttons { background:url("../img/buttons.svg") no-repeat scroll 0 0 transparent; display: block; margin: 40px 10px 0 30px;  text-indent: -999em; float: left; width: 70px; height: 70px; overflow: hidden; position: relative; }
+#slider1 .viewport { float: left; width:770px; height: 220px; overflow: hidden; position: relative; padding-left: 30px; margin-left: 10px;}
+#slider1 .buttons { background:url("../img/buttons.svg") no-repeat scroll 0 0 transparent; display: block; margin: 40px 0px 0 0px;  text-indent: -999em; float: left; width: 70px; height: 70px; overflow: hidden; position: relative; }
 #slider1 .next { background-position: 0px -70px; margin: 53px 0 0 10px; height: 65px;  }
 #slider1 .overview { list-style: none; position: absolute; padding: 0; margin: 0; width: 850px; left: 0 top: 0; }
 #slider1 .overview li{ float: left; margin: 0 40px 0 0; padding: 1px; width: 240px; color:#ecd077; font-size: 16px;}
@@ -2068,7 +2066,7 @@ p.check11:not(#foo) > input[type=checkbox] + label:hover 							{ background-pos
 }
 #file_browse_wrapper {
 	margin-left: 5px;
-    width: 210px;
+    width: 207px;
     height: 133px;
     background: url('../img/browse_button.svg') 0 0 no-repeat;
     border:none;
@@ -2077,7 +2075,7 @@ p.check11:not(#foo) > input[type=checkbox] + label:hover 							{ background-pos
 }
 #file_delete_wrapper {
 	margin-left: 5px;
-    width: 208px;
+    width: 205px;
     height: 133px;
     background: url('../img/delete_button.svg') 0 0 no-repeat;
     border:none;
@@ -2086,7 +2084,7 @@ p.check11:not(#foo) > input[type=checkbox] + label:hover 							{ background-pos
 }
 #file_upload_wrapper {
 	margin-left: 5px;
-    width: 208px;
+    width: 206px;
     height: 133px;
     background: url('../img/upload_button.svg') 0 0 no-repeat;
     border:none;
@@ -3204,12 +3202,29 @@ background: #d95a42;
 	height: 30px !important;
 }
 
-@media (min-width: 992px) and (max-width: 1199px) {
- .container {
-    width: 940px !important;
-  }
- .span10p h1 {
- 	font-size: 60px !important;
- }
+ul.nav.nav-tabs {
+	border-bottom-color: #53777a;
+	background: #333;
+}
+ul.nav.nav-tabs li {
+	
+}
+ul.nav.nav-tabs li a {
+	
+}
+ul.nav.nav-tabs li.active a {
+	border-color: #53777a;
+	background: #53777a;
+	-webkit-border-radius: 0;
+	-moz-border-radius: 0;
+	border-radius: 0;
+}
 
+
+.container {
+	width: 1200px !important;
+	min-width: 1200px !important;
+}
+.span10p h1 {
+	font-size: 60px !important;
 }

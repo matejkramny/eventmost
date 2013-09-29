@@ -7,6 +7,7 @@ var Geolocation = require('./Geolocation').Geolocation;
 var scheme = schema({
 	deleted: { type: Boolean, default: false },
 	name: { type: String, required: true },
+	venue_name: { type: String, required: false },
 	created: { type: Date, default: Date.now },
 	start: { type: Date, required: true },
 	end: { type: Date, required: true },
@@ -109,12 +110,10 @@ scheme.methods.edit = function (body, user, files, cb) {
 	if (body.name) {
 		this.name = body.name
 	}
-	console.log("Avatar "+body.avatar);
+	
 	if (body.avatar) {
 		try {
-			console.log("Assigning avatar")
 			this.avatar = mongoose.Types.ObjectId(body.avatar);
-			console.log("ASsigned avatar")
 		} catch (ex) {
 			// objectid invalid
 			if (process.env.NODE_ENV != 'production') {
@@ -122,7 +121,7 @@ scheme.methods.edit = function (body, user, files, cb) {
 			}
 		}
 	}
-	console.log(this.avatar);
+	
 	if (body.venue_name) {
 		this.venue_name = body.venue_name
 	}
