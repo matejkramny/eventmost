@@ -6,7 +6,7 @@ append meta
 	meta(name="event_id", content="#{event._id}")
 
 append addonjs
-	script(src="/js/eventLandingPage.js")
+	script(src="/js/eventLandingPage.js", defer="true")
 	include inc/mapjs
 
 block content
