@@ -1,0 +1,50 @@
+extends ../base
+
+append css
+	link(rel="stylesheet", href="/css/jquery.ui.resizable.min.css")
+	link(rel="stylesheet", href="/css/cardcreator.css")
+
+append addonjs
+	script(src="/js/jquery.ui.draggable.min.js", defer="defer")
+	script(src="/js/jquery.ui.droppable.min.js", defer="defer")
+	script(src="/js/jquery.ui.resizable.min.js", defer="defer")
+	script(src="/js/cardcreator.js", defer="defer")
+
+block content
+	.row-fluid
+		.span5
+			// the drawing board
+			h5 Create your business card
+			a(href="#") Preview
+			#cardCanvas
+		.span4.nostupidcolours
+			a.addTextBox(href="#") Add a text box
+			
+			br
+			br
+			a(href="#") Remove this element
+			form.form-horizontal
+				.form-group
+					label.control-label(for="bgColour") Background Colour (or choose picture)
+					.controls
+						input#bgColour.file_input_textbox5(type="color")
+						input#bgImage.file_input_textbox5(type="file")
+						a(href="#") Choose from our library
+			
+			form.form-horizontal
+				.form-group
+					label.control-label(for="borderSize") Border Size (px)
+					.controls
+						input#borderSize.file_input_textbox5(type="number", value="0")
+				.form-group
+					label.control-label(for="borderColour") Border Colour
+					.controls
+						input#borderColour.file_input_textbox5(type="color")
+				.form-group
+					label.control-label(for="textSize") Text Size (px)
+					.controls
+						input#textSize.file_input_textbox5(type="color")
+				.form-group
+					label.control-label(for="textColour") Text Colour
+					.controls
+						input#textColour.file_input_textbox5(type="number", value="15")
