@@ -79,6 +79,9 @@ header .menu {
 .container {width: 1200px;}
 /* After resizing */
 .smallspacer {margin-top: 5px;}
+.red {color: #c02942;}
+.orange-text{color: #d95a42;}
+.blueish {color: #53777a;}
 .dropbox {font-size: 50px;}
 .smallspacer-left {margin-left: 5px;}
 .zero2 {margin-left: 10px !important; }
@@ -1254,6 +1257,38 @@ input[type="search"]::-webkit-input-placeholder {
 	word-wrap:break-word !important;
 	white-space: normal;
 }
+.profile-button-orange {
+	background-color: #d95a42;
+	border:none;
+	font-size: 18px;
+	font-weight: 100;
+	border-radius: 5px;
+	padding-left: 40px;
+	padding-right: 40px;
+	height: 94px;
+	color: #542437;
+	margin-top: 10px;
+	margin-bottom: 20px;
+	width: 280px !important;
+	word-wrap:break-word !important;
+	white-space: normal;
+}
+.profile-button-yellow2 {
+	background-color: #ecd077;
+	border:none;
+	font-size: 18px;
+	font-weight: 100;
+	border-radius: 5px;
+	padding-left: 40px;
+	padding-right: 40px;
+	height: 94px;
+	color: #542437;
+	margin-top: 10px;
+	margin-bottom: 20px;
+	width: 280px !important;
+	word-wrap:break-word !important;
+	white-space: normal;
+}
 .center2 {	
 	margin: auto;
 	margin-top: 20px !important;
@@ -2179,6 +2214,21 @@ p.check11:not(#foo) > input[type=checkbox] + label:hover 							{ background-pos
 }
 .line2 {
 	background-color: #542437;
+	height: 1px;
+	margin-bottom: 5px;
+}
+.line-red {
+	background-color: #c02942;
+	height: 1px;
+	margin-bottom: 5px;
+}
+.line-blue {
+	background-color: #53777a;
+	height: 1px;
+	margin-bottom: 5px;
+}
+.line-orange {
+	background-color: #d95a42;
 	height: 1px;
 	margin-bottom: 5px;
 }
