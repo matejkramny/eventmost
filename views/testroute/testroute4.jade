@@ -1,16 +1,82 @@
 extends ../base
 
 block content
-		.row-fluid.headerspacer
-			.speaker_titlerespond2.smallslid.left
-				h5 <b>Inbox:</b>
-			.left.speaker_titlerespond2.smallslid
-				h5 <b>Lucy Cook</b> - Director of Finance, Delloite
+		.row-fluid
+			.col-md-1.speaker_titlerespond2.pull-left.pad.right-ten.nspacer-big
+				.pad-left-ten 
+					|<b>Inbox:</b>
+			.col-md-5.left.speaker_titlerespond2.nspacer-big.pad-left-ten 
+				| <b>Lucy Cook</b> - Director of Finance, Delloite
+			.col-md-6.speaker_titlerespond2.pull-right
+				dl.dropdown-color-red.pull-right
+					dt
+						a(href="#")
+							| Public <br /> Messages
+					dd
+						ul
+							li
+								a(href="#",) Person's Last Name
+							li
+								a(href="#",) Person's First Name
+							li
+								a(href="#",) Time received
+							li
+								a(href="#") Date of most recent events
+				dl.dropdown-color-orange.pull-right
+					dt
+						a(href="#")
+							| Those Who Saved <br />Your Profile
+					dd
+						ul
+							li
+								a(href="#",) Person's Last Name
+							li
+								a(href="#",) Person's First Name
+							li
+								a(href="#",) Time received
+							li
+								a(href="#") Lorem Ipsum very long text sub menu
+				dl.dropdown-color-blue.pull-right
+					dt
+						a(href="#")
+							| Business <br />Cards
+					dd
+						ul
+							li
+								a(href="#",) Person's Last Name
+							li
+								a(href="#",) Person's First Name
+							li
+								a(href="#",) Time received
+							li
+								a(href="#") Date of most recent events
+				dl.dropdown-color-red.pull-right
+					dt
+						a(href="#")
+							| Private <br /> Messages
+					dd
+						ul
+							li
+								a(href="#",) Person's Last Name
+							li
+								a(href="#",) Person's First Name
+							li
+								a(href="#",) Time received
+							li
+								a(href="#") Date of most recent events
+				dl.dropdown-color-orange.pull-right
+					dt
+						a(href="#" style="width:50px; padding-top:20px; height:30px;")
+							| All
 		.clearfix
-			.speaker_titlerespond2.smallslid
-				h5 <b>Private messages</b>
+		.col-md-7
+			.line-orange(style='height:2px; margin-top:-6px;')
+		.clearfix
+		.col-md-12
+			.speaker_titlerespond2.pad-left-ten 
+				h5.red <b>Private messages</b>
 			.clearfix
-			.line
+			.line-red
 		.row-fluid.headerspacer2.smallslid
 			.left.speaker_title2
 				| Guest speaker
@@ -51,9 +117,9 @@ block content
 			//- pagination goes here.
 		.clearfix
 			.speaker_titlerespond2.smallslid
-				h5 <b>Business card recived</b>
+				h5.blueish <b>Business card recived</b>
 			.clearfix
-			.line
+			.line-blue
 		.row-fluid.span12.smallslid
 			.left.span6
 				.left.prof-pic
@@ -70,9 +136,9 @@ block content
 			//- pagination goes here.
 		.clearfix
 			.speaker_titlerespond2.smallslid
-				h5 <b>Those who saved your profile</b>
+				h5.orange-text <b>Those who saved your profile</b>
 			.clearfix
-			.line
+			.line-orange
 		.row-fluid.span12.center
 			.left.thirty.smallslid4
 				img(src="/img/default_speaker.svg", alt="", class="circular" style="padding-bottom:5px;")
@@ -90,9 +156,9 @@ block content
 		.row-fluid.center.span12
 			//- pagination goes here.
 		.speaker_titlerespond2.smallslid
-			h5 <b>Public messages</b>
+			h5.red <b>Public messages</b>
 		.clearfix
-		.line
+		.line-red
 		.clearfix
 		.row-fluid.headerspacer2.smallslid
 			.left.speaker_title2

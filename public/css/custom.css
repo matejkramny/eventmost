@@ -1,0 +1,130 @@
+/* Font */
+@font-face {
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 100;
+  src: url('/fonts/raleway-thin.eot');
+  src: local('Raleway Thin'),
+  	   url('/fonts/raleway-thin.woff') format('woff'),
+       url('/fonts/raleway-thin.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 200;
+  src: url('/fonts/raleway-extralight.eot');
+  src: local('Raleway ExtraLight'),
+  	   url('/fonts/raleway-extralight.woff') format('woff'),
+       url('/fonts/raleway-extralight.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 300;
+  src: url('/fonts/raleway-light.eot');
+  src: local('Raleway Light'),
+  	   url('/fonts/raleway-light.woff') format('woff'),
+       url('/fonts/raleway-light.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/fonts/raleway-regular.eot');
+  src: local('Raleway'),
+  	   url('/fonts/raleway-regular.woff') format('woff'),
+       url('/fonts/raleway-regular.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 700;
+  src: url('/fonts/raleway-bold.eot');
+  src: local('Raleway Bold'),
+  	   url('/fonts/raleway-bold.woff') format('woff'),
+       url('/fonts/raleway-bold.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 900;
+  src: url('/fonts/raleway-extrabold.eot');
+  src: local('Raleway Heavy'),
+  	   url('/fonts/raleway-extrabold.woff') format('woff'),
+       url('/fonts/raleway-extrabold.ttf') format('truetype');
+}
+
+/* helpers */
+
+.pad-right-ten {padding-right: 10px;}
+.pad-right-zero{padding-right: 0px;}
+
+.pad-left-ten {padding-left: 10px;}
+
+.nspacer-small {margin-top: 5px;}
+.nspacer{margin-top: 10px;}
+.nspacer-big{margin-top: 20px;}
+
+/* lines*/
+.line-orange {background-color: #d95a42; height: 1px; margin-bottom: 5px;}
+.line-red {background-color: #c02942; height: 1px; margin-bottom: 5px;}
+
+/* other */
+.speaker_titlerespond2 h5 {font-size: 25px; font-weight: 500;}
+.speaker_titlerespond2 {
+	font-size: 20px;
+	color: #ecd077;
+	word-wrap:break-word;
+	max-width: 80%;
+}
+
+
+/**** dropdown-color-red ****/
+        .dropdown-color-red {margin-left: 0px !important; margin-top: 0px; margin-bottom: 4px;}
+        .dropdown-color-red  dd, .dropdown-color-red  dt, .dropdown-color-red  ul { margin:0px; padding:0px;  z-index: 799;}
+        .dropdown-color-red  dd { position:relative; }
+        .dropdown-color-red  a, .dropdown-color-red  a:visited { padding-left: 10px; padding-top:2px; color:#ecd078; text-decoration:none; outline:none; font-size: 14px;}
+        .dropdown-color-red  a:hover { color:#ecd078;  }
+        .dropdown-color-red  dt a:hover {  color:#ecd078; }
+        .dropdown-color-red  dt a { display:block; background-color: #c02942; padding:10px; color: #542437; font-weight: 400;
+         font-size:14px; text-align:center;  width:100px;}
+        .dropdown-color-red  dd ul {  color:#ecd078; display:none; font-weight: 400;
+                          right:0px; width:100% !important; padding:0px; position:absolute; top:0px; width:100%;  list-style:none; }
+        .dropdown-color-red  span.value { display:none;}
+        .dropdown-color-red  dd ul li a { padding:5px; display:block; padding-left: 10px;  border-bottom: none; margin-top:2px; 
+        	background-color: #c02942;  color: #542437; font-size:12px;}
+        .dropdown-color-red  dd ul li a:hover { background-color:#ecd078; color:#542437;}
+
+/**** dropdown-color-orange****/
+        .dropdown-color-orange {margin-left: 0px !important; margin-top: 0px; margin-bottom: 4px;}
+        .dropdown-color-orange  dd, .dropdown-color-orange  dt, .dropdown-color-orange ul { margin:0px; padding:0px;  z-index: 799;}
+        .dropdown-color-orange  dd { position:relative; }
+        .dropdown-color-orange  a, .dropdown-color-orange  a:visited { padding-left: 10px; padding-top:2px; color:#ecd078; text-decoration:none; outline:none; font-size: 14px;}
+        .dropdown-color-orange  a:hover { color:#ecd078;  }
+        .dropdown-color-orange  dt a:hover {  color:#ecd078; }
+        .dropdown-color-orange  dt a { display:block; background-color: #d95a42; padding:10px; color: #542437; font-weight: 400;
+         font-size:14px; text-align:center; vertical-align: middle; width:140px; height:40px; }
+        .dropdown-color-orange  dd ul {  color:#ecd078; display:none; font-weight: 400;
+                          right:0px; width:100% !important; padding:0px; position:absolute; top:0px; width:100%;  list-style:none; }
+        .dropdown-color-orange  span.value { display:none;}
+        .dropdown-color-orange  dd ul li a { padding:5px; display:block; padding-left: 10px;  border-bottom: none; margin-top:2px; 
+        	background-color: #d95a42;  color: #542437; font-size:12px;}
+        .dropdown-color-orange  dd ul li a:hover { background-color:#ecd078; color:#542437;}
+
+/**** dropdown-color-blue****/
+        .dropdown-color-blue {margin-left: 0px !important; margin-top: 0px; margin-bottom: 4px;}
+        .dropdown-color-blue  dd, .dropdown-color-blue  dt, .dropdown-color-blue ul { margin:0px; padding:0px;  z-index: 799;}
+        .dropdown-color-blue  dd { position:relative; }
+        .dropdown-color-blue  a, .dropdown-color-blue  a:visited { padding-left: 10px; padding-top:2px; color:#ecd078; text-decoration:none; outline:none; font-size: 14px;}
+        .dropdown-color-blue  a:hover { color:#ecd078;  }
+        .dropdown-color-blue  dt a:hover {  color:#ecd078; }
+        .dropdown-color-blue  dt a { display:block; background-color: #53777a; padding:10px; color: #542437; font-weight: 400;
+         font-size:14px; text-align:center;  width:100px;}
+        .dropdown-color-blue  dd ul {  color:#ecd078; display:none; font-weight: 400;
+                          right:0px; width:100% !important; padding:0px; position:absolute; top:0px; width:100%;  list-style:none; }
+        .dropdown-color-blue  span.value { display:none;}
+        .dropdown-color-blue  dd ul li a { padding:5px; display:block; padding-left: 10px;  border-bottom: none; margin-top:2px; 
+        	background-color: #53777a;  color: #542437; font-size:12px;}
+        .dropdown-color-blue  dd ul li a:hover { background-color:#ecd078; color:#542437;}
+
+
