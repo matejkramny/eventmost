@@ -1,0 +1,83 @@
+!!! 5
+html
+	head
+		meta(http-equiv="Content-Type", content="text/html; charset=utf-8;")
+		meta(name="_csrf", content="#{token}")
+		block meta
+		title EventMost - #{title}
+		link(href="/favicon.ico", type="image/x-icon", rel="icon")
+		link(href="/favicon.ico", type="image/x-icon", rel="shortcut icon")
+		
+		//- all css goes here
+		block css
+			link(rel="stylesheet", href="/v2/css/bootstrap.min.css")
+			link(rel="stylesheet", href="/v2/css/bootstrap-eventmost.css")
+
+	body
+		//- main container
+		block container
+			.row-fluid
+				header.span12
+					.container.pageHeader
+						.row-fluid.headerSpacer
+							.logo.span3
+								a(href="/")
+									img.logo(src="/img/logo.png")
+							if everyauth.loggedIn != true
+								//- Only displayed when users are guests
+								.signin.span3.offset6
+									a(href="", class="link1" data-reveal-id="loginModal") Login 
+									| |
+									a(href="", class="link1" data-reveal-id="signModal")  Sign up
+							else
+								//- Only displayed when user is logged in
+								.span7
+									.row-fluid
+										.menu.span12
+											a(href="/", class="link1") Home 
+											| |
+											a(href="/event/add", class="link1")  Create event
+									.row-fluid
+										.span12
+											form(method="POST", accept-charset="utf-8")
+												.right
+													input.gonew2(type="button", value="GO")
+												input(type="hidden", name="_csrf", value=token)
+												input.file_input_textbox4(type="search", placeholder="search events or people", style="line-height:30px !important;")
+								.span2
+									.row-fluid
+										.span2
+											img(src="/img/dot.svg", class="purpleline")
+										.span10
+											.row-fluid
+												.span12(style="height:45px;")
+													a.image(href="/conversations")
+														if user.mailboxUnread == 0
+															img.minus4(src="/img/messagesempty.svg", style="margin-top:-37px; margin-left:20px;")
+														else
+															img(src="/img/messages.svg") 
+											.row-fluid.minus2
+												.span12
+													h55 Inbox
+													h20= user.mailboxUnread
+			
+			.container
+				block content
+				.row-fluid
+					footer
+						.copy.text-center Copyright &copy; 2013 <b>EventMost</b>. All rights reserved. &nbsp;
+							a(href="http://www.facebook.com/groups/361667753935493/", alt="EventMost on Facebook", title="EventMost on Facebook") Facebook
+			
+			if everyauth.loggedIn != true
+				include modals/signup
+			
+		//- usually globally persistent
+		block js
+			script(src="/v2/js/gan.js", async="true")
+			script(src="/v2/js/jquery.min.js", defer="true")
+			script(src="/v2/js/bootstrap.min.js", defer="true")
+			if everyauth.loggedIn != true
+				script(src="/v2/js/signin.js", defer="true")
+				
+		//- page-specific
+		block addonjs
