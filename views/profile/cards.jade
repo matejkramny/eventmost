@@ -20,61 +20,84 @@ block container
 				br
 				.btn-group.btn-group-sm
 					a.btn.btn-primary(ng-click="createTextBox()") Add a text box
-					a.btn.btn-primary.addImage(href="#") Add an image
-					a.btn.btn-danger(ng-disabled="!libraryBox.enabled", ng-click="removeElement()") Remove selected element
-				.btn-group.btn-group-sm
-					a.btn.btn-info(href="#") Preview Mode
+					a.btn.btn-primary(ng-click="createImage()") Add an image
+					a.btn.btn-danger(ng-disabled="!libraryBox.enabled", ng-click="removeElement()") Remove selected box
+				.btn-group.btn-group-sm.pull-right
+					a.btn.btn-info(href="#", ng-click="togglePreviewMode()", ng-switch, on="preview")
+						span(ng-switch-when="false") Preview Mode
+						span(ng-switch-when="true") Editing mode
 					a.btn.btn-success(href="#") Save
 		hr
 		.row
 			.col-md-5.col-lg-6.nostupidcolours
-				form.form-horizontal
-					h4 Text formatting
-					.form-group
-						label.col-lg-4.col-md-4.control-label(for="textValue") Content
-						.col-lg-8.col-md-8
-							input#textValue.form-control(type="text", ng-model="libraryBox.text")
-					.form-group
-						label.col-lg-4.col-md-4.control-label(for="textSize") Size
-						.col-lg-8.col-md-8
-							input#textSize.form-control(type="number", ng-model="libraryBox.style.fontSize")
-					.form-group
-						label.col-lg-4.col-md-4.control-label(for="textBgColour") Formatting
-						.col-lg-8.col-md-8
-							.btn-group(data-toggle="buttons")
-								label.btn.btn-default
-									input(type="checkbox")
-									| Italics
-								label.btn.btn-default
-									input(type="checkbox")
-									| Bold
-					.form-group
-						label.col-lg-4.col-md-4.control-label(for="textType") Type
-						.col-lg-8.col-md-8
-							select#textType.form-control(type="color", ng-model="libraryBox.style.fontFamily")
-								option(value="Raleway") Raleway (default)
-								option(value="Helvetica") Helvetica
-								option(value="Arial") Arial
-								option(value="Tahoma") Tahoma
-								option(value="sans-serif") Sans-Serif
-								option(value="Courier New") Courier New
-								option(value="Georgia") Georgia
-								option(value="Times New Roman") Times New Roman
-								option(value="Verdana") Verdana
-								option(value="Geneva") Geneva
-					.form-group
-						label.col-lg-4.col-md-4.control-label(for="textColour") Colour
-						.col-lg-8.col-md-8
-							input#textColour.form-control(type="color", ng-model="libraryBox.style.color")
-					.form-group
-						label.col-lg-4.col-md-4.control-label(for="textBgColour") Background Colour
-						.col-lg-8.col-md-8
-							input#textBgColour.form-control(type="color", ng-model="libraryBox.style.backgroundColor")
-					.form-group
-						label.col-lg-4.col-md-4.control-label(for="textLeftOffset") Left Offset
-						.col-lg-8.col-md-8
-							input#textLeftOffset.form-control(type="number", ng-model="libraryBox.style.paddingLeft")
+				form.form-horizontal(ng-hide="libraryBox.image == null")
+					div(ng-hide="libraryBox.image == true")
+						h4 Text formatting
+						.form-group
+							label.col-lg-4.col-md-4.control-label(for="textValue") Content
+							.col-lg-8.col-md-8
+								input#textValue.form-control(type="text", placeholder="What's inside the box", ng-model="libraryBox.text")
+						.form-group
+							label.col-lg-4.col-md-4.control-label(for="textSize") Size
+							.col-lg-8.col-md-8
+								input#textSize.form-control(type="number", placeholder="Measured in pixels", ng-model="libraryBox.style.fontSize")
+						.form-group
+							label.col-lg-4.col-md-4.control-label(for="textBgColour") Formatting
+							.col-lg-8.col-md-8
+								.checkbox
+									label
+										input(type="checkbox", ng-true-value="italic", ng-false-value="normal", ng-model="libraryBox.style.fontStyle")
+										| Italics
+								.checkbox
+									label
+										input(type="checkbox", ng-true-value="bold", ng-false-value="normal", ng-model="libraryBox.style.fontWeight")
+										| Bold
+						.form-group
+							label.col-lg-4.col-md-4.control-label(for="textType") Type
+							.col-lg-8.col-md-8
+								select#textType.form-control(type="color", ng-model="libraryBox.style.fontFamily")
+									option(value="Raleway") Raleway (default)
+									option(value="Helvetica") Helvetica
+									option(value="Arial") Arial
+									option(value="Tahoma") Tahoma
+									option(value="sans-serif") Sans-Serif
+									option(value="Courier New") Courier New
+									option(value="Georgia") Georgia
+									option(value="Times New Roman") Times New Roman
+									option(value="Verdana") Verdana
+									option(value="Geneva") Geneva
+						.form-group
+							label.col-lg-4.col-md-4.control-label(for="textColour") Colour
+							.col-lg-8.col-md-8
+								input#textColour.form-control(type="color", ng-model="libraryBox.style.color")
+						.form-group
+							label.col-lg-4.col-md-4.control-label(for="textBgColour") Background Colour
+							.col-lg-8.col-md-8
+								.checkbox
+									label
+										input#textBgColour(type="checkbox", ng-model="libraryBox.style.background", ng-false-value="", ng-true-value="none", ng-change="libraryBox.style.backgroundColor = ''")
+										| Transparent
+								input.form-control(type="color", ng-model="libraryBox.style.backgroundColor", ng-hide="libraryBox.style.background == 'none'")
+						.form-group
+							label.col-lg-4.col-md-4.control-label(for="textLeftOffset") Left Offset
+							.col-lg-8.col-md-8
+								input#textLeftOffset.form-control(type="number", placeholder="Space between the border and text", ng-model="libraryBox.style.paddingLeft")
 					
+					div(ng-show="libraryBox.image == true")
+						h4 Image formatting
+						.form-group
+							label.col-lg-4.col-md-4.control-label(for="imageNote") Note
+							.col-lg-8.col-md-8
+								input#imageNote.form-control(type="text", placeholder="Image note" ng-model="libraryBox.text")
+						.form-group
+							label.col-lg-4.col-md-4.control-label(for="imageBgColour") Colour
+							.col-lg-8.col-md-8
+								input#imageBgColour.form-control(type="color", ng-model="libraryBox.style.backgroundColor")
+						.form-group
+							label.col-lg-4.col-md-4.control-label(for="imageBgImage") File
+							.col-lg-8.col-md-8
+								input#imageBgImage.form-control(type="file")
+						
 					h4 Border formatting
 					.form-group
 						label.col-lg-4.col-md-4.control-label(for="borderType") Type
@@ -92,7 +115,7 @@ block container
 					.form-group
 						label.col-lg-4.col-md-4.control-label(for="borderSize") Size
 						.col-lg-8.col-md-8
-							input#borderSize.form-control(type="number", ng-model="libraryBox.style.borderWidth")
+							input#borderSize.form-control(type="number", placeholder="Border Size measured in Pixels", ng-model="libraryBox.style.borderWidth")
 					.form-group
 						label.col-lg-4.col-md-4.control-label(for="borderColour") Colour
 						.col-lg-8.col-md-8
@@ -100,24 +123,38 @@ block container
 					.form-group
 						label.col-lg-4.col-md-4.control-label(for="borderRadius") Corner Radius
 						.col-lg-8.col-md-8
-							input#borderRadius.form-control(type="number", ng-model="libraryBox.style.borderRadius")
+							input#borderRadius.form-control(type="number", placeholder="Corner radius", ng-model="libraryBox.style.borderRadius")
+				
+				div(ng-show="libraryBox.id == null")
+					h4.lead To get started, 
+						a(ng-click="createTextBox()", style="cursor:pointer;") add a text box
+						|  or 
+						a(ng-click="createImage()", style="cursor:pointer;") an image
+						|  to the canvas ->
 					
 			.col-md-7.col-lg-6
-				#cardCanvas
+				#cardCanvas(ng-style="canvasStyles", ng-class="{ preview: preview }")
 					.libraryBox(id="{{libraryBox.id}}", card-directive, ng-repeat="libraryBox in libraryBoxes")
 						.handle
-						input(type="text", ng-model="libraryBox.text", ng-click="selectBox(libraryBox)", ng-style="libraryBox.style")
+						input(type="text", ng-hide="libraryBox.image" ng-model="libraryBox.text", ng-click="selectBox(libraryBox)", ng-style="libraryBox.style")
+						img(ng-src="{{ libraryBox.src }}", ng-show="libraryBox.image", ng-click="selectBox(libraryBox)", ng-style="libraryBox.style")
 				
-				h3 Card Background
+				hr
+				form.form-horizontal
+					.form-group
+						label.col-lg-4.col-md-4.control-label(for="component") Select Component
+						.col-lg-8.col-md-8
+							select#component.form-control(ng-model="boxId", ng-change="changeBox()", ng-options="box.id as box.text group by box.type for box in libraryBoxes")
+				h4 Card Background
 				form.form-horizontal
 					.form-group
 						label.col-lg-4.col-md-4.control-label(for="bgTemplate") Choose a template
 						.col-lg-8.col-md-8
-							a.btn.btn-success.btn-sm(href="#") Browse Library
+							a#bgTemplate.btn.btn-success.btn-sm(href="#") Browse Library
 					.form-group
 						label.col-lg-4.col-md-4.control-label(for="bgColour") Colour
 						.col-lg-8.col-md-8
-							input#bgColour.form-control(type="color")
+							input#bgColour.form-control(type="color", ng-model="canvasStyles.backgroundColor")
 					.form-group
 						label.col-lg-4.col-md-4.control-label(for="bgImage") Upload an Image
 						.col-lg-8.col-md-8
