@@ -1,32 +1,55 @@
-$(document).ready(function() {
-	$canvas = $("#cardCanvas");
-	$(".libraryBox").draggable().resizable()
-	$canvas.droppable({
-		drop: function(ev, ui) {
-			
-		}
-	})
+function BusinessCards ($scope) {
+	$scope.libraryBoxes = [];
+	$scope.libraryBox = {};
 	
-	var textBoxes = 0;
-	$(".addTextBox").click(function() {
-		var html = '<div class="libraryBox box'+textBoxes+'">\
-		<div class="handle"></div>\
-		<input type="text" value="Text">\
-		</div>';
-		
-		$canvas.append(html)
-		
-		$('.box'+textBoxes).draggable({
-			containment: $canvas,
+	$scope.createTextBox = function () {
+		var box = {
+			enabled: true,
+			id: "box"+$scope.libraryBoxes.length,
+			text: "Hello there buddy "+$scope.libraryBoxes.length,
+			style: {
+				borderStyle: "none",
+				borderWidth: 0,
+				borderColor: "#FFF000",
+				fontSize: 13,
+				color: "#FFFFFF"
+			}
+		};
+		$scope.libraryBoxes.push(box);
+	}
+	$scope.selectBox = function (box) {
+		$scope.libraryBox = box
+	}
+	$scope.removeElement = function () {
+		for (var i = 0; i < $scope.libraryBoxes.length; i++) {
+			var b = $scope.libraryBoxes[i];
+			if (b == $scope.libraryBox) {
+				$scope.libraryBoxes.splice(i, 1);
+				$scope.libraryBox = null;
+				break;
+			}
+		}
+	}
+}
+
+var eventMost = angular.module('eventMost', []);
+eventMost.controller('businessCards', BusinessCards)
+.directive('cardDirective', function() {
+	return function($scope, $element, $attrs) {
+		$element.draggable({
+			containment: $("#cardCanvas"),
 			handle: '.handle'
 		}).resizable({
-			containment: $canvas
+			containment: $("#cardCanvas")
 		});
-		
-		textBoxes++;
-	})
-	
-	$canvas.on('focus', '.libraryBox', function(ev) {
-		
-	})
+	}
+})
+.directive('canvasDroppable', function() {
+	return function($scope, $element, $attrs) {
+		$element.droppable({
+			drop: function(ev, ui) {
+				
+			}
+		})
+	}
 })

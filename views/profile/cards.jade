@@ -1,50 +1,72 @@
-extends ../base
+extends ../responsive
 
 append css
 	link(rel="stylesheet", href="/css/jquery.ui.resizable.min.css")
 	link(rel="stylesheet", href="/css/cardcreator.css")
 
 append addonjs
+	script(src="/v2/js/angular.min.js", defer="defer")
+	script(src="/js/jquery-ui-1.10.3.custom.min.js", defer="true")
+	script(src="/js/jquery.ui.touch-punch.min.js", defer="true")
 	script(src="/js/jquery.ui.draggable.min.js", defer="defer")
 	script(src="/js/jquery.ui.droppable.min.js", defer="defer")
 	script(src="/js/jquery.ui.resizable.min.js", defer="defer")
 	script(src="/js/cardcreator.js", defer="defer")
 
 block content
-	.row-fluid
-		.span5
-			// the drawing board
-			h5 Create your business card
-			a(href="#") Preview
-			#cardCanvas
-		.span4.nostupidcolours
-			a.addTextBox(href="#") Add a text box
+	div(ng-controller="businessCards")
+		h5 Create your business card
+		.row
+			.col-lg-12.col-md-12.col-xs-12.col-sm-12
+				a.btn.btn-success.btn-sm(href="#") Preview
+				| &nbsp;
+				a.btn.btn-primary.btn-sm(ng-click="createTextBox()") Add a text box
+				| &nbsp;
+				a.btn.btn-primary.btn-sm.addImage(href="#") Add an image
+				| &nbsp;
+				a.btn.btn-danger.btn-sm(ng-disabled="!libraryBox.enabled", ng-click="removeElement()") Remove selected element
+		.row
+			.col-md-8.col-lg-8
+				#cardCanvas
+					div(ng-repeat="libraryBox in libraryBoxes")
+						.libraryBox(id="{{libraryBox.id}}", card-directive)
+							.handle
+							input(type="text", ng-model="libraryBox.text", ng-click="selectBox(libraryBox)", ng-style="libraryBox.style")
+			.col-md-4.col-lg-4.nostupidcolours
 			
-			br
-			br
-			a(href="#") Remove this element
-			form.form-horizontal
-				.form-group
-					label.control-label(for="bgColour") Background Colour (or choose picture)
-					.controls
-						input#bgColour.file_input_textbox5(type="color")
-						input#bgImage.file_input_textbox5(type="file")
-						a(href="#") Choose from our library
+				form.form-horizontal
+					.form-group
+						label.col-lg-2.col-md-2.control-label(for="bgColour") Background Colour (or choose picture)
+						.col-lg-10.col-md-10
+							input#bgColour.form-control(type="color")
+							input#bgImage.form-control(type="file")
+							a.btn.btn-success.btn-sm(href="#") Choose from our library
 			
-			form.form-horizontal
-				.form-group
-					label.control-label(for="borderSize") Border Size (px)
-					.controls
-						input#borderSize.file_input_textbox5(type="number", value="0")
-				.form-group
-					label.control-label(for="borderColour") Border Colour
-					.controls
-						input#borderColour.file_input_textbox5(type="color")
-				.form-group
-					label.control-label(for="textSize") Text Size (px)
-					.controls
-						input#textSize.file_input_textbox5(type="color")
-				.form-group
-					label.control-label(for="textColour") Text Colour
-					.controls
-						input#textColour.file_input_textbox5(type="number", value="15")
+				form.form-horizontal
+					.form-group
+						label.col-lg-2.col-md-2.control-label(for="textValue") Text
+						.col-lg-10.col-md-10
+							input#textValue.form-control(type="text", ng-model="libraryBox.text")
+					.form-group
+						label.col-lg-2.col-md-2.control-label(for="borderSize") Border Size (px)
+						.col-lg-10.col-md-10
+							input#borderSize.form-control(type="number", ng-model="libraryBox.style.borderWidth")
+					.form-group
+						label.col-lg-2.col-md-2.control-label(for="borderType") Border Type
+						.col-lg-10.col-md-10
+							select#borderType.form-control(type="text", ng-model="libraryBox.style.borderStyle")
+								option(value="none") None
+								option(value="solid") Solid
+								option(value="dotted") Dotted
+					.form-group
+						label.col-lg-2.col-md-2.control-label(for="borderColour") Border Colour
+						.col-lg-10.col-md-10
+							input#borderColour.form-control(type="color", ng-model="libraryBox.style.borderColor")
+					.form-group
+						label.col-lg-2.col-md-2.control-label(for="textSize") Text Size (px)
+						.col-lg-10.col-md-10
+							input#textSize.form-control(type="number", ng-model="libraryBox.style.fontSize")
+					.form-group
+						label.col-lg-2.col-md-2.control-label(for="textColour") Text Colour
+						.col-lg-10.col-md-10
+							input#textColour.form-control(type="color", ng-model="libraryBox.style.color")
