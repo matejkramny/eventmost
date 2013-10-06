@@ -6,67 +6,119 @@ append css
 
 append addonjs
 	script(src="/v2/js/angular.min.js", defer="defer")
-	script(src="/js/jquery-ui-1.10.3.custom.min.js", defer="true")
-	script(src="/js/jquery.ui.touch-punch.min.js", defer="true")
 	script(src="/js/jquery.ui.draggable.min.js", defer="defer")
 	script(src="/js/jquery.ui.droppable.min.js", defer="defer")
 	script(src="/js/jquery.ui.resizable.min.js", defer="defer")
 	script(src="/js/cardcreator.js", defer="defer")
 
-block content
-	div(ng-controller="businessCards")
-		h5 Create your business card
+block container
+	.container(ng-controller="businessCards")
 		.row
-			.col-lg-12.col-md-12.col-xs-12.col-sm-12
-				a.btn.btn-success.btn-sm(href="#") Preview
-				| &nbsp;
-				a.btn.btn-primary.btn-sm(ng-click="createTextBox()") Add a text box
-				| &nbsp;
-				a.btn.btn-primary.btn-sm.addImage(href="#") Add an image
-				| &nbsp;
-				a.btn.btn-danger.btn-sm(ng-disabled="!libraryBox.enabled", ng-click="removeElement()") Remove selected element
+			.col-md-5.col-lg-6
+				h2 Create a business card
+			.col-md-7.col-lg-6
+				br
+				.btn-group.btn-group-sm
+					a.btn.btn-primary(ng-click="createTextBox()") Add a text box
+					a.btn.btn-primary.addImage(href="#") Add an image
+					a.btn.btn-danger(ng-disabled="!libraryBox.enabled", ng-click="removeElement()") Remove selected element
+				.btn-group.btn-group-sm
+					a.btn.btn-info(href="#") Preview Mode
+					a.btn.btn-success(href="#") Save
+		hr
 		.row
-			.col-md-8.col-lg-8
-				#cardCanvas
-					div(ng-repeat="libraryBox in libraryBoxes")
-						.libraryBox(id="{{libraryBox.id}}", card-directive)
-							.handle
-							input(type="text", ng-model="libraryBox.text", ng-click="selectBox(libraryBox)", ng-style="libraryBox.style")
-			.col-md-4.col-lg-4.nostupidcolours
-			
+			.col-md-5.col-lg-6.nostupidcolours
 				form.form-horizontal
+					h4 Text formatting
 					.form-group
-						label.col-lg-2.col-md-2.control-label(for="bgColour") Background Colour (or choose picture)
-						.col-lg-10.col-md-10
-							input#bgColour.form-control(type="color")
-							input#bgImage.form-control(type="file")
-							a.btn.btn-success.btn-sm(href="#") Choose from our library
-			
-				form.form-horizontal
-					.form-group
-						label.col-lg-2.col-md-2.control-label(for="textValue") Text
-						.col-lg-10.col-md-10
+						label.col-lg-4.col-md-4.control-label(for="textValue") Content
+						.col-lg-8.col-md-8
 							input#textValue.form-control(type="text", ng-model="libraryBox.text")
 					.form-group
-						label.col-lg-2.col-md-2.control-label(for="borderSize") Border Size (px)
-						.col-lg-10.col-md-10
-							input#borderSize.form-control(type="number", ng-model="libraryBox.style.borderWidth")
+						label.col-lg-4.col-md-4.control-label(for="textSize") Size
+						.col-lg-8.col-md-8
+							input#textSize.form-control(type="number", ng-model="libraryBox.style.fontSize")
 					.form-group
-						label.col-lg-2.col-md-2.control-label(for="borderType") Border Type
-						.col-lg-10.col-md-10
+						label.col-lg-4.col-md-4.control-label(for="textBgColour") Formatting
+						.col-lg-8.col-md-8
+							.btn-group(data-toggle="buttons")
+								label.btn.btn-default
+									input(type="checkbox")
+									| Italics
+								label.btn.btn-default
+									input(type="checkbox")
+									| Bold
+					.form-group
+						label.col-lg-4.col-md-4.control-label(for="textType") Type
+						.col-lg-8.col-md-8
+							select#textType.form-control(type="color", ng-model="libraryBox.style.fontFamily")
+								option(value="Raleway") Raleway (default)
+								option(value="Helvetica") Helvetica
+								option(value="Arial") Arial
+								option(value="Tahoma") Tahoma
+								option(value="sans-serif") Sans-Serif
+								option(value="Courier New") Courier New
+								option(value="Georgia") Georgia
+								option(value="Times New Roman") Times New Roman
+								option(value="Verdana") Verdana
+								option(value="Geneva") Geneva
+					.form-group
+						label.col-lg-4.col-md-4.control-label(for="textColour") Colour
+						.col-lg-8.col-md-8
+							input#textColour.form-control(type="color", ng-model="libraryBox.style.color")
+					.form-group
+						label.col-lg-4.col-md-4.control-label(for="textBgColour") Background Colour
+						.col-lg-8.col-md-8
+							input#textBgColour.form-control(type="color", ng-model="libraryBox.style.backgroundColor")
+					.form-group
+						label.col-lg-4.col-md-4.control-label(for="textLeftOffset") Left Offset
+						.col-lg-8.col-md-8
+							input#textLeftOffset.form-control(type="number", ng-model="libraryBox.style.paddingLeft")
+					
+					h4 Border formatting
+					.form-group
+						label.col-lg-4.col-md-4.control-label(for="borderType") Type
+						.col-lg-8.col-md-8
 							select#borderType.form-control(type="text", ng-model="libraryBox.style.borderStyle")
 								option(value="none") None
 								option(value="solid") Solid
 								option(value="dotted") Dotted
+								option(value="dashed") Dashed
+								option(value="double") Double
+								option(value="groove") Groove
+								option(value="ridge") Ridge
+								option(value="inset") Inset
+								option(value="outset") Outset
 					.form-group
-						label.col-lg-2.col-md-2.control-label(for="borderColour") Border Colour
-						.col-lg-10.col-md-10
+						label.col-lg-4.col-md-4.control-label(for="borderSize") Size
+						.col-lg-8.col-md-8
+							input#borderSize.form-control(type="number", ng-model="libraryBox.style.borderWidth")
+					.form-group
+						label.col-lg-4.col-md-4.control-label(for="borderColour") Colour
+						.col-lg-8.col-md-8
 							input#borderColour.form-control(type="color", ng-model="libraryBox.style.borderColor")
 					.form-group
-						label.col-lg-2.col-md-2.control-label(for="textSize") Text Size (px)
-						.col-lg-10.col-md-10
-							input#textSize.form-control(type="number", ng-model="libraryBox.style.fontSize")
+						label.col-lg-4.col-md-4.control-label(for="borderRadius") Corner Radius
+						.col-lg-8.col-md-8
+							input#borderRadius.form-control(type="number", ng-model="libraryBox.style.borderRadius")
+					
+			.col-md-7.col-lg-6
+				#cardCanvas
+					.libraryBox(id="{{libraryBox.id}}", card-directive, ng-repeat="libraryBox in libraryBoxes")
+						.handle
+						input(type="text", ng-model="libraryBox.text", ng-click="selectBox(libraryBox)", ng-style="libraryBox.style")
+				
+				h3 Card Background
+				form.form-horizontal
 					.form-group
-						label.col-lg-2.col-md-2.control-label(for="textColour") Text Colour
-						.col-lg-10.col-md-10
-							input#textColour.form-control(type="color", ng-model="libraryBox.style.color")
+						label.col-lg-4.col-md-4.control-label(for="bgTemplate") Choose a template
+						.col-lg-8.col-md-8
+							a.btn.btn-success.btn-sm(href="#") Browse Library
+					.form-group
+						label.col-lg-4.col-md-4.control-label(for="bgColour") Colour
+						.col-lg-8.col-md-8
+							input#bgColour.form-control(type="color")
+					.form-group
+						label.col-lg-4.col-md-4.control-label(for="bgImage") Upload an Image
+						.col-lg-8.col-md-8
+							input#bgImage.form-control(type="file")
