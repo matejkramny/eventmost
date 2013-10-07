@@ -19,27 +19,15 @@ html
 		header
 			.pull-left.logo-left
 				a(href="/")
-<<<<<<< HEAD
 					img.nspacer.logos(src="/images/logo.svg")
 			if everyauth.loggedIn != true
 				.pull-right.logo-right
 						//- Only displayed when users are guests
-						button.btn.btn-default(type='submit', data-reveal-id="loginModal" style="height:85px; width:85px; margin-right:-4px;")
+						button.btn.btn-default(type='submit', data-toggle="modal", href="#loginModal", style="height:85px; width:85px; margin-right:-4px;")
 							| <b>LOGIN</b>
-						button.btn.btn-warning(type='submit', data-reveal-id="signModal" style="height:85px; width:85px;")
+						button.btn.btn-warning(type='submit', data-toggle="modal", href="#signModal", style="height:85px; width:85px;")
 							| <b>SIGN UP</b>
 			else
-=======
-					img.nspacer(src="/images/logo.svg")
-			.pull-right.logo-right
-				if everyauth.loggedIn != true
-					//- Only displayed when users are guests
-					button.btn.btn-default(type='submit', data-toggle="modal", href="#loginModal", style="height:85px; width:85px; margin-right:-4px;")
-						| <b>LOGIN</b>
-					button.btn.btn-warning(type='submit', data-toggle="modal", href="#signModal", style="height:85px; width:85px;")
-						| <b>SIGN UP</b>
-				else
->>>>>>> e071bcbec4fa7a8195a5646e477cf75f8d705134
 					//- Only displayed when user is logged in
 					.container
 						.pull-right.col-md-1.col-xs-1
