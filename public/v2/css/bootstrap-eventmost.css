@@ -284,6 +284,69 @@ a.pink-border6:hover {background-position: 0px -98px; text-decoration: none;}
   .event:hover {background-color: #fff; overflow: hidden; height: 157px;}
   .rbox {overflow: hidden; height: 169px;}
 
+/**** POP UPS ****/
+  .reveal-modal-bg { 
+    position: fixed; 
+    height: 100%;
+    width: 100%;
+    background: #000;
+    background: rgba(0,0,0,.8);
+    z-index: 100;
+    display: none;
+    top: 0;
+    left: 0; 
+    }
+  
+  .reveal-modal {
+    visibility: hidden;
+    top: 100px; 
+    left: 50%;
+    margin-left: -300px;
+    width: 520px;
+    position: absolute;
+    z-index: 101;
+    padding: 30px 40px 34px;
+    padding-bottom: 18px !important;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+        background-color: #ecd077;
+        color: #542437;
+        font-size: 20px;
+    }
+    
+  .reveal-modal.small     { width: 200px; margin-left: -140px;}
+  .reveal-modal.medium    { width: 400px; margin-left: -240px;}
+  .reveal-modal.large     { width: 600px; margin-left: -340px;}
+  .reveal-modal.xlarge    { width: 800px; margin-left: -440px;}
+  
+  .reveal-modal .close-reveal-modal {
+    font-size: 22px;
+    line-height: .5;
+    position: absolute;
+    top: 8px;
+    right: 11px;
+    color: #aaa;
+    text-shadow: 0 -1px 1px rbga(0,0,0,.6);
+    font-weight: bold;
+    cursor: pointer;
+    } 
+
+  .reveal-modal h1 {color:#542437; width:100%; font-weight:400; text-align: center; font-size: 50px; margin-top: 5px !important;}
+  .reveal-modal h2 {color:#542437; width:100%; font-weight:400; text-align: center; font-size: 14px; margin-top: 5px !important;}
+  .reveal-modal h3 {color:#542437; width:100%; font-weight:700; text-align: center; font-size: 25px; margin-top: 5px !important;}
+  .smaller {font-size: 16px;}
+.fui-checkbox-unchecked,
+.fui-checkbox-checked, {  font-size: 0.1% !important;}
+.right-al {text-align: right;  width: 300px}
+.switches {margin-left: -60px;}
+.turn {margin-left: 107px ! important;}
+.turn2 {margin-left: 107px ! important; margin-top: 10px ! important;}
+  .pop-input {width: 100%; padding-top: 10px;}
+
+  /**** POP UPS ****/
+
+
 @media (max-width: 1199px) {
 #slider1 .overview li{ width: 240px; word-wrap:break-word;}
 .slider-text {width: 160%;}
