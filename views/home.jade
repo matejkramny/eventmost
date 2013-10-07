@@ -1,4 +1,4 @@
-extends base
+extends responsive
 
 append addonjs
 	script(src="/js/geo.js", defer="true")
@@ -6,78 +6,99 @@ append addonjs
 
 append content
 	include inc/flash
-	include modals/homemodals
-	
-	.avatar3.smallspacer
-		a(href="/profile")
-			img(src=user.avatar, alt="" style="max-height:230px; margin:auto; width: auto;")
-	.right.span13p
-		.orangebox.inh
-			a.link6(href="/event/add") Create event 
-			.box2
-				.iconbox
-					img(src="/img/people.svg", alt="")
-					.center event
-				.iconbox
-					img(src="/img/meetup.svg", alt="")
-					.center meetup
-				.iconbox
-					img(src="/img/conference.svg", alt="")
-					.center conference
-				.iconbox2
-					img(src="/img/other.svg", alt="")
-					.center other
-	
-	//- User card
-	.avatar.redbox
-		p.prof= user.getName()
-		.box2
-			.left
-				img(src="/img/i.svg", alt="")
-			.set
-				a.link4(href="/profile", alt="", title="") Edit profile
-			if user.admin
-				.set
-					a.link4(href="/admin", alt="", title="") Administration
-		img(src="/img/card.svg", alt="")
-		a.link4(href="/cards", alt="", title="")
-			| Choose your bussines card
-		.headerSpacer
-		.clearfix
-		.box2
-			.left
-				img(src="/img/i.svg", alt="")
-			.set
-				a.link4(href="", alt="", title="", data-reveal-id="NotificationModal")
-					| Notification settings
-		.clearfix
-		.box2
-			.left
-				img(src="/img/i.svg", alt="")
-			.set
-				a.link4(href="", alt="", title="", data-reveal-id="PrivacyModal")
-					| Privacy settings
-		.clearfix
-		a(href="/logout", class="logout") Logout
-	
-	//- Events nearby
-	a(href="/events/near", alt="Events Nearby")
-		.span7p.propermaps
-			h12 Events nearby
-			img(src="/img/map-icon2.svg", alt="", class="arrow")
-	//- Events
-	a(href="/events", alt="Events")
-		.span7p.yellow.propermaps
-			h13 All events
-			.smallspacer
-				img(src="/img/arrow_big.svg", alt="", class="arrow")
 
 	
+	.col-md-3.col-xs-3.nspacer
+		a(href="/profile")
+			//- img(src=user.avatar, alt="" style="")
+			img(src="/images/big-avatar.svg", alt="")
+	a(href="/event/add")
+		.col-md-9.col-xs-9.nspacer.bg-purple.font-bigs.font-thin.center(style='height:138px;') 
+			a.link-ashen(href="/event/add" style="letter-spacing:30px;") Create event
+			.clearfix
+			.inline.font-e(style='width:15%;') 
+				img(src="/images/people-icon.svg", alt="" ,style="margin-top:-20px; padding-top:20px;")
+				.center event
+			.inline.font-e(style='width:15%;')
+				img(src="/images/martini-icon.svg", alt="" ,style="margin-top:-20px; padding-top:20px;")
+				.center meetup
+			.inline.font-e(style='width:15%;')
+				img(src="/images/conference-icon.svg", alt="" ,style="margin-top:-20px; padding-top:20px;")
+				.center conference
+			.inline.font-e(style='width:15%;')
+				img(src="/images/other-icon.svg", alt="" ,style="margin-top:-20px; padding-top:20px;")
+				.center other
+	//- User card
+	.col-md-3.col-xs-3.nspacer
+		.bg-ashen(style='height:312px;') 
+			p.break.font-e.center.font-thin2(style='padding-top:10px;')= user.getName()
+			.pull-left.pad-left-ten
+				img(src="/images/i.svg", alt="", height="16px" width="16px;")
+			.pull-left.pad-left-ten.font-s.font-thin2
+				a.link-purple(href="/profile", alt="", title="") Edit profile
+				if user.admin
+					.set
+						a.link4(href="/admin", alt="", title="") Administration
+			.center
+				img(src="/images/default-card.svg", alt="" class="nspacer-small")
+				a.link-purple.font-thin2(href="/cards", alt="", title="")
+					| Choose your bussines card
+			.pull-left.pad-left-ten.nspacer-small
+				img(src="/images/i.svg", alt="", height="16px" width="16px;")
+			.pull-left.pad-left-ten.font-s.nspacer-small.font-thin2
+				a.link-purple(href="", alt="", title="", data-reveal-id="NotificationModal")
+					| Notification settings
+			.clearfix
+			.pull-left.pad-left-ten.nspacer-small
+				img(src="/images/i.svg", alt="", height="16px" width="16px;")
+			.pull-left.pad-left-ten.font-s.nspacer-small.font-thin2
+				a.link-purple(href="", alt="", title="", data-reveal-id="PrivacyModal")
+						| Privacy settings
+			.clearfix
+			.center.nspacer
+				a(href="/logout", class="logout link-yellow")
+					button.btn.btn-default.font-e(type='submit', data-reveal-id="loginModal" style="border-radius: 8px; margin-bottom:10px;")
+						| Logout
+	//- Events nearby
+	.col-md-9.col-xs-9.nspacer.pad-right-zero.pad-left-zero(style='height:313px;')
+		.col-md-6.col-xs-6.nspacer.pad-right-zero.pad-left-zero
+			a.link-green2(href="/events/near", alt="Events Nearby")
+				.font-bigs.font-thin.center(style='padding-top:20px;') 
+					| Events nearby
+					img(src="/images/location-icon.svg", alt="", class="arrow")
+		//- Events
+		.col-md-6.col-xs-6.nspacer.bg-yellow.pad-right-zero.pad-left-zero
+			a.link-purple2(href="/events", alt="Events")
+				.font-bigs.font-thin.center(style='padding-top:35px;') 
+					| All events<br />
+					img(src="/images/purple-arrow.svg", alt="", style='padding-bottom:35px;') 
+		.clearfix
+		.col-md-12.col-xs-12.bg-green.nspacer
+			.font-bigs.font-thin
+				| My Events
+	.clearfix
 	//- My Events
-	.left.smallspacer.leng
-		.bluebox
-			a.link4(href="/events/my") My events
-			.right.arrange
+	.nspacer.col-md-12.col-xs-12
+		.pull-left.event(style='width:101.4%;')
+			a.slid-box
+				article.c-two(style='background-image: url(images/event-avatar.jpg);')
+					.slid-box-background
+						h4 
+							img(src="/images/eye.svg", alt="", style="margin-top:-10px; padding-bottom:10px;")
+							| <br /> REVIEW
+				.col-lg-9.col-md-9.col-xs-9.psev.rbox(style='height:169px; padding-left:15px;')
+					h4 Temporibus autem quibusdam et aut officiis
+					| At vero eos et accusamus et iusto odio dignissimos ducimus qui <b>blanditiis praesentium </b>voluptatum deleniti atque 
+					corrupti quos <b>dolores et quas molestias.</b> At vero eos et accusamus et iusto odio dignissimos ducimus qui <b>blanditiis 
+					praesentium </b>voluptatum deleniti atque corrupti quos dolores et quas molestias.. At vero eos et accusamus et iusto 
+					odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque  corrupti quos dolores et quas mole.
+					At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque 
+					corrupti quos dolores et quas molestias. 
+	.clearfix
+		.left.smallspacer.leng
+			.bluebox
+				a.link4(href="/events/my") My events
+				.right.arrange
 				| Arrange by
 			.clearfix
 			.right
