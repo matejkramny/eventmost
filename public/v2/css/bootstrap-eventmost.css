@@ -298,15 +298,6 @@ a.pink-border6:hover {background-position: 0px -98px; text-decoration: none;}
     }
   
   .reveal-modal {
-    visibility: hidden;
-    top: 100px; 
-    left: 50%;
-    margin-left: -300px;
-    width: 520px;
-    position: absolute;
-    z-index: 101;
-    padding: 30px 40px 34px;
-    padding-bottom: 18px !important;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
     border-radius: 5px;
