@@ -185,7 +185,7 @@ a.pink-border6:hover {background-position: 0px -98px; text-decoration: none;}
   .event:hover {background-color: #fff; overflow: hidden; height: 157px;}
   .rbox {overflow: hidden; height: 169px;}
 
-@media (max-width: 1024px) {
+@media (max-width: 1199px) {
 #slider1 .overview li{ width: 240px; word-wrap:break-word;}
 .slider-text {width: 160%;}
 .slider-text:hover {width: 160%;}
@@ -198,6 +198,32 @@ a.pink-border6:hover {background-position: 0px -98px; text-decoration: none;}
 .logo-right {padding-right:60px;}
 }
 
+
+@media (max-width: 1024px) {
+#slider1 .overview li{ width: 240px; word-wrap:break-word;}
+.slider-text {width: 160%;}
+.slider-text:hover {width: 160%;}
+#slider1 {height:370px;}
+#slider1 .viewport{height:370px;}
+.lf {margin-left: 20px;}
+.event {font-size: 13px;}
+.c-two {width:200px;}
+.logo-left {padding-left:60px;}
+.logo-right {padding-right:60px;}
+}
+@media (max-width: 1023px) {
+#slider1 .overview li{ width: 170px;}
+.slider-text {width: 110%;}
+.slider-text:hover {width: 110%;}
+#slider1 {height:440px;}
+#slider1 .viewport{height:440px;}
+.lf {margin-left: 0px;}
+.c-two {width:140px;}
+.event {font-size: 11px;}
+.slid-box-background h4{font-size:16px;}
+.logo-left {padding-left:20px;}
+.logo-right {padding-right:20px;}
+}
 @media (max-width: 768px) {
 #slider1 .overview li{ width: 170px;}
 .slider-text {width: 110%;}
