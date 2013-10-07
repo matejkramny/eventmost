@@ -1,8 +1,6 @@
 extends responsive
 
 block addonjs
-	script(src="/v2/js/geo.js", defer="true")
-	script(src="/v2/js/getNearbyEvents.js", defer="true")
 
 append content
 	include inc/flash
@@ -106,20 +104,4 @@ append content
 					At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque 
 					corrupti quos dolores et quas molestias. 
 	.clearfix
-	
-	p.nspacer-big.text-center Looking for events..
-
-
-
-	.well.redboxres2(style="height: auto;")
-		form#UserLoginForm(action="/auth/password", method="post", accept-charset="utf-8", style="margin:0;")
-			input(type="hidden", name="_csrf", value=token)
-			.row-fluid
-				.span5
-					input.file_input_textbox2res(name="login", placeholder="email", maxlength="128", type="email", id="UserEmail", required="required", style="margin-bottom:0;")
-				.span5
-					input.file_input_textbox3res(name="password", placeholder="password", type="password", id="UserPassword", required="required", style="margin-bottom:0;")
-				.right
-					input.enteres(type="submit", value="ENTER")
-			.hide.center2.formStatus(style="font-size:20px;")
 	

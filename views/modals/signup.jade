@@ -1,37 +1,51 @@
-#loginModal.reveal-modal
-	h1 Login
-	form#LoginForm(action="/auth/password", method="POST")
-		.center2.formStatus
-		.pop-input.center
-			input.file_input_textbox2#LoginUserEmail(name="login", placeholder="email", maxlength="128", type="email", required="required", 
-				style="margin-top:0px; height:39px; width:350px;")
-			input.file_input_textbox3#LoginUserPassword(name="password", placeholder="password", type="password", required="required",
-				style=" height:39px; width:350px; margin-left:0px;")
-		.left
-			input.enter(type="submit", value="ENTER" style="margin-left:195px;")
-		.clearfix
-	.clearfix
-	.center2
-		a#openRegisterModal(href="#") Don't have an account?
-	a(href="/", class="close-reveal-modal") 
-		img(src="/img/x.svg")
+#loginModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="", aria-hidden="true")
+	.modal-dialog
+		.modal-content
+			.modal-header
+				button.close(type="button", data-dismiss="modal", aria-hidden="true") &times;
+				h4.modal-title Login
+			.modal-body
+				// Patryk, use .form-horizontal and markup from http://getbootstrap.com/css/#forms-horizontal
+				form#LoginForm(action="/auth/password", method="POST")
+					input(type="hidden", name="_csrf", value=token)
+					.center2.formStatus
+					.pop-input.center
+						input.file_input_textbox2#LoginUserEmail(name="login", placeholder="email", maxlength="128", type="email", required="required", 
+							style="margin-top:0px; height:39px; width:350px;")
+						input.file_input_textbox3#LoginUserPassword(name="password", placeholder="password", type="password", required="required",
+							style=" height:39px; width:350px; margin-left:0px;")
+					.left
+						input.enter(type="submit", value="ENTER" style="margin-left:195px;")
+					.clearfix
+				.clearfix
+				.center2
+					a#openRegisterModal(href="#") Don't have an account?
+			.modal-footer
+				button.btn.btn-default(type="button", data-dismiss="modal") Close
+				button.btn.btn-success(type="button") Submit
 
-#signModal.reveal-modal
-	h1 Register
-	.center2
-		| To create an account please fill our form.
-	form#RegisterForm(action="/auth/password", method="POST")
-		.center2.formStatus
-		.pop-input.center
-			input.file_input_textbox0#RegisterUserName(name="name", placeholder="name", maxlength="128", type="text",
-				style="margin-top:0px; height:39px; width:350px;")
-			input.file_input_textbox2#RegisterUserEmail(name="login", placeholder="email", maxlength="128", type="email", required="required", 
-				style="margin-top:10px; height:39px; width:350px;")
-			input.file_input_textbox3#RegisterUserPassword(name="password", placeholder="password", type="password", required="required",
-				style=" height:39px; width:350px; margin-left:0px; margin-top:7px;")
-		.left
-			input.enter(type="submit", value="ENTER" style="margin-left:195px;")
-		.clearfix
-	.clearfix
-	a(href="/", class="close-reveal-modal") 
-		img(src="/img/x.svg")
+#signModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="", aria-hidden="true")
+	.modal-dialog
+		.modal-content
+			.modal-header
+				button.close(type="button", data-dismiss="modal", aria-hidden="true") &times;
+				h4.modal-title Register
+			.modal-body
+				.center2
+					| To create an account please fill our form.
+				form#RegisterForm(action="/auth/password", method="POST")
+					input(type="hidden", name="_csrf", value=token)
+					.center2.formStatus
+					.pop-input.center
+						input.file_input_textbox0#RegisterUserName(name="name", placeholder="name", maxlength="128", type="text",
+							style="margin-top:0px; height:39px; width:350px;")
+						input.file_input_textbox2#RegisterUserEmail(name="login", placeholder="email", maxlength="128", type="email", required="required", 
+							style="margin-top:10px; height:39px; width:350px;")
+						input.file_input_textbox3#RegisterUserPassword(name="password", placeholder="password", type="password", required="required",
+							style=" height:39px; width:350px; margin-left:0px; margin-top:7px;")
+					.left
+						input.enter(type="submit", value="ENTER" style="margin-left:195px;")
+					.clearfix
+			.modal-footer
+				button.btn.btn-default(type="button", data-dismiss="modal") Close
+				button.btn.btn-success(type="button") Submit

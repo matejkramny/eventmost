@@ -11,8 +11,9 @@ append addonjs
 	script(src="/js/jquery.ui.resizable.min.js", defer="defer")
 	script(src="/js/cardcreator.js", defer="defer")
 
-block container
-	.container(ng-controller="businessCards")
+block content
+	.clearfix
+	.container(ng-controller="businessCards", style="margin-top:20px;")
 		.row
 			.col-md-5.col-lg-6
 				h2 Create a business card
