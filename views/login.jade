@@ -6,60 +6,111 @@ block addonjs
 
 append content
 	include inc/flash
-	.row-fluid.smallspacer
-		.span2p
-			.well.redboxres
-				h4 Sign in
-				h4 Sign up
-				.tops-minus-res
-					img(src="/img/finger.svg", alt="", class="arrow")
-			.well.redboxres.sociallogin
-				.sociallogin
-				a(href="/auth/facebook", alt="Log in with facebook", title="Log in with facebook")
-					img(src="/img/facebook.svg", alt="")
-			.well.redboxres.sociallogin
-				a(href="/auth/twitter", alt="Log in with twitter", title="Log in with twitter")
-					img(src="/img/twitter.svg")
-			.well.redboxres.sociallogin
-				a(href="/auth/linkedin", alt="Log in with linkedin", title="Log in with linkedin")
-					img(src="/img/linkedin.svg")
-		.span10p
-			form(method="POST", accept-charset="utf-8" style="height:38px;")
-				input(type="hidden", name="_csrf", value=token)
-				.row-fluid
-					.span10p
-						input(type="search", placeholder="search events or people", class="file_input_textboxres")
-					.right
-						input.gonewres(type="button", value="GO")
-			h12 Why use us <br />
-			h17 Not only can you register your event here, you can also:
+	.nspacer-big.center
+		.font-big
+			img(src="/images/big-purple-star.svg", alt="" class="pad-right-ten" style="margin-top:-10px;") 
+			| Why use us 
+			img(src="/images/big-purple-star.svg", alt="" style="margin-top:-10px;") 
+		h4 Not only can you register your event here, you can also:
+		.clearfix
 
-			#slider1.row-fluid
-				.span1
-					a.buttons.prev(href="#")
-				.span9
-					.viewport 
-						ul.overview
-							li 
-								img(src="/img/1.svg", alt="", class="slid") 
+
+	#slider1.nspacer-big
+		.col-md-1.col-xs-1.lf
+			a.buttons.prev(href="#")
+		.col-md-9.col-xs-9
+			.viewport 
+				ul.overview
+					li 
+						a(href="", class="pink-border")
+							.slider-text
 								| Create a social network<br /> like Facebook or Linkedin<br /> surrounding your event.
-							li 
-								img(src="/img/2.svg", alt="", class="slid") 
-								| Create a feedback platform<br /> for your guests speakers teams,<br /> vendors or other.
-							li 
-								img(src="/img/3.svg", alt="", class="slid") 
+					li 
+						a(href="", class="pink-border2")
+							.slider-text
+								| Create a feedback platform for your guests<br />  speakers teams,vendors or other.
+					li 
+						a(href="", class="pink-border3")
+							.slider-text
 								| Store files here for free <br /> that your attendees <br /> might use: power point <br />presentations, schedules, <br />pictures, etc.
-							li 
-								img(src="/img/4.svg", alt="", class="slid") 
+					li 
+						a(href="", class="pink-border4")
+							.slider-text
 								| We will send you and after-event analytics report full of tons of interesting stats (also free... well everything <br />is free).
-							li 
-								img(src="/img/5.svg", alt="", class="slid") 
-								| You can upload logos for your sponsors too (also free), that will be seen during the entire event and after this significantly increasing sponsor revenue!.
-							li
-								img(src="/img/6.svg", alt="", class="slid")
-								| No ticketing Fee! Eventbrite charges £.65 per ticket + 2.5% + 3.5% transaction fee. We only charge the 3.5%  transaction fee so we don’t lose money!
-				.span2
-					a.buttons.next(href="#")
+					li 
+						a(href="", class="pink-border5")
+							.slider-text
+								| You can upload logos <br /> for your sponsors too (also free), that will be seen during the entire event and after this significantly increasing sponsor revenue!.
+					li
+						a(href="", class="pink-border6")
+							.slider-text
+								| No ticketing Fee! <br />Eventbrite charges £.65 <br />per ticket + 2.5% + 3.5%<br /> transaction fee. We <br />only charge the 3.5%  <br />transaction fee so we <br />don’t lose money!
+		.col-md-1.col-xs-1
+			a.buttons.next(href="#")
+	.clearfix
+	.center.nspacer-big
+		a(href="",)
+			img(src="/images/create-event.svg", alt="")
+	.col-md-12.col-xs-12
+		.nspacer-big
+			h2 Events near you
+		.pull-left.event
+			a.slid-box
+				article.c-two(style='background-image: url(images/event-avatar.jpg);')
+					.slid-box-background
+						h4 
+							img(src="/images/eye.svg", alt="", style="margin-top:-10px; padding-bottom:10px;")
+							| <br /> REVIEW
+				.col-lg-9.col-md-9.col-xs-9.psev.pad-left-ten.rbox(style='height:169px;')
+					h4 Temporibus autem quibusdam et aut officiis
+					| At vero eos et accusamus et iusto odio dignissimos ducimus qui <b>blanditiis praesentium </b>voluptatum deleniti atque 
+					corrupti quos <b>dolores et quas molestias.</b> At vero eos et accusamus et iusto odio dignissimos ducimus qui <b>blanditiis 
+					praesentium </b>voluptatum deleniti atque corrupti quos dolores et quas molestias.. At vero eos et accusamus et iusto 
+					odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque  corrupti quos dolores et quas mole.
+					At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque 
+					corrupti quos dolores et quas molestias. 
+	.clearfix
+
+	.nspacer-big.col-md-12.col-xs-12
+		.pull-left.event
+			a.slid-box
+				article.c-two(style='background-image: url(images/event-avatar.jpg);')
+					.slid-box-background
+						h4 
+							img(src="/images/eye.svg", alt="", style="margin-top:-10px; padding-bottom:10px;")
+							| <br /> REVIEW
+				.col-lg-9.col-md-9.col-xs-9.psev.pad-left-ten.rbox(style='height:169px;')
+					h4 Temporibus autem quibusdam et aut officiis
+					| At vero eos et accusamus et iusto odio dignissimos ducimus qui <b>blanditiis praesentium </b>voluptatum deleniti atque 
+					corrupti quos <b>dolores et quas molestias.</b> At vero eos et accusamus et iusto odio dignissimos ducimus qui <b>blanditiis 
+					praesentium </b>voluptatum deleniti atque corrupti quos dolores et quas molestias.. At vero eos et accusamus et iusto 
+					odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque  corrupti quos dolores et quas mole.
+					At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque 
+					corrupti quos dolores et quas molestias. 
+	.clearfix
+
+	.nspacer-big.col-md-12.col-xs-12
+		.pull-left.event
+			a.slid-box
+				article.c-two(style='background-image: url(images/event-avatar.jpg);')
+					.slid-box-background
+						h4 
+							img(src="/images/eye.svg", alt="", style="margin-top:-10px; padding-bottom:10px;")
+							| <br /> REVIEW
+				.col-lg-9.col-md-9.col-xs-9.psev.pad-left-ten.rbox(style='height:169px;')
+					h4 Temporibus autem quibusdam et aut officiis
+					| At vero eos et accusamus et iusto odio dignissimos ducimus qui <b>blanditiis praesentium </b>voluptatum deleniti atque 
+					corrupti quos <b>dolores et quas molestias.</b> At vero eos et accusamus et iusto odio dignissimos ducimus qui <b>blanditiis 
+					praesentium </b>voluptatum deleniti atque corrupti quos dolores et quas molestias.. At vero eos et accusamus et iusto 
+					odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque  corrupti quos dolores et quas mole.
+					At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque 
+					corrupti quos dolores et quas molestias. 
+	.clearfix
+	
+	p.nspacer-big.text-center Looking for events..
+
+
+
 	.well.redboxres2(style="height: auto;")
 		form#UserLoginForm(action="/auth/password", method="post", accept-charset="utf-8", style="margin:0;")
 			input(type="hidden", name="_csrf", value=token)
@@ -71,26 +122,4 @@ append content
 				.right
 					input.enteres(type="submit", value="ENTER")
 			.hide.center2.formStatus(style="font-size:20px;")
-	.left.inres.orangeboxres
-		a.link5(href="/event/add")
-			| Create your event <br />
-			img(src="/img/arrow_big.svg", alt="", class="arrow")
-	.right.zero2.smallspacer
-		a.link1(href="/")
-			img(src="/img/appstore.svg" )
-	.right.zero2.smallspacer
-		a.link1(href="/")
-			img(src="/img/android.svg" )
-	.clearfix
-	.bluebox.center
-		.left 
-			img.arrow(src="/img/star.svg", alt="")
-		a.link4(href="/events/near") Events in range
-		.right
-			img.arrow(src="/img/star.svg", alt="")
-	.clearfix
-	
-	.row-fluid#nearbyEventsPlaceholder
-		.span12
-			p.text-center.eventtext Looking for events..
 	
