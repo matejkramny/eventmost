@@ -60,7 +60,7 @@ body {
   font-size: 14px;
 }
 header {background-color: #e6e7e8; height: 85px;}
-footer {background-color: #542437; color: #fff; padding: 10px;}
+footer {background-color: #542437; color: #fff; padding: 10px; margin-top: 10px;}
 
 textarea:focus, input:focus{
     outline: 0;
@@ -99,10 +99,14 @@ textarea:focus, input:focus{
 .font-thin2 {font-weight: 300;}
 .break{word-wrap:break-word;}
 
+.color-green{color: #0992a3;}
+.color-ashen{color: #f1f1f2;}
+
 .bg-purple {background-color: #542437; color: #e6e7e8;}
 .bg-ashen {background-color: #e6e7e8; color: #542437;}
 .bg-yellow {background-color: #fdd093; color: #542437;}
 .bg-green {background-color: #0992a3; color: #f1f1f2;}
+
 
 
 .inline {display: inline-block;}
@@ -165,14 +169,8 @@ a.link-ashen:hover {
   word-wrap:break-word;
   max-width: 80%;
 }
-.col-md-4-5, .col-xs-4-5 {
-  position: relative;
-  min-height: 1px;
-  padding-right: 15px;
-  padding-left: 15px;
-  float: left;
-  width: 37.5%;
-}
+
+.space {letter-spacing:30px;}
 .pic {vertical-align: middle; text-align: center; }
 
 /* buttons */
@@ -346,6 +344,107 @@ a.pink-border6:hover {background-position: 0px -98px; text-decoration: none;}
 
   /**** POP UPS ****/
 
+/**** dropdown****/
+.navbar-inverse .navbar-nav > li > a {
+  color: #f2f2ef;
+}
+.navbar-inverse .navbar-nav > .active > a,
+.navbar-inverse .navbar-nav > .active > a:hover,
+.navbar-inverse .navbar-nav > .active > a:focus {
+  border-bottom: 3px solid #fdca09 !important; 
+  color: #f2f2ef;
+  background-color: rgb(34, 34, 34);
+}
+.navbar-nav > li > a {
+    padding-bottom: 5px;
+    padding-top: 20px;
+}
+.dropdown {padding: 7px; padding-left: 15px;}
+.dropdown-toggle {color: #f1f1f2;  height: 55px;  font-size: 20px; font-weight: 300;}
+.dropdown-toggle:hover, .dropdown-toggle:focus {color: #00adef; text-decoration: none;}
+.nav .open > a, .nav .open > a:hover, .nav .open > a:focus {background-color: #f2f2ef !important;}
+.dropdown-menu > li > a { color:#f1f1f2 ! important; font-size: 16px; padding-left: 5px; padding-right: 5px;}
+.dropdown-menu {top: 80%; padding: 7px; background-color: #0992a3; border: none; box-shadow: 0px 0px 0px #888;}
+.dropdown-menu > li > a:hover,
+.dropdown-menu > li > a:focus { background-color: #0992a3; color:#fdd093 ! important;}
+.nav > li > a:hover,
+.nav > li > a:focus {
+  text-decoration: none;
+  background-color: #0992a3 !important;
+  color: #f1f1f2;
+}
+.nav .open > a, .nav .open > a:hover, .nav .open > a:focus {
+  background-color: #0992a3 !important;
+  color: #f1f1f2 !important;
+}
+.caret {float:right; margin-top: 10px; margin-left: 15px; margin-right: 5px; border-bottom-color:#f1f1f2; border-top-color:#f1f1f2;}
+.nav a:hover .caret {border-bottom-color:#f1f1f2; border-top-color:#f1f1f2;}
+.caret-new { margin-top: 10px; border-bottom-color:#f1f1f2 !important; border-top-color:#f1f1f2 !important;}
+.nav .caret{ border-bottom-color:#f1f1f2; border-top-color:#f1f1f2; }
+
+/**** grey****/
+
+.dropdown-toggle-grey {color: #542437;  height: 55px;  font-size: 20px; font-weight: 300;}
+.dropdown-toggle-grey:hover, .dropdown-toggle-grey:focus {color: #542437; text-decoration: none;}
+.nav-grey .open > a, .nav-grey .open > a:hover, .nav-grey .open > a:focus {background-color: #e5e5e5 !important; color: #542437;}
+.nav-grey > li > a:hover,
+.nav-grey > li > a:focus {
+  text-decoration: none;
+  background-color: #e5e5e5 !important;
+  color: #542437;
+}
+.nav-grey .open > a, .nav-grey .open > a:hover, .nav-grey .open > a:focus {
+  background-color: #e5e5e5 !important;
+  color: #542437 !important;
+}
+.nav-grey .caret{ border-bottom-color:#542437; border-top-color:#542437; }
+.nav-grey a:hover .caret {border-bottom-color:#542437; border-top-color:#542437; }
+
+.dropdown-menu-grey > li > a { color:#542437 ! important; font-size: 16px; padding-left: 5px; padding-right: 5px;}
+.dropdown-menu-grey {top: 80%; padding: 7px; background-color: #e5e5e5; border: none; box-shadow: 0px 0px 0px #888;}
+.dropdown-menu-grey > li > a:hover,
+.dropdown-menu-grey > li > a:focus { background-color: #e5e5e5; color:#0992a3 ! important;}
+/**** dropdown****/
+
+/**** pagination ****/
+.pagination{margin-top: 0px;}
+.pagination > li > a, .pagination > li > span {
+  border: none;
+  background-color: #f1f1f2;
+  color: #542437;
+  padding-left: 0px;
+  padding-right: 10px;
+}
+.pagination > li > a:hover,
+.pagination > li > span:hover,
+.pagination > li > a:focus,
+.pagination > li > span:focus {
+  background-color: #f1f1f2;
+  color: #0992a3;
+}
+.pagination > .disabled > span,
+.pagination > .disabled > a,
+.pagination > .disabled > a:hover,
+.pagination > .disabled > a:focus {
+  color: #999999;
+  cursor: not-allowed;
+  background-color: #f1f1f2;
+  border-color: #f1f1f2;
+}
+.pagination > .active > a,
+.pagination > .active > span,
+.pagination > .active > a:hover,
+.pagination > .active > span:hover,
+.pagination > .active > a:focus,
+.pagination > .active > span:focus {
+  z-index: 2;
+  cursor: default;
+  background-color: #f1f1f2;
+  font-weight: 700;
+  color: #542437;
+  border-color: #f1f1f2;
+}
+/**** pagination ****/
 
 @media (max-width: 1199px) {
 #slider1 .overview li{ width: 240px; word-wrap:break-word;}
@@ -358,6 +457,8 @@ a.pink-border6:hover {background-position: 0px -98px; text-decoration: none;}
 .c-two {width:200px;}
 .logo-left {padding-left:60px;}
 .logo-right {padding-right:60px;}
+.big-avatar {width: 100%; height: 100%;}
+.small-avatar {width: 95%; height: 100%;}
 }
 
 
@@ -372,6 +473,8 @@ a.pink-border6:hover {background-position: 0px -98px; text-decoration: none;}
 .c-two {width:200px;}
 .logo-left {padding-left:60px;}
 .logo-right {padding-right:60px;}
+.big-avatar {width: 100%; height: 100%;}
+.small-avatar {width: 95%; height: 100%;}
 }
 @media (max-width: 1023px) {
 #slider1 .overview li{ width: 170px;}
@@ -398,6 +501,10 @@ a.pink-border6:hover {background-position: 0px -98px; text-decoration: none;}
 .slid-box-background h4{font-size:16px;}
 .logo-left {padding-left:20px;}
 .logo-right {padding-right:20px;}
+.font-bigs {font-size: 30px;}
+.font-s, .resfont {font-size: 12px;}
+.space {letter-spacing:10px;}
+.dropdown-toggle {height: 5px;  font-size: 14px; font-weight: 300;}
 }
 @media (max-width: 480px) {
 .logo-left {padding-left:0px;}

@@ -11,10 +11,10 @@ append content
 	.col-md-3.col-xs-3.nspacer
 		a(href="/profile")
 			//- img(src=user.avatar, alt="" style="")
-			img(src="/images/big-avatar.svg", alt="")
+			img.big-avatar(src="/images/big-avatar.svg", alt="")
 	a(href="/event/add")
 		.col-md-9.col-xs-9.nspacer.bg-purple.font-bigs.font-thin.center(style='height:138px;') 
-			a.link-ashen(href="/event/add" style="letter-spacing:30px;") Create event
+			a.link-ashen.space(href="/event/add") Create event
 			.clearfix
 			.inline.font-e(style='width:15%;') 
 				img(src="/images/people-icon.svg", alt="" ,style="margin-top:-20px; padding-top:20px;")
@@ -40,8 +40,8 @@ append content
 					.set
 						a.link4(href="/admin", alt="", title="") Administration
 			.center
-				img(src="/images/default-card.svg", alt="" class="nspacer-small")
-				a.link-purple.font-thin2(href="/cards", alt="", title="")
+				img.small-avatar(src="/images/default-card.svg", alt="" class="nspacer-small")
+				a.link-purple.font-thin2.resfont(href="/cards", alt="", title="")
 					| Choose your bussines card
 			.pull-left.pad-left-ten.nspacer-small
 				img(src="/images/i.svg", alt="", height="16px" width="16px;")
@@ -61,21 +61,36 @@ append content
 						| Logout
 	//- Events nearby
 	.col-md-9.col-xs-9.nspacer.pad-right-zero.pad-left-zero(style='height:313px;')
-		.col-md-6.col-xs-6.nspacer.pad-right-zero.pad-left-zero
+		.col-md-6.col-xs-6.pad-right-zero.pad-left-zero
 			a.link-green2(href="/events/near", alt="Events Nearby")
-				.font-bigs.font-thin.center(style='padding-top:20px;') 
+				.font-bigs.font-thin.center(style='padding-top:35px;') 
 					| Events nearby
 					img(src="/images/location-icon.svg", alt="", class="arrow")
 		//- Events
-		.col-md-6.col-xs-6.nspacer.bg-yellow.pad-right-zero.pad-left-zero
+		.col-md-6.col-xs-6.bg-yellow.pad-right-zero.pad-left-zero
 			a.link-purple2(href="/events", alt="Events")
 				.font-bigs.font-thin.center(style='padding-top:35px;') 
 					| All events<br />
 					img(src="/images/purple-arrow.svg", alt="", style='padding-bottom:35px;') 
 		.clearfix
 		.col-md-12.col-xs-12.bg-green.nspacer
-			.font-bigs.font-thin
+			.font-bigs.font-thin(style='height:80px; padding-top:5px;')
 				| My Events
+				.pull-right(style='margin-right:-15px;')
+					ul.nav.navbar-nav
+						li.dropdown
+							a.dropdown-toggle(href='#', data-toggle='dropdown')
+								| Arrange by
+								b.caret
+							ul.dropdown-menu.pull-right
+								li
+									a(href='#') Most recent to latest
+								li
+									a(href='#') Latest to most recent
+								li
+									a(href='#') Events name A-Z
+								li
+									a(href='#') My planned events
 	.clearfix
 	//- My Events
 	.nspacer.col-md-12.col-xs-12
@@ -95,98 +110,112 @@ append content
 					At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque 
 					corrupti quos dolores et quas molestias. 
 	.clearfix
-		.left.smallspacer.leng
-			.bluebox
-				a.link4(href="/events/my") My events
-				.right.arrange
-				| Arrange by
-			.clearfix
-			.right
-				dl.dropdown
-					dt
-						a.dropx(href="#")
-							| select
-					dd
-						ul
-							li
-								a(href="#",) Most recent to latest
-							li
-								a(href="#",) Latest to most recent
-							li
-								a(href="#",) Events name A-Z
-							li.border_bottom
-								a(href="#") My planned events
-	- var myeventsi = 0;
-	for event in myevents
-		.row-fluid
-			.events
-				.span1p
-					img(src="/img/map-icon.svg")
-				.span1
-					if event.avatar && event.avatar.url
-						img.minus(src=event.avatar.url, alt="")
-					else
-						img.minus(src="/img/default-logo.svg")
-				.span8p
-					a(href="/event/"+event._id)
-						h8= event.name
-					p.eventtext!= event.description
-				.right_star
-					img(src="/img/martini.svg", alt="", class="arrow")
-				.right_star
-					.image2
-						img.image2(src="/img/calendar-icony.svg", alt="")
-						h16= event.start.getDate()
-							| .
-							= event.start.getMonth()+1
-							br
-							= event.start.getFullYear()
-				.right_star
-					.left
-						img(src="/img/clock.svg", alt="", class="arrow")
-					.left.date #{event.start.getHours()}:#{event.start.getMinutes()}
-						br
-						| (BST)
-				.left.headerSpacer
-					.left
-						img(src="/img/map6.svg", alt="", class="arrow")
-					.left.location
-						if event.address && event.address.length > 0
-							h1= event.venue_name
-							h3= event.address
-						else
-							h1 Location unavailable
-		- if (++myeventsi < myevents.length)
-			.line
-		- else
-			br
-		.clearfix
-	if myevents.length == 0
-		.row-fluid
-			.span12
-				p.text-center.eventtext You have no events
-	
-	.bluebox
-		a.link4(href="/events/near") Events nearby
-		.right.arrange
-			| Arrange by
-		.clearfix
-		.right
-			dl.dropdown
-				dt
-					a(href="#", class="dropx") 
-						| select
-				dd
-					ul
-						li
-							a(href="#",) Most recent to latest
-						li
-							a(href="#",) Latest to most recent
-						li
-							a(href="#",) Events name A-Z
-						li.border_bottom
-							a(href="#") My planned events
-	.row-fluid#nearbyEventsPlaceholder
-		.span12
-			p.text-center.eventtext Looking for events..
+	.nspacer.col-md-12.col-xs-12
+		.pull-left.event(style='width:101.4%;')
+			a.slid-box
+				article.c-two(style='background-image: url(images/event-avatar.jpg);')
+					.slid-box-background
+						h4 
+							img(src="/images/eye.svg", alt="", style="margin-top:-10px; padding-bottom:10px;")
+							| <br /> REVIEW
+				.col-lg-9.col-md-9.col-xs-9.psev.rbox(style='height:169px; padding-left:15px;')
+					h4 Temporibus autem quibusdam et aut officiis
+					| At vero eos et accusamus et iusto odio dignissimos ducimus qui <b>blanditiis praesentium </b>voluptatum deleniti atque 
+					corrupti quos <b>dolores et quas molestias.</b> At vero eos et accusamus et iusto odio dignissimos ducimus qui <b>blanditiis 
+					praesentium </b>voluptatum deleniti atque corrupti quos dolores et quas molestias.. At vero eos et accusamus et iusto 
+					odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque  corrupti quos dolores et quas mole.
+					At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque 
+					corrupti quos dolores et quas molestias. 
+	.clearfix
+	.nspacer
+		.pull-right(style='height:35px;')
+			ul.pagination
+				li
+					a(href='#') «
+				li.active
+					a(href='#') 1
+				li
+					a(href='#') 2
+				li
+					a(href='#') 3
+				li.disabled
+					a(href='#') ...
+				li
+					a(href='#') 5
+				li
+					a(href='#') »
+	.clearfix
+	.nspacer.col-md-12.col-xs-12.font-bigs.font-thin
+		.bg-ashen(style='width:101.4%;')
+			.color-green.pad-left-ten
+				| Events nearby
+				.pull-right
+					ul.nav.navbar-nav.nav-grey
+						li.dropdown
+							a.dropdown-toggle.dropdown-toggle-grey(href='#', data-toggle='dropdown')
+								| Arrange by
+								b.caret
+							ul.dropdown-menu.dropdown-menu-grey.pull-right
+								li
+									a(href='/') Most recent to latest
+								li
+									a(href='/') Latest to most recent
+								li
+									a(href='/') Events name A-Z
+								li
+									a(href='/') My planned events
+	//- Events nearby
+	.nspacer.col-md-12.col-xs-12
+		.pull-left.event(style='width:101.4%;')
+			a.slid-box
+				article.c-two(style='background-image: url(images/event-avatar.jpg);')
+					.slid-box-background
+						h4 
+							img(src="/images/eye.svg", alt="", style="margin-top:-10px; padding-bottom:10px;")
+							| <br /> REVIEW
+				.col-lg-9.col-md-9.col-xs-9.psev.rbox(style='height:169px; padding-left:15px;')
+					h4 Temporibus autem quibusdam et aut officiis
+					| At vero eos et accusamus et iusto odio dignissimos ducimus qui <b>blanditiis praesentium </b>voluptatum deleniti atque 
+					corrupti quos <b>dolores et quas molestias.</b> At vero eos et accusamus et iusto odio dignissimos ducimus qui <b>blanditiis 
+					praesentium </b>voluptatum deleniti atque corrupti quos dolores et quas molestias.. At vero eos et accusamus et iusto 
+					odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque  corrupti quos dolores et quas mole.
+					At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque 
+					corrupti quos dolores et quas molestias. 
+	.clearfix
+	.nspacer.col-md-12.col-xs-12
+		.pull-left.event(style='width:101.4%;')
+			a.slid-box
+				article.c-two(style='background-image: url(images/event-avatar.jpg);')
+					.slid-box-background
+						h4 
+							img(src="/images/eye.svg", alt="", style="margin-top:-10px; padding-bottom:10px;")
+							| <br /> REVIEW
+				.col-lg-9.col-md-9.col-xs-9.psev.rbox(style='height:169px; padding-left:15px;')
+					h4 Temporibus autem quibusdam et aut officiis
+					| At vero eos et accusamus et iusto odio dignissimos ducimus qui <b>blanditiis praesentium </b>voluptatum deleniti atque 
+					corrupti quos <b>dolores et quas molestias.</b> At vero eos et accusamus et iusto odio dignissimos ducimus qui <b>blanditiis 
+					praesentium </b>voluptatum deleniti atque corrupti quos dolores et quas molestias.. At vero eos et accusamus et iusto 
+					odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque  corrupti quos dolores et quas mole.
+					At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque 
+					corrupti quos dolores et quas molestias. 
+	.clearfix
+	.nspacer
+		.pull-right(style='height:35px;')
+			ul.pagination
+				li
+					a(href='#') «
+				li.active
+					a(href='#') 1
+				li
+					a(href='#') 2
+				li
+					a(href='#') 3
+				li.disabled
+					a(href='#') ...
+				li
+					a(href='#') 5
+				li
+					a(href='#') »
+	.clearfix
+
 	
