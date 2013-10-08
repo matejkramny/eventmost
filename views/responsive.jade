@@ -24,39 +24,39 @@ html
 		//- main container
 		block container
 		header
-			.pull-left.logo-left
-				a(href="/")
-					img.nspacer.logos.img-responsive(src="/images/logo.svg")
-			if everyauth.loggedIn != true
-				.pull-right.logo-right
-						//- Only displayed when users are guests
-						button.btn.btn-default.pb(type='submit', data-toggle="modal", href="#loginModal",  style="margin-right:-4px;")
-							| <b>LOGIN</b>
-						button.btn.btn-warning.pb(type='submit', data-toggle="modal", href="#signModal",)
-							| <b>SIGN UP</b>
-			else
-					//- Only displayed when user is logged in
-					.container
-						.pull-right.col-md-1.col-xs-1
-							a.image(href="/conversations")
-							if user.mailboxUnread == 0
-									img.mail(src="/images/message-icon.svg", alt="")
-							else
-											img(src="/img/messages.svg") 
-							.row-fluid.minus2
-								.message-nr
-									h20= user.mailboxUnread
-						.col-md-6.col-xs-6.pull-right
-							.pull-right.nspacer-small
-								a(href="/", class="font-e link-purple header-links") Home 
-								| |
-								a(href="/event/add", class="font-e link-purple header-links")  Create event
-							.clearfix
-							.nspacer
-								form(method="POST", accept-charset="utf-8")
-									input.gonew2.pull-right.header-links(type="button", value="GO", style="width:10%;")
-									input(type="hidden", name="_csrf", value=token)
-									input.pull-right.font-s.search-input.pad-left-ten.header-links(type="search", placeholder="search events or people", style="width:75%;")
+			.container
+				.pull-left.col-md-4.col-xs-4
+					a(href="/")
+						img.nspacer.logos(src="/images/logo.svg")
+				if everyauth.loggedIn != true
+					.pull-right.logo-right
+							//- Only displayed when users are guests
+							button.btn.btn-default.pb(type='submit', data-toggle="modal", href="#loginModal",  style="margin-right:-4px;")
+								| <b>LOGIN</b>
+							button.btn.btn-warning.pb(type='submit', data-toggle="modal", href="#signModal",)
+								| <b>SIGN UP</b>
+				else
+						//- Only displayed when user is logged in
+					.pull-right.col-md-2.col-xs-2
+						a.image(href="/conversations")
+						if user.mailboxUnread == 0
+								img.mail.pull-right(src="/images/message-icon.svg", alt="")
+						else
+										img(src="/img/messages.svg") 
+						.row-fluid.minus2
+							.message-nr
+								h20= user.mailboxUnread
+					.col-md-6.col-xs-6.pull-right
+						.pull-right.nspacer-small
+							a(href="/", class="font-e link-purple header-links") Home 
+							| |
+							a(href="/event/add", class="font-e link-purple header-links")  Create event
+						.clearfix
+						.nspacer
+							form(method="POST", accept-charset="utf-8")
+								input.gonew2.pull-right.header-links(type="button", value="GO", style="width:10%;")
+								input(type="hidden", name="_csrf", value=token)
+								input.pull-right.font-s.search-input.pad-left-ten.header-links(type="search", placeholder="search events or people", style="width:75%;")
 			
 		.container
 			block content

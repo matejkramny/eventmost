@@ -165,7 +165,7 @@ a.link-ashen:hover {
 .logo-left {padding-left:200px;}
 .logo-right {padding-right:200px;}
 
-.message-nr h20 {font-size: 22px; font-weight: 400; color: #542437;  margin-top: -20px; margin-left: 40px; position: absolute;
+.message-nr h20 {font-size: 22px; font-weight: 400; color: #542437;  margin-top: 45px; margin-left: 140px; position: absolute;
   padding-left: 7px; padding-right: 7px; background-color: #fdd093 !important; border-radius: 15px; }
 
 .speaker_titlerespond2 h5 {font-size: 25px; font-weight: 500;}
@@ -456,6 +456,8 @@ a.pink-border6:hover {background-position: 0px -98px; text-decoration: none;}
 .logo-right {padding-right:60px;}
 .big-avatar {width: 100%; height: 100%;}
 .small-avatar {width: 95%; height: 100%;}
+.message-nr h20 {font-size: 22px; font-weight: 400; color: #542437;  margin-top: 45px; margin-left: 100px; position: absolute;
+  padding-left: 7px; padding-right: 7px; background-color: #fdd093 !important; border-radius: 15px; }
 }
 
 
@@ -465,6 +467,7 @@ a.pink-border6:hover {background-position: 0px -98px; text-decoration: none;}
 .slider-text:hover {width: 160%;}
 #slider1 {height:370px;}
 #slider1 .viewport{height:370px;}
+.message-nr h20 {margin-left: 100px;}
 .lf {margin-left: 20px;}
 .event {font-size: 13px;}
 .c-two {width:200px;}
@@ -492,6 +495,7 @@ a.pink-border6:hover {background-position: 0px -98px; text-decoration: none;}
 .space {letter-spacing:10px;}
 .mfresponsive2{margin-top:-14px;}
 .mfresponsive{margin-top:-14px;}
+.message-nr h20 {margin-left: 80px; }
 }
 
 
@@ -517,6 +521,8 @@ a.pink-border6:hover {background-position: 0px -98px; text-decoration: none;}
 .home-big {padding-top:32px;}
 .home-big2 {padding-bottom:30px; padding-top:30px;}
 .home-big3 {padding-bottom:30px; padding-top:30px;}
+.header-links {font-size: 12px;}
+.message-nr h20 {margin-left: 60px; }
 /**** dropdown****/
 .navbar-nav > li > a {
     padding-top: 0px;
@@ -539,31 +545,27 @@ a.pink-border6:hover {background-position: 0px -98px; text-decoration: none;}
 @media only screen and (min-width: 320px) and (max-width: 480px) {
 .logo-left {padding-left:0px;}
 .logos {width: 160px; height: 41px;}
-.mail{width: 40px; height: 41px;}
-.header-links {font-size: 14px;}
 .search-4{width:80%;}
 .font-bigs {font-size: 20px;}
-
 #slider1 .overview li{ width: 240px; word-wrap:break-word;}
 .slider-text {width: 160%;}
 .slider-text:hover {width: 160%;}
 #slider1 {height:370px;}
 #slider1 .viewport{height:370px;}
-
-
 #slider1 .next { background-position: 0px -70px; margin: 53px 0px 0px 0px;  width: 10%; }
 }
 
 
 
 @media (max-width: 480px) {
+.hide2 {display: none;}
+.xs-bigus {width: 96%; float: right;}
 .logo-left {padding-left:0px;}
-.logos {width: 160px; height: 41px;}
-.mail{width: 40px; height: 41px;}
-.header-links {font-size: 14px;}
+.logos {width: 100px; height: 26px;}
+.header-links {font-size: 12px;}
 .search-4{width:80%;}
-.font-bigs {font-size: 120px;}
 .font-big {font-size: 30px;}
+.mail{width: 50px; height: 50px;}
 .pb {width: 55px; height: 55px;}
 .starr {width:10%;}
 #slider1 {max-width: 480px; margin-left: -10px; height: 250px;}
@@ -572,7 +574,8 @@ margin: 70px 0px 0 0px;  text-indent: -999em; float: left; width: 45px; height: 
 #slider1 .next { background-position: 0px -45px; margin: 70px -20px -20px -22px;  }
 .slider-text {font-size: 14px;}
 #slider1 .viewport { margin-left: 40px;}
-  .c-two{width: 50px;  height:169px;}
+.c-two{width: 50px;  height:169px;}
+.message-nr h20 {margin-left: 0px; }
 /* sprites */
 a.pink-border {width:116px; height:97px; background: transparent url('../../../images/1slider.svg') no-repeat;  float: left; margin-bottom: 3px; text-decoration: none;}
 a.pink-border:hover {background-position: 0px -98px; text-decoration: none; }
