@@ -60,23 +60,23 @@ append content
 					button.btn.btn-default.font-e(type='submit', data-reveal-id="loginModal" style="border-radius: 8px; margin-bottom:10px;")
 						| Logout
 	//- Events nearby
-	.col-md-9.col-xs-9.nspacer.pad-right-zero.pad-left-zero(style='height:313px;')
+	.col-md-9.col-xs-9.nspacer.pad-right-zero.pad-left-zero.three
 		.col-md-6.col-xs-6.pad-right-zero.pad-left-zero
 			a.link-green2(href="/events/near", alt="Events Nearby")
-				.font-bigs.font-thin.center(style='padding-top:35px;') 
+				.font-bigs.font-thin.center.home-big  
 					| Events nearby
-					img(src="/images/location-icon.svg", alt="", class="arrow")
+					img.home-big3(src="/images/location-icon.svg", alt="",)
 		//- Events
 		.col-md-6.col-xs-6.bg-yellow.pad-right-zero.pad-left-zero
 			a.link-purple2(href="/events", alt="Events")
-				.font-bigs.font-thin.center(style='padding-top:35px;') 
+				.font-bigs.font-thin.center.home-big 
 					| All events<br />
-					img(src="/images/purple-arrow.svg", alt="", style='padding-bottom:35px;') 
+					img.home-big2(src="/images/purple-arrow.svg", alt="",)
 		.clearfix
 		.col-md-12.col-xs-12.bg-green.nspacer
-			.font-bigs.font-thin(style='height:80px; padding-top:5px;')
+			.font-bigs.font-thin.e(style='padding-top:5px;')
 				| My Events
-				.pull-right(style='margin-right:-15px;')
+				.pull-right.mfresponsive
 					ul.nav.navbar-nav
 						li.dropdown
 							a.dropdown-toggle(href='#', data-toggle='dropdown')
@@ -149,7 +149,7 @@ append content
 		.bg-ashen(style='width:101.4%;')
 			.color-green.pad-left-ten
 				| Events nearby
-				.pull-right
+				.pull-right.mfresponsive2
 					ul.nav.navbar-nav.nav-grey
 						li.dropdown
 							a.dropdown-toggle.dropdown-toggle-grey(href='#', data-toggle='dropdown')
@@ -164,6 +164,7 @@ append content
 									a(href='/') Events name A-Z
 								li
 									a(href='/') My planned events
+	.clearfix
 	//- Events nearby
 	.nspacer.col-md-12.col-xs-12
 		.pull-left.event(style='width:101.4%;')
