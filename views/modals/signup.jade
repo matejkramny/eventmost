@@ -1,10 +1,8 @@
 #loginModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="", aria-hidden="true")
 	.modal-dialog
 		.modal-content
-			.modal-header
-				button.close(type="button", data-dismiss="modal", aria-hidden="true") &times;
-				h4.modal-title Login
-			.modal-body
+			.modal-body.reveal-modal
+				h1 Login
 				// Patryk, use .form-horizontal and markup from http://getbootstrap.com/css/#forms-horizontal
 				form#LoginForm(action="/auth/password", method="POST")
 					input(type="hidden", name="_csrf", value=token)
@@ -20,17 +18,14 @@
 				.clearfix
 				.center2
 					a#openRegisterModal(href="#") Don't have an account?
-			.modal-footer
-				button.btn.btn-default(type="button", data-dismiss="modal") Close
-				button.btn.btn-success(type="button") Submit
-
+				a(href="/", class="close-reveal-modal", data-dismiss="modal") 
+					img(src="/img/x.svg")
+				
 #signModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="", aria-hidden="true")
 	.modal-dialog
 		.modal-content
-			.modal-header
-				button.close(type="button", data-dismiss="modal", aria-hidden="true") &times;
-				h4.modal-title Register
-			.modal-body
+			.modal-body.reveal-modal
+				h1 Register
 				.center2
 					| To create an account please fill our form.
 				form#RegisterForm(action="/auth/password", method="POST")
@@ -45,7 +40,7 @@
 							style=" height:39px; width:350px; margin-left:0px; margin-top:7px;")
 					.left
 						input.enter(type="submit", value="ENTER" style="margin-left:195px;")
+					
 					.clearfix
-			.modal-footer
-				button.btn.btn-default(type="button", data-dismiss="modal") Close
-				button.btn.btn-success(type="button") Submit
+					a(href="/", class="close-reveal-modal", data-dismiss="modal") 
+						img(src="/img/x.svg")
