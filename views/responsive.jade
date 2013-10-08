@@ -30,9 +30,9 @@ html
 			if everyauth.loggedIn != true
 				.pull-right.logo-right
 						//- Only displayed when users are guests
-						button.btn.btn-default(type='submit', data-toggle="modal", href="#loginModal", style="height:85px; width:85px; margin-right:-4px;")
+						button.btn.btn-default.pb(type='submit', data-toggle="modal", href="#loginModal",  style="margin-right:-4px;")
 							| <b>LOGIN</b>
-						button.btn.btn-warning(type='submit', data-toggle="modal", href="#signModal", style="height:85px; width:85px;")
+						button.btn.btn-warning.pb(type='submit', data-toggle="modal", href="#signModal",)
 							| <b>SIGN UP</b>
 			else
 					//- Only displayed when user is logged in
