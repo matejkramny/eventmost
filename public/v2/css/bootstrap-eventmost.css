@@ -162,8 +162,7 @@ a.link-ashen:hover {
   color: #e6e7e8;
 }
 /* other */
-.logo-left {padding-left:200px;}
-.logo-right {padding-right:200px;}
+
 
 .message-nr h20 {font-size: 22px; font-weight: 400; color: #542437;  margin-top: 45px; margin-left: 140px; position: absolute;
   padding-left: 7px; padding-right: 7px; background-color: #fdd093 !important; border-radius: 15px; }
@@ -452,8 +451,6 @@ a.pink-border6:hover {background-position: 0px -98px; text-decoration: none;}
 .lf {margin-left: 20px;}
 .event {font-size: 13px;}
 .c-two {width:200px;}
-.logo-left {padding-left:60px;}
-.logo-right {padding-right:60px;}
 .big-avatar {width: 100%; height: 100%;}
 .small-avatar {width: 95%; height: 100%;}
 .message-nr h20 {font-size: 22px; font-weight: 400; color: #542437;  margin-top: 45px; margin-left: 100px; position: absolute;
@@ -471,8 +468,6 @@ a.pink-border6:hover {background-position: 0px -98px; text-decoration: none;}
 .lf {margin-left: 20px;}
 .event {font-size: 13px;}
 .c-two {width:200px;}
-.logo-left {padding-left:60px;}
-.logo-right {padding-right:60px;}
 .big-avatar {width: 100%; height: 100%;}
 .small-avatar {width: 95%; height: 100%;}
 .font-bigs {font-size: 50px;}
@@ -488,8 +483,6 @@ a.pink-border6:hover {background-position: 0px -98px; text-decoration: none;}
 .c-two {width:140px;}
 .event {font-size: 11px;}
 .slid-box-background h4{font-size:16px;}
-.logo-left {padding-left:20px;}
-.logo-right {padding-right:20px;}
 .font-bigs {font-size: 30px;}
 .font-s, .resfont {font-size: 12px;}
 .space {letter-spacing:10px;}
@@ -509,8 +502,6 @@ a.pink-border6:hover {background-position: 0px -98px; text-decoration: none;}
 .c-two {width:140px;}
 .event {font-size: 11px;}
 .slid-box-background h4{font-size:16px;}
-.logo-left {padding-left:20px;}
-.logo-right {padding-right:20px;}
 .font-bigs {font-size: 30px;}
 .font-s, .resfont {font-size: 12px;}
 .space {letter-spacing:10px;}
