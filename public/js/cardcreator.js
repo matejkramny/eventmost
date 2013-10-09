@@ -6,7 +6,7 @@ function BusinessCards ($scope) {
 	$scope.preview = false;
 	
 	$scope.canvasStyles = {
-		backgroundColor: "#000000"
+		backgroundColor: "#FFFFFF"
 	};
 	
 	$scope.createTextBox = function () {
