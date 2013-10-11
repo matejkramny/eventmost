@@ -30,6 +30,34 @@ block content
 					a.btn.btn-success(href="#") Save
 		hr
 		.row
+			.col-md-7.col-lg-6
+				h4 Card Background
+				form.form-horizontal
+					.form-group
+						label.col-lg-4.col-md-4.control-label(for="bgTemplate") Choose a template
+						.col-lg-8.col-md-8
+							a#bgTemplate.btn.btn-success.btn-sm(href="#") Browse Library
+					.form-group
+						label.col-lg-4.col-md-4.control-label(for="bgColour") Colour
+						.col-lg-8.col-md-8
+							input#bgColour.form-control(type="color", ng-model="canvasStyles.backgroundColor")
+					.form-group
+						label.col-lg-4.col-md-4.control-label(for="bgImage") Upload an Image
+						.col-lg-8.col-md-8
+							input#bgImage.form-control(type="file")
+				hr
+				#cardCanvas(ng-style="canvasStyles", ng-class="{ preview: preview }")
+					.libraryBox(id="{{libraryBox.id}}", card-directive, ng-repeat="libraryBox in libraryBoxes")
+						.handle
+						input(type="text", ng-hide="libraryBox.image" ng-model="libraryBox.text", ng-click="selectBox(libraryBox)", ng-style="libraryBox.style")
+						img(ng-src="{{ libraryBox.src }}", ng-show="libraryBox.image", ng-click="selectBox(libraryBox)", ng-style="libraryBox.style")
+				hr
+				form.form-horizontal
+					.form-group
+						label.col-lg-4.col-md-4.control-label(for="component") Select Component
+						.col-lg-8.col-md-8
+							select#component.form-control(ng-model="boxId", ng-change="changeBox()", ng-options="box.id as box.text group by box.type for box in libraryBoxes")
+			
 			.col-md-5.col-lg-6.nostupidcolours
 				form.form-horizontal(ng-hide="libraryBox.image == null")
 					div(ng-hide="libraryBox.image == true")
@@ -131,32 +159,5 @@ block content
 						a(ng-click="createTextBox()", style="cursor:pointer;") add a text box
 						|  or 
 						a(ng-click="createImage()", style="cursor:pointer;") an image
-						|  to the canvas ->
-					
-			.col-md-7.col-lg-6
-				#cardCanvas(ng-style="canvasStyles", ng-class="{ preview: preview }")
-					.libraryBox(id="{{libraryBox.id}}", card-directive, ng-repeat="libraryBox in libraryBoxes")
-						.handle
-						input(type="text", ng-hide="libraryBox.image" ng-model="libraryBox.text", ng-click="selectBox(libraryBox)", ng-style="libraryBox.style")
-						img(ng-src="{{ libraryBox.src }}", ng-show="libraryBox.image", ng-click="selectBox(libraryBox)", ng-style="libraryBox.style")
-				
-				hr
-				form.form-horizontal
-					.form-group
-						label.col-lg-4.col-md-4.control-label(for="component") Select Component
-						.col-lg-8.col-md-8
-							select#component.form-control(ng-model="boxId", ng-change="changeBox()", ng-options="box.id as box.text group by box.type for box in libraryBoxes")
-				h4 Card Background
-				form.form-horizontal
-					.form-group
-						label.col-lg-4.col-md-4.control-label(for="bgTemplate") Choose a template
-						.col-lg-8.col-md-8
-							a#bgTemplate.btn.btn-success.btn-sm(href="#") Browse Library
-					.form-group
-						label.col-lg-4.col-md-4.control-label(for="bgColour") Colour
-						.col-lg-8.col-md-8
-							input#bgColour.form-control(type="color", ng-model="canvasStyles.backgroundColor")
-					.form-group
-						label.col-lg-4.col-md-4.control-label(for="bgImage") Upload an Image
-						.col-lg-8.col-md-8
-							input#bgImage.form-control(type="file")
+						|  to the canvas
+			

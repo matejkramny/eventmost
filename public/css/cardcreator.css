@@ -1,10 +1,7 @@
-body {
-	background: #FFF;
-}
 #cardCanvas {
 	width: 500px;
 	height: 250px;
-	background: #000;
+	background: #FFF;
 	position: relative;
 	margin-top: 10px;
 }
@@ -22,6 +19,7 @@ body {
 #cardCanvas.preview .libraryBox {
 	border: none;
 	outline: none;
+	padding: 1px; /* compensates the dotted border hidden when .preview is on */
 }
 #cardCanvas.preview .libraryBox .handle {
 	opacity: 0.1;

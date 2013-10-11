@@ -36,16 +36,16 @@ html
 							button.btn.btn-warning.pb.pull-right(type='submit', data-toggle="modal", href="#signModal",)
 								| <b>SIGN UP</b>
 				else
-						//- Only displayed when user is logged in
-						.pull-right.col-md-2.col-xs-2
-							a.image(href="/conversations")
-							if user.mailboxUnread == 0
-								img.mail.pull-right(src="/images/message-icon.svg", alt="")
-							else
-								img(src="/img/messages.svg") 
-						.row-fluid.minus2
-							.message-nr
-								h20= user.mailboxUnread
+					//- Only displayed when user is logged in
+					.pull-right.col-md-2.col-xs-2
+						a.image(href="/conversations")
+						if user.mailboxUnread == 0
+							img.mail.pull-right(src="/images/message-icon.svg", alt="")
+						else
+							img(src="/img/messages.svg") 
+					.row-fluid.minus2
+						.message-nr
+							h20= user.mailboxUnread
 					.col-md-6.col-xs-6.pull-right
 						.pull-right.nspacer-small
 							a(href="/", class="font-e link-purple header-links") Home 
