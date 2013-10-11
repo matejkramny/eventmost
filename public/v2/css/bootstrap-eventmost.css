@@ -442,7 +442,7 @@ a.pink-border6:hover {background-position: 0px -98px; text-decoration: none;}
 }
 /**** pagination ****/
 
-@media (max-width: 1199px) {
+@media only screen and (max-width: 1199px) {
 #slider1 .overview li{ width: 240px; word-wrap:break-word;}
 .slider-text {width: 160%;}
 .slider-text:hover {width: 160%;}
@@ -458,7 +458,7 @@ a.pink-border6:hover {background-position: 0px -98px; text-decoration: none;}
 }
 
 
-@media handheld, screen and  (max-width: 1024px) {
+@media only screen and (max-width: 1024px) {
 #slider1 .overview li{ width: 240px; word-wrap:break-word;}
 .slider-text {width: 160%;}
 .slider-text:hover {width: 160%;}
@@ -473,7 +473,7 @@ a.pink-border6:hover {background-position: 0px -98px; text-decoration: none;}
 .font-bigs {font-size: 50px;}
 }
 
-@media handheld, screen and  (min-width: 768px) and (max-width: 980px) {
+@media only screen and (min-width: 768px) and (max-width: 980px) {
 #slider1 .overview li{ width: 170px;}
 .slider-text {width: 110%;}
 .slider-text:hover {width: 110%;}
@@ -492,7 +492,7 @@ a.pink-border6:hover {background-position: 0px -98px; text-decoration: none;}
 }
 
 
-@media handheld, screen and  (max-width: 768px) {
+@media only screen and (max-width: 768px) {
 #slider1 .overview li{ width: 170px;}
 .slider-text {width: 110%;}
 .slider-text:hover {width: 110%;}
@@ -533,7 +533,7 @@ a.pink-border6:hover {background-position: 0px -98px; text-decoration: none;}
 
 /* Smartphones (portrait and landscape) ----------- */
 
-@media handheld, screen and (min-width: 320px) and (max-width: 480px) {
+@media only screen and (min-width: 320px) and (max-width: 480px) {
 .logo-left {padding-left:0px;}
 .logos {width: 160px; height: 41px;}
 .search-4{width:80%;}
@@ -548,7 +548,7 @@ a.pink-border6:hover {background-position: 0px -98px; text-decoration: none;}
 
 
 
-@media handheld, screen and  (max-width: 480px) {
+@media only screen and (max-width: 480px) {
 .hide2 {display: none;}
 .xs-bigus {width: 96%; float: right;}
 .logo-left {padding-left:0px;}
