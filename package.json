@@ -5,6 +5,9 @@
   "scripts": {
     "start": "node app.js"
   },
+  "subdomain": "eventmost",
+  "domains": [
+  ],
   "dependencies": {
     "express": "latest",
     "jade": "latest",
