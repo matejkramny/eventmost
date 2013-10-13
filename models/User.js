@@ -111,7 +111,6 @@ scheme.methods.setPassword = function(password) {
 }
 
 scheme.statics.getHash = function (password) {
-	return "";
 	var shasum = crypto.createHash('sha1');
 	return shasum.update("aßas155"+password+"90124*)SADZ~<").digest('hex');
 }
