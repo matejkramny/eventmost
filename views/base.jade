@@ -28,7 +28,7 @@ html
 							.logo.span3
 								a(href="/")
 									img.logo(src="/img/logo.png")
-							if everyauth.loggedIn != true
+							if loggedIn != true
 								//- Only displayed when users are guests
 								.signin.span3.offset6
 									a(href="", class="link1" data-reveal-id="loginModal") Login 
@@ -73,7 +73,7 @@ html
 						.copy.text-center Copyright &copy; 2013 <b>EventMost</b>. All rights reserved. &nbsp;
 							a(href="http://www.facebook.com/groups/361667753935493/", alt="EventMost on Facebook", title="EventMost on Facebook") Facebook
 			
-			if everyauth.loggedIn != true
+			if loggedIn != true
 				include modals/signup
 			
 		//- usually globally persistent
@@ -96,7 +96,7 @@ html
 			script(src="/js/jquery.jcarousel.min.js", defer="true")
 			script(src="/js/three.js", defer="true")
 			script(src="/js/four.js", defer="true")
-			if everyauth.loggedIn != true
+			if loggedIn != true
 				script(src="/js/signin.js", defer="true")
 				
 		//- page-specific

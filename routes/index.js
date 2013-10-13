@@ -13,29 +13,23 @@ var auth = require('./auth'),
 
 exports.router = function(app) {
 	app.get('/', function(req, res) {
-		if (res.locals.everyauth.loggedIn == true) {
+		if (req.user) {
 			home.display(req, res);
 		} else {
 			auth.display(req, res)
 		}
 	})
-		.get('/auth/finish', util.authorized, auth.checkFinished)
-		.post('/auth/finish', util.authorized, auth.doCheckFinished)
 		.get('/about', contact.about)
 		.get('/contact', contact.contactus)
 		.post('/contact', contact.doContact)
 		.get('/token', getToken)
-		.post('/auth/password.json', auth.doPasswordJSON)
-		.get('/auth/twitter.json', auth.doTwitterJSON)
-		.get('/auth/facebook.json', auth.doFacebookJSON)
-		.get('/auth/linkedin.json', auth.doLinkedInJSON)
 		.get('/logout.json', logoutJSON)
 		.get('/loggedin', isloggedin)
 		.post('/emailavailable', emailAvailable)
 		.get('/testroute*', testRoute)
 	
 	// Used for JSON/XML auth responses
-	//auth.router(app)
+	auth.router(app)
 	// Events..
 	events.router(app);
 	// Maps

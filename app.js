@@ -7,6 +7,7 @@ var express = require('express')
 	, MongoStore = require('connect-mongo')(express)
 	, authmethods = require('./routes/auth')
 	, mailer = require('nodemailer')
+	, passport = require('passport')
 
 var bugsnag = require("bugsnag");
 bugsnag.register("6c73b59b8d37503c8e8a70d67613d067", {
@@ -54,7 +55,6 @@ if (process.env.NODE_ENV == 'production') {
 	sessionStore = new MongoStore({
 		url: db
 	});
-	app.set('view cache', false); // Tell Jade not to cache views
 }
 
 // all environments
@@ -82,6 +82,9 @@ app.use(express.session({ // Session store
 }));
 app.use(express.csrf()); // csrf protection
 
+app.use(passport.initialize());
+app.use(passport.session());
+
 // Custom middleware
 app.use(function(req, res, next) {
 	// request middleware
@@ -92,16 +95,19 @@ app.use(function(req, res, next) {
 	if (req.session.flash) {
 		res.locals.flash = req.session.flash;
 	} else {
-		res.locals.flash = [];
+		req.session.flash = res.locals.flash = [];
 	}
 	
-	req.session.flash = [];
+	res.locals.emptyFlash = function () {
+		req.session.flash = []
+	}
+	
+	res.locals.user = req.user;
+	res.locals.loggedIn = res.locals.user != null;
 	
 	// navigation bar
 	next();
 });
-
- // Authentication middleware
 
 var server = http.createServer(app)
 server.listen(app.get('port'), function(){
@@ -115,6 +121,7 @@ routes.router(app);
 // development only
 if ('development' == app.get('env')) {
 	app.use(express.errorHandler()); // Let xpress handle errors
+	app.set('view cache', false); // Tell Jade not to cache views
 }
 
 if (process.env.NODE_ENV == 'production') {

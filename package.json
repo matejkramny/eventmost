@@ -19,7 +19,6 @@
     "connect-mongo": "latest",
 	"nodemailer": "latest",
 	"passport": "latest",
-	"passport-local": "latest",
 	"socket.io": "latest",
 	"nodetime": "latest",
 	"nodemailer": "latest",

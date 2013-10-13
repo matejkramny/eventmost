@@ -1,5 +1,5 @@
 exports.authorized = function (req, res, next) {
-	if (req.loggedIn) {
+	if (req.user) {
 		next()
 	} else {
 		res.format({
