@@ -22,6 +22,7 @@
 	"socket.io": "latest",
 	"nodetime": "latest",
 	"nodemailer": "latest",
-	"bugsnag": "latest"
+	"bugsnag": "latest",
+	"should": "latest"
   }
 }

@@ -52,6 +52,8 @@ scheme.methods.setName = function (name) {
 			this.surname = "";
 		}
 	} catch (exception) {
+		this.name = "";
+		this.surname = "";
 		// TODO log this exception
 	}
 }
@@ -59,9 +61,17 @@ scheme.methods.getName = function () {
 	var name;
 	
 	if ((this.name != null && this.name.length != 0) || (this.surname != null && this.surname.length != 0)) {
-		name = this.name + " " + this.surname;
+		if (this.surname && this.name) {
+			name = this.name + " " + this.surname;
+		} else {
+			name = this.name == null ? this.surname : this.name;
+		}
 	} else {
 		name = this.email;
+	}
+	
+	if (!name) {
+		return ""
 	}
 	
 	return name;
