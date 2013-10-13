@@ -5,7 +5,7 @@ var users = require('./users')
 	, dashboard = require('./dashboard')
 
 function authorize (req, res, next) {
-	if (req.loggedIn && req.user.admin === true) {
+	if (req.user && req.user.admin === true) {
 		next()
 	} else {
 		res.redirect('/')
