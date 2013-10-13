@@ -23,7 +23,7 @@ exports.display = function(req, res) {
 }
 
 function doPasswordLogin (req, res) {
-	var email = req.body.email,
+	var email = req.body.login,
 		password = req.body.password,
 		name = req.body.name;
 	
