@@ -1,86 +1,21 @@
 var mongoose = require('mongoose')
-	, everyauth = require('everyauth')
+	, passport = require('passport')
+	, LocalStrategy = require('passport-local').Strategy
 	, models = require('../models')
 	, https = require('https')
 
-everyauth.everymodule.findUserById(function(id, cb) {
-	models.User.findOne({ _id: mongoose.Types.ObjectId(id) }, function(err, user) {
-		cb(err, user);
-	})
-});
-everyauth.password
-	.getLoginPath('/auth')
-	.postLoginPath('/auth/password')
-	.loginView('login')
-	.authenticate(function(login, password) {
-		var promise = this.Promise();
+passport.use(new LocalStrategy({
+		usernameField: 'email',
+		passwordField: 'password'
+	},
+	function(username, password, done) {
 		
-		models.User.authenticatePassword(login, password, function(err, user) {
-			if (err) promise.fulfill([err]);
-			else promise.fulfill(user);
-		});
-				
-		return promise;
-	})
-	.loginSuccessRedirect('/')
-	.getRegisterPath('/auth')
-	.postRegisterPath('/auth/password')
-	.registerView('login')
-	.validateRegistration(function(){})
-	.registerUser(function(userAttrs) {})
-	.registerSuccessRedirect('/')
-	
-everyauth.twitter
-	.entryPath('/auth/twitter')
-	.callbackPath('/auth/twitter/callback')
-	.consumerKey("nlvyUeSPdTPJZGvQzyeLg")
-	.consumerSecret("mGAdYwq6NjUMInJk6EdhP5Gv5mGchuATkiMktxOGmI")
-	.findOrCreateUser(function(session, accessToken, accessTokenSecret, meta) {
-		var promise = this.Promise();
-		
-		models.User.authenticateTwitter(session, accessToken, accessTokenSecret, meta, function(err, user) {
-			if (err) promise.fulfill([err]);
-			else promise.fulfill(user);
-		});
-		
-		return promise;
-	})
-	.redirectPath('/auth/finish');
+	}
+))
 
-everyauth.facebook
-	.entryPath('/auth/facebook')
-	.callbackPath('/auth/facebook/callback')
-	.scope('email')
-	.appId('532240236843933')
-	.appSecret('61e367fbe3aae28d49c788229aaa4464')
-	.findOrCreateUser(function(session, accessToken, accessSecret, meta) {
-		var promise = this.Promise();
-		
-		models.User.authenticateFacebook(session, accessToken, accessSecret, meta, function(err, user) {
-			if (err) promise.fulfill([err])
-			else promise.fulfill(user);
-		})
-		
-		return promise;
-	})
-	.redirectPath('/auth/finish')
-
-everyauth.linkedin
-	.entryPath('/auth/linkedin')
-	.callbackPath('/auth/linkedin/callback')
-	.consumerKey('rklpzzr92ztv')
-	.consumerSecret('H0y6fL9dAa4WEhzd')
-	.findOrCreateUser(function(session, accessToken, accessSecret, meta) {
-		var promise = this.Promise();
-		
-		models.User.authenticateLinkedIn(session, accessToken, accessSecret, meta, function(err, user) {
-			if (err) promise.fulfill([err])
-			else promise.fulfill(user)
-		})
-		
-		return promise;
-	})
-	.redirectPath('/auth/finish')
+exports.router = function (app) {
+	app.post('/login.json', doJSONLogin)
+}
 
 exports.display = function(req, res) {
 	res.render('login', { title: "Login" });
@@ -194,8 +129,4 @@ exports.doFacebookJSON = function (req, res) {
 	}
 }
 exports.doLinkedInJSON = function (req, res) {
-}
-
-exports.router = function (app) {
-	app.post('/login.json', doJSONLogin)
 }

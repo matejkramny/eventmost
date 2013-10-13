@@ -5,7 +5,6 @@ var express = require('express')
 	, mongoose = require('mongoose')
 	, util = require('./util')
 	, MongoStore = require('connect-mongo')(express)
-	, everyauth = require('everyauth')
 	, authmethods = require('./routes/auth')
 	, mailer = require('nodemailer')
 
@@ -55,7 +54,7 @@ if (process.env.NODE_ENV == 'production') {
 	sessionStore = new MongoStore({
 		url: db
 	});
-	everyauth.debug = true;
+	app.set('view cache', false); // Tell Jade not to cache views
 }
 
 // all environments
@@ -102,13 +101,7 @@ app.use(function(req, res, next) {
 	next();
 });
 
-app.use(everyauth.middleware()); // Authentication middleware
-
-// development only
-if ('development' == app.get('env')) {
-	app.use(express.errorHandler()); // Let xpress handle errors
-	app.set('view cache', false); // Tell Jade not to cache views
-}
+ // Authentication middleware
 
 var server = http.createServer(app)
 server.listen(app.get('port'), function(){
@@ -118,6 +111,11 @@ server.listen(app.get('port'), function(){
 
 // routes
 routes.router(app);
+
+// development only
+if ('development' == app.get('env')) {
+	app.use(express.errorHandler()); // Let xpress handle errors
+}
 
 if (process.env.NODE_ENV == 'production') {
 	console.log("Starting nodetime")
