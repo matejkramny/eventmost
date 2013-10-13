@@ -5,6 +5,7 @@
   "scripts": {
     "start": "node app.js"
   },
+  "start": "app.js",
   "subdomain": "eventmost",
   "domains": [
   ],

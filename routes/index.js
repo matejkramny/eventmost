@@ -1,5 +1,4 @@
 var auth = require('./auth'),
-	everyauth = require('everyauth'),
 	home = require('./home'),
 	contact = require('./contact'),
 	events = require('./events'),
