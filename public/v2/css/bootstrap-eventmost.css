@@ -550,7 +550,7 @@ a.pink-border6 {width:121px; height:97px; background: transparent url('../../../
 
 
 
-@media only screen and (max-width: 480px) {
+@media (max-width: 480px) {
 .hide-all {display: inline;}
 .hide2 {display: none;}
 .xs-bigus {width: 96%; float: right;}
