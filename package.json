@@ -5,6 +5,7 @@
   "scripts": {
     "start": "node app.js"
   },
+  "start": "app.js",
   "subdomain": "eventmost",
   "domains": [
   ],
@@ -18,10 +19,11 @@
     "validator": "latest",
     "connect-mongo": "latest",
 	"nodemailer": "latest",
-	"everyauth": "latest",
+	"passport": "latest",
 	"socket.io": "latest",
 	"nodetime": "latest",
 	"nodemailer": "latest",
-	"bugsnag": "latest"
+	"bugsnag": "latest",
+	"should": "latest"
   }
 }
