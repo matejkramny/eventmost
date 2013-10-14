@@ -7,29 +7,125 @@ append addonjs
 append content
 	include inc/flash
 
-	
-	.col-md-3.col-xs-3.nspacer.h1
+	.col-xs-12.hide-all2
+		form(method="POST", accept-charset="utf-8")
+			input.gonew2.pull-right.header-links(type="button", value="GO", style="width:10%;")
+			input(type="hidden", name="_csrf", value=token)
+			input.pull-right.font-s.search-input.pad-left-ten.header-links(type="search", placeholder="search events or people", style="width:87%;")
+	.clearfix.hide-all2
+
+	.col-xs-12.hide-all2
+
+		.nspacer.he1.hide-all2.pull-left(style="width:30%;")
+			a(href="/profile")
+				//- img(src=user.avatar, alt="" style="")
+				img(src="/images/big-avatar.svg", alt="" class="img-responsive")
+		a(href="/event/add")
+		.col-xs-8.nspacer.bg-purple.font-thin.center.he1.hide-all2.pull-right
+			a.link-ashen.space(href="/event/add", style="font-size:14px;") Create event
+			.clearfix
+			.inline.font-e(style="width:20%;")
+				img(src="/images/people-icon.svg", alt="" , class="create-e-img" )
+				.center event
+			.inline.font-e(style="width:20%;")
+				img(src="/images/martini-icon.svg", alt="" , class="create-e-img" )
+				.center meetup
+			.inline.font-e(style="width:20%;")
+				img(src="/images/conference-icon.svg", alt="" , class="create-e-img" )
+				.center conference
+			.inline.font-e(style="width:20%;")
+				img(src="/images/other-icon.svg", alt="", class="create-e-img" )
+				.center other
+
+	.col-md-3.col-xs-3.nspacer.he1.hide-mini
 		a(href="/profile")
 			//- img(src=user.avatar, alt="" style="")
-			img.big-avatar(src="/images/big-avatar.svg", alt="")
+			img(src="/images/big-avatar.svg", alt="" class="img-responsive" )
 	a(href="/event/add")
-		.col-md-9.col-xs-9.nspacer.bg-purple.font-bigs.font-thin.center.h1
+		.col-md-9.col-xs-9.nspacer.bg-purple.font-bigs.font-thin.center.he1.img-responsive.hide-mini
 			a.link-ashen.space(href="/event/add") Create event
 			.clearfix
 			.inline.font-e(style='width:15%;') 
-				img(src="/images/people-icon.svg", alt="" ,style="margin-top:-20px; padding-top:20px;")
+				img(src="/images/people-icon.svg", alt="" , class="img-responsive create-e-img" )
 				.center event
 			.inline.font-e(style='width:15%;')
-				img(src="/images/martini-icon.svg", alt="" ,style="margin-top:-20px; padding-top:20px;")
+				img(src="/images/martini-icon.svg", alt="" , class="img-responsive create-e-img" )
 				.center meetup
 			.inline.font-e(style='width:15%;')
-				img(src="/images/conference-icon.svg", alt="" ,style="margin-top:-20px; padding-top:20px;")
+				img(src="/images/conference-icon.svg", alt="" , class="img-responsive create-e-img" )
 				.center conference
 			.inline.font-e(style='width:15%;')
-				img(src="/images/other-icon.svg", alt="" ,style="margin-top:-20px; padding-top:20px;")
+				img(src="/images/other-icon.svg", alt="", class="img-responsive create-e-img" )
 				.center other
+
 	//- User card
-	.col-md-3.col-xs-3.nspacer
+	.clearfix.hide-all2
+	.nspacer.hide-all2
+	.pull-left.nspacer.hide-all2(style='width:33%;') 
+		.bg-ashen(style='height:242px;') 
+			p.break.center.font-thin2.font-a(style='padding-top:10px;')= user.getName()
+			.pull-left.pad-left-ten
+				img(src="/images/i.svg", alt="", height="7px" width="7px;")
+			.pull-left.pad-left-ten.font-s.font-thin2
+				a.link-purple.font-en(href="/profile", alt="", title="",) Edit profile
+				if user.admin
+					.set.font-en
+						a.link4(href="/admin", alt="", title="",) Administration
+			.center
+				img.small-avatar(src="/images/default-card.svg", alt="" class="nspacer-small")
+				a.link-purple.font-thin2.resfont.font-en6(href="/cards", alt="", title="",)
+					| Choose your bussines card
+			.pull-left.pad-left-ten.nspacer-small
+				img(src="/images/i.svg", alt="", height="7px" width="7px;")
+			.pull-left.pad-left-ten.font-s.nspacer-small.font-thin2
+				a.link-purple.font-en6(href="", alt="", title="", data-reveal-id="NotificationModal" , )
+					| Notification settings
+			.clearfix
+			.pull-left.pad-left-ten.nspacer-small
+				img(src="/images/i.svg", alt="", height="7px" width="7px;")
+			.pull-left.pad-left-ten.font-s.nspacer-small.font-thin2
+				a.link-purple.font-en6(href="", alt="", title="", data-reveal-id="PrivacyModal" ,)
+						| Privacy settings
+			.clearfix
+			.center.nspacer
+				a(href="/logout", class="logout link-yellow")
+					button.btn.btn-default.font-e(type='submit', data-reveal-id="loginModal" style="border-radius: 8px; margin-bottom:10px; font-size:9px;")
+						| Logout
+	//- Events nearby
+	.col-xs-4.pad-right-zero.pad-left-zero.hide-all2.nspacer
+		a.link-green2(href="/events/near", alt="Events Nearby")
+			.font-bigs.font-thin.center.home-big  
+				| Events nearby
+				img.home-big3(src="/images/location-icon.svg", alt="", class="img-responsive", style="width:80%; margin:auto;")
+		//- Events
+	.col-xs-4.bg-yellow.pad-right-zero.pad-left-zero.hide-all2.nspacer(style='height:242px;') 
+		a.link-purple2(href="/events", alt="Events")
+			.font-bigs.font-thin.center.home-big 
+				| All events<br />
+				img.home-big2(src="/images/purple-arrow.svg", alt="", class="img-responsive", style="width:70%; margin:auto;")
+	.clearfix.hide-all2
+	.col-xs-12.hide-all2
+		.bg-green.font-ah.pad-left-ten(style="min-height:27px;")
+			| My Events
+			.pull-right
+				ul.nav.navbar-nav(style="margin-right:-7px; margin-top:-5px;")
+					li.dropdown
+						a.dropdown-toggle(href='#', data-toggle='dropdown')
+							| Arrange by
+							b.caret
+						ul.dropdown-menu.pull-right
+							li
+								a(href='#') Most recent to latest
+							li
+								a(href='#') Latest to most recent
+							li
+								a(href='#') Events name A-Z
+							li
+								a(href='#') My planned events
+	.clearfix.hide-all2
+
+	//- User card
+	.col-md-3.col-xs-3.nspacer.hide-mini
 		.bg-ashen(style='height:312px;') 
 			p.break.font-e.center.font-thin2(style='padding-top:10px;')= user.getName()
 			.pull-left.pad-left-ten
@@ -60,7 +156,7 @@ append content
 					button.btn.btn-default.font-e(type='submit', data-reveal-id="loginModal" style="border-radius: 8px; margin-bottom:10px;")
 						| Logout
 	//- Events nearby
-	.col-md-9.col-xs-9.nspacer.pad-right-zero.pad-left-zero.three
+	.col-md-9.col-xs-9.nspacer.pad-right-zero.pad-left-zero.three.hide-mini
 		.col-md-6.col-xs-6.pad-right-zero.pad-left-zero
 			a.link-green2(href="/events/near", alt="Events Nearby")
 				.font-bigs.font-thin.center.home-big  
@@ -91,41 +187,43 @@ append content
 									a(href='#') Events name A-Z
 								li
 									a(href='#') My planned events
-	.clearfix
+	.clearfix.hide-mini
 	//- My Events
 	.nspacer.col-md-12.col-xs-12
 		.pull-left.event(style='width:101.4%;')
 			a.slid-box
-				article.c-two(style='background-image: url(images/event-avatar.jpg);')
+				article.c-two
 					.slid-box-background
 						h4 
-							img(src="/images/eye.svg", alt="", style="margin-top:-10px; padding-bottom:10px;")
+							.eye.hide2
 							| <br /> REVIEW
-				.col-lg-9.col-md-9.col-xs-9.psev.rbox(style='height:169px; padding-left:15px;')
+				.col-lg-9.col-md-9.col-xs-9.psev.pad-left-ten.rbox.eh
 					h4 Temporibus autem quibusdam et aut officiis
-					| At vero eos et accusamus et iusto odio dignissimos ducimus qui <b>blanditiis praesentium </b>voluptatum deleniti atque 
-					corrupti quos <b>dolores et quas molestias.</b> At vero eos et accusamus et iusto odio dignissimos ducimus qui <b>blanditiis 
-					praesentium </b>voluptatum deleniti atque corrupti quos dolores et quas molestias.. At vero eos et accusamus et iusto 
-					odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque  corrupti quos dolores et quas mole.
-					At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque 
-					corrupti quos dolores et quas molestias. 
+					.smart-minus
+						| At vero eos et accusamus et iusto odio dignissimos ducimus qui <b>blanditiis praesentium </b>voluptatum deleniti atque 
+						corrupti quos <b>dolores et quas molestias.</b> At vero eos et accusamus et iusto odio dignissimos ducimus qui <b>blanditiis 
+						praesentium </b>voluptatum deleniti atque corrupti quos dolores et quas molestias.. At vero eos et accusamus et iusto 
+						odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque  corrupti quos dolores et quas mole.
+						At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque 
+						corrupti quos dolores et quas molestias. 
 	.clearfix
 	.nspacer.col-md-12.col-xs-12
 		.pull-left.event(style='width:101.4%;')
 			a.slid-box
-				article.c-two(style='background-image: url(images/event-avatar.jpg);')
+				article.c-two
 					.slid-box-background
 						h4 
-							img(src="/images/eye.svg", alt="", style="margin-top:-10px; padding-bottom:10px;")
+							.eye.hide2
 							| <br /> REVIEW
-				.col-lg-9.col-md-9.col-xs-9.psev.rbox(style='height:169px; padding-left:15px;')
+				.col-lg-9.col-md-9.col-xs-9.psev.pad-left-ten.rbox.eh
 					h4 Temporibus autem quibusdam et aut officiis
-					| At vero eos et accusamus et iusto odio dignissimos ducimus qui <b>blanditiis praesentium </b>voluptatum deleniti atque 
-					corrupti quos <b>dolores et quas molestias.</b> At vero eos et accusamus et iusto odio dignissimos ducimus qui <b>blanditiis 
-					praesentium </b>voluptatum deleniti atque corrupti quos dolores et quas molestias.. At vero eos et accusamus et iusto 
-					odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque  corrupti quos dolores et quas mole.
-					At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque 
-					corrupti quos dolores et quas molestias. 
+					.smart-minus
+						| At vero eos et accusamus et iusto odio dignissimos ducimus qui <b>blanditiis praesentium </b>voluptatum deleniti atque 
+						corrupti quos <b>dolores et quas molestias.</b> At vero eos et accusamus et iusto odio dignissimos ducimus qui <b>blanditiis 
+						praesentium </b>voluptatum deleniti atque corrupti quos dolores et quas molestias.. At vero eos et accusamus et iusto 
+						odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque  corrupti quos dolores et quas mole.
+						At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque 
+						corrupti quos dolores et quas molestias. 
 	.clearfix
 	.nspacer
 		.pull-right(style='height:35px;')
@@ -145,7 +243,7 @@ append content
 				li
 					a(href='#') »
 	.clearfix
-	.nspacer.col-md-12.col-xs-12.font-bigs.font-thin
+	.nspacer.col-md-12.col-xs-12.font-bigs.font-thin.hide-mini
 		.bg-ashen(style='width:101.4%;')
 			.color-green.pad-left-ten
 				| Events nearby
@@ -164,41 +262,68 @@ append content
 									a(href='/') Events name A-Z
 								li
 									a(href='/') My planned events
-	.clearfix
+	.clearfix.hide-mini
+
+
+	.col-xs-12.hide-all2
+		.bg-ashen.color-green.font-ah.pad-left-ten(style="min-height:27px;")
+			| Events nearby
+			.pull-right
+				ul.nav.navbar-nav.nav-grey(style="margin-right:-7px; margin-top:-5px;")
+					li.dropdown
+						a.dropdown-toggle.dropdown-toggle-grey(href='#', data-toggle='dropdown')
+							| Arrange by
+							b.caret
+						ul.dropdown-menu.dropdown-menu-grey.pull-right
+							li
+								a(href='/') Most recent to latest
+							li
+								a(href='/') Latest to most recent
+							li
+								a(href='/') Events name A-Z
+							li
+								a(href='/') My planned events
+	.clearfix.hide-all2
+
+
+
+
 	//- Events nearby
 	.nspacer.col-md-12.col-xs-12
 		.pull-left.event(style='width:101.4%;')
 			a.slid-box
-				article.c-two(style='background-image: url(images/event-avatar.jpg);')
+				article.c-two
 					.slid-box-background
 						h4 
-							img(src="/images/eye.svg", alt="", style="margin-top:-10px; padding-bottom:10px;")
+							.eye.hide2
 							| <br /> REVIEW
-				.col-lg-9.col-md-9.col-xs-9.psev.rbox(style='height:169px; padding-left:15px;')
+				.col-lg-9.col-md-9.col-xs-9.psev.pad-left-ten.rbox.eh
 					h4 Temporibus autem quibusdam et aut officiis
-					| At vero eos et accusamus et iusto odio dignissimos ducimus qui <b>blanditiis praesentium </b>voluptatum deleniti atque 
-					corrupti quos <b>dolores et quas molestias.</b> At vero eos et accusamus et iusto odio dignissimos ducimus qui <b>blanditiis 
-					praesentium </b>voluptatum deleniti atque corrupti quos dolores et quas molestias.. At vero eos et accusamus et iusto 
-					odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque  corrupti quos dolores et quas mole.
-					At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque 
-					corrupti quos dolores et quas molestias. 
+					.smart-minus
+						| At vero eos et accusamus et iusto odio dignissimos ducimus qui <b>blanditiis praesentium </b>voluptatum deleniti atque 
+						corrupti quos <b>dolores et quas molestias.</b> At vero eos et accusamus et iusto odio dignissimos ducimus qui <b>blanditiis 
+						praesentium </b>voluptatum deleniti atque corrupti quos dolores et quas molestias.. At vero eos et accusamus et iusto 
+						odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque  corrupti quos dolores et quas mole.
+						At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque 
+						corrupti quos dolores et quas molestias. 
 	.clearfix
 	.nspacer.col-md-12.col-xs-12
 		.pull-left.event(style='width:101.4%;')
 			a.slid-box
-				article.c-two(style='background-image: url(images/event-avatar.jpg);')
+				article.c-two
 					.slid-box-background
 						h4 
-							img(src="/images/eye.svg", alt="", style="margin-top:-10px; padding-bottom:10px;")
+							.eye.hide2
 							| <br /> REVIEW
-				.col-lg-9.col-md-9.col-xs-9.psev.rbox(style='height:169px; padding-left:15px;')
+				.col-lg-9.col-md-9.col-xs-9.psev.pad-left-ten.rbox.eh
 					h4 Temporibus autem quibusdam et aut officiis
-					| At vero eos et accusamus et iusto odio dignissimos ducimus qui <b>blanditiis praesentium </b>voluptatum deleniti atque 
-					corrupti quos <b>dolores et quas molestias.</b> At vero eos et accusamus et iusto odio dignissimos ducimus qui <b>blanditiis 
-					praesentium </b>voluptatum deleniti atque corrupti quos dolores et quas molestias.. At vero eos et accusamus et iusto 
-					odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque  corrupti quos dolores et quas mole.
-					At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque 
-					corrupti quos dolores et quas molestias. 
+					.smart-minus
+						| At vero eos et accusamus et iusto odio dignissimos ducimus qui <b>blanditiis praesentium </b>voluptatum deleniti atque 
+						corrupti quos <b>dolores et quas molestias.</b> At vero eos et accusamus et iusto odio dignissimos ducimus qui <b>blanditiis 
+						praesentium </b>voluptatum deleniti atque corrupti quos dolores et quas molestias.. At vero eos et accusamus et iusto 
+						odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque  corrupti quos dolores et quas mole.
+						At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque 
+						corrupti quos dolores et quas molestias. 
 	.clearfix
 	.nspacer
 		.pull-right(style='height:35px;')

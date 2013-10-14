@@ -41,19 +41,19 @@ html
 					.pull-right.col-md-2.col-xs-2
 						a.image(href="/conversations")
 						if user.mailboxUnread == 0
-							img.mail.pull-right(src="/images/message-icon.svg", alt="")
+							img.mail.pull-right.img-mess-smart(src="/images/message-icon.svg", alt="")
 						else
-							img(src="/img/messages.svg") 
-					.row-fluid.minus2
-						.message-nr
-							h20= user.mailboxUnread
+							img.img-mess-smart.img-responsive(src="/img/messages.svg") 
+						.row-fluid.minus2
+							.message-nr
+								h20= user.mailboxUnread
 					.col-md-6.col-xs-6.pull-right
 						.pull-right.nspacer-small
 							a(href="/", class="font-e link-purple header-links") Home 
 							| |
 							a(href="/event/add", class="font-e link-purple header-links")  Create event
 						.clearfix
-						.nspacer
+						.nspacer.hide-mini
 							form(method="POST", accept-charset="utf-8")
 								input.gonew2.pull-right.header-links(type="button", value="GO", style="width:10%;")
 								input(type="hidden", name="_csrf", value=token)
