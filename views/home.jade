@@ -22,7 +22,7 @@ append content
 				img(src="/images/big-avatar.svg", alt="" class="img-responsive")
 		a(href="/event/add")
 		.col-xs-8.nspacer.bg-purple.font-thin.center.he1.hide-all2.pull-right
-			a.link-ashen.space(href="/event/add", style="font-size:14px;") Create event
+			a.link-ashen.space.iphone-size(href="/event/add", style="font-size:14px;") Create event
 			.clearfix
 			.inline.font-e(style="width:20%;")
 				img(src="/images/people-icon.svg", alt="" , class="create-e-img" )
@@ -71,8 +71,8 @@ append content
 				if user.admin
 					.set.font-en
 						a.link4(href="/admin", alt="", title="",) Administration
-			.center
-				img.small-avatar(src="/images/default-card.svg", alt="" class="nspacer-small")
+			.center.clearfix
+				img(src="/images/default-card.svg", alt="" class="nspacer-small img-responsive")
 				a.link-purple.font-thin2.resfont.font-en6(href="/cards", alt="", title="",)
 					| Choose your bussines card
 			.pull-left.pad-left-ten.nspacer-small
@@ -135,8 +135,9 @@ append content
 				if user.admin
 					.set
 						a.link4(href="/admin", alt="", title="") Administration
+			.clearfix
 			.center
-				img.small-avatar(src="/images/default-card.svg", alt="" class="nspacer-small")
+				img.small-avatar(src="/images/default-card.svg", alt="" class="nspacer-small img-responsive", style="margin:5px auto;")
 				a.link-purple.font-thin2.resfont(href="/cards", alt="", title="")
 					| Choose your bussines card
 			.pull-left.pad-left-ten.nspacer-small
@@ -284,8 +285,6 @@ append content
 							li
 								a(href='/') My planned events
 	.clearfix.hide-all2
-
-
 
 
 	//- Events nearby
