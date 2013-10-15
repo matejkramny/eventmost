@@ -106,6 +106,7 @@ textarea:focus, input:focus{
 
 .font-thin {font-weight: 100;}
 .font-thin2 {font-weight: 300;}
+.font-reg{font-weight: 400;}
 .break{word-wrap:break-word;}
 
 
@@ -128,6 +129,8 @@ textarea:focus, input:focus{
 /* lines*/
 .line-orange {background-color: #d95a42; height: 1px; margin-bottom: 5px;}
 .line-red {background-color: #c02942; height: 1px; margin-bottom: 5px;}
+
+ .icon-min{margin-top:-4px;}
 
 .create-e-img{margin-top:-20px; padding-top:20px; margin-left:40px;}
 
@@ -220,6 +223,20 @@ a.link-ashen:hover {
   background-color: #fdd093 !important;
   border-color: #fdd093 !important;
 }
+.btn-primary {
+  color: #fff;
+  background-color: #0992a3;
+  border-color: #0992a3;
+}
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary.active,
+.open .dropdown-toggle.btn-primary {
+  color: #fff;
+  background-color: #0992a3 !important;
+  border-color: #0992a3 !important;
+}
 .gonew2 {
   background-color: #542437;
   color: #e6e7e8;
@@ -244,7 +261,48 @@ a.link-ashen:hover {
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
 }
-
+input.login {
+  color:#542437 !important;
+  font-size: 30px;
+  font-weight: 200;
+  border: none;
+  border-radius: 5px;
+  margin-top:0px; 
+  line-height: 30px;
+  background:url("../../../images/email-icon.svg")no-repeat scroll 15px 15px;
+  background-color: #fdd194;
+  padding: 8px;
+  padding-left: 55px;
+  box-shadow: none;
+}
+input.pass {
+  color:#542437 !important;
+  font-size: 30px;
+  font-weight: 200;
+  border: none;
+  border-radius: 5px;
+  margin-top:0px; 
+  line-height: 30px;
+  background:url("../../../images/pass-icon.svg")no-repeat scroll 15px 15px;
+  background-color: #fdd194;
+  padding: 8px;
+  padding-left: 55px;
+}
+input.name {
+  color:#542437 !important;
+  font-size: 30px;
+  font-weight: 200;
+  border: none;
+  border-radius: 5px;
+  margin-top:0px; 
+  line-height: 30px;
+  background:url("../../../images/name-icon.svg")no-repeat scroll 15px 15px;
+  background-color: #fdd194;
+  padding: 8px;
+  padding-left: 55px;
+  box-shadow: none;
+}
+.login::-webkit-input-placeholder, .pass::-webkit-input-placeholder, .name::-webkit-input-placeholder {   color:#542437 !important; }
 
 /* login page carousel */
 #slider1 { height: 1%; overflow:hidden; float: left; width:100%; height: 300px; margin: 10px auto; max-width: 1100px;}
@@ -310,7 +368,7 @@ a.pink-border6 {width:121px; height:97px; background: transparent url('../../../
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
     border-radius: 5px;
-        background-color: #ecd077;
+        background-color: #e7e7e8;
         color: #542437;
         font-size: 20px;
     }
@@ -557,7 +615,7 @@ a.pink-border6 {width:121px; height:97px; background: transparent url('../../../
 .font-e {font-size: 14px;}
 /* Smartphones (portrait and landscape) ----------- */
 
-@media  (max-width: 685px) {
+@media only screen and (min-width: 481px) and (max-width: 685px) {
 #slider1 .overview li{ width: 170px;}
 .slider-text {width: 110%;}
 .slider-text:hover {width: 110%;}
@@ -651,6 +709,7 @@ h2 {font-size:14px; }
 h4 {font-size: 10px; font-weight: 700;}
 
 /*over-shadow*/
+h1 {font-size: 35px !important;}
 .eh{height:auto;}
 .eye{background:url("../../../images/eye.svg") no-repeat; margin-top:-80px; padding-bottom:10px; height: 21px; width: 35px; margin: auto; }
   .slid-box {color:#542437; }
@@ -678,4 +737,49 @@ footer {font-size: 10px;}
 .font-en {font-size: 7px;}
 .font-en6 {font-size: 6px;}
 .space {letter-spacing:3px;}
+
+.icon-min{width:20px; height: 20px;}
+input.login {
+  color:#542437 !important;
+  font-size: 20px;
+  font-weight: 200;
+  border: none;
+  border-radius: 5px;
+  margin-top:0px; 
+  line-height: 20px;
+  background:url("../../../images/email-icon-small.svg")no-repeat scroll 15px 12px;
+  background-color: #fdd194;
+  padding: 8px;
+  padding-left: 45px;
+  width: 80%;
+  box-shadow: none;
+}
+input.pass {
+  color:#542437 !important;
+  font-size: 20px;
+  font-weight: 200;
+  border: none;
+  border-radius: 5px;
+  margin-top:0px; 
+  line-height: 20px;
+  background:url("../../../images/pass-icon-small.svg")no-repeat scroll 15px 11px;
+  background-color: #fdd194;
+  padding: 8px;
+  padding-left: 45px;
+  width: 80%;
+}
+input.name {
+  color:#542437 !important;
+  font-size: 20px;
+  font-weight: 200;
+  border: none;
+  border-radius: 5px;
+  margin-top:0px; 
+  line-height: 20px;
+  background:url("../../../images/name-icon-small.svg")no-repeat scroll 15px 11px;
+  background-color: #fdd194;
+  padding: 8px;
+  padding-left: 45px;
+  width: 80%;
+}
 }
