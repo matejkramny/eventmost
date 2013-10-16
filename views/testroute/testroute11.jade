@@ -1,0 +1,153 @@
+extends ../responsive
+
+block content
+
+	.col-xs-12.hide-all2
+		form(method="POST", accept-charset="utf-8")
+			input.gonew2.pull-right.header-links(type="button", value="GO", style="width:10%;")
+			input(type="hidden", name="_csrf", value=token)
+			input.pull-right.font-s.search-input.pad-left-ten.header-links(type="search", placeholder="search events or people", style="width:87%;")
+	.clearfix.hide-all2
+
+	.col-lg-12.col-md-12.col-xs-12.center.nspacer.font
+		img.pad-right-ten(src="/images/man.svg", alt="",  class="img-responsive inline", style="margin:7px auto; vertical-align:bottom;")
+		| Create your profile
+	.col-lg-12.col-md-12.col-xs-12.font-e.center.nspacer
+		| All fields are
+		img.pad-left-ten(src="/images/optional.svg", alt="",  class="img-responsive inline", style="margin:-2px auto; vertical-align:bottom;")
+	.clearfix
+	.nspacer-big
+	.col-lg-9.col-md-9.col-xs-9.hide-mini3(style="float:none; margin:auto;")
+		.col-lg-4.col-md-4.col-xs-4.ei.hide-mini3
+			img.pad-right-ten(src="/images/big-avatar-blue.svg", alt="",  class="img-responsive",)
+			a.link-green(href="", alt="", title="")
+				.font-e.center
+					| upload logo/picture
+
+		.ei.hide-mini3
+			.col-lg-8.col-md-8.col-xs-8.pad-left-zero.pad-right-zero.bg-purple
+				.pad-left-zero.col-lg-4.col-md-4.col-xs-4.font-e.psev.right
+					| Email
+				.psev.col-lg-8.col-md-8.col-xs-8
+					input.input-grey#LoginUserEmail(name="login", type="email", required="required",)
+			.col-lg-8.col-md-8.col-xs-8.pad-left-zero.bg-purple.nspacer.pad-right-zero
+				.pad-left-zero.col-lg-4.col-md-4.col-xs-4.font-e.psev.right
+					| First name:
+				.psev.col-lg-8.col-md-8.col-xs-8
+					input.input-grey#LoginUserEmail(name="login", type="", required="required",)
+			.col-lg-8.col-md-8.col-xs-8.pad-left-zero.bg-purple.nspacer.pad-right-zero
+				.pad-left-zero.col-lg-4.col-md-4.col-xs-4.font-e.psev.right
+					| Last name:
+				.psev.col-lg-8.col-md-8.col-xs-8
+					input.input-grey#LoginUserEmail(name="login", type="", required="required",) 
+		.clearfix
+	//- mobile only
+	.col-lg-12.hide-all3(style="float:none; margin:auto;")
+		img(src="/images/big-avatar-blue.svg", alt="",  class="img-responsive", style="float:none; margin:auto;")
+		a.link-green(href="", alt="", title="")
+			.font-ah.center
+				| upload logo/picture
+	.nspacer
+	.col-xs-12.hide-all3(style="float:none; margin:0px auto; height:30px;")
+		.col-lg-12.col-md-12.col-xs-12.bg-purple.pad-right-zero(style="min-height:30px;")
+			.pad-left-zero.col-lg-3.col-md-3.col-xs-3.font-e.psev.right(style="padding-top:9px; height:30px;")
+				| Email
+			.psev.col-lg-9.col-md-9.col-xs-9(style="height:30px; margin-top:-3px;")
+				input.input-grey#LoginUserEmail(name="login", type="email", required="required",)
+	.col-xs-12.hide-all3(style="float:none; margin:4px auto; height:30px;")
+		.col-lg-12.col-md-12.col-xs-12.bg-purple.pad-right-zero(style="min-height:30px;")
+			.pad-left-zero.col-lg-3.col-md-3.col-xs-3.font-e.psev.right(style="padding-top:9px; height:30px;")
+				| First Name
+			.psev.col-lg-9.col-md-9.col-xs-9(style="height:30px; margin-top:-3px;")
+				input.input-grey#LoginUserEmail(name="login", type="text", required="required",)
+	.col-xs-12.hide-all3(style="float:none; margin:4px auto; height:30px;")
+		.col-lg-12.col-md-12.col-xs-12.bg-purple.pad-right-zero(style="min-height:30px;")
+			.pad-left-zero.col-lg-3.col-md-3.col-xs-3.font-e.psev.right(style="padding-top:9px; height:30px;")
+				| Last Name
+			.psev.col-lg-9.col-md-9.col-xs-9(style="height:30px; margin-top:-3px;")
+				input.input-grey#LoginUserEmail(name="login", type="", required="required",)
+	.col-xs-12.hide-all3(style="float:none; margin:4px auto; height:30px;")
+		.col-lg-12.col-md-12.col-xs-12.bg-purple.pad-right-zero(style="min-height:30px;")
+			.pad-left-zero.col-lg-3.col-md-3.col-xs-3.font-e.psev.right(style="padding-top:9px; height:30px;")
+				| Company
+			.psev.col-lg-9.col-md-9.col-xs-9(style="height:30px; margin-top:-3px;")
+				input.input-grey#LoginUserEmail(name="login", type="", required="required",)
+	.col-xs-12.hide-all3(style="float:none; margin:4px auto; height:30px;")
+		.col-lg-12.col-md-12.col-xs-12.bg-purple.pad-right-zero(style="min-height:30px;")
+			.pad-left-zero.col-lg-3.col-md-3.col-xs-3.font-e.psev.right(style="padding-top:9px; height:30px;")
+				| Position
+			.psev.col-lg-9.col-md-9.col-xs-9(style="height:30px; margin-top:-3px;")
+				input.input-grey#LoginUserEmail(name="login", type="", required="required",)
+	.col-xs-12.hide-all3(style="float:none; margin:4px auto; height:30px;")
+		.col-lg-12.col-md-12.col-xs-12.bg-purple.pad-right-zero(style="min-height:30px;")
+			.pad-left-zero.col-lg-3.col-md-3.col-xs-3.font-e.psev.right(style="padding-top:9px; height:30px;")
+				| Location
+			.psev.col-lg-9.col-md-9.col-xs-9(style="height:30px; margin-top:-3px;")
+				input.input-grey#LoginUserEmail(name="login", type="", required="required",)
+	.col-xs-12.hide-all3(style="float:none; margin:4px auto; height:30px;")
+		.col-lg-12.col-md-12.col-xs-12.bg-purple.pad-right-zero(style="min-height:30px;")
+			.pad-left-zero.col-lg-3.col-md-3.col-xs-3.font-e.psev.right(style="padding-top:9px; height:30px;")
+				| Interests
+			.psev.col-lg-9.col-md-9.col-xs-9(style="height:30px; margin-top:-3px;")
+				input.input-grey#LoginUserEmail(name="login", type="", required="required",)
+	.col-xs-12.hide-all3(style="float:none; margin:4px auto; height:30px;")
+		.col-lg-12.col-md-12.col-xs-12.bg-purple.pad-right-zero(style="min-height:30px;")
+			.pad-left-zero.col-lg-3.col-md-3.col-xs-3.font-e.psev.right(style="padding-top:9px; height:30px;")
+				| Website
+			.psev.col-lg-9.col-md-9.col-xs-9(style="height:30px; margin-top:-3px;")
+				input.input-grey#LoginUserEmail(name="login", type="", required="required",)
+	.col-xs-12.hide-all3(style="float:none; margin:4px auto; height:30px;")
+		.col-lg-12.col-md-12.col-xs-12.bg-purple.pad-right-zero(style="min-height:30px;")
+			.pad-left-zero.col-lg-3.col-md-3.col-xs-3.font-e.psev.right(style="padding-top:9px; height:30px;")
+				| Education
+			.psev.col-lg-9.col-md-9.col-xs-9(style="height:30px; margin-top:-3px;")
+				input.input-grey#LoginUserEmail(name="login", type="", required="required",)
+	.col-xs-12.hide-all3(style="float:none; margin:4px auto; height:120px;")
+		.col-lg-12.col-md-12.col-xs-12.bg-purple.pad-right-zero(style="min-height:120px;")
+			.pad-left-zero.col-lg-3.col-md-3.col-xs-3.font-e.psev.right(style="padding-top:9px; height:30px;")
+				| Description
+			.psev.col-lg-9.col-md-9.col-xs-9(style="height:30px; margin-top:3px;")
+				textarea.input-grey.textarea-grey#LoginUserEmail(name="login", type="textarea", required="required", rows="4", cols="50" style="padding-top:5px; min-height:102px;")
+	//- end mobile only	
+	.col-lg-9.col-md-9.col-xs-9.hide-mini3(style="float:none; margin:4px auto;")
+		.col-lg-12.col-md-12.col-xs-12.bg-purple.pad-right-zero(style="min-height:40px;")
+			.pad-left-zero.col-lg-3.col-md-3.col-xs-3.font-e.psev.right
+				| Company
+			.psev.col-lg-9.col-md-9.col-xs-9
+				input.input-grey#LoginUserEmail(name="login", type="", required="required",)
+		.col-lg-12.col-md-12.col-xs-12.bg-purple.nspacer.pad-right-zero(style="min-height:40px;")
+			.pad-left-zero.col-lg-3.col-md-3.col-xs-3.font-e.psev.right
+				| Position:
+			.psev.col-lg-9.col-md-9.col-xs-9
+				input.input-grey#LoginUserEmail(name="login", type="", required="required",)
+		.col-lg-12.col-md-12.col-xs-12.bg-purple.nspacer.pad-right-zero(style="min-height:40px;")
+			.pad-left-zero.col-lg-3.col-md-3.col-xs-3.font-e.psev.right
+				| Location:
+			.psev.col-lg-9.col-md-9.col-xs-9
+				input.input-grey#LoginUserEmail(name="login", type="", required="required",)
+		.col-lg-12.col-md-12.col-xs-12.bg-purple.nspacer.pad-right-zero(style="min-height:40px;")
+			.pad-left-zero.col-lg-3.col-md-3.col-xs-3.font-e.psev.right
+				| Interests:
+			.psev.col-lg-9.col-md-9.col-xs-9
+				input.input-grey#LoginUserEmail(name="login", type="", required="required",)
+		.col-lg-12.col-md-12.col-xs-12.bg-purple.nspacer.pad-right-zero(style="min-height:40px;")
+			.pad-left-zero.col-lg-3.col-md-3.col-xs-3.font-e.psev.right
+				| Website:
+			.psev.col-lg-9.col-md-9.col-xs-9
+				input.input-grey#LoginUserEmail(name="login", type="", required="required",)
+		.col-lg-12.col-md-12.col-xs-12.bg-purple.nspacer.pad-right-zero(style="min-height:40px;")
+			.pad-left-zero.col-lg-3.col-md-3.col-xs-3.font-e.psev.right
+				| Education:
+			.psev.col-lg-9.col-md-9.col-xs-9
+				input.input-grey#LoginUserEmail(name="login", type="", required="required",)
+		.col-lg-12.col-md-12.col-xs-12.bg-purple.nspacer.pad-right-zero.hide-mini3(style="min-height:118px;")
+			.pad-left-zero.col-lg-3.col-md-3.col-xs-3.font-e.psev.right
+				| Description:
+			.psev.col-lg-9.col-md-9.col-xs-9
+				textarea.input-grey.textarea-grey#LoginUserEmail(name="login", type="textarea", required="required", rows="4", cols="50" style="padding-top:5px; min-height:102px;")
+	.clearfix
+		.col-lg-9.col-md-9.col-xs-9(style="float:none; margin:4px auto;")
+			.nspacer
+			.center
+				button.btn.btn-primary.font-e.font-ah(type='submit', href="", style="padding:20px; padding-left:35px; padding-right:35px;")
+					| <b>Enter</b>

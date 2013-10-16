@@ -1,6 +1,9 @@
-extends base
+extends ../responsive
 
-block content
+block addonjs
+
+append content
+	include inc/flash
 		.row-fluid.color.spacer
 			.left.speaker_title.inner
 				img(src="/img/default_speaker.svg", alt="", class="circularespond")

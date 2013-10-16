@@ -67,7 +67,7 @@ textarea:focus, input:focus{
 }
 
 /* helpers */
-.hide-all, .hide-all2 {display: none;}
+.hide-all, .hide-all2, .hide-all3 {display: none;}
 
 .psev {padding: 7px;}
 .big-pad{padding: 20px;}
@@ -119,18 +119,20 @@ textarea:focus, input:focus{
 .bg-green {background-color: #0992a3; color: #f1f1f2;}
 
 .e{height:80px;}
+.ei{height:150px;}
 .eh{height:169px;}
 .three{height:313px;}
 .mfresponsive{margin-right:-15px;}
 .pb {width: 85px; height: 85px;}
 .he1{height:148px;}
+.mar-res{margin-left: 5px; width: 65%;}
 
 .inline {display: inline-block;}
 /* lines*/
 .line-orange {background-color: #d95a42; height: 1px; margin-bottom: 5px;}
 .line-red {background-color: #c02942; height: 1px; margin-bottom: 5px;}
 
- .icon-min{margin-top:-4px;}
+.icon-min{margin-top:-4px;}
 
 .create-e-img{margin-top:-20px; padding-top:20px; margin-left:40px;}
 
@@ -148,6 +150,14 @@ a.link-purple2{
   color: #542437;
 }
 a.link-purple2:hover {
+  text-decoration: none;
+  color: #542437;
+}
+a.link-green{
+  text-decoration: none;
+  color: #0992a3;
+}
+a.link-green:hover {
   text-decoration: none;
   color: #542437;
 }
@@ -302,6 +312,20 @@ input.name {
   padding-left: 55px;
   box-shadow: none;
 }
+.input-grey {
+  color:#542437 !important;
+  font-size: 20px;
+  font-weight: 400;
+  border: none;
+  border-radius: 0px;
+  margin-top:0px; 
+  line-height: 20px;
+  background-color: #f1f1f2;
+  box-shadow: none;
+  padding-left: 5px;
+  width: 100%;
+}
+.textarea-grey{resize:none; }
 .login::-webkit-input-placeholder, .pass::-webkit-input-placeholder, .name::-webkit-input-placeholder {   color:#542437 !important; }
 
 /* login page carousel */
@@ -628,7 +652,6 @@ input.pass {
   width: 80%;
 }
 input.name {
-  color:#542437 !important;
   font-size: 20px;
   font-weight: 200;
   border: none;
@@ -641,6 +664,13 @@ input.name {
   padding-left: 45px;
   width: 80%;
 }
+.input-grey {
+  font-size: 10px;
+  line-height: 10px;
+  padding-top: 0px;
+}
+.hide-all3{display: block;}
+.hide-mini3{display: none;}
 }
 /**** pagination ****/
 @media only screen and (min-width: 1025px) and (max-width: 1199px) {
@@ -792,9 +822,10 @@ input.name {
 .dropdown-menu-grey > li > a { font-size: 12px;}
 /**** dropdown****/
 .font-bigs {font-size: 25px;}
+.font-e {font-size: 14px;}
 .he1{height:88px;}
 .create-e-img{margin-top:-20px; padding-top:20px; margin-left:0px; width: 30%; height: 30%;}
-.font-e {font-size: 14px;}
+.font-e {font-size: 12px;}
 .e{height:86px;}
 /*over-shadow*/
   .rbox {overflow: hidden; height: auto; width: 60%; margin-top: -15px; font-size: 10px; height: 200px;}
@@ -802,6 +833,7 @@ input.name {
   .hide-all2 {display: inline;}
   .message-nr h20 {float: right; margin-left: 50px;}
   .iphone-size {font-size: 22px !important;}
+ 
 }
 
 
