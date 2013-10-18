@@ -1,16 +1,19 @@
-extends ../base
+extends ../responsive
 
 block content
-	.row-fluid.color.spacer
-		.left.speaker_title.inner
-			img(src="/img/default_speaker.svg", alt="", class="circularespond")
-		.left.event-size.text-right.smallslid.spacer
+
+	.nspacer
+	.col-md-2.col-xs-2.col-sm-2
+		img(src="/images/default_speaker.svg", alt="", class="circularespond")
+	.col-md-4.col-xs-4.col-sm-4
+		.text-right.font-s
 			| <b>Lucy Cook</b> - Director of Finance, Delloite<br />
 			| Guest speaker<br />
 			img(src="/img/email-icon-small2.svg", alt="", style="padding-right:5px;")
 			a(href="#", class="link3")
 				| lucy.cook@mediaart.com
 		.clearfix
+	.col-md-6.col-xs-6.col-sm-6
 		.right.iconsbox.spacerbig
 			a(href="#", class="link1")
 				img(src="/img/send-private-rev.svg", alt="", style="padding-right:5px;")
