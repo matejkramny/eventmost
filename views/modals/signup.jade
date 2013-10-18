@@ -3,25 +3,24 @@
 		.modal-content
 			.modal-body.reveal-modal
 				h1 Hello !
-				// Patryk, use .form-horizontal and markup from http://getbootstrap.com/css/#forms-horizontal
 				form#LoginForm(action="/auth/password", method="POST")
 					input(type="hidden", name="_csrf", value=token)
-					.formStatus
+					.formStatus.center
 					.pop-input.center
-						input.login#LoginUserEmail(name="login", placeholder="email", type="email", required="required",)
+						input.login#LoginUserEmail(name="login", placeholder="email", type="email", required="required")
 					.pop-input.center
-						input.pass#LoginUserPassword(name="password", placeholder="password", type="password", required="required",)
+						input.pass#LoginUserPassword(name="password", placeholder="password", type="password", required="required")
 					.pop-input.center
-						button.btn.btn-primary.font.font-ah(type='submit', href="",)
+						button.btn.btn-primary.font.font-ah(type='submit', authentication-login)
 							| ENTER
 					.clearfix
 					.pop-input.center.font-e.font-reg(style="margin-top:15px;")
 						| Login in with
-						a.pad-left-ten(href="")
+						a.pad-left-ten(href="/auth/facebook")
 							img(src="/images/face-icon.svg", alt="", class="icon-min")
-						a.pad-left-ten(href="")
+						a.pad-left-ten(href="/auth/twitter")
 							img(src="/images/twit-icon.svg", alt="", class="icon-min")
-						a.pad-left-ten(href="")
+						a.pad-left-ten(href="/auth/linkedin")
 							img(src="/images/in-icon.svg", alt="", class="icon-min")
 				.clearfix
 				.pop-input.center
@@ -29,7 +28,7 @@
 					a.link-purple#openRegisterModal(href="#") Enter here!
 				a(href="/", class="close-reveal-modal", data-dismiss="modal") 
 					img(src="/img/x.svg")
-				
+			
 #signModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="", aria-hidden="true")
 	.modal-dialog
 		.modal-content
@@ -39,7 +38,7 @@
 					| To create an account please fill our form.
 				form#RegisterForm(action="/auth/password", method="POST")
 					input(type="hidden", name="_csrf", value=token)
-					.center2.formStatus
+					.formStatus.center
 					.pop-input.center
 						input.name#RegisterUserName(name="name", placeholder="name", maxlength="128", type="text",)
 					.pop-input.center
@@ -48,15 +47,15 @@
 						input.pass#RegisterUserPassword(name="password", placeholder="password", type="password", required="required",)
 					.pop-input.center
 						button.btn.btn-primary.font.font-ah(type='submit', href="",)
-							| ENTER
+							| REGISTER
 					.clearfix
 					.pop-input.center.font-e.font-reg(style="margin-top:15px;")
-						| Sign in with
-						a.pad-left-ten(href="")
+						| Sign up with
+						a.pad-left-ten(href="/auth/facebook")
 							img(src="/images/face-icon.svg", alt="", class="icon-min")
-						a.pad-left-ten(href="")
+						a.pad-left-ten(href="/auth/twitter")
 							img(src="/images/twit-icon.svg", alt="", class="icon-min")
-						a.pad-left-ten(href="")
+						a.pad-left-ten(href="/auth/linkedin")
 							img(src="/images/in-icon.svg", alt="", class="icon-min")
 					a(href="/", class="close-reveal-modal", data-dismiss="modal") 
 						img(src="/img/x.svg")
