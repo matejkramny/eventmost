@@ -3,14 +3,19 @@ var models = require('../models')
 
 exports.router = function (app) {
 	app.get('/cards', showCards)
+		.get('/card/new', newCard)
 		.get('/card/:id', getCard)
 		.post('/card/new', doNewCard)
 }
 
 function showCards (req, res) {
-	models.Card.find({ user: req.user._id }, function(err, cards) {
+	models.Card.find({ user: req.user._id }, { _id: 1 }, function(err, cards) {
 		res.render('profile/cards', { cards: cards, title: "Business cards" });
 	});
+}
+
+function newCard (req, res) {
+	res.render('profile/cardtool', { title: "Business cards" });
 }
 
 function getCard (req, res) {
@@ -30,12 +35,23 @@ function getCard (req, res) {
 }
 
 function doNewCard (req, res) {
-	new models.Card({}).edit(req.body.html, function(err) {
+	new models.Card({
+		user: req.user._id
+	}).edit(req.body.html, function(err) {
 		if (err && err.length) {
 			req.session.flash = err;
 		}
 		
-		res.redirect('/cards');
+		res.format({
+			html: function() {
+				res.redirect('/cards');
+			},
+			json: function() {
+				res.send({
+					status: 200
+				})
+			}
+		})
 	})
 }
 

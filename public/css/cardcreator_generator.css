@@ -1,0 +1,8 @@
+.libraryBox {
+	border: none;
+	outline: none;
+	padding: 1px; /* compensates the dotted border hidden when .preview is on */
+}
+.handle {
+	display:none;
+}

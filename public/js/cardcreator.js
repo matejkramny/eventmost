@@ -19,6 +19,11 @@ function BusinessCards ($scope) {
 			data: {
 				html: $("#cardCanvas").html(),
 				_csrf: $("head meta[name=_csrf]").attr('content')
+			},
+			success: function(data, status, jqxhr) {
+				if (data.status == 200) {
+					window.location = '/cards';
+				}
 			}
 		})
 	}

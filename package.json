@@ -28,6 +28,6 @@
 	"nodemailer": "latest",
 	"bugsnag": "latest",
 	"should": "latest",
-	"phantom": "latest"
+	"phantomjs": "latest"
   }
 }
