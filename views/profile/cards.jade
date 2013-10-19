@@ -26,7 +26,7 @@ block content
 					a.btn.btn-info(href="#", ng-click="togglePreviewMode()", ng-switch, on="preview")
 						span(ng-switch-when="false") Preview Mode
 						span(ng-switch-when="true") Editing mode
-					a.btn.btn-success(href="#") Save
+					a.btn.btn-success(href="#", ng-click="sendCard()") Save
 		hr
 		.row
 			.col-md-7.col-lg-6
@@ -45,11 +45,12 @@ block content
 						.col-lg-8.col-md-8
 							input#bgImage.form-control(type="file")
 				hr
-				#cardCanvas(ng-style="canvasStyles", ng-class="{ preview: preview }")
-					.libraryBox(id="{{libraryBox.id}}", card-directive, ng-repeat="libraryBox in libraryBoxes")
-						.handle
-						input(type="text", ng-hide="libraryBox.image" ng-model="libraryBox.text", ng-click="selectBox(libraryBox)", ng-style="libraryBox.style")
-						img(ng-src="{{ libraryBox.src }}", ng-show="libraryBox.image", ng-click="selectBox(libraryBox)", ng-style="libraryBox.style")
+				#cardCanvas
+					.canvas(ng-style="canvasStyles", ng-class="{ preview: preview }")
+						.libraryBox(id="{{libraryBox.id}}", card-directive, ng-repeat="libraryBox in libraryBoxes")
+							.handle
+							input(type="text", ng-hide="libraryBox.image", value="{{libraryBox.text}}", ng-click="selectBox(libraryBox)", ng-style="libraryBox.style")
+							img(ng-src="{{ libraryBox.src }}", ng-show="libraryBox.image", ng-click="selectBox(libraryBox)", ng-style="libraryBox.style")
 				hr
 				form.form-horizontal
 					.form-group

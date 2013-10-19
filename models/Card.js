@@ -3,71 +3,48 @@ var mongoose = require('mongoose');
 var schema = mongoose.Schema;
 var ObjectId = schema.ObjectId;
 var fs = require('fs')
+	, phantom = require('phantom')
 
 var scheme = schema({
 	user: {
 		type: ObjectId,
 		ref: 'User'
 	},
-	name: String,
-	surname: String,
-	address: String,
-	zip: String,
-	city: String,
-	avatar: { type: String, default: "/img/avatar.jpg" },
-	phone: String,
-	email: String,
-	twitter: String,
-	website: String,
-	position: String,
-	card_type: String,
-	isDeleted: Boolean,
-	deleted: Date
+	html: String,
+	location: String
 });
 
-scheme.methods.getName = function () {
-	return this.name + " " + this.surname;
-}
-
-scheme.methods.edit = function (card, body, user, files, cb) {
-	card.user = user._id;
-	card.name = body.name;
-	card.surname = body.surname;
-	card.address = body.address;
-	card.zip = body.zipcode;
-	card.city = body.city;
-	card.phone = body.phone;
-	card.email = body.email;
-	card.twitter = body.twitter;
-	card.website = body.website;
-	card.position = body.position;
-	card.card_type = body.card_type;
+scheme.methods.edit = function (html, cb) {
+	var self = this;
+	if (!html) {
+		return cb("Invalid HTML!")
+	}
 	
-	var save = function () {
-		card.save(function(err) {
-			if (err) throw err;
-			
-			cb(null)
+	html = "<!DOCTYPE html><html><head></head><body>" 
+	+ html + "</body></html>";
+	
+	console.log(html)
+	self.html = html;
+	
+	self.save(function(err) {
+		if (err) throw err;
+		
+		var page = phantom.create(function(ph) {
+			ph.createPage(function(page) {
+				page.open("http://127.0.0.1:3000/card/"+self._id, function(status) {
+					console.log(status)
+					
+					if (status === 'success') {
+						console.log("Finished!")
+						page.render(__dirname+"/../public/businesscards/"+self._id+".png")
+						cb(null);
+					}
+					
+					ph.exit();
+				})
+			})
 		})
-	}
-	
-	if (files.avatar != null && files.avatar.name.length != 0) {
-		var ext = files.avatar.type.split('/');
-		var ext = ext[ext.length-1];
-		
-		card.avatar = "/avatars/"+card._id+"."+ext;
-		
-		fs.readFile(files.avatar.path, function(err, avatar) {
-			fs.writeFile(__dirname + "/../public"+card.avatar, avatar, function(err) {
-				if (err) throw err;
-				
-				save()
-			});
-		});
-		return;
-	} else {
-		save()
-	}
+	})
 }
 
 exports.Card = mongoose.model("Card", scheme);
