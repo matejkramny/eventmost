@@ -1,5 +1,5 @@
 {
-  "name": "EventMost",
+  "name": "eventmost",
   "version": "0.2.0",
   "private": true,
   "scripts": {
@@ -27,6 +27,7 @@
 	"nodetime": "latest",
 	"nodemailer": "latest",
 	"bugsnag": "latest",
-	"should": "latest"
+	"should": "latest",
+	"phantomjs": "latest"
   }
 }

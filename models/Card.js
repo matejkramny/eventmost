@@ -3,71 +3,59 @@ var mongoose = require('mongoose');
 var schema = mongoose.Schema;
 var ObjectId = schema.ObjectId;
 var fs = require('fs')
+	, exec = require('child_process').exec
 
 var scheme = schema({
 	user: {
 		type: ObjectId,
 		ref: 'User'
 	},
-	name: String,
-	surname: String,
-	address: String,
-	zip: String,
-	city: String,
-	avatar: { type: String, default: "/img/avatar.jpg" },
-	phone: String,
-	email: String,
-	twitter: String,
-	website: String,
-	position: String,
-	card_type: String,
-	isDeleted: Boolean,
-	deleted: Date
+	html: String,
+	location: String
 });
 
-scheme.methods.getName = function () {
-	return this.name + " " + this.surname;
-}
-
-scheme.methods.edit = function (card, body, user, files, cb) {
-	card.user = user._id;
-	card.name = body.name;
-	card.surname = body.surname;
-	card.address = body.address;
-	card.zip = body.zipcode;
-	card.city = body.city;
-	card.phone = body.phone;
-	card.email = body.email;
-	card.twitter = body.twitter;
-	card.website = body.website;
-	card.position = body.position;
-	card.card_type = body.card_type;
+scheme.methods.edit = function (html, cb) {
+	var self = this;
+	if (!html) {
+		return cb("Invalid HTML!")
+	}
 	
-	var save = function () {
-		card.save(function(err) {
-			if (err) throw err;
+	html = '<!DOCTYPE html><html><head>\
+		<link rel="stylesheet" href="/v2/css/bootstrap.min.css">\
+		<link rel="stylesheet" href="/v2/css/bootstrap-eventmost.css">\
+		<link href="/css/cardcreator.css" rel="stylesheet">\
+		<link href="/css/cardcreator_generator.css" rel="stylesheet">\
+	</head><body>'
+	+ html +
+	'</body></html>';
+	
+	console.log(html)
+	self.html = html;
+	
+	var url = "http://127.0.0.1:"+(process.env.PORT || 3000)+"/card/"+self._id
+	console.log(url)
+	
+	self.save(function(err) {
+		if (err) throw err;
+		
+		console.log("Loading.")
+		
+		process.env.PHANTOM_WEBPAGE = url;
+		process.env.PHANTOM_CARD_ID = self._id;
+		
+		var proc = exec('cd '+__dirname+'/../scripts/; ../node_modules/phantomjs/bin/phantomjs createBusinessCard.js')
+		proc.stdout.on('data', function(chunk) {
+			console.log(chunk)
+		})
+		proc.stderr.on('data', function(chunk) {
+			console.log(chunk)
+		})
+		proc.on('close', function(code) {
+			console.log("Done, code "+code);
 			
 			cb(null)
 		})
-	}
-	
-	if (files.avatar != null && files.avatar.name.length != 0) {
-		var ext = files.avatar.type.split('/');
-		var ext = ext[ext.length-1];
-		
-		card.avatar = "/avatars/"+card._id+"."+ext;
-		
-		fs.readFile(files.avatar.path, function(err, avatar) {
-			fs.writeFile(__dirname + "/../public"+card.avatar, avatar, function(err) {
-				if (err) throw err;
-				
-				save()
-			});
-		});
-		return;
-	} else {
-		save()
-	}
+	})
 }
 
 exports.Card = mongoose.model("Card", scheme);

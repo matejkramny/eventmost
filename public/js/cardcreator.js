@@ -6,8 +6,27 @@ function BusinessCards ($scope) {
 	$scope.preview = false;
 	
 	$scope.canvasStyles = {
-		backgroundColor: "#FFFFFF"
+		backgroundColor: "#FFFFFF",
+		width: "500px",
+		height: "250px"
 	};
+	
+	$scope.sendCard = function () {
+		$.ajax({
+			type: "POST",
+			dataType: "json",
+			url: "/card/new",
+			data: {
+				html: $("#cardCanvas").html(),
+				_csrf: $("head meta[name=_csrf]").attr('content')
+			},
+			success: function(data, status, jqxhr) {
+				if (data.status == 200) {
+					window.location = '/cards';
+				}
+			}
+		})
+	}
 	
 	$scope.createTextBox = function () {
 		var index = $scope.libraryBoxes.length
@@ -18,6 +37,15 @@ function BusinessCards ($scope) {
 			id: "box"+index,
 			text: "Text Value",
 			style: {
+				width: "100%",
+				height: "100%",
+				padding: "0",
+				margin: "0",
+				"font-size": "13px",
+				"border-radius": 0,
+				overflow: "hidden",
+				background: "none",
+				
 				fontSize: 13,
 				fontStyle: "normal",
 				fontWeight: "normal",
