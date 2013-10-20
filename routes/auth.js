@@ -2,6 +2,9 @@ var mongoose = require('mongoose')
 	, passport = require('passport')
 	, models = require('../models')
 	, https = require('https')
+	, FacebookStrategy = require('passport-facebook').Strategy
+	, TwitterStrategy = require('passport-twitter').Strategy
+	, LinkedinStrategy = require('passport-linkedin').Strategy
 
 passport.serializeUser(function(user, done) {
 	done(null, user._id);
@@ -13,8 +16,41 @@ passport.deserializeUser(function(id, done) {
 	})
 })
 
+passport.use(new FacebookStrategy({
+	clientID: '532240236843933',
+	clientSecret: '61e367fbe3aae28d49c788229aaa4464',
+	callbackURL: 'http://eventmost.com/auth/facebook/callback'
+}, models.User.authenticateFacebook ));
+
+passport.use(new TwitterStrategy({
+	consumerKey: 'nlvyUeSPdTPJZGvQzyeLg',
+	consumerSecret: 'mGAdYwq6NjUMInJk6EdhP5Gv5mGchuATkiMktxOGmI',
+	callbackURL: 'http://eventmost.com/auth/twitter/callback'
+}, models.User.authenticateTwitter))
+
+passport.use(new LinkedinStrategy({
+	consumerKey: 'rklpzzr92ztv',
+	consumerSecret: 'H0y6fL9dAa4WEhzd',
+	callbackURL: 'http://eventmost.com/auth/linkedin/callback',
+	profileFields: ['id', 'first-name', 'picture-url', 'last-name', 'email-address', 'location', 'publicProfileUrl', 'industry', 'headline', 'summary']
+}, models.User.authenticateLinkedIn));
+
 exports.router = function (app) {
+	function socialRoute(serviceName) {
+		return {
+			successRedirect: '/',
+			failureRedirect: '/?fail-reason=Cannot Sign in With '+serviceName+' :(#login-failed'
+		}
+	}
+	
 	app.post('/auth/password', doPasswordLogin)
+		.get('/auth/facebook', passport.authenticate('facebook', { scope: 'email' }))
+		.get('/auth/facebook/callback', passport.authenticate('facebook', socialRoute('Facebook')))
+		.get('/auth/twitter', passport.authenticate('twitter'))
+		.get('/auth/twitter/callback', passport.authenticate('twitter', socialRoute('Twitter')))
+		.get('/auth/linkedin', passport.authenticate('linkedin', { scope: ['r_network', 'r_basicprofile', 'r_fullprofile', 'r_contactinfo', 'rw_nus', 'r_emailaddress'] }))
+		.get('/auth/linkedin/callback', passport.authenticate('linkedin', socialRoute('LinkedIn')))
+		
 		.get('/logout', logout)
 }
 

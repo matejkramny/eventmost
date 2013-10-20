@@ -136,7 +136,7 @@ scheme.statics.authenticatePassword = function (email, password, cb, extra) {
 		}
 	})
 }
-scheme.statics.authenticateTwitter = function (session, accessToken, accessTokenSecret, meta, cb) {
+scheme.statics.authenticateTwitter = function (accessToken, accessSecret, meta, cb) {
 	var query = {
 		'twitter.userid': meta.id
 	}
@@ -144,34 +144,22 @@ scheme.statics.authenticateTwitter = function (session, accessToken, accessToken
 	models.User.find(query, function(err, users) {
 		if (err) throw err;
 		
-		if (users.length > 0) {
-			if (users.length > 1 || (session.auth && session.auth.loggedIn == true)) {
-				return cb(["Twitter account already linked"])
-			}
-			
+		if (users.length == 1) {
 			cb(null, users[0])
-		} else {
-			if (session.auth && session.auth.loggedIn == true) {
-				// Update the user's twitter token
-				models.User.findOne({
-					_id: mongoose.Types.ObjectId(session.auth.userId)
-				}, function(err, user) {
-					if (err) throw err;
-					
-					user.updateTwitter(meta, accessToken, accessTokenSecret, function(err) {
-						cb(null, user);
-					})
-				})
-			} else {
-				// Create user
-				models.User.createWithTwitter(meta, accessToken, accessTokenSecret, function(err, twUser) {
-					cb(null, twUser);
-				});
-			}
+			return;
+		} else if (users.length == 0) {
+			// Create a profile
+			// Create user
+			models.User.createWithTwitter(meta, accessToken, accessSecret, function(err, aUser) {
+				cb(null, aUser);
+			});
+			return;
 		}
+		
+		cb(["Twitter account already linked"])
 	});
 }
-scheme.statics.authenticateFacebook = function (session, accessToken, accessSecret, meta, cb) {
+scheme.statics.authenticateFacebook = function (accessToken, accessSecret, meta, cb) {
 	var query = {
 		'facebook.userid': meta.id
 	}
@@ -179,35 +167,22 @@ scheme.statics.authenticateFacebook = function (session, accessToken, accessSecr
 	models.User.find(query, function(err, users) {
 		if (err) throw err;
 		
-		if (users.length > 0) {
-			if (users.length > 1 || (session.auth && session.auth.loggedIn == true)) {
-				console.log("Already linked")
-				return cb(["Facebook account already linked"])
-			}
-			
+		if (users.length == 1) {
 			cb(null, users[0])
-		} else {
-			if (session.auth && session.auth.loggedIn == true) {
-				// Update the user's facebook token
-				models.User.findOne({
-					_id: mongoose.Types.ObjectId(session.auth.userId)
-				}, function(err, user) {
-					if (err) throw err;
-					
-					user.updateFacebook(meta, accessToken, accessSecret, function(err) {
-						cb(null, user);
-					})
-				})
-			} else {
-				// Create user
-				models.User.createWithFacebook(meta, accessToken, accessSecret, function(err, aUser) {
-					cb(null, aUser);
-				});
-			}
+			return;
+		} else if (users.length == 0) {
+			// Create a profile
+			// Create user
+			models.User.createWithFacebook(meta, accessToken, accessSecret, function(err, aUser) {
+				cb(null, aUser);
+			});
+			return;
 		}
+		
+		cb(["Facebook account already linked"])
 	});
 }
-scheme.statics.authenticateLinkedIn = function (session, accessToken, accessSecret, meta, cb) {
+scheme.statics.authenticateLinkedIn = function (accessToken, accessSecret, meta, cb) {
 	var query = {
 		'linkedin.userid': meta.id
 	}
@@ -215,37 +190,23 @@ scheme.statics.authenticateLinkedIn = function (session, accessToken, accessSecr
 	models.User.find(query, function(err, users) {
 		if (err) throw err;
 		
-		if (users.length > 0) {
-			if (users.length > 1 || (session.auth && session.auth.loggedIn == true)) {
-				return cb(["LinkedIn account already linked"])
-			}
-			
+		if (users.length == 1) {
 			cb(null, users[0])
-		} else {
-			if (session.auth && session.auth.loggedIn == true) {
-				// Update the user's linkedin token
-				models.User.findOne({
-					_id: mongoose.Types.ObjectId(session.auth.userId)
-				}, function(err, user) {
-					if (err) throw err;
-					
-					user.updateLinkedIn(meta, accessToken, accessSecret, function(err) {
-						cb(null, user);
-					})
-				})
-			} else {
-				// Create user
-				models.User.createWithLinkedIn(meta, accessToken, accessSecret, function(err, aUser) {
-					cb(null, aUser);
-				});
-			}
+			return;
+		} else if (users.length == 0) {
+			// Create a profile
+			// Create user
+			models.User.createWithLinkedIn(meta, accessToken, accessSecret, function(err, aUser) {
+				cb(null, aUser);
+			});
+			return;
 		}
+		
+		cb(["LinkedIn account already linked"])
 	});
 }
 
 scheme.statics.createWithPassword = function (login, password, cb, extra) {
-	console.log("Registering with login/password");
-	
 	var user = new exports.User({
 		email: login,
 		created: Date.now()
@@ -263,9 +224,9 @@ scheme.statics.createWithPassword = function (login, password, cb, extra) {
 }
 
 scheme.statics.createWithTwitter = function(meta, accessToken, accessTokenSecret, cb) {
-	console.log("Twitter meta: " + meta)
+	var _meta = meta._json
 	
-	var avatar = meta.profile_image_url;
+	var avatar = _meta.profile_image_url;
 	if (avatar.indexOf("_normal") != -1) {
 		avatar = avatar.replace("_normal", "");
 	}
@@ -275,11 +236,11 @@ scheme.statics.createWithTwitter = function(meta, accessToken, accessTokenSecret
 			userid: meta.id
 		},
 		avatar: avatar,
-		location: meta.location,
+		location: _meta.location,
 		requestEmail: true,
 		created: Date.now()
 	});
-	user.setName(meta.name);
+	user.setName(_meta.name);
 	
 	user.save(function(err) {
 		var smeta = new models.SocialMetadata({
@@ -295,30 +256,31 @@ scheme.statics.createWithTwitter = function(meta, accessToken, accessTokenSecret
 	});
 }
 scheme.statics.createWithFacebook = function (meta, accessToken, accessTokenSecret, cb) {
+	var _meta = meta._json;
 	var user = new exports.User({
 		facebook: {
 			userid: meta.id
 		},
 		requestEmail: false,
 		created: Date.now(),
-		avatar: 'http://graph.facebook.com/'+meta.id+'/picture?type=large'
+		avatar: 'http://graph.facebook.com/'+_meta.id+'/picture?type=large'
 	})
-	if (meta.location) {
-		user.location = meta.location;
-	} if (meta.first_name) {
-		user.name = meta.first_name;
-	} if (meta.last_name) {
-		user.surname = meta.last_name;
-	} if (meta.link) {
-		user.website = meta.link;
-	} if (meta.email) {
-		user.email = meta.email;
+	if (_meta.location) {
+		user.location = _meta.location;
+	} if (_meta.first_name) {
+		user.name = _meta.first_name;
+	} if (_meta.last_name) {
+		user.surname = _meta.last_name;
+	} if (_meta.link) {
+		user.website = _meta.link;
+	} if (_meta.email) {
+		user.email = _meta.email;
 	}
-	if (meta.work && meta.work.length > 0) {
-		user.position = meta.work[0].description;
+	if (_meta.work && _meta.work.length > 0) {
+		user.position = _meta.work[0].description;
 	}
-	if (meta.education && meta.education.length > 0 && meta.education[0].school.name) {
-		user.education = meta.education[0].school.name;
+	if (_meta.education && _meta.education.length > 0 && _meta.education[0].school.name) {
+		user.education = _meta.education[0].school.name;
 	}
 	
 	user.save(function(err) {
@@ -335,20 +297,21 @@ scheme.statics.createWithFacebook = function (meta, accessToken, accessTokenSecr
 	})
 }
 scheme.statics.createWithLinkedIn = function (meta, accessToken, accessTokenSecret, cb) {
+	var _meta = meta._json;
 	var user = new exports.User({
 		linkedin: {
 			userid: meta.id
 		},
-		location: meta.location,
-		requestEmail: true,
+		avatar: _meta.pictureUrl,
+		email: _meta.emailAddress,
 		created: Date.now(),
-		name: meta.firstName,
-		surname: meta.lastName,
-		location: meta.location.name,
-		website: meta.publicProfileUrl,
-		interests: meta.industry,
-		position: meta.headline,
-		desc: meta.summary
+		name: _meta.firstName,
+		surname: _meta.lastName,
+		location: _meta.location.name,
+		website: _meta.publicProfileUrl,
+		interests: _meta.industry,
+		position: _meta.headline,
+		desc: _meta.summary
 	})
 	
 	user.save(function(err) {
