@@ -3,6 +3,7 @@ function BusinessCards ($scope) {
 	$scope.libraryBox = {};
 	$scope.boxId = "";
 	
+	$scope.hasTemplateBackground = false;
 	$scope.preview = false;
 	
 	$scope.canvasStyles = {
@@ -37,22 +38,13 @@ function BusinessCards ($scope) {
 			id: "box"+index,
 			text: "Text Value",
 			style: {
-				width: "100%",
-				height: "100%",
-				padding: "0",
-				margin: "0",
-				"font-size": "13px",
-				"border-radius": 0,
-				overflow: "hidden",
-				background: "none",
-				
-				fontSize: 13,
+				fontSize: 20,
 				fontStyle: "normal",
 				fontWeight: "normal",
-				fontFamily: "Raleway",
-				color: "#FFFFFF",
+				fontFamily: "Arial",
+				color: "#000000",
 				background: "none",
-				paddingLeft: 0,
+				paddingLeft: 15,
 				
 				borderStyle: "none",
 				borderWidth: 0,
@@ -118,17 +110,31 @@ function BusinessCards ($scope) {
 			}
 		}
 	}
+	
+	$scope.selectTemplate = function (id) {
+		$scope.canvasStyles.background = "url(/images/businessCardTemplates/"+id+".svg) no-repeat top left"
+		$scope.canvasStyles.backgroundSize = "500px 250px"
+		$scope.hasTemplateBackground = true
+	}
+	$scope.removeTemplate = function () {
+		delete $scope.canvasStyles.background;
+		delete $scope.canvasStyles.backgroundSize;
+		$scope.hasTemplateBackground = false
+	}
 }
 
 var eventMost = angular.module('eventMost', []);
 eventMost.controller('businessCards', BusinessCards)
 .directive('cardDirective', function() {
-	return function($scope, $element, $attrs) {
-		$element.draggable({
-			containment: $("#cardCanvas"),
+	return function(scope, element, attrs) {
+		element.css("width", "200px")
+		.css("height", "50px")
+		
+		element.draggable({
+			containment: $("#cardCanvas .canvas"),
 			handle: '.handle',
 		}).resizable({
-			containment: $("#cardCanvas"),
+			containment: $("#cardCanvas .canvas"),
 			handles: "n, e, s, w, ne, se, sw, nw",
 			minHeight: 20,
 			minWidth: 25
@@ -136,8 +142,8 @@ eventMost.controller('businessCards', BusinessCards)
 	}
 })
 .directive('canvasDroppable', function() {
-	return function($scope, $element, $attrs) {
-		$element.droppable({
+	return function(scope, element, attrs) {
+		element.droppable({
 			drop: function(ev, ui) {
 				
 			}

@@ -1,4 +1,4 @@
-#cardCanvas, #cardCanvas .canvas {
+#cardCanvas .canvas {
 	width: 500px;
 	height: 250px;
 	background: #FFF;
@@ -16,17 +16,17 @@
 	left: 10px;
 	top: 10px;
 }
-#cardCanvas .canvas.preview .libraryBox {
+.canvas.preview .libraryBox {
 	border: none;
 	outline: none;
 	padding: 1px; /* compensates the dotted border hidden when .preview is on */
 }
-#cardCanvas .canvas.preview .libraryBox:hover {
+.canvas.preview .libraryBox:hover {
 	padding: 0px;
 	border: dotted 1px #000;
 	outline: dotted 1px #FFF;
 }
-#cardCanvas .canvas.preview .libraryBox .handle {
+.canvas.preview .libraryBox .handle {
 	opacity: 0.1;
 }
 .libraryBox:hover .handle, .libraryBox.preview:hover .handle {

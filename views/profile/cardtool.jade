@@ -34,8 +34,10 @@ block content
 					.form-group
 						label.col-lg-4.col-md-4.control-label(for="bgTemplate") Choose a template
 						.col-lg-8.col-md-8
-							a#bgTemplate.btn.btn-success.btn-sm(href="#") Browse Library
-					.form-group
+							a#bgTemplate.btn.btn-success.btn-sm(href="#businessCardLibrary", data-toggle="modal") Browse Library
+							| &nbsp;
+							a.btn.btn-danger.btn-sm(ng-show="hasTemplateBackground", ng-click="removeTemplate()") Remove
+					.form-group(ng-hide="hasTemplateBackground")
 						label.col-lg-4.col-md-4.control-label(for="bgColour") Colour
 						.col-lg-8.col-md-8
 							input#bgColour.form-control(type="color", ng-model="canvasStyles.backgroundColor")
@@ -46,7 +48,7 @@ block content
 				hr
 				#cardCanvas
 					.canvas(ng-style="canvasStyles", ng-class="{ preview: preview }")
-						.libraryBox(id="{{libraryBox.id}}", card-directive, ng-repeat="libraryBox in libraryBoxes")
+						.libraryBox(id="{{ libraryBox.id }}", card-directive, ng-repeat="libraryBox in libraryBoxes")
 							.handle
 							input(type="text", ng-hide="libraryBox.image", disabled="disabled", value="{{ libraryBox.text }}", ng-click="selectBox(libraryBox)", ng-style="libraryBox.style")
 							img(ng-src="{{ libraryBox.src }}", ng-show="libraryBox.image", ng-click="selectBox(libraryBox)", ng-style="libraryBox.style")
@@ -84,7 +86,6 @@ block content
 							label.col-lg-4.col-md-4.control-label(for="textType") Type
 							.col-lg-8.col-md-8
 								select#textType.form-control(type="color", ng-model="libraryBox.style.fontFamily")
-									option(value="Raleway") Raleway (default)
 									option(value="Helvetica") Helvetica
 									option(value="Arial") Arial
 									option(value="Tahoma") Tahoma
@@ -159,4 +160,5 @@ block content
 						|  or 
 						a(ng-click="createImage()", style="cursor:pointer;") an image
 						|  to the canvas
-			
+	
+		include ../modals/businesscardLibrary
