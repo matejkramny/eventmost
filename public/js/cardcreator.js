@@ -114,7 +114,8 @@ function BusinessCards ($scope) {
 	$scope.selectTemplate = function (id) {
 		$scope.canvasStyles.background = "url(/images/businessCardTemplates/"+id+".svg) no-repeat top left"
 		$scope.canvasStyles.backgroundSize = "500px 250px"
-		$scope.hasTemplateBackground = true
+		$scope.hasTemplateBackground = true;
+		$("#businessCardLibrary").modal('hide');
 	}
 	$scope.removeTemplate = function () {
 		delete $scope.canvasStyles.background;
