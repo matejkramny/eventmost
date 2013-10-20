@@ -11,7 +11,8 @@ var scheme = schema({
 		ref: 'User'
 	},
 	html: String,
-	location: String
+	location: String,
+	created: { type: Date, default: Date.now() }
 });
 
 scheme.methods.edit = function (html, cb) {
