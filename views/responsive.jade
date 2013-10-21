@@ -54,10 +54,9 @@ html
 							a(href="/event/add", class="font-e link-purple header-links")  Create event
 						.clearfix
 						.nspacer.hide-mini
-							form(method="POST", accept-charset="utf-8")
-								input.gonew2.pull-right.header-links(type="button", value="GO", style="width:10%;")
-								input(type="hidden", name="_csrf", value=token)
-								input.pull-right.font-s.search-input.pad-left-ten.header-links(type="search", placeholder="search events or people", style="width:75%;")
+							form(method="GET", accept-charset="utf-8", action="/search/people/")
+								input.gonew2.pull-right.header-links(type="submit", value="GO", style="width:10%;")
+								input.pull-right.font-s.search-input.pad-left-ten.header-links(type="search", name="q", placeholder="search for people on EventMost", style="width:75%;", value= typeof search !== "undefined" ? search.query : null)
 			
 		.container
 			block content

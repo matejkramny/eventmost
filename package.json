@@ -27,7 +27,6 @@
 	"nodetime": "latest",
 	"nodemailer": "latest",
 	"bugsnag": "latest",
-	"should": "latest",
-	"phantomjs": "latest"
+	"should": "latest"
   }
 }

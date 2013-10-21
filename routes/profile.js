@@ -65,9 +65,7 @@ exports.profile = profile = function (req, res) {
 function viewUser (req, res) {
 	var id = req.params.id;
 	
-	models.User.findOne({
-		_id: mongoose.Types.ObjectId(id)
-	}, function(err, user) {
+	models.User.findById(id, function(err, user) {
 		if (err) throw err;
 		
 		// check if user is self or user is 
@@ -86,7 +84,7 @@ function viewUser (req, res) {
 		res.format({
 			html: function() {
 				if (user != null) {
-					res.locals.prof = user;
+					res.locals.theUser = user; //locals.user is the logged in user..
 					res.locals.saved = saved;
 					res.render('user', { title: user.getName() });
 				} else {

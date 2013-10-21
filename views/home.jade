@@ -63,7 +63,8 @@ append content
 	.nspacer.hide-all2
 	.pull-left.nspacer.hide-all2(style='width:33%;') 
 		.bg-ashen(style='height:242px;') 
-			p.break.center.font-thin2.font-a(style='padding-top:10px;')= user.getName()
+			p.break.center.font-thin2.font-a(style='padding-top:10px;')
+				a(href="/user/"+user._id)= user.getName()
 			.pull-left.pad-left-ten
 				img(src="/images/i.svg", alt="", height="7px" width="7px;")
 			.pull-left.pad-left-ten.font-s.font-thin2
@@ -127,7 +128,8 @@ append content
 	//- User card
 	.col-md-3.col-xs-3.nspacer.hide-mini
 		.bg-ashen(style='height:312px;') 
-			p.break.font-e.center.font-thin2(style='padding-top:10px;')= user.getName()
+			p.break.font-e.center.font-thin2(style='padding-top:10px;')
+				a(href="/user/"+user._id)= user.getName()
 			.pull-left.pad-left-ten
 				img(src="/images/i.svg", alt="", height="16px" width="16px;")
 			.pull-left.pad-left-ten.font-s.font-thin2

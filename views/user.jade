@@ -1,19 +1,299 @@
-extends layout
+extends responsive
 
 block content
-	include inc/sidebar
-	#main-content
-		.search-box
-			.search-content
-				p
-					span.title= prof.getName()
-					if !prof._id.equals(user._id)
-						span.right
-							if saved
-								| already in saved profiles.
-							else
-								a.submit-btn(href="/user/"+prof._id+"/save") Save profile
-							a.submit-btn(href="/topics?with="+prof._id) Private message
-					else
-						span.right This is you!
-	.clear
+
+	.col-xs-12.hide-all2
+		form(method="POST", accept-charset="utf-8")
+			input.gonew2.pull-right.header-links(type="button", value="GO", style="width:10%;")
+			input(type="hidden", name="_csrf", value=token)
+			input.pull-right.font-s.search-input.pad-left-ten.header-links(type="search", placeholder="search events or people", style="width:87%;")
+	.clearfix.hide-all2
+
+
+	.nspacer
+	.col-md-2.col-xs-2.col-sm-2.hide-mini3-except-smart
+		.pull-right
+			img(src=theUser.avatar, alt="", class="circularespond img-responsive")
+	.col-md-4.col-xs-4.col-sm-4.hide-mini3-except-smart
+		.text-right.font-s.nspacer-bigger
+			| <b>#{theUser.getName()}</b> - #{theUser.position}, #{theUser.company}<br />
+			img(src="/images/message-icon-small.svg", alt="", class="pad-right-ten")
+			a(href="mailto:#{user.email}", class="link-purple")
+				| #{user.email}
+		.clearfix
+	
+	unless theUser._id.equals(user._id)
+		.col-md-6.col-xs-6.col-sm-6.lower.hide-mini3-except-smart
+			.right.iconsbox.spacerbig
+				a(href="/conversations", class="link1")
+					img(src="/images/send-prv.svg", alt="", class="img-responsive inline pad-right-ten res-butt")
+				a(href="/conversations", class="link1")
+					img(src="/images/send-business.svg", alt="", class="img-responsive inline pad-right-ten res-butt")
+				a(href="/user/"+theUser._id+"/save", class="link1")
+					img(src="/images/save-prof.svg", alt="", class="img-responsive inline pad-right-ten res-butt")
+		.col-md-6.col-xs-6.col-sm-6.lower-hide.hide-except-smart
+			.right.iconsbox.spacerbig
+				a(href="/conversations", class="link1")
+					img(src="/images/send-prv.svg", alt="", class="img-responsive inline res-butt")
+				a(href="/conversations", class="link1")
+					img(src="/images/send-business.svg", alt="", class="img-responsive inline res-butt")
+				a(href="/user/"+theUser._id+"/save", class="link1")
+					img(src="/images/save-prof.svg", alt="", class="img-responsive inline res-butt")
+		.hide-except-smart
+			.center
+				a(href="/conversations", class="link1")
+					img(src="/images/send-prv.svg", alt="", class="img-responsive inline res-butt pad-left-five")
+				a(href="/conversations", class="link1")
+					img(src="/images/send-business.svg", alt="", class="img-responsive inline res-butt pad-left-five")
+				a(href="/user/"+theUser._id+"/save", class="link1")
+					img(src="/images/save-prof.svg", alt="", class="img-responsive inline res-butt pad-left-five")
+
+	.nspacer.hide-except-smart
+	.col-md-4.col-xs-4.col-sm-4.hide-except-smart
+		img(src="/images/default_speaker.svg", alt="", class="circularespond img-responsive")
+	.col-md-8.col-xs-8.col-sm-8.hide-except-smart
+		.text-right.font-s.nspacer-bigger
+			| <b>#{theUser.getName()}</b> - #{theUser.position}, #{theUser.company}<br />
+			img(src="/images/message-icon-small.svg", alt="", class="pad-right-ten")
+			a(href="mailto:#{theUser.email}", class="link-purple")
+			| #{theUser.email}
+		.clearfix
+
+	.clearfix
+	.nspacer-big
+	.col-md-3.col-xs-3.col-sm-3.font-s.lower
+		.pull-left
+			.pull-left.text-right
+				| Name: <br />
+				| Position: <br />
+				| Company: <br />
+			.pull-right.pad-left-ten
+				| <b>#{theUser.getName()}</b> <br />
+				| <b>#{theUser.position}</b> <br />
+				| <b>#{theUser.company}</b>
+	.col-md-4.col-xs-4.col-sm-4.font-s.lower-hide
+		.pull-left
+			.pull-left.text-right
+				| Name: <br />
+				| Position: <br />
+				| Company: <br />
+			.pull-right.pad-left-ten
+				| <b>#{theUser.getName()}</b> <br />
+				| <b>#{theUser.position}</b> <br />
+				| <b>#{theUser.company}</b>
+	.col-md-4.col-xs-4.col-sm-4.font-s.hide-mini3-except-smart
+		.pull-left
+			.pull-left.text-right
+				| Website: <br />
+				| Location: <br />
+				| Interests: <br />
+				| Education: 
+			.pull-right.pad-left-ten
+				| <b>#{theUser.website}</b> <br />
+				| <b>#{theUser.location}</b> <br />
+				| <b>#{theUser.interests}</b> <br />
+				| <b>#{theUser.education}</b> 
+	
+	.col-md-12.col-xs-12.col-sm-12.font-s.center.hide-except-smart
+		.pull-left
+			.pull-left.text-right
+				| Name: <br />
+				| Position: <br />
+				| Company: <br />
+			.pull-right.pad-left-ten
+				| <b>#{theUser.getName()}</b> <br />
+				| <b>#{theUser.position}</b> <br />
+				| <b>#{theUser.company}</b>
+	.clearfix.center.hide-all3
+	.nspacer.hide-all3
+	.col-md-12.col-xs-12.col-sm-12.font-s.hide-except-smart
+		.pull-left
+			.pull-left.text-right
+				| Website: <br />
+				| Location: <br />
+				| Interests: <br />
+				| Educaction: 
+			.pull-right.pad-left-ten
+				| <b>#{theUser.website}</b> <br />
+				| <b>#{theUser.location}</b> <br />
+				| <b>#{theUser.interests}</b> <br />
+				| <b>#{theUser.education}</b>
+	
+	.clearfix
+	.nspacer-big
+	.col-md-7.col-xs-7.col-sm-7.hide-mini3-except-smart
+			.font-e1
+				| Description: 
+			.font-x 
+				!= theUser.desc
+	.clearfix
+
+	.col-md-12.col-xs-12.col-sm-12.hide-except-smart
+			.font-e1
+				| Description: 
+			.font-x 
+				!= theUser.desc
+
+	.nspacer-big
+	.col-md-12.col-xs-12.col-sm-12.hide-mini3-except-smart
+		.font2.semi-bold
+			| #{theUser.getName()}'s wall
+		.line-purple
+		.col-md-2.col-xs-2.col-sm-2
+			.font-e1
+				| Guest speaker
+			img(src="/images/default_speaker.svg", alt="", class="circularespond img-responsive")
+		.col-md-10.col-xs-10.col-sm-10.nspacer-bigger
+			.font-e1.bigger-pad-left
+				| <b>Lucy Cook</b> - Director of Finance, Delloite	<br />
+			.nspacer
+			.pull-left
+				img.pull-left.bubble-responsive(src="/images/bubble-left-grey.svg", alt="", style="vertical-align:top;")
+			.pull-left.bg-grey.psev.post-width.font-x 
+				| At vero eos et accusamus et iusto odio dignissimos <b>ducimus qui blanditiis</b> praesentium voluptatum deleniti atque corrupti quos dolores 
+				| et quas molestias excepturi sint occaecati cupiditate non provident,similique sunt.
+				| At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis <b>praesentium voluptatum deleniti</b> atque corrupti quos dolores 
+				| et quas molestias excepturi sint occaecati cupiditate non provident,similique sunt.
+		.clearfix
+		.nspacer
+		.col-md-2.col-xs-2.col-sm-2
+			.font-e1
+				| Guest speaker
+			img(src="/images/default_speaker.svg", alt="", class="circularespond img-responsive")
+		.col-md-10.col-xs-10.col-sm-10.nspacer-bigger
+			.font-e1.bigger-pad-left
+				| <b>Lucy Cook</b> - Director of Finance, Delloite	<br />
+			.nspacer
+			.pull-left
+				img.pull-left(src="/images/bubble-left-grey.svg", alt="", style="vertical-align:top;")
+			.pull-left.bg-grey.psev.post-width.font-x 
+				| At vero eos et accusamus et iusto odio dignissimos <b>ducimus qui blanditiis</b> praesentium voluptatum deleniti atque corrupti quos dolores 
+				| et quas molestias excepturi sint occaecati cupiditate non provident,similique sunt.
+		.clearfix
+		.nspacer
+		.col-md-2.col-xs-2.col-sm-2
+			.font-e1
+				| Guest speaker
+			img(src="/images/default_speaker.svg", alt="", class="circularespond img-responsive")
+		.col-md-10.col-xs-10.col-sm-10.nspacer-bigger
+			.font-e1.bigger-pad-left
+				| <b>Lucy Cook</b> - Director of Finance, Delloite	<br />
+			.nspacer
+			.pull-left
+				img.pull-left(src="/images/bubble-left-grey.svg", alt="", style="vertical-align:top;")
+			.pull-left.bg-grey.psev.post-width.font-x 
+				| At vero eos et accusamus et iusto odio dignissimos <b>ducimus qui blanditiis</b> praesentium voluptatum deleniti atque corrupti quos dolores 
+				| et quas molestias excepturi sint occaecati cupiditate non provident,similique sunt.
+				| At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis <b>praesentium voluptatum deleniti</b> atque corrupti quos dolores 
+				| et quas molestias excepturi sint occaecati cupiditate non provident,similique sunt.
+				| At vero eos et accusamus et iusto odio dignissimos <b>ducimus qui blanditiis</b> praesentium voluptatum deleniti atque corrupti quos dolores 
+				| et quas molestias excepturi sint occaecati cupiditate non provident,similique sunt.
+				| At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis <b>praesentium voluptatum deleniti</b> atque corrupti quos dolores 
+				| et quas molestias excepturi sint occaecati cupiditate non provident,similique sunt.
+		.clearfix
+		.nspacer
+
+	.col-md-12.col-xs-12.col-sm-12.hide-except-smart
+		.font2.semi-bold
+			| Lucy Cook’s wall
+		.line-purple
+		.clearfix
+			.font-e1.pull-left
+				| Guest speaker
+			.clearfix
+			.col-md-5.col-xs-5.col-sm-5
+				img(src="/images/default_speaker.svg", alt="", class="circularespond", style="width:100%;")
+			.col-md-7.col-xs-7.col-sm-7
+				.font-e1(style="margin-top:30px;")
+					| <b>Lucy Cook</b> - Director of Finance, Delloite	<br />
+		.col-md-12.col-xs-12.col-sm-12
+			.pull-left
+				img.pull-left.bubble-responsive(src="/images/bubble-left-grey.svg", alt="", style="vertical-align:top;")
+			.pull-left.bg-grey.psev.post-width.font-x 
+				| At vero eos et accusamus et iusto odio dignissimos <b>ducimus qui blanditiis</b> praesentium voluptatum deleniti atque corrupti quos dolores 
+				| et quas molestias excepturi sint occaecati cupiditate non provident,similique sunt.
+				| At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis <b>praesentium voluptatum deleniti</b> atque corrupti quos dolores 
+				| et quas molestias excepturi sint occaecati cupiditate non provident,similique sunt.
+		.clearfix
+		.nspacer
+			.font-e1.pull-left
+				| Guest speaker
+			.clearfix
+			.col-md-5.col-xs-5.col-sm-5
+				img(src="/images/default_speaker.svg", alt="", class="circularespond", style="width:100%;")
+			.col-md-7.col-xs-7.col-sm-7
+				.font-e1(style="margin-top:30px;")
+					| <b>Lucy Cook</b> - Director of Finance, Delloite	<br />
+		.clearfix
+		.col-md-12.col-xs-12.col-sm-12
+			.pull-left
+				img.pull-left.bubble-responsive(src="/images/bubble-left-grey.svg", alt="", style="vertical-align:top;")
+			.pull-left.bg-grey.psev.post-width.font-x 
+				| At vero eos et accusamus et iusto odio dignissimos <b>ducimus qui blanditiis</b> praesentium voluptatum deleniti atque corrupti quos dolores 
+		.clearfix
+		.nspacer
+			.font-e1.pull-left
+				| Guest speaker
+			.clearfix
+			.col-md-5.col-xs-5.col-sm-5
+				img(src="/images/default_speaker.svg", alt="", class="circularespond", style="width:100%;")
+			.col-md-7.col-xs-7.col-sm-7
+				.font-e1(style="margin-top:30px;")
+					| <b>Lucy Cook</b> - Director of Finance, Delloite	<br />
+		.clearfix
+		.col-md-12.col-xs-12.col-sm-12
+			.pull-left
+				img.pull-left.bubble-responsive(src="/images/bubble-left-grey.svg", alt="", style="vertical-align:top;")
+			.pull-left.bg-grey.psev.post-width.font-x 
+				| At vero eos et accusamus et iusto odio dignissimos <b>ducimus qui blanditiis</b> praesentium voluptatum deleniti atque corrupti quos dolores 
+		.clearfix
+
+	.center(style='height:35px;')
+		ul.pagination
+			li
+				a(href='#') «
+			li.active
+				a(href='#') 1
+			li
+				a(href='#') 2
+			li
+				a(href='#') 3
+			li.disabled
+				a(href='#') ...
+			li
+				a(href='#') 5
+			li
+				a(href='#') »
+	.clearfix
+	.nspacer
+	.col-sm-12.col-xs-12.col-md-12.hide-mini3-except-smart
+		.col-sm-2.col-xs-2.col-md-2
+		.col-sm-10.col-xs-10.col-md-10
+			.pull-left
+				img.pull-left(src="/images/bubble-left-blue.svg", alt="", style="vertical-align:top;")
+			.pull-left.bg-green.psev.post-width-text
+				textarea.postcommentarea(placeholder="Post a comment here...")
+				.pull-right
+					a(href="#",) 
+						img(src="/images/post-button.svg", alt="", class="img-responsive post-butt")
+			.clearfix
+			.nspacer
+			.pull-right
+				a(href="",)
+				button.btn.btn-default.font-e.hide-prof-butt(type='submit', style="border-radius: 10px; color:#fff; padding:20px;")
+					| Hide profile
+	.col-sm-12.col-xs-12.col-md-12.hide-except-smart
+			.pull-left
+				img.pull-left.bubble-responsive(src="/images/bubble-left-blue.svg", alt="", style="vertical-align:top;")
+			.pull-left.bg-green.psev.post-width-text
+				textarea.postcommentarea(placeholder="Post a comment here...")
+				.pull-right
+					a(href="#",) 
+						img(src="/images/post-button.svg", alt="", class="img-responsive post-butt")
+			.clearfix
+			.nspacer
+			.pull-right
+				a(href="",)
+				button.btn.btn-default.font-e.hide-prof-butt(type='submit', style="border-radius: 10px; color:#fff; padding:20px;")
+					| Hide profile
+	.clearfix

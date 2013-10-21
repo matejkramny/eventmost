@@ -1,0 +1,23 @@
+extends ../responsive
+
+block content
+	br
+	if search.results.length == 0
+		h1.text-center No Search results :(
+		br
+	for p in search.results
+		.row
+			a.col-md-2.col-sm-2.col-lg-2(href="/user/"+p._id)
+				img(src=p.avatar, style="max-height: 150px;")
+			.col-md-10.col-sm-10.col-lg-10
+				.row
+					h4.col-md-12.col-sm-12.col-lg-12
+						a(href="/user/"+p._id): strong= p.getName()
+				.row
+					strong.col-md-12.col-sm-12.col-lg-12
+						= p.position
+						| , 
+						= p.company
+						|  in 
+						= p.location
+		br
