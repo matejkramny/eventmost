@@ -1,20 +1,31 @@
-extends base
-
-
+extends responsive
 
 block content
-
 		.row-fluid.headerspacer
 			.speaker_titlerespond2.smallslid.left
-				h5 <b>Inbox:</b>
-			.left.speaker_titlerespond2.smallslid
-				h5 <b>Lucy Cook</b> - Director of Finance, Delloite
+				h5 <b>Inbox:</b> 
+				<b>Lucy Cook</b> - Director of Finance, Delloite
 		.clearfix
 			.speaker_titlerespond2.smallslid
 				h5.red <b>Private messages</b>
 			.clearfix
 			.line-red
 		.row-fluid.headerspacer2.smallslid
+			.pull-right
+				ul.nav.navbar-nav(style="margin-right:-7px; margin-top:-5px;")
+					li.dropdown
+						a.dropdown-toggle(href='#', data-toggle='dropdown')
+							| Arrange by
+							b.caret
+						ul.dropdown-menu.pull-right
+							li
+								a(href='#') Person's Last Name
+							li
+								a(href='#') Person's First Name
+							li
+								a(href='#') Time Recieved
+							li
+								a(href='#') Date of most recent events
 			.left.speaker_title2
 				| Guest speaker
 				.speakerbox

@@ -1,7 +1,6 @@
 var fs = require('fs')
 	, models = require('../models')
 	, mongoose = require('mongoose')
-	, io = require('../app').io
 	, util = require('../util')
 	, async = require('async')
 	, transport = require('../app').transport
