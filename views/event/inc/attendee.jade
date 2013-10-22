@@ -1,13 +1,12 @@
 mixin attendee(attendee)
-	.row-fluid.smallspacer
-		.span1
+	.row
+		.col-sm-3.col-mg-3.col-lg-3
 			img(src="/img/avatar.jpg", style="max-height: 80px;")
-		.span11
-			h8= attendee.user.getName()
-			br
-			h8 Category: #{attendee.category}
-			br
-			h8
+		.col-sm-9.col-mg-9.col-lg-9
+			h5= attendee.user.getName()
+			h5 Category: #{attendee.category}
+			h5
 				if event.user.company
 					| , 
 					= event.user.company
+	br

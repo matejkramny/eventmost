@@ -1,4 +1,4 @@
-extends ../base
+extends ../responsive
 
 include inc/navbar
 include inc/attendee
@@ -12,32 +12,31 @@ append addonjs
 block content
 	mixin navbar(0)
 
-	.row-fluid
-		.span9
-			.row-fluid
-				.span12
-					h12= event.name
-			.row-fluid
-				h8 Thanks to our sponsors
-		.span3
+	.row
+		.col-lg-9.col-md-9.col-sm-9
+			.row
+				.col-lg-12.col-md-12.col-sm-12
+					h3= event.name
+			.row
+				.col-lg-12.col-md-12.col-sm-12
+					h4 Thanks to our sponsors
+		.col-lg-3.col-md-3.col-sm-3
 			if event.avatar && event.avatar.url
-				img(src=event.avatar.url)
+				img(src=event.avatar.url, style="max-width:150px; max-height: 150px;")
 			else
 				img(src="/img/default-logo.svg")
 	
-	.row-fluid.headerspacer2
-		.span6
-			.bluebox
-				a.link4(href="/event/"+event._id+"/conversations") Conversations
-		.span6
-			.bluebox
-				a.link4(href="/event/"+event._id+"/attendees") Attendees
-			mixin attendee({ user: event.user, category: "Planner" })
-			- var i = 0;
-			for attendee in event.attendees
-				mixin attendee(attendee)
-				- if (i > 4) break;
-				- i++
-
-	br
-	.clearfix
+	.row.headerspacer2
+		.col-lg-6.col-md-6.col-sm-6
+			h3.text-center: a(href="/event/"+event._id+"/conversations") Conversations
+			.well
+				h4 No conversations
+		.col-lg-6.col-md-6.col-sm-6
+			h3.text-center: a(href="/event/"+event._id+"/attendee") Attendees
+			.well
+				mixin attendee({ user: event.user, category: "Planner" })
+				- var i = 0;
+				for attendee in event.attendees
+					mixin attendee(attendee)
+					- if (i > 4) break;
+					- i++
