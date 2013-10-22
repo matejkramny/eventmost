@@ -1,4 +1,4 @@
-extends ../base
+extends ../responsive
 
 include inc/navbar
 include inc/attendee
@@ -6,6 +6,7 @@ include inc/attendee
 append content
 	mixin navbar(2)
 	
+	br
 	mixin attendee({ user: event.user, category: "Planner" })
 	
 	for attendee in event.attendees
