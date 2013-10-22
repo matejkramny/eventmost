@@ -1,37 +1,35 @@
-extends ../base
+extends ../responsive
 
 include inc/navbar
 
 block content
 	mixin navbar(1)
 	
+	br
 	form#uploadForm(action="/event/"+event._id+"/dropbox/upload", method="POST", enctype="multipart/form-data")
 		input(type="hidden", name="_csrf", value=token)
-		.left
+		.pull-left
 			#file_browse_wrapper
 				input#file_browse(name="upload", type="file")
-		.left
-			#file_upload_wrapper(onclick="$('#uploadForm').submit()")
+		.pull-left
+			button.btn.btn-success#file_upload_wrapper(onclick="$('#uploadForm').submit()") Upload
 		.clearfix
 	
 	for file in event.files
-		.row-fluid
-			.span2
+		.row
+			.col-sm-2.col-lg-2.col-md-2
 				img(src=file.file)
-			.span6
-				h8= file.name
-				br
-				h8 Size: #{file.size}
-				br
-				h8 Created: #{file.created.toString()}
-			.span4
-				.options-btn-box
-					form#deleteForm(method="POST", action="/event/"+event._id+"/dropbox/remove")
-						input(type="hidden", name="_csrf", value=token)
-						input(type="hidden", name="file", value=file.file)
-						
-						a.btn.btn-success(href=file.file) Download
-						if event.user._id.equals(user._id)
-							| &nbsp;
-							a.btn.btn-danger(href="#", onclick="$('#deleteForm').submit()") Delete
+			.col-sm-6.col-lg-6.col-md-6
+				h5= file.name
+				h5 Size: #{file.size}
+				h5 Created: #{file.created.toString()}
+			.col-sm-4.col-lg-4.col-md-4
+				form#deleteForm(method="POST", action="/event/"+event._id+"/dropbox/remove")
+					input(type="hidden", name="_csrf", value=token)
+					input(type="hidden", name="file", value=file.file)
+					
+					a.btn.btn-success(href=file.file) Download
+					if event.user._id.equals(user._id)
+						| &nbsp;
+						a.btn.btn-danger(href="#", onclick="$('#deleteForm').submit()") Delete
 	br
