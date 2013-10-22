@@ -1,11 +1,19 @@
-extends ../base
+extends ../responsive
 
 block content
 
-	.eighty-five
+	.col-xs-12.hide-all2
+		form(method="POST", accept-charset="utf-8")
+			input.gonew2.pull-right.header-links(type="button", value="GO", style="width:10%;")
+			input(type="hidden", name="_csrf", value=token)
+			input.pull-right.font-s.search-input.pad-left-ten.header-links(type="search", placeholder="search events or people", style="width:87%;")
+	.clearfix.hide-all2
+
+	.col-lg-10.col-md-10.col-xs-10.no-float.hide-mini
 		.center2
 			.half-round
-				| <b>Your order</b>
+				.pad-left-ten
+					| <b>Your order</b>
 		table.gridtable-payment
 			tr
 				th.sixty
@@ -66,69 +74,245 @@ block content
 		.center2
 			.half-round
 				| <b>Choose payment method</b>
-		.headerspacer2
-			.left.span6
-				p.check5.left.smallslid 
-					input(name="", placeholder="", type="checkbox", id="creditcard", value="css3")
-					label(for='creditcard',) 
-				.left.headerSpacer4
-					h17 Credit Card
-			.left.span3
-				p.check5.left
-					input(name="", placeholder="", type="checkbox", id="paypal", value="css3")
-					label(for='paypal',) 
-				.left.headerSpacer4
-					h17 Paypal
-			.clearfix
-		.headerspacer2
-			.left.span5
-				img(src="/img/credit-cards.svg", alt="", class="arrow")
-			.left.span5
-				img(src="/img/paypal.svg", alt="", class="arrow")
-			.clearfix
-		.headerSpacer 
-			.left.text-right.color.headerSpacer.hun
+		.nspacer
+		.col-lg-6.col-md-6.col-xs-6
+			.center
+				.pull-left
+					p.check5
+						input(name="", placeholder="", type="checkbox", id="creditcard", value="css3")
+						label(for='creditcard',) 
+				.font2.color-green.pull-left.nspacer
+					| Credit Card
+		.nspacer
+		.col-lg-6.col-md-6.col-xs-6
+			.center
+				.pull-left
+					p.check5
+						input(name="", placeholder="", type="checkbox", id="paypal", value="css3")
+						label(for='paypal',) 
+				.font2.color-green.pull-left.nspacer
+					| Paypal
+		.clearfix
+		.col-lg-6.col-md-6.col-xs-6
+				img(src="/images/credit-cards.svg", alt="", class="img-responsive")
+		.col-lg-6.col-md-6.col-xs-6
+				img(src="/images/paypal.svg", alt="", class="img-responsive")
+		.clearfix
+		.nspacer-big
+		.col-lg-6.col-md-6.col-xs-6.col-land
+			.pad-left-zero.col-lg-4.col-md-4.col-xs-4.font-x.nspacer.right
 				| Card owner:
-			.left
-				input(name="", placeholder="", type="text", id="", required="required", class="file_input_textbox_credit")
-			.clearfix
-			.left.color.headerSpacer.text-right.hun 
+			.psev.col-lg-8.col-md-8.col-xs-8.payment-input
+				input.input-yellow-rounded.font-x#LoginUserEmail(name="login", type="email", required="required",)
+			.nspacer-big
+			.pad-left-zero.col-lg-4.col-md-4.col-xs-4.font-x.nspacer.right
 				| Card number:
-			.left
-				input(name="", placeholder="", type="text", id="", required="required", class="file_input_textbox_credit")
-			.clearfix
-			.left.text-right.color.headerSpacer.hun 
+			.psev.col-lg-8.col-md-8.col-xs-8.payment-input
+				input.input-yellow-rounded.font-x#LoginUserEmail(name="login", type="email", required="required",)
+			.nspacer-big
+			.pad-left-zero.col-lg-4.col-md-4.col-xs-4.font-x.nspacer.right
 				| Expiration date:
-			.left
-				input(name="", placeholder="", type="text", id="", required="required", class="file_input_textbox_credit")
-			.clearfix
-			.left.text-right.color.headerSpacer.hun 
+			.psev.col-lg-8.col-md-8.col-xs-8.payment-input
+				input.input-yellow-rounded.font-x#LoginUserEmail(name="login", type="email", required="required",)
+			.nspacer-big
+			.pad-left-zero.col-lg-4.col-md-4.col-xs-4.font-x.nspacer.right
 				| CVV:
-			.left
-				input(name="", placeholder="", type="text", id="", required="required", class="file_input_textbox_credit")
+			.psev.col-lg-8.col-md-8.col-xs-8.payment-input
+				input.input-yellow-rounded.font-x#LoginUserEmail(name="login", type="email", required="required",)
+			.nspacer-big
+			.pad-left-zero.col-lg-4.col-md-4.col-xs-4.font-x.nspacer.right
+				| Address:
+			.psev.col-lg-8.col-md-8.col-xs-8.payment-input
+				input.input-yellow-rounded.font-x#LoginUserEmail(name="login", type="email", required="required",)
+			.nspacer-big
+			.pad-left-zero.col-lg-4.col-md-4.col-xs-4.font-x.nspacer.right
+				| ZIP Code:
+			.psev.col-lg-8.col-md-8.col-xs-8.payment-input
+				input.input-yellow-rounded.font-x#LoginUserEmail(name="login", type="email", required="required",)
+			.nspacer-big
+			.pad-left-zero.col-lg-4.col-md-4.col-xs-4.font-x.nspacer.right
+				| City:
+			.psev.col-lg-8.col-md-8.col-xs-8.payment-input
+				input.input-yellow-rounded.font-x#LoginUserEmail(name="login", type="email", required="required",)
 			.clearfix
-			.left.hun
-			.hun2
-				.right
-					input.pay(type="submit", value="PAY NOW")
-			.clearfix
-		.headerspacer2.center2
-		h5.color.center2
-			<b>Success</b>, you payment has been processed
-		.headerspacer2.center2
-			img(src="/img/bubble-red.svg", alt="", class="arrow")
-		h5.color.center.tops-minus
-			<b>Thank you!</b>
-		h5.color.center.tops-minus.tf
+			.psev.col-lg-12.col-md-12.col-xs-12.payment-button
+				button.btn.btn-info.font-xs.font-ah.pull-right(type='submit', href="", style="padding:5px; padding-left:15px; padding-right:15px; margin-right:20px;")
+					| <b>PAY NOW</b>
+		.clearfix
+		.nspacer-awsome
+		.center2
+			.font2
+				<b>Success</b>, you payment has been processed
+		.center2
+			img(src="/images/bubble-blue.svg", alt="",)
+		.center2
+			.font2
+				<b>Thank you!</b>
+		.center.font-e
 			| Now you may access the event.
-		.center2.span4
-			.left
-				img(src="/img/accessevent.svg", alt="", class="arrow")
-			.right
-				img(src="/img/goback.svg", alt="", class="arrow")
+		.col-lg-12.col-md-12.col-xs-12.center2
+			button.btn.btn-primary.font-e.font-ah(type='submit', href="", style="height:70px; padding:10px; padding-left:35px; padding-right:35px; margin-right:20px;")
+				| Access event
+			button.btn.btn-primary.font-e.font-ah(type='submit', href="", style="height:70px; padding:10px; padding-left:35px; padding-right:35px; margin-left:20px;")
+				| Go back <br />to homepage
+
+
+
+	.col-lg-12.col-md-12.col-xs-12.no-float.hide-except-smart
+	.nspacer.hide-except-smart
+		.center
+			.half-round
+				.pad-left-ten
+					| <b>Your order</b>
+		table.gridtable-payment
+			tr
+				th.sixty
+					| REGISTRATION TYPE
+				th
+					| PRICE
+				th
+					| FEE
+				th
+					| QUANTITY
+			tr
+				td
+					| I would like to register as an idividual
+				td
+					| £25.00
+				td
+					| £2.15
+				td
+					dl.dropdown6
+						dt
+							a.dropx6(href="#")
+								| 
+						dd
+							ul
+								li
+									a(href="#",) 1
+								li
+									a(href="#",) 2
+								li
+									a(href="#",) 3
+								li
+									a(href="#",) 4
+								li
+									a(href="#",) 5
+								li
+									a(href="#",) 6
+								li
+									a(href="#",) 7
+								li
+									a(href="#",) 8
+								li
+									a(href="#",) 9
+								li
+									a(href="#",) 10
+								li
+									a(href="#",) 11
+								li
+									a(href="#",) 12
+			tr
+				td
+					| Total
+				td
+					| £50.00
+				td
+					| 
+				td
+					| £54.30
+		.center2
+			.half-round
+				| <b>Choose payment method</b>
+		.nspacer
+	.col-lg-6.col-md-6.col-xs-6.pad-left-zero.hide-except-smart
+		.pull-left
+			p.check5
+				input(name="", placeholder="", type="checkbox", id="creditcardsmaller", value="small")
+				label(for='creditcardsmaller',) 
+		.color-green.pull-left.nspacer(style="font-size:14px;")
+			| Credit Card
+	.col-lg-6.col-md-6.col-xs-6.pad-right-zero.hide-except-smart
+		.pull-left
+			p.check5
+				input(name="", placeholder="", type="checkbox", id="paypalsmaller", value="cs1")
+				label(for='paypalsmaller',) 
+		.color-green.pull-left.nspacer
+			| Paypal
+	.clearfix.hide-except-smart
+		.clearfix
+		.col-lg-6.col-md-6.col-xs-6
+				img(src="/images/credit-cards.svg", alt="", class="img-responsive")
+		.col-lg-6.col-md-6.col-xs-6
+				img(src="/images/paypal.svg", alt="", class="img-responsive")
+		.clearfix
+		.nspacer-big
+	.col-lg-12.col-md-12.col-xs-12.hide-except-smart
+			.pad-left-zero.col-lg-4.col-md-4.col-xs-4.font-x.nspacer.right
+				| Card owner:
+			.psev.col-lg-8.col-md-8.col-xs-8
+				input.input-yellow-rounded.font-x#LoginUserEmail(name="login", type="email", required="required",)
+			.nspacer-big
 			.clearfix
+			.pad-left-zero.col-lg-4.col-md-4.col-xs-4.font-x.nspacer.right
+				| Card number:
+			.psev.col-lg-8.col-md-8.col-xs-8
+				input.input-yellow-rounded.font-x#LoginUserEmail(name="login", type="email", required="required",)
+			.nspacer-big
+			.clearfix
+			.pad-left-zero.col-lg-4.col-md-4.col-xs-4.font-x.nspacer.right
+				| Expiration date:
+			.psev.col-lg-8.col-md-8.col-xs-8
+				input.input-yellow-rounded.font-x#LoginUserEmail(name="login", type="email", required="required",)
+			.nspacer-big
+			.clearfix
+			.pad-left-zero.col-lg-4.col-md-4.col-xs-4.font-x.nspacer.right
+				| CVV:
+			.psev.col-lg-8.col-md-8.col-xs-8
+				input.input-yellow-rounded.font-x#LoginUserEmail(name="login", type="email", required="required",)
+			.nspacer-big
+			.clearfix
+			.pad-left-zero.col-lg-4.col-md-4.col-xs-4.font-x.nspacer.right
+				| Address:
+			.psev.col-lg-8.col-md-8.col-xs-8
+				input.input-yellow-rounded.font-x#LoginUserEmail(name="login", type="email", required="required",)
+			.nspacer-big
+			.clearfix
+			.pad-left-zero.col-lg-4.col-md-4.col-xs-4.font-x.nspacer.right
+				| ZIP Code:
+			.psev.col-lg-8.col-md-8.col-xs-8
+				input.input-yellow-rounded.font-x#LoginUserEmail(name="login", type="email", required="required",)
+			.nspacer-big
+			.clearfix
+			.pad-left-zero.col-lg-4.col-md-4.col-xs-4.font-x.nspacer.right
+				| City:
+			.psev.col-lg-8.col-md-8.col-xs-8
+				input.input-yellow-rounded.font-x#LoginUserEmail(name="login", type="email", required="required",)
+			.clearfix
+			.psev.col-lg-12.col-md-12.col-xs-12
+				button.btn.btn-info.font-xs.font-ah.pull-right(type='submit', href="", style="font-size:12px; padding:5px; padding-left:15px; padding-right:15px; margin-right:0px;")
+					| <b>PAY NOW</b>
+		.clearfix.hide-except-smart
+	.col-lg-12.col-md-12.col-xs-12.hide-except-smart
+		.nspacer-awsome.hide-except-smart
+		.center2.hide-except-smart
+			.font2
+				<b>Success</b>, you payment has been processed
+		.nspacer-awsome.hide-all
+		.center
+			img(src="/images/bubble-blue.svg", alt="",)
+		.center2.hide-all
+			.font2
+				<b>Thank you!</b>
+		.center
+			| Now you may access the event.
+		.col-lg-12.col-md-12.col-xs-12.center2.hide-all
+		.center
+			button.btn.btn-primary.font-e.font-ah(type='submit', href="", style="font-size:12px; height:70px; padding:5px; padding-left:15px; padding-right:15px; margin-right:10px;")
+				| Access event
+			button.btn.btn-primary.font-e.font-ah(type='submit', href="", style="font-size:12px; height:70px; padding:5px; padding-left:15px; padding-right:15px; margin-left:10px;")
+				| Go back <br />to homepage
+	.clearfix
 
-
-			
 
 	

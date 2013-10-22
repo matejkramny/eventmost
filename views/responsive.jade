@@ -62,7 +62,7 @@ html
 			block content
 			.row-fluid
 				footer
-					.text-center EventMost | <a href="/contact">Contact us</a>
+					.text-center EventMost | <a href="/contact" class="link-white">Contact us</a>
 			
 			if !loggedIn
 				include modals/signup
@@ -79,6 +79,7 @@ html
 			script(src="/js/jquery.tinycarousel.min.js", defer="true")
 			script(src="/js/tinycarousel2.js", defer="true")
 			script(src="/js/over-box.js", defer="true")
+			script(src="/js/three.js", defer="true")
 			if !loggedIn
 				script(src="/v2/js/signin.js", defer="true")
 				

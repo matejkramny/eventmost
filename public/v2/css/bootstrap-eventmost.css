@@ -91,8 +91,11 @@ textarea:focus, input:focus{
 .nspacer{margin-top: 10px;}
 .nspacer-big{margin-top: 20px;}
 .nspacer-bigger{margin-top: 25px;}
+.nspacer-awsome{margin-top: 55px;}
+
 
 .nspacer-min{margin-top: -10px;}
+.nspacer-min-big{margin-top: -20px;}
 
 .home-big {padding-top:35px;}
 .pad-top {padding-top: 7px;}
@@ -112,6 +115,7 @@ textarea:focus, input:focus{
 .font-bigs2{font-size: 40px;}
 .font, .font2 {font-size: 25px;}
 .font-x {font-size: 14px;}
+.font-xs {font-size: 13px;}
 .font-e, .font-e1 {font-size: 18px;}
 .font-s {font-size: 16px;}
 
@@ -207,6 +211,14 @@ a.link-ashen:hover {
   text-decoration: none;
   color: #e6e7e8;
 }
+a.link-white{
+  text-decoration: none;
+  color: #fff;
+}
+a.link-white:hover {
+  text-decoration: none;
+  color: #ecd078;
+}
 /* other */
 
 .circularespond {
@@ -275,6 +287,20 @@ a.link-ashen:hover {
   color: #fff;
   background-color: #0992a3 !important;
   border-color: #0992a3 !important;
+}
+.btn-info {
+  color: #542437;
+  background-color: #fdd093;
+  border-color: #fdd093;
+}
+.btn-info:hover,
+.btn-info:focus,
+.btn-info:active,
+.btn-info.active,
+.open .dropdown-toggle.btn-info {
+  color: #542437;
+  background-color: #fdd093 !important;
+  border-color: #fdd093 !important;
 }
 .gonew2 {
   background-color: #542437;
@@ -592,6 +618,121 @@ a.pink-border6 {width:121px; height:97px; background: transparent url('../../../
   border-color: #f1f1f2;
 }
 
+/**** payment ****/
+.payment-input{padding-right: 30px;}
+.payment-button{padding-right: 10px;}
+.center2 {  
+  margin: auto;
+  margin-top: 20px !important;
+  vertical-align:middle;
+  text-align:center;
+  float: none;}
+.half-round {
+  border-top-left-radius: 15px 15px;
+  border-top-right-radius: 15px 15px;
+  background-color: #542437;
+  min-height: 20px;
+  color: #f1f1f2;
+  padding: 10px; 
+  text-align: left;
+  font-size: 16px;
+}
+table.gridtable-payment {
+  color:#542437;
+  margin: 5px  auto;
+  width: 100%;
+  text-align: left;
+  border-width: 1px;
+  border-collapse: collapse;
+  font-size: 14px;
+
+}
+table.gridtable-payment tr {
+    border-bottom: 1px solid #542437 !important;
+}
+table.gridtable-payment th {
+  border-width: 1px;
+  font-size: 14px;
+  padding: 8px;
+  color: #542437;
+}
+table.gridtable-payment td {
+  border-width: 1px;
+  padding: 8px;
+  color: #542437;
+  padding-top: 14px;
+}
+/**** DROPDOWN ****/
+        .dropdown6 {margin-left: 20px !important; margin-top: 0px; margin-bottom: 4px;}
+        .dropdown6 dd, .dropdown6 dt, .dropdown5 ul { margin:0px; padding:0px;  z-index: 799;}
+        .dropdown6 dd { position:relative; }
+        .dropdown6 a, .dropdown6 a:visited { padding-left: 10px; padding-top:2px; color:#fff; text-decoration:none; outline:none; font-size: 14px;}
+        .dropdown6 a:hover { color:#fff;  }
+        .dropdown6 dt a:hover {  color:#fff; }
+        .dropdown6 dt a {background-image: url('../../../images/drop6.svg') ; display:block; 
+                      width:70px; height: 21px; }
+        .dropdown6 dt a .dropx6 {cursor:pointer; display:block; padding:0px; color: #53777a; padding-left: 0px; }
+        .dropdown6 dd ul {  color:#542437; display:none; font-weight: 400;
+                          left:-20px; padding:0px; position:absolute; top:2px; width:auto; min-width:48px; list-style:none; }
+        .dropdown6 span.value { display:none;}
+        .dropdown6 dd ul li a { padding:5px; display:block; padding-left: 10px;  border-bottom: none; 
+          background:#ecd077 none repeat scroll 0 0; color:#542437;}
+        .dropdown6 dd ul li a:hover { background-color:#542437; color:#fff;}
+        .dropdown6 .border_bottom a {border-bottom: 4px solid #53777a !important;}
+        .dropx6 {cursor:pointer; display:block; padding:0px; color: #53777a; padding-top: 0px; margin-left: -20px;}
+
+
+/**** checkboxes ****/
+
+p.check5 > input
+{
+  padding: 0;
+  margin: 0;
+  height: 50px;
+  width: 55px;
+  float: left;
+  position: absolute;
+  left: 0;
+  opacity: 0;
+}
+p.check5 > label 
+{ 
+  line-height: 30px; 
+  color: #fff; 
+  padding: 0 0 0 0px;
+  padding-top: 5px;
+  -moz-transition: color 1s ease; 
+  -o-transition: color 1s ease; 
+  -webkit-transition: color 1s ease; 
+  transition: color 1s ease; 
+}
+fieldset[dir=rtl] p.check5 > label {
+  padding: 0 0px 0 0;
+}
+
+p.check5:not(#foo) > input + label
+{
+  background: url('../../../images/check5.svg');
+  height: 50px !important;
+  width: 55px;
+  margin-left: 30px;
+  cursor: pointer !important;
+}
+
+/* Checked styles */
+p.check5:not(#foo) > input[type=checkbox]:checked + label             { background-position: 0 50px; }
+p.check5:not(#foo) > input[type=checkbox]:hover:checked + label,
+p.check5:not(#foo) > input[type=checkbox]:focus:checked + label,
+p.check5:not(#foo) > input[type=checkbox]:checked + label:hover,
+p.check5:not(#foo) > input[type=checkbox]:focus:checked + label           { background-position: 0 -100px; }
+
+/* Hover & Focus styles */
+p.check5:not(#foo) > input[type=checkbox]:hover + label,
+p.check5:not(#foo) > input[type=checkbox]:focus + label,
+p.check5:not(#foo) > input[type=checkbox] + label:hover               { background-position: 0 0px; }
+
+/**** checkbox5 ****/
+
 
 
 
@@ -752,6 +893,61 @@ input.name {
 .post-butt{width: 40px;}
 .hide-except-smart{display: blockl}
 .hide-mini3-except-smart{display:  none;}
+
+.half-round {font-size: 11px;}
+table.gridtable-payment {font-size: 10px;}
+table.gridtable-payment th {font-size: 11px;}
+.dropdown6 a, .dropdown6 a:visited {font-size: 11px;}
+/**** checkboxes ****/
+
+p.check5 > input
+{
+  padding: 0;
+  margin: 0;
+  height: 33px;
+  width: 36px;
+  float: left;
+  position: absolute;
+  left: 0;
+  opacity: 0;
+}
+p.check5 > label 
+{ 
+  line-height: 30px; 
+  color: #fff; 
+  padding: 0 0 0 0px;
+  padding-top: 5px;
+  -moz-transition: color 1s ease; 
+  -o-transition: color 1s ease; 
+  -webkit-transition: color 1s ease; 
+  transition: color 1s ease; 
+}
+fieldset[dir=rtl] p.check5 > label {
+  padding: 0 0px 0 0;
+}
+
+p.check5:not(#foo) > input + label
+{
+  background: url('../../../images/check5-small.svg');
+  height: 33px !important;
+  width: 36px;
+  margin-left: 0px;
+  cursor: pointer !important;
+}
+
+/* Checked styles */
+p.check5:not(#foo) > input[type=checkbox]:checked + label             { background-position: 0 66px; }
+p.check5:not(#foo) > input[type=checkbox]:hover:checked + label,
+p.check5:not(#foo) > input[type=checkbox]:focus:checked + label,
+p.check5:not(#foo) > input[type=checkbox]:checked + label:hover,
+p.check5:not(#foo) > input[type=checkbox]:focus:checked + label           { background-position: 0 -66px; }
+
+/* Hover & Focus styles */
+p.check5:not(#foo) > input[type=checkbox]:hover + label,
+p.check5:not(#foo) > input[type=checkbox]:focus + label,
+p.check5:not(#foo) > input[type=checkbox] + label:hover               { background-position: 0 0px; }
+
+/**** checkbox5 ****/
 }
 /**** pagination ****/
 @media only screen and (min-width: 1025px) and (max-width: 1199px) {
@@ -794,7 +990,7 @@ input.name {
 .post-width-text{width:91%;}
 .res-butt {width: 110px; height: auto; margin-top: 12px;}
 .res-butt2 {width: 110px; height: auto; margin-top: 12px; margin-right: 0px!important;}
-
+.col-land{width: 100%;}
 }
 
 @media only screen and (min-width: 768px) and (max-width: 980px) {
@@ -835,7 +1031,7 @@ input.name {
 .postcommentarea {width: 80% ! important;}
 .textarea-grey-border{ font-size: 14px ! important; }
 .post-butt{width: 80px; margin-right: 0px;}
-
+.col-land{width: 100%;}
 }
 
 @media only screen and (min-width: 686px) and (max-width: 768px) {
@@ -895,6 +1091,7 @@ input.name {
 .post-butt{width: 80px; margin-right: 0px;}
 .lower-hide{display: none !important;}
 .textarea-grey-border{ font-size: 14px ! important; }
+.col-land{width: 100%;}
 }
 
 
@@ -966,6 +1163,7 @@ input.name {
 .bubble-responsive{width: 10px;}
 .hide-prof-butt{margin-right: 35px;}
 .textarea-grey-border{ font-size: 14px ! important; }
+.col-land{width: 100%;}
 }
 
 
