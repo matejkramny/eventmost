@@ -67,7 +67,8 @@ textarea:focus, input:focus{
 }
 
 /* helpers */
-.hide-all, .hide-all2, .hide-all3, .lower-hide, .hide-except-smart{display: none;}
+.hide-all, .hide-all2, .hide-all3, .lower-hide, .hide-except-smart, .defer{display: none;}
+.hide-all4, .defer2{display: none;}
 
 .hide-except-smart{display: none;}
 .hide-mini3-except-smart{display: block;}
@@ -116,14 +117,14 @@ textarea:focus, input:focus{
 .font, .font2 {font-size: 25px;}
 .font-x {font-size: 14px;}
 .font-xs {font-size: 13px;}
-.font-e, .font-e1 {font-size: 18px;}
+.font-e, .font-e1, .font-e2 {font-size: 18px;}
 .font-s {font-size: 16px;}
 
 .font-thin {font-weight: 100;}
 .font-thin2 {font-weight: 300;}
 .semi-bold{font-weight: 600;}
 .font-reg{font-weight: 400;}
-.break{word-wrap:break-word;}
+.break{word-wrap:break-word !important;}
 
 .color-green{color: #0992a3;}
 .color-white{color: #fff;}
@@ -737,6 +738,8 @@ p.check5:not(#foo) > input[type=checkbox] + label:hover               { backgrou
 
 
 @media only screen and (max-width: 480px) {
+.lower2, .hide-all4{display: none;}
+.don{display: none;}
 .he1{height:72px;}
 .font-bigs {font-size: 20px;}
 .hide-all, .hide-all2 {display: inline;}
@@ -891,8 +894,12 @@ input.name {
 }
 .textarea-grey-border{ font-size: 14px ! important; }
 .post-butt{width: 40px;}
-.hide-except-smart{display: blockl}
+.hide-except-smart{display: block}
 .hide-mini3-except-smart{display:  none;}
+
+.font-e2 {font-size: 12px;}
+.defer2{display: block;}
+.defer{display: none;}
 
 .half-round {font-size: 11px;}
 table.gridtable-payment {font-size: 10px;}
@@ -948,6 +955,7 @@ p.check5:not(#foo) > input[type=checkbox]:focus + label,
 p.check5:not(#foo) > input[type=checkbox] + label:hover               { background-position: 0 0px; }
 
 /**** checkbox5 ****/
+
 }
 /**** pagination ****/
 @media only screen and (min-width: 1025px) and (max-width: 1199px) {
@@ -971,6 +979,8 @@ p.check5:not(#foo) > input[type=checkbox] + label:hover               { backgrou
 
 }
 
+
+
 @media only screen and (min-width: 981px) and (max-width: 1024px) {
 #slider1 .overview li{ width: 240px; word-wrap:break-word;}
 .slider-text {width: 160%;}
@@ -991,6 +1001,8 @@ p.check5:not(#foo) > input[type=checkbox] + label:hover               { backgrou
 .res-butt {width: 110px; height: auto; margin-top: 12px;}
 .res-butt2 {width: 110px; height: auto; margin-top: 12px; margin-right: 0px!important;}
 .col-land{width: 100%;}
+.font-e2 {font-size: 12px;}
+.lower2{display: none;}
 }
 
 @media only screen and (min-width: 768px) and (max-width: 980px) {
@@ -1032,6 +1044,9 @@ p.check5:not(#foo) > input[type=checkbox] + label:hover               { backgrou
 .textarea-grey-border{ font-size: 14px ! important; }
 .post-butt{width: 80px; margin-right: 0px;}
 .col-land{width: 100%;}
+.font-e2 {font-size: 12px;}
+.defer{display: block;}
+.lower2{display: none;}
 }
 
 @media only screen and (min-width: 686px) and (max-width: 768px) {
@@ -1092,6 +1107,8 @@ p.check5:not(#foo) > input[type=checkbox] + label:hover               { backgrou
 .lower-hide{display: none !important;}
 .textarea-grey-border{ font-size: 14px ! important; }
 .col-land{width: 100%;}
+.font-e2 {font-size: 12px;}
+.defer{display: block;}
 }
 
 
@@ -1164,6 +1181,9 @@ p.check5:not(#foo) > input[type=checkbox] + label:hover               { backgrou
 .hide-prof-butt{margin-right: 35px;}
 .textarea-grey-border{ font-size: 14px ! important; }
 .col-land{width: 100%;}
+.font-e2 {font-size: 12px;}
+.defer{display: block;}
+.hide-all4{display: none;}
 }
 
 
