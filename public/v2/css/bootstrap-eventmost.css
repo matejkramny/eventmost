@@ -955,6 +955,8 @@ p.check5:not(#foo) > input[type=checkbox]:focus + label,
 p.check5:not(#foo) > input[type=checkbox] + label:hover               { background-position: 0 0px; }
 
 /**** checkbox5 ****/
+.lower-hide{display: none;}
+
 
 }
 /**** pagination ****/
