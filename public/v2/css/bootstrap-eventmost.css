@@ -73,7 +73,7 @@ textarea:focus, input:focus{
 .hide-except-smart{display: none;}
 .hide-mini3-except-smart{display: block;}
 
-.pad-on-smar{padding-left: 10px; padding-right: 10px;}
+.pad-on-smart{padding-left: 10px; padding-right: 10px;}
 .psev {padding: 7px;}
 .psev2 {padding: 4px;}
 .big-pad{padding: 20px;}
@@ -804,7 +804,7 @@ p.check5-purple-small:not(#foo) > input[type=checkbox] + label:hover            
 
 
 @media only screen and (max-width: 480px) {
-.pad-on-smar{padding-left: 0px !important; padding-right: 0px !important;}
+.pad-on-smart{padding-left: 0px !important; padding-right: 0px !important;}
 .pad-smart{padding-left: 0px !important; padding-right: 0px !important;}
 .lower2, .hide-all4{display: none;}
 .don{display: none;}
@@ -1274,7 +1274,7 @@ p.check5:not(#foo) > input[type=checkbox] + label:hover               { backgrou
 .font-x1 {font-size: 12px;}
 .inv-till-1, .vis-till-1{display: none;}
 .pad-smart{padding-left: 0px !important; padding-right: 0px !important;}
-.pad-on-smar{padding-left: 0px !important; padding-right: 0px !important;}
+.pad-on-smart{padding-left: 0px !important; padding-right: 0px !important;}
 }
 
 
