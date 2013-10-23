@@ -68,12 +68,13 @@ textarea:focus, input:focus{
 
 /* helpers */
 .hide-all, .hide-all2, .hide-all3, .lower-hide, .hide-except-smart, .defer{display: none;}
-.hide-all4, .defer2{display: none;}
+.hide-all4, .defer2, .vis-till-1{display:none;}
 
 .hide-except-smart{display: none;}
 .hide-mini3-except-smart{display: block;}
 
 .psev {padding: 7px;}
+.psev2 {padding: 4px;}
 .big-pad{padding: 20px;}
 
 .pad-right-ten {padding-right: 10px;}
@@ -90,6 +91,7 @@ textarea:focus, input:focus{
 
 .nspacer-small {margin-top: 5px;}
 .nspacer{margin-top: 10px;}
+.nspacer-medium{margin-top: 15px;}
 .nspacer-big{margin-top: 20px;}
 .nspacer-bigger{margin-top: 25px;}
 .nspacer-awsome{margin-top: 55px;}
@@ -115,8 +117,10 @@ textarea:focus, input:focus{
 .font-bigs {font-size: 50px;}
 .font-bigs2{font-size: 40px;}
 .font, .font2 {font-size: 25px;}
-.font-x {font-size: 14px;}
+.font-x, .font-x1 {font-size: 14px;}
 .font-xs {font-size: 13px;}
+.font-xs2 {font-size: 12px;}
+.font-tw{font-size: 20px;}
 .font-e, .font-e1, .font-e2 {font-size: 18px;}
 .font-s {font-size: 16px;}
 
@@ -150,9 +154,12 @@ textarea:focus, input:focus{
 /* lines*/
 .line-purple {background-color: #542437; height: 1px; margin-bottom: 5px;}
 .line-orange {background-color: #d95a42; height: 1px; margin-bottom: 5px;}
+.line-green {background-color: #0992a3; height: 1px; margin-bottom: 5px;}
 .line-red {background-color: #c02942; height: 1px; margin-bottom: 5px;}
 
+.prof-wall{padding-left: 20px; padding-right: 20px; height: 50px;}
 .icon-min{margin-top:-4px;}
+
 
 .abs{position: absolute;}
 .rel-bottom{position: relative; bottom: 0px;}
@@ -229,6 +236,14 @@ a.link-white:hover {
   -webkit-border-radius: 54px;
   -moz-border-radius: 54px;
 }
+.circularespond-small {
+  width: 102px;
+  height: 102px;
+  border-radius: 51px;
+  -webkit-border-radius: 51px;
+  -moz-border-radius: 51px;
+}
+
 
 .message-nr h20 {font-size: 22px; font-weight: 400; color: #542437;  margin-top: 45px; margin-left: 140px; position: absolute;
   padding-left: 7px; padding-right: 7px; background-color: #fdd093 !important; border-radius: 15px; }
@@ -732,12 +747,63 @@ p.check5:not(#foo) > input[type=checkbox]:hover + label,
 p.check5:not(#foo) > input[type=checkbox]:focus + label,
 p.check5:not(#foo) > input[type=checkbox] + label:hover               { background-position: 0 0px; }
 
+
+p.check5-purple-small > input
+{
+  padding: 0;
+  margin: 0;
+  height: 33px;
+  width: 36px;
+  float: left;
+  position: absolute;
+  left: 0;
+  opacity: 0;
+}
+p.check5-purple-small > label 
+{ 
+  line-height: 30px; 
+  color: #fff; 
+  padding: 0 0 0 0px;
+  padding-top: 5px;
+  -moz-transition: color 1s ease; 
+  -o-transition: color 1s ease; 
+  -webkit-transition: color 1s ease; 
+  transition: color 1s ease; 
+}
+fieldset[dir=rtl] p.check5 > label {
+  padding: 0 0px 0 0;
+}
+
+p.check5-purple-small:not(#foo) > input + label
+{
+  background: url('../../../images/check5-small-purple.svg');
+  height: 33px !important;
+  width: 36px;
+  margin-left: 0px;
+  cursor: pointer !important;
+}
+
+/* Checked styles */
+p.check5-purple-small:not(#foo) > input[type=checkbox]:checked + label             { background-position: 0 66px; }
+p.check5-purple-small:not(#foo) > input[type=checkbox]:hover:checked + label,
+p.check5-purple-small:not(#foo) > input[type=checkbox]:focus:checked + label,
+p.check5-purple-small:not(#foo) > input[type=checkbox]:checked + label:hover,
+p.check5-purple-small:not(#foo) > input[type=checkbox]:focus:checked + label           { background-position: 0 -66px; }
+
+/* Hover & Focus styles */
+p.check5-purple-small:not(#foo) > input[type=checkbox]:hover + label,
+p.check5-purple-small:not(#foo) > input[type=checkbox]:focus + label,
+p.check5-purple-small:not(#foo) > input[type=checkbox] + label:hover               { background-position: 0 0px; }
+
+
+
 /**** checkbox5 ****/
 
 
 
 
 @media only screen and (max-width: 480px) {
+.pad-smart{padding-left: 0px !important; padding-right: 0px !important;}
 .lower2, .hide-all4{display: none;}
 .don{display: none;}
 .he1{height:72px;}
@@ -761,7 +827,9 @@ margin: 70px 0px 0 0px;  text-indent: -999em; float: left; width: 45px; height: 
 #slider1 .viewport { margin-left: 40px;}
 .c-two{width: 50px;  height:169px;}
 .message-nr h20 {margin-left: 0px; float: right; margin-top: 20px; font-size: 12px;}
-
+.font-tw{font-size:16px; }
+.prof-wall{padding-left: ; padding-right: ; height: 45px;}
+.font-x1 {font-size: 12px;}
 
 header {height: 40px;}
 .btn-warning, .btn-default, .mob-text, .pagination {font-size: 11px;}
@@ -956,8 +1024,7 @@ p.check5:not(#foo) > input[type=checkbox] + label:hover               { backgrou
 
 /**** checkbox5 ****/
 .lower-hide{display: none;}
-
-
+.inv-till-1, .vis-till-1{display: none;}
 }
 /**** pagination ****/
 @media only screen and (min-width: 1025px) and (max-width: 1199px) {
@@ -978,7 +1045,8 @@ p.check5:not(#foo) > input[type=checkbox] + label:hover               { backgrou
 .post-width, .post-width-text{width:94%;}
 .res-butt {width: 110px; height: auto; margin-top: 12px;}
 .res-butt2 {width: 110px; height: auto; margin-top: 12px; margin-right: 0px!important;}
-
+.prof-wall{padding-left: 10px; padding-right: 10px;}
+.font-tw{font-size: 16px;}
 }
 
 
@@ -1005,6 +1073,9 @@ p.check5:not(#foo) > input[type=checkbox] + label:hover               { backgrou
 .col-land{width: 100%;}
 .font-e2 {font-size: 12px;}
 .lower2{display: none;}
+.font-tw{font-size: 14px;}
+.prof-wall{padding-left: 7px; padding-right: 7px;}
+.font-x1 {font-size: 11px;}
 }
 
 @media only screen and (min-width: 768px) and (max-width: 980px) {
@@ -1049,6 +1120,11 @@ p.check5:not(#foo) > input[type=checkbox] + label:hover               { backgrou
 .font-e2 {font-size: 12px;}
 .defer{display: block;}
 .lower2{display: none;}
+.font-tw{font-size: 14px;}
+.prof-wall{padding-left: 7px; padding-right: 7px;}
+.font-x1 {font-size: 11px;}
+.inv-till-1{display: none;}
+.vis-till-1{display: block;}
 }
 
 @media only screen and (min-width: 686px) and (max-width: 768px) {
@@ -1111,6 +1187,11 @@ p.check5:not(#foo) > input[type=checkbox] + label:hover               { backgrou
 .col-land{width: 100%;}
 .font-e2 {font-size: 12px;}
 .defer{display: block;}
+.font-tw{font-size: 12px;}
+.prof-wall{padding-left: 4px; padding-right: 4px;}
+.font-x1 {font-size: 11px;}
+.inv-till-1{display: none;}
+.vis-till-1{display: block;}
 }
 
 
@@ -1186,6 +1267,11 @@ p.check5:not(#foo) > input[type=checkbox] + label:hover               { backgrou
 .font-e2 {font-size: 12px;}
 .defer{display: block;}
 .hide-all4{display: none;}
+.font-tw{font-size: }
+.prof-wall{padding-left: ; padding-right: ; height: 45px;}
+.font-x1 {font-size: 12px;}
+.inv-till-1, .vis-till-1{display: none;}
+.pad-smart{padding-left: 0px !important; padding-right: 0px !important;}
 }
 
 
