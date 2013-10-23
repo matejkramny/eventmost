@@ -21,7 +21,7 @@ var scheme = schema({
 	website: { type: String, default: "" },
 	education: { type: String, default: "" },
 	interests: { type: String, default: "" },
-	avatar: { type: String, default: "/img/avatar.jpg" },
+	avatar: { type: String, default: "/imgages/big-avatar.svg" },
 	facebook: {
 		userid: String
 	},
