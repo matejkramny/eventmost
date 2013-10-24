@@ -131,6 +131,8 @@ exports.doEditProfile = doEditProfile = function (req, res) {
 	var errors = [];
 	var u = req.user;
 	
+	console.log(req.body)
+	
 	var blocking = false;
 	var cb = function () {
 		u.save(function(err) {

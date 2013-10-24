@@ -22,3 +22,4 @@ $(document).ready(function() {
 			$(".dropdown2 dd ul, .dropdown3 dd ul, .dropdown4 dd ul, .dropdown5 dd ul, .dropdown6 dd ul, .dropdown7 dd ul, .dropdown8 dd ul, .dropdown12 dd ul, .dropdown-color-red dd ul, .dropdown-color-orange dd ul, .dropdown-color-blue dd ul").hide();
 		}
 	});
+})

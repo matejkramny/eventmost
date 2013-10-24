@@ -6,7 +6,7 @@ $(document).ready(function() {
 		
 		var formData = {};
 		$("#profileForm input").each(function() {
-			formData[$(this).attr('name')] = $(this).attr('value');
+			formData[$(this).attr('name')] = $(this).val();
 		})
 		
 		$.ajax({
