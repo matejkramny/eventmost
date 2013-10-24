@@ -1,110 +1,105 @@
-extends ../base
+extends ../responsive
+
+append addonjs
+	script(src="/v2/js/saveProfile.js", defer="defer")
+
+mixin mobileText(text, id, name, required, value)
+	.col-xs-12.hide-all3(style="float:none; margin:4px auto; height:30px;")
+		.col-lg-12.col-md-12.col-xs-12.bg-purple.pad-right-zero(style="min-height:30px;")
+			.pad-left-zero.col-lg-3.col-md-3.col-xs-3.font-e1.psev.right(style="padding-top:9px; height:30px;")
+				= text
+			.psev.col-lg-9.col-md-9.col-xs-9(style="height:30px; margin-top:-3px;")
+				input.input-grey(id="LoginUserMobile#{id}", name=name, type="text", required= required ? "required" : null, value=value)
+mixin mobileTextarea(text, id, name, required, value)
+	.col-xs-12.hide-all3(style="float:none; margin:4px auto; height:120px;")
+		.col-lg-12.col-md-12.col-xs-12.bg-purple.pad-right-zero(style="min-height:120px;")
+			.pad-left-zero.col-lg-3.col-md-3.col-xs-3.font-e1.psev.right(style="padding-top:9px; height:30px;")
+				= text
+			.psev.col-lg-9.col-md-9.col-xs-9(style="height:30px; margin-top:3px;")
+				textarea.input-grey.textarea-grey(id="LoginUserMobile#{id}", name=name, value=value, type="textarea", required= required ? "required" : null, rows="4", cols="50" style="padding-top:5px; min-height:102px;")
+
+mixin text(text, id, name, required, value, first)
+	.col-lg-8.col-md-8.col-xs-8.pad-left-zero.bg-purple.pad-right-zero(class= first ? null : "nspacer")
+		.pad-left-zero.col-lg-4.col-md-4.col-xs-4.font-e.psev.right
+			= text
+		.psev.col-lg-8.col-md-8.col-xs-8
+			input.input-grey(id="LoginUser#{id}", name=name, type="text", required= required ? "required" : null, value=value)
+
+mixin textBig(text, id, name, required, value, first)
+	.col-lg-12.col-md-12.col-xs-12.bg-purple.pad-right-zero(class= first ? null : "nspacer", style="min-height:40px;")
+		.pad-left-zero.col-lg-3.col-md-3.col-xs-3.font-e.psev.right
+			= text
+		.psev.col-lg-9.col-md-9.col-xs-9
+			input.input-grey(id="LoginUser#{id}", name=name, type="text", required= required ? "required" : null, value=value)
+
+mixin textarea(text, id, name, required, value)
+	.col-lg-12.col-md-12.col-xs-12.bg-purple.nspacer.pad-right-zero.hide-mini3(style="min-height:118px;")
+		.pad-left-zero.col-lg-3.col-md-3.col-xs-3.font-e.psev.right
+			= text
+		.psev.col-lg-9.col-md-9.col-xs-9
+			textarea.input-grey.textarea-grey(id="LoginUser#{id}", name=name, type="textarea", required= required ? "required" : null, rows="4", cols="50", style="padding-top:5px; min-height:102px;")= value
 
 block content
-
-	.eighty-five
-		.center2.dropbox.color
-			img(src="/img/dropbox.svg", alt="" style="padding-right:20px;")
-			| Event dropbox
-	//- photo
-	.eighty-five
-		.headerspacer2.smallslid3
-			.left.well2.yellowborder2
-				img(src="/img/default_logo.svg", alt="", class="arrow")
-			.left
-				#file_browse_wrapper
-					input(type="file", id="file_browse")
-			.left
-				#file_upload_wrapper
-			.left
-				#file_delete_wrapper
+	form#profileForm(action="/profile/save", method="POST")
+		input(type="hidden", name="_csrf", value=token)
+		.col-lg-12.col-md-12.col-xs-12.center.nspacer.font
+			img.pad-right-ten(src="/images/man.svg", alt="",  class="img-responsive inline", style="margin:7px auto; vertical-align:bottom;")
+			| Edit your profile
+		.col-lg-12.col-md-12.col-xs-12.font-e.center.nspacer
+			| All fields are
+			img.pad-left-ten(src="/images/optional.svg", alt="",  class="img-responsive inline", style="margin:-2px auto; vertical-align:bottom;")
 		.clearfix
-	.headerspacer2.center2.color.speaker_title2
-		| Who can view this file:
-	.headerspacer2.center2
-		.smallt.thin.color.smallslid8
-			| All attendees
-		.thirty
-			p.check7.smallslid.checkdropbox
-				input(name="", placeholder="", type="checkbox", id="yhm", value="css3")
-				label(for='yhm')
-	.clearfix
-	.headerspacer2
-	.span6
-		.right
-			.smallt.thin.color.center.smallslid9.outer5
-				| Certain attendee <br />categories
-			dl.dropdown7
-				dt
-					a.dropx7(href="#")
-						| Choose categories
-				dd
-					ul
-						li
-							a(href="#",) guest speaker
-							p.check7.smallslid.checkdropbox2
-								input(name="", placeholder="", type="checkbox", id="yhm2", value="css3")
-								label(for='yhm2')
-						li
-							a(href="#",) guest speaker2
-							p.check7.smallslid.checkdropbox2
-								input(name="", placeholder="", type="checkbox", id="yhm22", value="css3")
-								label(for='yhm22')
-						li
-							a(href="#",) guest speaker
-							p.check7.smallslid.checkdropbox2
-								input(name="", placeholder="", type="checkbox", id="yhm3", value="css3")
-								label(for='yhm3')
-						li.border_bottom2
-							a(href="#", style="height:30px;") guest speaker
-							p.check7.smallslid.checkdropbox2-end
-								input(name="", placeholder="", type="checkbox", id="yhm4", value="css3")
-								label(for='yhm4')
-	.span6
-		.left
-			.smallt.thin.color.center.smallslid9.outer5
-				| Cetrain individuals
-			dl.dropdown8
-				dt
-					a.dropx8(href="#")
-						| Choose individuals
-				dd
-					ul
-						li
-							a(href="#",) guest speaker
-							p.check8.smallslid.checkdropbox2
-								input(name="", placeholder="", type="checkbox", id="1yhm2", value="css3")
-								label(for='1yhm2')
-						li
-							a(href="#",) guest speaker2
-							p.check8.smallslid.checkdropbox2
-								input(name="", placeholder="", type="checkbox", id="2yhm22", value="css3")
-								label(for='2yhm22')
-						li
-							a(href="#",) guest speaker
-							p.check8.smallslid.checkdropbox2
-								input(name="", placeholder="", type="checkbox", id="3yhm3", value="css3")
-								label(for='3yhm3')
-						li.border_bottom2
-							a(href="#", style="height:30px;") guest speaker
-							p.check8.smallslid.checkdropbox2-end
-								input(name="", placeholder="", type="checkbox", id="4yhm4", value="css3")
-								label(for='4yhm4')
-	.clearfix
-	.headerspacer2.center2.smallt.thin.color
-		| File will be viewable <b>but not downloadable</b> for anyone who has acccess to your event. <br />
-		| Would you like to allow general public to also be able to view this file, but not downloand it? <br />
-		| <b>!(such could help with brand promotion)!	</b>
+		.nspacer-big
+		.col-lg-9.col-md-9.col-xs-9.hide-mini3(style="float:none; margin:auto;")
+			.col-lg-4.col-md-4.col-xs-4.ei.hide-mini3
+				img.pad-right-ten(src="/images/big-avatar-blue.svg", alt="",  class="img-responsive",)
+				a.link-green(href="", alt="", title="")
+					.font-e.center
+						| upload avatar
 
-	.center2
-		.toggle-center
-			label.checkbox.toggle.candy(style='width: 100px;', onclick='')
-				input(type='checkbox', class="invisible")
-				span
-					span No
-					span Yes
-				a.slide-button		
-	.center2
-		input.dropbox-add(type="submit", value="Add another file...")
-	.clearfix
-	.headerspacer2
+			.ei.hide-mini3
+				mixin text("Email:", "Email", "email", true, user.email, true)
+				mixin text("First Name:", "Name", "name", false, user.name)
+				mixin text("Last Name:", "Surname", "surname", false, user.surname)
+			.clearfix
+	
+		//- mobile only
+		.col-lg-12.hide-all3(style="float:none; margin:auto;")
+			img(src="/images/big-avatar-blue.svg", alt="",  class="img-responsive", style="float:none; margin:auto;")
+			a.link-green(href="", alt="", title="")
+				.font-ah.center
+					| upload logo/picture
+		.nspacer
+		.col-xs-12.hide-all3(style="float:none; margin:0px auto; height:30px;")
+			.col-lg-12.col-md-12.col-xs-12.bg-purple.pad-right-zero(style="min-height:30px;")
+				.pad-left-zero.col-lg-3.col-md-3.col-xs-3.font-e1.psev.right(style="padding-top:9px; height:30px;")
+					| Email
+				.psev.col-lg-9.col-md-9.col-xs-9(style="height:30px; margin-top:-3px;")
+					input.input-grey#LoginUserMobileEmail(name="email", type="email", required="required", value=user.email)
+		mixin mobileText("First Name", "Name", "name", false, user.name)
+		mixin mobileText("Last Name", "Surname", "surname", false, user.surname)
+		mixin mobileText("Company", "Company", "company", false, user.company)
+		mixin mobileText("Position", "Position", "position", false, user.position)
+		mixin mobileText("Location", "Location", "location", false, user.location)
+		mixin mobileText("Interests", "Interests", "interests", false, user.interests)
+		mixin mobileText("Website", "Website", "website", false, user.website)
+		mixin mobileText("Education", "Education", "education", false, user.education)
+		mixin mobileTextarea("Description", "Description", "description", false, user.desc)
+		//- end mobile only	
+	
+		.col-lg-9.col-md-9.col-xs-9.hide-mini3(style="float:none; margin:4px auto;")
+			mixin textBig("Company:", "Company", "company", false, user.company, true)
+			mixin textBig("Position:", "Position", "position", false, user.position)
+			mixin textBig("Location:", "Location", "location", false, user.location)
+			mixin textBig("Interests:", "Interests", "interests", false, user.interests)
+			mixin textBig("Website:", "Website", "website", false, user.website)
+			mixin textBig("Education:", "Education", "education", false, user.education)
+			mixin textarea("Description:", "Description", "description", false, user.desc)
+		.clearfix
+		.row
+			.nspacer
+			//- the -xs-offset-* class will be fixed in next bootstrap release..
+			button#profileSaveButton.col-lg-offset-5.col-md-offset-5.col-xs-offset-2.col-sm-offset-5.col-lg-2.col-md-2.col-xs-8.col-sm-2.btn.btn-primary.font-e.font-ah(type='submit', style="padding:20px; padding-left:35px; padding-right:35px;")
+				b Save
+			p#profileSaveStatus.col-lg-5.col-md-5.col-sm-5.hide.lead(style="padding-top:18px;")
+				b Saved!

@@ -136,10 +136,19 @@ exports.doEditProfile = doEditProfile = function (req, res) {
 		u.save(function(err) {
 			if (err) throw err;
 		})
-	
-		req.session.flash = errors;
-		req.session.flash.push("Profile updated!")
-		res.redirect('/profile');
+		
+		res.format({
+			json: function() {
+				res.send({
+					success: true
+				})
+			},
+			html: function() {
+				req.session.flash = errors;
+				req.session.flash.push("Profile updated!")
+				res.redirect('/profile');
+			}
+		})
 	}
 	
 	if (req.body.email.length == 0 && req.body.name.length == 0 && req.body.surname.length == 0) {
@@ -173,7 +182,7 @@ exports.doEditProfile = doEditProfile = function (req, res) {
 	u.education = req.body.education;
 	u.desc = req.body.desc;
 	
-	if (req.body.password.length > 0) {
+	if (req.body.password && req.body.password.length > 0) {
 		// user wants to change/create a password
 		if (req.body.password == req.body.password_old) {
 			errors.push("New password and old password must not be the same")
@@ -189,7 +198,7 @@ exports.doEditProfile = doEditProfile = function (req, res) {
 		}
 	}
 	
-	if (req.files.avatar != null && req.files.avatar.name.length != 0) {
+	if (req.files && req.files.avatar != null && req.files.avatar.name.length != 0) {
 		var ext = req.files.avatar.type.split('/');
 		var ext = ext[ext.length-1];
 		u.avatar = "/profileavatars/"+u._id+"."+ext;

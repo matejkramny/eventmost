@@ -88,7 +88,6 @@ app.use(passport.session());
 // Custom middleware
 app.use(function(req, res, next) {
 	// request middleware
-	
 	res.locals.token = req.csrfToken();
 	
 	// flash
