@@ -16,16 +16,6 @@ $(document).ready(function() {
 			formData[$(this).attr('name')] = $(this).val();
 		})
 		
-		/*$.ajax({
-			url: "/profile/edit",
-			data: formData,
-			dataType: "json",
-			type: "POST",
-			success: function(data, status, jqxhr) {
-				$("#profileSaveStatus").html("<b>Saved!</b>")
-			}
-		})*/
-		
 		var form = new FormData();
 		//form.append("_csrf", $("head meta[name=_csrf]").attr('content'));
 		for (var name in formData) {
