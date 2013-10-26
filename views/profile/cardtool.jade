@@ -49,9 +49,9 @@ block content
 				#cardCanvas
 					.canvas(ng-style="canvasStyles", ng-class="{ preview: preview }")
 						.libraryBox(id="{{ libraryBox.id }}", card-directive, ng-repeat="libraryBox in libraryBoxes")
-							.handle
 							input(type="text", ng-hide="libraryBox.image", disabled="disabled", value="{{ libraryBox.text }}", ng-click="selectBox(libraryBox)", ng-style="libraryBox.style")
 							img(ng-src="{{ libraryBox.src }}", ng-show="libraryBox.image", ng-click="selectBox(libraryBox)", ng-style="libraryBox.style")
+							.handle
 				hr
 				form.form-horizontal
 					.form-group
@@ -86,6 +86,7 @@ block content
 							label.col-lg-4.col-md-4.control-label(for="textType") Type
 							.col-lg-8.col-md-8
 								select#textType.form-control(type="color", ng-model="libraryBox.style.fontFamily")
+									option(value="Raleway") Raleway
 									option(value="Helvetica") Helvetica
 									option(value="Arial") Arial
 									option(value="Tahoma") Tahoma

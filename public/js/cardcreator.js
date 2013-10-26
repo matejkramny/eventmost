@@ -36,7 +36,7 @@ function BusinessCards ($scope) {
 			image: false,
 			type: "Text",
 			id: "box"+index,
-			text: "Text Value",
+			text: "Text Box",
 			style: {
 				fontSize: 20,
 				fontStyle: "normal",
@@ -136,7 +136,7 @@ eventMost.controller('businessCards', BusinessCards)
 			handle: '.handle',
 		}).resizable({
 			containment: $("#cardCanvas .canvas"),
-			handles: "n, e, s, w, ne, se, sw, nw",
+			handles: "e, s, n, w, se, sw, ne, nw",
 			minHeight: 20,
 			minWidth: 25
 		});
