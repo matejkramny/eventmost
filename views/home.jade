@@ -40,7 +40,7 @@ append content
 	.col-md-3.col-xs-3.nspacer.he1.hide-mini
 		a(href="/profile")
 			//- img(src=user.avatar, alt="" style="")
-			img.img-responsive(src=user.avatar)
+			img.img-responsive(src= user.avatar.length == 0 ? "/images/big-avatar.svg" : user.avatar)
 	a(href="/event/add")
 		.col-md-9.col-xs-9.nspacer.bg-purple.font-bigs.font-thin.center.he1.img-responsive.hide-mini
 			a.link-ashen.space(href="/event/add") Create event
@@ -79,13 +79,13 @@ append content
 			.pull-left.pad-left-ten.nspacer-small
 				img(src="/images/i.svg", alt="", height="7px" width="7px;")
 			.pull-left.pad-left-ten.font-s.nspacer-small.font-thin2
-				a.link-purple.font-en6(href="", alt="", title="", data-reveal-id="NotificationModal" , )
+				a.link-purple.font-en6(href="", alt="", title="", data-reveal-id="NotificationModal")
 					| Notification settings
 			.clearfix
 			.pull-left.pad-left-ten.nspacer-small
 				img(src="/images/i.svg", alt="", height="7px" width="7px;")
 			.pull-left.pad-left-ten.font-s.nspacer-small.font-thin2
-				a.link-purple.font-en6(href="", alt="", title="", data-reveal-id="PrivacyModal" ,)
+				a.link-purple.font-en6(href="", alt="", title="", data-reveal-id="PrivacyModal")
 						| Privacy settings
 			.clearfix
 			.center.nspacer

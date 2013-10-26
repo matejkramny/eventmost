@@ -40,8 +40,9 @@ mixin textarea(text, id, name, required, value)
 			textarea.input-grey.textarea-grey(id="LoginUser#{id}", ng-model=name, ng-init="#{name}='#{value}'", name=name, type="textarea", required= required ? "required" : null, rows="4", cols="50", style="padding-top:5px; min-height:102px;")= value
 
 block content
-	form#profileForm(action="/profile/save", method="POST")
+	form#profileForm(action="/profile/save", method="POST", enctype="multipart/form-data")
 		input(type="hidden", name="_csrf", value=token)
+		input.hide#avatar(type="file", name="avatar")
 		.col-lg-12.col-md-12.col-xs-12.center.nspacer.font
 			img.pad-right-ten(src="/images/man.svg", alt="",  class="img-responsive inline", style="margin:7px auto; vertical-align:bottom;")
 			| Edit your profile
@@ -52,8 +53,8 @@ block content
 		.nspacer-big
 		.col-lg-9.col-md-9.col-xs-9.hide-mini3(style="float:none; margin:auto;")
 			.col-lg-4.col-md-4.col-xs-4.ei.hide-mini3
-				img.pad-right-ten(src="/images/big-avatar-blue.svg", alt="",  class="img-responsive",)
-				a.link-green(href="", alt="", title="")
+				a.link-green.avatar-upload-btn(href="#")
+					img.avatar-upload-image.pad-right-ten(src= user.avatar.length == 0 ? "/images/big-avatar-blue.svg" : user.avatar, class="img-responsive")
 					.font-e.center
 						| upload avatar
 
@@ -65,10 +66,10 @@ block content
 	
 		//- mobile only
 		.col-lg-12.hide-all3(style="float:none; margin:auto;")
-			img(src="/images/big-avatar-blue.svg", alt="",  class="img-responsive", style="float:none; margin:auto;")
-			a.link-green(href="", alt="", title="")
+			a.link-green.avatar-upload-btn(href="#")
+				img.avatar-upload-image(src= user.avatar.length == 0 ? "/images/big-avatar-blue.svg" : user.avatar, class="img-responsive", style="float:none; margin:auto;")
 				.font-ah.center
-					| upload logo/picture
+					| upload avatar
 		.nspacer
 		.col-xs-12.hide-all3(style="float:none; margin:0px auto; height:30px;")
 			.col-lg-12.col-md-12.col-xs-12.bg-purple.pad-right-zero(style="min-height:30px;")
