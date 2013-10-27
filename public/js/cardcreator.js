@@ -6,55 +6,58 @@ function BusinessCards ($scope) {
 	$scope.hasTemplateBackground = false;
 	$scope.hasBackgroundImage = false;
 	
+	$scope.uploadProgress = 0;
+	
 	$scope.canvasStyles = {
 		backgroundColor: "#FFFFFF",
 		width: "500px",
 		height: "250px"
 	};
 	
+	$scope.uploadRequest;
 	$scope.sendCard = function () {
+		if ($scope.uploadRequest != null) {
+			return;
+		}
 		
 		var form = new FormData();
 		form.append("_csrf", $("head meta[name=_csrf]").attr('content'));
 		var html = new Blob([$("#cardCanvas").html()], { type: 'text/html' })
 		form.append("html", html, "html");
 		
-		var ur = new XMLHttpRequest();
+		$scope.uploadRequest = ur = new XMLHttpRequest();
 		ur.responseType = "json";
-		ur.onreadystatechange = function() {
-			if (ur.readyState == 4) {
-				if (ur.status == 200) {
-					result = JSON.parse(ur.response);
-					
-					if (result.status != 200) {
-						alert("Could not upload business card\n"+result.err);
-					} else {
-						window.location = '/cards';
-					}
-				} else {
-					// Not ok
-					alert(ur.statusText);
-				}
-			}
-		};
+		ur.onreadystatechange = $scope.readyStateChange
+		ur.upload.addEventListener('progress', $scope.uploadProgressChange, false)
 		
 		ur.open("POST", "/card/new");
+		ur.setRequestHeader('Accept', 'application/json');
 		ur.send(form);
-		
-		/*$.ajax({
-			type: "POST",
-			dataType: "json",
-			url: "/card/new",
-			data: {
-				html: $("#cardCanvas").html(),
-				_csrf: $("head meta[name=_csrf]").attr('content')
-			},
-			success: function(data, status, jqxhr) {
-				if (data.status == 200) {
-					window.location = '/cards';
+	}
+	
+	$scope.readyStateChange = function() {
+		var ur = $scope.uploadRequest
+		if (ur.readyState == 4) {
+			if (ur.status == 200) {
+				result = JSON.parse(ur.response);
+				
+				if (result.status != 200) {
+					alert("Could not upload business card\n"+result.err);
+				} else {
+					//window.location = '/cards';
 				}
+			} else {
+				// Not ok
+				alert(ur.statusText);
 			}
-		})*/
+		}
+	};
+	
+	$scope.uploadProgressChange = function (ev) {
+		if (ev.lengthComputable) {
+			var percent = Math.round(ev.loaded * 100 / ev.total);
+			$scope.uploadProgress = percent;
+		}
 	}
 	
 	$scope.$watch('libraryBox.blackandwhite', function () {
@@ -253,6 +256,26 @@ eventMost.controller('businessCards', BusinessCards)
 				}
 				reader.readAsDataURL(file);
 			});
+		}
+	}
+})
+.directive('uploadProgressBar', function() {
+	return {
+		restrict: 'A',
+		link: function (scope, element, attrs) {
+			element.attr('aria-valuenow', scope.uploadProgress)
+				.css('width', scope.uploadProgress+'%');
+			
+			scope.$watch(attrs.progressBarWatch, function(val) {
+				element.attr('aria-valuenow', val)
+					.css('width', val+'%');
+					
+				if (val == 100) {
+					element.addClass('progress-bar-success')
+				} else {
+					element.removeClass('progress-bar-success')
+				}
+			})
 		}
 	}
 })
