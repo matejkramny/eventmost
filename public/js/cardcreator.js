@@ -41,6 +41,9 @@ function BusinessCards ($scope) {
 			if (ur.status == 200) {
 				result = JSON.parse(ur.response);
 				
+				$scope.uploadProgress = 100;
+				console.log("Done!")
+				
 				if (result.status != 200) {
 					alert("Could not upload business card\n"+result.err);
 				} else {
@@ -269,11 +272,16 @@ eventMost.controller('businessCards', BusinessCards)
 			scope.$watch(attrs.progressBarWatch, function(val) {
 				element.attr('aria-valuenow', val)
 					.css('width', val+'%');
-					
+				
+				console.log("hello")
 				if (val == 100) {
 					element.addClass('progress-bar-success')
 				} else {
 					element.removeClass('progress-bar-success')
+				}
+				
+				if (!scope.$$phase) {
+					scope.$apply()
 				}
 			})
 		}
