@@ -22,6 +22,8 @@ scheme.methods.edit = function (html, cb) {
 	}
 	
 	fs.readFile(html.path, function(err, htmlData) {
+		if (err) throw err;
+		
 		htmlData = '<!DOCTYPE html><html><head>\
 			<link rel="stylesheet" href="../../public/v2/css/bootstrap.min.css">\
 			<link href="../../public/css/cardcreator.css" rel="stylesheet">\
@@ -33,7 +35,7 @@ scheme.methods.edit = function (html, cb) {
 		fs.writeFile(__dirname+"/../data/cardhtml/"+self._id+".html", htmlData, function(err) {
 			if (err) throw err;
 			
-			var url = "file://data/cardhtml/"+self._id+".html"
+			var url = "file:/"+__dirname+"/../data/cardhtml/"+self._id+".html"
 			
 			self.save(function(err) {
 				if (err) throw err;
@@ -41,7 +43,7 @@ scheme.methods.edit = function (html, cb) {
 				console.log("Loading. "+url)
 				
 				try {
-					var proc = exec('cd ../; webkit2png -o public/businesscards/'+self._id+'.png -x 500 250 "'+url+'"')
+					var proc = exec('webkit2png -o '+__dirname+'/../public/businesscards/'+self._id+'.png -x 500 250 "'+url+'"')
 					proc.stdout.on('data', function(chunk) {
 						console.log(chunk)
 					})
