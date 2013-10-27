@@ -24,8 +24,8 @@ block content
 					a.btn.btn-danger(ng-disabled="!libraryBox.enabled", ng-click="removeElement()") Remove selected box
 				.btn-group.btn-group-sm.pull-right
 					a.btn.btn-success(href="#", ng-click="sendCard()") Save
-		.progress
-			.progress-bar#uploadProgress.hide(role="progressbar", aria-valuenow="", aria-valuemin="0", aria-valuemax="100", style="")
+		.progress.hide
+			.progress-bar#uploadProgress(role="progressbar", aria-valuenow="", aria-valuemin="0", aria-valuemax="100", style="")
 		.row
 			.col-md-7.col-lg-6
 				h4 Card Background

@@ -18,7 +18,7 @@ function BusinessCards ($scope) {
 			return;
 		}
 		
-		$("#uploadProgress").removeClass("hide");
+		$("#uploadProgress").parent().removeClass("hide");
 		
 		var form = new FormData();
 		form.append("_csrf", $("head meta[name=_csrf]").attr('content'));
