@@ -6,8 +6,6 @@ function BusinessCards ($scope) {
 	$scope.hasTemplateBackground = false;
 	$scope.hasBackgroundImage = false;
 	
-	$scope.uploadProgress = 0;
-	
 	$scope.canvasStyles = {
 		backgroundColor: "#FFFFFF",
 		width: "500px",
@@ -35,14 +33,25 @@ function BusinessCards ($scope) {
 		ur.send(form);
 	}
 	
+	function updateProgress (val) {
+		var element = $("#uploadProgress");
+		element.attr('aria-valuenow', val)
+			.css('width', val+'%');
+		
+		if (val == 100) {
+			element.addClass('progress-bar-success')
+		} else {
+			element.removeClass('progress-bar-success')
+		}
+	} 
+	
 	$scope.readyStateChange = function() {
 		var ur = $scope.uploadRequest
 		if (ur.readyState == 4) {
 			if (ur.status == 200) {
 				result = JSON.parse(ur.response);
 				
-				$scope.uploadProgress = 100;
-				console.log("Done!")
+				updateProgress(100);
 				
 				if (result.status != 200) {
 					alert("Could not upload business card\n"+result.err);
@@ -59,7 +68,7 @@ function BusinessCards ($scope) {
 	$scope.uploadProgressChange = function (ev) {
 		if (ev.lengthComputable) {
 			var percent = Math.round(ev.loaded * 100 / ev.total);
-			$scope.uploadProgress = percent;
+			updateProgress(percent)
 		}
 	}
 	
@@ -259,31 +268,6 @@ eventMost.controller('businessCards', BusinessCards)
 				}
 				reader.readAsDataURL(file);
 			});
-		}
-	}
-})
-.directive('uploadProgressBar', function() {
-	return {
-		restrict: 'A',
-		link: function (scope, element, attrs) {
-			element.attr('aria-valuenow', scope.uploadProgress)
-				.css('width', scope.uploadProgress+'%');
-			
-			scope.$watch(attrs.progressBarWatch, function(val) {
-				element.attr('aria-valuenow', val)
-					.css('width', val+'%');
-				
-				console.log("hello")
-				if (val == 100) {
-					element.addClass('progress-bar-success')
-				} else {
-					element.removeClass('progress-bar-success')
-				}
-				
-				if (!scope.$$phase) {
-					scope.$apply()
-				}
-			})
 		}
 	}
 })
