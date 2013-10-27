@@ -18,6 +18,8 @@ function BusinessCards ($scope) {
 			return;
 		}
 		
+		$("#uploadProgress").removeClass("hide");
+		
 		var form = new FormData();
 		form.append("_csrf", $("head meta[name=_csrf]").attr('content'));
 		var html = new Blob([$("#cardCanvas").html()], { type: 'text/html' })
@@ -55,8 +57,11 @@ function BusinessCards ($scope) {
 				
 				if (result.status != 200) {
 					alert("Could not upload business card\n"+result.err);
+					$("#uploadProgress").removeClass('progress-bar-success')
+						.addClass('progress-bar-danger')
+					$scope.uploadRequest = null;
 				} else {
-					//window.location = '/cards';
+					window.location = '/cards';
 				}
 			} else {
 				// Not ok
