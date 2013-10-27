@@ -4,7 +4,7 @@ function BusinessCards ($scope) {
 	$scope.boxId = "";
 	
 	$scope.hasTemplateBackground = false;
-	$scope.preview = false;
+	$scope.hasBackgroundImage = false;
 	
 	$scope.canvasStyles = {
 		backgroundColor: "#FFFFFF",
@@ -28,6 +28,15 @@ function BusinessCards ($scope) {
 			}
 		})
 	}
+	
+	$scope.$watch('libraryBox.blackandwhite', function () {
+		if (!$scope.libraryBox || !$scope.libraryBox.style) return;
+		
+		var scale = "grayscale("+$scope.libraryBox.blackandwhite+"%)";
+		$scope.libraryBox.style.filter = scale;
+		$scope.libraryBox.style["-webkit-filter"] = scale;
+	});
+	
 	
 	$scope.createTextBox = function () {
 		var index = $scope.libraryBoxes.length
@@ -60,11 +69,11 @@ function BusinessCards ($scope) {
 			enabled: true,
 			image: true,
 			type: "Image",
+			hasBackgroundImage: false,
 			id: "box"+index,
 			text: "Image "+index,
-			src: "",
 			style: {
-				backgroundColor: "transparent",
+				backgroundColor: "#000000",
 				
 				borderStyle: "none",
 				borderWidth: 0,
@@ -96,10 +105,6 @@ function BusinessCards ($scope) {
 		}
 	}
 	
-	$scope.togglePreviewMode = function () {
-		$scope.preview = !$scope.preview;
-	}
-	
 	$scope.changeBox = function() {
 		var boxes = $scope.libraryBoxes;
 		var id = $scope.boxId;
@@ -121,6 +126,20 @@ function BusinessCards ($scope) {
 		delete $scope.canvasStyles.background;
 		delete $scope.canvasStyles.backgroundSize;
 		$scope.hasTemplateBackground = false
+	}
+	
+	$scope.removeBackgroundImage = function () {
+		delete $scope.canvasStyles.background;
+		delete $scope.canvasStyles.backgroundSize;
+		$scope.canvasStyles.backgroundColor = "#FFFFFF";
+		$scope.hasBackgroundImage = false;
+	}
+	
+	$scope.removeBoxBackgroundImage = function () {
+		delete $scope.libraryBox.style.background;
+		delete $scope.libraryBox.style.backgroundSize;
+		$scope.libraryBox.style.backgroundColor = "#000000";
+		$scope.libraryBox.hasBackgroundImage = false;
 	}
 }
 
@@ -149,5 +168,63 @@ eventMost.controller('businessCards', BusinessCards)
 				
 			}
 		})
+	}
+})
+.directive('cardImageUpload', function() {
+	return {
+		restrict: 'A',
+		link: function(scope, element, attrs) {
+			element.bind('change', function() {
+				// Upload file
+				var files = this.files;
+				for (var i = 0; i < files.length; i++) {
+					file = files[i];
+					break;
+				}
+				
+				if (typeof file === "undefined" || file == null) {
+					return;
+				}
+				
+				var ext = file.name.split('.');
+				var extensionValid = false;
+				
+				if (ext.length > 0) {
+					ext = ext[ext.length-1];
+					
+					// Check against valid extensions
+					if (ext == 'jpg' || ext == 'jpeg' || ext == 'png' || ext == 'gif') {
+						// valid.
+						extensionValid = true;
+					}
+				}
+				
+				if (!extensionValid) {
+					alert("The file is not valid :/. Please choose an image, thank you.");
+					return;
+				}
+				
+				var reader = new FileReader();
+				reader.onload = function(img) {
+					scope.$apply(function () {
+						var target = attrs.uploadTarget || "background";
+						var applyTo;
+						
+						if (target == 'background') {
+							applyTo = scope.canvasStyles
+							scope.hasBackgroundImage = true;
+						} else if (target == 'image') {
+							applyTo = scope.libraryBox.style
+							scope.libraryBox.hasBackgroundImage = true;
+						}
+						
+						applyTo.backgroundColor = "";
+						applyTo.background = 'url('+img.target.result+') no-repeat top left';
+						applyTo.backgroundSize = '100% 100%';
+					})
+				}
+				reader.readAsDataURL(file);
+			});
+		}
 	}
 })
