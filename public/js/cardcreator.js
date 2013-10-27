@@ -13,7 +13,35 @@ function BusinessCards ($scope) {
 	};
 	
 	$scope.sendCard = function () {
-		$.ajax({
+		
+		var form = new FormData();
+		form.append("_csrf", $("head meta[name=_csrf]").attr('content'));
+		var html = new Blob([$("#cardCanvas").html()], { type: 'text/html' })
+		form.append("html", html, "html");
+		
+		var ur = new XMLHttpRequest();
+		ur.responseType = "json";
+		ur.onreadystatechange = function() {
+			if (ur.readyState == 4) {
+				if (ur.status == 200) {
+					result = JSON.parse(ur.response);
+					
+					if (result.status != 200) {
+						alert("Could not upload business card\n"+result.err);
+					} else {
+						window.location = '/cards';
+					}
+				} else {
+					// Not ok
+					alert(ur.statusText);
+				}
+			}
+		};
+		
+		ur.open("POST", "/card/new");
+		ur.send(form);
+		
+		/*$.ajax({
 			type: "POST",
 			dataType: "json",
 			url: "/card/new",
@@ -26,7 +54,7 @@ function BusinessCards ($scope) {
 					window.location = '/cards';
 				}
 			}
-		})
+		})*/
 	}
 	
 	$scope.$watch('libraryBox.blackandwhite', function () {

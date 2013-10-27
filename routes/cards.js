@@ -37,7 +37,7 @@ function getCard (req, res) {
 function doNewCard (req, res) {
 	new models.Card({
 		user: req.user._id
-	}).edit(req.body.html, function(err) {
+	}).edit(req.files.html, function(err) {
 		if (err && err.length) {
 			req.session.flash = err;
 		}

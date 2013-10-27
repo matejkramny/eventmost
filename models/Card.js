@@ -21,43 +21,44 @@ scheme.methods.edit = function (html, cb) {
 		return cb("Invalid HTML!")
 	}
 	
-	html = '<!DOCTYPE html><html><head>\
-		<link rel="stylesheet" href="/v2/css/bootstrap.min.css">\
-		<link href="/css/cardcreator.css" rel="stylesheet">\
-		<link href="/css/cardcreator_generator.css" rel="stylesheet">\
-	</head><body>'
-	+ html +
-	'</body></html>';
-	
-	self.html = html;
-	
-	var url = "http://127.0.0.1:"+(process.env.PORT || 3000)+"/card/"+self._id
-	
-	self.save(function(err) {
-		if (err) throw err;
+	fs.readFile(html.path, function(err, htmlData) {
+		htmlData = '<!DOCTYPE html><html><head>\
+			<link rel="stylesheet" href="../../public/v2/css/bootstrap.min.css">\
+			<link href="../../public/css/cardcreator.css" rel="stylesheet">\
+			<link href="../../public/css/cardcreator_generator.css" rel="stylesheet">\
+		</head><body>'
+		+ htmlData +
+		'</body></html>';
 		
-		console.log("Loading.")
-		
-		process.env.PHANTOM_WEBPAGE = url;
-		process.env.PHANTOM_CARD_ID = self._id;
-		
-		try {
-			var proc = exec('webkit2png -o '+__dirname+'/../public/businesscards/'+self._id+'.png -x 500 250 "'+url+'"')
-			proc.stdout.on('data', function(chunk) {
-				console.log(chunk)
-			})
-			proc.stderr.on('data', function(chunk) {
-				console.log(chunk)
-			})
-			proc.on('close', function(code) {
-				console.log("Done, code "+code);
+		fs.writeFile(__dirname+"/../data/cardhtml/"+self._id+".html", htmlData, function(err) {
+			if (err) throw err;
 			
-				cb(null)
+			var url = "file://data/cardhtml/"+self._id+".html"
+			
+			self.save(function(err) {
+				if (err) throw err;
+		
+				console.log("Loading. "+url)
+				
+				try {
+					var proc = exec('cd ../; webkit2png -o public/businesscards/'+self._id+'.png -x 500 250 "'+url+'"')
+					proc.stdout.on('data', function(chunk) {
+						console.log(chunk)
+					})
+					proc.stderr.on('data', function(chunk) {
+						console.log(chunk)
+					})
+					proc.on('close', function(code) {
+						console.log("Done, code "+code);
+						
+						cb(null)
+					})
+				} catch (e) {
+					console.log("Is webkit2png installed? http://snippets.aktagon.com/snippets/504-how-to-generate-screenshots-on-debian-linux-with-python-webkit2png")
+					cb("Internal Server Error");
+				}
 			})
-		} catch (e) {
-			console.log("Is webkit2png installed? http://snippets.aktagon.com/snippets/504-how-to-generate-screenshots-on-debian-linux-with-python-webkit2png")
-			cb("Internal Server Error");
-		}
+		})
 	})
 }
 
