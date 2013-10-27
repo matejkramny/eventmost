@@ -35,7 +35,7 @@ scheme.methods.edit = function (html, cb) {
 		fs.writeFile(__dirname+"/../data/cardhtml/"+self._id+".html", htmlData, function(err) {
 			if (err) throw err;
 			
-			var url = "file:/"+__dirname+"/../data/cardhtml/"+self._id+".html"
+			var url = "file://"+__dirname+"/../data/cardhtml/"+self._id+".html"
 			
 			self.save(function(err) {
 				if (err) throw err;
