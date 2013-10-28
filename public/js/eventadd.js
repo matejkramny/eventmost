@@ -8,7 +8,6 @@ $(document).ready(function() {
 	
 	var editor = new TINY.editor.edit('editor', {
 		id: 'tinyeditor',
-		width: 1180,
 		height: 175,
 		cssclass: 'tinyeditor',
 		controlclass: 'tinyeditor-control',

@@ -29,7 +29,7 @@ TINY.editor=function(){var c=[],offset=-30;
 		var p=document.createElement('div'),w=document.createElement('div'),h=document.createElement('div'),
 		l=obj.controls.length,i=0;
 		this.i=document.createElement('iframe');
-		this.i.width=obj.width||'500';this.i.height=obj.height||'250';this.ie=T$$$();
+		this.i.width=obj.width||'700';this.i.height=obj.height||'250';this.ie=T$$$();
 		h.className=obj.rowclass||'tinyeditor-header';p.className=obj.cssclass||'tinyeditor';p.style.width=this.i.width+'px';p.appendChild(h);
 		for(i;i<l;i++){
 			var id=obj.controls[i];
