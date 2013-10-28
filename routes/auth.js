@@ -5,6 +5,7 @@ var mongoose = require('mongoose')
 	, FacebookStrategy = require('passport-facebook').Strategy
 	, TwitterStrategy = require('passport-twitter').Strategy
 	, LinkedinStrategy = require('passport-linkedin').Strategy
+	, util = require('../util')
 
 passport.serializeUser(function(user, done) {
 	done(null, user._id);
@@ -38,7 +39,7 @@ passport.use(new LinkedinStrategy({
 exports.router = function (app) {
 	function socialRoute(serviceName) {
 		return {
-			successRedirect: '/',
+			successRedirect: '/auth/success',
 			failureRedirect: '/?fail-reason=Cannot Sign in With '+serviceName+' :(#login-failed'
 		}
 	}
@@ -50,6 +51,8 @@ exports.router = function (app) {
 		.get('/auth/twitter/callback', passport.authenticate('twitter', socialRoute('Twitter')))
 		.get('/auth/linkedin', passport.authenticate('linkedin', { scope: ['r_network', 'r_basicprofile', 'r_fullprofile', 'r_contactinfo', 'rw_nus', 'r_emailaddress'] }))
 		.get('/auth/linkedin/callback', passport.authenticate('linkedin', socialRoute('LinkedIn')))
+		
+		.get('/auth/success', util.authorized, authSuccess)
 		
 		.get('/logout', logout)
 }
@@ -82,7 +85,7 @@ function doPasswordLogin (req, res) {
 						})
 					},
 					html: function() {
-						res.redirect('/')
+						res.redirect('/auth/success')
 					}
 				})
 			});
@@ -97,7 +100,7 @@ function doPasswordLogin (req, res) {
 					})
 				},
 				html: function() {
-					res.redirect('/')
+					res.redirect('/?fail-reason=Email or Password is incorrect :(#login-failed')
 				}
 			})
 			return;
@@ -105,6 +108,19 @@ function doPasswordLogin (req, res) {
 	}, {
 		name: name
 	})
+}
+
+function authSuccess (req, res) {
+	if (req.session.redirectAfterLogin) {
+		console.log(req.session.redirectAfterLogin);
+		res.redirect(req.session.redirectAfterLogin);
+		
+		req.session.redirectAfterLogin = null;
+		
+		return;
+	}
+	
+	res.redirect('/')
 }
 
 function logout (req, res) {

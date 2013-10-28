@@ -142,7 +142,7 @@ exports.doEditProfile = doEditProfile = function (req, res) {
 		res.format({
 			json: function() {
 				res.send({
-					success: true
+					status: 200
 				})
 			},
 			html: function() {

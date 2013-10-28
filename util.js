@@ -5,7 +5,8 @@ exports.authorized = function (req, res, next) {
 		res.format({
 			html: function() {
 				req.session.flash = ["You are not logged in"];
-				res.redirect('/')
+				req.session.redirectAfterLogin = req.url;
+				res.redirect('/?fail-reason=Please Log In. You will be transferred where you were after that..#login-failed')
 			},
 			json: function() {
 				res.send({

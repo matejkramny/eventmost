@@ -62,7 +62,7 @@ $(document).ready(function() {
 			if (data.status == 200 && data.user != null) {
 				// Logged in
 				self.status.html("Logged in, reloading page!");
-				window.location = "/";
+				window.location = "/auth/success";
 			} else {
 				// Error
 				self.status.html(data.err)

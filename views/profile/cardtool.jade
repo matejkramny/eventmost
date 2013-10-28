@@ -23,35 +23,35 @@ block content
 					a.btn.btn-primary(ng-click="createImage()") Add an image
 					a.btn.btn-danger(ng-disabled="!libraryBox.enabled", ng-click="removeElement()") Remove selected box
 				.btn-group.btn-group-sm.pull-right
-					a.btn.btn-info(href="#", ng-click="togglePreviewMode()", ng-switch, on="preview")
-						span(ng-switch-when="false") Preview Mode
-						span(ng-switch-when="true") Editing mode
 					a.btn.btn-success(href="#", ng-click="sendCard()") Save
+		.progress.hide
+			.progress-bar#uploadProgress(role="progressbar", aria-valuenow="", aria-valuemin="0", aria-valuemax="100", style="")
 		.row
 			.col-md-7.col-lg-6
 				h4 Card Background
 				form.form-horizontal
-					.form-group
+					.form-group(ng-hide="hasBackgroundImage")
 						label.col-lg-4.col-md-4.control-label(for="bgTemplate") Choose a template
 						.col-lg-8.col-md-8
 							a#bgTemplate.btn.btn-success.btn-sm(href="#businessCardLibrary", data-toggle="modal") Browse Library
 							| &nbsp;
 							a.btn.btn-danger.btn-sm(ng-show="hasTemplateBackground", ng-click="removeTemplate()") Remove
-					.form-group(ng-hide="hasTemplateBackground")
+					.form-group(ng-hide="hasTemplateBackground || hasBackgroundImage")
 						label.col-lg-4.col-md-4.control-label(for="bgColour") Colour
 						.col-lg-8.col-md-8
 							input#bgColour.form-control(type="color", ng-model="canvasStyles.backgroundColor")
-					.form-group
+					.form-group(ng-hide="hasTemplateBackground")
 						label.col-lg-4.col-md-4.control-label(for="bgImage") Upload an Image
 						.col-lg-8.col-md-8
-							input#bgImage.form-control(type="file")
+							input#bgImage.form-control(ng-hide="hasBackgroundImage", type="file", card-image-upload, upload-target="background")
+							button.btn.btn-danger(ng-show="hasBackgroundImage", ng-click="removeBackgroundImage()") Remove Uploaded Image
 				hr
 				#cardCanvas
 					.canvas(ng-style="canvasStyles", ng-class="{ preview: preview }")
 						.libraryBox(id="{{ libraryBox.id }}", card-directive, ng-repeat="libraryBox in libraryBoxes")
-							.handle
 							input(type="text", ng-hide="libraryBox.image", disabled="disabled", value="{{ libraryBox.text }}", ng-click="selectBox(libraryBox)", ng-style="libraryBox.style")
-							img(ng-src="{{ libraryBox.src }}", ng-show="libraryBox.image", ng-click="selectBox(libraryBox)", ng-style="libraryBox.style")
+							div.img(ng-src="{{ libraryBox.src }}", ng-show="libraryBox.image", ng-click="selectBox(libraryBox)", ng-style="libraryBox.style")
+							.handle
 				hr
 				form.form-horizontal
 					.form-group
@@ -59,10 +59,10 @@ block content
 						.col-lg-8.col-md-8
 							select#component.form-control(ng-model="boxId", ng-change="changeBox()", ng-options="box.id as box.text group by box.type for box in libraryBoxes")
 			
-			.col-md-5.col-lg-6.nostupidcolours
+			.col-md-5.col-lg-6
 				form.form-horizontal(ng-hide="libraryBox.image == null")
 					div(ng-hide="libraryBox.image == true")
-						h4 Text formatting
+						h4 Text Formatting
 						.form-group
 							label.col-lg-4.col-md-4.control-label(for="textValue") Content
 							.col-lg-8.col-md-8
@@ -86,6 +86,7 @@ block content
 							label.col-lg-4.col-md-4.control-label(for="textType") Type
 							.col-lg-8.col-md-8
 								select#textType.form-control(type="color", ng-model="libraryBox.style.fontFamily")
+									option(value="Raleway") Raleway
 									option(value="Helvetica") Helvetica
 									option(value="Arial") Arial
 									option(value="Tahoma") Tahoma
@@ -113,19 +114,35 @@ block content
 								input#textLeftOffset.form-control(type="number", placeholder="Space between the border and text", ng-model="libraryBox.style.paddingLeft")
 					
 					div(ng-show="libraryBox.image == true")
-						h4 Image formatting
+						h4 Image Formatting
 						.form-group
 							label.col-lg-4.col-md-4.control-label(for="imageNote") Note
 							.col-lg-8.col-md-8
 								input#imageNote.form-control(type="text", placeholder="Image note" ng-model="libraryBox.text")
-						.form-group
+						.form-group(ng-hide="libraryBox.hasBackgroundImage")
 							label.col-lg-4.col-md-4.control-label(for="imageBgColour") Colour
 							.col-lg-8.col-md-8
 								input#imageBgColour.form-control(type="color", ng-model="libraryBox.style.backgroundColor")
 						.form-group
 							label.col-lg-4.col-md-4.control-label(for="imageBgImage") File
 							.col-lg-8.col-md-8
-								input#imageBgImage.form-control(type="file")
+								input#imageBgImage.form-control(type="file", card-image-upload, upload-target="image", ng-hide="libraryBox.hasBackgroundImage")
+								button.btn.btn-danger(ng-show="libraryBox.hasBackgroundImage", ng-click="removeBoxBackgroundImage()") Remove Uploaded Image
+						.form-group(ng-show="libraryBox.hasBackgroundImage")
+							label.col-lg-4.col-md-4.control-label(for="imageBgColour") Image Position
+							.col-lg-4.col-md-4
+								input#imageBgColour.form-control(type="text", ng-model="libraryBox.style.backgroundPositionX", placeholder="x = 0px")
+							.col-lg-4.col-md-4
+								input#imageBgColour.form-control(type="text", ng-model="libraryBox.style.backgroundPositionY", placeholder="y = 0px")
+						.form-group(ng-show="libraryBox.hasBackgroundImage")
+							label.col-lg-4.col-md-4.control-label(for="imageBgColour") Image Size
+							.col-lg-8.col-md-8
+								input#imageBgColour.form-control(type="text", ng-model="libraryBox.style.backgroundSize", placeholder="100% 100%")
+						.form-group(ng-show="libraryBox.hasBackgroundImage")
+							label.col-lg-4.col-md-4.control-label(for="imageBgColour") Grayscale
+							.col-lg-8.col-md-8
+								input#imageBgColour.form-control(type="number", ng-model="libraryBox.blackandwhite", placeholder="0", min="0", max="100")
+						
 						
 					h4 Border formatting
 					.form-group
@@ -141,18 +158,19 @@ block content
 								option(value="ridge") Ridge
 								option(value="inset") Inset
 								option(value="outset") Outset
-					.form-group
-						label.col-lg-4.col-md-4.control-label(for="borderSize") Size
-						.col-lg-8.col-md-8
-							input#borderSize.form-control(type="number", placeholder="Border Size measured in Pixels", ng-model="libraryBox.style.borderWidth")
-					.form-group
-						label.col-lg-4.col-md-4.control-label(for="borderColour") Colour
-						.col-lg-8.col-md-8
-							input#borderColour.form-control(type="color", ng-model="libraryBox.style.borderColor")
-					.form-group
-						label.col-lg-4.col-md-4.control-label(for="borderRadius") Corner Radius
-						.col-lg-8.col-md-8
-							input#borderRadius.form-control(type="number", placeholder="Corner radius", ng-model="libraryBox.style.borderRadius")
+					div(ng-hide="libraryBox.style.borderStyle == 'none'")
+						.form-group
+							label.col-lg-4.col-md-4.control-label(for="borderSize") Size
+							.col-lg-8.col-md-8
+								input#borderSize.form-control(type="number", placeholder="Border Size measured in Pixels", ng-model="libraryBox.style.borderWidth")
+						.form-group
+							label.col-lg-4.col-md-4.control-label(for="borderColour") Colour
+							.col-lg-8.col-md-8
+								input#borderColour.form-control(type="color", ng-model="libraryBox.style.borderColor")
+						.form-group
+							label.col-lg-4.col-md-4.control-label(for="borderRadius") Corner Radius
+							.col-lg-8.col-md-8
+								input#borderRadius.form-control(type="number", placeholder="Corner radius", ng-model="libraryBox.style.borderRadius")
 				
 				div(ng-show="libraryBox.id == null")
 					h4.lead To get started, 
