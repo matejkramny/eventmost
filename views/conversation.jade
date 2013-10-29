@@ -1,9 +1,8 @@
-extends layout
+extends responsive
 
 block content
-	include inc/sidebar
 	#main-content
-		form(action="/topic/"+topic._id+"/update", method="POST")
+		form(action="/conversation/"+topic._id+"/update", method="POST")
 			input(type="hidden", name="_csrf", value=token)
 			.search-box
 				.search-content
@@ -11,7 +10,7 @@ block content
 						span.title
 							input.rounded-input.left(placeholder="Topic title", name="title", value= topic.name || "Chat", name="topicname", style="width: 500px;")
 							input.submit-btn.left(type="submit", value="Update title")
-		form(action="/topic/"+topic._id+"/new", method="POST")
+		form(action="/conversation/"+topic._id+"/new", method="POST")
 			input(type="hidden", name="_csrf", value=token)
 			.left(style="width: 100%;")
 				input.rounded-input#message(type="text", name="message", value="", placeholder="Enter a message", required="required", style="width: 75%; float: left;")

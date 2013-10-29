@@ -2,7 +2,6 @@ extends ../responsive
 
 block content
 
-
 	.col-xs-12.hide-all2
 		form(method="POST", accept-charset="utf-8")
 			input.gonew2.pull-right.header-links(type="button", value="GO", style="width:10%;")
@@ -19,16 +18,17 @@ block content
 			| <b>Inbox:</b>
 	.col-md-5.col-xs-5.col-sm-5.nspacer-medium.hide-mini3-except-smart
 		.font-tw
-			| <b>Lucy Cook</b> - Director of Finance, Delloite
+			b= user.getName() 
+			|  - #{user.position}, #{user.company}
 	.col-md-6.col-xs-6.col-sm-6.hide-mini3-except-smart
 		.font-x1.bg-purple.center.pull-right.psev2.prof-wall
-			| Public <br />Messages
+			| <a href="#Public">Public <br />Messages</a>
 		.font-x1.bg-green.center.pull-right.psev2.prof-wall
-			| Those Who Saved<br />Your Profile
+			| <a href="#Profile">Those Who Saved<br />Your Profile</a>
 		.font-x1.bg-yellow.center.pull-right.psev2.prof-wall
-			| Business <br />Cards
+			| <a href="#Business">Business <br />Cards</a>
 		.font-x1.bg-purple.center.pull-right.psev2.prof-wall
-			| Private<br />Messages
+			| <a href="#Private">Private<br />Messages</a>
 		.font-x1.bg-green.center.pull-right.psev2.prof-wall(style="padding-top:15px;")
 			| All
 	.clearfix.hide-mini3-except-smart

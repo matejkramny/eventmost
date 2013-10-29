@@ -220,7 +220,7 @@ function newMessage(req, res) {
 					}
 					dispatchTo.push(topic.users[i])
 				}
-				notifyByEmail(dispatchTo, topic, message, req.user)
+				//notifyByEmail(dispatchTo, topic, message, req.user)
 			})
 		} else {
 			// 404
