@@ -265,7 +265,7 @@ eventMost.controller('businessCards', BusinessCards)
 						} else if (target == 'image') {
 							applyTo = scope.libraryBox.style;
 							scope.libraryBox.hasBackgroundImage = true;
-							applyTo.backgroundSize = '100% 100%'l
+							applyTo.backgroundSize = '100% 100%';
 						}
 						
 						applyTo.backgroundColor = "";
