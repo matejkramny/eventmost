@@ -93,6 +93,7 @@ textarea:focus, input:focus{
 
 .nspacer-small {margin-top: 5px;}
 .nspacer{margin-top: 10px;}
+.nspacer-medium2{margin-top: 12px;}
 .nspacer-medium{margin-top: 15px;}
 .nspacer-big{margin-top: 20px;}
 .nspacer-bigger{margin-top: 25px;}
@@ -185,6 +186,9 @@ border-radius: 10px;}
 .uploads2, .dif2{display: none;}
 .uploads-text{padding-top:10px;}
 .res-dis-non-vis{display: none;}
+.butt-mar{margin-right: 10px;}
+.dont-display{display: block;}
+.display{display: none;}
 /* links*/
 a.link-purple{
   text-decoration: none;
@@ -930,7 +934,11 @@ p.check5-purple-small:not(#foo) > input[type=checkbox] + label:hover            
 .event-address{width:16.4%; line-height:30px;}
 .event-address-input{width:82.6%; margin-top:6px !important;}
 
+.send-to{width:14%; line-height:30px;}
+.send-to-input{width:85.2%; margin-top:6px !important;}
 
+.subject{width:10.3%; line-height:30px;}
+.subject-input{width:89.1%; margin-top:6px !important;}
 
 /**** datepicker ****/
 #datepicker, #datepicker2 {
@@ -1627,6 +1635,10 @@ p.check5:not(#foo) > input[type=checkbox] + label:hover               { backgrou
 .disabled-image{margin-left: 10px; width: 110%;}
 .re-font{font-size: 20px}
 .re-font2{font-size: 20px; padding-top: 10px;}
+.send-text{font-size: 14px}
+.butt-mar{margin-right: 5px;}
+.send-to{width:17%; line-height:30px;}
+.send-to-input{width:82.2%; margin-top:6px !important;}
 }
 
 @media only screen and (min-width: 686px) and (max-width: 768px) {
@@ -1744,10 +1756,30 @@ p.check5:not(#foo) > input[type=checkbox] + label:hover               { backgrou
 table.gridtable {font-size: 14px;}
 table.gridtable td {font-size: 12px;}
 table.gridtable th {font-size: 12px;}
+.send-text{font-size: 14px}
+.butt-mar{margin-right: 5px;}
+.send-to{width:17%; line-height:30px;}
+.send-to-input{width:82.2%; margin-top:6px !important;}
 }
 
+@media only screen and (max-width: 700px) {
+
+.tinyeditor-font-over2 {margin-top:-44px !important; background:url(../../../images/tiny_over.svg); width:176px;
+  height: 44px; margin-left:200px; overflow: hidden; z-index: 700; -webkit-appearance:none;} 
+.tinyeditor-font-over {margin-top:55px !important; background:url(../../../images/tiny_over.svg); width:176px;
+  height: 44px; margin-left:15px; overflow: hidden; z-index: 700; -webkit-appearance:none;} 
+.tinyeditor-header {height:110px;}
+.send-to{width:20%; line-height:30px;}
+.send-to-input{width:78.2%; margin-top:6px !important;}
+.subject{width:13.3%; line-height:30px;}
+.subject-input{width:85.9%; margin-top:6px !important;}
+}
 
 @media only screen and (min-width: 481px) and (max-width: 685px) {
+.subject{width:16.3%; line-height:30px;}
+.subject-input{width:82.9%; margin-top:6px !important;}
+.dont-display{display: none;}
+.display{display: block;}
 .re-font2{font-size: 12px; padding-top: 6px;}
 #slider1 .overview li{ width: 170px;}
 .slider-text {width: 110%;}
@@ -1834,6 +1866,10 @@ table.gridtable th {font-size: 12px;}
 }
 
 @media only screen and (max-width: 480px) {
+.subject{width:30.3%; line-height:30px;}
+.subject-input{width:66.9%; margin-top:6px !important;}
+.dont-display{display: none;}
+.display{display: block;}
 .logo-text{font-size: 12px;}
 .event-name{width:38%; line-height:30px; padding-top: 1px;}
 .event-name-input{width:60%; margin-top:6px !important;}

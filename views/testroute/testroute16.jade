@@ -1,0 +1,85 @@
+extends ../responsive
+
+
+append addonjs
+	script(src="/js/geo.js", defer="true")
+	script(src="/js/datepicker.js", defer="true")
+	script(src="/js/tiny.editor.packed.js", defer="true")
+	script(src="/js/jquery.jcarousel.min.js", defer="true")
+	script(src="/js/eventadd.js", defer="true")
+
+append content
+	include ../inc/flash
+
+block content
+
+	.col-xs-12.hide-all2
+		form(method="POST", accept-charset="utf-8")
+			input.gonew2.pull-right.header-links(type="button", value="GO", style="width:10%;")
+			input(type="hidden", name="_csrf", value=token)
+			input.pull-right.font-s.search-input.pad-left-ten.header-links(type="search", placeholder="search events or people", style="width:87%;")
+	.clearfix.hide-all2
+
+	.nspacer
+	.col-lg-12.col-md-12.col-xs-12.display
+		button.btn.btn-info.font-x1.pull-left(type='submit', href="", style="height:55px; margin-right:10px; border:10px; padding:10px; padding-left:15px; padding-right:15px;")
+			| Send<br />by category
+		button.btn.btn-primary.font-x1.pull-left(type='submit', href="", style="height:55px; border:10px; padding:10px; padding-left:15px; padding-right:15px;")
+			| All<br />attendees
+		.clearfix
+
+	.nspacer.display
+	.col-lg-12.col-md-12.col-xs-12.display
+		.container.bg-purple.pad-top-zero.pad-right-zero(style="height:55px;")
+			.pull-left.subject
+				.font-evente.logo-text.nspacer-medium2.send-text
+					| SEND TO:
+			.pull-left.subject-input
+					input.input-grey#LoginUserEmail(name="login", type="search", required="required", placeholder="search",style="height:43px;")
+
+	.col-lg-9.col-md-9.col-xs-8.dont-display
+		.container.bg-purple.pad-top-zero.pad-right-zero(style="height:55px;")
+			.pull-left.send-to
+				.font-evente.logo-text.nspacer-medium2.send-text
+					| SEND TO:
+			.pull-left.send-to-input
+					input.input-grey#LoginUserEmail(name="login", type="search", required="required", placeholder="search",style="height:43px;")
+		.clearfix
+	.col-lg-3.col-md-3.col-xs-4.pad-left-zero.dont-display
+		button.btn.btn-info.font-x1.pull-right(type='submit', href="", style="height:55px; border:10px; padding:10px; padding-left:15px; padding-right:15px;")
+			| Send<br />by category
+		button.btn.btn-primary.font-x1.pull-right.butt-mar(type='submit', href="", style="height:55px; border:10px; padding:10px; padding-left:15px; padding-right:15px;")
+			| All<br />attendees
+	.clearfix
+	.nspacer-small
+	.col-lg-12.col-md-12.col-xs-12
+		.container.bg-purple.pad-top-zero.pad-right-zero(style="height:55px;")
+			.pull-left.subject
+				.font-evente.logo-text.nspacer-medium2.send-text
+					| SUBJECT:
+			.pull-left.subject-input
+					input.input-grey#LoginUserEmail(name="login", type="text", required="required", placeholder="",style="height:43px;")
+		.clearfix
+
+	.col-lg-12.col-md-12.col-xs-12.no-float				
+		.nspacer-small
+		.bg-green
+			.pull-left
+				img.psev(src="/images/pencil.svg")
+			.pull-left.font2.font-thin.nspacer-small
+				| Event description
+			.pull-right.pad-right-ten.nspacer
+				img(src="/images/optional-white.svg")
+			.clearfix
+		.clearfix
+
+		textarea#tinyeditor(style="height: 200px width:1000px;", name="description", placeholder="Description...")
+	
+	.clearfix
+	.nspacer-small
+	.col-lg-12.col-md-12.col-xs-12
+		button.btn.btn-primary.font.pull-left(type='submit', href="", style="font-size:22px; margin-right:10px; height:55px; border:10px; padding:10px; padding-left:15px; padding-right:15px;")
+			| Add file...
+		button.btn.btn-warning.font.pull-right(type='submit', href="", style="font-size:22px; height:55px; border:10px; padding:10px; padding-left:15px; padding-right:15px;")
+			| SEND
+	.clearfix
