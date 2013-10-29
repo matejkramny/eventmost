@@ -49,9 +49,12 @@ html
 								h20= user.mailboxUnread
 					.col-md-6.col-xs-6.pull-right
 						.pull-right.nspacer-small
-							a(href="/", class="font-e link-purple header-links") Home 
-							| |
-							a(href="/event/add", class="font-e link-purple header-links")  Create event
+							a.font-e.link-purple.header-links(href="/") Home
+							|  | 
+							a.font-e.link-purple.header-links(href="/event/add") Create event
+							if user.admin
+								|  | 
+								a.font-e.link-purple.header-links(href="/admin") Administration
 						.clearfix
 						.nspacer.hide-mini
 							form(method="GET", accept-charset="utf-8", action="/search/people/")
