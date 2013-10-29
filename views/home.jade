@@ -1,11 +1,12 @@
 extends responsive
 
 append addonjs
-	script(src="/js/geo.js", defer="true")
-	script(src="/js/getNearbyEvents.js", defer="true")
+	script(src="/v2/js/geo.js", defer="true")
+	script(src="/v2/js/angular-nearEvents.js", defer="true")
 
 append content
 	include inc/flash
+	include event/inc/item
 
 	.col-xs-12.hide-all2
 		form(method="POST", accept-charset="utf-8")
@@ -66,12 +67,12 @@ append content
 			p.break.center.font-thin2.font-a(style='padding-top:10px;')
 				a.link-purple(href="/user/"+user._id)= user.getName()
 			.pull-left.pad-left-ten
-				img(src="/images/i.svg", alt="", height="7px" width="7px;")
+				img(src="/images/i.svg", height="7px" width="7px;")
 			.pull-left.pad-left-ten.font-s.font-thin2
-				a.link-purple.font-en(href="/profile", alt="", title="",) Edit profile
+				a.link-purple.font-en(href="/profile") Edit profile
 				if user.admin
 					.set.font-en
-						a.link4(href="/admin", alt="", title="",) Administration
+						a.link4(href="/admin") Administration
 			.center.clearfix
 				img(src="/images/default-card.svg", alt="" class="nspacer-small img-responsive")
 				a.link-purple.font-thin2.resfont.font-en6(href="/cards", alt="", title="",)
@@ -79,31 +80,31 @@ append content
 			.pull-left.pad-left-ten.nspacer-small
 				img(src="/images/i.svg", alt="", height="7px" width="7px;")
 			.pull-left.pad-left-ten.font-s.nspacer-small.font-thin2
-				a.link-purple.font-en6(href="", alt="", title="", data-reveal-id="NotificationModal")
+				a.link-purple.font-en6(data-toggle="modal", href="#notificationModal")
 					| Notification settings
 			.clearfix
 			.pull-left.pad-left-ten.nspacer-small
 				img(src="/images/i.svg", alt="", height="7px" width="7px;")
 			.pull-left.pad-left-ten.font-s.nspacer-small.font-thin2
-				a.link-purple.font-en6(href="", alt="", title="", data-reveal-id="PrivacyModal")
+				a.link-purple.font-en6(data-toggle="modal", href="#privacyModal")
 						| Privacy settings
 			.clearfix
 			.center.nspacer
 				a(href="/logout", class="logout link-yellow")
-					button.btn.btn-default.font-e(type='submit', data-reveal-id="loginModal" style="border-radius: 8px; margin-bottom:10px; font-size:9px;")
+					button.btn.btn-default.font-e(type='submit', style="border-radius: 8px; margin-bottom:10px; font-size:9px;")
 						| Logout
 	//- Events nearby
 	.col-xs-4.pad-right-zero.pad-left-zero.hide-all2.nspacer
 		a.link-green2(href="/events/near", alt="Events Nearby")
 			.font-bigs.font-thin.center.home-big  
 				| Events nearby
-				img.home-big3(src="/images/location-icon.svg", alt="", class="img-responsive", style="width:80%; margin:auto;")
+				img.home-big3(src="/images/location-icon.svg", class="img-responsive", style="width:80%; margin:auto;")
 		//- Events
 	.col-xs-4.bg-yellow.pad-right-zero.pad-left-zero.hide-all2.nspacer(style='height:242px;') 
 		a.link-purple2(href="/events", alt="Events")
 			.font-bigs.font-thin.center.home-big 
 				| All events<br />
-				img.home-big2(src="/images/purple-arrow.svg", alt="", class="img-responsive", style="width:70%; margin:auto;")
+				img.home-big2(src="/images/purple-arrow.svg", class="img-responsive", style="width:70%; margin:auto;")
 	.clearfix.hide-all2
 	.col-xs-12.hide-all2
 		.bg-green.font-ah.pad-left-ten(style="min-height:27px;")
@@ -134,24 +135,21 @@ append content
 				img(src="/images/i.svg", alt="", height="16px" width="16px;")
 			.pull-left.pad-left-ten.font-s.font-thin2
 				a.link-purple(href="/profile", alt="", title="") Edit profile
-				if user.admin
-					.set
-						a.link4(href="/admin", alt="", title="") Administration
 			.clearfix
 			.center
-				img.small-avatar(src="/images/default-card.svg", alt="" class="nspacer-small img-responsive", style="margin:5px auto;")
-				a.link-purple.font-thin2.resfont(href="/cards", alt="", title="")
+				img.small-avatar(src="/images/default-card.svg", class="nspacer-small img-responsive", style="margin:5px auto;")
+				a.link-purple.font-thin2.resfont(href="/cards")
 					| Business Card Library
 			.pull-left.pad-left-ten.nspacer-small
 				img(src="/images/i.svg", alt="", height="16px" width="16px;")
 			.pull-left.pad-left-ten.font-s.nspacer-small.font-thin2
-				a.link-purple(href="", alt="", title="", data-reveal-id="NotificationModal")
+				a.link-purple(data-toggle="modal", href="#notificationModal")
 					| Notification settings
 			.clearfix
 			.pull-left.pad-left-ten.nspacer-small
 				img(src="/images/i.svg", alt="", height="16px" width="16px;")
 			.pull-left.pad-left-ten.font-s.nspacer-small.font-thin2
-				a.link-purple(href="", alt="", title="", data-reveal-id="PrivacyModal")
+				a.link-purple(data-toggle="modal", href="#privacyModal")
 						| Privacy settings
 			.clearfix
 			.center.nspacer
@@ -191,61 +189,38 @@ append content
 								li
 									a(href='#') My planned events
 	.clearfix.hide-mini
+	
+	
 	//- My Events
-	.nspacer.col-md-12.col-xs-12
-		.pull-left.event(style='width:101.4%;')
-			a.slid-box
-				article.c-two
-					.slid-box-background
-						h4 
-							.eye.hide2
-							| <br /> REVIEW
-				.col-lg-9.col-md-9.col-xs-9.psev.pad-left-ten.rbox.eh
-					h4 Temporibus autem quibusdam et aut officiis
-					.smart-minus
-						| At vero eos et accusamus et iusto odio dignissimos ducimus qui <b>blanditiis praesentium </b>voluptatum deleniti atque 
-						corrupti quos <b>dolores et quas molestias.</b> At vero eos et accusamus et iusto odio dignissimos ducimus qui <b>blanditiis 
-						praesentium </b>voluptatum deleniti atque corrupti quos dolores et quas molestias.. At vero eos et accusamus et iusto 
-						odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque  corrupti quos dolores et quas mole.
-						At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque 
-						corrupti quos dolores et quas molestias. 
-	.clearfix
-	.nspacer.col-md-12.col-xs-12
-		.pull-left.event(style='width:101.4%;')
-			a.slid-box
-				article.c-two
-					.slid-box-background
-						h4 
-							.eye.hide2
-							| <br /> REVIEW
-				.col-lg-9.col-md-9.col-xs-9.psev.pad-left-ten.rbox.eh
-					h4 Temporibus autem quibusdam et aut officiis
-					.smart-minus
-						| At vero eos et accusamus et iusto odio dignissimos ducimus qui <b>blanditiis praesentium </b>voluptatum deleniti atque 
-						corrupti quos <b>dolores et quas molestias.</b> At vero eos et accusamus et iusto odio dignissimos ducimus qui <b>blanditiis 
-						praesentium </b>voluptatum deleniti atque corrupti quos dolores et quas molestias.. At vero eos et accusamus et iusto 
-						odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque  corrupti quos dolores et quas mole.
-						At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque 
-						corrupti quos dolores et quas molestias. 
-	.clearfix
-	.nspacer
-		.pull-right(style='height:35px;')
-			ul.pagination
-				li
-					a(href='#') «
-				li.active
-					a(href='#') 1
-				li
-					a(href='#') 2
-				li
-					a(href='#') 3
-				li.disabled
-					a(href='#') ...
-				li
-					a(href='#') 5
-				li
-					a(href='#') »
-	.clearfix
+	for event in myevents
+		mixin eventItem(event)
+	if myevents.length == 0
+		.nspacer.col-md-12.col-xs-12.col-lg-12.col-sm-12
+			p.lead.text-center You have no events..
+				br
+				a(href="/event/add") Create an event
+	else
+		.nspacer
+			.pull-right(style='height:35px;')
+				ul.pagination
+					li
+						a(href='#') «
+					li.active
+						a(href='#') 1
+					li
+						a(href='#') 2
+					li
+						a(href='#') 3
+					li.disabled
+						a(href='#') ...
+					li
+						a(href='#') 5
+					li
+						a(href='#') »
+		.clearfix
+
+
+	//- nearby
 	.nspacer.col-md-12.col-xs-12.font-bigs.font-thin.hide-mini
 		.bg-ashen(style='width:101.4%;')
 			.color-green.pad-left-ten
@@ -287,45 +262,15 @@ append content
 							li
 								a(href='/') My planned events
 	.clearfix.hide-all2
-
-
+	
 	//- Events nearby
-	.nspacer.col-md-12.col-xs-12
-		.pull-left.event(style='width:101.4%;')
-			a.slid-box
-				article.c-two
-					.slid-box-background
-						h4 
-							.eye.hide2
-							| <br /> REVIEW
-				.col-lg-9.col-md-9.col-xs-9.psev.pad-left-ten.rbox.eh
-					h4 Temporibus autem quibusdam et aut officiis
-					.smart-minus
-						| At vero eos et accusamus et iusto odio dignissimos ducimus qui <b>blanditiis praesentium </b>voluptatum deleniti atque 
-						corrupti quos <b>dolores et quas molestias.</b> At vero eos et accusamus et iusto odio dignissimos ducimus qui <b>blanditiis 
-						praesentium </b>voluptatum deleniti atque corrupti quos dolores et quas molestias.. At vero eos et accusamus et iusto 
-						odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque  corrupti quos dolores et quas mole.
-						At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque 
-						corrupti quos dolores et quas molestias. 
-	.clearfix
-	.nspacer.col-md-12.col-xs-12
-		.pull-left.event(style='width:101.4%;')
-			a.slid-box
-				article.c-two
-					.slid-box-background
-						h4 
-							.eye.hide2
-							| <br /> REVIEW
-				.col-lg-9.col-md-9.col-xs-9.psev.pad-left-ten.rbox.eh
-					h4 Temporibus autem quibusdam et aut officiis
-					.smart-minus
-						| At vero eos et accusamus et iusto odio dignissimos ducimus qui <b>blanditiis praesentium </b>voluptatum deleniti atque 
-						corrupti quos <b>dolores et quas molestias.</b> At vero eos et accusamus et iusto odio dignissimos ducimus qui <b>blanditiis 
-						praesentium </b>voluptatum deleniti atque corrupti quos dolores et quas molestias.. At vero eos et accusamus et iusto 
-						odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque  corrupti quos dolores et quas mole.
-						At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque 
-						corrupti quos dolores et quas molestias. 
-	.clearfix
+	#nearbyEventsPlaceholder
+		p.text-center.lead
+	
+	.center.hide2
+			button#tryAgainNearbyEvents.btn.btn-warning.font.big-pad-left.big-pad-right(type='submit', href="#", style="font-weight:300;")
+				| Allow EventMost to GeoLocate my current position
+	
 	.nspacer
 		.pull-right(style='height:35px;')
 			ul.pagination
@@ -344,5 +289,5 @@ append content
 				li
 					a(href='#') »
 	.clearfix
-
 	
+	include modals/homemodals

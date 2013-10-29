@@ -259,10 +259,10 @@ eventMost.controller('businessCards', BusinessCards)
 						var applyTo;
 						
 						if (target == 'background') {
-							applyTo = scope.canvasStyles
+							applyTo = scope.canvasStyles;
 							scope.hasBackgroundImage = true;
 						} else if (target == 'image') {
-							applyTo = scope.libraryBox.style
+							applyTo = scope.libraryBox.style;
 							scope.libraryBox.hasBackgroundImage = true;
 						}
 						

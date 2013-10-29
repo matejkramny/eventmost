@@ -33,10 +33,10 @@ html
 				if loggedIn == false
 					.pull-right.logo-right
 							//- Only displayed when users are guests
-							button.btn.btn-warning.pb.pull-right(type='submit', data-toggle="modal", href="#signModal",)
-								| <b>SIGN UP</b>
-							button.btn.btn-default.pb.pull-right(type='submit', data-toggle="modal", href="#loginModal",  style="margin-right:-4px;")
-								| <b>LOGIN</b>
+							button.btn.btn-warning.pb.pull-right(type='submit', data-toggle="modal", href="#signModal")
+								b SIGN UP
+							button.btn.btn-default.pb.pull-right(type='submit', data-toggle="modal", href="#loginModal", style="margin-right:-4px;")
+								b LOGIN
 				else
 					//- Only displayed when user is logged in
 					.pull-right.col-md-2.col-xs-2
@@ -50,9 +50,12 @@ html
 								h20= user.mailboxUnread
 					.col-md-6.col-xs-6.pull-right
 						.pull-right.nspacer-small
-							a(href="/", class="font-e link-purple header-links") Home 
-							| |
-							a(href="/event/add", class="font-e link-purple header-links")  Create event
+							a.font-e.link-purple.header-links(href="/") Home
+							|  | 
+							a.font-e.link-purple.header-links(href="/event/add") Create event
+							if user.admin
+								|  | 
+								a.font-e.link-purple.header-links(href="/admin") Administration
 						.clearfix
 						.nspacer.hide-mini
 							form(method="GET", accept-charset="utf-8", action="/search/people/")
@@ -63,7 +66,8 @@ html
 			block content
 			.row
 				footer.col-xs-12.col-md-12.col-sm-12.col-lg-12
-					.text-center Copyright © 2013 <b>EventMost</b> | <a href="/contact" class="link-white">Contact us</a>
+					.text-center Copyright © 2013 <b>EventMost</b> | 
+						a.link-white(href="/contact") Contact us
 			
 			if !loggedIn
 				include modals/signup

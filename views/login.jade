@@ -1,13 +1,16 @@
 extends responsive
 
 block addonjs
+	script(src="/v2/js/geo.js", defer="defer")
+	script(src="/v2/js/angular-nearEvents.js", defer="defer")
 
 append content
 	include inc/flash
+	
 	.nspacer-big.center
 		.font-big
 			img(src="/images/big-purple-star.svg", alt="" class="starr" style="margin-top:-10px;") 
-			| Why use us 
+			| Why use us
 			img(src="/images/big-purple-star.svg", alt="" class="starr" style="margin-top:-10px;") 
 		h4 Not only can you register your event here, you can also:
 		.clearfix
@@ -93,62 +96,11 @@ append content
 	.center.nspacer-big.hide2
 			button.btn.btn-warning.font.big-pad.big-pad-left.big-pad-right(type='submit', href="#", style="font-weight:500;")
 				| Create event
+	
 	.col-md-12.col-xs-12
 		.nspacer-big
 			h2 Events near you
-		.pull-left.event
-			a.slid-box
-				article.c-two
-					.slid-box-background
-						h4 
-							.eye.hide2
-							| <br /> REVIEW
-				.col-lg-9.col-md-9.col-xs-9.psev.pad-left-ten.rbox.eh
-					h4 Temporibus autem quibusdam et aut officiis
-					.smart-minus
-						| At vero eos et accusamus et iusto odio dignissimos ducimus qui <b>blanditiis praesentium </b>voluptatum deleniti atque 
-						corrupti quos <b>dolores et quas molestias.</b> At vero eos et accusamus et iusto odio dignissimos ducimus qui <b>blanditiis 
-						praesentium </b>voluptatum deleniti atque corrupti quos dolores et quas molestias.. At vero eos et accusamus et iusto 
-						odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque  corrupti quos dolores et quas mole.
-						At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque 
-						corrupti quos dolores et quas molestias. 
 	.clearfix
-
-	.nspacer-big.col-md-12.col-xs-12
-		.pull-left.event
-			a.slid-box
-				article.c-two
-					.slid-box-background
-						h4 
-							.eye.hide2
-							| <br /> REVIEW
-				.col-lg-9.col-md-9.col-xs-9.psev.pad-left-ten.rbox.eh
-					h4 Temporibus autem quibusdam et aut officiis
-					.smart-minus
-						| At vero eos et accusamus et iusto odio dignissimos ducimus qui <b>blanditiis praesentium </b>voluptatum deleniti atque 
-						corrupti quos <b>dolores et quas molestias.</b> At vero eos et accusamus et iusto odio dignissimos ducimus qui <b>blanditiis 
-						praesentium </b>voluptatum deleniti atque corrupti quos dolores et quas molestias.. At vero eos et accusamus et iusto 
-						odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque  corrupti quos dolores et quas mole.
-						At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque 
-						corrupti quos dolores et quas molestias. 
-	.clearfix
-
-	.nspacer-big.col-md-12.col-xs-12
-		.pull-left.event
-			a.slid-box
-				article.c-two
-					.slid-box-background
-						h4 
-							.eye.hide2
-							| <br /> REVIEW
-				.col-lg-9.col-md-9.col-xs-9.psev.pad-left-ten.rbox.eh
-					h4 Temporibus autem quibusdam et aut officiis
-					.smart-minus
-						| At vero eos et accusamus et iusto odio dignissimos ducimus qui <b>blanditiis praesentium </b>voluptatum deleniti atque 
-						corrupti quos <b>dolores et quas molestias.</b> At vero eos et accusamus et iusto odio dignissimos ducimus qui <b>blanditiis 
-						praesentium </b>voluptatum deleniti atque corrupti quos dolores et quas molestias.. At vero eos et accusamus et iusto 
-						odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque  corrupti quos dolores et quas mole.
-						At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque 
-						corrupti quos dolores et quas molestias. 
-	.clearfix
+	#nearbyEventsPlaceholder
+		p.text-center.lead
 	

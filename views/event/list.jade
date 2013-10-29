@@ -1,5 +1,7 @@
 extends ../responsive
 
+include inc/item
+
 block content
 	.row
 		.col-md-12.col-sm-12.col-lg-12
@@ -25,31 +27,6 @@ block content
 				h4.text-center There are no events :(
 	else
 		hr
+	
 	for event in events
-		.row
-			.events
-				.col-sm-2.col-md-2.col-lg-2
-					if event.avatar && event.avatar.url
-						img(src=event.avatar.url, alt="", style="max-height: 100px; max-width: 150px;")
-					else
-						img(src="/img/default-logo.svg", style="max-height: 100px; max-width: 150px;")
-				.col-sm-5.col-md-5.col-lg-5
-					a(href="/event/"+event._id)
-						h8= event.name
-					p.eventtext!= event.description
-				.col-md-3.col-sm-3.col-lg-3
-					.location
-						if event.address && event.address.length > 0
-							h5= event.address
-						else
-							h5 Location unavailable
-				.col-md-1.col-sm-1.col-lg-1
-					.date #{event.start.getHours()}:#{event.start.getMinutes()}
-				.col-md-1.col-sm-1.col-lg-1
-					.image2
-						h16= event.start.getDate()
-							| .
-							= event.start.getMonth()+1
-							br
-							= event.start.getFullYear()
-		br
+		mixin eventItem(event)
