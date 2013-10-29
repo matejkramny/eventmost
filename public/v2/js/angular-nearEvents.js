@@ -11,7 +11,7 @@ function formatEvent(event) {
 		event.venue_name = "";
 	}
 	var html = '<div class="nspacer col-md-12 col-xs-12 col-lg-12 col-sm-12">\
-        <div style="width:101.4%;" class="pull-left event"><a class="slid-box">\
+        <div style="width:101.4%;" class="pull-left event"><a href="/event/'+event._id+'" class="slid-box">\
             <article class="c-two">\
               <div class="slid-box-background">\
                 <h4><div class="eye hide2"></div><br> REVIEW</h4>\
