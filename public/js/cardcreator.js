@@ -261,15 +261,14 @@ eventMost.controller('businessCards', BusinessCards)
 						if (target == 'background') {
 							applyTo = scope.canvasStyles;
 							scope.hasBackgroundImage = true;
-							applyTo.backgroundSize = '500px 250px';
 						} else if (target == 'image') {
 							applyTo = scope.libraryBox.style;
 							scope.libraryBox.hasBackgroundImage = true;
-							applyTo.backgroundSize = '100% 100%';
 						}
 						
 						applyTo.backgroundColor = "";
 						applyTo.background = 'url('+img.target.result+') no-repeat top left';
+						applyTo.backgroundSize = '100% 100%';
 					})
 				}
 				reader.readAsDataURL(file);

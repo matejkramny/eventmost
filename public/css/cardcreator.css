@@ -4,6 +4,7 @@
 	background: #FFF;
 	position: relative;
 	margin-top: 10px;
+	background-size: 500px 250px !important;
 }
 
 .libraryBox {
