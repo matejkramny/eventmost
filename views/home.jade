@@ -6,6 +6,7 @@ append addonjs
 
 append content
 	include inc/flash
+	include event/inc/item
 
 	.col-xs-12.hide-all2
 		form(method="POST", accept-charset="utf-8")
@@ -191,61 +192,38 @@ append content
 								li
 									a(href='#') My planned events
 	.clearfix.hide-mini
+	
+	
 	//- My Events
-	.nspacer.col-md-12.col-xs-12
-		.pull-left.event(style='width:101.4%;')
-			a.slid-box
-				article.c-two
-					.slid-box-background
-						h4 
-							.eye.hide2
-							| <br /> REVIEW
-				.col-lg-9.col-md-9.col-xs-9.psev.pad-left-ten.rbox.eh
-					h4 Temporibus autem quibusdam et aut officiis
-					.smart-minus
-						| At vero eos et accusamus et iusto odio dignissimos ducimus qui <b>blanditiis praesentium </b>voluptatum deleniti atque 
-						corrupti quos <b>dolores et quas molestias.</b> At vero eos et accusamus et iusto odio dignissimos ducimus qui <b>blanditiis 
-						praesentium </b>voluptatum deleniti atque corrupti quos dolores et quas molestias.. At vero eos et accusamus et iusto 
-						odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque  corrupti quos dolores et quas mole.
-						At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque 
-						corrupti quos dolores et quas molestias. 
-	.clearfix
-	.nspacer.col-md-12.col-xs-12
-		.pull-left.event(style='width:101.4%;')
-			a.slid-box
-				article.c-two
-					.slid-box-background
-						h4 
-							.eye.hide2
-							| <br /> REVIEW
-				.col-lg-9.col-md-9.col-xs-9.psev.pad-left-ten.rbox.eh
-					h4 Temporibus autem quibusdam et aut officiis
-					.smart-minus
-						| At vero eos et accusamus et iusto odio dignissimos ducimus qui <b>blanditiis praesentium </b>voluptatum deleniti atque 
-						corrupti quos <b>dolores et quas molestias.</b> At vero eos et accusamus et iusto odio dignissimos ducimus qui <b>blanditiis 
-						praesentium </b>voluptatum deleniti atque corrupti quos dolores et quas molestias.. At vero eos et accusamus et iusto 
-						odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque  corrupti quos dolores et quas mole.
-						At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque 
-						corrupti quos dolores et quas molestias. 
-	.clearfix
-	.nspacer
-		.pull-right(style='height:35px;')
-			ul.pagination
-				li
-					a(href='#') «
-				li.active
-					a(href='#') 1
-				li
-					a(href='#') 2
-				li
-					a(href='#') 3
-				li.disabled
-					a(href='#') ...
-				li
-					a(href='#') 5
-				li
-					a(href='#') »
-	.clearfix
+	for event in myevents
+		mixin eventItem(event)
+	if myevents.length == 0
+		.nspacer.col-md-12.col-xs-12.col-lg-12.col-sm-12
+			p.lead.text-center You have no events..
+				br
+				a(href="/event/add") Create an event
+	else
+		.nspacer
+			.pull-right(style='height:35px;')
+				ul.pagination
+					li
+						a(href='#') «
+					li.active
+						a(href='#') 1
+					li
+						a(href='#') 2
+					li
+						a(href='#') 3
+					li.disabled
+						a(href='#') ...
+					li
+						a(href='#') 5
+					li
+						a(href='#') »
+		.clearfix
+
+
+	//- nearby
 	.nspacer.col-md-12.col-xs-12.font-bigs.font-thin.hide-mini
 		.bg-ashen(style='width:101.4%;')
 			.color-green.pad-left-ten
