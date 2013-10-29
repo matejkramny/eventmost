@@ -1,7 +1,6 @@
 var express = require('express')
 	, routes = require('./routes')
 	, http = require('http')
-	, https = require('https')
 	, path = require('path')
 	, mongoose = require('mongoose')
 	, util = require('./util')
@@ -9,12 +8,6 @@ var express = require('express')
 	, authmethods = require('./routes/auth')
 	, mailer = require('nodemailer')
 	, passport = require('passport')
-	, fs = require('fs')
-
-var ssl = {
-	key: fs.readFileSync(process.env.SSL_KEY),
-	cert: fs.readFileSync(process.env.SSL_CERT)
-};
 
 var bugsnag = require("bugsnag");
 bugsnag.register("6c73b59b8d37503c8e8a70d67613d067", {
@@ -118,9 +111,6 @@ app.use(function(req, res, next) {
 var server = http.createServer(app)
 server.listen(app.get('port'), function(){
 	console.log('Express server listening on port ' + app.get('port'));
-});
-https.createServer(ssl, app).listen(process.env.PORTS || 443, function() {
-	console.log("HTTPS Listening to "+(process.env.PORTS || 443))
 });
 //exports.io = require('socket.io').listen(server)
 
