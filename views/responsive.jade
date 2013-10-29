@@ -33,9 +33,9 @@ html
 					.pull-right.logo-right
 							//- Only displayed when users are guests
 							button.btn.btn-warning.pb.pull-right(type='submit', data-toggle="modal", href="#signModal")
-								| <b>SIGN UP</b>
+								b SIGN UP
 							button.btn.btn-default.pb.pull-right(type='submit', data-toggle="modal", href="#loginModal", style="margin-right:-4px;")
-								| <b>LOGIN</b>
+								b LOGIN
 				else
 					//- Only displayed when user is logged in
 					.pull-right.col-md-2.col-xs-2
@@ -62,7 +62,8 @@ html
 			block content
 			.row
 				footer.col-xs-12.col-md-12.col-sm-12.col-lg-12
-					.text-center Copyright © 2013 <b>EventMost</b> | <a href="/contact" class="link-white">Contact us</a>
+					.text-center Copyright © 2013 <b>EventMost</b> | 
+						a.link-white(href="/contact") Contact us
 			
 			if !loggedIn
 				include modals/signup

@@ -1,8 +1,8 @@
 extends responsive
 
 append addonjs
-	script(src="/js/geo.js", defer="true")
-	script(src="/js/getNearbyEvents.js", defer="true")
+	script(src="/v2/js/geo.js", defer="true")
+	script(src="/v2/js/angular-nearEvents.js", defer="true")
 
 append content
 	include inc/flash
@@ -265,45 +265,15 @@ append content
 							li
 								a(href='/') My planned events
 	.clearfix.hide-all2
-
-
+	
 	//- Events nearby
-	.nspacer.col-md-12.col-xs-12
-		.pull-left.event(style='width:101.4%;')
-			a.slid-box
-				article.c-two
-					.slid-box-background
-						h4 
-							.eye.hide2
-							| <br /> REVIEW
-				.col-lg-9.col-md-9.col-xs-9.psev.pad-left-ten.rbox.eh
-					h4 Temporibus autem quibusdam et aut officiis
-					.smart-minus
-						| At vero eos et accusamus et iusto odio dignissimos ducimus qui <b>blanditiis praesentium </b>voluptatum deleniti atque 
-						corrupti quos <b>dolores et quas molestias.</b> At vero eos et accusamus et iusto odio dignissimos ducimus qui <b>blanditiis 
-						praesentium </b>voluptatum deleniti atque corrupti quos dolores et quas molestias.. At vero eos et accusamus et iusto 
-						odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque  corrupti quos dolores et quas mole.
-						At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque 
-						corrupti quos dolores et quas molestias. 
-	.clearfix
-	.nspacer.col-md-12.col-xs-12
-		.pull-left.event(style='width:101.4%;')
-			a.slid-box
-				article.c-two
-					.slid-box-background
-						h4 
-							.eye.hide2
-							| <br /> REVIEW
-				.col-lg-9.col-md-9.col-xs-9.psev.pad-left-ten.rbox.eh
-					h4 Temporibus autem quibusdam et aut officiis
-					.smart-minus
-						| At vero eos et accusamus et iusto odio dignissimos ducimus qui <b>blanditiis praesentium </b>voluptatum deleniti atque 
-						corrupti quos <b>dolores et quas molestias.</b> At vero eos et accusamus et iusto odio dignissimos ducimus qui <b>blanditiis 
-						praesentium </b>voluptatum deleniti atque corrupti quos dolores et quas molestias.. At vero eos et accusamus et iusto 
-						odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque  corrupti quos dolores et quas mole.
-						At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque 
-						corrupti quos dolores et quas molestias. 
-	.clearfix
+	#nearbyEventsPlaceholder
+		p.text-center.lead
+	
+	.center.hide2
+			button#tryAgainNearbyEvents.btn.btn-warning.font.big-pad-left.big-pad-right(type='submit', href="#", style="font-weight:300;")
+				| Allow EventMost to GeoLocate my current position
+	
 	.nspacer
 		.pull-right(style='height:35px;')
 			ul.pagination
@@ -322,6 +292,5 @@ append content
 				li
 					a(href='#') »
 	.clearfix
-
 	
 	include modals/homemodals
