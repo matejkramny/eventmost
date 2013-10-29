@@ -36,12 +36,12 @@ $(document).ready(function() {
 		if (avatarUploadRequest.readyState == 4) {
 			if (avatarUploadRequest.status == 200) {
 				result = JSON.parse(avatarUploadRequest.response);
-				console.log(result);
-				console.log(typeof result);
+				
 				if (result.status != 200) {
 					alert("Could not save profile :(\n"+result.err);
 				} else {
 					$("#profileSaveStatus").html("<b>Saved!</b>")
+					window.location = "/";
 				}
 			} else {
 				// Not ok
