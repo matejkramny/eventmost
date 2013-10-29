@@ -68,7 +68,7 @@ textarea:focus, input:focus{
 
 /* helpers */
 .hide-all, .hide-all2, .hide-all3, .lower-hide, .hide-except-smart, .defer{display: none;}
-.hide-all4, .defer2, .vis-till-1{display:none;}
+.hide-all4, .defer2, .vis-till-1, ..res-dis-non-vis{display:none;}
 
 .hide-except-smart{display: none;}
 .hide-mini3-except-smart{display: block;}
@@ -85,6 +85,7 @@ textarea:focus, input:focus{
 .pad-left-zero{padding-left: 0px;}
 .pad-left-five{padding-left: 5px;}
 .pad-left-ten {padding-left: 10px;}
+.pad-left-ten2 {padding-left: 12px;}
 .big-pad-left{padding-left: 30px;}
 .bigger-pad-left{padding-left: 45px;}
 
@@ -175,10 +176,15 @@ border-radius: 10px;}
 .post-width-text{width:95%;}
 
 .col-lg-3-5{width:31.6%; float: left; padding-left: 5px; padding-right: 5px;}
-.button-event{width:19.9%;}
+.button-event{width:20%;}
 
 .create-e-img{margin-top:-20px; padding-top:20px; margin-left:0px;}
-
+.create-height{height:158px;}
+.date-height{height:402px;}
+.uploads{padding-top:30px;}
+.uploads2, .dif2{display: none;}
+.uploads-text{padding-top:10px;}
+.res-dis-non-vis{display: none;}
 /* links*/
 a.link-purple{
   text-decoration: none;
@@ -341,6 +347,7 @@ a.link-white:hover {
 #file_browse_wrapper {
     background: url('../../../images/browse_button.svg') 0 0 no-repeat;
     border:none;
+    height: 158px;
     overflow:hidden;
     cursor: pointer !important;
 }
@@ -926,11 +933,11 @@ p.check5-purple-small:not(#foo) > input[type=checkbox] + label:hover            
 
 
 /**** datepicker ****/
-#datepicker {
-  margin-left: -10px;
+#datepicker, #datepicker2 {
+  margin-left: -5px;
 }
 .ui-datepicker {
-  width: 411px;
+  width: 100%;
   background-color: #542437;
   display: none;
   margin: 10px 0 0 0;
@@ -1049,14 +1056,10 @@ p.check5-purple-small:not(#foo) > input[type=checkbox] + label:hover            
   height: 30px;
   line-height: 30px;
   min-width: 34px;
-  -webkit-border-radius: 6px;
-  -moz-border-radius: 6px;
-  border-radius: 6px;
+
 }
 .ui-datepicker td a {
-  -webkit-border-radius: 6px;
-  -moz-border-radius: 6px;
-  border-radius: 6px;
+
     background-color: #542437;
   color: #f1f1f2;
 }
@@ -1158,7 +1161,7 @@ p.check5-purple-small:not(#foo) > input[type=checkbox] + label:hover            
 .blind2 {position:absolute; margin-top:16px; margin-left:771px; z-index:700;}
 
 .tinyeditor-font-over {background:url(../../../images/tiny_over.svg); width:176px;height: 44px;margin-left:402px; 
-  overflow: hidden; z-index: 700;}
+  overflow: hidden; z-index: 700;  font-size:14px}
 #tinyeditor {border:none; margin:0; padding:0; font:14px 'Courier New',Verdana; width: 100% !important;}
 .tinyeditor {width: 100% !important; border:10px solid #0992a3;  color: #fff; padding:0 0px 0px; font:12px Verdana,Arial}
 .tinyeditor iframe {width: 100% !important; border:none;  background-color: #f1f1f2; overflow-x:hidden}
@@ -1168,7 +1171,7 @@ border-radius: 10px; color: #54777b; font-size: 20px; font-weight: 100 !importan
 .tinyeditor-header select option{background-color: #f1f1f2; color: #53777a}
 .tinyeditor-header select option:hover{background-color: #f1f1f2; color: #53777a}
 .tinyeditor-font {width:120%; padding-left: 10px !important;  height: 44px; font-weight: 100;  
-  font-size:20px; padding-top: 6px !important;  
+  font-size:14px; padding-top: 6px !important;  
   margin-top:0px !important; margin-left:0px; background:url(../../../images/tiny_over.svg); -webkit-appearance:none; }
 .tinyeditor-font-over2 {margin-top:-44px !important; background:url(../../../images/tiny_over.svg); width:176px;
   height: 44px; margin-left:590px; overflow: hidden; z-index: 700; -webkit-appearance:none;}   
@@ -1179,6 +1182,7 @@ border-radius: 10px; color: #54777b; font-size: 20px; font-weight: 100 !importan
 .tinyeditor-font option  {border: none; font-size: 14px; color: #54777b; padding: 5px; font-weight: 100;}
 .tinyeditor-size option  {border: none; font-size: 14px; color: #54777b; padding: 5px; font-weight: 100;}
 .tinyeditor-font select {width: 120%; font-size: 14px;}
+.tinyeditor-font, .tinyeditor-size{font-size: 18px !important; margin-top: 14px;}
 
 .tinyeditor-style {margin-right:12px}
 .tinyeditor-divider {float:left; width:1px; height:30px; background:#ccc}
@@ -1478,6 +1482,18 @@ p.check5:not(#foo) > input[type=checkbox] + label:hover               { backgrou
 .res-butt2 {width: 110px; height: auto; margin-top: 12px; margin-right: 0px!important;}
 .prof-wall{padding-left: 10px; padding-right: 10px;}
 .font-tw{font-size: 16px;}
+#file_browse_wrapper {
+    background: url('../../../images/browse_button-smaller.svg') 0 0 no-repeat;
+    height: 127px;
+}
+.create-height{height:127px;}
+.uploads{padding-top:20px;}
+.uploads-text{padding-top:10px;}
+.logo-text{font-size: 18px;}
+.event-venue-input{width:85.7%; }
+.event-address-input{width:82.4%; }
+.current-location{margin-left: -4px; font-size: 11px; padding-top: 4px;}
+.date-height{height:435px;}
 }
 
 
@@ -1507,6 +1523,19 @@ p.check5:not(#foo) > input[type=checkbox] + label:hover               { backgrou
 .font-tw{font-size: 14px;}
 .prof-wall{padding-left: 7px; padding-right: 7px;}
 .font-x1 {font-size: 11px;}
+#file_browse_wrapper {
+    background: url('../../../images/browse_button-smaller.svg') 0 0 no-repeat;
+    height: 127px;
+}
+.create-height{height:127px;}
+.uploads{padding-top:20px;}
+.uploads-text{padding-top:10px;}
+.logo-text{font-size: 18px;}
+.event-venue-input{width:85.7%; }
+.event-address-input{width:82.4%; }
+.current-location{margin-left: -4px; font-size: 11px; padding-top: 4px;}
+.date-height{height:435px;}
+
 }
 
 @media only screen and (min-width: 768px) and (max-width: 980px) {
@@ -1556,9 +1585,53 @@ p.check5:not(#foo) > input[type=checkbox] + label:hover               { backgrou
 .font-x1 {font-size: 11px;}
 .inv-till-1{display: none;}
 .vis-till-1{display: block;}
+.ui-datepicker .ui-datepicker-title {
+  margin: 0 52px;
+  line-height: 44px;
+  text-align: center;
+  font-size: 14px;
+}
+.ui-datepicker select {
+    font-size: 8px;
+  margin: 1px 0;
+}
+.ui-datepicker td span,
+.ui-datepicker td a {
+  font-size: 10px;
+}
+.ui-datepicker th {
+  font-size: 10px;
+}
+.ui-datepicker-calendar{width: 100px;}
+#file_browse_wrapper {
+    background: url('../../../images/browse_button-smaller2.svg') 0 0 no-repeat;
+    height: 94px;
+}
+.create-height{height:94px;}
+.uploads{display: none;}
+.uploads2{display: block; margin: 0px auto; padding-top: 10px;}
+.uploads-text{padding-top:10px;}
+.logo-text{font-size: 18px;}
+.event-venue-input{width:85.7%; }
+.event-address-input{width:82.4%; }
+.current-location{margin-left: -9px; font-size: 9px; padding-top: 1px; text-align: center;}
+.date-height{height:415px;}
+#datepicker, #datepicker2{margin-left: -15px;}
+.dif{display: none;}
+.dif2{display: block; line-height: 20px; padding-left: 5px;}
+.tinyeditor-font-over2 {margin-top:14px !important; background:url(../../../images/tiny_over.svg); width:176px;
+  height: 44px; margin-left:15px; overflow: hidden; z-index: 700; -webkit-appearance:none;} 
+.tinyeditor-header {height:110px;}
+.learn-create{margin-top: -5px;}
+.gestlist{padding-left: 0px;}
+.disabled-image{margin-left: 10px; width: 110%;}
+.re-font{font-size: 20px}
+.re-font2{font-size: 20px; padding-top: 10px;}
 }
 
 @media only screen and (min-width: 686px) and (max-width: 768px) {
+.next-drop li{width: 100px;}
+.next-drop {width: 100px;}
 #slider1 .overview li{ width: 170px;}
 .slider-text {width: 110%;}
 .slider-text:hover {width: 110%;}
@@ -1623,10 +1696,59 @@ p.check5:not(#foo) > input[type=checkbox] + label:hover               { backgrou
 .font-x1 {font-size: 11px;}
 .inv-till-1{display: none;}
 .vis-till-1{display: block;}
+.ui-datepicker .ui-datepicker-title {
+  margin: 0 52px;
+  line-height: 44px;
+  text-align: center;
+  font-size: 14px;
+}
+.ui-datepicker select {
+    font-size: 8px;
+  margin: 1px 0;
+}
+.ui-datepicker td span,
+.ui-datepicker td a {
+  font-size: 10px;
+}
+.ui-datepicker th {
+  font-size: 10px;
+}
+.ui-datepicker-calendar{width: 100px;}
+#file_browse_wrapper {
+    background: url('../../../images/browse_button-smaller2.svg') 0 0 no-repeat;
+    height: 94px;
+}
+.create-height{height:94px;}
+.uploads{display: none;}
+.uploads2{display: block; margin: 0px auto; padding-top: 10px;}
+.uploads-text{padding-top:10px;}
+.logo-text{font-size: 18px;}
+.event-venue-input{width:85.7%; }
+.event-address{width:18.4%;}
+.event-address-input{width:80.4%; }
+.current-location{margin-left: -9px; font-size: 9px; padding-top: 1px; text-align: center;}
+.date-height{height:415px;}
+#datepicker, #datepicker2{margin-left: -15px;}
+.dif{display: none;}
+.dif2{display: block; line-height: 20px; padding-left: 5px;}
+.tinyeditor-font-over2 {margin-top:14px !important; background:url(../../../images/tiny_over.svg); width:176px;
+  height: 44px; margin-left:15px; overflow: hidden; z-index: 700; -webkit-appearance:none;} 
+.tinyeditor-header {height:110px;}
+.learn-create{margin-top: -5px;}
+.gestlist{padding-left: 0px;}
+.disabled-image{margin-left: 10px; width: 110%;}
+.re-font{font-size: 18px}
+.re-font2{font-size: 18px; padding-top: 10px;}
+.res-dis-non{display: none;}
+.res-dis-non-vis{display: block;}
+table.gridtable {font-size: 14px;}
+table.gridtable td {font-size: 12px;}
+table.gridtable th {font-size: 12px;}
 }
 
 
 @media only screen and (min-width: 481px) and (max-width: 685px) {
+.re-font2{font-size: 12px; padding-top: 6px;}
 #slider1 .overview li{ width: 170px;}
 .slider-text {width: 110%;}
 .slider-text:hover {width: 110%;}
@@ -1704,6 +1826,78 @@ p.check5:not(#foo) > input[type=checkbox] + label:hover               { backgrou
 .inv-till-1, .vis-till-1{display: none;}
 .pad-smart{padding-left: 0px !important; padding-right: 0px !important;}
 .pad-on-smart{padding-left: 0px !important; padding-right: 0px !important;}
+.logo-text{font-size: 14px;}
+.event-name{width:19%; line-height:30px;}
+.event-name-input{width:80%; margin-top:6px !important;}
+.create-height{height:70px;}
+.dif2{display: block; line-height: 1px;}
 }
 
+@media only screen and (max-width: 480px) {
+.logo-text{font-size: 12px;}
+.event-name{width:38%; line-height:30px; padding-top: 1px;}
+.event-name-input{width:60%; margin-top:6px !important;}
+.create-height{height:70px;}
+.dif2{display: block; line-height: 1px;}
+#file_browse_wrapper {
+    background: url('../../../images/browse_button-smaller3.svg') 0 0 no-repeat;
+    height: 48px;
+    width: 100%;
+}
+.ui-datepicker .ui-datepicker-title {
+  margin: 0 52px;
+  line-height: 44px;
+  text-align: center;
+  font-size: 14px;
+}
+.ui-datepicker select {
+    font-size: 8px;
+  margin: 1px 0;
+}
+.ui-datepicker td span,
+.ui-datepicker td a {
+  font-size: 10px;
+  padding: 0px;
+  margin-left: -5px;
+}
+.ui-datepicker th {
+  font-size: 10px;
+}
+.ui-datepicker-calendar{width: 100px;}
+#datepicker{margin-left: -15px; }
+.tinyeditor-font-over2 {margin-top:14px !important; background:url(../../../images/tiny_over.svg); width:176px;
+  height: 44px; margin-left:15px; overflow: hidden; z-index: 700; -webkit-appearance:none;} 
+.tinyeditor-font-over {margin-top:100px !important; background:url(../../../images/tiny_over.svg); width:176px;
+  height: 44px; margin-left:15px; overflow: hidden; z-index: 700; -webkit-appearance:none;} 
+.tinyeditor-header {height:220px;}
 
+table.gridtable {
+  color:#f1f1f2;
+  margin: 0px  auto;
+  width: 100%;
+  border-width: 1px;
+  border-color: #f1f1f2;
+  border-collapse: collapse;
+
+}
+table.gridtable th {
+  border-width: 1px;
+  text-align: center;
+  font-size: 10px;
+  padding: 8px;
+  color: #f1f1f2;
+  border-style: solid;
+  border:5px solid #f1f1f2;
+  background-color: #0992a3;
+}
+table.gridtable td {
+  border-width: 1px;
+  font-size: 10px;
+  padding: 8px;
+  color: #542437;
+  border-style: solid;
+  border:5px solid #f1f1f2;
+  background-color: #0992a3;
+}
+.re-font2{font-size: 12px; padding-top: 10px;}
+}

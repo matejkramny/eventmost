@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="24.375px" height="24.452px" viewBox="-38.393 -5.5 24.375 24.452" enable-background="new -38.393 -5.5 24.375 24.452"
+	 xml:space="preserve">
+<g>
+	<path fill="#542437" d="M95.533,8.079c-4.323-4.301-12.58-5.995-16.905-1.69L44.041,40.824C39.723,45.128,39.723,52.1,44.045,56.4
+		c4.319,4.307,11.322,4.307,15.646,0l8.045-8.014L82.9,33.292c4.325-4.301,5.447-10.158,1.125-14.457
+		c-4.317-4.305-10.199-3.187-14.518,1.115L54.346,35.051l1.622,1.614l15.16-15.093c3.421-3.405,7.854-4.527,11.273-1.123
+		c3.42,3.404,2.293,7.821-1.122,11.222L66.115,46.77l-8.054,8.02c-3.415,3.398-8.979,3.398-12.396,0
+		c-3.417-3.407-3.417-8.947,0-12.348L80.253,8c3.42-3.4,10.235-1.711,13.652,1.692c3.416,3.403,5.119,10.191,1.695,13.594
+		L65.412,53.352l1.624,1.619l30.195-30.072C101.549,20.601,99.851,12.379,95.533,8.079z"/>
+</g>
+<g>
+	<path fill="none" stroke="#542437" stroke-width="2" stroke-linecap="round" stroke-miterlimit="10" d="M220.589,91.604
+		c0,0.99-0.784,1.793-1.757,1.793h-14.6c-0.971,0-1.756-0.803-1.756-1.793V72.02h18.111L220.589,91.604L220.589,91.604z"/>
+	
+		<line fill="none" stroke="#542437" stroke-width="2" stroke-linecap="round" stroke-miterlimit="10" x1="206.119" y1="72.02" x2="206.119" y2="93.396"/>
+	
+		<line fill="none" stroke="#542437" stroke-width="2" stroke-linecap="round" stroke-miterlimit="10" x1="211.533" y1="72.02" x2="211.533" y2="93.396"/>
+	
+		<line fill="none" stroke="#542437" stroke-width="2" stroke-linecap="round" stroke-miterlimit="10" x1="216.947" y1="72.02" x2="216.947" y2="93.396"/>
+	<path fill="none" stroke="#542437" stroke-width="2" stroke-linecap="round" stroke-miterlimit="10" d="M207.702,68.836v-2.438
+		c0-0.991,0.786-1.795,1.758-1.795h4.146c0.971,0,1.758,0.804,1.758,1.795v2.438"/>
+	<path fill="#542437" d="M223.051,70.75c0,0.99-0.787,1.795-1.758,1.795h-19.52c-0.971,0-1.758-0.805-1.758-1.795v0.073
+		c0-0.991,0.787-1.794,1.758-1.794h19.52c0.971,0,1.757,0.804,1.757,1.794L223.051,70.75L223.051,70.75z"/>
+</g>
+<text transform="matrix(1 0 0 1 157.501 148.7207)" fill="#542437" font-family="'Raleway'" font-size="10.4236">Delete</text>
+<g>
+	<path fill="none" stroke="#542437" stroke-width="2" stroke-linecap="round" stroke-miterlimit="10" d="M-18.906,16.677
+		c0,0.782-0.634,1.416-1.417,1.416h-11.766c-0.783,0-1.417-0.633-1.417-1.416V1.214h14.599V16.677z"/>
+	
+		<line fill="none" stroke="#542437" stroke-width="2" stroke-linecap="round" stroke-miterlimit="10" x1="-30.569" y1="1.214" x2="-30.569" y2="18.092"/>
+	
+		<line fill="none" stroke="#542437" stroke-width="2" stroke-linecap="round" stroke-miterlimit="10" x1="-26.206" y1="1.214" x2="-26.206" y2="18.092"/>
+	
+		<line fill="none" stroke="#542437" stroke-width="2" stroke-linecap="round" stroke-miterlimit="10" x1="-21.842" y1="1.214" x2="-21.842" y2="18.092"/>
+	<path fill="none" stroke="#542437" stroke-width="2" stroke-linecap="round" stroke-miterlimit="10" d="M-29.293-1.299v-1.925
+		c0-0.782,0.634-1.417,1.416-1.417h3.342c0.782,0,1.417,0.634,1.417,1.417v1.925"/>
+	<path fill="#542437" d="M-16.923,0.213c0,0.781-0.635,1.416-1.417,1.416h-15.732c-0.783,0-1.417-0.635-1.417-1.416V0.27
+		c0-0.782,0.634-1.417,1.417-1.417h15.732c0.782,0,1.417,0.634,1.417,1.417V0.213z"/>
+</g>
+</svg>
