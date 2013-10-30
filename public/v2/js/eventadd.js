@@ -1,6 +1,66 @@
 $(document).ready(function() {
 	var eventid = null;// used when event is created by ajax
 	
+	var isLocalStorageCapable = false;
+	try {
+		if ('localStorage' in window && window['localStorage'] !== null) {
+			isLocalStorageCapable = true;
+		}
+	} catch (e) {
+	}
+	
+	function getNear(coords) {
+		$.ajax({
+			url: "http://maps.googleapis.com/maps/api/geocode/json?latlng="+coords.lat+","+coords.lng+"&sensor=true",
+			dataType: "json",
+			method: "GET",
+			success: function(data, status, jqxhr) {
+				if (data.results.length > 0) {
+					$(".current-location-field").val(data.results[0].formatted_address);
+					$(".current-location-status").html("use current location")
+				} else {
+					$(".current-location-status").html("Location unavailable :(")
+				}
+			}
+		});
+	}
+	
+	var loadNear = function() {
+		$(".current-location-status").html("Locating..");
+		
+		if (window.Geo.isSupported()) {
+			window.Geo.getLocation(function(coords, pos) {
+				
+				$(".current-location-status").html("Googling..");
+				
+				if (isLocalStorageCapable) {
+					//HTML5 storage...
+					localStorage["didSaveCoords"] = true;
+					localStorage["coords"] = JSON.stringify(coords);
+				}
+				
+				getNear(coords);
+			}, function(err) {
+				var msg = Geo.errorMessage(err);
+				$(".current-location-status").html("Location Unavailable :(");
+			});
+		} else {
+			$placeholderText.html("Geolocalization not supported by your browser");
+		}
+	}
+	
+	// Event location for desktop
+	$("#creditcardsmaller3, #creditcardsmaller223").change(function() {
+		if ($(this).is(':checked')) {
+			if (isLocalStorageCapable && localStorage["didSaveCoords"]) {
+				getNear(JSON.parse(localStorage["coords"]));
+			} else {
+				loadNear()
+			}
+		}
+	})
+	
+	//TINY editor
 	var editor = new TINY.editor.edit('editor', {
 		id: 'tinyeditor',
 		height: 175,
@@ -21,10 +81,14 @@ $(document).ready(function() {
 	});
 	
 	// Datepicker
-	$(".datepickerWrapper .nowButton").click(function() {
+	$(".datepickerWrapper .nowButton").click(function(ev) {
+		ev.preventDefault();
+		
 		var now = new Date();
 		var time = ('0' + now.getHours()).slice(-2) + ":" + ('0' + now.getMinutes()).slice(-2);
-		$(this).parent().parent().find('input[type=time]').val(time)
+		$(this).parent().parent().parent().find('input[type=time]').val(time)
+		
+		return false;
 	})
 	
 	// Enable categories
@@ -101,12 +165,17 @@ $(document).ready(function() {
 		
 		var reader = new FileReader();
 		reader.onload = function(img) {
-			$("#avatar_preview").attr('src', img.target.result);
+			$(".avatar_preview").attr('src', img.target.result);
 		}
 		reader.readAsDataURL(file);
 	})
 	
-	$("#file_upload_wrapper").click(function() {
+	$(".file_browse_wrapper").click(function(ev) {
+		ev.preventDefault();
+		$("#file_browse").trigger('click');
+		return false;
+	})
+	$(".file_upload_wrapper").click(function() {
 		if (typeof file === "undefined" || file == null) {
 			// opens the dialog
 			$("#file_browse").trigger('click');
@@ -121,11 +190,12 @@ $(document).ready(function() {
 		avatarUploadRequest = new XMLHttpRequest();
 		avatarUploadRequest.responseType = "json";
 		avatarUploadRequest.onreadystatechange = xmlhttprequestResponse;
+		avatarUploadRequest.upload.addEventListener('progress', xmlUploadProgress, false)
 		avatarUploadRequest.open("POST", "/event/add/avatar");
 		avatarUploadRequest.send(form);
 	});
 	
-	$("#file_delete_wrapper").click(function() {
+	$(".file_delete_wrapper").click(function() {
 		file = null;
 		avatarUploadRequest = null;
 		
@@ -148,6 +218,24 @@ $(document).ready(function() {
 		})
 	});
 	
+	function updateProgress(perc) {
+		if (perc > 0) {
+			$(".avatar-progress-upload").removeClass('progress-bar-success').parent().removeClass("hide")
+		}
+		
+		$(".avatar-progress-upload").attr("aria-valuenow", perc).css("width", perc+"%").find("span").html(perc+"% Uploaded");
+		
+		if (perc >= 100) {
+			$(".avatar-progress-upload").addClass("progress-bar-success").parent().addClass("hide");
+		}
+	}
+	
+	function xmlUploadProgress (ev) {
+		if (ev.lengthComputable) {
+			var percent = Math.round(ev.loaded * 100 / ev.total);
+			updateProgress(percent)
+		}
+	}
 	function xmlhttprequestResponse () {
 		if (avatarUploadRequest.readyState == 4) {
 			if (avatarUploadRequest.status == 200) {

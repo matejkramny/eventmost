@@ -5,7 +5,7 @@ $(document).ready(function() {
 		$($this).parent().find(".datepickerResult").html(dateString);
 	}
 	
-	$('#datepicker, #datepicker2').each(function() {
+	$('.datepicker').each(function() {
 		var self = this;
 		$(this).datepicker({
 			inline: true,
