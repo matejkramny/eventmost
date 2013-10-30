@@ -1,11 +1,6 @@
 $(document).ready(function() {
 	var eventid = null;// used when event is created by ajax
 	
-	$("#mycarouse, #mycarousel2").jcarousel({
-		vertical: true,
-		scroll: 2
-	});
-	
 	var editor = new TINY.editor.edit('editor', {
 		id: 'tinyeditor',
 		height: 175,
