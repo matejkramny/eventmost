@@ -168,6 +168,8 @@ $(document).ready(function() {
 			$(".avatar_preview").attr('src', img.target.result);
 		}
 		reader.readAsDataURL(file);
+		
+		uploadAvatar()
 	})
 	
 	$(".file_browse_wrapper").click(function(ev) {
@@ -175,15 +177,15 @@ $(document).ready(function() {
 		$("#file_browse").trigger('click');
 		return false;
 	})
-	$(".file_upload_wrapper").click(function() {
+	function uploadAvatar () {
 		if (typeof file === "undefined" || file == null) {
 			// opens the dialog
 			$("#file_browse").trigger('click');
 			return;
 		}
-		
+	
 		$("#avatarStatus").html("<br/>Uploading..");
-		
+	
 		var form = new FormData();
 		form.append("_csrf", $("head meta[name=_csrf]").attr('content'));
 		form.append("avatar", file);
@@ -193,7 +195,8 @@ $(document).ready(function() {
 		avatarUploadRequest.upload.addEventListener('progress', xmlUploadProgress, false)
 		avatarUploadRequest.open("POST", "/event/add/avatar");
 		avatarUploadRequest.send(form);
-	});
+	}
+	$(".file_upload_wrapper").click(uploadAvatar);
 	
 	$(".file_delete_wrapper").click(function() {
 		file = null;
