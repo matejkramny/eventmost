@@ -173,6 +173,8 @@ textarea:focus, input:focus{
 .color-green{color: #0992a3;}
 .color-white{color: #fff;}
 .color-ashen{color: #f1f1f2;}
+.color-yellow{color: #fdd093;}
+
 
 .bg-purple {background-color: #542437; color: #e6e7e8;}
 .bg-ashen {background-color: #e6e7e8; color: #542437;}
@@ -837,7 +839,7 @@ table.gridtable-payment td {
                           left:-20px; padding:0px; position:absolute; top:2px; width:auto; min-width:48px; list-style:none; }
         .dropdown6 span.value { display:none;}
         .dropdown6 dd ul li a { padding:5px; display:block; padding-left: 10px;  border-bottom: none; 
-          background:#ecd077 none repeat scroll 0 0; color:#542437;}
+          background:#fdd093 none repeat scroll 0 0; color:#542437;}
         .dropdown6 dd ul li a:hover { background-color:#542437; color:#fff;}
         .dropdown6 .border_bottom a {border-bottom: 4px solid #53777a !important;}
         .dropx6 {cursor:pointer; display:block; padding:0px; color: #53777a; padding-top: 0px; margin-left: -20px;}
