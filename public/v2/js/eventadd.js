@@ -261,24 +261,17 @@ $(document).ready(function() {
 	}
 	
 	// Categories & tickets
-	$("#selectedCategoriesList").on('mouseover', 'li', function() {
-		$(this).find("a").css("opacity", 1)
-	}).on('mouseout', 'li', function() {
-		$(this).find("a").css("opacity", 0)
-	}).on('click', 'li a', function(e) {
+	$("#selectedCategoriesList").on('click', 'span', function(e) {
 		e.preventDefault()
-		var cat = $(this).parent();
-		var text = cat.find('.guest').html();
-		removeCategory(cat, text);
+		
+		var text = $(this).attr("val");
+		removeCategory($(this), text);
 		removeTicket(text)
 		
 		return false;
 	})
-	$("#selectedCategoriesList li").each(function() {
-		$(this).find("a").css("opacity", 0)
-	})
 	
-	var categories = [];
+	var categories = ["Guest Speaker"];
 	var $tickets = $("#tickets");
 	function getTickets () {
 		var tickets = [];
@@ -324,7 +317,7 @@ $(document).ready(function() {
 		var html = "<tr>" + $("#ticketTemplate").html() + "</tr>";
 		$tickets.append(html);
 		
-		fixTickets();
+		//fixTickets();
 	}
 	
 	function removeTicket(ticket) {
@@ -343,16 +336,16 @@ $(document).ready(function() {
 			}
 		}
 		
-		var template = $("#selectedCategoryListTemplate");
-		template.find(".guest").html(category);
-		template.find("input[type=hidden]").val(category);
-		var html = template.html();
-		$("#selectedCategoriesList").append(html);
+		//var template = $("#selectedCategoryListTemplate");
+		//template.find(".guest").html(category);
+		//template.find("input[type=hidden]").val(category);
+		//var html = template.html();
+		$("#selectedCategoriesList").append("<span val=\""+category+"\">"+category+"<br/></span>");
 		
 		categories.push(category);
 		
 		if (categories.length > 0) {
-			$("#selectedCategories .noneSelected").hide();
+			$("#selectedCategoriesList .noneSelected").addClass('hide')
 		}
 	}
 	
@@ -368,19 +361,20 @@ $(document).ready(function() {
 		$category.remove();
 		
 		if (categories.length == 0) {
-			$("#selectedCategories .noneSelected").show();
+			$("#selectedCategoriesList .noneSelected").removeClass("hide");
 		}
 	}
 	
-	$("#predefinedCategories li a").click(function() {
-		var text = $(this).html();
+	$("#predefinedCategories span").click(function() {
+		var text = $(this).attr("val");
 		addCategory(text);
 		addTicket(text);
 	})
-	$("#createCategory .addCategory").click(function(ev) {
+	$("#createCategory a.add-category-manual").click(function(ev) {
 		ev.preventDefault();
 		
-		var field = $(this).parent().find("input");
+		var href = $(this).attr("href")
+		var field = $("#createCategory input"+href)
 		var val = field.val();
 		if (val.length > 0) {
 			addCategory(val);

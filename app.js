@@ -69,6 +69,7 @@ app.locals.pretty = process.env.NODE_ENV != 'production' // Pretty HTML outside 
 //app.use(bugsnag.requestHandler);
 app.use(express.logger('dev')); // Pretty log
 app.use(express.limit('25mb')); // File upload limit
+//TODO SERVE STATIC SHIT ONLY FOR DEVELOPMENT.. PRODUCTION STUFF GETS SERVED BY NGINX. make a switch in process.env
 app.use("/", express.static(path.join(__dirname, 'public'))); // serve static files
 app.use(express.bodyParser()); // Parse the request body
 app.use(express.cookieParser()); // Parse cookies from header
