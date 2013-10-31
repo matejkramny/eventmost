@@ -9,472 +9,100 @@ append addonjs
 
 append content
 	include ../inc/flash
-
-	//- smart
-	//- ------------------------------mobile
-	//- event search for mobiles
-	.col-xs-12.hide-all2
-		form(method="POST", accept-charset="utf-8")
-			input.gonew2.pull-right.header-links(type="button", value="GO", style="width:10%;")
-			input(type="hidden", name="_csrf", value=token)
-			input.pull-right.font-s.search-input.pad-left-ten.header-links(type="search", placeholder="search events or people", style="width:87%;")
-	.clearfix.hide-all2
-
-	form#mobileForm
-		//- event name
-		.col-xs-12.no-float.hide-all2
-			.container.bg-green.pad-top-zero.pad-right-zero(style="height:38px;")
-				.pull-left.event-name
-					.font.logo-text
-						| Event name
-				.pull-left.event-name-input
-						input.input-grey#LoginUserEmail(name="login", type="", required="required",)
-			.clearfix
-			//- logo
-			.nspacer-small
-			.col-xs-5.bg-yellow.pad-top-zero.pad-right-zero(style="height:38px;")
-				.pull-left.event-name
-					.font.logo-text.font-exception
-						| Logo
-			.col-xs-7.pad-right-zero
-				img.avatar_preview(src="/images/logo-avatar.svg",  class="img-responsive")
-			.clearfix
-		
-		.progress.hide
-			.progress-bar.avatar-progress-upload(role="progress", aria-valuenow="0", aria-valuemin="0", aria-valuemax="100", style="width: 0%;")
-				span.sr-only 0% Uploaded
+	
+	div(ng-controller="eventAdd")
+		//- smart
+		//- ------------------------------mobile
+		//- event search for mobiles
+		.col-xs-12.hide-all2
+			form(method="POST", accept-charset="utf-8")
+				input.gonew2.pull-right.header-links(type="button", value="GO", style="width:10%;")
+				input(type="hidden", name="_csrf", value=token)
+				input.pull-right.font-s.search-input.pad-left-ten.header-links(type="search", placeholder="search events or people", style="width:87%;")
 		.clearfix.hide-all2
-			//- image upload btns
-			button.btn.btn-warning.hide-all2.file_browse_wrapper(type='button', style="border-radius: 10px; padding:5px; padding-top:15px; width:32%; margin-top:-15px;")
-				img(src="/images/browses1.svg")
-				.center
-					| Browse
-			button.btn.btn-warning.hide-all2.file_upload_wrapper(type='button', style="border-radius: 10px; padding:5px; padding-top:15px; width:32%; margin-top:-15px;")
-				img(src="/images/upload-pin-s1.svg")
-				.center
-					| Upload
-			button.btn.btn-warning.hide-all2.file_delete_wrapper(type='button', style="border-radius: 10px; padding:5px; padding-top:15px; width:32%; margin-top:-15px;")
-				img(src="/images/bin1.svg")
-				.center
-					| Delete
 
-		//- venue name
-		.clearfix.hide-all2
-		.col-xs-12.no-float.hide-all2
-			.container.bg-green.pad-top-zero.pad-right-zero(style="height:38px; margin-top:-15px;")
-				.pull-left.event-name
-					.font.logo-text
-						| Venue name
-				.pull-left.event-name-input
-						input.input-grey#LoginUserEmail(name="login", type="", required="required",)
-
-		//- Event Address
-		.clearfix.hide-all2
-		.col-xs-12.no-float.hide-all2
-			.container.bg-purple.pad-top-zero.pad-right-zero(style="height:38px; margin-top:-35px;")
-				.pull-left.event-name
-					.font.logo-text
-						| Event address
-				.pull-left.event-name-input
-						input.input-grey.current-location-field(name="address", type="text")
-
-		//- Current location checkbox
-		.clearfix.hide-all2
-		.col-xs-12.no-float.hide-all2
-			.container.bg-purple.pad-top-zero.pad-right-zero(style="height:38px; margin-top:-35px;")
-				.pull-left
-					p.check5-purple-small
-						input(type="checkbox", id="creditcardsmaller223", value="small")
-						label(for='creditcardsmaller223') 
-				.pull-left.nspacer.logo-text.current-location-status
-						| use current location 
-
-		//- Event Date
-		.clearfix.hide-all2
-		.col-xs-12.no-float.hide-all2
-			.center(style="margin-top:-20px;")
-				| Event date
-		//- FROM
-		.clearfix.hide-all2
-		.col-xs-12.no-float.hide-all2
-			.container.bg-purple.date-height.datepickerWrapper(style="margin-top:-20px;")
-				.center
-					.font.logo-text
-						| FROM:
-				.datepicker
-				.pull-left.font-e
-					| Time of event:
-				.pull-left.pad-left-ten
-					input.input-grey-rounded(name="start_date", type="time")
+		form#mobileForm
+			//- event name
+			.col-xs-12.no-float.hide-all2
+				.container.bg-green.pad-top-zero.pad-right-zero(style="height:38px;")
+					.pull-left.event-name
+						.font.logo-text
+							| Event name
+					.pull-left.event-name-input
+							input.input-grey#eventName(name="eventName", type="text", required="required")
 				.clearfix
-				.nspacer
-				.pull-left
-					.input-grey-rounded.psev
-						a.link-purple.nowButton(href="#", style="font-size:10px;")
-							| NOW
-				.pull-right
-					.input-grey-rounded.psev
-						a.link-purple(href="#", style="font-size:10px;")
-							| DONE
-		//- TO
-		.clearfix.hide-all2
-		.col-xs-12.no-float.hide-all2
-			.container.bg-purple.date-height.datepickerWrapper(style="margin-top:-20px;")
-				.center
-					.font.logo-text
-						| TO:
-				.datepicker
-				.pull-left.font-e
-					| Time of event:
-				.pull-left.pad-left-ten
-					input.input-grey-rounded(name="start_date", type="time")
-				.clearfix
-				.nspacer
-				.pull-left
-					.input-grey-rounded.psev
-						a.link-purple.nowButton(href="#", style="font-size:10px;")
-							| NOW
-				.pull-right
-					.input-grey-rounded.psev
-						a.link-purple(href="#", style="font-size:10px;")
-							| DONE
-
-		//- Event description
-		.col-xs-12.no-float.hide-all2				
-			.nspacer-small
-			.bg-green
-				.pull-left
-					img.psev(src="/images/pencil.svg")
-				.pull-left.font2.font-thin.nspacer-small
-					| Event description
-				.pull-right.pad-right-ten.nspacer
-					img(src="/images/optional-white.svg")
-				.clearfix
-			.clearfix
-
-			textarea#tinyeditor1.hide-all2(style="height: 50px; width:1000px;", name="description", placeholder="Description...")
-
-		//- Ticket categories
-		.col-xs-12.no-float.hide-all2
-			.nspacer-small
-			.bg-purple(style="height:102px;")
-				.col-lg-12.col-md-12.col-xs-12.font2.center(style="padding-top:5px; font-size:13px;")
-					| Choose attendee / ticket categories
-				.col-lg-12.col-md-12.col-xs-12.font2.center
-					img(src="/images/optional-white.svg" class="img-responsive" style="margin:10px auto")
-				.col-lg-12.col-md-12.col-xs-12.font2.center
-					a.link-white(href="#", style="font-size:12px; padding-bottom:0px;") LEARN MORE
-					img.pad-left-five(src="/images/small-white-arrow.svg" style="")
-
-		//- Predefined categories
-		.col-xs-12.no-float.hide-all2
-			.pull-left.font2.font-exception
-				| Predefined categories
-			.clearfix
-			#predefinedCategories.font-evente.font-thin2.nspacer.pull-left.font-exception
-				span: a 1. Guest Speaker
-				span 2. Attendee
-				span 3. Vencor
-				span 4. Entrepreneur
-				span 5. Team
-				span 6. Startup Team
-				span 7. Company
-				span 8. Mentor
-				span 9. Educator
-			.clearfix
-		//- create your own
-		.clearfix.hide-all2
-		.col-xs-12.no-float.hide-all2
-			.pull-left.font2.font-exception
-				| Create your own
-			.clearfix
-			.font-evente.font-thin2.nspacer.pull-left
-				.col-lg-9.col-md-9.col-xs-9
-					input.input-ashen-rounded.font-exception(name="start_date", type="text", style="height:35px;")
-				.col-lg-3.col-md-3.col-xs-3.pad-left-zero
-					a(href="#").addCategory
-						img(src="/images/ashen-arrow.svg" style="")
-				.clearfix
+				//- logo
 				.nspacer-small
-				.col-lg-9.col-md-9.col-xs-9
-					input.input-ashen-rounded.font-exception(name="start_date", type="text", style="height:35px;")
-				.col-lg-3.col-md-3.col-xs-3.pad-left-zero
-					a(href="#").addCategory
-						img(src="/images/ashen-arrow.svg" style="")
+				.col-xs-5.bg-yellow.pad-top-zero.pad-right-zero(style="height:38px;")
+					.pull-left.event-name
+						.font.logo-text.font-exception
+							| Logo
+				.col-xs-7.pad-right-zero
+					img.avatar_preview(src="/images/logo-avatar.svg",  class="img-responsive")
 				.clearfix
-			.clearfix
-		//- selected cats
-		.clearfix.hide-all2
-		.col-xs-12.no-float.hide-all2
-			.pull-left.font2.font-exception
-				| Selected categories
-			.clearfix
-			.font-evente.font-thin2.nspacer.pull-left.font-exception
-				| Guest Speaker<br />
-			.clearfix
-
-		//- allow attendees checkbox
-		.clearfix.hide-all2
-		.col-xs-12.no-float.hide-all2
-			.nspacer
-			.font2.pull-left.font-exception
-				| Allow attendees to create their own categories?
-			.clearfix
-			.pull-left
-				label.checkbox.toggle.candy(style='width: 100px; margin-left:0px; margin-top:4px;', onclick='')
-					input(type='checkbox', class="invisible")
-					span
-						span No
-						span Yes
-					a.slide-button
-			.clearfix
-
-			//- allow them to comment in public checkbox
-			.nspacer
-			.font2.pull-left.font-exception
-				| Allow them to comment out in public (like facebook)?
-			.clearfix
-			.pull-left
-				label.checkbox.toggle.candy(style='width: 100px; margin-left:0px; margin-top:4px;', onclick='')
-					input(type='checkbox', class="invisible")
-					span
-						span No
-						span Yes
-					a.slide-button
-			.clearfix
-	
-			//- give admins to another user
-			.nspacer
-			.line-purple
-			.font2.pull-left.font-exception
-				| Give admin rights to another user?
-			.clearfix
-			.pull-left
-				label.checkbox.toggle.candy(style='width: 100px; margin-left:0px; margin-top:4px;', onclick='')
-					input(type='checkbox', class="invisible")
-					span
-						span No
-						span Yes
-					a.slide-button
-			.clearfix
-
-			.nspacer-medium
-	
-			//-tickets
-			.bg-purple.psev.font-lebig.pull-left.semi-bold
-				.pull-left
-					img(src="/images/small-ticket.svg" style="")
-				.pull-left.pad-right-ten
-					| Tickets
-			.clearfix
-			.line-purple
-			//- Include priced tickets checkbox
-			.nspacer
-			.font2.pull-left.font-exception
-				| Include priced tickets?
-			.clearfix
-		.clearfix.hide-all2
-		.col-xs-12.no-float.hide-all2.font-exception
-			.pull-left(style="width:50px;")
-				p.check5-purple-small
-					input(name="", placeholder="", type="checkbox", id="1creditcardsmaller23", value="small")
-					label(for='1creditcardsmaller23',)
-			.font2.pull-left
-				| YES
-			.col-lg-1.col-md-1.col-xs-1.pad-right-zero(style="width:50px;")
-				p.check5-purple-small
-					input(name="", placeholder="", type="checkbox", id="2creditcardsmaller233", value="small")
-					label(for='2creditcardsmaller233',)
-			.font2.pull-left
-				| NO
-			.clearfix
-		.clearfix
-
-		//- Tickets table
-		.col-xs-12.no-float.hide-all2
-			table.gridtable
-				thead
-					tr
-						th
-							| Ticket Type
-						th
-							| Ticket Price
-						th
-							| Number <br /> of tickets
-						th
-							| Fee
-						th
-							| Who pays <br /> the fee?
-						th
-							| VAT
-						th
-							| Total <br /> Ticket Price:
-						th
-							| What <br /> you’ll recive <br /> per ticket:
-				tbody#tickets
-					tr#ticketTemplate.hide
-						td.ticket-dropdown
-							ul.nav.navbar-nav(style="margin-right:-7px; margin-top:-5px;")
-								li.dropdown
-									a.dropdown-toggle(href='#', data-toggle='dropdown')
-										| Premium
-										b.caret
-									ul.dropdown-menu.pull-right
-										li
-											a(href='#') Premium
-										li
-											a(href='#') Standard
-						td
-							input.input-green(type="number", value="0.00",)
-						td
-							input.input-green(type="number", value="1",)
-						td
-							input.input-green(type="text", value="0.00",)
-						td.ticket-dropdown2
-							ul.nav.navbar-nav(style="margin-right:-7px; margin-top:-5px;")
-								li.dropdown
-									a.dropdown-toggle(href='#', data-toggle='dropdown')
-										| Arrange by
-										b.caret
-									ul.dropdown-menu.pull-right
-										li
-											a(href='#') Me
-										li
-											a(href='#') Attendee
-						td
-							input.input-green(type="text", disabled="disabled", )
-						td
-							input.input-green(type="text", disabled="disabled" )
-						td
-							input.input-green(type="text", )
-					tr
-						td.ticket-dropdown
-							ul.nav.navbar-nav(style="margin-top:-5px;")
-								li.dropdown
-									a.dropdown-toggle(href='#', data-toggle='dropdown' )
-										| Premium
-										b.caret
-									ul.dropdown-menu
-										li
-											a(href='#') Premium
-										li
-											a(href='#') Standard
-						td
-							input.input-green(type="number", value="0.00", style="font-size:10px;")
-						td
-							input.input-green(type="number", value="1", style="font-size:10px;")
-						td
-							input.input-green(type="text", value="0.00", style="font-size:10px;")
-						td.ticket-dropdown2
-							ul.nav.navbar-nav(style="margin-top:-5px;")
-								li.dropdown
-									a.dropdown-toggle(href='#', data-toggle='dropdown')
-										| Me
-										b.caret
-									ul.dropdown-menu.pull-right
-										li
-											a(href='#') Me
-										li
-											a(href='#') Attendee
-						td
-							input.input-green(type="text", disabled="disabled", style="font-size:10px;")
-						td
-							input.input-green(type="text", disabled="disabled", style="font-size:10px;")
-						td
-							input.input-green(type="text", style="font-size:10px;")
-			.clearfix
-		//- end mobile---------------------------
-
-	
-	form#desktop
-		//- -------------------------------standard
-
-		.nspacer-small.hide-mini
-		//- event name
-		.col-lg-11.col-md-11.col-xs-11.no-float.hide-mini
-			.container.bg-green.pad-top-zero.pad-right-zero(style="height:62px;")
-				.pull-left.event-name
-					.font.font-thin.logo-text
-						| Event name
-				.pull-left.event-name-input
-						input.input-grey#LoginUserEmail(name="login", type="", required="required", style="height:50px;")
-			.clearfix
-			.nspacer-small
+		
 			.progress.hide
 				.progress-bar.avatar-progress-upload(role="progress", aria-valuenow="0", aria-valuemin="0", aria-valuemax="100", style="width: 0%;")
 					span.sr-only 0% Uploaded
-			.col-lg-1.col-md-1.col-xs-1.bg-yellow.create-height
-				.font.font-thin.nspacer.logo-text.dif.font-exception
-					| Logo
-				.font.font-thin.nspacer.logo-text.dif2
-					| L<br />o<br />g<br />o
-			.col-lg-3-5
-				img.avatar_preview(src="/images/logo-avatar.svg",  class="img-responsive")
-			.pull-left.button-event
-				.bg-yellow-rounded
-					#file_browse_wrapper
-						input#file_browse(name="avatar", type="file")
-			a.pad-left-five.pull-left.button-event.file_upload_wrapper(href="#", style="text-decoration:none !important;")
-				.bg-yellow-rounded.center.create-height
-					img.uploads(src="/images/upload-pin.svg",)
-					img.uploads2(src="/images/upload-pin-s.svg",)
-					.center.font-tw.uploads-text
+			.clearfix.hide-all2
+				//- image upload btns
+				button.btn.btn-warning.hide-all2.file_browse_wrapper(type='button', style="border-radius: 10px; padding:5px; padding-top:15px; width:32%; margin-top:-15px;")
+					img(src="/images/browses1.svg")
+					.center
+						| Browse
+				button.btn.btn-warning.hide-all2.file_upload_wrapper(type='button', style="border-radius: 10px; padding:5px; padding-top:15px; width:32%; margin-top:-15px;")
+					img(src="/images/upload-pin-s1.svg")
+					.center
 						| Upload
-			.pad-left-five.pull-left.button-event.file_delete_wrapper
-				.bg-yellow-rounded.center.create-height
-					img.uploads(src="/images/delete-bin.svg",)
-					img.uploads2(src="/images/delete-bin-s.svg",)
-					.center.font-tw.uploads-text
+				button.btn.btn-warning.hide-all2.file_delete_wrapper(type='button', style="border-radius: 10px; padding:5px; padding-top:15px; width:32%; margin-top:-15px;")
+					img(src="/images/bin1.svg")
+					.center
 						| Delete
-			.clearfix
 
-			.nspacer-small
-			.col-lg-10.col-md-10.col-xs-10.pad-left-zero
-				.container.bg-green.pad-top-zero.pad-right-zero(style="height:62px;")
-					.pull-left.event-venue
-						.font.font-thin.logo-text
+			//- venue name
+			.clearfix.hide-all2
+			.col-xs-12.no-float.hide-all2
+				.container.bg-green.pad-top-zero.pad-right-zero(style="height:38px; margin-top:-15px;")
+					.pull-left.event-name
+						.font.logo-text
 							| Venue name
-					.pull-left.event-venue-input
-							input.input-grey#LoginUserEmail(name="login", type="", required="required", style="height:50px;")
-			.col-lg-2.col-md-2.col-xs-2
-				img(src="/images/optional-big.svg", alt="", style="margin-top:15px;" class="img-responsive")
-			.clearfix
+					.pull-left.event-name-input
+							input.input-grey#venueName(name="venueName", type="text")
 
-			.nspacer-small
-			.col-lg-8.col-md-8.col-xs-8.pad-left-zero.pad-right-zero
-				.container.bg-purple.pad-top-zero.pad-right-zero(style="height:62px;")
-					.pull-left.event-address
-						.font.font-thin.logo-text
+			//- Event Address
+			.clearfix.hide-all2
+			.col-xs-12.no-float.hide-all2
+				.container.bg-purple.pad-top-zero.pad-right-zero(style="height:38px; margin-top:-35px;")
+					.pull-left.event-name
+						.font.logo-text
 							| Event address
-					.pull-left.event-address-input
-							input.input-grey.current-location-field(name="address", type="text", style="height:50px;")
-			.col-lg-2.col-md-2.col-xs-2.pad-left-five
-				.container.bg-purple.pad-top-zero.pad-right-zero(style="height:62px;")
-					.center.current-location
+					.pull-left.event-name-input
+							input.input-grey.current-location-field#address(name="address", type="text")
+
+			//- Current location checkbox
+			.clearfix.hide-all2
+			.col-xs-12.no-float.hide-all2
+				.container.bg-purple.pad-top-zero.pad-right-zero(style="height:38px; margin-top:-35px;")
+					.pull-left
 						p.check5-purple-small
-							input(name="", placeholder="", type="checkbox", id="creditcardsmaller3", value="small")
-							label(for='creditcardsmaller3')
-					.nspacer-min-big.current-location.current-location-status
-						| use current location 
-			.col-lg-2.col-md-2.col-xs-2
-				img(src="/images/optional-big.svg", alt="", style="margin-top:15px;" class="img-responsive")
-			.clearfix
+							input(type="checkbox", id="creditcardsmaller223", value="small")
+							label(for='creditcardsmaller223') 
+					.pull-left.nspacer.logo-text.current-location-status
+							| use current location 
 
-			.nspacer-small
-
-			//- normal calendars
-			.col-lg-2.col-md-2.col-xs-2.pad-left-zero.pad-right-zero.res-dis-non
-				.container.bg-purple.pad-top-zero.pad-right-zero(style="height:62px;")
-					.pull-left.event-address
-						.font.font-thin.logo-text
-							| Event date
-
-			.col-lg-5.col-md-5.col-xs-5.pad-left-five.pad-right-zero.res-dis-non
-				.container.bg-purple.date-height.datepickerWrapper
+			//- Event Date
+			.clearfix.hide-all2
+			.col-xs-12.no-float.hide-all2
+				.center(style="margin-top:-20px;")
+					| Event date
+			//- FROM
+			.clearfix.hide-all2
+			.col-xs-12.no-float.hide-all2
+				.container.bg-purple.date-height.datepickerWrapper(style="margin-top:-20px;")
 					.center
-						.font.font-thin.logo-text
+						.font.logo-text
 							| FROM:
-					.datepicker
+					.datepicker#fromDateMobile
 					.pull-left.font-e
 						| Time of event:
 					.pull-left.pad-left-ten
@@ -483,18 +111,20 @@ append content
 					.nspacer
 					.pull-left
 						.input-grey-rounded.psev
-							a.link-purple.nowButton(href="#")
+							a.link-purple.nowButton(href="#", style="font-size:10px;")
 								| NOW
 					.pull-right
 						.input-grey-rounded.psev
-							a.link-purple(href="#")
+							a.link-purple(href="#", style="font-size:10px;")
 								| DONE
-			.col-lg-5.col-md-5.col-xs-5.pad-left-five.pad-right-zero.res-dis-non
-				.container.bg-purple.date-height.datepickerWrapper
+			//- TO
+			.clearfix.hide-all2
+			.col-xs-12.no-float.hide-all2
+				.container.bg-purple.date-height.datepickerWrapper(style="margin-top:-20px;")
 					.center
-						.font.font-thin.logo-text
+						.font.logo-text
 							| TO:
-					.datepicker
+					.datepicker#toDateMobile
 					.pull-left.font-e
 						| Time of event:
 					.pull-left.pad-left-ten
@@ -503,96 +133,46 @@ append content
 					.nspacer
 					.pull-left
 						.input-grey-rounded.psev
-							a.link-purple.nowButton(href="#")
+							a.link-purple.nowButton(href="#", style="font-size:10px;")
 								| NOW
 					.pull-right
 						.input-grey-rounded.psev
-							a.link-purple(href="#")
+							a.link-purple(href="#", style="font-size:10px;")
 								| DONE
-			//- small calendars
-			.col-lg-12.col-md-12.col-xs-12.pad-left-zero.pad-right-zero.res-dis-non-vis
-				.container.bg-purple.pad-top-zero.pad-right-zero(style="height:32px;")
-					.pull-left.event-address
-						.font.font-thin.logo-text
-							| Event date
-			.clearfix.res-dis-non-vis
-			.nspacer.res-dis-non-vis
-			.col-lg-6.col-md-6.col-xs-6.pad-left-zero.res-dis-non-vis
-				.container.bg-purple.date-height
-					.center
-						.font.font-thin.logo-text
-							| FROM:
-					#datepicker
-					.pull-left.font-e
-						| Time of event:
-					.pull-left.pad-left-ten
-						input.input-grey-rounded(name="start_date", type="time")
-					.clearfix
-					.nspacer
-					.pull-left
-						.input-grey-rounded.psev
-							a.link-purple(href="#")
-								| NOW
-					.pull-right
-						.input-grey-rounded.psev
-							a.link-purple(href="#")
-								| DONE
-			.col-lg-6.col-md-6.col-xs-6.pad-left-five.pad-right-zero.res-dis-non-vis
-				.container.bg-purple.date-height
-					.center
-						.font.font-thin.logo-text
-							| TO:
-					#datepicker2
-					.pull-left.font-e
-						| Time of event:
-					.pull-left.pad-left-ten
-						input.input-grey-rounded(name="start_date", type="time")
-					.clearfix
-					.nspacer
-					.pull-left
-						.input-grey-rounded.psev
-							a.link-purple(href="#")
-								| NOW
-					.pull-right
-						.input-grey-rounded.psev
-							a.link-purple(href="#")
-								| DONE
-			.clearfix
 
-			.nspacer-small
-			.bg-green
-				.pull-left
-					img.pencil(src="/images/pencil.svg")
-				.pull-left.font2.font-thin.nspacer-small
-					| Event description
-				.pull-right.pad-right-ten.nspacer
-					img(src="/images/optional-big-white.svg")
+			//- Event description
+			.col-xs-12.no-float.hide-all2				
+				.nspacer-small
+				.bg-green
+					.pull-left
+						img.psev(src="/images/pencil.svg")
+					.pull-left.font2.font-thin.nspacer-small
+						| Event description
+					.pull-right.pad-right-ten.nspacer
+						img(src="/images/optional-white.svg")
+					.clearfix
 				.clearfix
-			.clearfix
 
-			textarea#tinyeditor(style="height: 200px width:1000px;", name="description", placeholder="Description...")
+				textarea#tinyeditor1.hide-all2(style="height: 50px; width:1000px;", name="description", placeholder="Description...")
 
+			//- Ticket categories
+			.col-xs-12.no-float.hide-all2
+				.nspacer-small
+				.bg-purple(style="height:102px;")
+					.col-lg-12.col-md-12.col-xs-12.font2.center(style="padding-top:5px; font-size:13px;")
+						| Choose attendee / ticket categories
+					.col-lg-12.col-md-12.col-xs-12.font2.center
+						img(src="/images/optional-white.svg" class="img-responsive" style="margin:10px auto")
+					.col-lg-12.col-md-12.col-xs-12.font2.center
+						a.link-white(href="#", style="font-size:12px; padding-bottom:0px;") LEARN MORE
+						img.pad-left-five(src="/images/small-white-arrow.svg" style="")
 
-			//- Choose attendee labels
-			.nspacer-small
-			.bg-purple(style="height:82px;")
-				.col-lg-2.col-md-2.col-xs-2
-					img(src="/images/people2.svg", style="padding:5px;"  class="img-responsive")
-				.col-lg-8.col-md-8.col-xs-8.font2.font-thin(style="padding-top:25px;")
-					| Choose attendee / ticket categories
-				.pull-right.pad-right-ten.nspacer
-					img.dif(src="/images/optional-big-white.svg" class="img-responsive")
-					img.dif2(src="/images/optional-white.svg" class="img-responsive")
-				.pull-right.pad-right-ten.nspacer.learn-create
-					a.link-white(href="#", style="font-size:12px; padding-bottom:0px;") LEARN MORE
-					img.pad-left-five(src="/images/small-white-arrow.svg" style="")
-
-			.clearfix
-			.nspacer-small
-			.col-lg-4.col-md-4.col-xs-4
-				.center.font2.font-exception
+			//- Predefined categories
+			.col-xs-12.no-float.hide-all2
+				.pull-left.font2.font-exception
 					| Predefined categories
-				#predefinedCategories.font-evente.font-thin2.nspacer.gestlist.font-exception-thin
+				.clearfix
+				.predefinedCategories.font-evente.font-thin2.nspacer.pull-left.font-exception
 					span(val="Guest Speaker") 1. Guest Speaker
 					br
 					span(val="Attendee") 2. Attendee
@@ -610,130 +190,120 @@ append content
 					span(val="Mentor") 8. Mentor
 					br
 					span(val="Educator") 9. Educator
-			.col-lg-4.col-md-4.col-xs-4
-				.center.font2.font-exception
+				.clearfix
+			//- create your own
+			.clearfix.hide-all2
+			.col-xs-12.no-float.hide-all2
+				.pull-left.font2.font-exception
 					| Create your own
-				#createCategory.font-evente.font-thin2.nspacer.gestlist
+				.clearfix
+				.createCategory.font-evente.font-thin2.nspacer.pull-left
 					.col-lg-9.col-md-9.col-xs-9
-						input#add-category-manual-1.input-ashen-rounded.font-exception-thin(add-category-manual, type="text", style="height:35px;")
-					.col-lg-3.col-md-3.col-xs-3.pad-left-zero
-						a.add-category-manual(href="#add-category-manual-1").addCategory
-							img(src="/images/ashen-arrow.svg" style="")
-					.clearfix
-					.nspacer-small
-					.col-lg-9.col-md-9.col-xs-9
-						input#add-category-manual-2.input-ashen-rounded.font-exception-thin(add-category-manual, type="text", style="height:35px;")
-					.col-lg-3.col-md-3.col-xs-3.pad-left-zero
-						a.add-category-manual(href="#add-category-manual-2").addCategory
-							img(src="/images/ashen-arrow.svg" style="")
-					.clearfix
-					.nspacer-small
-					.col-lg-9.col-md-9.col-xs-9
-						input#add-category-manual-3.input-ashen-rounded.font-exception-thin(add-category-manual, type="text", style="height:35px;")
-					.col-lg-3.col-md-3.col-xs-3.pad-left-zero
-						a.add-category-manual(href="#add-category-manual-3").addCategory
-							img(src="/images/ashen-arrow.svg" style="")
-					.clearfix
-					.nspacer-small
-					.col-lg-9.col-md-9.col-xs-9
-						input#add-category-manual-4.input-ashen-rounded.font-exception-thin(add-category-manual, type="text", style="height:35px;")
-					.col-lg-3.col-md-3.col-xs-3.pad-left-zero
-						a.add-category-manual(href="#add-category-manual-4").addCategory
-							img(src="/images/ashen-arrow.svg" style="")
-					.clearfix
-					.nspacer-small
-					.col-lg-9.col-md-9.col-xs-9
-						input#add-category-manual-5.input-ashen-rounded.font-exception-thin(add-category-manual, type="text", style="height:35px;")
-					.col-lg-3.col-md-3.col-xs-3.pad-left-zero
-						a.add-category-manual(href="#add-category-manual-5").addCategory
-							img(src="/images/ashen-arrow.svg" style="")
-					.clearfix
-					.nspacer-small
-					.col-lg-9.col-md-9.col-xs-9
-						input.input-ashen-rounded.font-exception-thin(add-category-manual, type="text", style="height:35px;")
+						input#add-category-manual-6.input-ashen-rounded.font-exception(name="start_date", type="text", style="height:35px;")
 					.col-lg-3.col-md-3.col-xs-3.pad-left-zero
 						a.add-category-manual(href="#add-category-manual-6").addCategory
 							img(src="/images/ashen-arrow.svg" style="")
-			.col-lg-4.col-md-4.col-xs-4
-				.center.font2.font-exception
+					.clearfix
+					.nspacer-small
+					.col-lg-9.col-md-9.col-xs-9
+						input#add-category-manual-7.input-ashen-rounded.font-exception(name="start_date", type="text", style="height:35px;")
+					.col-lg-3.col-md-3.col-xs-3.pad-left-zero
+						a.add-category-manual(href="#add-category-manual-7").addCategory
+							img(src="/images/ashen-arrow.svg" style="")
+					.clearfix
+				.clearfix
+			//- selected cats
+			.clearfix.hide-all2
+			.col-xs-12.no-float.hide-all2
+				.pull-left.font2.font-exception
 					| Selected categories
-				#selectedCategoriesList.font-evente.font-thin2.nspacer.gestlist.font-exception-thin
+				.clearfix
+				.selectedCategoriesList.font-evente.font-thin2.nspacer.pull-left.font-exception
 					span(val="Guest Speaker") Guest Speaker
 						br
 					p.noneSelected.hide No categories :(
-			.clearfix
+				.clearfix
 
-			.nspacer
-			.font2.pull-left.font-exception
-				| Allow attendees to create their own categories?
-			.pull-left
-				label.checkbox.toggle.candy(style='width: 100px; margin-left:20px; margin-top:4px;', onclick='')
-					input(type='checkbox', class="invisible")
-					span
-						span No
-						span Yes
-					a.slide-button
-			.clearfix
-
-
-			.nspacer
-			.font2.pull-left.font-exception
-				| Allow attendees to publicly comment on the event?
-			.pull-left
-				label.checkbox.toggle.candy(style='width: 100px; margin-left:20px; margin-top:4px;', onclick='')
-					input(type='checkbox', class="invisible")
-					span
-						span No
-						span Yes
-					a.slide-button
-			.clearfix
-			.nspacer
-			.line-purple
-			.font2.pull-left.font-exception
-				| Give admin rights to another user?
-			.pull-left
-				label.checkbox.toggle.candy(style='width: 100px; margin-left:20px; margin-top:4px;', onclick='')
-					input(type='checkbox', class="invisible")
-					span
-						span No
-						span Yes
-					a.slide-button
-			.clearfix
-
-			.nspacer-medium
-
-			.bg-purple.psev.font-lebig.pull-left.semi-bold
+			//- allow attendees checkbox
+			.clearfix.hide-all2
+			.col-xs-12.no-float.hide-all2
+				.nspacer
+				.font2.pull-left.font-exception
+					| Allow attendees to create their own categories?
+				.clearfix
 				.pull-left
-					img(src="/images/small-ticket.svg" style="")
-				.pull-left.pad-right-ten
-					| Tickets
+					label.checkbox.toggle.candy(style='width: 100px; margin-left:0px; margin-top:4px;', onclick='')
+						input#allowAttendeesCreateCategoriesDesktop(type='checkbox', class="invisible")
+						span
+							span No
+							span Yes
+						a.slide-button
+				.clearfix
+
+				//- allow them to comment in public checkbox
+				.nspacer
+				.font2.pull-left.font-exception
+					| Allow attendees to publicly comment on the event?
+				.clearfix
+				.pull-left
+					label.checkbox.toggle.candy(style='width: 100px; margin-left:0px; margin-top:4px;', onclick='')
+						input#allowAttendeesCommentDesktop(type='checkbox', class="invisible")
+						span
+							span No
+							span Yes
+						a.slide-button
+				.clearfix
+	
+				//- give admins to another user
+				.nspacer
+				.line-purple
+				.font2.pull-left.font-exception
+					| Give admin rights to another user?
+				.clearfix
+				.pull-left
+					label.checkbox.toggle.candy(style='width: 100px; margin-left:0px; margin-top:4px;', onclick='')
+						input(type='checkbox', class="invisible")
+						span
+							span No
+							span Yes
+						a.slide-button
+				.clearfix
+
+				.nspacer-medium
+	
+				//-tickets
+				.bg-purple.psev.font-lebig.pull-left.semi-bold
+					.pull-left
+						img(src="/images/small-ticket.svg" style="")
+					.pull-left.pad-right-ten
+						| Tickets
+				.clearfix
+				.line-purple
+				//- Include priced tickets checkbox
+				.nspacer
+				.font2.pull-left.font-exception
+					| Include priced tickets?
+				.clearfix
+			.clearfix.hide-all2
+			.col-xs-12.no-float.hide-all2.font-exception
+				.pull-left(style="width:50px;")
+					p.check5-purple-small
+						input(name="", placeholder="", type="checkbox", id="1creditcardsmaller23", value="small", checked="checked")
+						label(for='1creditcardsmaller23')
+				.font2.pull-left
+					| YES
+				.col-lg-1.col-md-1.col-xs-1.pad-right-zero(style="width:50px;")
+					p.check5-purple-small
+						input(name="", placeholder="", type="checkbox", id="2creditcardsmaller233", value="small")
+						label(for='2creditcardsmaller233')
+				.font2.pull-left
+					| NO
+				.clearfix
 			.clearfix
-			.line-purple
 
-			.nspacer
-			.font2.pull-left.font-exception
-				| Include priced tickets?
-			.col-lg-1.col-md-1.col-xs-1.pad-right-zero(style="width:50px;")
-				p.check5-purple-small
-					input(name="", placeholder="", type="checkbox", id="creditcardsmaller23", value="small")
-					label(for='creditcardsmaller23',)
-			.font2.pull-left.font-exception
-				| YES
-			.col-lg-1.col-md-1.col-xs-1.pad-right-zero(style="width:50px;")
-				p.check5-purple-small
-					input(name="", placeholder="", type="checkbox", id="creditcardsmaller233", value="small")
-					label(for='creditcardsmaller233',)
-			.font2.pull-left.font-exception
-				| NO
-			.clearfix
-		.clearfix
-		.col-lg-11.col-md-11.col-xs-11.no-float
-				//- ticket price table
-		//-.row-fluid.rel#tickets-table
-		//-display=inline becoz its locked by default
-
-		.col-lg-11.col-md-11.col-xs-11.no-float.hide-mini
-
+			//- Tickets table
+			.hide-all2
+				.col-xs-12.no-float.hide-all2.ticketsWrapper
 					table.gridtable
 						thead
 							tr
@@ -747,200 +317,555 @@ append content
 									| Fee
 								th
 									| Who pays <br /> the fee?
-								th
-									| VAT
-								th
-									| Total <br /> Ticket Price:
-								th
-									| What <br /> you’ll recive <br /> per ticket:
 						tbody#tickets
-							tr#ticketTemplate.hide
-								td.ticket-dropdown
-									ul.nav.navbar-nav(style="margin-right:-7px; margin-top:-5px;")
-										li.dropdown.next-drop
-											a.dropdown-toggle.next-drop(href='#', data-toggle='dropdown')
-												| Premium
-												b.caret
-											ul.dropdown-menu.pull-right.next-drop
-												li
-													a(href='#') Premium
-												li
-													a(href='#') Standard
-								td
-									input.input-green(type="number", value="0.00",)
-								td
-									input.input-green(type="number", value="1",)
-								td
-									input.input-green(type="text", value="0.00",)
-								td.ticket-dropdown2
-									ul.nav.navbar-nav(style="margin-right:-7px; margin-top:-5px;")
-										li.dropdown
-											a.dropdown-toggle(href='#', data-toggle='dropdown')
-												| Arrange by
-												b.caret
-											ul.dropdown-menu.pull-right.next-drop
-												li
-													a(href='#') Me
-												li
-													a(href='#') Attendee
-								td
-									input.input-green(type="text", disabled="disabled", )
-								td
-									input.input-green(type="text", disabled="disabled" )
-								td
-									input.input-green(type="text", )
-							tr
+							tr(ng-repeat="ticket in tickets")
 								td.ticket-dropdown
 									ul.nav.navbar-nav(style="margin-top:-5px;")
 										li.dropdown
-											a.dropdown-toggle(href='#', data-toggle='dropdown' )
-												| Premium
+											a.dropdown-toggle(href='#', data-toggle='dropdown')
+												| {{ ticket.type }}
 												b.caret
-											ul.dropdown-menu.next-drop
+											ul.dropdown-menu
 												li
-													a(href='#') Premium
+													a(href='', ng-click="ticket.type='premium'") Premium
 												li
-													a(href='#') Standard
+													a(href='', ng-click="ticket.type='standard'") Standard
+												li
+													a(href='', ng-click="ticket.type='custom'") Custom
+									input.input-green(type="text", style="font-size:10px;", ng-model="ticket.customType", ng-show="ticket.isCustomType", placeholder="Custom ticket")
 								td
-									input.input-green(type="number", value="0.00",)
+									input.input-green(type="number", min="0", ng-model="ticket.price", style="font-size:10px;")
 								td
-									input.input-green(type="number", value="1",)
+									input.input-green(type="number", min="1", ng-model="ticket.quantity", style="font-size:10px;")
 								td
-									input.input-green(type="text", value="0.00",)
+									input.input-green(type="text", value="0.00", ng-model="ticket.fee", style="font-size:10px;")
 								td.ticket-dropdown2
 									ul.nav.navbar-nav(style="margin-top:-5px;")
 										li.dropdown
 											a.dropdown-toggle(href='#', data-toggle='dropdown')
 												| Me
 												b.caret
+											ul.dropdown-menu.pull-right
+												li
+													a(href='', ng-click="ticket.whopays='me'") Me
+												li
+													a(href='', ng-click="ticket.whopays='attendee'") Attendee
+					.clearfix
+				.nspacer
+				.center
+					button.btn.btn-info.font-bigs2.font-exception(type='submit', href="publishMobile", style="line-height:45px; padding:30px; padding-left:55px; padding-right:55px;")
+						| Publish<br /><b>my</b> event
+			//- end mobile---------------------------
+
+	
+		form#desktop
+			//- -------------------------------standard
+
+			.nspacer-small.hide-mini
+			//- event name
+			.col-lg-11.col-md-11.col-xs-11.no-float.hide-mini
+				.container.bg-green.pad-top-zero.pad-right-zero(style="height:62px;")
+					.pull-left.event-name
+						.font.font-thin.logo-text
+							| Event name
+					.pull-left.event-name-input
+							input.input-grey#eventNameDesktop(name="eventName", type="text", required="required", style="height:50px;")
+				.clearfix
+				.nspacer-small
+				.progress.hide
+					.progress-bar.avatar-progress-upload(role="progress", aria-valuenow="0", aria-valuemin="0", aria-valuemax="100", style="width: 0%;")
+						span.sr-only 0% Uploaded
+				.col-lg-1.col-md-1.col-xs-1.bg-yellow.create-height
+					.font.font-thin.nspacer.logo-text.dif.font-exception
+						| Logo
+					.font.font-thin.nspacer.logo-text.dif2
+						| L<br />o<br />g<br />o
+				.col-lg-3-5
+					img.avatar_preview(src="/images/logo-avatar.svg",  class="img-responsive")
+				.pull-left.button-event
+					.bg-yellow-rounded
+						#file_browse_wrapper
+							input#file_browse(name="avatar", type="file")
+				a.pad-left-five.pull-left.button-event.file_upload_wrapper(href="#", style="text-decoration:none !important;")
+					.bg-yellow-rounded.center.create-height
+						img.uploads(src="/images/upload-pin.svg",)
+						img.uploads2(src="/images/upload-pin-s.svg",)
+						.center.font-tw.uploads-text
+							| Upload
+				.pad-left-five.pull-left.button-event.file_delete_wrapper
+					.bg-yellow-rounded.center.create-height
+						img.uploads(src="/images/delete-bin.svg",)
+						img.uploads2(src="/images/delete-bin-s.svg",)
+						.center.font-tw.uploads-text
+							| Delete
+				.clearfix
+
+				.nspacer-small
+				.col-lg-10.col-md-10.col-xs-10.pad-left-zero
+					.container.bg-green.pad-top-zero.pad-right-zero(style="height:62px;")
+						.pull-left.event-venue
+							.font.font-thin.logo-text
+								| Venue name
+						.pull-left.event-venue-input
+								input.input-grey#venueNameDesktop(name="venueName", type="text", style="height:50px;")
+				.col-lg-2.col-md-2.col-xs-2
+					img(src="/images/optional-big.svg", alt="", style="margin-top:15px;" class="img-responsive")
+				.clearfix
+
+				.nspacer-small
+				.col-lg-8.col-md-8.col-xs-8.pad-left-zero.pad-right-zero
+					.container.bg-purple.pad-top-zero.pad-right-zero(style="height:62px;")
+						.pull-left.event-address
+							.font.font-thin.logo-text
+								| Event address
+						.pull-left.event-address-input
+								input.input-grey.current-location-field(name="address", type="text", style="height:50px;")
+				.col-lg-2.col-md-2.col-xs-2.pad-left-five
+					.container.bg-purple.pad-top-zero.pad-right-zero(style="height:62px;")
+						.center.current-location
+							p.check5-purple-small
+								input(name="", placeholder="", type="checkbox", id="creditcardsmaller3", value="small")
+								label(for='creditcardsmaller3')
+						.nspacer-min-big.current-location.current-location-status
+							| use current location 
+				.col-lg-2.col-md-2.col-xs-2
+					img(src="/images/optional-big.svg", alt="", style="margin-top:15px;" class="img-responsive")
+				.clearfix
+
+				.nspacer-small
+
+				//- normal calendars
+				.col-lg-2.col-md-2.col-xs-2.pad-left-zero.pad-right-zero.res-dis-non
+					.container.bg-purple.pad-top-zero.pad-right-zero(style="height:62px;")
+						.pull-left.event-address
+							.font.font-thin.logo-text
+								| Event date
+
+				.col-lg-5.col-md-5.col-xs-5.pad-left-five.pad-right-zero.res-dis-non
+					.container.bg-purple.date-height.datepickerWrapper
+						.center
+							.font.font-thin.logo-text
+								| FROM:
+						.datepicker
+						.pull-left.font-e
+							| Time of event:
+						.pull-left.pad-left-ten
+							input.input-grey-rounded(name="start_date", type="time")
+						.clearfix
+						.nspacer
+						.pull-left
+							.input-grey-rounded.psev
+								a.link-purple.nowButton(href="#")
+									| NOW
+						.pull-right
+							.input-grey-rounded.psev
+								a.link-purple(href="#")
+									| DONE
+				.col-lg-5.col-md-5.col-xs-5.pad-left-five.pad-right-zero.res-dis-non
+					.container.bg-purple.date-height.datepickerWrapper
+						.center
+							.font.font-thin.logo-text
+								| TO:
+						.datepicker
+						.pull-left.font-e
+							| Time of event:
+						.pull-left.pad-left-ten
+							input.input-grey-rounded(name="start_date", type="time")
+						.clearfix
+						.nspacer
+						.pull-left
+							.input-grey-rounded.psev
+								a.link-purple.nowButton(href="#")
+									| NOW
+						.pull-right
+							.input-grey-rounded.psev
+								a.link-purple(href="#")
+									| DONE
+				//- small calendars
+				.col-lg-12.col-md-12.col-xs-12.pad-left-zero.pad-right-zero.res-dis-non-vis
+					.container.bg-purple.pad-top-zero.pad-right-zero(style="height:32px;")
+						.pull-left.event-address
+							.font.font-thin.logo-text
+								| Event date
+				.clearfix.res-dis-non-vis
+				.nspacer.res-dis-non-vis
+				.col-lg-6.col-md-6.col-xs-6.pad-left-zero.res-dis-non-vis
+					.container.bg-purple.date-height
+						.center
+							.font.font-thin.logo-text
+								| FROM:
+						#datepicker
+						.pull-left.font-e
+							| Time of event:
+						.pull-left.pad-left-ten
+							input.input-grey-rounded(name="start_date", type="time")
+						.clearfix
+						.nspacer
+						.pull-left
+							.input-grey-rounded.psev
+								a.link-purple(href="#")
+									| NOW
+						.pull-right
+							.input-grey-rounded.psev
+								a.link-purple(href="#")
+									| DONE
+				.col-lg-6.col-md-6.col-xs-6.pad-left-five.pad-right-zero.res-dis-non-vis
+					.container.bg-purple.date-height
+						.center
+							.font.font-thin.logo-text
+								| TO:
+						#datepicker2
+						.pull-left.font-e
+							| Time of event:
+						.pull-left.pad-left-ten
+							input.input-grey-rounded(name="start_date", type="time")
+						.clearfix
+						.nspacer
+						.pull-left
+							.input-grey-rounded.psev
+								a.link-purple(href="#")
+									| NOW
+						.pull-right
+							.input-grey-rounded.psev
+								a.link-purple(href="#")
+									| DONE
+				.clearfix
+
+				.nspacer-small
+				.bg-green
+					.pull-left
+						img.pencil(src="/images/pencil.svg")
+					.pull-left.font2.font-thin.nspacer-small
+						| Event description
+					.pull-right.pad-right-ten.nspacer
+						img(src="/images/optional-big-white.svg")
+					.clearfix
+				.clearfix
+
+				textarea#tinyeditor(style="height: 200px width:1000px;", name="description", placeholder="Description...")
+
+
+				//- Choose attendee labels
+				.nspacer-small
+				.bg-purple(style="height:82px;")
+					.col-lg-2.col-md-2.col-xs-2
+						img(src="/images/people2.svg", style="padding:5px;"  class="img-responsive")
+					.col-lg-8.col-md-8.col-xs-8.font2.font-thin(style="padding-top:25px;")
+						| Choose attendee / ticket categories
+					.pull-right.pad-right-ten.nspacer
+						img.dif(src="/images/optional-big-white.svg" class="img-responsive")
+						img.dif2(src="/images/optional-white.svg" class="img-responsive")
+					.pull-right.pad-right-ten.nspacer.learn-create
+						a.link-white(href="#", style="font-size:12px; padding-bottom:0px;") LEARN MORE
+						img.pad-left-five(src="/images/small-white-arrow.svg" style="")
+
+				.clearfix
+				.nspacer-small
+				.col-lg-4.col-md-4.col-xs-4
+					.center.font2.font-exception
+						| Predefined categories
+					.predefinedCategories.font-evente.font-thin2.nspacer.gestlist.font-exception-thin
+						span(val="Guest Speaker") 1. Guest Speaker
+						br
+						span(val="Attendee") 2. Attendee
+						br
+						span(val="Vencor") 3. Vencor
+						br
+						span(val="Entrepreneur") 4. Entrepreneur
+						br
+						span(val="Team") 5. Team
+						br
+						span(val="Startup Team") 6. Startup Team
+						br
+						span(val="Company") 7. Company
+						br
+						span(val="Mentor") 8. Mentor
+						br
+						span(val="Educator") 9. Educator
+				.col-lg-4.col-md-4.col-xs-4
+					.center.font2.font-exception
+						| Create your own
+					.createCategory.font-evente.font-thin2.nspacer.gestlist
+						.col-lg-9.col-md-9.col-xs-9
+							input#add-category-manual-1.input-ashen-rounded.font-exception-thin(add-category-manual, type="text", style="height:35px;")
+						.col-lg-3.col-md-3.col-xs-3.pad-left-zero
+							a.add-category-manual(href="#add-category-manual-1").addCategory
+								img(src="/images/ashen-arrow.svg" style="")
+						.clearfix
+						.nspacer-small
+						.col-lg-9.col-md-9.col-xs-9
+							input#add-category-manual-2.input-ashen-rounded.font-exception-thin(add-category-manual, type="text", style="height:35px;")
+						.col-lg-3.col-md-3.col-xs-3.pad-left-zero
+							a.add-category-manual(href="#add-category-manual-2").addCategory
+								img(src="/images/ashen-arrow.svg" style="")
+						.clearfix
+						.nspacer-small
+						.col-lg-9.col-md-9.col-xs-9
+							input#add-category-manual-3.input-ashen-rounded.font-exception-thin(add-category-manual, type="text", style="height:35px;")
+						.col-lg-3.col-md-3.col-xs-3.pad-left-zero
+							a.add-category-manual(href="#add-category-manual-3").addCategory
+								img(src="/images/ashen-arrow.svg" style="")
+						.clearfix
+						.nspacer-small
+						.col-lg-9.col-md-9.col-xs-9
+							input#add-category-manual-4.input-ashen-rounded.font-exception-thin(add-category-manual, type="text", style="height:35px;")
+						.col-lg-3.col-md-3.col-xs-3.pad-left-zero
+							a.add-category-manual(href="#add-category-manual-4").addCategory
+								img(src="/images/ashen-arrow.svg" style="")
+						.clearfix
+						.nspacer-small
+						.col-lg-9.col-md-9.col-xs-9
+							input#add-category-manual-5.input-ashen-rounded.font-exception-thin(add-category-manual, type="text", style="height:35px;")
+						.col-lg-3.col-md-3.col-xs-3.pad-left-zero
+							a.add-category-manual(href="#add-category-manual-5").addCategory
+								img(src="/images/ashen-arrow.svg" style="")
+						.clearfix
+						.nspacer-small
+						.col-lg-9.col-md-9.col-xs-9
+							input.input-ashen-rounded.font-exception-thin(add-category-manual, type="text", style="height:35px;")
+						.col-lg-3.col-md-3.col-xs-3.pad-left-zero
+							a.add-category-manual(href="#add-category-manual-6").addCategory
+								img(src="/images/ashen-arrow.svg" style="")
+				.col-lg-4.col-md-4.col-xs-4
+					.center.font2.font-exception
+						| Selected categories
+					.selectedCategoriesList.font-evente.font-thin2.nspacer.gestlist.font-exception-thin
+						span(val="Guest Speaker") Guest Speaker
+							br
+						p.noneSelected.hide No categories :(
+				.clearfix
+
+				.nspacer
+				.font2.pull-left.font-exception
+					| Allow attendees to create their own categories?
+				.pull-left
+					label.checkbox.toggle.candy(style='width: 100px; margin-left:20px; margin-top:4px;', onclick='')
+						input(type='checkbox', class="invisible")
+						span
+							span No
+							span Yes
+						a.slide-button
+				.clearfix
+
+
+				.nspacer
+				.font2.pull-left.font-exception
+					| Allow attendees to publicly comment on the event?
+				.pull-left
+					label.checkbox.toggle.candy(style='width: 100px; margin-left:20px; margin-top:4px;', onclick='')
+						input(type='checkbox', class="invisible")
+						span
+							span No
+							span Yes
+						a.slide-button
+				.clearfix
+				.nspacer
+				.line-purple
+				.font2.pull-left.font-exception
+					| Give admin rights to another user?
+				.pull-left
+					label.checkbox.toggle.candy(style='width: 100px; margin-left:20px; margin-top:4px;', onclick='')
+						input(type='checkbox', class="invisible")
+						span
+							span No
+							span Yes
+						a.slide-button
+				.clearfix
+
+				.nspacer-medium
+
+				.bg-purple.psev.font-lebig.pull-left.semi-bold
+					.pull-left
+						img(src="/images/small-ticket.svg" style="")
+					.pull-left.pad-right-ten
+						| Tickets
+				.clearfix
+				.line-purple
+
+				.nspacer
+				.font2.pull-left.font-exception
+					| Include priced tickets?
+				.col-lg-1.col-md-1.col-xs-1.pad-right-zero(style="width:50px;")
+					p.check5-purple-small
+						input(name="", placeholder="", type="checkbox", id="creditcardsmaller23", value="small", checked="checked")
+						label(for='creditcardsmaller23')
+				.font2.pull-left.font-exception
+					| YES
+				.col-lg-1.col-md-1.col-xs-1.pad-right-zero(style="width:50px;")
+					p.check5-purple-small
+						input(name="", placeholder="", type="checkbox", id="creditcardsmaller233", value="small")
+						label(for='creditcardsmaller233')
+				.font2.pull-left.font-exception
+					| NO
+				.clearfix
+			.clearfix
+			.col-lg-11.col-md-11.col-xs-11.no-float
+					//- ticket price table
+			//-.row-fluid.rel#tickets-table
+			//-display=inline becoz its locked by default
+
+			.hide-mini
+				.col-lg-11.col-md-11.col-xs-11.no-float.hide-mini.ticketsWrapper
+					table.gridtable
+						thead
+							tr
+								th
+									| Ticket Type
+								th
+									| Ticket Price
+								th
+									| Number <br /> of tickets
+								th
+									| Fee
+								th
+									| Who pays <br /> the fee?
+						tbody#tickets
+							tr(ng-repeat="ticket in tickets")
+								td.ticket-dropdown
+									ul.nav.navbar-nav(style="margin-top:-5px;")
+										li.dropdown.dropdown-update-link
+											a.dropdown-toggle(href='#', data-toggle='dropdown' )
+												| {{ ticket.type }}
+												b.caret
+											ul.dropdown-menu.next-drop
+												li
+													a(href='', ng-click="ticket.type='premium'") Premium
+												li
+													a(href='', ng-click="ticket.type='standard'") Standard
+												li
+													a(href='', ng-click="ticket.type='custom'") Custom
+									input.input-green(type="text", ng-model="ticket.customType", ng-show="ticket.isCustomType", placeholder="Custom ticket")
+								td
+									input.input-green(type="number", value="0.00", min="0", ng-model="ticket.price")
+								td
+									input.input-green(type="number", value="1", min="1", ng-model="ticket.quantity")
+								td
+									input.input-green(type="text", value="0.00", disabled="disabled", ng-model="ticket.fee")
+								td.ticket-dropdown2
+									ul.nav.navbar-nav(style="margin-top:-5px;")
+										li.dropdown.dropdown-update-link
+											a.dropdown-toggle(href='#', data-toggle='dropdown')
+												| Me
+												b.caret
 											ul.dropdown-menu.pull-right.next-drop
 												li
-													a(href='#') Me
+													a(href='', ng-click="ticket.whopays='me'") Me
 												li
-													a(href='#') Attendee
-								td
-									input.input-green(type="text", disabled="disabled",)
-								td
-									input.input-green(type="text", disabled="disabled")
-								td
-									input.input-green(type="text",)
-			.clearfix
-			.nspacer
-			.center
-				button.btn.btn-info.font-bigs2.font-exception(type='submit', href="", style="line-height:45px; padding:30px; padding-left:55px; padding-right:55px;")
-					| Publish<br /><b>my</b> event
+													a(href='', ng-click="ticket.whopays='attendee'") Attendee
+					.clearfix
+				.nspacer
+				.center
+					button.btn.btn-info.font-bigs2.font-exception(type='submit', href="publishDesktop", style="line-height:45px; padding:30px; padding-left:55px; padding-right:55px;")
+						| Publish<br /><b>my</b> event
+			//- end desktop------------------------------------------
 
-			.clearfix
-			.nspacer-medium
-			.center
-				img(src="/images/publish.svg")
-
-			.nspacer
-		//- end desktop------------------------------------------
-
-
-
-
-
-
-	.col-lg-11.col-md-11.col-xs-11.no-float
-		.nspacer	
-			.pull-left.font.re-font.logo-text.font-exception
-				| Invite people with this link: 
-				//- this is auto-replaced by js
-				| #invitationLink Sorry, an error occured :(. Please let us know
-		.clearfix
-		.nspacer
-			.pull-left.font.re-font.logo-text.font-exception
-				| One last step: 
-			.pull-left.font.font-thin.pad-left-five.re-font.logo-text.font-exception-thin
-				| Control who can see or access your event
-
-		.clearfix
-		.nspacer
-			.pull-left.font.re-font.logo-text.font-exception
-				| Please type your password (there are no stupid restrictions):
-	.clearfix
-	.col-lg-11.col-md-11.col-xs-11.no-float
-			input.input-grey.textarea-green-border#LoginUserEmail(name="login", type="email", required="required", style="padding-top:5px; width:100%;")
-		.center.nspacer
-			button.btn.btn-default.font.re-font(type='submit', style="border-radius: 10px; color:#fff; padding:20px; padding-right:40px; padding-left:40px;")
-				| ENTER
-		.center.nspacer.color-green.font.re-font.logo-text.font-exception
-			| <b>SUCCESS!</b> Registration complete. To change any of this at anytime, <br />
-			| just go to “Event settings” within the event page.<br />
-			| Also there you will find how to control other very important functions<br />
-			| such as:
-
-		.clearfix
 	
-	.nspacer
-	
-	//- ------Desktop-------
-	.col-lg-11.col-md-11.col-xs-11.no-float.hide-mini.font-exception
-		.pull-left
-			img(src="/images/arrow-big-purple.svg")
-		.pull-left.font.pad-left-five.re-font2(style="margin-top:5px;")
-			| Adding inactive profile for guest speakers/teams/companies
-		.clearfix
-		.nspacer
-		.pull-left
-			img(src="/images/arrow-big-purple.svg")
-		.pull-left.font.pad-left-five.re-font2.font-exception(style="margin-top:5px;")
-			| Adding file to Event’s dropbox
-		.clearfix
-		.nspacer
-		.pull-left
-			img(src="/images/arrow-big-purple.svg")
-		.pull-left.font.pad-left-five.re-font2.font-exception(style="margin-top:5px;")
-			| View event summary
-		.clearfix
-		.nspacer
-		.pull-left
-			img(src="/images/arrow-big-purple.svg")
-		.pull-left.font.pad-left-five.re-font2(style="margin-top:5px;")
-			| Control who can comment out in the open
 
-	.clearfix.hide-mini
-	.nspacer.hide-mini
-
-	.col-lg-12.col-md-12.col-xs-12.center.hide-mini
-		button.btn.btn-default.font-e.font-ah(type='submit', href="", style="border-radius: 10px; padding:10px; padding-left:35px; padding-right:35px; margin-right:20px; color:#fff;")
-			| Go to home page
-		button.btn.btn-default.font-e.font-ah(type='submit', href="", style="border-radius: 10px; padding:10px; padding-left:35px; padding-right:35px; margin-left:20px; color:#fff;")
-			| Go to event page
-	//- //------Desktop-------//
-	
-	//- ------Mobile-------
-	.col-lg-12.col-md-12.col-xs-12.no-float.hide-all2
-		.pull-left
-			img(src="/images/arrow-big-purple.svg",  style="width:30px;")
-		.pull-left.font.pad-left-five.re-font2
-			| Adding inactive profile for guest speakers/teams/companies
 		.clearfix
-		.pull-left
-			img(src="/images/arrow-big-purple.svg",  style="width:30px;")
-		.pull-left.font.pad-left-five.re-font2
-			| Adding file to Event’s dropbox
-		.clearfix
-		.pull-left
-			img(src="/images/arrow-big-purple.svg",  style="width:30px;")
-		.pull-left.font.pad-left-five.re-font2
-			| View event summary
-		.clearfix
-		.pull-left
-			img(src="/images/arrow-big-purple.svg",  style="width:30px;")
-		.pull-left.font.pad-left-five.re-font2
-			| Control who can comment out in the open
-
-	.clearfix.hide-all2
-	.nspacer.hide-all2
-
-
-	.col-lg-12.col-md-12.col-xs-12.center.hide-all2
+		.nspacer-medium
 		.center
-			button.btn.btn-default.font-e.font-ah(type='submit', href="", style="border-radius: 10px; padding:10px; padding-left:35px; padding-right:35px; color:#fff;")
+			img(src="/images/publish.svg")
+
+		.nspacer
+
+		.col-lg-11.col-md-11.col-xs-11.no-float
+			.nspacer	
+				.pull-left.font.re-font.logo-text.font-exception
+					| Invite people with this link: 
+					//- this is auto-replaced by js
+					| #invitationLink Sorry, an error occured :(. Please let us know
+			.clearfix
+			.nspacer
+				.pull-left.font.re-font.logo-text.font-exception
+					| One last step: 
+				.pull-left.font.font-thin.pad-left-five.re-font.logo-text.font-exception-thin
+					| Control who can see or access your event
+
+			.clearfix
+			.nspacer
+				.pull-left.font.re-font.logo-text.font-exception
+					| Please type your password (there are no stupid restrictions):
+		.clearfix
+		.col-lg-11.col-md-11.col-xs-11.no-float
+				input.input-grey.textarea-green-border#LoginUserEmail(name="login", type="email", required="required", style="padding-top:5px; width:100%;")
+			.center.nspacer
+				button.btn.btn-default.font.re-font(type='submit', style="border-radius: 10px; color:#fff; padding:20px; padding-right:40px; padding-left:40px;")
+					| ENTER
+			.center.nspacer.color-green.font.re-font.logo-text.font-exception
+				| <b>SUCCESS!</b> Registration complete. To change any of this at anytime, <br />
+				| just go to “Event settings” within the event page.<br />
+				| Also there you will find how to control other very important functions<br />
+				| such as:
+
+			.clearfix
+	
+		.nspacer
+	
+		//- ------Desktop-------
+		.col-lg-11.col-md-11.col-xs-11.no-float.hide-mini.font-exception
+			.pull-left
+				img(src="/images/arrow-big-purple.svg")
+			.pull-left.font.pad-left-five.re-font2(style="margin-top:5px;")
+				| Adding inactive profile for guest speakers/teams/companies
+			.clearfix
+			.nspacer
+			.pull-left
+				img(src="/images/arrow-big-purple.svg")
+			.pull-left.font.pad-left-five.re-font2.font-exception(style="margin-top:5px;")
+				| Adding file to Event’s dropbox
+			.clearfix
+			.nspacer
+			.pull-left
+				img(src="/images/arrow-big-purple.svg")
+			.pull-left.font.pad-left-five.re-font2.font-exception(style="margin-top:5px;")
+				| View event summary
+			.clearfix
+			.nspacer
+			.pull-left
+				img(src="/images/arrow-big-purple.svg")
+			.pull-left.font.pad-left-five.re-font2(style="margin-top:5px;")
+				| Control who can comment out in the open
+
+		.clearfix.hide-mini
+		.nspacer.hide-mini
+
+		.col-lg-12.col-md-12.col-xs-12.center.hide-mini
+			button.btn.btn-default.font-e.font-ah(type='submit', href="", style="border-radius: 10px; padding:10px; padding-left:35px; padding-right:35px; margin-right:20px; color:#fff;")
 				| Go to home page
-			button.btn.btn-default.font-e.font-ah(type='submit', href="", style="border-radius: 10px; padding:10px; padding-left:35px; padding-right:35px;color:#fff;")
-			| Go to event page
-	//- //------Desktop-------//
+			button.btn.btn-default.font-e.font-ah(type='submit', href="", style="border-radius: 10px; padding:10px; padding-left:35px; padding-right:35px; margin-left:20px; color:#fff;")
+				| Go to event page
+		//- //------Desktop-------//
+	
+		//- ------Mobile-------
+		.col-lg-12.col-md-12.col-xs-12.no-float.hide-all2
+			.pull-left
+				img(src="/images/arrow-big-purple.svg",  style="width:30px;")
+			.pull-left.font.pad-left-five.re-font2
+				| Adding inactive profile for guest speakers/teams/companies
+			.clearfix
+			.pull-left
+				img(src="/images/arrow-big-purple.svg",  style="width:30px;")
+			.pull-left.font.pad-left-five.re-font2
+				| Adding file to Event’s dropbox
+			.clearfix
+			.pull-left
+				img(src="/images/arrow-big-purple.svg",  style="width:30px;")
+			.pull-left.font.pad-left-five.re-font2
+				| View event summary
+			.clearfix
+			.pull-left
+				img(src="/images/arrow-big-purple.svg",  style="width:30px;")
+			.pull-left.font.pad-left-five.re-font2
+				| Control who can comment out in the open
+
+		.clearfix.hide-all2
+		.nspacer.hide-all2
+
+
+		.col-lg-12.col-md-12.col-xs-12.center.hide-all2
+			.center
+				button.btn.btn-default.font-e.font-ah(type='submit', href="", style="border-radius: 10px; padding:10px; padding-left:35px; padding-right:35px; color:#fff;")
+					| Go to home page
+				button.btn.btn-default.font-e.font-ah(type='submit', href="", style="border-radius: 10px; padding:10px; padding-left:35px; padding-right:35px;color:#fff;")
+				| Go to event page
+		//- //------Desktop-------//

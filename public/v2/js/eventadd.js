@@ -261,7 +261,7 @@ $(document).ready(function() {
 	}
 	
 	// Categories & tickets
-	$("#selectedCategoriesList").on('click', 'span', function(e) {
+	$(".selectedCategoriesList").on('click', 'span', function(e) {
 		e.preventDefault()
 		
 		var text = $(this).attr("val");
@@ -272,7 +272,37 @@ $(document).ready(function() {
 	})
 	
 	var categories = ["Guest Speaker"];
+	var $ticketsWrapper = $(".ticketsWrapper")
 	var $tickets = $("#tickets");
+	
+	//Yes,No hiding/showing the #ticketsWrapper
+	$("#2creditcardsmaller233, #creditcardsmaller233").change(function() {
+		if ($(this).is(":checked")) {
+			$("#1creditcardsmaller23, #creditcardsmaller23").attr("checked", false)
+			$ticketsWrapper.hide();
+		} else {
+			$("#1creditcardsmaller23, #creditcardsmaller23").attr("checked", "checked")
+			$ticketsWrapper.show();
+		}
+	})
+	$("#1creditcardsmaller23, #creditcardsmaller23").change(function() {
+		if ($(this).is(":checked")) {
+			$("#2creditcardsmaller233, #creditcardsmaller233").attr("checked", false)
+			$ticketsWrapper.show();
+		} else {
+			$("#2creditcardsmaller233, #creditcardsmaller233").attr("checked", "checked")
+			$ticketsWrapper.hide();
+		}
+	})
+	
+	$("body").on("click", ".dropdown-update-link ul.dropdown-menu a", function(ev) {
+		ev.preventDefault();
+		
+		$(this).parent().parent().parent().find("a.dropdown-toggle").html($(this).html()+"<b class=\"caret\"></b>")
+		
+		return true;
+	})
+	
 	function getTickets () {
 		var tickets = [];
 		$tickets.find("tr").each(function() {
@@ -312,6 +342,18 @@ $(document).ready(function() {
 			return;
 		}
 		
+		var scope = angular.element($("#tickets")).scope();
+		scope.$apply(function() {
+			scope.tickets.push({
+				price: 0.0,
+				quantity: 1,
+				fee: 0,
+				vat: 0,
+				price: 0,
+				type: 'custom',
+				customType: ticket
+			})
+		})
 		// copy the template
 		$("#ticketTemplate").find(".tickets-ticket-type").attr("value", ticket)
 		var html = "<tr>" + $("#ticketTemplate").html() + "</tr>";
@@ -340,12 +382,12 @@ $(document).ready(function() {
 		//template.find(".guest").html(category);
 		//template.find("input[type=hidden]").val(category);
 		//var html = template.html();
-		$("#selectedCategoriesList").append("<span val=\""+category+"\">"+category+"<br/></span>");
+		$(".selectedCategoriesList").append("<span val=\""+category+"\">"+category+"<br/></span>");
 		
 		categories.push(category);
 		
 		if (categories.length > 0) {
-			$("#selectedCategoriesList .noneSelected").addClass('hide')
+			$(".selectedCategoriesList .noneSelected").addClass('hide')
 		}
 	}
 	
@@ -361,20 +403,20 @@ $(document).ready(function() {
 		$category.remove();
 		
 		if (categories.length == 0) {
-			$("#selectedCategoriesList .noneSelected").removeClass("hide");
+			$(".selectedCategoriesList .noneSelected").removeClass("hide");
 		}
 	}
 	
-	$("#predefinedCategories span").click(function() {
+	$(".predefinedCategories span").click(function() {
 		var text = $(this).attr("val");
 		addCategory(text);
 		addTicket(text);
 	})
-	$("#createCategory a.add-category-manual").click(function(ev) {
+	$(".createCategory a.add-category-manual").click(function(ev) {
 		ev.preventDefault();
 		
 		var href = $(this).attr("href")
-		var field = $("#createCategory input"+href)
+		var field = $(".createCategory input"+href)
 		var val = field.val();
 		if (val.length > 0) {
 			addCategory(val);
@@ -604,3 +646,31 @@ $(document).ready(function() {
 		})(i);
 	}
 });
+
+eventMost.controller('eventAdd', function($scope) {
+	var s = $scope;
+	
+	s.tickets = [{
+		price: 0.0,
+		quantity: 1,
+		fee: 0,
+		vat: 0,
+		price: 0,
+		type: 'custom',
+		customType: "Guest Speaker"
+	}];
+	s.$watch('tickets', function(ticks) {
+		for (var i = 0; i < ticks.length; i++) {
+			var t = ticks[i];
+			
+			t.fee = t.price * 0.035;
+			t.vat = t.price * 0.2;
+			t.totalPrice = "£" + (t.price + t.fee + t.vat).toFixed(2)
+			
+			t.isCustomType = t.type == 'custom' ? true : false;
+			
+			t.fee = "£" + (t.fee).toFixed(2);
+			t.vat = "£" + (t.vat).toFixed(2);
+		}
+	}, true)
+})
