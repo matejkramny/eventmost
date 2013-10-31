@@ -303,39 +303,6 @@ $(document).ready(function() {
 		return true;
 	})
 	
-	function getTickets () {
-		var tickets = [];
-		$tickets.find("tr").each(function() {
-			$this = $(this);
-			if ($this.attr("id") == "ticketTemplate") return;
-			
-			var ticket = {
-				$t: $this
-			};
-			
-			ticket.name = $this.find(".tickets-ticket-type").val();
-			ticket.price = $this.find(".tickets-ticket-price").val();
-			ticket.number = $this.find(".tickets-ticket-number").val();
-			ticket.fee = $this.find(".tickets-ticket-fee").val();
-			ticket.vat = $this.find(".tickets-ticket-vat").val();
-			ticket.total = $this.find(".tickets-ticket-total").val();
-			ticket.summary = $this.find(".tickets-ticket-summary").val();
-			ticket.organiserPays = $this.find(".dropdown3 a").html() == "Me";
-			tickets.push(ticket);
-		});
-		return tickets;
-	}
-	function getTicket (ticket) {
-		var tickets = getTickets();
-		for (var i = 0; i < tickets.length; i++) {
-			var t = tickets[i];
-			if (t.name == ticket) {
-				// gotcha
-				return t;
-			}
-		}
-		return null;
-	}
 	function addTicket (ticket) {
 		var t = getTicket(ticket);
 		if (t != null) {
@@ -354,19 +321,20 @@ $(document).ready(function() {
 				customType: ticket
 			})
 		})
-		// copy the template
-		$("#ticketTemplate").find(".tickets-ticket-type").attr("value", ticket)
-		var html = "<tr>" + $("#ticketTemplate").html() + "</tr>";
-		$tickets.append(html);
-		
-		//fixTickets();
 	}
 	
 	function removeTicket(ticket) {
-		var t = getTicket(ticket);
-		if (t != null) {
-			t.$t.remove();
-		}
+		var scope = angular.element($("#tickets")).scope();
+		scope.$apply(function() {
+			for (var i = 0; i < scope.tickets.length; i++) {
+				var t = scope.tickets[i];
+				
+				if (t.customType == ticket) {
+					scope.tickets.splice(i, 1);
+					break;
+				}
+			}
+		});
 	}
 	
 	function addCategory (category) {
