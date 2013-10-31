@@ -437,7 +437,7 @@ $(document).ready(function() {
 			avatar: getValue("#avatar_id"),
 			venue_name: getValue("#venueName"),
 			location: getValue("#event_location"),
-			lat: getValue("#lat"),
+			lat: getValue("#lat"),////////////////////////////////////////////////////////////////////////////////////////////////
 			lng: getValue("#lng"),
 			start: getTime("#datepicker"),
 			end: getTime("#datepicker2"),
