@@ -171,16 +171,16 @@ append content
 			.pull-left.font2.font-exception
 				| Predefined categories
 			.clearfix
-			.font-evente.font-thin2.nspacer.pull-left.font-exception
-				| 1. Guest Speaker<br />
-				| 2. Attendee<br />
-				| 3. Vencor<br />
-				| 4. Entrepreneur<br />
-				| 5. Team<br />
-				| 6. Startup Team<br />
-				| 7. Company<br />
-				| 8. Mentor<br />
-				| 9. Educator
+			#predefinedCategories.font-evente.font-thin2.nspacer.pull-left.font-exception
+				span: a 1. Guest Speaker
+				span 2. Attendee
+				span 3. Vencor
+				span 4. Entrepreneur
+				span 5. Team
+				span 6. Startup Team
+				span 7. Company
+				span 8. Mentor
+				span 9. Educator
 			.clearfix
 		//- create your own
 		.clearfix.hide-all2
@@ -592,65 +592,75 @@ append content
 			.col-lg-4.col-md-4.col-xs-4
 				.center.font2.font-exception
 					| Predefined categories
-				.font-evente.font-thin2.nspacer.gestlist.font-exception-thin
-					| 1. Guest Speaker<br />
-					| 2. Attendee<br />
-					| 3. Vencor<br />
-					| 4. Entrepreneur<br />
-					| 5. Team<br />
-					| 6. Startup Team<br />
-					| 7. Company<br />
-					| 8. Mentor<br />
-					| 9. Educator
+				#predefinedCategories.font-evente.font-thin2.nspacer.gestlist.font-exception-thin
+					span(val="Guest Speaker") 1. Guest Speaker
+					br
+					span(val="Attendee") 2. Attendee
+					br
+					span(val="Vencor") 3. Vencor
+					br
+					span(val="Entrepreneur") 4. Entrepreneur
+					br
+					span(val="Team") 5. Team
+					br
+					span(val="Startup Team") 6. Startup Team
+					br
+					span(val="Company") 7. Company
+					br
+					span(val="Mentor") 8. Mentor
+					br
+					span(val="Educator") 9. Educator
 			.col-lg-4.col-md-4.col-xs-4
 				.center.font2.font-exception
 					| Create your own
-				.font-evente.font-thin2.nspacer.gestlist
+				#createCategory.font-evente.font-thin2.nspacer.gestlist
 					.col-lg-9.col-md-9.col-xs-9
-						input.input-ashen-rounded.font-exception-thin(name="start_date", type="text", style="height:35px;")
+						input#add-category-manual-1.input-ashen-rounded.font-exception-thin(add-category-manual, type="text", style="height:35px;")
 					.col-lg-3.col-md-3.col-xs-3.pad-left-zero
-						a(href="#").addCategory
+						a.add-category-manual(href="#add-category-manual-1").addCategory
 							img(src="/images/ashen-arrow.svg" style="")
 					.clearfix
 					.nspacer-small
 					.col-lg-9.col-md-9.col-xs-9
-						input.input-ashen-rounded.font-exception-thin(name="start_date", type="text", style="height:35px;")
+						input#add-category-manual-2.input-ashen-rounded.font-exception-thin(add-category-manual, type="text", style="height:35px;")
 					.col-lg-3.col-md-3.col-xs-3.pad-left-zero
-						a(href="#").addCategory
+						a.add-category-manual(href="#add-category-manual-2").addCategory
 							img(src="/images/ashen-arrow.svg" style="")
 					.clearfix
 					.nspacer-small
 					.col-lg-9.col-md-9.col-xs-9
-						input.input-ashen-rounded.font-exception-thin(name="start_date", type="text", style="height:35px;")
+						input#add-category-manual-3.input-ashen-rounded.font-exception-thin(add-category-manual, type="text", style="height:35px;")
 					.col-lg-3.col-md-3.col-xs-3.pad-left-zero
-						a(href="#").addCategory
+						a.add-category-manual(href="#add-category-manual-3").addCategory
 							img(src="/images/ashen-arrow.svg" style="")
 					.clearfix
 					.nspacer-small
 					.col-lg-9.col-md-9.col-xs-9
-						input.input-ashen-rounded.font-exception-thin(name="start_date", type="text", style="height:35px;")
+						input#add-category-manual-4.input-ashen-rounded.font-exception-thin(add-category-manual, type="text", style="height:35px;")
 					.col-lg-3.col-md-3.col-xs-3.pad-left-zero
-						a(href="#").addCategory
+						a.add-category-manual(href="#add-category-manual-4").addCategory
 							img(src="/images/ashen-arrow.svg" style="")
 					.clearfix
 					.nspacer-small
 					.col-lg-9.col-md-9.col-xs-9
-						input.input-ashen-rounded.font-exception-thin(name="start_date", type="text", style="height:35px;")
+						input#add-category-manual-5.input-ashen-rounded.font-exception-thin(add-category-manual, type="text", style="height:35px;")
 					.col-lg-3.col-md-3.col-xs-3.pad-left-zero
-						a(href="#").addCategory
+						a.add-category-manual(href="#add-category-manual-5").addCategory
 							img(src="/images/ashen-arrow.svg" style="")
 					.clearfix
 					.nspacer-small
 					.col-lg-9.col-md-9.col-xs-9
-						input.input-ashen-rounded.font-exception-thin(name="start_date", type="text", style="height:35px;")
+						input.input-ashen-rounded.font-exception-thin(add-category-manual, type="text", style="height:35px;")
 					.col-lg-3.col-md-3.col-xs-3.pad-left-zero
-						a(href="#").addCategory
+						a.add-category-manual(href="#add-category-manual-6").addCategory
 							img(src="/images/ashen-arrow.svg" style="")
 			.col-lg-4.col-md-4.col-xs-4
 				.center.font2.font-exception
 					| Selected categories
-				.font-evente.font-thin2.nspacer.gestlist.font-exception-thin
-					| Guest Speaker<br />
+				#selectedCategoriesList.font-evente.font-thin2.nspacer.gestlist.font-exception-thin
+					span(val="Guest Speaker") Guest Speaker
+						br
+					p.noneSelected.hide No categories :(
 			.clearfix
 
 			.nspacer
@@ -668,7 +678,7 @@ append content
 
 			.nspacer
 			.font2.pull-left.font-exception
-				| Allow them to comment out in publik (like facebook)?
+				| Allow attendees to publicly comment on the event?
 			.pull-left
 				label.checkbox.toggle.candy(style='width: 100px; margin-left:20px; margin-top:4px;', onclick='')
 					input(type='checkbox', class="invisible")
