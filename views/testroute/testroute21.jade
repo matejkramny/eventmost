@@ -1,0 +1,256 @@
+extends ../responsive
+
+block content
+
+	.col-xs-12.hide-all2
+		form(method="POST", accept-charset="utf-8")
+			input.gonew2.pull-right.header-links(type="button", value="GO", style="width:10%;")
+			input(type="hidden", name="_csrf", value=token)
+			input.pull-right.font-s.search-input.pad-left-ten.header-links(type="search", placeholder="search events or people", style="width:87%;")
+	.clearfix.hide-all2
+
+
+		//- inbox title plus buttons
+	.nspacer
+
+	.col-md-4.col-xs-4.col-sm-4.nspacer-medium.hide-mini3-except-smart
+		.font-tw
+			| <b>Event Page</b>
+	.col-md-8.col-xs-8.col-sm-8.hide-mini3-except-smart
+		.font-x1.bg-yellow.center.pull-right.psev2.prof-wall(style="padding-top:15px;")
+			| <a href="#Business" class="link-purple">Conversations</a>
+		.font-x1.bg-purple.center.pull-right.psev2.prof-wall(style="padding-top:15px;")
+			| <a href="#Public" class="link-white">My notes</a>
+		.font-x1.bg-green.center.pull-right.psev2.prof-wall
+			| <a href="#Profile" class="link-white">Event<br />dropbox</a>
+		.font-x1.bg-yellow.center.pull-right.psev2.prof-wall
+			| <a href="#Business" class="link-purple">Registration<br />page</a>
+		.font-x1.bg-purple.center.pull-right.psev2.prof-wall(style="padding-top:15px;")
+			| <a href="#Private" class="link-white">My profile</a>
+		.font-x1.bg-green.center.pull-right.psev2.prof-wall(style="padding-top:15px;")
+			| <a href="#Profile" class="link-white">Attendees</a>
+	.clearfix.hide-mini3-except-smart
+	.col-md-6.col-xs-6.col-sm-6.hide-mini3-except-smart
+		.line-green(style="height:3px; margin-top:-3px;")
+
+	.col-md-12.col-xs-12.col-sm-12.nspacer-medium.hide-all2
+		.center
+			.font-tw.inline
+				| <b>Event Page</b>
+	.clearfix.hide-all2
+	.col-md-12.col-xs-12.col-sm-12.hide-all2
+		.center
+			.inline.nspacer-small
+				.font-x1.bg-green.center.psev2.prof-wall
+					| All<br /><span class="color-green">Messages</span>
+			.inline.nspacer-small
+				.font-x1.bg-purple.center.psev2.prof-wall
+					| <a href="#Private" class="link-white">Private<br />Messages</a>
+			.inline.nspacer-small
+				.font-x1.bg-yellow.center.psev2.prof-wall
+					| <a href="#Private" class="link-purple">Business <br />Cards</a>
+			.inline.nspacer-small
+				.font-x1.bg-green.center.psev2.prof-wall
+					| <a href="#Private" class="link-white">Those Who Saved<br />Your Profile</a>
+			.inline.nspacer-small
+				.font-x1.bg-purple.center.psev2.prof-wall
+					| <a href="#Private" class="link-white">Public <br />Messages</a>
+
+
+	.clearfix
+
+		//- end inbox title plus buttons
+
+	.nspacer
+
+	.col-md-3.col-xs-3.col-sm-3
+		img(src="/images/sponsor-logo-clear.svg", alt="", class="img-responsive")
+
+	.col-md-9.col-xs-9.col-sm-9
+		.bg-yellow.font-bigs2.center.deifer-font2
+			| The Title of the Event
+		.font-lebig.center.setting-line.nspacer.deifer-font
+			| Thanks to our sponsors:
+
+	.clearfix
+	.nspacer-big
+
+	.col-md-4.col-xs-4.col-sm-4
+		img(src="/images/sponsor-logo.svg", alt="", class="img-responsive")
+
+	.col-md-4.col-xs-4.col-sm-4
+		.font-lebig.center.setting-line.nspacer.deifer-font.and
+			| and
+
+	.col-md-4.col-xs-4.col-sm-4
+		img(src="/images/sponsor-logo.svg", alt="", class="img-responsive")
+
+	.clearfix
+	.nspacer
+
+
+
+
+	//- arrange by tablet-portrait	
+	.col-xs-12.hide-all2.here-show(style="height:50px; margin-top:0px;")
+			.pull-right.font-exception-thin
+				ul.nav.navbar-nav.nav-ashen
+					li.dropdown
+						a.dropdown-toggle.dropdown-toggle-ashen(href='#', data-toggle='dropdown')
+							| Arrange by
+							b.caret
+						ul.dropdown-menu.dropdown-menu-ashen.pull-right
+							li
+								a(href='/') Most recent to latest
+							li
+								a(href='/') Latest to most recent
+							li
+								a(href='/') Events name A-Z
+							li
+								a(href='/') My planned events
+	.clearfix.here-show
+
+
+	//- most recent large
+	.col-md-3.col-xs-3.col-sm-3
+		.font-evente
+			.pad-top.font-exception-thin.deifer-font3
+				| Most recent comment
+			.nspacer-big.font-exception-thin.deifer-font3
+				| Guest speaker
+			.pad-top
+				img(src="/images/default_speaker-purple.svg", alt="", class="circularespond img-responsive")
+	
+
+
+
+
+
+	.col-md-8.col-xs-8.col-sm-7.postish-small(style="margin-top:70px;")
+			.font-e1.bigger-pad-left.font-exception-thin.no-left.don-show-here
+				| <b>Lucy Cook</b> - Director of Finance, Delloite	<br />
+			.font-e1.font-exception-thin.no-left.here-show
+				| <b>Lucy Cook</b> - Director of Finance, Delloite	<br />
+			.nspacer
+			.pull-left
+				img.pull-left.bubble-responsive(src="/images/bubble-left-grey.svg", alt="", style="vertical-align:top;")
+			.pull-left.bg-grey.psev.post-width-small.font-x 
+				| At vero eos et accusamus et iusto odio dignissimos <b>ducimus qui blanditiis</b> praesentium voluptatum deleniti atque corrupti quos dolores 
+				| et quas molestias excepturi sint occaecati cupiditate non provident,similique sunt.
+			button.btn.btn-primary.font-xs2.pull-right(type='submit', style="margin-top:-25px; border-radius: 10px; color:#fff; padding:7px; padding-left:12px; padding-right:12px;")
+				| DELETE
+
+	//- arrange by large	
+	.nspacer.pull-right.font-bigs.font-thin.don-show-here(style="height:50px; margin-top:80px;")
+				.pull-right.mfresponsive2.font-exception-thin
+					ul.nav.navbar-nav.nav-ashen
+						li.dropdown
+							a.dropdown-toggle.dropdown-toggle-ashen(href='#', data-toggle='dropdown')
+								| Arrange by
+								b.caret
+							ul.dropdown-menu.dropdown-menu-ashen.pull-right
+								li
+									a(href='/') Most recent to latest
+								li
+									a(href='/') Latest to most recent
+								li
+									a(href='/') Events name A-Z
+								li
+									a(href='/') My planned events
+
+	.clearfix
+	.nspacer
+
+	.col-md-12.col-xs-12.col-sm-12
+		.line-purple
+
+		//- guest speakers large
+
+	.col-md-4.col-xs-4.col-sm-4.hide-mini3-except-smart
+		.font-evente.font-exception-thin.deifer-font3
+			| Guest speaker 
+		.pull-left(style="width:30%;")
+			img(src="/images/default_speaker-purple.svg", alt="", class="circularespond-small img-responsive")
+		.font-e.pull-left.break.nspacer.center(style="width:70%;")
+			| <b>Goerge Lucas</b> - <br />Director of Star Wars, <br />USA
+
+	.col-md-4.col-xs-4.col-sm-4.hide-mini3-except-smart
+		.font-evente.font-exception-thin.deifer-font3
+			| Guest speaker 
+		.pull-left(style="width:30%;")
+			img(src="/images/default_speaker-purple.svg", alt="", class="circularespond-small img-responsive")
+		.font-e.pull-left.break.nspacer.center(style="width:70%;")
+			| <b>Goerge McFly</b> - <br />Back to the Future, <br />USA
+
+	.col-md-4.col-xs-4.col-sm-4.hide-mini3-except-smart
+		.font-evente.font-exception-thin.deifer-font3
+			| Guest speaker 
+		.pull-left(style="width:30%;")
+			img(src="/images/default_speaker-purple.svg", alt="", class="circularespond-small img-responsive")
+		.font-e.pull-left.break.nspacer.center(style="width:70%;")
+			| <b>Goerge Lucas</b> - <br />Director of Star Wars, <br />USA
+
+		//- guest speakers smartphones
+
+	.col-md-6.col-xs-6.col-sm-6.hide-all2
+		.font-evente.font-exception-thin.deifer-font3
+			| Guest speaker 
+		.pull-left(style="width:30%;")
+			img(src="/images/default_speaker-purple.svg", alt="", class="circularespond-small img-responsive")
+		.font-e.pull-left.break.nspacer.center(style="width:70%;")
+			| <b>Goerge Lucas</b> - <br />Director of Star Wars, <br />USA
+
+	.col-md-6.col-xs-6.col-sm-6.hide-all2
+		.font-evente.font-exception-thin.deifer-font3
+			| Guest speaker 
+		.pull-left(style="width:30%;")
+			img(src="/images/default_speaker-purple.svg", alt="", class="circularespond-small img-responsive")
+		.font-e.pull-left.break.nspacer.center(style="width:70%;")
+			| <b>Goerge Lucas</b> - <br />Director of Star Wars, <br />USA
+	.clearfix
+
+
+
+	.nspacer
+	.col-md-12.col-xs-12.col-sm-12
+		.line-purple
+		//- end guest speakers
+
+	.pull-right(style='height:35px;')
+		ul.pagination
+			li
+				a(href='#') «
+			li.active
+				a(href='#') 1
+			li
+				a(href='#') 2
+			li
+				a(href='#') 3
+			li.disabled
+				a(href='#') ...
+			li
+				a(href='#') 5
+			li
+				a(href='#') »
+
+	
+	.clearfix
+	.nspacer
+
+
+	.col-sm-12.col-xs-12.col-md-12
+		.pull-left
+			img.pull-left.bubble-responsive(src="/images/bubble-left-blue.svg", alt="", style="vertical-align:top;")
+		.pull-left.bg-green.psev.post-width-text
+			textarea.postcommentarea(placeholder="Post a comment here...")
+			.pull-right
+				a(href="#",) 
+					img(src="/images/post-button.svg", alt="", class="img-responsive post-butt")
+		.clearfix
+		.nspacer
+		.pull-right
+			a(href="",)
+			button.btn.btn-default.font-e.hide-prof-butt(type='submit', style="border-radius: 10px; color:#fff; padding:20px;")
+				| Exit event
+
+	.clearfix
