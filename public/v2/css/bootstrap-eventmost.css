@@ -190,6 +190,7 @@ border-radius: 10px;}
 .pb {width: 85px; height: 85px;}
 .he1{height:148px;}
 .mar-res{margin-left: 5px; width: 65%;}
+.and{padding-top: 60px;}
 
 .here-show{display: none;}
 .inline {display: inline-block;}
@@ -1313,6 +1314,7 @@ left:48%; top: 47%; z-index: 950; width: 63px; height: 72px; position:absolute; 
 
 
 @media only screen and (max-width: 480px) {
+.and{margin-top: -25px;}
 .pad-on-smart{padding-left: 0px !important; padding-right: 0px !important;}
 .pad-smart{padding-left: 0px !important; padding-right: 0px !important;}
 .lower2, .hide-all4{display: none;}
@@ -1597,6 +1599,7 @@ p.check5:not(#foo) > input[type=checkbox] + label:hover               { backgrou
 
 
 @media only screen and (min-width: 981px) and (max-width: 1024px) {
+
 #slider1 .overview li{ width: 240px; word-wrap:break-word;}
 .slider-text {width: 160%;}
 .slider-text:hover {width: 160%;}
@@ -1637,6 +1640,7 @@ p.check5:not(#foo) > input[type=checkbox] + label:hover               { backgrou
 }
 
 @media only screen and (min-width: 768px) and (max-width: 980px) {
+.and{padding-top: 30px;}
 .post-width-small{width:82%;}
 .postish-small{margin-left: -50px;}
 .deifer-font3{font-size: 15px;}
@@ -1740,6 +1744,7 @@ p.check5:not(#foo) > input[type=checkbox] + label:hover               { backgrou
 }
 
 @media only screen and (min-width: 686px) and (max-width: 768px) {
+.and{padding-top: 25px;}
 .don-show-here{display: none;}
 .here-show{display: block;}
 .post-width-small{width:82%;}
@@ -1874,6 +1879,7 @@ table.gridtable th {font-size: 12px;}
 }
 
 @media only screen and (max-width: 700px) {
+  .and{padding-top: 25px;}
 .don-show-here{display: none;}
 .here-show{display: block;}
 .post-width-small{width:82%;}
@@ -1893,6 +1899,7 @@ table.gridtable th {font-size: 12px;}
 }
 
 @media only screen and (min-width: 481px) and (max-width: 685px) {
+  .and{padding-top: 15px;}
 .deifer-font3{font-size: 15px;}
 .deifer-font{font-size: 10px;}
 .deifer-font2{font-size: 15px;}
@@ -1995,6 +2002,7 @@ table.gridtable th {font-size: 12px;}
 }
 
 @media only screen and (max-width: 480px) {
+.and{margin-top: -15px;}
 .dropdown-toggle-ashen
 .no-left{padding-left: -50px !important;}
 .deifer-font3{font-size: 12px;}
