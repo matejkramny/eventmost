@@ -3,7 +3,15 @@ models = require('../../models')
 exports.editEvent = function (req, res) {
 	var ev = res.locals.event;
 	
-	if (!ev.user._id.equals(req.user._id)) {
+	var canEdit = false;
+	for (var i = 0; i < ev.attendees.length; i++) {
+		var at = ev.attendees[i];
+		if (at.admin && at.user._id.equals(req.user._id)) {
+			var canEdit = true;
+			break;
+		}
+	}
+	if (!canEdit) {
 		req.session.flash.push("Unauthorized")
 		res.redirect('/event/'+res.locals.event._id);
 		return;
@@ -20,7 +28,15 @@ exports.doEditEvent = function (req, res) {
 	
 	var ev = res.locals.event;
 	// Only planner can edit
-	if (!ev.user._id.equals(req.user._id)) {
+	var canEdit = false;
+	for (var i = 0; i < ev.attendees.length; i++) {
+		var at = ev.attendees[i];
+		if (at.admin && at.user._id.equals(req.user._id)) {
+			var canEdit = true;
+			break;
+		}
+	}
+	if (!canEdit) {
 		res.format({
 			html: function() {
 				req.session.flash.push("Unauthorized")
@@ -57,7 +73,15 @@ exports.deleteEvent = function (req, res) {
 	var ev = res.locals.event;
 	
 	// Only for event planners
-	if (!ev.user._id.equals(req.user._id)) {
+	var isPlanner = false;
+	for (var i = 0; i < ev.attendees.length; i++) {
+		var at = ev.attendees[i];
+		if (at.admin && at.user._id.equals(req.user._id)) {
+			var isPlanner = true;
+			break;
+		}
+	}
+	if (!isPlanner) {
 		res.format({
 			html: function() {
 				req.session.flash.push("Unauthorized")

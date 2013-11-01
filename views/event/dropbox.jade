@@ -6,7 +6,7 @@ block content
 	mixin navbar(1)
 	
 	br
-	form#uploadForm(action="/event/"+event._id+"/dropbox/upload", method="POST", enctype="multipart/form-data")
+	form#uploadForm(action="/event/"+ev._id+"/dropbox/upload", method="POST", enctype="multipart/form-data")
 		input(type="hidden", name="_csrf", value=token)
 		.pull-left
 			#file_browse_wrapper
@@ -15,7 +15,7 @@ block content
 			button.btn.btn-success#file_upload_wrapper(onclick="$('#uploadForm').submit()") Upload
 		.clearfix
 	
-	for file in event.files
+	for file in ev.files
 		.row
 			.col-sm-2.col-lg-2.col-md-2
 				img(src=file.file)
@@ -24,12 +24,12 @@ block content
 				h5 Size: #{file.size}
 				h5 Created: #{file.created.toString()}
 			.col-sm-4.col-lg-4.col-md-4
-				form#deleteForm(method="POST", action="/event/"+event._id+"/dropbox/remove")
+				form#deleteForm(method="POST", action="/event/"+ev._id+"/dropbox/remove")
 					input(type="hidden", name="_csrf", value=token)
 					input(type="hidden", name="file", value=file.file)
 					
 					a.btn.btn-success(href=file.file) Download
-					if event.user._id.equals(user._id)
+					if eventadmin
 						| &nbsp;
 						a.btn.btn-danger(href="#", onclick="$('#deleteForm').submit()") Delete
 	br

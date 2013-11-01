@@ -3,33 +3,33 @@ mixin navbar(activePage)
 		.span12
 			ul.nav.nav-tabs
 				li(class= activePage == 0 ? "active" : null)
-					a(href="/event/"+event._id+"/")
-						h8= event.name
+					a(href="/event/"+ev._id+"/")
+						h8= ev.name
 				li(class= activePage == 1 ? "active" : null)
-					a(href="/event/"+event._id+"/dropbox")
+					a(href="/event/"+ev._id+"/dropbox")
 						h8 Dropbox
 				li(class= activePage == 2 ? "active" : null)
-					a(href="/event/"+event._id+"/attendees")
+					a(href="/event/"+ev._id+"/attendees")
 						if !eventattending
 							h8 Attendees
 						else
-							h8= event.attendees.length + 1
+							h8= ev.attendees.length + 1
 								|  Attendee
-								if event.attendees.length > 0
+								if ev.attendees.length > 0
 									| s
 				li(class= activePage == 3 ? "active" : null)
-					a(href="/event/"+event._id+"/conversations")
+					a(href="/event/"+ev._id+"/conversations")
 						h8 Conversations
 				
 				//- Admin area
-				if user._id.equals(event.user._id)
+				if eventadmin
 					li.pull-right(class= activePage == 5 ? "active" : null)
-						a(href="/event/"+event._id+"/planner")
+						a(href="/event/"+ev._id+"/planner")
 							h8 Event Settings
 					li.pull-right(class= activePage == 6 ? "active" : null)
-						a(href="/event/"+event._id+"/planner")
+						a(href="/event/"+ev._id+"/planner")
 							h8 Dashboard
 				
 				li.pull-right(class= activePage == 4 ? "active" : null)
-					a(href="/event/"+event._id+"/registrationpage")
+					a(href="/event/"+ev._id+"/registrationpage")
 						h8 Registration page

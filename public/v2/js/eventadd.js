@@ -1,5 +1,6 @@
 $(document).ready(function() {
 	var eventid = null;// used when event is created by ajax
+	var lat, lng;
 	
 	var isLocalStorageCapable = false;
 	try {
@@ -10,6 +11,8 @@ $(document).ready(function() {
 	}
 	
 	function getNear(coords) {
+		lat = coords.lat;
+		lng = coords.lng;
 		$.ajax({
 			url: "http://maps.googleapis.com/maps/api/geocode/json?latlng="+coords.lat+","+coords.lng+"&sensor=true",
 			dataType: "json",
@@ -79,6 +82,25 @@ $(document).ready(function() {
 			cssclass: 'resize'
 		}
 	});
+	//TINY editor
+	var editor1 = new TINY.editor.edit('editor', {
+		id: 'tinyeditor1',
+		height: 175,
+		cssclass: 'tinyeditor',
+		controlclass: 'tinyeditor-control',
+		rowclass: 'tinyeditor-header',
+		dividerclass: 'tinyeditor-divider',
+		controls: ['bold', 'italic', 'underline', 'strikethrough', 'leftalign', 'centeralign', 'rightalign', 'blockjustify', 'font', 'size',],
+		footer: true,
+		fonts: ['Raleway', 'Verdana','Arial','Georgia','Trebuchet MS'],
+		xhtml: true,
+		cssfile: '/css/tinymce.iframe.css',
+		bodyid: 'editor',
+		footerclass: 'tinyeditor-footer',
+		resize: {
+			cssclass: 'resize'
+		}
+	});
 	
 	// Datepicker
 	$(".datepickerWrapper .nowButton").click(function(ev) {
@@ -132,6 +154,7 @@ $(document).ready(function() {
 	
 	// Avatar upload
 	var avatarUploadRequest;
+	var avatar_id;
 	var file;
 	$("#file_browse").change(function() {
 		var files = this.files;
@@ -249,8 +272,7 @@ $(document).ready(function() {
 					alert("Could not upload image\n"+result.err);
 				} else {
 					// store the avatar id in the form.
-					$("#file_browse").removeAttr("name");
-					$("#avatar_id").attr('value', result.id);
+					avatar_id = result.id;
 					$("#avatarStatus").html("<br/>Uploaded");
 				}
 			} else {
@@ -304,21 +326,14 @@ $(document).ready(function() {
 	})
 	
 	function addTicket (ticket) {
-		var t = getTicket(ticket);
-		if (t != null) {
-			return;
-		}
-		
 		var scope = angular.element($("#tickets")).scope();
 		scope.$apply(function() {
 			scope.tickets.push({
 				price: 0.0,
 				quantity: 1,
-				fee: 0,
-				vat: 0,
-				price: 0,
 				type: 'custom',
-				customType: ticket
+				customType: ticket,
+				whopays: 'me'
 			})
 		})
 	}
@@ -417,47 +432,53 @@ $(document).ready(function() {
 		date.setMinutes(minutes)
 		return date.getTime();
 	}
-	function buildFormData() {
+	function buildFormData($form) {
 		var allowCreateCategories = false;
-		if ($("#cbox7").is(':checked')) {
+		if ($form.find(".allowAttendeesToCreateTheirOwnCategories").is(':checked')) {
 			allowCreateCategories = true;
 		}
-		var pricedTickets = false;
-		if ($("#cbox9").is(':checked')) {
-			pricedTIckets = true;
+		var allowCommentOnEvent = false;
+		if ($form.find(".allowAttendeesToCommentOnTheEvent").is(':checked')) {
+			allowCommentOnEvent = true;
 		}
-		var tickets = getTickets();
-		for (var i = 0; i < tickets.length; i++) {
-			delete tickets[i].$t
+		var pricedTickets = false;
+		if ($form.find(".includePricedTickets").is(':checked')) {
+			pricedTickets = true;
 		}
 		
+		var scope = angular.element($("#tickets")).scope();
+		var tickets = scope.tickets;
+		
+		var ed = $form.find('.tinyeditor').length > 0 ? editor : editor1;
 		var d = {
 			_csrf: $("head meta[name=_csrf]").attr('content'),
-			name: getValue("#eventName"),
-			avatar: getValue("#avatar_id"),
-			venue_name: getValue("#venueName"),
-			location: getValue("#event_location"),
-			lat: getValue("#lat"),////////////////////////////////////////////////////////////////////////////////////////////////
-			lng: getValue("#lng"),
-			start: getTime("#datepicker"),
-			end: getTime("#datepicker2"),
-			description: $(editor.i.contentWindow.document.body)[0].innerHTML,
+			name: $form.find('input[name=eventName]').val(),
+			avatar: avatar_id,
+			venue_name: $form.find('input[name=venueName]').val(),
+			location: $form.find('input[name=address]').val(),
+			lat: lat,
+			lng: lng,
+			start: getTime($form.find('.datepicker')[0]),
+			end: getTime($form.find('.datepicker')[1]),
+			description: $(ed.i.contentWindow.document.body)[0].innerHTML,
 			categories: categories,
 			allowAttendeesToCreateCategories: allowCreateCategories,
+			allowCommentsOnEvent: allowCommentOnEvent,
 			pricedTickets: pricedTickets,
 			tickets: pricedTickets ? tickets : [],
 		};
+		console.log(d);
 		
 		return d;
 	}
 	
 	var isLoading = false;
-	$("#publishButton").click(function() {
+	$(".eventSubmitBtn").click(function() {
 		if (isLoading) {
 			return;
 		}
 		isLoading = true;
-		data = buildFormData();
+		data = buildFormData($("#"+$(this).attr("href")));
 		
 		$("#submitStatus").removeClass("hide").html("Loading...");
 		
@@ -487,11 +508,12 @@ $(document).ready(function() {
 				
 				$("#afterSubmit").removeClass("hide");
 				$("#afterPublishHide").addClass("hide");
-				$("#eventName").attr('disabled', true)
+				//$form.find("input[name=eventName]").attr('disabled', true)
 				window.scrollTo(0,0);
 				
 				eventid = data.id;
-				$("#invitationLink").html("http://eventmost.com/event/"+eventid);
+				$("#invitationLink").attr("href", "http://eventmost.com/event/"+eventid).html("eventmost.com/event/"+eventid);
+				$(".gotoeventbutton").attr("href", "/event/"+eventid);
 			},
 			error: function(xhr, status, error) {
 				isLoading = false;
@@ -500,7 +522,8 @@ $(document).ready(function() {
 	});
 	
 	// Invitation link select all text inside it
-	$("#invitationLink").click(function() {
+	$("#invitationLink").click(function(ev) {
+		ev.preventDefault()
 		// select the text inside the div
 		if (document.selection) {
 			var range = document.body.createTextRange();
@@ -511,108 +534,40 @@ $(document).ready(function() {
 			range.selectNode(this);
 			window.getSelection().addRange(range);
 		}
+		
+		return false;
 	})
 	
-	var restrictive = null; // 0,1,2,3,4 = possible values
-	var restrictions = [
-		$("#restrictions_none"), //0
-		$("#restrictions_in_range"),//1
-		$("#restrictions_password"),//2
-		$("#restrictions_in_range_password"),//3
-		$("#restrictions_private")//4
-	];
-	var $eventPassword = $("#eventPassword")
-	var $confirmPassword = $("#confirmPassword")
-	var $finalSuccess = $("#finalSuccess")
+	var pwdSuccess = $("#passwordProtectSuccess")
+	var pwdSubmit = $("#submitPasswordProtection")
+	var pwdField = $("#passwordProtection")
 	
-	function hidePassword() {
-		$("#passwordFieldWrapper").addClass("hide")
-	}
-	function showPassword() {
-		$("#passwordFieldWrapper").removeClass("hide")
-	}
-	function showSuccess() {
-		$finalSuccess.removeClass("hide")
+	pwdSubmit.click(function(ev) {
+		ev.preventDefault();
 		
-		$finalSuccess.find(".fillWithEventLink").attr("href", "/event/"+eventid)
-		$finalSuccess.find(".fillWithDropboxLink").attr("href", "/event/"+eventid+"/dropbox")
-		$finalSuccess.find(".fillWithSettingsLink").attr("href", "/event/"+eventid+"/settings")
-	}
-	function hideSuccess() {
-		$finalSuccess.addClass("hide")
-	}
-	
-	function deselectRestriction() {
-		if (restrictive == null) return;
-		restrictions[restrictive].removeClass("selected");
-	}
-	
-	function selectRestriction() {
-		if (restrictive == null) return;
-		restrictions[restrictive].addClass("selected")
-	}
-	
-	function updateRestrictions() {
-		if (restrictive == null) return;
-		
-		if (restrictive >= 2 && restrictive < 4) {
-			// Show password field
-			showPassword()
-			hideSuccess()
-		} else {
-			// hide pwd field
-			hidePassword()
-			// show success
-			showSuccess()
-			// update the restriction level
-			publishRestrictionSettings()
-		}
-	}
-	
-	function publishRestrictionSettings() {
-		$("#successStatus").removeClass("hide").html("Updating event settings..")
-		
-		$.ajax({
-			url: "/event/"+eventid+"/edit",
-			type: "POST",
-			dataType: "json",
-			data: {
-				_csrf: $("head meta[name=_csrf]").attr('content'),
-				password: $("#eventPassword").val(),
-				restriction: restrictive
-			},
-			success: function(data, status, xhr) {
-				$("#successStatus").addClass("hide")
-			},
-			error: function(xhr, status, error) {
-				
-			}
-		})
-	}
-	
-	$confirmPassword.click(function() {
-		if ($eventPassword.val().length > 0) {
-			// ok, show success
-			showSuccess()
+		if (pwdField.val().length > 0) {
+			// Update the settings
+			pwdSuccess.removeClass('hide');
+			pwdSubmit.addClass('hide');
+			pwdField.addClass('hide')
+			$(".passwordText").addClass('hide')
 			
-			publishRestrictionSettings()
+			$.ajax({
+				url: "/event/"+eventid+"/edit",
+				type: "POST",
+				dataType: "json",
+				data: {
+					_csrf: $("head meta[name=_csrf]").attr('content'),
+					passwordString: pwdField.val(),
+					password: true
+				}
+			})
 		} else {
-			hideSuccess()
-			// not ok, display some message
+			return;
 		}
-	});
-	
-	// Restriction box
-	for (var i = 0; i < restrictions.length; i++) {
-		(function(number) {
-			restrictions[number].click(function() {
-				deselectRestriction();
-				restrictive = number;
-				selectRestriction();
-				updateRestrictions();
-			});
-		})(i);
-	}
+		
+		return false;
+	})
 });
 
 eventMost.controller('eventAdd', function($scope) {
@@ -621,24 +576,16 @@ eventMost.controller('eventAdd', function($scope) {
 	s.tickets = [{
 		price: 0.0,
 		quantity: 1,
-		fee: 0,
-		vat: 0,
 		price: 0,
 		type: 'custom',
-		customType: "Guest Speaker"
+		customType: "Guest Speaker",
+		whopays: 'me'
 	}];
 	s.$watch('tickets', function(ticks) {
 		for (var i = 0; i < ticks.length; i++) {
 			var t = ticks[i];
 			
-			t.fee = t.price * 0.035;
-			t.vat = t.price * 0.2;
-			t.totalPrice = "£" + (t.price + t.fee + t.vat).toFixed(2)
-			
 			t.isCustomType = t.type == 'custom' ? true : false;
-			
-			t.fee = "£" + (t.fee).toFixed(2);
-			t.vat = "£" + (t.vat).toFixed(2);
 		}
 	}, true)
 })
