@@ -13,6 +13,7 @@ block content
 				th Twitter
 				th Facebook
 				th LinkedIn
+				th Admin
 		tbody
 			for user in users
 				tr
@@ -32,6 +33,11 @@ block content
 							span.glyphicon.glyphicon-ok
 					td
 						if user.linkedin.userid == null
+							span.glyphicon.glyphicon-remove
+						else
+							span.glyphicon.glyphicon-ok
+					td
+						if user.admin == false
 							span.glyphicon.glyphicon-remove
 						else
 							span.glyphicon.glyphicon-ok
