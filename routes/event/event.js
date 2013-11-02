@@ -68,33 +68,29 @@ function getEvent (req, res, next) {
 			return;
 		}
 		
-		res.locals.event = ev;
+		res.locals.ev = ev;
 		
 		next()
 	})
 }
 
 exports.attending = attending = function (req, res, next) {
-	var ev = res.locals.event;
+	var ev = res.locals.ev;
 	
 	var attending = false;
-	if (ev.user && ev.user._id.equals(req.user._id)) {
-		// owns the event, no need to search if the user is attending
-		attending = true;
-	} else {
-		for (var i = 0; i < ev.attendees.length; i++) {
-			var attendee = ev.attendees[i];
-			
-			if (typeof attendee.user === "object" && attendee.user._id.equals(req.user._id)) {
-				attending = true;
-				break;
-			}
+	var isAdmin = false;
+	for (var i = 0; i < ev.attendees.length; i++) {
+		var attendee = ev.attendees[i];
+		
+		if (typeof attendee.user === "object" && attendee.user._id.equals(req.user._id)) {
+			attending = true;
+			isAdmin = attendee.admin;
+			break;
 		}
 	}
 	
-	console.log("Attending:"+attending)
-	
 	res.locals.eventattending = attending;
+	res.locals.eventadmin = isAdmin;
 	
 	next()
 }
@@ -103,9 +99,9 @@ exports.viewEvent = function (req, res) {
 	res.format({
 		html: function() {
 			if (res.locals.eventattending) {
-				res.render('event/homepage', { title: res.locals.event.name });
+				res.render('event/homepage', { title: res.locals.ev.name });
 			} else {
-				res.render('event/landingpage', { title: res.locals.event.name });
+				res.render('event/landingpage', { title: res.locals.ev.name });
 			}
 		},
 		json: function() {
@@ -120,7 +116,7 @@ exports.viewEvent = function (req, res) {
 exports.viewRegistrationPage = function (req, res) {
 	res.format({
 		html: function() {
-			res.render('event/landingpage', { title: res.locals.event.name });
+			res.render('event/landingpage', { title: res.locals.ev.name });
 		}
 	});
 }
@@ -129,7 +125,7 @@ exports.joinEvent = function (req, res) {
 	var password = req.body.password;
 	var category = req.body.category;
 	
-	var ev = res.locals.event;
+	var ev = res.locals.ev;
 	var attendee = {
 		user: req.user._id
 	};

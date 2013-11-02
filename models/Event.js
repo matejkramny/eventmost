@@ -11,37 +11,33 @@ var scheme = schema({
 	created: { type: Date, default: Date.now },
 	start: { type: Date, required: true },
 	end: { type: Date, required: true },
-	user: {
-		type: ObjectId,
-		ref: 'User'
-	},
 	attendees: [{
 		user: {
 			type: ObjectId,
 			ref: 'User'
 		},
-		category: String
-		// ticket?
+		category: String,
+		admin: { type: Boolean, default: false },
+		ticket: { type: ObjectId }
 	}],
 	geo: {}, // don't store anything here. - temporary placeholder when the event is loaded
 	description: String,
 	avatar: { type: ObjectId, ref: 'Avatar' },
 	address: String,
-	allowAttendeesToCreateCategories: { type: Boolean, default: true },
+	allowAttendeesToCreateCategories: { type: Boolean, default: false },
+	allowAttendeesToComment: { type: Boolean, default: false },
 	pricedTickets: { type: Boolean, default: false },
 	categories: [],
 	tickets: [{
-		organiserPays: { type: Boolean, default: true, required: true },
-		name: { type: String, required: true },
 		price: { type: Number, required: true },
-		number: { type: Number, required: true },
-		summary: { type: String, required: true }
+		quantity: { type: Number, required: true },
+		type: { type: String, required: true },
+		customType: { type: String, required: false },
+		whopays: { type: String, required: true }
 	}],
 	accessRequirements: {
-		private: { type: Boolean, default: true },
 		password: { type: Boolean, default: false },
-		passwordString: String,
-		inRange: { type: Boolean, default: false }
+		passwordString: String
 	},
 	files: [{
 		created: {
@@ -73,7 +69,7 @@ scheme.statics.getEvent = function (id, cb) {
 	try {
 		exports.Event
 			.findOne({ deleted: false, _id: mongoose.Types.ObjectId(id) })
-			.populate('user attendees.user messages.user avatar')
+			.populate('attendees.user messages.user avatar')
 			.exec(function(err, ev) {
 				if (err) throw err;
 				
@@ -91,8 +87,6 @@ scheme.statics.getEvent = function (id, cb) {
 					ev.save();
 				}
 				
-				console.log(ev.avatar.url);
-				
 				ev.getGeo(function(geo) {
 					cb(ev);
 				})
@@ -104,8 +98,14 @@ scheme.statics.getEvent = function (id, cb) {
 }
 
 scheme.methods.edit = function (body, user, files, cb) {
+	console.log(body);
+	
 	var self = this;
-	this.user = user._id;
+	this.attendees = [{
+		user: user._id,
+		category: 'Planner',
+		admin: true
+	}];
 	
 	if (body.name) {
 		this.name = body.name
@@ -134,29 +134,16 @@ scheme.methods.edit = function (body, user, files, cb) {
 	if (body.allowAttendeesToCreateCategories != null) {
 		this.allowAttendeesToCreateCategories = body.allowAttendeesToCreateCategories
 	}
+	if (body.allowCommentsOnEvent != null) {
+		this.allowCommentsOnEvent = body.allowCommentsOnEvent
+	}
 	if (body.pricedTickets != null) {
 		this.pricedTickets = body.pricedTickets
 	}
 	
 	// restriction settings
-	if (body.restriction != null) {
-		var restriction = parseInt(body.restriction);
-		if (!(isNaN(restriction) || restriction < 0 || restriction > 4)) {
-			this.accessRequirements.private = false;
-			this.accessRequirements.password = false;
-			this.accessRequirements.inRange = false;
-			
-			if (restriction == 1) {
-				this.accessRequirements.inRange = true;
-			} else if (restriction == 2) {
-				this.accessRequirements.password = true;
-			} else if (restriction == 3) {
-				this.accessRequirements.inRange = true;
-				this.accessRequirements.password = true;
-			} else if (restriction == 4) {
-				this.accessRequirements.private = true;
-			}
-		}
+	if (body.passwordRequired != null) {
+		this.accessRequirements.password = body.passwordRequired;
 	}
 	
 	if (body.password) {
@@ -196,26 +183,28 @@ scheme.methods.edit = function (body, user, files, cb) {
 		var tickets = body.tickets || [];
 		for (var i = 0; i < tickets.length; i++) {
 			var ticket = tickets[i];
-			var t = {};
-		
-			if (typeof ticket.organiserPays === "string" || typeof ticket.organiserPays === "boolean") {
-				if (typeof ticket.organiserPays === "boolean") {
-					t.organiserPays = ticket.organiserPays;
-				} else {
-					t.organiserPays = ticket.organiserPays == "false" ? false : true;
-				}
+			var t = {
+				whopays: 'me',
+				type: 'standard',
+				cutomType: '',
+				quantity: 1,
+				price: 0.0
+			};
+			
+			if (typeof ticket.whopays === "string" && ticket.whopays == 'attendee') {
+				t.whopays = 'attendee';
 			}
-			if (typeof ticket.name === "string") {
-				t.name = ticket.name;
+			if (typeof ticket.type === 'string' && (ticket.type == 'premium' || ticket.type == 'custom')) {
+				t.type = ticket.type;
+			}
+			if (typeof ticket.typeCustom === 'string' && ticket.type == 'custom') {
+				t.customType = ticket.customType;
 			}
 			if (typeof ticket.price === "string") {
 				t.price = parseFloat(ticket.price);
 			}
-			if (typeof ticket.number === "string") {
-				t.number = parseInt(ticket.number);
-			}
-			if (typeof ticket.summary === "string") {
-				t.summary = parseFloat(ticket.summary);
+			if (typeof ticket.quantity === "string") {
+				t.quantity = parseInt(ticket.quantity);
 			}
 		
 			this.tickets.push(t);
@@ -281,6 +270,23 @@ scheme.methods.validate = function (cb) {
 	if ((this.start && this.end) && this.end < this.start) {
 		// event ends before it starts..
 		errs.push("Event finishes before it begins. End date must be after the start date")
+	}
+	
+	for (var i = 0; i < this.tickets.length; i++) {
+		var t = this.tickets[i];
+		
+		if (typeof t.price !== 'number' || t.price < 0.0) {
+			errs.push("Ticket "+t.type+"-"+t.customType+" has invalid price")
+		}
+		if (typeof t.quantity !== 'number' || t.quantity < 0) {
+			errs.push("Ticket "+t.type+"-"+t.customType+" has invalid quantity")
+		}
+		if (typeof t.type !== 'string' || !(t.type == 'custom' || t.type == 'standard' || t.type == 'premium')) {
+			errs.push("Ticket "+t.type+"-"+t.customType+" has invalid type")
+		}
+		if (typeof t.whopays !== 'string' || !(t.whopays == 'me' || t.whopays == 'attendee')) {
+			errs.push("Ticket "+t.type+"-"+t.customType+" has invalid Who Pays attribute")
+		}
 	}
 	
 	cb(errs);

@@ -123,7 +123,7 @@ exports.listAttendees = function (req, res) {
 	if (!res.locals.eventattending) {
 		res.format({
 			html: function() {
-				res.redirect('/event/'+res.locals.event._id);
+				res.redirect('/event/'+res.locals.ev._id);
 			},
 			json: function() {
 				res.send({
@@ -138,11 +138,11 @@ exports.listAttendees = function (req, res) {
 	
 	res.format({
 		html: function() {
-			res.render('event/attendees', { title: "Attendees at "+res.locals.event.name })
+			res.render('event/attendees', { title: "Attendees at "+res.locals.ev.name })
 		},
 		json: function() {
 			res.send({
-				event: res.locals.event,
+				event: res.locals.ev,
 				attending: res.locals.eventattending
 			})
 		}

@@ -3,7 +3,7 @@ extends ../responsive
 include inc/navbar
 
 append meta
-	meta(name="event_id", content="#{event._id}")
+	meta(name="event_id", content="#{ev._id}")
 
 append addonjs
 	script(src="/js/eventLandingPage.js", defer="true")
@@ -19,31 +19,31 @@ block content
 	
 	.row
 		.col-md-12.col-lg-12.col-sm-12
-			h3.text-center= event.name
+			h3.text-center= ev.name
 	
 	.row
 		.col-sm-7.col-lg-7.col-md-7
 			.row
 				.col-sm-4.col-lg-4.col-md-4
-					img(src=event.avatar.url, style="max-height: 150px; max-width: 150px;")
+					img(src=ev.avatar.url, style="max-height: 150px; max-width: 150px;")
 				.col-sm-8.col-lg-8.col-md-8
-					.description-text-medium(style="word-wrap: break-word;")!= event.description
+					.description-text-medium(style="word-wrap: break-word;")!= ev.description
 			.row
 				.col-md-12.col-lg-12.col-sm-12
 					// tickets required
-					if event.pricedTickets
+					if ev.pricedTickets
 						include inc/payment
 			.row
 				.col-md-12.col-lg-12.col-sm-12
 					.text-center
 						h4 Who are you in this event:
-					if event.allowAttendeesToCreateCategories && event.categories.length > 0
+					if ev.allowAttendeesToCreateCategories && ev.categories.length > 0
 						.row
 							.col-lg-5.col-sm-5.col-md-5
 								.iconsbox2.left#eventCategoryList
-									for category in event.categories
+									for category in ev.categories
 										input.btn.btn-default.btn-block(type="button", value=category)
-							if event.allowAttendeesToCreateCategories
+							if ev.allowAttendeesToCreateCategories
 								.col-sm-6.col-lg-6.col-md-6
 									.row
 										.col-sm-4.col-lg-4.col-md-4
@@ -52,7 +52,7 @@ block content
 													| or
 										.col-sm-8.col-lg-8.col-md-8
 											mixin createCategory()
-					else if event.allowAttendeesToCreateCategories
+					else if ev.allowAttendeesToCreateCategories
 						mixin createCategory()
 					else
 						h5 An attendee. Sorry, the event organiser does not allow attendees to choose categories or craete their own.
@@ -61,25 +61,20 @@ block content
 				.col-sm-6.col-lg-6.col-md-6
 					.row
 						.col-sm-6.col-lg-6.col-md-6
-							h4 At #{event.start.getHours()}:#{event.start.getMinutes()}
+							h4 At #{ev.start.getHours()}:#{ev.start.getMinutes()}
 						.col-sm-6.col-lg-6.col-md-6
 							h4 On 
-								= event.start.getDate()
+								= ev.start.getDate()
 								| .
-								= event.start.getMonth()+1
+								= ev.start.getMonth()+1
 								br
-								= event.start.getFullYear()
+								= ev.start.getFullYear()
 				.col-sm-6.col-lg-6.col-md-6
-					h4 Event Organizer
-					h5
-						strong= event.user.getName()
-						if event.user.position
-							|  - #{event.user.position}
 			.row
 				.col-sm-12.col-lg-12.col-md-12
-					h4= event.venue_name
-					if event.address && event.address.length > 0
-						h4= event.address
+					h4= ev.venue_name
+					if ev.address && ev.address.length > 0
+						h4= ev.address
 					else
 						h4 Location unavailable
 			.row

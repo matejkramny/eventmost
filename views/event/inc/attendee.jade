@@ -6,7 +6,7 @@ mixin attendee(attendee)
 			h5= attendee.user.getName()
 			h5 Category: #{attendee.category}
 			h5
-				if event.user.company
+				if attendee.user.company
 					| , 
-					= event.user.company
+					= attendee.user.company
 	br

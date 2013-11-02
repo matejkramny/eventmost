@@ -1,4 +1,4 @@
-if event.address != null || event.geo != null
+if ev.address != null || ev.geo != null
 	script(src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false", defer="true")
 	script(defer="true").
 		var mapId = document.getElementById('eventMap');
@@ -9,18 +9,18 @@ if event.address != null || event.geo != null
 				mapTypeId: google.maps.MapTypeId.ROADMAP
 			});
 		}
-	if event.geo != null
+	if ev.geo != null
 		script(defer="true").
 			function preInitialize() {
-				var location = new google.maps.LatLng(#{event.geo.geo.lat}, #{event.geo.geo.lng});
+				var location = new google.maps.LatLng(#{ev.geo.geo.lat}, #{ev.geo.geo.lng});
 				initialize(location)	
 			}
-	else if event.address != null
+	else if ev.address != null
 		//- geolocate the address
 		script(defer="true").
 			function preInitialize() {
 				geocoder = new google.maps.Geocoder();
-				geocoder.geocode({ address: "#{event.address}" }, function(results, status) {
+				geocoder.geocode({ address: "#{ev.address}" }, function(results, status) {
 					if (status == google.maps.GeocoderStatus.OK) {
 						initialize(results[0].geometry.location);
 					}
@@ -39,7 +39,7 @@ if event.address != null || event.geo != null
 			});
 			var infowindow = new google.maps.InfoWindow;
 		
-			var content = '<div class="map-content"><h3>#{event.name}</h3>#{event.address}<br /><a href="http://maps.google.com/?daddr=#{event.address}" target="_blank">Get Directions</a></div>';
+			var content = '<div class="map-content"><h3>#{ev.name}</h3>#{ev.address}<br /><a href="http://maps.google.com/?daddr=#{ev.address}" target="_blank">Get Directions</a></div>';
 			infowindow.setContent(content);
 			google.maps.event.addListener(
 				marker, 

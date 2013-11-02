@@ -36,7 +36,15 @@ exports.doRemove = function (req, res, next) {
 	var ev = res.locals.event;
 	
 	// must be planner of the event
-	if (ev.user == null || !ev.user._id.equals(req.user._id)) {
+	var isPlanner = false;
+	for (var i = 0; i < ev.attendees.length; i++) {
+		var at = ev.attendees[i];
+		if (at.admin && at.user._id.equals(req.user._id)) {
+			var isPlanner = true;
+			break;
+		}
+	}
+	if (!isPlanner) {
 		req.session.flash.push("Unauthorized")
 		res.redirect('/event/'+ev._id);
 		return;
