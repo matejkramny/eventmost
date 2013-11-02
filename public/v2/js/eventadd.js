@@ -296,24 +296,32 @@ $(document).ready(function() {
 	var categories = ["Guest Speaker"];
 	var $ticketsWrapper = $(".ticketsWrapper")
 	var $tickets = $("#tickets");
+	var $ticketsLock = $(".tickets-lock");
+	
+	$ticketsLock.addClass('hide')
+	setTimeout(function() {
+		if ($("#2creditcardsmaller233").is(":checked")) {
+			$ticketsLock.removeClass('hide')
+		}
+	}, 200)
 	
 	//Yes,No hiding/showing the #ticketsWrapper
 	$("#2creditcardsmaller233, #creditcardsmaller233").change(function() {
 		if ($(this).is(":checked")) {
 			$("#1creditcardsmaller23, #creditcardsmaller23").attr("checked", false)
-			$ticketsWrapper.hide();
+			$ticketsLock.removeClass("hide");
 		} else {
 			$("#1creditcardsmaller23, #creditcardsmaller23").attr("checked", "checked")
-			$ticketsWrapper.show();
+			$ticketsLock.addClass("hide");
 		}
 	})
 	$("#1creditcardsmaller23, #creditcardsmaller23").change(function() {
 		if ($(this).is(":checked")) {
 			$("#2creditcardsmaller233, #creditcardsmaller233").attr("checked", false)
-			$ticketsWrapper.show();
+			$ticketsLock.addClass("hide");
 		} else {
 			$("#2creditcardsmaller233, #creditcardsmaller233").attr("checked", "checked")
-			$ticketsWrapper.hide();
+			$ticketsLock.removeClass("hide");
 		}
 	})
 	
