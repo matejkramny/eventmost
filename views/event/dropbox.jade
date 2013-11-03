@@ -3,7 +3,7 @@ extends ../responsive
 include inc/navbar
 
 block content
-	mixin navbar(1)
+	+navbar
 	
 	br
 	form#uploadForm(action="/event/"+ev._id+"/dropbox/upload", method="POST", enctype="multipart/form-data")
