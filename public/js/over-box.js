@@ -4,10 +4,10 @@ jQuery(document).ready(function($){
 	//portfolio - show link
 	$('.slid-box-background').hover(
 		function () {
-			$(this).animate({opacity:'1'});
+			$(this).css({ opacity:'1' });
 		},
 		function () {
-			$(this).animate({opacity:'0'});
+			$(this).css({ opacity:'0' });
 		}
 	);	
 });

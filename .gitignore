@@ -5,3 +5,4 @@ public/profileavatars/*.*
 public/dropbox/*.*
 public/businesscards/*.*
 data/*/*.*
+newrelic_agent.log
