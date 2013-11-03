@@ -3,7 +3,7 @@ extends layout
 block content
 	h2= users.length
 		|  Users
-	table.table
+	table.table.table-fixed-header
 		thead
 			tr
 				th Name
@@ -13,7 +13,7 @@ block content
 				th Twitter
 				th Facebook
 				th LinkedIn
-				th Admin?
+				th Admin
 		tbody
 			for user in users
 				tr
