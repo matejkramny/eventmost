@@ -3,7 +3,7 @@ extends layout
 block content
 	h2= events.length
 		|  Events
-	h3 X events happening right <code>NOW</code>
+	h3 X events happening <code>NOW</code>
 	table.table
 		thead
 			tr
@@ -42,13 +42,13 @@ block content
 					td= event.address
 					td
 						if event.password.enabled == true
-							span.glyphicon.glyphicon-thumbs-up
+							span.glyphicon.glyphicon-ok
 						else
-							span.glyphicon.glyphicon-thumbs-down
+							span
 					td= event.messages.length
 					td= event.files.length
 					td
 						if event.deleted == true
-							span.glyphicon.glyphicon-thumbs-up
+							span.glyphicon.glyphicon-ok
 						else
-							span.glyphicon.glyphicon-thumbs-down
+							span

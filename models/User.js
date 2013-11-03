@@ -329,3 +329,39 @@ scheme.statics.createWithLinkedIn = function (meta, accessToken, accessTokenSecr
 }
 
 exports.User = mongoose.model("User", scheme);
+/*
+for (var i = 0; i < 100; i++) {
+	var isAdmin = i % 5 == 0
+	var isTwitter = i % 6 == 0
+	var isFb = i % 7 == 0
+	var isLinkedin = i % 9 == 0
+
+	var user = {
+		name: "Generated "+i,
+		surname: " --"+i,
+		email: "gen"+i+"@craftbyte.net"
+	}
+	if (isAdmin) {
+		user.admin = true;
+	}
+	if (isTwitter) {
+		user.twitter = {
+			userid: "1234"
+		}
+	}
+	if (isFb) {
+		user.facebook = {
+			userid: "1234"
+		}
+	}
+	if (isLinkedin) {
+		user.linkedin = {
+			userid: "1234"
+		}
+	}
+
+
+	new exports.User(user).save(function(err) {
+		if (err) throw err;
+	})
+}*/
