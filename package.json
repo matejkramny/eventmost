@@ -27,6 +27,7 @@
 	"nodetime": "latest",
 	"nodemailer": "latest",
 	"bugsnag": "bugsnag/bugsnag-node",
-	"should": "latest"
+	"should": "latest",
+	"newrelic": "latest"
   }
 }

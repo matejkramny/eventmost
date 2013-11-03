@@ -1,7 +1,7 @@
 var models = require('../models');
 
 exports.display = function (req, res) {
-	models.Event.find({ user: req.user._id, deleted: false })
+	models.Event.find({ 'attendees.user': { $in: [req.user._id] }, deleted: false })
 		.sort('-start')
 		.limit(5)
 		.populate('avatar')
