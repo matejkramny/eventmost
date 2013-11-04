@@ -36,7 +36,7 @@ exports.show = function(req, res) {
 				lastYear++;
 			}
 		}
-	
+		res.locals.activePage = 1
 		res.render('admin/dashboard', {
 			layout: 'admin/layout',
 			users: users,
