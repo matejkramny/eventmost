@@ -1991,6 +1991,7 @@ table.gridtable th {font-size: 12px;}
 }
 
 @media only screen and (min-width: 481px) and (max-width: 685px) {
+.button-font{font-size: 13px;}
 .half-round-purple {width: 94%;}
   .and{padding-top: 15px;}
 .deifer-font3{font-size: 15px;}
@@ -2095,6 +2096,7 @@ table.gridtable th {font-size: 12px;}
 }
 
 @media only screen and (max-width: 480px) {
+.button-font{font-size: 13px;}
 .half-round-purple {width: 91%;}
 .and{margin-top: -15px;}
 .dropdown-toggle-ashen
