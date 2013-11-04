@@ -18,6 +18,7 @@ var scheme = schema({
 		},
 		category: String,
 		admin: { type: Boolean, default: false },
+		isAttending: { type: Boolean, default: true }, // gets set to false when the user exits the event..
 		ticket: { type: ObjectId }
 	}],
 	geo: {}, // don't store anything here. - temporary placeholder when the event is loaded

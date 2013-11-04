@@ -2,7 +2,7 @@ models = require('../../models')
 
 exports.listEvents = function (req, res) {
 	models.Event.find({ deleted: false })
-		.populate('avatar user')
+		.populate('avatar attendees.user')
 		.sort('-start')
 		.exec(function(err, evs) {
 		// TODO limit mount of events received
@@ -24,8 +24,8 @@ exports.listEvents = function (req, res) {
 }
 
 exports.listMyEvents = function (req, res) {
-	models.Event.find({ user: req.user._id, deleted: false })
-		.populate('avatar user')
+	models.Event.find({ 'attendees.user': req.user._id })
+		.populate('avatar attendees.user')
 		.sort('-start')
 		.exec(function(err, evs) {
 		if (err) throw err;
@@ -55,7 +55,7 @@ exports.listNearEvents = function (req, res) {
 		// render a blank page, and tell it to ask user for browser positioning
 		res.format({
 			html: function() {
-				res.render('event/list', { events: [], pagename: "Events near you", title: "Events nearby" });
+				res.render('event/list', { events: [], findNear: true, pagename: "Events near you", title: "Events nearby" });
 			},
 			json: function() {
 				res.send({
@@ -82,13 +82,14 @@ exports.listNearEvents = function (req, res) {
 					$maxDistance: 0.09009009009
 				}
 			}
-		}).populate('event')
+		}).populate('event event.avatar')
 		.limit(limit)
 		.exec(function(err, geos) {
 			if (err) throw err;
 		
 			if (geos) {
 				var events = [];
+				
 				for (var i = 0; i < geos.length; i++) {
 					if (geos[i].event == null) {
 						continue;

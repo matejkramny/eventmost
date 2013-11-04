@@ -3,7 +3,10 @@ function formatEvent(event) {
 	if (event.address == null || event.address.length == 0) {
 		event.address = "<h1>Location unavailable</h1>";
 	}
-	var avatar = event.avatar.url || "/images/default-logo.svg";
+	var avatar = "/images/event-avatar.jpg";
+	if (event.avatar && event.avatar.url)
+		avatar = event.avatar.url;
+	
 	if (!event.description) {
 		event.description = "";
 	}
@@ -12,7 +15,7 @@ function formatEvent(event) {
 	}
 	var html = '<div class="nspacer col-md-12 col-xs-12 col-lg-12 col-sm-12">\
         <div style="width:101.4%;" class="pull-left event"><a href="/event/'+event._id+'" class="slid-box">\
-            <article class="c-two">\
+            <article class="c-two" style="background: url('+avatar+') top left; background-size: 100% 100%;">\
               <div class="slid-box-background">\
                 <h4><div class="eye hide2"></div><br> REVIEW</h4>\
               </div>\

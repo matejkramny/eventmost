@@ -200,23 +200,19 @@ append content
 				br
 				a(href="/event/add") Create an event
 	else
+		- var pages = Math.ceil(myeventsTotal / 5)
+		- var curpage = Math.ceil(myeventsSkip / 5)
 		.nspacer
 			.pull-right(style='height:35px;')
 				ul.pagination
 					li
-						a(href='#') «
-					li.active
-						a(href='#') 1
+						a(href='/') «
+					- for (var i = 0; i < pages; i++)
+						li(class= curpage == i ? "active" : null)
+							a(href='/?skip='+i*5)= i+1
+					
 					li
-						a(href='#') 2
-					li
-						a(href='#') 3
-					li.disabled
-						a(href='#') ...
-					li
-						a(href='#') 5
-					li
-						a(href='#') »
+						a(href='/?skip='+((pages*5)-5)) »
 		.clearfix
 
 
