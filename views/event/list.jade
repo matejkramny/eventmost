@@ -2,6 +2,11 @@ extends ../responsive
 
 include inc/item
 
+append addonjs
+	if typeof findNear !== "undefined" && findNear
+		script(src="/v2/js/geo.js", defer="true")
+		script(src="/v2/js/angular-nearEvents.js", defer="true")
+
 block content
 	.row
 		.col-md-12.col-sm-12.col-lg-12
@@ -21,7 +26,12 @@ block content
 	
 	
 	h2.text-center= pagename
-	if events.length == 0
+	
+	if typeof findNear !== "undefined" && findNear
+		//- Events nearby
+		#nearbyEventsPlaceholder
+			p.text-center.lead Locating events around you..
+	else if events.length == 0
 		.row
 			.col-md-12.col-sm-12.col-lg-12
 				h4.text-center There are no events :(
