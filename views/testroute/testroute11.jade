@@ -1,5 +1,8 @@
 extends ../responsive
 
+append content
+	include ../modals/notes
+
 block content
 
 	.col-xs-12.hide-all2
@@ -149,5 +152,6 @@ block content
 		.col-lg-9.col-md-9.col-xs-9(style="float:none; margin:4px auto;")
 			.nspacer
 			.center
-				button.btn.btn-primary.font-e.font-ah(type='submit', href="", style="padding:20px; padding-left:35px; padding-right:35px;")
-					| <b>Enter</b>
+				a(data-toggle="modal", href="#notesModal")
+					button.btn.btn-primary.font-e.font-ah(type='submit', href="", style="padding:20px; padding-left:35px; padding-right:35px;")
+						| <b>Enter</b>

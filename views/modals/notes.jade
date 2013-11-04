@@ -1,0 +1,28 @@
+#notesModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="", aria-hidden="true",)
+	.modal-dialog
+		.modal-content
+			.modal-body.reveal-modal(style="background-color:#fdd093;")
+				.font-e.center(style="margin-top:50px;")
+					| Allow user to know you saved his/her profile?
+				.clearfix
+				.center
+					label.checkbox.toggle.candy(style='width: 100px; margin:10px auto;', onclick='')
+						input.allowAttendeesToCreateTheirOwnCategories(type='checkbox', class="invisible")
+						span
+							span No
+							span Yes
+						a.slide-button
+				.nspacer
+				.font-e.center(style="margin-top:10px;")
+					| Add a private note about this person? <br />(only you can see such)
+				.center
+					label.checkbox.toggle.candy(style='width: 100px; margin:10px auto;', onclick='')
+						input.allowAttendeesToCreateTheirOwnCategories(type='checkbox', class="invisible")
+						span
+							span No
+							span Yes
+						a.slide-button
+				.clearfix
+				a(href="/", class="close-reveal-modal") 
+					img(src="/img/x.svg")
+
