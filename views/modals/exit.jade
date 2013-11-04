@@ -1,0 +1,31 @@
+#exitModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="", aria-hidden="true",)
+	.modal-dialog
+		.modal-content
+			.modal-body.reveal-modal(style="background-color:#fdd093;")
+				.font-e.center.semi-bold(style="margin-top:50px;")
+					| If you virtually exit this event you will not be able to view any body else’s profile or view conversations.
+				.clearfix
+				.font-e.center(style="margin-top:50px;")
+					| Are you sure you’d like to exit (you will still be resisted for this event)?
+				.clearfix
+				.center
+					label.checkbox.toggle.candy(style='width: 100px; margin:10px auto;', onclick='')
+						input.allowAttendeesToCreateTheirOwnCategories(type='checkbox', class="invisible")
+						span
+							span No
+							span Yes
+						a.slide-button
+				.nspacer
+				.font-e.center(style="margin-top:10px;")
+					| Would you like to un=register for this event?
+				.center
+					label.checkbox.toggle.candy(style='width: 100px; margin:10px auto;', onclick='')
+						input.allowAttendeesToCreateTheirOwnCategories(type='checkbox', class="invisible")
+						span
+							span No
+							span Yes
+						a.slide-button
+				.clearfix
+				a(href="/", class="close-reveal-modal") 
+					img(src="/img/x.svg")
+

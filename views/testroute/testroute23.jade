@@ -1,6 +1,12 @@
 extends ../responsive
 
+append content
+	include ../modals/exit
+
 block content
+
+
+
 
 	.col-xs-12.hide-all2
 		form(method="POST", accept-charset="utf-8")
@@ -291,8 +297,9 @@ block content
 		.clearfix
 		.nspacer
 		.pull-right
-			a(href="",)
-			button.btn.btn-default.font-e.hide-prof-butt(type='submit', style="border-radius: 10px; color:#fff; padding:20px;")
-				| Exit event
+			a(data-toggle="modal", href="#exitModal")
+				button.btn.btn-default.font-e.hide-prof-butt(type='submit', style="border-radius: 10px; color:#fff; padding:20px;")
+					| Exit event
 
 	.clearfix
+
