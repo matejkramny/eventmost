@@ -31,6 +31,32 @@ $(document).ready(function() {
 		});
 	}
 	
+	$(".current-location-field").blur(function() {
+		var address = $(this).val();
+		if (address.length == 0) {
+			return;
+		}
+		
+		$(".current-location-status").html("Googling..");
+		
+		$.ajax({
+			url: "/geocode.json?address="+address,
+			dataType: "json",
+			success: function(data, status, jqxhr) {
+				if (data.results.length > 0) {
+					$(".current-location-field").val(data.results[0].formatted_address);
+					var geo = data.results[0].geometry.location;
+					lat = geo.lat;
+					lng = geo.lng;
+					
+					$(".current-location-status").html("use current location")
+				} else {
+					$(".current-location-status").html("Location unavailable :(")
+				}
+			}
+		})
+	})
+	
 	var loadNear = function() {
 		$(".current-location-status").html("Locating..");
 		

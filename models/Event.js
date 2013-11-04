@@ -211,6 +211,8 @@ scheme.methods.edit = function (body, user, files, cb) {
 		}
 	}
 	
+	console.log(body.lat)
+	console.log(body.lng)
 	if (body.lat != null && body.lng != null) {
 		Geolocation.findOne({ event: this._id }, function(err, geo) {
 			if (err) throw err;
@@ -220,6 +222,7 @@ scheme.methods.edit = function (body, user, files, cb) {
 		
 			if (isNaN(lat) || isNaN(lng)) {
 				// cannot save.
+				console.log("Cannot save lat&lng")
 				return;
 			}
 		
