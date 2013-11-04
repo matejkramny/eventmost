@@ -13,8 +13,11 @@ $(document).ready(function() {
 	function getNear(coords) {
 		lat = coords.lat;
 		lng = coords.lng;
+		
+		$(".current-location-status").html("Googling..");
+		
 		$.ajax({
-			url: "http://maps.googleapis.com/maps/api/geocode/json?latlng="+coords.lat+","+coords.lng+"&sensor=true",
+			url: "/rgeocode.json?latlng="+coords.lat+","+coords.lng,
 			dataType: "json",
 			method: "GET",
 			success: function(data, status, jqxhr) {
@@ -33,9 +36,6 @@ $(document).ready(function() {
 		
 		if (window.Geo.isSupported()) {
 			window.Geo.getLocation(function(coords, pos) {
-				
-				$(".current-location-status").html("Googling..");
-				
 				if (isLocalStorageCapable) {
 					//HTML5 storage...
 					localStorage["didSaveCoords"] = true;
