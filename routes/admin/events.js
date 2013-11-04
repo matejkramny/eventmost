@@ -5,6 +5,7 @@ exports.show = function (req, res) {
 		if (err) throw err;
 		
 		res.locals.events = events;
+		res.locals.activePage = 3
 		res.render('admin/events', { layout: 'admin/layout' });
 	})
 }

@@ -33,7 +33,7 @@ exports.show = function (req, res) {
 					lastYear++;
 				}
 			}
-			
+		res.locals.activePage = 4
 			res.render('admin/emails', {
 				layout: 'admin/layout',
 				emails: emailNotifications,

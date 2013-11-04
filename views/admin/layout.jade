@@ -24,20 +24,23 @@ html
 						a(href="/admin/")
 							img.img-responsive(src="/images/logo.svg", style="margin-top:20px;")
 						hr
+						ul.list-group.nav
+								a.list-group-item(href="/admin/", class= activePage == 1 ? "active" : null)
+									span.glyphicon.glyphicon-dashboard
+									|  Dashboard
+								a.list-group-item(href="/admin/users", class= activePage == 2 ? "active" : null)
+									span.glyphicon.glyphicon-user
+									|  Users
+								a.list-group-item(href="/admin/events", class= activePage == 3 ? "active" : null)
+									span.glyphicon.glyphicon-calendar
+									|  Events
+								a.list-group-item(href="/admin/emails", class= activePage == 4 ? "active" : null)
+									span.glyphicon.glyphicon-envelope
+									|  Emails
 						ul.list-group
-							//-(style="padding-left: 10px; padding-right: 10px;")
-							a.list-group-item(href="/admin/")
-								span.glyphicon.glyphicon-dashboard
-								|  Dashboard
-							a.list-group-item(href="/admin/users")
-								span.glyphicon.glyphicon-user
-								|  Users
-							a.list-group-item(href="/admin/events")
-								span.glyphicon.glyphicon-calendar
-								|  Events
-							a.list-group-item(href="/admin/emails")
-								span.glyphicon.glyphicon-envelope
-								|  Emails
+							a.list-group-item(href="/")
+								span.glyphicon.glyphicon-log-out
+								|   Back to EventMost
 					.col-md-10.col-lg-10.col-sm-10
 						block content
 		block js
