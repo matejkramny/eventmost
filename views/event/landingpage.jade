@@ -7,7 +7,9 @@ append meta
 
 append addonjs
 	script(src="/js/eventLandingPage.js", defer="true")
+	script(src="/js/drops.js", defer="true")
 	include inc/mapjs
+
 
 block content
 	mixin navbar(4)
@@ -17,22 +19,61 @@ block content
 			b My Category is:
 			input#createOwnCategory(type="text", placeholder="Create my own category..", style="font-size:18px; margin-top:10px; margin-left:0px; border:1px solid #ecd077;")
 	
-	.row
-		.col-md-12.col-lg-12.col-sm-12
-			h3.text-center= ev.name
+	.col-xs-12.hide-all2
+		form(method="POST", accept-charset="utf-8")
+			input.gonew2.pull-right.header-links(type="button", value="GO", style="width:10%;")
+			input(type="hidden", name="_csrf", value=token)
+			input.pull-right.font-s.search-input.pad-left-ten.header-links(type="search", placeholder="search events or people", style="width:87%;")
+	.clearfix.hide-all2
 	
-	.row
-		.col-sm-7.col-lg-7.col-md-7
-			.row
-				.col-sm-4.col-lg-4.col-md-4
-					img(src=ev.avatar.url, style="max-height: 150px; max-width: 150px;")
-				.col-sm-8.col-lg-8.col-md-8
-					.description-text-medium(style="word-wrap: break-word;")!= ev.description
-			.row
-				.col-md-12.col-lg-12.col-sm-12
-					// tickets required
-					if ev.pricedTickets
-						include inc/payment
+	.nspacer
+	.col-md-4.col-lg-4.col-sm-4
+		.center
+			img(src="/images/event-avatar-new.svg" alt="" )
+			// it's commeneted because there is different avatar image img(src=ev.avatar.url,)
+	.col-md-8.col-lg-8.col-sm-8
+		h3= ev.name
+		.nspacer
+		.col-md-4.col-lg-4.col-sm-4.pad-left-zero.font-e.semi-bold
+			| When
+			.line-purple
+			.font-s.inline.semi-bold
+				| At #{ev.start.getHours()}:#{ev.start.getMinutes()}
+			.font-s.inline.semi-bold
+				| On 
+				= ev.start.getDate()
+				| .
+				= ev.start.getMonth()+1
+			.font-s.inline.semi-bold
+				= ev.start.getFullYear()
+		.col-md-4.col-lg-4.col-sm-4.pad-left-zero.font-e.semi-bold
+			| Where
+			.line-purple
+			.font-s.inline.semi-bold
+				img(src="/images/mapster.svg" alt="" class="pad-right-five")
+				= ev.address
+		.col-md-4.col-lg-4.col-sm-4.pad-left-zero.font-e.semi-bold
+			| Event Organizer
+			.line-purple
+			.font-s.inline.semi-bold
+			// event organiser name here?
+		.clearfix
+		.nspacer
+		// google map here?
+		img(src="/images/map.jpg" alt="" class="img-responsive")
+	.clearfix
+
+
+	.col-md-12.col-lg-12.col-sm-12
+		.font.semi-bold
+			| Event description
+		.line-purple
+		.description-text-medium.break!= ev.description	
+
+	.col-md-12.col-lg-12.col-sm-12
+		// tickets required
+		if ev.pricedTickets
+			include inc/payment
 			.row
 				.col-md-12.col-lg-12.col-sm-12
 					.text-center
@@ -61,14 +102,7 @@ block content
 				.col-sm-6.col-lg-6.col-md-6
 					.row
 						.col-sm-6.col-lg-6.col-md-6
-							h4 At #{ev.start.getHours()}:#{ev.start.getMinutes()}
 						.col-sm-6.col-lg-6.col-md-6
-							h4 On 
-								= ev.start.getDate()
-								| .
-								= ev.start.getMonth()+1
-								br
-								= ev.start.getFullYear()
 				.col-sm-6.col-lg-6.col-md-6
 			.row
 				.col-sm-12.col-lg-12.col-md-12
