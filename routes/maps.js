@@ -55,7 +55,8 @@ exports.geoCode = geoCode = function (req, res) {
 		})
 		.on('end', function() {
 			res.status(200);
-			res.send(JSON.stringify(JSON.parse(data).results))
+			res.set('Content-Type', 'application/json');
+			res.send(data);
 		});
 	}
 	
