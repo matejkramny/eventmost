@@ -1,6 +1,9 @@
 extends ../responsive
 
-include inc/navbar
+
+append content
+	include inc/navbar
+	include ../modals/registration
 
 append meta
 	meta(name="event_id", content="#{ev._id}")
@@ -25,7 +28,7 @@ block content
 			input(type="hidden", name="_csrf", value=token)
 			input.pull-right.font-s.search-input.pad-left-ten.header-links(type="search", placeholder="search events or people", style="width:87%;")
 	.clearfix.hide-all2
-	
+
 	.nspacer
 	.col-md-4.col-lg-4.col-sm-4
 		.center
@@ -50,8 +53,11 @@ block content
 			| Where
 			.line-purple
 			.font-s.inline.semi-bold
-				img(src="/images/mapster.svg" alt="" class="pad-right-five")
-				= ev.address
+				img.inline(src="/images/mapster.svg" alt="" class="pad-right-five")
+				.inline
+					= ev.address
+				.inline
+					= ev.venue_name
 		.col-md-4.col-lg-4.col-sm-4.pad-left-zero.font-e.semi-bold
 			| Event Organizer
 			.line-purple
@@ -60,7 +66,8 @@ block content
 		.clearfix
 		.nspacer
 		// google map here?
-		img(src="/images/map.jpg" alt="" class="img-responsive")
+		#eventMap(style="height:197px;")
+		| Event does not have a location
 	.clearfix
 
 
@@ -74,10 +81,16 @@ block content
 		// tickets required
 		if ev.pricedTickets
 			include inc/payment
-			.row
-				.col-md-12.col-lg-12.col-sm-12
-					.text-center
-						h4 Who are you in this event:
+
+	.col-md-12.col-lg-12.col-sm-12
+		.nspacer.center
+			a(data-toggle="modal", href="#attendModal")
+				button.btn.btn-primary.hide-prof-butt(type='submit', style="border-radius: 10px; padding:10px; padding-right:25px; padding-left:25px;")
+					| Attend this event as...
+
+
+
+	// not sure what is it
 					if ev.allowAttendeesToCreateCategories && ev.categories.length > 0
 						.row
 							.col-lg-5.col-sm-5.col-md-5
@@ -97,24 +110,8 @@ block content
 						mixin createCategory()
 					else
 						h5 An attendee. Sorry, the event organiser does not allow attendees to choose categories or craete their own.
-		.col-sm-5.col-lg-5.col-md-5
-			.row
-				.col-sm-6.col-lg-6.col-md-6
-					.row
-						.col-sm-6.col-lg-6.col-md-6
-						.col-sm-6.col-lg-6.col-md-6
-				.col-sm-6.col-lg-6.col-md-6
-			.row
-				.col-sm-12.col-lg-12.col-md-12
-					h4= ev.venue_name
-					if ev.address && ev.address.length > 0
-						h4= ev.address
-					else
-						h4 Location unavailable
-			.row
-				.col-sm-12.col-lg-12.col-md-12
-					#eventMap(style="height:300px;")
-						h4 Event does not have a location
+
+
 	
 	.row
 		.col-sm-12.col-lg-12.col-md-12
@@ -126,3 +123,4 @@ block content
 						|  if you don't like it when computers make you do things :)
 					input#accessEvent.btn.btn-success(type="submit", value="Access event")
 					input.btn.btn-info(type="button", onclick="window.location='/';return false;", value="Go back to homepage")
+

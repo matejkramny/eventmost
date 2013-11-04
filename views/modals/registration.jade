@@ -1,0 +1,31 @@
+#attendModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="", aria-hidden="true",)
+	.modal-dialog
+		.modal-content
+			.modal-body.reveal-modal(style="background-color:#fdd093;")
+				.font-e.center
+					| Attending this event as:
+				.clearfix
+				.nspacer
+				.col-md-5.col-lg-5.col-sm-5
+					input.input-ashen-rounded.font-exception(type="submit", value="Guest Speaker" style="padding:10px; font-size:16px;")
+					.nspacer-small
+					input.input-ashen-rounded.font-exception(type="submit", value="Guest Speaker" style="padding:10px; font-size:16px;")
+					.nspacer-small
+					input.input-ashen-rounded.font-exception(type="submit", value="Guest Speaker" style="padding:10px; font-size:16px;")
+					.nspacer-small
+					input.input-ashen-rounded.font-exception(type="submit", value="Guest Speaker" style="padding:10px; font-size:16px;")
+				.col-md-2.col-lg-2.col-sm-2
+					.center(style="margin-top:50px;")
+						| or
+				.col-md-5.col-lg-5.col-sm-5.semi-bold(style="margin-top:20px;")
+					| Create your own:
+					input.input-ashen-rounded.font-exception(type="text" style="padding:10px; font-size:16px;")
+				.clearfix
+				.nspacer
+				.center
+					button.btn.btn-primary.hide-prof-butt(type='submit', style="border-radius: 10px; padding:10px; padding-right:25px; padding-left:25px;")
+						| Access <br />event
+				.clearfix
+				a(href="/", class="close-reveal-modal") 
+					img(src="/img/x.svg")
+
