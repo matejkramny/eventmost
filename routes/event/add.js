@@ -1,11 +1,18 @@
-models = require('../../models')
-fs = require('fs')
+var models = require('../../models'),
+	fs = require('fs')
 
-exports.addEvent = function (req, res) {
+exports.router = function (app) {
+	app.get('/event/add', addEvent)
+		.post('/event/add', doAddEvent)
+		.post('/event/add/avatar', uploadAvatarAsync)
+		.get('/event/:avatarid/avatar/remove', removeAvatar)
+}
+
+function addEvent (req, res) {
 	res.render('event/add', { title: "Add Event" })
 }
 
-exports.doAddEvent = function (req, res) {
+function doAddEvent (req, res) {
 	var newEvent = new models.Event({});
 	
 	newEvent.edit(req.body, req.user, req.files, function(err, ev) {
@@ -39,7 +46,7 @@ exports.doAddEvent = function (req, res) {
 	});
 }
 
-exports.uploadAvatarAsync = function(req, res) {
+function uploadAvatarAsync (req, res) {
 	var avatarid = req.body.avatarid;
 	var avatar;
 	
@@ -80,7 +87,8 @@ exports.uploadAvatarAsync = function(req, res) {
 		})
 	}
 }
-exports.removeAvatar = function (req, res) {
+
+function removeAvatar (req, res) {
 	var id = req.params.avatarid;
 	
 	// Find the avatar

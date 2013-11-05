@@ -13,7 +13,6 @@ append addonjs
 	script(src="/js/drops.js", defer="true")
 	include inc/mapjs
 
-
 block content
 	mixin navbar(4)
 	
@@ -32,7 +31,7 @@ block content
 	.nspacer
 	.col-md-4.col-lg-4.col-sm-4
 		.center
-			img(src="/images/event-avatar-new.svg" alt="" )
+			img(src="/images/event-avatar-new.svg", alt="")
 			// it's commeneted because there is different avatar image img(src=ev.avatar.url,)
 	.col-md-8.col-lg-8.col-sm-8
 		h3= ev.name
@@ -53,7 +52,7 @@ block content
 			| Where
 			.line-purple
 			.font-s.inline.semi-bold
-				img.inline(src="/images/mapster.svg" alt="" class="pad-right-five")
+				img.inline.pad-right-five(src="/images/mapster.svg", alt="")
 				.inline
 					= ev.address
 				.inline
@@ -65,9 +64,9 @@ block content
 			// event organiser name here?
 		.clearfix
 		.nspacer
-		// google map here?
+		// google map here
 		#eventMap(style="height:197px;")
-		| Event does not have a location
+			| Event does not have a location
 	.clearfix
 
 
@@ -84,34 +83,8 @@ block content
 
 	.col-md-12.col-lg-12.col-sm-12
 		.nspacer.center
-			a(data-toggle="modal", href="#attendModal")
-				button.btn.btn-primary.hide-prof-butt(type='submit', style="border-radius: 10px; padding:10px; padding-right:25px; padding-left:25px;")
-					| Attend this event as...
-
-
-
-	// not sure what is it
-					if ev.allowAttendeesToCreateCategories && ev.categories.length > 0
-						.row
-							.col-lg-5.col-sm-5.col-md-5
-								.iconsbox2.left#eventCategoryList
-									for category in ev.categories
-										input.btn.btn-default.btn-block(type="button", value=category)
-							if ev.allowAttendeesToCreateCategories
-								.col-sm-6.col-lg-6.col-md-6
-									.row
-										.col-sm-4.col-lg-4.col-md-4
-											.inten1
-												.inten2
-													| or
-										.col-sm-8.col-lg-8.col-md-8
-											mixin createCategory()
-					else if ev.allowAttendeesToCreateCategories
-						mixin createCategory()
-					else
-						h5 An attendee. Sorry, the event organiser does not allow attendees to choose categories or craete their own.
-
-
+			button.btn.btn-primary.hide-prof-butt(type='button', data-toggle="modal", href="#attendModal", style="border-radius: 10px; padding:10px; padding-right:25px; padding-left:25px;")
+				| Attend this event ssas...
 	
 	.row
 		.col-sm-12.col-lg-12.col-md-12

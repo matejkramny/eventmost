@@ -69,7 +69,6 @@ function viewUser (req, res) {
 		if (err) throw err;
 		
 		// check if user is self or user is 
-		console.log(req.user.savedProfiles)
 		var saved = false;
 		for (var i = 0; i < req.user.savedProfiles.length; i++) {
 			var uid = req.user.savedProfiles[i];
@@ -78,8 +77,6 @@ function viewUser (req, res) {
 				break;
 			}
 		}
-		
-		console.log("Saved "+saved)
 		
 		res.format({
 			html: function() {
