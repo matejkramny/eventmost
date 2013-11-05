@@ -218,10 +218,19 @@ border-radius: 10px;}
 .postish-small{margin-left: -140px;}
 
 
+.width100{width: 100%;}
+.width53{width: 53%;}
+.width18{width: 18%;}
+.width14{width: 14%;}
+
+
 .post-width-text{width:95%;}
 
 .col-lg-3-5{width:31.6%; float: left; padding-left: 5px; padding-right: 5px;}
 .button-event{width:20%;}
+
+
+.filename{padding: 21px; height:100px; font-size: 20px;}
 
 .create-e-img{margin-top:-20px; padding-top:20px; margin-left:0px;}
 .create-height{height:158px;}
@@ -1697,6 +1706,8 @@ p.check5:not(#foo) > input[type=checkbox] + label:hover               { backgrou
 }
 /**** pagination ****/
 @media only screen and (min-width: 1025px) and (max-width: 1199px) {
+
+.filename{padding: 21px; height:82px; font-size: 17px;}
 .half-round-purple {width: 96.2%;}
 #slider1 .overview li{ width: 240px; word-wrap:break-word;}
 .slider-text {width: 160%;}
@@ -1734,6 +1745,7 @@ p.check5:not(#foo) > input[type=checkbox] + label:hover               { backgrou
 
 
 @media only screen and (min-width: 981px) and (max-width: 1024px) {
+.filename{padding: 21px; height:82px; font-size: 17px;}
 .half-round-purple {width: 96.2%;}
 #slider1 .overview li{ width: 240px; word-wrap:break-word;}
 .slider-text {width: 160%;}
@@ -1775,6 +1787,7 @@ p.check5:not(#foo) > input[type=checkbox] + label:hover               { backgrou
 }
 
 @media only screen and (min-width: 768px) and (max-width: 980px) {
+.filename{padding: 11px; height:62px; font-size: 14px;}
 .half-round-purple {width: 95%;}
 .and{padding-top: 30px;}
 .post-width-small{width:82%;}
@@ -1880,6 +1893,7 @@ p.check5:not(#foo) > input[type=checkbox] + label:hover               { backgrou
 }
 
 @media only screen and (min-width: 686px) and (max-width: 768px) {
+.filename{padding: 11px; height:58px; font-size: 14px;}
 .half-round-purple {width: 94.8%;}
 .and{padding-top: 25px;}
 .don-show-here{display: none;}
@@ -2036,6 +2050,7 @@ table.gridtable th {font-size: 12px;}
 }
 
 @media only screen and (min-width: 481px) and (max-width: 685px) {
+.filename{padding: 7px; height:46px; font-size: 11px;}
 .button-font{font-size: 13px;}
 .half-round-purple {width: 94%;}
   .and{padding-top: 15px;}
@@ -2141,6 +2156,10 @@ table.gridtable th {font-size: 12px;}
 }
 
 @media only screen and (max-width: 480px) {
+.fontish{font-size: 14px !important;}
+.fontish2{font-size: 12px !important;}
+.back-spacer{margin-top: 0px; padding-left: 5px;}
+.filename{padding: 2px; padding-left: 10px; height:37px; font-size: 11px;}
 .button-font{font-size: 13px;}
 .half-round-purple {width: 91%;}
 .and{margin-top: -15px;}
@@ -2222,4 +2241,9 @@ table.gridtable td {
 table.gridtable-payment-yellow td {font-size: 10px;}
 table.gridtable-payment-yellow th {font-size: 10px;}
 table.gridtable-payment-yellow {font-size: 10px;}
+}
+
+
+@media only screen and (max-width: 360px) {
+.filename{padding: 2px; padding-left: 10px; height:34px; font-size: 9px;}
 }
