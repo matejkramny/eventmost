@@ -5,19 +5,19 @@ exports.show = function (req, res) {
 		if (err) throw err;
 
 			var eventsNow = 0
-			var now = Date.now()
 		for (var i = 0; i < events.length; i++) {
-			var eventNow = events[i];
-			var wstart = eventNow.start.getTime()
-			var wend = eventNow.end.getTime()
+			var eventss = events[i];
+			var cDate = Date.now();
+			var fDate = eventss.start.getTime();
+			var lDate = eventss.end.getTime();
 
-			if (wstart < now < wend) {
+			if ((cDate <= lDate && cDate >= fDate)) {
 				eventsNow++;
-			}
+			};
 		}
 
 		res.locals.events = events;
 		res.locals.activePage = 3
-		res.render('admin/events', { layout: 'admin/layout', eventsNow: eventsNow });
+		res.render('admin/events', { layout: 'admin/layout', eventsNow: eventsNow, cDate: cDate, lDate: lDate, fDate: fDate });
 	})
 }
