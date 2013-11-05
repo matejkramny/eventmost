@@ -1075,7 +1075,52 @@ p.check5-purple-small:not(#foo) > input[type=checkbox]:focus + label,
 p.check5-purple-small:not(#foo) > input[type=checkbox] + label:hover               { background-position: 0 0px; }
 
 
+p.check5-purple-small2 > input
+{
+  padding: 0;
+  margin: 0;
+  height: 33px;
+  width: 36px;
+  float: left;
+  position: absolute;
+  left: 0;
+  opacity: 0;
+}
+p.check5-purple-small2 > label 
+{ 
+  line-height: 30px; 
+  color: #fff; 
+  padding: 0 0 0 0px;
+  padding-top: 5px;
+  -moz-transition: color 1s ease; 
+  -o-transition: color 1s ease; 
+  -webkit-transition: color 1s ease; 
+  transition: color 1s ease; 
+}
+fieldset[dir=rtl] p.check5 > label {
+  padding: 0 0px 0 0;
+}
 
+p.check5-purple-small2:not(#foo) > input + label
+{
+  background: url('../../../images/check5-small-purple2.svg');
+  height: 33px !important;
+  width: 36px;
+  margin-left: 0px;
+  cursor: pointer !important;
+}
+
+/* Checked styles */
+p.check5-purple-small2:not(#foo) > input[type=checkbox]:checked + label             { background-position: 0 66px; }
+p.check5-purple-small2:not(#foo) > input[type=checkbox]:hover:checked + label,
+p.check5-purple-small2:not(#foo) > input[type=checkbox]:focus:checked + label,
+p.check5-purple-small2:not(#foo) > input[type=checkbox]:checked + label:hover,
+p.check5-purple-small2:not(#foo) > input[type=checkbox]:focus:checked + label           { background-position: 0 -66px; }
+
+/* Hover & Focus styles */
+p.check5-purple-small2:not(#foo) > input[type=checkbox]:hover + label,
+p.check5-purple-small2:not(#foo) > input[type=checkbox]:focus + label,
+p.check5-purple-small2:not(#foo) > input[type=checkbox] + label:hover               { background-position: 0 0px; }
 
 
 /**** checkbox5 ****/

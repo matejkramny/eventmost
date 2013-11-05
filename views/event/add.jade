@@ -9,7 +9,9 @@ append addonjs
 
 append content
 	include ../inc/flash
-	
+	include ../modals/add-modal
+
+
 	div(ng-controller="eventAdd")
 		#afterPublishHide
 			//- smart
@@ -260,7 +262,8 @@ append content
 							input(type='checkbox', class="invisible")
 							span
 								span No
-								span Yes
+								a(data-toggle="modal", href="#addModal")
+									span Yes
 							a.slide-button
 					.clearfix
 
@@ -646,7 +649,8 @@ append content
 							input(type='checkbox', class="invisible")
 							span
 								span No
-								span Yes
+								a(data-toggle="modal", href="#addModal")
+									span Yes
 							a.slide-button
 					.clearfix
 
@@ -659,7 +663,6 @@ append content
 							| Tickets
 					.clearfix
 					.line-purple
-
 					.nspacer
 					.font2.pull-left.font-exception
 						| Include priced tickets?
