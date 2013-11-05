@@ -27,7 +27,7 @@ exports.doEditEvent = function (req, res) {
 	var errors = [];
 	
 	var ev = res.locals.event;
-	// Only planner can edit
+	
 	var canEdit = false;
 	for (var i = 0; i < ev.attendees.length; i++) {
 		var at = ev.attendees[i];

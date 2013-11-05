@@ -41,14 +41,14 @@ block content
 						= event.end.getMinutes()
 					td= event.address
 					td
-						if event.password.enabled == true
+						if event.accessRequirements.password == true
 							span.glyphicon.glyphicon-ok
 						else
-							span
+							span.glyphicon.glyphicon-remove
 					td= event.messages.length
 					td= event.files.length
 					td
 						if event.deleted == true
 							span.glyphicon.glyphicon-ok
 						else
-							span
+							span.glyphicon.glyphicon-remove
