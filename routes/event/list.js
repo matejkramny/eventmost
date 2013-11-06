@@ -1,5 +1,6 @@
 var models = require('../../models')
 	, util = require('../../util')
+	, async = require('async')
 
 exports.router = function (app) {
 	app.get('/events', exports.listEvents)
@@ -89,7 +90,7 @@ exports.listNearEvents = function (req, res) {
 					$maxDistance: 0.09009009009
 				}
 			}
-		}).populate('event event.avatar')
+		}).populate('event')
 		.limit(limit)
 		.exec(function(err, geos) {
 			if (err) throw err;
@@ -107,17 +108,26 @@ exports.listNearEvents = function (req, res) {
 					}
 				}
 				
-				res.format({
-					html: function() {
-						res.render('event/list', { events: events, pagename: "Events near you", title: "Events nearby" })
-					},
-					json: function() {
-						res.send({
-							events: events,
-							pagename: "Events near you"
-						})
-					}
+				// May slow the app down.. Mongoose does not seem to support sub-document population (event.avatar)
+				async.each(geos, function(geo, cb) {
+					if (geo.event)
+						geo.event.populate('avatar', cb);
+					else
+						cb(null)
+				}, function(err) {
+					res.format({
+						html: function() {
+							res.render('event/list', { events: events, pagename: "Events near you", title: "Events nearby" })
+						},
+						json: function() {
+							res.send({
+								events: events,
+								pagename: "Events near you"
+							})
+						}
+					})
 				})
+				
 			}
 		}
 	);
