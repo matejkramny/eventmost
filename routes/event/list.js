@@ -10,7 +10,7 @@ exports.router = function (app) {
 exports.listEvents = function (req, res) {
 	models.Event.find({ deleted: false })
 		.populate('avatar attendees.user')
-		.sort('-start')
+		.sort('-created')
 		.exec(function(err, evs) {
 		// TODO limit mount of events received
 		if (err) throw err;
@@ -33,7 +33,7 @@ exports.listEvents = function (req, res) {
 exports.listMyEvents = function (req, res) {
 	models.Event.find({ 'attendees.user': req.user._id })
 		.populate('avatar attendees.user')
-		.sort('-start')
+		.sort('-created')
 		.exec(function(err, evs) {
 		if (err) throw err;
 		if (evs) {

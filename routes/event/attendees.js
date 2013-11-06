@@ -5,7 +5,7 @@ exports.router = function (app) {
 	
 	app.get('/event/:id/attendees', attending, list)
 		.get('/event/:id/attendee/:attendee', attending, showAttendee)
-		.post('/event/:id/join', joinEvent)
+		.post('/event/:id/join', attending, joinEvent)
 }
 
 function list (req, res) {
@@ -71,6 +71,7 @@ function showAttendee (req, res) {
 	res.render('user', { title: theAttendee.user.getName() });
 }
 
+//TODO fix this, i can attend an event as many times as i want..
 function joinEvent (req, res) {
 	var password = req.body.password;
 	var category = req.body.category;
