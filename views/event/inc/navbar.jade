@@ -29,7 +29,7 @@ mixin navbar
 				br
 				| page
 		.font-x1.bg-purple.center.pull-right.psev2.prof-wall(style="padding-top:15px;")
-			a.link-white(href=base+"attendee/"+attendee ? attendee._id : "") My profile
+			a.link-white(href=base+"attendee/"+(attendee ? attendee._id : "")) My profile
 		.font-x1.bg-green.center.pull-right.psev2.prof-wall(style="padding-top:15px;")
 			a.link-white(href=base+"attendees") Attendees
 	.clearfix.hide-mini3-except-smart
