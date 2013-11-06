@@ -74,7 +74,11 @@ block content
 
 	.col-md-12.col-lg-12.col-sm-12
 		.nspacer.center
-			button.btn.btn-primary.hide-prof-butt(type='button', data-toggle="modal", href="#attendModal", style="border-radius: 10px; padding:10px; padding-right:25px; padding-left:25px;")
-				| Attend this event as...
-
+			if ev.categories.length > 0 || ev.allowAttendeesToCreateCategories
+				button.btn.btn-primary.hide-prof-butt(type='button', data-toggle="modal", href="#attendModal", style="border-radius: 10px; padding:10px; padding-right:25px; padding-left:25px;")
+					| Attend this event as...
+			else
+				p.accessEventWarningMessage.hide(style="font-size: 16px;")
+				a.btn.btn-primary.hide-prof-butt#accessEventDirect(href="#")
+					| Attend this event
 	include ../modals/registration
