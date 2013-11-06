@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 
 var schema = mongoose.Schema;
 var ObjectId = schema.ObjectId;
+var fs = require('fs')
 
 var scheme = schema({
 	url: String,

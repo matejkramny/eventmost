@@ -1,6 +1,14 @@
-models = require('../../models')
+var models = require('../../models'),
+	attending = require('./event').attending
 
-exports.editEvent = function (req, res) {
+exports.router = function (app) {
+	app.get('/event/:id/edit', attending, editEvent)
+		.post('/event/:id/edit', doEditEvent)
+		.get('/event/:id/delete', deleteEvent)
+	
+}
+
+function editEvent (req, res) {
 	var ev = res.locals.event;
 	
 	var canEdit = false;
@@ -23,11 +31,11 @@ exports.editEvent = function (req, res) {
 	})
 }
 
-exports.doEditEvent = function (req, res) {
+function doEditEvent (req, res) {
 	var errors = [];
 	
 	var ev = res.locals.event;
-	// Only planner can edit
+	
 	var canEdit = false;
 	for (var i = 0; i < ev.attendees.length; i++) {
 		var at = ev.attendees[i];
@@ -69,7 +77,7 @@ exports.doEditEvent = function (req, res) {
 	})
 }
 
-exports.deleteEvent = function (req, res) {
+function deleteEvent (req, res) {
 	var ev = res.locals.event;
 	
 	// Only for event planners

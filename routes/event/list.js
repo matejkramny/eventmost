@@ -1,4 +1,11 @@
-models = require('../../models')
+var models = require('../../models')
+	, util = require('../../util')
+
+exports.router = function (app) {
+	app.get('/events', exports.listEvents)
+		.get('/events/my', util.authorized, exports.listMyEvents)
+		.get('/events/near', exports.listNearEvents)
+}
 
 exports.listEvents = function (req, res) {
 	models.Event.find({ deleted: false })
@@ -114,38 +121,4 @@ exports.listNearEvents = function (req, res) {
 			}
 		}
 	);
-}
-
-exports.listSpeakers = function (req, res) {
-	
-}
-
-exports.listAttendees = function (req, res) {
-	if (!res.locals.eventattending) {
-		res.format({
-			html: function() {
-				res.redirect('/event/'+res.locals.ev._id);
-			},
-			json: function() {
-				res.send({
-					status: 403,
-					message: "Not attending"
-				})
-			}
-		})
-		
-		return;
-	}
-	
-	res.format({
-		html: function() {
-			res.render('event/attendees', { title: "Attendees at "+res.locals.ev.name })
-		},
-		json: function() {
-			res.send({
-				event: res.locals.ev,
-				attending: res.locals.eventattending
-			})
-		}
-	});
 }

@@ -3,10 +3,14 @@ mixin attendee(attendee)
 		.col-sm-3.col-mg-3.col-lg-3
 			img(src="/img/avatar.jpg", style="max-height: 80px;")
 		.col-sm-9.col-mg-9.col-lg-9
-			h5= attendee.user.getName()
+			//- beware attendee._id not attendee.user._id
+			a(href="/event/"+ev._id+"/attendee/"+attendee._id): h5= attendee.user.getName()
 			h5 Category: #{attendee.category}
 			h5
+				if attendee.user.position
+					= attendee.user.position
+					if attendee.user.company
+						| ,
 				if attendee.user.company
-					| , 
 					= attendee.user.company
 	br

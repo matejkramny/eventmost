@@ -3,6 +3,7 @@ var mongoose = require('mongoose');
 var schema = mongoose.Schema;
 var ObjectId = schema.ObjectId;
 var Geolocation = require('./Geolocation').Geolocation;
+var Avatar = require('./Avatar').Avatar
 
 var scheme = schema({
 	deleted: { type: Boolean, default: false },
@@ -80,8 +81,8 @@ scheme.statics.getEvent = function (id, cb) {
 				}
 				
 				if (ev.avatar == null || ev.avatar.url == null || ev.avatar.url.length == 0) {
-					var avatar = new models.Avatar({
-						url: "/img/default-logo.svg"
+					var avatar = new Avatar({
+						url: "/images/event-avatar-new.svg"
 					})
 					avatar.save();
 					ev.avatar = avatar._id;
@@ -212,8 +213,6 @@ scheme.methods.edit = function (body, user, files, cb) {
 		}
 	}
 	
-	console.log(body.lat)
-	console.log(body.lng)
 	if (body.lat != null && body.lng != null) {
 		Geolocation.findOne({ event: this._id }, function(err, geo) {
 			if (err) throw err;

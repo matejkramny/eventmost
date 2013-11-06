@@ -15,126 +15,30 @@
 				| FEE
 			th
 				| QUANTITY
-		tr
-			td
-				| I would like to register as an idividual
-			td
-				| 19 Sept 2013
-			td
-				| £25.00
-			td
-				| £2.15
-			td
-				dl.dropdown6
-					dt
-						a.dropx6(href="#")
-							| 
-					dd
-						ul
-							li
-								a(href="#",) 1
-							li
-								a(href="#",) 2
-							li
-								a(href="#",) 3
-							li
-								a(href="#",) 4
-							li
-								a(href="#",) 5
-							li
-								a(href="#",) 6
-							li
-								a(href="#",) 7
-							li
-								a(href="#",) 8
-							li
-								a(href="#",) 9
-							li
-								a(href="#",) 10
-							li
-								a(href="#",) 11
-							li
-								a(href="#",) 12
-		tr
-			td
-				| I would like to register as an idividual but join a team
-			td
-				| 19 Sept 2013
-			td
-				| £25.00
-			td
-				| £2.15
-			td
-				dl.dropdown6
-					dt
-						a.dropx6(href="#")
-							| 
-					dd
-						ul
-							li
-								a(href="#",) 1
-							li
-								a(href="#",) 2
-							li
-								a(href="#",) 3
-							li
-								a(href="#",) 4
-							li
-								a(href="#",) 5
-							li
-								a(href="#",) 6
-							li
-								a(href="#",) 7
-							li
-								a(href="#",) 8
-							li
-								a(href="#",) 9
-							li
-								a(href="#",) 10
-							li
-								a(href="#",) 11
-							li
-								a(href="#",) 12
-		tr
-			td
-				| I would like to register a whole team of six
-			td
-				| 19 Sept 2013
-			td
-				| £25.00
-			td
-				| £2.15
-			td
-				dl.dropdown6
-					dt
-						a.dropx6(href="#")
-							| 
-					dd
-						ul
-							li
-								a(href="#",) 1
-							li
-								a(href="#",) 2
-							li
-								a(href="#",) 3
-							li
-								a(href="#",) 4
-							li
-								a(href="#",) 5
-							li
-								a(href="#",) 6
-							li
-								a(href="#",) 7
-							li
-								a(href="#",) 8
-							li
-								a(href="#",) 9
-							li
-								a(href="#",) 10
-							li
-								a(href="#",) 11
-							li
-								a(href="#",) 12
+		for ticket in ev.tickets
+			tr
+				td
+					= ticket.type == 'custom' ? ticket.customType : ticket.type
+				td
+					= ev.start.getDate()
+					| /
+					= ev.start.getMonth()
+					|  
+					= ev.start.getFullYear()
+				td
+					| £#{ticket.price}
+				td
+					| £#{(ticket.price * 0.035).toFixed(2))
+				td
+					dl.dropdown6
+						dt
+							a.dropx6(href="#")
+								| 
+						dd
+							ul
+								- for (var i = 0; i < ticket.quantity; i++) 
+									li
+										a(href="#") #{i}
 		tr
 			td
 				| Total
@@ -148,16 +52,16 @@
 				| <b>0</b>
 .eighty-five
 	.bg-yellowish
-		.nspacer.d-s-s-s1
-			.pull-left.pad-left-five
-				|Enter promotional code :
-			.pull-left
-				input.input-yellow-rounded(name="" , type="text", id="", required="required", style="", placeholder="9864")
-		.nspacer.d-s-s-s
-			.pull-right
-				input.input-yellow-rounded(name="" , type="text", id="", required="required", style="", placeholder="9864")
-			.pull-right
-				|Enter promotional code :
+		//-.nspacer.d-s-s-s1
+		//-	.pull-left.pad-left-five
+		//-		|Enter promotional code :
+		//-	.pull-left
+		//-		input.input-yellow-rounded(name="" , type="text", id="", required="required", style="", placeholder="9864")
+		//-.nspacer.d-s-s-s
+		//-	.pull-right
+		//-		input.input-yellow-rounded(name="" , type="text", id="", required="required", style="", placeholder="9864")
+		//-	.pull-right
+		//-		|Enter promotional code :
 		.clearfix
 		.line2
 		.pull-left

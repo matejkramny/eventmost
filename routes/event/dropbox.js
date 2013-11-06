@@ -1,7 +1,14 @@
-models = require('../../models')
-fs = require('fs')
+var models = require('../../models'),
+	fs = require('fs')
+	attending = require('./event').attending
 
-exports.view = function (req, res) {
+exports.router = function (app) {
+	app.get('/event/:id/dropbox', attending, view)
+		.post('/event/:id/dropbox/upload', attending, doUpload)
+		.post('/event/:id/dropbox/remove', doRemove)
+}
+
+function view (req, res) {
 	if (!res.locals.eventattending) {
 		res.format({
 			html: function() {
@@ -31,7 +38,7 @@ exports.view = function (req, res) {
 	})
 }
 
-exports.doRemove = function (req, res, next) {
+function doRemove (req, res, next) {
 	var filepath = req.body.file;
 	var ev = res.locals.event;
 	
@@ -83,7 +90,7 @@ exports.doRemove = function (req, res, next) {
 	})
 }
 
-exports.doUpload = function (req, res) {
+function doUpload (req, res) {
 	if (!res.locals.eventattending) {
 		res.format({
 			html: function() {

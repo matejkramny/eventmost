@@ -3,7 +3,11 @@ extends layout
 block content
 	h2= events.length
 		|  Events
-	h3 X events happening <code>NOW</code>
+	if eventsNow == 1
+		h3 1 event happening <code>NOW</code>
+	else
+		h3= eventsNow
+			|  events happening <code>NOW</code>
 	table.table
 		thead
 			tr
@@ -21,34 +25,18 @@ block content
 				tr
 					td= event.attendees.length
 					td= event.name
-					td= event.start.getDay()
-						| /
-						= event.start.getMonth()
-						| /
-						= event.start.getYear()
-						|  
-						= event.start.getHours()
-						| :
-						= event.start.getMinutes()
-					td= event.end.getDay()
-						| /
-						= event.end.getMonth()
-						| /
-						= event.end.getYear()
-						|  
-						= event.end.getHours()
-						| :
-						= event.end.getMinutes()
+					td= event.start.toUTCString()
+					td= event.end.toUTCString()
 					td= event.address
 					td
-						if event.password.enabled == true
+						if event.accessRequirements.password == true
 							span.glyphicon.glyphicon-ok
 						else
-							span
+							span.glyphicon.glyphicon-remove
 					td= event.messages.length
 					td= event.files.length
 					td
 						if event.deleted == true
 							span.glyphicon.glyphicon-ok
 						else
-							span
+							span.glyphicon.glyphicon-remove

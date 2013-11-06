@@ -8,24 +8,7 @@ append addonjs
 		script(src="/v2/js/angular-nearEvents.js", defer="true")
 
 block content
-	.row
-		.col-md-12.col-sm-12.col-lg-12
-			ul.nav.nav-tabs
-				li
-					a(href="/events")
-						h8 All Events
-				li
-					a(href="/events/my")
-						h8 Created Events
-				li
-					a(href="/events/near")
-						h8 Events Nearby
-				li.pull-right
-					a(href="/event/add")
-						h8 Create Event
-	
-	
-	h2.text-center= pagename
+	include inc/listnavbar
 	
 	if typeof findNear !== "undefined" && findNear
 		//- Events nearby
