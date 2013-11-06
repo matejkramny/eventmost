@@ -20,6 +20,7 @@ block content
 				th Messages
 				th Files in dropbox
 				th Removed
+				th Remove/Revive
 		tbody
 			for event in events
 				tr
@@ -40,3 +41,12 @@ block content
 							span.glyphicon.glyphicon-ok
 						else
 							span.glyphicon.glyphicon-remove
+					td
+						if event.deleted == false
+							a.btn.btn-danger(href="/admin/events/#{event._id}/delete")
+								span.glyphicon.glyphicon-remove
+								span Remove
+						else
+							a.btn.btn-success(href="/admin/events/#{event._id}/revive")
+								span.glyphicon-ok.glyphicon
+								span Revive

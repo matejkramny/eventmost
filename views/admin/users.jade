@@ -14,6 +14,7 @@ block content
 			th Facebook
 			th LinkedIn
 			th Admin
+			th Remove
 		tbody
 		for user in users
 			tr
@@ -49,3 +50,7 @@ block content
 						span
 					else
 						span.glyphicon.glyphicon-ok
+				td
+					a.btn.btn-danger(href="/admin/users/#{user._id}/remove")
+						span.glyphicon.glyphicon-remove
+						span Remove
