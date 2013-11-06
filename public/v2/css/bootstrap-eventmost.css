@@ -2247,3 +2247,8 @@ table.gridtable-payment-yellow {font-size: 10px;}
 @media only screen and (max-width: 360px) {
 .filename{padding: 2px; padding-left: 10px; height:34px; font-size: 9px;}
 }
+
+/* Event registraion page */
+.eventCategorySelected {
+	border: #333 1px solid;
+}

@@ -6,20 +6,16 @@
 					| Attending this event as:
 				.clearfix
 				.nspacer
-				.col-md-5.col-lg-5.col-sm-5
-					input.input-ashen-rounded.font-exception(type="submit", value="Guest Speaker" style="padding:10px; font-size:16px;")
-					.nspacer-small
-					input.input-ashen-rounded.font-exception(type="submit", value="Guest Speaker" style="padding:10px; font-size:16px;")
-					.nspacer-small
-					input.input-ashen-rounded.font-exception(type="submit", value="Guest Speaker" style="padding:10px; font-size:16px;")
-					.nspacer-small
-					input.input-ashen-rounded.font-exception(type="submit", value="Guest Speaker" style="padding:10px; font-size:16px;")
+				.col-md-5.col-lg-5.col-sm-5#eventCategoryList
+					for category in ev.categories
+						input.input-ashen-rounded.font-exception(type="button", value=category style="padding:10px; font-size:16px;")
+						.nspacer-small
 				.col-md-2.col-lg-2.col-sm-2
 					.center(style="margin-top:50px;")
 						| or
 				.col-md-5.col-lg-5.col-sm-5.semi-bold(style="margin-top:20px;")
 					| Create your own:
-					input.input-ashen-rounded.font-exception(type="text" style="padding:10px; font-size:16px;")
+					input.input-ashen-rounded.font-exception#createOwnCategory(type="text" style="padding:10px; font-size:16px;")
 				.clearfix
 				.nspacer
 				.center

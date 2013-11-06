@@ -1,9 +1,6 @@
 extends ../responsive
 
-
-append content
-	include inc/navbar
-	include ../modals/registration
+include inc/navbar
 
 append meta
 	meta(name="event_id", content="#{ev._id}")
@@ -80,3 +77,4 @@ block content
 			button.btn.btn-primary.hide-prof-butt(type='button', data-toggle="modal", href="#attendModal", style="border-radius: 10px; padding:10px; padding-right:25px; padding-left:25px;")
 				| Attend this event as...
 
+	include ../modals/registration
