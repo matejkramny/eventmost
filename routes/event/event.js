@@ -9,18 +9,19 @@ var dropbox = require('./dropbox')
 
 exports.router = function (app) {
 	app.all('/event/*', util.authorized)
-		.all('/event/:id/*', getEvent)
+	add.router(app)
+	
+	app.all('/event/:id/*', getEvent)
 		.get('/event/:id', getEvent, attending, viewEvent)
 		
 		.post('/event/:id/post', attending, postMessage)
 		.get('/event/:id/conversations', attending, conversations.display)
 		
 		.get('/event/:id/registrationpage', attending, viewRegistrationPage)
-		
+	
 	attendees.router(app)
 	list.router(app)
 	dropbox.router(app)
-	add.router(app)
 }
 
 // Middleware to get :id param into res.local

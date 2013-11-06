@@ -3,6 +3,7 @@ var mongoose = require('mongoose');
 var schema = mongoose.Schema;
 var ObjectId = schema.ObjectId;
 var Geolocation = require('./Geolocation').Geolocation;
+var Avatar = require('./Avatar').Avatar
 
 var scheme = schema({
 	deleted: { type: Boolean, default: false },
@@ -80,7 +81,7 @@ scheme.statics.getEvent = function (id, cb) {
 				}
 				
 				if (ev.avatar == null || ev.avatar.url == null || ev.avatar.url.length == 0) {
-					var avatar = new models.Avatar({
+					var avatar = new Avatar({
 						url: "/img/default-logo.svg"
 					})
 					avatar.save();
