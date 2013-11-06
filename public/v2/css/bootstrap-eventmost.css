@@ -97,6 +97,10 @@ footer {background-color: #542437; color: #fff; padding: 10px; margin-top: 10px;
 textarea:focus, input:focus{
     outline: 0;
 }
+
+.font-header-icon{font-size:12px; padding-left: 7px;}
+.font-header-icon2{font-size:12px; padding-left: 14px;}
+
 .font-exception-thin{font-family:'raleway_extralight', Arial, sans-serif !important;}
 .font-exception{font-family:'ralewaythin', Arial, sans-serif !important;}
 /* helpers */
@@ -223,7 +227,7 @@ border-radius: 10px;}
 .width18{width: 18%;}
 .width15{width: 15%;}
 .width14{width: 14%;}
-
+.width7{width: 6%;}
 
 .post-width-text{width:95%;}
 
@@ -324,7 +328,7 @@ a.link-white:hover {
 }
 
 
-.message-nr h20 {font-size: 22px; font-weight: 400; color: #542437;  margin-top: 45px; margin-left: 140px; position: absolute;
+.message-nr h20 {font-size: 22px; font-weight: 400; color: #542437;  margin-top: 45px; margin-left: 45px; position: absolute;
   padding-left: 7px; padding-right: 7px; background-color: #fdd093 !important; border-radius: 15px; }
 
 .speaker_titlerespond2 h5 {font-size: 25px; font-weight: 500;}
@@ -1869,8 +1873,10 @@ p.check5:not(#foo) > input[type=checkbox] + label:hover               { backgrou
 .c-two {width:200px;}
 .big-avatar {width: 100%; height: 100%;}
 .small-avatar {width: 95%; height: 100%;}
-.message-nr h20 {font-size: 22px; font-weight: 400; color: #542437;  margin-top: 45px; margin-left: 100px; position: absolute;
-  padding-left: 7px; padding-right: 7px; background-color: #fdd093 !important; border-radius: 15px; }
+.message-nr h20 {font-size: 20px; font-weight: 400; color: #542437;  margin-top: 45px; margin-left: 37px; position: absolute;
+  padding-left: 5px; padding-right: 5px; background-color: #fdd093 !important; border-radius: 10px; }
+.font-header-icon2{padding-left: 7px;}
+.font-header-icon{padding-left: 0px;}
 .font-bigs {font-size: 40px;}
 .he1{height:118px;}
 .post-width, .post-width-text{width:94%;}
@@ -1905,7 +1911,10 @@ p.check5:not(#foo) > input[type=checkbox] + label:hover               { backgrou
 .slider-text:hover {width: 160%;}
 #slider1 {height:370px;}
 #slider1 .viewport{height:370px;}
-.message-nr h20 {margin-left: 100px;}
+.message-nr h20 {font-size: 20px; font-weight: 400; color: #542437;  margin-top: 45px; margin-left: 37px; position: absolute;
+  padding-left: 5px; padding-right: 5px; background-color: #fdd093 !important; border-radius: 10px; }
+.font-header-icon2{padding-left: 7px;}
+.font-header-icon{padding-left: 0px;}
 .lf {margin-left: 20px;}
 .event {font-size: 13px;}
 .c-two {width:200px;}
@@ -1964,7 +1973,10 @@ p.check5:not(#foo) > input[type=checkbox] + label:hover               { backgrou
 .space {letter-spacing:10px;}
 .mfresponsive2{margin-top:-14px;}
 .mfresponsive{margin-top:-14px;}
-.message-nr h20 {margin-left: 80px; }
+.message-nr h20 {font-size: 16px; font-weight: 400; color: #542437;  margin-top: 25px; margin-left: 30px; position: absolute;
+  padding-left: 5px; padding-right: 5px; background-color: #fdd093 !important; border-radius: 10px; }
+.font-header-icon2{padding-left: 7px;}
+.font-header-icon{padding-left: 0px;}
 .font-bigs {font-size: 30px;}
 .he1{height:88px;}
 .create-e-img{margin-top:-20px; padding-top:20px; margin-left:0px; width: 20%; height: 30%;}
@@ -2084,7 +2096,10 @@ p.check5:not(#foo) > input[type=checkbox] + label:hover               { backgrou
 .home-big2 {padding-bottom:30px; padding-top:30px;}
 .home-big3 {padding-bottom:30px; padding-top:30px;}
 .header-links {font-size: 12px;}
-.message-nr h20 {margin-left: 60px; }
+.message-nr h20 {font-size: 16px; font-weight: 400; color: #542437;  margin-top: 25px; margin-left: 30px; position: absolute;
+  padding-left: 5px; padding-right: 5px; background-color: #fdd093 !important; border-radius: 10px; }
+.font-header-icon2{padding-left: 7px;}
+.font-header-icon{padding-left: 0px;}
 /**** dropdown****/
 .navbar-nav > li > a {
     padding-top: 0px;
@@ -2248,7 +2263,10 @@ table.gridtable th {font-size: 12px;}
 .home-big2 {padding-bottom:30px; padding-top:30px;}
 .home-big3 {padding-bottom:30px; padding-top:30px;}
 .header-links {font-size: 12px;}
-.message-nr h20 {margin-left: 60px; }
+.message-nr h20 {font-size: 16px; font-weight: 400; color: #542437;  margin-top: 25px; margin-left: 30px; position: absolute;
+  padding-left: 5px; padding-right: 5px; background-color: #fdd093 !important; border-radius: 10px; }
+.font-header-icon2{padding-left: 7px;}
+.font-header-icon{padding-left: 0px;}
 /**** dropdown****/
 .navbar-nav > li > a {
     padding-top: 0px; }
@@ -2287,7 +2305,10 @@ table.gridtable th {font-size: 12px;}
   .rbox {overflow: hidden; height: auto; width: 60%; margin-top: -15px; font-size: 10px; height: 200px;}
   .hide-mini {display: none;}
   .hide-all2 {display: inline;}
-  .message-nr h20 {float: right; margin-left: 50px;}
+.message-nr h20 {font-size: 12px; font-weight: 400; color: #542437;  margin-top: 15px; margin-left: 15px; position: absolute;
+  padding-left: 5px; padding-right: 5px; background-color: #fdd093 !important; border-radius: 10px; }
+.font-header-icon2{padding-left: 7px;}
+.font-header-icon{padding-left: 0px;}
   .iphone-size {font-size: 22px !important;}
  .post-width{width:92%;}
 .post-width-text{width:91%;}
@@ -2326,6 +2347,7 @@ table.gridtable th {font-size: 12px;}
 }
 
 @media only screen and (max-width: 480px) {
+
 .dont-show320{display:none;}
 .show320{display:block;}
 .dropdown-menu-last > li > a {background-color: #f1f1f2 !important;}
@@ -2352,6 +2374,11 @@ table.gridtable th {font-size: 12px;}
 .event-name-input{width:60%; margin-top:6px !important;}
 .create-height{height:70px;}
 .dif2{display: block; line-height: 1px;}
+.message-nr h20 {font-size: 12px; font-weight: 400; color: #542437;  margin-top: 15px; margin-left: 15px; position: absolute;
+  padding-left: 5px; padding-right: 5px; background-color: #fdd093 !important; border-radius: 10px; }
+.font-header-icon2{padding-left: 7px; font-size: 10px;}
+.font-header-icon{padding-left: 0px; font-size: 10px;}
+
 #file_browse_wrapper {
     background: url('../../../images/browse_button-smaller3.svg') 0 0 no-repeat;
     height: 48px;
@@ -2420,6 +2447,11 @@ table.gridtable-payment-yellow {font-size: 10px;}
 
 
 @media only screen and (max-width: 360px) {
+
+ .message-nr h20 {font-size: 9px; font-weight: 400; color: #542437;  margin-top: 15px; margin-left: 7px; position: absolute;
+  padding-left: 2px; padding-right: 2px; background-color: #fdd093 !important; border-radius: 5px; }
+.font-header-icon2{padding-left: 7px; font-size: 8px;}
+.font-header-icon{padding-left: 0px; font-size: 8px;} 
 .dont-show320{display:none;}
 .show320{display:block;}
 .filename{padding: 2px; padding-left: 10px; height:34px; font-size: 9px;}
