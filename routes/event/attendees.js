@@ -71,7 +71,6 @@ function showAttendee (req, res) {
 	res.render('user', { title: theAttendee.user.getName() });
 }
 
-//TODO fix this, i can attend an event as many times as i want..
 function joinEvent (req, res) {
 	var password = req.body.password;
 	var category = req.body.category;
@@ -80,6 +79,21 @@ function joinEvent (req, res) {
 	var attendee = {
 		user: req.user._id
 	};
+	
+	if (res.locals.eventattending) {
+		res.format({
+			html: function() {
+				res.redirect('/event/'+ev._id);
+			},
+			json: function() {
+				res.send({
+					status: 400,
+					message: "Already attending"
+				})
+			}
+		})
+		return;
+	}
 	
 	if (ev.accessRequirements.password) {
 		if (ev.accessRequirements.passwordString != password) {
