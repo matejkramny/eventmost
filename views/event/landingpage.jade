@@ -16,11 +16,6 @@ append addonjs
 block content
 	mixin navbar(4)
 	
-	mixin createCategory
-		.description-text(style="margin-top:50px;")
-			b My Category is:
-			input#createOwnCategory(type="text", placeholder="Create my own category..", style="font-size:18px; margin-top:10px; margin-left:0px; border:1px solid #ecd077;")
-	
 	.col-xs-12.hide-all2
 		form(method="POST", accept-charset="utf-8")
 			input.gonew2.pull-right.header-links(type="button", value="GO", style="width:10%;")
@@ -31,8 +26,7 @@ block content
 	.nspacer
 	.col-md-4.col-lg-4.col-sm-4
 		.center
-			img(src="/images/event-avatar-new.svg", alt="")
-			// it's commeneted because there is different avatar image img(src=ev.avatar.url,)
+			img.img-responsive(src=ev.avatar.url)
 	.col-md-8.col-lg-8.col-sm-8
 		h3= ev.name
 		.nspacer
@@ -84,7 +78,7 @@ block content
 	.col-md-12.col-lg-12.col-sm-12
 		.nspacer.center
 			button.btn.btn-primary.hide-prof-butt(type='button', data-toggle="modal", href="#attendModal", style="border-radius: 10px; padding:10px; padding-right:25px; padding-left:25px;")
-				| Attend this event ssas...
+				| Attend this event as...
 	
 	.row
 		.col-sm-12.col-lg-12.col-md-12

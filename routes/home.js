@@ -5,7 +5,7 @@ exports.display = function (req, res) {
 	
 	var query = { 'attendees.user': req.user._id }
 	models.Event.find(query)
-		.sort('-start')
+		.sort('-created')
 		.limit(5)
 		.skip(skip)
 		.populate('avatar')
