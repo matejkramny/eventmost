@@ -98,8 +98,8 @@ textarea:focus, input:focus{
     outline: 0;
 }
 
-.font-header-icon{font-size:12px; padding-left: 7px;}
-.font-header-icon2{font-size:12px; padding-left: 14px;}
+.font-header-icon{font-size:12px; padding-left: 7px; margin-top: 67px; position: absolute;}
+.font-header-icon2{font-size:12px; padding-left: 14px; margin-top: 67px; position: absolute;}
 
 .font-exception-thin{font-family:'raleway_extralight', Arial, sans-serif !important;}
 .font-exception{font-family:'ralewaythin', Arial, sans-serif !important;}
@@ -1639,6 +1639,8 @@ margin: 70px 0px 0 0px;  text-indent: -999em; float: left; width: 45px; height: 
 .font-x1 {font-size: 12px;}
 
 header {height: 40px;}
+.font-header-icon2{margin-top: 25px;}
+.font-header-icon{margin-top: 25px;}
 .btn-warning, .btn-default, .mob-text, .pagination {font-size: 11px;}
 h2 {font-size:14px; }
 h4 {font-size: 10px; font-weight: 700;}
@@ -1875,8 +1877,8 @@ p.check5:not(#foo) > input[type=checkbox] + label:hover               { backgrou
 .small-avatar {width: 95%; height: 100%;}
 .message-nr h20 {font-size: 20px; font-weight: 400; color: #542437;  margin-top: 45px; margin-left: 37px; position: absolute;
   padding-left: 5px; padding-right: 5px; background-color: #fdd093 !important; border-radius: 10px; }
-.font-header-icon2{padding-left: 7px;}
-.font-header-icon{padding-left: 0px;}
+.font-header-icon2{padding-left: 7px; margin-top: 60px;}
+.font-header-icon{padding-left: 0px; margin-top: 60px;}
 .font-bigs {font-size: 40px;}
 .he1{height:118px;}
 .post-width, .post-width-text{width:94%;}
@@ -1913,8 +1915,8 @@ p.check5:not(#foo) > input[type=checkbox] + label:hover               { backgrou
 #slider1 .viewport{height:370px;}
 .message-nr h20 {font-size: 20px; font-weight: 400; color: #542437;  margin-top: 45px; margin-left: 37px; position: absolute;
   padding-left: 5px; padding-right: 5px; background-color: #fdd093 !important; border-radius: 10px; }
-.font-header-icon2{padding-left: 7px;}
-.font-header-icon{padding-left: 0px;}
+.font-header-icon2{padding-left: 7px; margin-top: 60px;}
+.font-header-icon{padding-left: 0px; margin-top: 60px;}
 .lf {margin-left: 20px;}
 .event {font-size: 13px;}
 .c-two {width:200px;}
@@ -1975,8 +1977,9 @@ p.check5:not(#foo) > input[type=checkbox] + label:hover               { backgrou
 .mfresponsive{margin-top:-14px;}
 .message-nr h20 {font-size: 16px; font-weight: 400; color: #542437;  margin-top: 25px; margin-left: 30px; position: absolute;
   padding-left: 5px; padding-right: 5px; background-color: #fdd093 !important; border-radius: 10px; }
-.font-header-icon2{padding-left: 7px;}
-.font-header-icon{padding-left: 0px;}
+.font-header-icon2{padding-left: 7px; margin-top: 40px;}
+.font-header-icon{padding-left: 0px; margin-top: 40px;}
+
 .font-bigs {font-size: 30px;}
 .he1{height:88px;}
 .create-e-img{margin-top:-20px; padding-top:20px; margin-left:0px; width: 20%; height: 30%;}
@@ -2098,8 +2101,8 @@ p.check5:not(#foo) > input[type=checkbox] + label:hover               { backgrou
 .header-links {font-size: 12px;}
 .message-nr h20 {font-size: 16px; font-weight: 400; color: #542437;  margin-top: 25px; margin-left: 30px; position: absolute;
   padding-left: 5px; padding-right: 5px; background-color: #fdd093 !important; border-radius: 10px; }
-.font-header-icon2{padding-left: 7px;}
-.font-header-icon{padding-left: 0px;}
+.font-header-icon2{padding-left: 7px; margin-top: 40px;}
+.font-header-icon{padding-left: 0px; margin-top: 40px;}
 /**** dropdown****/
 .navbar-nav > li > a {
     padding-top: 0px;
@@ -2265,8 +2268,8 @@ table.gridtable th {font-size: 12px;}
 .header-links {font-size: 12px;}
 .message-nr h20 {font-size: 16px; font-weight: 400; color: #542437;  margin-top: 25px; margin-left: 30px; position: absolute;
   padding-left: 5px; padding-right: 5px; background-color: #fdd093 !important; border-radius: 10px; }
-.font-header-icon2{padding-left: 7px;}
-.font-header-icon{padding-left: 0px;}
+.font-header-icon2{padding-left: 7px; margin-top: 40px;}
+.font-header-icon{padding-left: 0px; margin-top: 40px;}
 /**** dropdown****/
 .navbar-nav > li > a {
     padding-top: 0px; }
