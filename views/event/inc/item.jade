@@ -2,11 +2,7 @@ mixin eventItem(event)
 	.nspacer.col-md-12.col-xs-12.col-lg-12.col-sm-12
 		.pull-left.event(style='width:101.4%;')
 			a.slid-box(href="/event/"+event._id)
-				- var url = "/images/event-avatar.jpg"
-				- if (event.avatar && event.avatar.url)
-					- url = event.avatar.url
-				
-				article.c-two(style="background: url(#{url}) top left; background-size: 100% 100%;")
+				article.c-two(style="background: url(#{event.avatar.url}) top left; background-size: 100% 100%;")
 					.slid-box-background
 						h4 
 							.eye.hide2

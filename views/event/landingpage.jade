@@ -1,9 +1,6 @@
 extends ../responsive
 
-
-append content
-	include inc/navbar
-	include ../modals/registration
+include inc/navbar
 
 append meta
 	meta(name="event_id", content="#{ev._id}")
@@ -77,17 +74,11 @@ block content
 
 	.col-md-12.col-lg-12.col-sm-12
 		.nspacer.center
-			button.btn.btn-primary.hide-prof-butt(type='button', data-toggle="modal", href="#attendModal", style="border-radius: 10px; padding:10px; padding-right:25px; padding-left:25px;")
-				| Attend this event as...
-	
-	.row
-		.col-sm-12.col-lg-12.col-md-12
-			//- bottom buttons access & home page
-			unless eventattending
-				.text-center
-					p#accessEventWarningMessage.hide(style="font-size: 16px;") Please select a category, otherwise 
-						code click "Access Event" once more
-						|  if you don't like it when computers make you do things :)
-					input#accessEvent.btn.btn-success(type="submit", value="Access event")
-					input.btn.btn-info(type="button", onclick="window.location='/';return false;", value="Go back to homepage")
-
+			if ev.categories.length > 0 || ev.allowAttendeesToCreateCategories
+				button.btn.btn-primary.hide-prof-butt(type='button', data-toggle="modal", href="#attendModal", style="border-radius: 10px; padding:10px; padding-right:25px; padding-left:25px;")
+					| Attend this event as...
+			else
+				p.accessEventWarningMessage.hide(style="font-size: 16px;")
+				a.btn.btn-primary.hide-prof-butt#accessEventDirect(href="#")
+					| Attend this event
+	include ../modals/registration

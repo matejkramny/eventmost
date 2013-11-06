@@ -5,7 +5,7 @@ exports.router = function (app) {
 	
 	app.get('/event/:id/attendees', attending, list)
 		.get('/event/:id/attendee/:attendee', attending, showAttendee)
-		.post('/event/:id/join', joinEvent)
+		.post('/event/:id/join', attending, joinEvent)
 }
 
 function list (req, res) {
@@ -79,6 +79,21 @@ function joinEvent (req, res) {
 	var attendee = {
 		user: req.user._id
 	};
+	
+	if (res.locals.eventattending) {
+		res.format({
+			html: function() {
+				res.redirect('/event/'+ev._id);
+			},
+			json: function() {
+				res.send({
+					status: 400,
+					message: "Already attending"
+				})
+			}
+		})
+		return;
+	}
 	
 	if (ev.accessRequirements.password) {
 		if (ev.accessRequirements.passwordString != password) {

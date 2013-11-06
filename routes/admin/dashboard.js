@@ -1,3 +1,4 @@
+var models = require('../../models')
 exports.show = function(req, res) {
 	models.User.find({}, function(err, users) {
 		if (err) throw err;

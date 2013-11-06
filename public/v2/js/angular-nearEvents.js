@@ -3,7 +3,7 @@ function formatEvent(event) {
 	if (event.address == null || event.address.length == 0) {
 		event.address = "<h1>Location unavailable</h1>";
 	}
-	var avatar = "/images/event-avatar.jpg";
+	var avatar = "/images/event-avatar-new.svg";
 	if (event.avatar && event.avatar.url)
 		avatar = event.avatar.url;
 	

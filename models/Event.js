@@ -124,6 +124,14 @@ scheme.methods.edit = function (body, user, files, cb) {
 		}
 	}
 	
+	if (!this.avatar) {
+		var avatar = new Avatar({
+			url: "/images/event-avatar-new.svg"
+		})
+		avatar.save();
+		this.avatar = avatar._id;
+	}
+	
 	if (body.venue_name) {
 		this.venue_name = body.venue_name
 	}

@@ -12,7 +12,7 @@ function view (req, res) {
 	if (!res.locals.eventattending) {
 		res.format({
 			html: function() {
-				res.redirect('/event/'+res.locals.event._id);
+				res.redirect('/event/'+res.locals.ev._id);
 			},
 			json: function() {
 				res.send({
@@ -31,7 +31,7 @@ function view (req, res) {
 		},
 		json: function() {
 			res.send({
-				event: res.locals.event,
+				event: res.locals.ev,
 				attending: res.locals.eventattending
 			})
 		}
@@ -94,7 +94,7 @@ function doUpload (req, res) {
 	if (!res.locals.eventattending) {
 		res.format({
 			html: function() {
-				res.redirect('/event/'+res.locals.event._id);
+				res.redirect('/event/'+res.locals.ev._id);
 			},
 			json: function() {
 				res.send({

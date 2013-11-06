@@ -2,7 +2,7 @@ $(document).ready(function() {
 	$accessEvent = $("#accessEvent")
 	$createOwnCategory = $("#createOwnCategory")
 	$eventCategoryList = $("#eventCategoryList")
-	$accessEventWarningMessage = $("#accessEventWarningMessage")
+	$accessEventWarningMessage = $(".accessEventWarningMessage")
 	
 	var selectedCategory = null;
 	var hadWarningAboutSelectingCategory = false;
@@ -32,24 +32,26 @@ $(document).ready(function() {
 		selectedCategory = $(this).attr('value');
 	})
 	
-	$accessEvent.click(function() {
-		// Check if has selected any category or entered own
-		
-		// Check if there are options to create category // selct category
-		var hasOption = false;
-		if ($createOwnCategory.length > 0) {
-			hasOption = true;
+	function accessEvent (checkCategories) {
+		if (checkCategories) {
+			// Check if has selected any category or entered own
+
+			// Check if there are options to create category // selct category
+			var hasOption = false;
+			if ($createOwnCategory.length > 0) {
+				hasOption = true;
+			}
+			if ($eventCategoryList.find("input[type=button]").length > 0) {
+				hasOption = true;
+			}
+
+			if (hasOption && (selectedCategory == null || selectedCategory.length == 0) && hadWarningAboutSelectingCategory == false) {
+				$accessEventWarningMessage.removeClass("hide");
+				hadWarningAboutSelectingCategory = true;
+				return;
+			}
 		}
-		if ($eventCategoryList.find("input[type=button]").length > 0) {
-			hasOption = true;
-		}
-		
-		if (hasOption && (selectedCategory == null || selectedCategory.length == 0) && hadWarningAboutSelectingCategory == false) {
-			$accessEventWarningMessage.removeClass("hide");
-			hadWarningAboutSelectingCategory = true;
-			return;
-		}
-		
+
 		// I AM ATTENDING ALRIGHT
 		$accessEventWarningMessage.removeClass("hide");
 		$accessEventWarningMessage.html("Adding you to the attendees list..");
@@ -75,5 +77,13 @@ $(document).ready(function() {
 				$accessEventWarningMessage.html("Sorry, could not attend because: "+err);
 			}
 		})
+	}
+	
+	$("#accessEventDirect").click(function() {
+		accessEvent(false);
+	})
+	
+	$accessEvent.click(function() {
+		accessEvent(true);
 	})
 });

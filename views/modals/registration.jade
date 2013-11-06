@@ -6,24 +6,29 @@
 					| Attending this event as:
 				.clearfix
 				.nspacer
-				.col-md-5.col-lg-5.col-sm-5
-					input.input-ashen-rounded.font-exception(type="submit", value="Guest Speaker" style="padding:10px; font-size:16px;")
-					.nspacer-small
-					input.input-ashen-rounded.font-exception(type="submit", value="Guest Speaker" style="padding:10px; font-size:16px;")
-					.nspacer-small
-					input.input-ashen-rounded.font-exception(type="submit", value="Guest Speaker" style="padding:10px; font-size:16px;")
-					.nspacer-small
-					input.input-ashen-rounded.font-exception(type="submit", value="Guest Speaker" style="padding:10px; font-size:16px;")
+				.col-md-5.col-lg-5.col-sm-5#eventCategoryList
+					for category in ev.categories
+						input.input-ashen-rounded.font-exception(type="button", value=category style="padding:10px; font-size:16px;")
+						.nspacer-small
 				.col-md-2.col-lg-2.col-sm-2
 					.center(style="margin-top:50px;")
 						| or
 				.col-md-5.col-lg-5.col-sm-5.semi-bold(style="margin-top:20px;")
-					| Create your own:
-					input.input-ashen-rounded.font-exception(type="text" style="padding:10px; font-size:16px;")
+					if ev.allowAttendeesToCreateCategories
+						| Create your own:
+						input.input-ashen-rounded.font-exception#createOwnCategory(type="text" style="padding:10px; font-size:16px;")
+					else
+						| Create your own:
+						br
+						small Not possible, it is disabled on this event
 				.clearfix
 				.nspacer
 				.center
-					button.btn.btn-primary.hide-prof-butt(type='submit', style="border-radius: 10px; padding:10px; padding-right:25px; padding-left:25px;")
+					.text-center
+						p.accessEventWarningMessage.hide(style="font-size: 16px;") Please select a category, otherwise 
+							code click "Access Event" once more
+							|  if you don't like it when computers make you do things :)
+					button#accessEvent.btn.btn-primary.hide-prof-butt(type='submit', style="border-radius: 10px; padding:10px; padding-right:25px; padding-left:25px;")
 						| Access <br />event
 				.clearfix
 				a.close-reveal-modal(href="#", data-dismiss="modal") 

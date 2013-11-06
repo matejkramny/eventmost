@@ -1,8 +1,8 @@
-var users = require('./users')
-	, models = require('../../models')
-	, emails = require('./emails')
-	, events = require('./events')
-	, dashboard = require('./dashboard')
+var users = require('./users'),
+models = require('../../models'),
+emails = require('./emails'),
+events = require('./events'),
+dashboard = require('./dashboard')
 
 function authorize (req, res, next) {
 	if (req.user && req.user.admin === true) {
