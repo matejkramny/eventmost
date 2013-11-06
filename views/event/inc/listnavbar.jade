@@ -1,0 +1,144 @@
+
+li
+	a(href="/events")
+		h8 All Events
+li
+	a(href="/events/my")
+		h8 Created Events
+li
+	a(href="/events/near")
+		h8 Events Nearby
+li.pull-right
+	a(href="/event/add")
+		h8 Create Event
+
+- var base = "/event/"+ev._id+"/";
+.col-xs-12.hide-all2
+	form(method="POST", accept-charset="utf-8")
+		input.gonew2.pull-right.header-links(type="button", value="GO", style="width:10%;")
+		input(type="hidden", name="_csrf", value=token)
+		input.pull-right.font-s.search-input.pad-left-ten.header-links(type="search", placeholder="search events or people", style="width:87%;")
+.clearfix.hide-all2
+
+
+//- inbox title plus buttons
+.nspacer
+
+.col-md-4.col-xs-4.col-sm-4.nspacer-medium.hide-mini3-except-smart
+	.font-tw
+		a(href=base, style="text-decoration: none !important; color: black;")
+			b= ev.name
+.col-md-8.col-xs-8.col-sm-8.hide-mini3-except-smart
+	.font-x1.bg-yellow.center.pull-right.psev2.prof-wall(style="padding-top:15px;")
+		a.link-purple(href=base+"conversations") Conversations
+	.font-x1.bg-purple.center.pull-right.psev2.prof-wall(style="padding-top:15px;")
+		a.link-white(href=base+"notes") My notes
+	.font-x1.bg-green.center.pull-right.psev2.prof-wall
+		a.link-white(href=base+"dropbox") Event
+			br
+			| dropbox
+	.font-x1.bg-yellow.center.pull-right.psev2.prof-wall
+		a.link-purple(href=base+"registrationpage") Registration
+			br
+			| page
+	.font-x1.bg-purple.center.pull-right.psev2.prof-wall(style="padding-top:15px;")
+		a.link-white(href=base+"attendee/"+attendee._id) My profile
+	.font-x1.bg-green.center.pull-right.psev2.prof-wall(style="padding-top:15px;")
+		a.link-white(href=base+"attendees") Attendees
+.clearfix.hide-mini3-except-smart
+.col-md-6.col-xs-6.col-sm-6.hide-mini3-except-smart
+	.line-green(style="height:3px; margin-top:-3px;")
+
+.col-md-12.col-xs-12.col-sm-12.nspacer-medium.hide-all2
+	.center
+		a(href=base, style="text-decoration: none !important; color: black;")
+			b= ev.name
+.clearfix.hide-all2
+.col-md-12.col-xs-12.col-sm-12.hide-all2
+	.center
+		.inline.nspacer-small
+			.font-x1.bg-green.center.psev2.prof-wall
+				a.link-white(href=base+"attendees") Attendees<br /><span class="color-green">Messages</span>
+		.inline.nspacer-small
+			.font-x1.bg-purple.center.psev2.prof-wall
+				a.link-white(href=base+"attendee/"+user._id) My 
+					br
+					| profile
+		.inline.nspacer-small
+			.font-x1.bg-yellow.center.psev2.prof-wall
+				a.link-purple(href=base+"registrationpage") Registration
+					br
+					| page
+		.inline.nspacer-small
+			.font-x1.bg-green.center.psev2.prof-wall
+				a.link-white(href=base+"dropdown") Event
+					br
+					| dropbox
+		.inline.nspacer-small
+			.font-x1.bg-purple.center.psev2.prof-wall
+				a.link-white(href=base+"notes") My
+					br
+					| notes
+		.inline.nspacer-small
+			.font-x1.bg-yellow.center.psev2.prof-wall
+				a.link-purple(href=base+"conversations") Conversations
+					br
+					span.color-yellow Messages
+
+.clearfix
+
+//- end inbox title plus buttons
+
+if eventadmin
+	//- second inbox title plus buttons
+	.nspacer
+
+	.col-md-2.col-xs-2.col-sm-2.nspacer-medium.hide-mini3-except-smart
+		.font-s
+			b Planner options
+	.col-md-10.col-xs-10.col-sm-10.hide-mini3-except-smart
+		.font-x1.bg-yellow.center.pull-right.psev2.prof-wall(style="padding-top:15px;")
+			a.link-purple(href=base) Add logos
+		.font-x1.bg-purple.center.pull-right.psev2.prof-wall(style="padding-top:15px;")
+			a.link-white(href=base) Email attendees
+		.font-x1.bg-green.center.pull-right.psev2.prof-wall(style="padding-top:15px;")
+			a.link-white(href=base) Push notifications
+		.font-x1.bg-yellow.center.pull-right.psev2.prof-wall
+			a.link-purple(href=base) Create<br />feedback profile
+		.font-x1.bg-purple.center.pull-right.psev2.prof-wall(style="padding-top:15px;")
+			a.link-white(href=base) Event summary
+		.font-x1.bg-green.center.pull-right.psev2.prof-wall(style="padding-top:15px;")
+			a.link-white(href=base) Admin panel
+	.clearfix.hide-mini3-except-smart
+
+	.col-md-4.col-xs-4.col-sm-4.hide-mini3-except-smart
+		.line-green(style="height:3px; margin-top:-3px;")
+
+
+	.col-md-12.col-xs-12.col-sm-12.nspacer-medium.hide-all2
+		.center
+			.font-tw.inline
+				b Planner options
+	.clearfix.hide-all2
+	.col-md-12.col-xs-12.col-sm-12.hide-all2
+		.center
+			.inline.nspacer-small
+				.font-x1.bg-green.center.psev2.prof-wall
+					a.link-white(href=base) Admin <br/>panel
+			.inline.nspacer-small
+				.font-x1.bg-purple.center.psev2.prof-wall
+					a.link-white(href=base) Event <br/>summary
+			.inline.nspacer-small
+				.font-x1.bg-yellow.center.psev2.prof-wall
+					a.link-purple(href=base) Create<br />feedback profile
+			.inline.nspacer-small
+				.font-x1.bg-green.center.psev2.prof-wall
+					a.link-white(href=base) Push <br/>notifications
+			.inline.nspacer-small
+				.font-x1.bg-purple.center.psev2.prof-wall
+					a.link-white(href=base) Email <br/>attendees
+			.inline.nspacer-small
+				.font-x1.bg-yellow.center.psev2.prof-wall
+					a.link-purple(href=base) Add <br/>logos
+
+		//- second end inbox title plus buttons
