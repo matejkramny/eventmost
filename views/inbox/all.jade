@@ -1,71 +1,12 @@
 extends ../responsive
 
 block content
-
-	.col-xs-12.hide-all2
-		form(method="POST", accept-charset="utf-8")
-			input.gonew2pull-right.header-links(type="button", value="GO", style="width:10%;")
-			input(type="hidden", name="_csrf", value=token)
-			input.pull-right.font-s.search-input.pad-left-ten.header-links(type="search", placeholder="search events or people", style="width:87%;")
-	.clearfix.hide-all2
-
-
-		//- inbox title plus buttons
-	.nspacer
-
-	.col-md-1.col-xs-1.col-sm-1.nspacer-medium.hide-mini3-except-smart
-		.font-tw
-			| <b>Inbox:</b>
-	.col-md-5.col-xs-5.col-sm-5.nspacer-medium.hide-mini3-except-smart
-		.font-tw
-			b= user.getName() 
-			|  - #{user.position}, #{user.company}
-	.col-md-6.col-xs-6.col-sm-6.hide-mini3-except-smart
-		.font-x1.bg-purple.center.pull-right.psev2.prof-wall
-			| <a href="#Public">Public <br />Messages</a>
-		.font-x1.bg-green.center.pull-right.psev2.prof-wall
-			| <a href="#Profile">Those Who Saved<br />Your Profile</a>
-		.font-x1.bg-yellow.center.pull-right.psev2.prof-wall
-			| <a href="#Business">Business <br />Cards</a>
-		.font-x1.bg-purple.center.pull-right.psev2.prof-wall
-			| <a href="#Private">Private<br />Messages</a>
-		.font-x1.bg-green.center.pull-right.psev2.prof-wall(style="padding-top:15px;")
-			| All
-	.clearfix.hide-mini3-except-smart
-	.col-md-7.col-xs-7.col-sm-7.hide-mini3-except-smart
-		.line-green(style="height:3px; margin-top:-3px;")
-
-	.col-md-12.col-xs-12.col-sm-12.nspacer-medium.hide-all2
-		.center
-			.font-tw.inline
-				| <b>Inbox:</b>
-			.font-tw.inline
-				b= user.getName() 
-				|  - #{user.position}, #{user.company}
-	.clearfix.hide-all2
-	.col-md-12.col-xs-12.col-sm-12.hide-all2
-		.center
-			.inline.nspacer-small
-				.font-x1.bg-green.center.psev2.prof-wall
-					| All<br /><span class="color-green">Messages</span>
-			.inline.nspacer-small
-				.font-x1.bg-purple.center.psev2.prof-wall
-					| Private<br />Messages
-			.inline.nspacer-small
-				.font-x1.bg-yellow.center.psev2.prof-wall
-					| Business <br />Cards
-			.inline.nspacer-small
-				.font-x1.bg-green.center.psev2.prof-wall
-					| Those Who Saved<br />Your Profile
-			.inline.nspacer-small
-				.font-x1.bg-purple.center.psev2.prof-wall
-					| Public <br />Messages
-
-
+	include navbar
+	
 	.clearfix
-
-		//- end inbox title plus buttons
-
+	
+	//- end inbox title plus buttons
+	
 	.nspacer
 
 	.col-md-12.col-xs-12.col-sm-12
