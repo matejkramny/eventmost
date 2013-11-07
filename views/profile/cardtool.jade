@@ -11,11 +11,82 @@ append addonjs
 	script(src="/js/cardcreator.js", defer="defer")
 
 block content
+
+	//- navbar could be added to navbar.jade
+
+	.nspacer
+	.col-md-4.col-xs-4.col-sm-4.nspacer.hide-mini3-except-smart
+		.font2 
+			a.link-purple(href="",)
+				| Create a business card
+	.col-md-8.col-xs-8.col-sm-8.hide-mini3-except-smart
+		.font-x1.bg-purple.center.pull-right.psev2.prof-wall(style="padding-top:15px;")
+			a.link-white(href=base+"notes") Save
+		.font-x1.bg-green.center.pull-right.psev2.prof-wall
+			a.link-white(href=base+"dropbox") Preview
+				br
+				| ModeEditing
+		.font-x1.bg-yellow.center.pull-right.psev2.prof-wall
+			a.link-purple(href=base+"registrationpage") Remove
+				br
+				| selected box
+		.font-x1.bg-purple.center.pull-right.psev2.prof-wall
+			a.link-white(href=base+"attendee/"+(attendee ? attendee._id : "")) Add
+				br
+				| an image
+		.font-x1.bg-green.center.pull-right.psev2.prof-wall
+			a.link-white(href=base+"attendees") Add
+				br
+				| a text box
+	.clearfix.hide-mini3-except-smart
+	.col-md-7.col-xs-7.col-sm-7.hide-mini3-except-smart
+		.line-green(style="height:3px; margin-top:-3px;")
+
+
+	//- smart navbar could be added to navbar.jade
+	.col-md-12.col-xs-12.col-sm-12.nspacer-medium.hide-all2
+		.center
+			a.link-purple(href="",)
+				| Create a business card
+	.clearfix.hide-all2
+	.col-md-12.col-xs-12.col-sm-12.hide-all2
+		.center
+			.inline.nspacer-small
+				.font-x1.bg-green.center.psev2.prof-wall
+					a.link-white(href=base+"attendees") Add
+						br
+						| a text box
+			.inline.nspacer-small
+				.font-x1.bg-purple.center.psev2.prof-wall
+					a.link-white(href=base+"attendee/"+user._id) Add
+						br
+						| an image 
+			.inline.nspacer-small
+				.font-x1.bg-yellow.center.psev2.prof-wall
+					a.link-purple(href=base+"registrationpage") Remove
+						br
+						| selected box
+			.inline.nspacer-small
+				.font-x1.bg-green.center.psev2.prof-wall
+					a.link-white(href=base+"dropdown") Preview
+						br
+						| ModeEditing
+			.inline.nspacer-small
+				.font-x1.bg-purple.center.psev2.prof-wall
+					a.link-white(href=base+"notes") Save<br /><span class="color-purple">Messages</span>
+	.clearfix
+
+
+
+
+	//- card tool
+
+
 	.clearfix
 	.container(ng-controller="businessCards")
 		.row
 			.col-md-5.col-lg-6
-				h2 Create a business card
+				h2 C
 			.col-md-7.col-lg-6
 				br
 				.btn-group.btn-group-sm
