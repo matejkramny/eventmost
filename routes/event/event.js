@@ -8,8 +8,8 @@ var dropbox = require('./dropbox')
 	, models = require('../../models')
 
 exports.router = function (app) {
-	//app.get('/event/:id/registrationpage', getEvent, attending, viewRegistrationPage)
-	//app.get('/event/:id/*', redirectToRegistrationPage)
+	app.get('/event/:id/registrationpage', getEvent, attending, viewRegistrationPage)
+	app.get('/event/:id/*', redirectToRegistrationPage)
 	
 	app.all('/event/*', util.authorized)
 	add.router(app)
