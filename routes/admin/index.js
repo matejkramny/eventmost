@@ -12,6 +12,17 @@ function authorize (req, res, next) {
 	}
 }
 
+function removeEventCompletely (req, res, next) {
+	models.Event.remove({ _id: req.params.id }, function(err) {
+	    if (!err) {
+	            res.redirect('/admin/events');
+	    }
+	    else {
+	            throw err;
+	    }
+	});
+}
+
 function removeEvent (req, res, next) {
 	models.Event.findById(req.params.id, function (err, event) {
 	  if (err) return handleError(err);
@@ -49,20 +60,13 @@ function removeUser (req, res, next) {
 	});
 }
 
-function returnToEvents (req, res) {
-	window.location.href='/admin/events'
-}
-
-function returnToUsers (req, res) {
-	window.location.href='/admin/users'
-}
-
 exports.router = function (app) {
 	app.get('/admin', authorize, dashboard.show)
 	app.get('/admin/users', authorize, users.show)
 	app.get('/admin/emails', authorize, emails.show);
 	app.get('/admin/events', authorize, events.show)
-	app.get('/admin/events/:id/delete', authorize, removeEvent, returnToEvents)
-	app.get('/admin/events/:id/revive', authorize, reviveEvent, returnToEvents)
-	app.get('/admin/users/:id/remove', authorize, removeUser, returnToUsers)
+	app.get('/admin/events/:id/delete', authorize, removeEvent)
+	app.get('/admin/events/:id/remove', authorize, removeEventCompletely)
+	app.get('/admin/events/:id/revive', authorize, reviveEvent)
+	app.get('/admin/users/:id/remove', authorize, removeUser)
 }

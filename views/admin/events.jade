@@ -19,10 +19,11 @@ block content
 				th Password protected
 				th Messages
 				th Files in dropbox
-				th Removed
-				th Remove
+				th Deleted
+				th Delete
 					br
 					span Revive
+				th Remove
 		tbody
 			for event in events
 				tr
@@ -51,4 +52,8 @@ block content
 						else
 							a.btn.btn-danger.btn-xs(href="/admin/events/#{event._id}/delete")
 								span.glyphicon.glyphicon-remove
-								span  Remove
+								span  Delete
+					td
+						a.btn.btn-danger.btn-xs(href="/admin/events/#{event._id}/remove")
+							span.glyphicon.glyphicon-remove
+							span  Remove
