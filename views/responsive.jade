@@ -40,7 +40,7 @@ html
 				else
 					//- Only displayed when user is logged in
 					.pull-right.width7
-						a.image(href="/conversations")
+						a.image(href="/inbox/all")
 							if user.mailboxUnread == 0
 								img.mail.pull-right.img-mess-smart(src="/images/notes-icon.svg", alt="", style="width:100%;")
 							else
@@ -53,7 +53,7 @@ html
 
 
 					.pull-right.width7
-						a.image(href="/conversations")
+						a.image(href="/inbox/all")
 							if user.mailboxUnread == 0
 								img.mail.pull-right.img-mess-smart(src="/images/message-icon.svg", alt="", style="width:100%;")
 							else

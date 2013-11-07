@@ -1,0 +1,1 @@
+nodemon -e ".js" app.js

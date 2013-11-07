@@ -5,7 +5,7 @@ var auth = require('./auth'),
 	maps = require('./maps'),
 	profile = require('./profile'),
 	cards = require('./cards'),
-	conversations = require('./conversations'),
+	inbox = require('./inbox'),
 	search = require('./search'),
 	admin = require('./admin'),
 	util = require('../util')
@@ -38,7 +38,7 @@ exports.router = function(app) {
 	// business cards
 	cards.router(app)
 	// topics
-	conversations.router(app)
+	inbox.router(app)
 	// search API
 	search.router(app)
 	
