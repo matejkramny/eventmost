@@ -13,21 +13,40 @@ function authorize (req, res, next) {
 }
 
 function removeEvent (req, res, next) {
-	models.Event.findById(req.params.id, function (err, ev) {
-		console.log(ev)})
-	event.deleted = true
-	event.save()
+	models.Event.findById(req.params.id, function (err, event) {
+	  if (err) return handleError(err);
+	  
+	  event.deleted = true;
+	 event.save(function (err) {
+	    if (err) return handleError(err);
+	    res.send(evemt);
+	  });
+	});
 	res.redirect('/admin/events')
 }
 
 function reviveEvent (req, res, next) {
-	models.Event.findById(req.params.id)
-	event.deleted = false
-	event.save()
+	models.Event.findById(req.params.id, function (err, event) {
+	  if (err) return handleError(err);
+	  
+	  event.deleted = false;
+	 event.save(function (err) {
+	    if (err) return handleError(err);
+	    res.send(evemt);
+	  });
+	});
+	res.redirect('/admin/events')
 }
 
 function removeUser (req, res, next) {
-	models.User.remove({ _id: req.params.id })
+	models.User.remove({ _id: req.params.id }, function(err) {
+	    if (!err) {
+	            res.redirect('/admin/users');
+	    }
+	    else {
+	            throw err;
+	    }
+	});
 }
 
 function returnToEvents (req, res) {

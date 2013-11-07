@@ -30,6 +30,8 @@ block content
 					= user.created.getHours()
 					| :
 					= user.created.getMinutes()
+					| :
+					= user.created.getSeconds()
 				td
 					if user.twitter.userid == null
 						span
@@ -51,6 +53,6 @@ block content
 					else
 						span.glyphicon.glyphicon-ok
 				td
-					a.btn.btn-danger(href="/admin/users/#{user._id}/remove")
+					a.btn.btn-danger.btn-xs(href="/admin/users/#{user._id}/remove")
 						span.glyphicon.glyphicon-remove
 						span Remove
