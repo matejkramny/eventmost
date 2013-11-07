@@ -1,58 +1,16 @@
 var fs = require('fs')
-	, models = require('../models')
+	, models = require('../../models')
 	, mongoose = require('mongoose')
-	, util = require('../util')
+	, util = require('../../util')
 	, async = require('async')
-	, transport = require('../app').transport
+	, transport = require('../../app').transport
 
 exports.router = function (app) {
-	app.get('/inbox/conversation/new', util.authorized, newTopic)
-		.get('/inbox', util.authorized, show)
-		.get('/inbox/conversation/:id', util.authorized, showTopic)
-		.post('/inbox/conversation/:id/new', util.authorized, newMessage)
-		.post('/inbox/conversation/:id/update', util.authorized, updateTopic)
-}
-
-function show (req, res) {
-	var withUser;
-	var search = [
-		{ users: req.user._id }
-	]
-	if (req.query.with != null) {
-		withUser = mongoose.Types.ObjectId(req.query.with);
-		search.push(withUser);
-	}
-	
-	models.Topic
-		.find({
-			$and: search
-		})
-		.populate('users')
-		.sort('-lastUpdated')
-		.exec(function(err, topics) {
-			if (err) throw err;
-			
-			var topic = "Conversation";
-			if (topics.length && withUser) {
-				for (var i = 0; i < topics[0].users.length; i++) {
-					if (topics[0].users[i]._id.equals(withUser)) {
-						topic += " with "+topics[0].users[i].getName()
-					}
-				}
-			}
-			
-			res.format({
-				html: function() {
-					res.locals.topics = topics;
-					res.render('inbox/all', { pageName: topic, title: "Inbox" });
-				},
-				json: function() {
-					res.send({
-						topics: topics
-					})
-				}
-			})
-		})
+	app.get('/inbox/conversation/*', util.authorized)
+		.get('/inbox/conversation/new', newTopic)
+		.get('/inbox/conversation/:id', showTopic)
+		.post('/inbox/conversation/:id/new', newMessage)
+		.post('/inbox/conversation/:id/update', updateTopic)
 }
 
 function newTopic (req, res) {
