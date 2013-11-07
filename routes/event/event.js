@@ -8,6 +8,9 @@ var dropbox = require('./dropbox')
 	, models = require('../../models')
 
 exports.router = function (app) {
+	//app.get('/event/:id/registrationpage', getEvent, attending, viewRegistrationPage)
+	//app.get('/event/:id/*', redirectToRegistrationPage)
+	
 	app.all('/event/*', util.authorized)
 	add.router(app)
 	
@@ -72,14 +75,17 @@ exports.attending = attending = function (req, res, next) {
 	var attending = false;
 	var isAdmin = false;
 	var theAttendee;
-	for (var i = 0; i < ev.attendees.length; i++) {
-		var attendee = ev.attendees[i];
+	
+	if (res.locals.loggedIn) {
+		for (var i = 0; i < ev.attendees.length; i++) {
+			var attendee = ev.attendees[i];
 		
-		if (typeof attendee.user === "object" && attendee.user._id.equals(req.user._id)) {
-			attending = true;
-			isAdmin = attendee.admin;
-			theAttendee = attendee;
-			break;
+			if (typeof attendee.user === "object" && attendee.user._id.equals(req.user._id)) {
+				attending = true;
+				isAdmin = attendee.admin;
+				theAttendee = attendee;
+				break;
+			}
 		}
 	}
 	
@@ -88,6 +94,14 @@ exports.attending = attending = function (req, res, next) {
 	res.locals.attendee = theAttendee;
 	
 	next()
+}
+
+function redirectToRegistrationPage (req, res, next) {
+	if (req.user) {
+		next();
+	} else {
+		res.redirect('/event/'+req.params.id+"/registrationpage")
+	}
 }
 
 function viewEvent (req, res) {

@@ -48,7 +48,7 @@ mixin navbar
 					a.link-white(href=base+"attendees") Attendees<br /><span class="color-green">Messages</span>
 			.inline.nspacer-small
 				.font-x1.bg-purple.center.psev2.prof-wall
-					a.link-white(href=base+"attendee/"+user._id) My 
+					a.link-white(href= (loggedIn == true ? base+"attendee/"+user._id : base+"attendees")) My 
 						br
 						| profile
 			.inline.nspacer-small
