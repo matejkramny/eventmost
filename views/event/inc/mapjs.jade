@@ -32,6 +32,7 @@ if ev.address != null || ev.geo != null
 		
 	script(defer="true").
 		function initialize(location) {
+			var address = "#{ev.address}";
 			if (!map) return;
 			map.setCenter(location);
 			map.setZoom(12);
@@ -42,7 +43,7 @@ if ev.address != null || ev.geo != null
 			});
 			var infowindow = new google.maps.InfoWindow;
 		
-			var content = '<div class="map-content"><h3>#{ev.name}</h3>#{ev.address}<br /><a href="http://maps.google.com/?daddr=#{ev.address}" target="_blank">Get Directions</a></div>';
+			var content = '<div class="map-content"><h3>#{ev.name}</h3>'+address+'<br /><a href="http://maps.google.com/?daddr='+address+'" target="_blank">Get Directions</a></div>';
 			infowindow.setContent(content);
 			google.maps.event.addListener(
 				marker, 
