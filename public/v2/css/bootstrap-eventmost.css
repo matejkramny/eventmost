@@ -105,7 +105,9 @@ textarea:focus, input:focus{
 .font-exception{font-family:'ralewaythin', Arial, sans-serif !important;}
 /* helpers */
 .hide-all, .hide-all2, .hide-all3, .lower-hide, .hide-except-smart, .defer{display: none;}
-.hide-all4, .defer2, .vis-till-1, ..res-dis-non-vis{display:none;}
+.hide-all4, .defer2, .vis-till-1, .res-dis-non-vis {display:none;}
+.show-not1{display: none;}
+
 
 .hide-except-smart{display: none;}
 .hide-mini3-except-smart{display: block;}
@@ -1914,7 +1916,21 @@ p.check5:not(#foo) > input[type=checkbox] + label:hover               { backgrou
 .inv-till-1, .vis-till-1{display: none;}
 }
 /**** pagination ****/
+
+
+
 @media only screen and (min-width: 1025px) and (max-width: 1199px) {
+
+
+.dropdown-select select {
+      background: url('../../../images/dropdown_arrow.svg') no-repeat;  /*Adds background-image*/
+      background-position: 245px 14px;  /*Position of the background-image*/
+}
+.dropdown-select-component select {
+      background: url('../../../images/dropdown_arrow.svg') no-repeat;  /*Adds background-image*/
+      background-position: 205px 14px;  /*Position of the background-image*/
+}
+
 
 .other53{width: 70% !important;}
 .all{width:18%;}
@@ -1954,6 +1970,13 @@ p.check5:not(#foo) > input[type=checkbox] + label:hover               { backgrou
 .current-location{margin-left: -4px; font-size: 11px; padding-top: 4px;}
 .date-height{height:435px;}
 
+}
+
+
+@media only screen and (max-width: 1000px) {
+.show-not{display: none;}
+.show-not1{display: block;}
+.fontol {font-size: 16px;}
 }
 
 
@@ -2117,6 +2140,7 @@ p.check5:not(#foo) > input[type=checkbox] + label:hover               { backgrou
 .butt-mar{margin-right: 5px;}
 .send-to{width:17%; line-height:30px;}
 .send-to-input{width:82.2%; margin-top:6px !important;}
+.fontol{font-size: 16px;}
 }
 
 @media only screen and (min-width: 686px) and (max-width: 768px) {
@@ -2286,6 +2310,14 @@ table.gridtable th {font-size: 12px;}
 }
 
 @media only screen and (min-width: 481px) and (max-width: 685px) {
+.dropdown-select select {
+      background: url('../../../images/dropdown_arrow.svg') no-repeat;  /*Adds background-image*/
+      background-position: 805px 14px;  /*Position of the background-image*/
+}
+.dropdown-select-component select {
+      background: url('../../../images/dropdown_arrow.svg') no-repeat;  /*Adds background-image*/
+      background-position: 805px 14px;  /*Position of the background-image*/
+}
   .dropdown-menu-last > li > a {background-color: #f1f1f2 !important;}
 .dropdown-menu-last{background-color: #f1f1f2 !important;}
 .other53{width: 80% !important;}
