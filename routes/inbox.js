@@ -44,7 +44,7 @@ function show (req, res) {
 			res.format({
 				html: function() {
 					res.locals.topics = topics;
-					res.render('inbox', { pageName: topic, title: "Inbox" });
+					res.render('inbox/all', { pageName: topic, title: "Inbox" });
 				},
 				json: function() {
 					res.send({
