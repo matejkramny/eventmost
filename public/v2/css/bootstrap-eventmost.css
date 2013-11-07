@@ -343,6 +343,33 @@ a.link-white:hover {
 .space {letter-spacing:30px;}
 .pic {vertical-align: middle; text-align: center; }
 
+/* select arrow vanishing */
+
+.dropdown-select select {
+      border: 0 !important;  /*Removes border*/
+      -webkit-appearance: none;  /*Removes default chrome and safari style*/
+      -moz-appearance: none; /* Removes Default Firefox style*/
+      background: url('../../../images/dropdown_arrow.svg') no-repeat;  /*Adds background-image*/
+      background-position: 325px 14px;  /*Position of the background-image*/
+      width: 100%; /*Width of select dropdown to give space for arrow image*/
+      text-indent: 0.01px; /* Removes default arrow from firefox*/
+      text-overflow: "";  /*Removes default arrow from firefox*/
+      cursor: pointer;
+}
+.dropdown-select-component select {
+      border: 0 !important;  /*Removes border*/
+      -webkit-appearance: none;  /*Removes default chrome and safari style*/
+      -moz-appearance: none; /* Removes Default Firefox style*/
+      background: url('../../../images/dropdown_arrow.svg') no-repeat;  /*Adds background-image*/
+      background-position: 275px 14px;  /*Position of the background-image*/
+      width: 100%; /*Width of select dropdown to give space for arrow image*/
+      text-indent: 0.01px; /* Removes default arrow from firefox*/
+      text-overflow: "";  /*Removes default arrow from firefox*/
+      cursor: pointer;
+}
+
+
+
 /* buttons */
 .btn-default {
   color: #fdd093;
@@ -550,6 +577,33 @@ input.name {
   padding-left: 5px;
   width: 100%;
 }
+
+
+/* file upload */
+
+.fileinputs {
+  position: relative;
+}
+
+.fakefile {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  z-index: 1;
+}
+
+input.file {
+  position: relative;
+  text-align: right;
+  -moz-opacity:0 ;
+  filter:alpha(opacity: 0);
+  opacity: 0;
+  z-index: 2;
+}
+
+
+
+
 .textarea-grey, .textarea-grey-border, .textarea-green-border{resize:none; }
 .textarea-grey-border{border-color:#542437 !important;  border-style:solid; border-width:5px; padding: 10px; padding-top: 15px;}
 .textarea-green-border{border-color:#0992a3 !important;  border-style:solid; border-width:5px; padding: 10px; padding-top: 15px;}
