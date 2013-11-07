@@ -6,11 +6,11 @@ var fs = require('fs')
 	, transport = require('../app').transport
 
 exports.router = function (app) {
-	app.get('/conversation/new', util.authorized, newTopic)
-		.get('/conversations', util.authorized, show)
-		.get('/conversation/:id', util.authorized, showTopic)
-		.post('/conversation/:id/new', util.authorized, newMessage)
-		.post('/conversation/:id/update', util.authorized, updateTopic)
+	app.get('/inbox/conversation/new', util.authorized, newTopic)
+		.get('/inbox', util.authorized, show)
+		.get('/inbox/conversation/:id', util.authorized, showTopic)
+		.post('/inbox/conversation/:id/new', util.authorized, newMessage)
+		.post('/inbox/conversation/:id/update', util.authorized, updateTopic)
 }
 
 function show (req, res) {
@@ -44,7 +44,7 @@ function show (req, res) {
 			res.format({
 				html: function() {
 					res.locals.topics = topics;
-					res.render('conversations', { pageName: topic, title: "Conversations" });
+					res.render('inbox', { pageName: topic, title: "Inbox" });
 				},
 				json: function() {
 					res.send({
@@ -78,7 +78,7 @@ function newTopic (req, res) {
 				topic.save(function(err) {
 					if (err) throw err;
 			
-					res.redirect('/conversation/'+topic._id);
+					res.redirect('/inbox/conversation/'+topic._id);
 				})
 			}
 		})
@@ -135,7 +135,7 @@ function showTopic(req, res) {
 			res.format({
 				html: function() {
 					res.status(404);
-					res.redirect('/conversations')
+					res.redirect('/inbox')
 				},
 				json: function() {
 					res.send({
@@ -153,7 +153,7 @@ function newMessage(req, res) {
 	if (text.length == 0) {
 		res.format({
 			html: function() {
-				res.redirect('/conversation/'+id);
+				res.redirect('/inbox/conversation/'+id);
 			},
 			json: function() {
 				res.send({
@@ -203,7 +203,7 @@ function newMessage(req, res) {
 			message.save(function(err) {
 				res.format({
 					html: function() {
-						res.redirect('/conversation/'+topic._id)
+						res.redirect('/inbox/conversation/'+topic._id)
 					},
 					json: function() {
 						res.send({
@@ -228,7 +228,7 @@ function newMessage(req, res) {
 			res.format({
 				html: function() {
 					res.status(403);
-					res.redirect('/conversations')
+					res.redirect('/inbox')
 				},
 				json: function() {
 					res.send({
@@ -316,7 +316,7 @@ function updateTopic(req, res) {
 		topic.name = title;
 		topic.lastUpdated = Date.now()
 		topic.save(function(err) {
-			res.redirect('/conversation/'+topic._id)
+			res.redirect('/inbox/conversation/'+topic._id)
 		})
 	});
 }
