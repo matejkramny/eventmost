@@ -1,4 +1,5 @@
-var contact = require('../models/Contact').Contact,
+var models = require('../models'),
+	contact = models.Contact,
 	transport
 
 exports.about = function (req, res) {

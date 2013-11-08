@@ -8,7 +8,8 @@ var auth = require('./auth'),
 	inbox = require('./inbox'),
 	search = require('./search'),
 	admin = require('./admin'),
-	util = require('../util')
+	util = require('../util'),
+	models = require('../models')
 
 exports.router = function(app) {
 	app.get('/', function(req, res) {
