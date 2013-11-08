@@ -10,5 +10,5 @@ exports.router = function (app) {
 }
 
 function showSavedProfiles (req, res) {
-	
+	res.render('inbox/profiles', { pageName: "People who saved your profile", title: "Saved Profiles"})
 }

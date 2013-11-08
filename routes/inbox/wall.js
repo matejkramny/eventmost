@@ -10,5 +10,5 @@ exports.router = function (app) {
 }
 
 function showWall (req, res) {
-	
+	res.render('inbox/pms', { pageName: "Public Messages", title: "Public Messages" });
 }

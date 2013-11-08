@@ -40,19 +40,10 @@ function show (req, res) {
 		.exec(function(err, topics) {
 			if (err) throw err;
 			
-			var topic = "Conversation";
-			if (topics.length && withUser) {
-				for (var i = 0; i < topics[0].users.length; i++) {
-					if (topics[0].users[i]._id.equals(withUser)) {
-						topic += " with "+topics[0].users[i].getName()
-					}
-				}
-			}
-			
 			res.format({
 				html: function() {
 					res.locals.topics = topics;
-					res.render('inbox/all', { pageName: topic, title: "Inbox" });
+					res.render('inbox/all', { pageName: "Inbox Dashboard", title: "Inbox" });
 				},
 				json: function() {
 					res.send({
