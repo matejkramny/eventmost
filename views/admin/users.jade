@@ -15,6 +15,7 @@ block content
 			th LinkedIn
 			th Admin
 			th Remove
+			th OP
 		tbody
 		for user in users
 			tr
@@ -55,4 +56,13 @@ block content
 				td
 					a.btn.btn-danger.btn-xs(href="/admin/users/#{user._id}/remove")
 						span.glyphicon.glyphicon-remove
-						span Remove
+						span  Remove
+				td
+					if user.admin
+						a.btn.btn-danger.btn-xs(href="/admin/users/#{user._id}/deop")
+							span.glyphicon.glyphicon-chevron-down
+							span  DEOP
+					else
+						a.btn.btn-success.btn-xs(href="/admin/users/#{user._id}/op")
+							span.glyphicon.glyphicon-chevron-up
+							span  OP

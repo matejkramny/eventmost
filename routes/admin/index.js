@@ -30,10 +30,36 @@ function removeEvent (req, res, next) {
 	  event.deleted = true;
 	 event.save(function (err) {
 	    if (err) return handleError(err);
-	    res.send(evemt);
+	    res.send(event);
 	  });
 	});
 	res.redirect('/admin/events')
+}
+
+function OPUSER (req, res, next) {
+	models.User.findById(req.params.id, function (err, user) {
+	  if (err) return handleError(err);
+	  
+	  user.admin = true;
+	 user.save(function (err) {
+	    if (err) return handleError(err);
+	    res.send(user);
+	  });
+	});
+	res.redirect('/admin/users')
+}
+
+function DEOPUSER (req, res, next) {
+	models.User.findById(req.params.id, function (err, user) {
+	  if (err) return handleError(err);
+	  
+	  user.admin = false;
+	 user.save(function (err) {
+	    if (err) return handleError(err);
+	    res.send(user);
+	  });
+	});
+	res.redirect('/admin/users')
 }
 
 function reviveEvent (req, res, next) {
@@ -43,7 +69,7 @@ function reviveEvent (req, res, next) {
 	  event.deleted = false;
 	 event.save(function (err) {
 	    if (err) return handleError(err);
-	    res.send(evemt);
+	    res.send(event);
 	  });
 	});
 	res.redirect('/admin/events')
@@ -69,4 +95,6 @@ exports.router = function (app) {
 	app.get('/admin/events/:id/remove', authorize, removeEventCompletely)
 	app.get('/admin/events/:id/revive', authorize, reviveEvent)
 	app.get('/admin/users/:id/remove', authorize, removeUser)
+	app.get('/admin/users/:id/op', authorize, OPUSER)
+	app.get('/admin/users/:id/deop', authorize, DEOPUSER)
 }
