@@ -8,11 +8,11 @@ exports.config = {
   /**
    * Array of application names.
    */
-  app_name : ['EventMost'],
+  app_name : ['EventMost Main'],
   /**
    * Your New Relic license key.
    */
-  license_key : 'b2013e8b7f782b75c7fc461ded692a98b9e35fb6',
+  license_key : '8b9593512ad7b0ceffe0a1b0cb24e051c5517f78',
   logging : {
     /**
      * Level at which to log. 'trace' is most useful to New Relic when diagnosing

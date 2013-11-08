@@ -9,6 +9,7 @@ var express = require('express')
 	, authmethods = require('./routes/auth')
 	, mailer = require('nodemailer')
 	, passport = require('passport')
+	, newrelic = require('newrelic');
 
 var bugsnag = require("bugsnag");
 bugsnag.register("6c73b59b8d37503c8e8a70d67613d067", {
