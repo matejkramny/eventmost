@@ -40,7 +40,7 @@ function view (req, res) {
 
 function doRemove (req, res, next) {
 	var filepath = req.body.file;
-	var ev = res.locals.event;
+	var ev = res.locals.ev;
 	
 	// must be planner of the event
 	var isPlanner = false;
@@ -107,7 +107,7 @@ function doUpload (req, res) {
 		return;
 	}
 	
-	var ev = res.locals.event;
+	var ev = res.locals.ev;
 	
 	if (req.files.upload == null || req.files.upload.name.length == 0) {
 		res.format({

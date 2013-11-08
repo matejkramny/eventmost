@@ -15,7 +15,7 @@
 .col-md-5.col-xs-5.col-sm-5.nspacer-medium.hide-mini3-except-smart
 	.font-tw
 		b= user.getName() 
-		|  - #{user.position}, #{user.company}
+		//-|  - #{user.position}, #{user.company}
 .col-md-6.col-xs-6.col-sm-6.hide-mini3-except-smart
 	.font-x1.bg-purple.center.pull-right.psev2.prof-wall
 		a.link-white(href="/inbox/wall") Public <br />Messages
@@ -37,7 +37,7 @@
 			b= pagename
 		.font-tw.inline
 			b= user.getName() 
-			|  - #{user.position}, #{user.company}
+			//-|  - #{user.position}, #{user.company}
 .clearfix.hide-all2
 .col-md-12.col-xs-12.col-sm-12.hide-all2
 	.center
