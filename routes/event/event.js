@@ -76,7 +76,7 @@ exports.attending = attending = function (req, res, next) {
 	var isAdmin = false;
 	var theAttendee;
 	
-	if (res.locals.loggedIn) {
+	if (res.locals.loggedIn && req.user) {
 		for (var i = 0; i < ev.attendees.length; i++) {
 			var attendee = ev.attendees[i];
 		
