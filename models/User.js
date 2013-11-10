@@ -1,7 +1,7 @@
 var mongoose = require('mongoose')
-	,crypto = require('crypto')
-	,https = require('https')
-	,SocialMetadata = require('./SocialMetadata').SocialMetadata
+	, crypto = require('crypto')
+	, https = require('https')
+	, SocialMetadata = require('./SocialMetadata').SocialMetadata
 
 var schema = mongoose.Schema;
 var ObjectId = schema.ObjectId;
@@ -38,6 +38,12 @@ var scheme = schema({
 			ref: 'User'
 		}
 	],
+	privacy: {
+		allowPM: { type: Boolean, default: true },
+		allowWall: { type: Boolean, default: true },
+		allowLocation: { type: Boolean, default: true },
+		showProfile: { type: Boolean, default: true },
+	},
 	requestEmail: { type: Boolean, default: false },
 	admin: { type: Boolean, default: false },
 	mailboxUnread: { type: Number, default: 0 }
