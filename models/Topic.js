@@ -4,7 +4,6 @@ var schema = mongoose.Schema;
 var ObjectId = schema.ObjectId;
 
 var scheme = schema({
-	name: String,
 	lastUpdated: Date,
 	users: [{
 		type: ObjectId,

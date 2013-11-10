@@ -25,17 +25,17 @@ block content
 	unless theUser._id.equals(user._id)
 		.col-md-6.col-xs-6.col-sm-6.lower.hide-mini3-except-smart
 			.right.iconsbox.spacerbig
-				a(href="/conversations", class="link1")
+				a(href="/inbox/messages/new?to="+theUser._id, class="link1")
 					img(src="/images/send-prv.svg", alt="", class="img-responsive inline pad-right-ten res-butt")
-				a(href="/conversations", class="link1")
+				a(href="/inbox/cards/send?to="+theUser._id, class="link1")
 					img(src="/images/send-business.svg", alt="", class="img-responsive inline pad-right-ten res-butt")
 				a(href="/user/"+theUser._id+"/save", class="link1")
 					img(src="/images/save-prof.svg", alt="", class="img-responsive inline pad-right-ten res-butt")
 		.col-md-6.col-xs-6.col-sm-6.lower-hide.hide-except-smart
 			.right.iconsbox.spacerbig
-				a(href="/conversations", class="link1")
+				a(href="/inbox/messages/new?to="+theUser._id, class="link1")
 					img(src="/images/send-prv.svg", alt="", class="img-responsive inline res-butt")
-				a(href="/conversations", class="link1")
+				a(href="/inbox/cards/send?to="+theUser._id, class="link1")
 					img(src="/images/send-business.svg", alt="", class="img-responsive inline res-butt")
 				a(href="/user/"+theUser._id+"/save", class="link1")
 					img(src="/images/save-prof.svg", alt="", class="img-responsive inline res-butt")
