@@ -196,7 +196,7 @@ border-radius: 10px;}
 .bg-green {background-color: #0992a3; color: #f1f1f2;}
 
 
-.summary-yellow-height{height: 280px;}
+.summary-yellow-height{height: auto; padding-bottom: 10px;}
 .number-height{height: 170px;}
 
 .e{height:80px;}
@@ -263,8 +263,8 @@ border-radius: 10px;}
 .setting-line{line-height: 30px;}
 
 
-.dont-show320{display:block;}
-.show320{display:none;}
+.dont-show320, .dont-show320-2{display:block;}
+.show320, .show320-2{display:none;}
 /* links*/
 a.link-purple{
   text-decoration: none;
@@ -1930,7 +1930,7 @@ p.check5:not(#foo) > input[type=checkbox] + label:hover               { backgrou
 
 @media only screen and (min-width: 1025px) and (max-width: 1199px) {
 
-
+.graphs-font{font-size: 14px;}
 .dropdown-select select {
       background: url('../../../images/dropdown_arrow.svg') no-repeat;  /*Adds background-image*/
       background-position: 245px 14px;  /*Position of the background-image*/
@@ -1986,13 +1986,16 @@ p.check5:not(#foo) > input[type=checkbox] + label:hover               { backgrou
 .show-not{display: none;}
 .show-not1{display: block;}
 .fontol {font-size: 16px;}
+.graphs-font{font-size: 14px;}
+.inde{display: none;}
+.overfonts{font-size: 16px;}
 }
 
 
 
 @media only screen and (min-width: 981px) and (max-width: 1024px) {
 
-
+.graphs-font{font-size: 14px;}
 .filename{padding: 21px; height:82px; font-size: 17px;}
 .half-round-purple {width: 96.2%;}
 #slider1 .overview li{ width: 240px; word-wrap:break-word;}
@@ -2038,6 +2041,7 @@ p.check5:not(#foo) > input[type=checkbox] + label:hover               { backgrou
 }
 
 @media only screen and (min-width: 768px) and (max-width: 980px) {
+.graphs-font{font-size: 10px !important;}
 .other53{width: 70% !important;}
 .all{width:25%;}
 .filename{padding: 11px; height:62px; font-size: 14px;}
@@ -2153,6 +2157,7 @@ p.check5:not(#foo) > input[type=checkbox] + label:hover               { backgrou
 }
 
 @media only screen and (min-width: 686px) and (max-width: 768px) {
+.graphs-font{font-size: 10px !important;}
 .other53{width: 70% !important;}
 .all{width:25%;}
 .filename{padding: 11px; height:58px; font-size: 14px;}
@@ -2318,7 +2323,12 @@ table.gridtable th {font-size: 12px;}
 .subject-input{width:85.9%; margin-top:6px !important;}
 }
 
+
 @media only screen and (min-width: 481px) and (max-width: 685px) {
+.overfonts{font-size: 13px;}
+.summary-yellow-height{height: auto; padding-bottom: 10px;}
+.inde{display: none;}
+.graphs-font{font-size: 10px !important;}
 .dropdown-select select {
       background: url('../../../images/dropdown_arrow.svg') no-repeat;  /*Adds background-image*/
       background-position: 805px 14px;  /*Position of the background-image*/
@@ -2445,8 +2455,15 @@ table.gridtable th {font-size: 12px;}
 .dropdown-menu-last{background-color: #f1f1f2 !important;}
 }
 
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 600px) {
+.summary-yellow-height{height: auto; padding-bottom: 10px;}
+}
 
+
+@media only screen and (max-width: 480px) {
+.overfonts{font-size: 12px;}
+.graphs-font{font-size: 10px !important;}
+.graphs-font2{font-size: 10px !important;}
 .dont-show320{display:none;}
 .show320{display:block;}
 .dropdown-menu-last > li > a {background-color: #f1f1f2 !important;}
@@ -2546,13 +2563,14 @@ table.gridtable-payment-yellow {font-size: 10px;}
 
 
 @media only screen and (max-width: 360px) {
-
+.graphs-font{font-size: 8px !important;}
+.summary-yellow-height{height: auto; padding-bottom: 10px;}
  .message-nr h20 {font-size: 9px; font-weight: 400; color: #542437;  margin-top: 15px; margin-left: 7px; position: absolute;
   padding-left: 2px; padding-right: 2px; background-color: #fdd093 !important; border-radius: 5px; }
 .font-header-icon2{padding-left: 7px; font-size: 8px;}
 .font-header-icon{padding-left: 0px; font-size: 8px;} 
-.dont-show320{display:none;}
-.show320{display:block;}
+.dont-show320, .dont-show320-2{display:none;}
+.show320, .show320-2{display:block;}
 .filename{padding: 2px; padding-left: 10px; height:34px; font-size: 9px;}
 }
 
