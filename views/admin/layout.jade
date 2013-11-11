@@ -20,13 +20,12 @@ html
 					margin: 0;
 					padding: 0;
 					border: 0;
-					width: 100%;
 				}
 	body
 		block container
 			.container-full
 				.row
-					.col-md-2.col-lg-2.col-sm-2
+					.col-md-2.col-lg-2.col-sm-2(style="width: 16.5%")
 						a(href="/admin/")
 							img.img-responsive(src="/images/logo.svg", style="margin-top:20px;")
 						hr
@@ -47,7 +46,7 @@ html
 							a.list-group-item(href="/")
 								span.glyphicon.glyphicon-log-out
 								|   Back to EventMost
-					.col-md-10.col-lg-10.col-sm-10
+					.col-md-10.col-lg-10.col-sm-10(style="width: 83.5%")
 						block content
 		block js
 			script(src="/js/jquery.min.js")
