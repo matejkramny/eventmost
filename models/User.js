@@ -1,6 +1,7 @@
 var mongoose = require('mongoose')
-	,crypto = require('crypto')
-	,https = require('https')
+	, crypto = require('crypto')
+	, https = require('https')
+	, SocialMetadata = require('./SocialMetadata').SocialMetadata
 
 var schema = mongoose.Schema;
 var ObjectId = schema.ObjectId;
@@ -37,6 +38,12 @@ var scheme = schema({
 			ref: 'User'
 		}
 	],
+	privacy: {
+		allowPM: { type: Boolean, default: true },
+		allowWall: { type: Boolean, default: true },
+		allowLocation: { type: Boolean, default: true },
+		showProfile: { type: Boolean, default: true },
+	},
 	requestEmail: { type: Boolean, default: false },
 	admin: { type: Boolean, default: false },
 	mailboxUnread: { type: Number, default: 0 }
@@ -141,7 +148,7 @@ scheme.statics.authenticateTwitter = function (accessToken, accessSecret, meta, 
 		'twitter.userid': meta.id
 	}
 	
-	models.User.find(query, function(err, users) {
+	exports.User.find(query, function(err, users) {
 		if (err) throw err;
 		
 		if (users.length == 1) {
@@ -150,7 +157,7 @@ scheme.statics.authenticateTwitter = function (accessToken, accessSecret, meta, 
 		} else if (users.length == 0) {
 			// Create a profile
 			// Create user
-			models.User.createWithTwitter(meta, accessToken, accessSecret, function(err, aUser) {
+			exports.User.createWithTwitter(meta, accessToken, accessSecret, function(err, aUser) {
 				cb(null, aUser);
 			});
 			return;
@@ -164,7 +171,7 @@ scheme.statics.authenticateFacebook = function (accessToken, accessSecret, meta,
 		'facebook.userid': meta.id
 	}
 	
-	models.User.find(query, function(err, users) {
+	exports.User.find(query, function(err, users) {
 		if (err) throw err;
 		
 		if (users.length == 1) {
@@ -173,7 +180,7 @@ scheme.statics.authenticateFacebook = function (accessToken, accessSecret, meta,
 		} else if (users.length == 0) {
 			// Create a profile
 			// Create user
-			models.User.createWithFacebook(meta, accessToken, accessSecret, function(err, aUser) {
+			exports.User.createWithFacebook(meta, accessToken, accessSecret, function(err, aUser) {
 				cb(null, aUser);
 			});
 			return;
@@ -187,7 +194,7 @@ scheme.statics.authenticateLinkedIn = function (accessToken, accessSecret, meta,
 		'linkedin.userid': meta.id
 	}
 	
-	models.User.find(query, function(err, users) {
+	exports.User.find(query, function(err, users) {
 		if (err) throw err;
 		
 		if (users.length == 1) {
@@ -196,7 +203,7 @@ scheme.statics.authenticateLinkedIn = function (accessToken, accessSecret, meta,
 		} else if (users.length == 0) {
 			// Create a profile
 			// Create user
-			models.User.createWithLinkedIn(meta, accessToken, accessSecret, function(err, aUser) {
+			exports.User.createWithLinkedIn(meta, accessToken, accessSecret, function(err, aUser) {
 				cb(null, aUser);
 			});
 			return;
@@ -243,7 +250,7 @@ scheme.statics.createWithTwitter = function(meta, accessToken, accessTokenSecret
 	user.setName(_meta.name);
 	
 	user.save(function(err) {
-		var smeta = new models.SocialMetadata({
+		var smeta = new SocialMetadata({
 			type: "twitter",
 			meta: meta,
 			accessToken: accessToken,
@@ -284,7 +291,7 @@ scheme.statics.createWithFacebook = function (meta, accessToken, accessTokenSecr
 	}
 	
 	user.save(function(err) {
-		var smeta = new models.SocialMetadata({
+		var smeta = new SocialMetadata({
 			type: "facebook",
 			meta: meta,
 			accessToken: accessToken,
@@ -315,7 +322,7 @@ scheme.statics.createWithLinkedIn = function (meta, accessToken, accessTokenSecr
 	})
 	
 	user.save(function(err) {
-		var smeta = new models.SocialMetadata({
+		var smeta = new SocialMetadata({
 			type: "linkedin",
 			meta: meta,
 			accessToken: accessToken,

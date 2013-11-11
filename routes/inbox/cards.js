@@ -10,5 +10,5 @@ exports.router = function (app) {
 }
 
 function showCards (req, res) {
-	res.render('inbox/business')
+	res.render('inbox/business', { pageName: "Received Business Cards", title: "Private Messages" })
 }

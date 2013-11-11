@@ -15,6 +15,7 @@ block content
 			th LinkedIn
 			th Admin
 			th Remove
+			th OP
 		tbody
 		for user in users
 			tr
@@ -30,6 +31,8 @@ block content
 					= user.created.getHours()
 					| :
 					= user.created.getMinutes()
+					| :
+					= user.created.getSeconds()
 				td
 					if user.twitter.userid == null
 						span
@@ -51,6 +54,15 @@ block content
 					else
 						span.glyphicon.glyphicon-ok
 				td
-					a.btn.btn-danger(href="/admin/users/#{user._id}/remove")
+					a.btn.btn-danger.btn-xs(href="/admin/users/#{user._id}/remove")
 						span.glyphicon.glyphicon-remove
-						span Remove
+						span  Remove
+				td
+					if user.admin
+						a.btn.btn-danger.btn-xs(href="/admin/users/#{user._id}/deop")
+							span.glyphicon.glyphicon-chevron-down
+							span  DEOP
+					else
+						a.btn.btn-success.btn-xs(href="/admin/users/#{user._id}/op")
+							span.glyphicon.glyphicon-chevron-up
+							span  OP

@@ -6,30 +6,36 @@ block content
 	+navbar
 	
 	br
-	form#uploadForm(action="/event/"+ev._id+"/dropbox/upload", method="POST", enctype="multipart/form-data")
+	form.pull-right#uploadForm(action="/event/"+ev._id+"/dropbox/upload", method="POST", enctype="multipart/form-data")
 		input(type="hidden", name="_csrf", value=token)
 		.pull-left
-			#file_browse_wrapper
-				input#file_browse(name="upload", type="file")
+			input(name="upload", type="file")
 		.pull-left
-			button.btn.btn-success#file_upload_wrapper(onclick="$('#uploadForm').submit()") Upload
+			button.btn.btn-success#file_upload_wrapper(onclick="$('#uploadForm').submit()")
+				span.glyphicon.glyphicon-cloud-upload
+				|  Upload
 		.clearfix
-	
+	.clearfix
+	hr
 	for file in ev.files
 		.row
-			.col-sm-2.col-lg-2.col-md-2
-				img(src=file.file)
-			.col-sm-6.col-lg-6.col-md-6
-				h5= file.name
-				h5 Size: #{file.size}
-				h5 Created: #{file.created.toString()}
-			.col-sm-4.col-lg-4.col-md-4
-				form#deleteForm(method="POST", action="/event/"+ev._id+"/dropbox/remove")
+			.col-sm-4.col-lg-4.col-md-4.col-xs-4
+				img.img-responsive(src=file.file)
+			.col-sm-8.col-lg-8.col-md-8.col-xs-8
+				.pull-left
+					h5= file.name
+					h5 Size: #{file.size}
+					h5 Created: #{file.created.toString()}
+				form.pull-right#deleteForm(method="POST", action="/event/"+ev._id+"/dropbox/remove")
 					input(type="hidden", name="_csrf", value=token)
 					input(type="hidden", name="file", value=file.file)
 					
-					a.btn.btn-success(href=file.file) Download
+					a.btn-sm.btn.btn-success(href=file.file)
+						span.glyphicon.glyphicon-cloud-download
+						|  Download
 					if eventadmin
 						| &nbsp;
-						a.btn.btn-danger(href="#", onclick="$('#deleteForm').submit()") Delete
-	br
+						a.btn-sm.btn.btn-danger(href="#", onclick="$('#deleteForm').submit()")
+							span.glyphicon.glyphicon-remove
+							|  Remove
+		br

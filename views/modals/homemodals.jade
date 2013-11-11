@@ -2,34 +2,35 @@
 	.modal-dialog
 		.modal-content
 			.modal-body.reveal-modal
+				input(type="hidden", name="_csrf", value=token)
 				h1 Privacy settings
 				br
 				h3.text-center Allow people to private message me?
 				.text-center
 					label.radio-inline
-						input(type="radio", name="allowPM")
+						input(type="radio", name="allowPM", value="yes", checked= user.privacy.allowPM == true ? "checked" : null)
 						| Yes
 					label.radio-inline
-						input(type="radio", name="allowPM")
+						input(type="radio", name="allowPM", value="no", checked= user.privacy.allowPM == false ? "checked" : null)
 						| No
 				hr
 				h3.text-center Allow people to comment on my wall?
 				.text-center
 					label.radio-inline
-						input(type="radio", name="allowPM")
+						input(type="radio", name="allowWall", value="yes", checked= user.privacy.allowWall == true ? "checked" : null)
 						| Yes
 					label.radio-inline
-						input(type="radio", name="allowPM")
+						input(type="radio", name="allowWall", value="no", checked= user.privacy.allowWall == false ? "checked" : null)
 						| No
 				hr
 				h3.text-center Turn off location ability?
 				p.text-center you will not be able to find Events in range
 				.text-center
 					label.radio-inline
-						input(type="radio", name="allowPM")
+						input(type="radio", name="allowLocation", value="yes", checked= user.privacy.allowLocation == true ? "checked" : null)
 						| Yes
 					label.radio-inline
-						input(type="radio", name="allowPM")
+						input(type="radio", name="allowLocation", value="no", checked= user.privacy.allowLocation == false ? "checked" : null)
 						| No
 				hr
 				h3.text-center Show my profile in events?
@@ -38,14 +39,15 @@
 						h2 You will not be able to see other attendees or access event information and documents other than the event description and location!
 				.text-center
 					label.radio-inline
-						input(type="radio", name="allowPM")
+						input(type="radio", name="showProfile", value="yes", checked= user.privacy.showProfile == true ? "checked" : null)
 						| Yes
 					label.radio-inline
-						input(type="radio", name="allowPM")
+						input(type="radio", name="showProfile", value="no", checked= user.privacy.showProfile == false ? "checked" : null)
 						| No
 				br
+				p.lead.text-center.statusText.hide Saving..
 				.pop-input.center
-					button.btn.btn-primary.font.font-ah(type='submit', href="",)
+					button.btn.btn-primary.font.font-ah(type='submit', href="")
 						| Save
 				
 				a(href="#", class="close-reveal-modal", data-dismiss="modal") 

@@ -128,8 +128,6 @@ exports.doEditProfile = doEditProfile = function (req, res) {
 	var errors = [];
 	var u = req.user;
 	
-	console.log(req.body)
-	
 	var blocking = false;
 	var cb = function () {
 		u.save(function(err) {
@@ -150,13 +148,17 @@ exports.doEditProfile = doEditProfile = function (req, res) {
 		})
 	}
 	
-	if (req.body.email.length == 0 && req.body.name.length == 0 && req.body.surname.length == 0) {
+	if (req.body.email && req.body.email.length == 0 && req.body.name && req.body.name.length == 0 && req.body.surname && req.body.surname.length == 0) {
 		errors.push("You must enter an email address, your first name or your last name.");
 	} else {
-		u.name = req.body.name;
-		u.surname = req.body.surname;
+		if (typeof req.body.name !== 'undefined') {
+			u.name = req.body.name;
+		}
+		if (typeof req.body.surname !== 'undefined') {
+			u.surname = req.body.surname;
+		}
 		
-		if (u.email != req.body.email) {
+		if (typeof req.body.email !== 'undefined' && u.email != req.body.email) {
 			blocking = true;
 			models.User.find({ email: req.body.email }, function(err, emails) {
 				if (err) throw err;
@@ -173,13 +175,40 @@ exports.doEditProfile = doEditProfile = function (req, res) {
 		}
 	}
 	
-	u.company = req.body.company;
-	u.position = req.body.position;
-	u.location = req.body.location;
-	u.interests = req.body.interests;
-	u.website = req.body.website;
-	u.education = req.body.education;
-	u.desc = req.body.desc;
+	if (typeof req.body.showProfile !== 'undefined') {
+		u.privacy.showProfile = req.body.showProfile == 'yes' ? true : false;
+	}
+	if (typeof req.body.allowLocation !== 'undefined') {
+		u.privacy.allowLocation = req.body.allowLocation == 'yes' ? true : false;
+	}
+	if (typeof req.body.allowWall !== 'undefined') {
+		u.privacy.allowWall = req.body.allowWall == 'yes' ? true : false;
+	}
+	if (typeof req.body.allowPM !== 'undefined') {
+		u.privacy.allowPM = req.body.allowPM == 'yes' ? true : false;
+	}
+	
+	if (typeof req.body.company !== 'undefined') {
+		u.company = req.body.company;
+	}
+	if (typeof req.body.position !== 'undefined') {
+		u.position = req.body.position;
+	}
+	if (typeof req.body.location !== 'undefined') {
+		u.location = req.body.location;
+	}
+	if (typeof req.body.interests !== 'undefined') {
+		u.interests = req.body.interests;
+	}
+	if (typeof req.body.website !== 'undefined') {
+		u.website = req.body.website;
+	}
+	if (typeof req.body.education !== 'undefined') {
+		u.education = req.body.education;
+	}
+	if (typeof req.body.desc !== 'undefined') {
+		u.desc = req.body.desc;
+	}
 	
 	if (req.body.password && req.body.password.length > 0) {
 		// user wants to change/create a password

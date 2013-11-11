@@ -8,7 +8,7 @@ exports.config = {
   /**
    * Array of application names.
    */
-  app_name : ['EventMost'],
+  app_name : ['EventMost Main'],
   /**
    * Your New Relic license key.
    */

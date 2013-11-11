@@ -16,7 +16,7 @@ block content
 
 	.col-md-12.col-xs-12.col-sm-12
 		.bg-yellow.font-bigs2.center.deifer-font2
-			| The Title of the Event
+			= ev.name
 
 	.clearfix
 	.nspacer-big
@@ -34,9 +34,6 @@ block content
 	.clearfix
 	.nspacer
 
-
-
-
 	//- arrange by tablet-portrait	
 	.col-xs-12.hide-all2.here-show(style="height:50px; margin-top:0px;")
 			.pull-right.font-exception-thin
@@ -47,13 +44,13 @@ block content
 							b.caret
 						ul.dropdown-menu.dropdown-menu-ashen.pull-right
 							li
-								a(href='/') Most recent to latest
+								a(href='') Most recent to latest
 							li
-								a(href='/') Latest to most recent
+								a(href='') Latest to most recent
 							li
-								a(href='/') Events name A-Z
+								a(href='') Events name A-Z
 							li
-								a(href='/') My planned events
+								a(href='') My planned events
 	.clearfix.here-show
 
 
@@ -65,7 +62,7 @@ block content
 			.nspacer-big.font-exception-thin.deifer-font3
 				| Guest speaker
 			.pad-top
-				img(src="/images/default_speaker-purple.svg", alt="", class="circularespond img-responsive")
+				img.circularespond.img-responsive(src="/images/default_speaker-purple.svg")
 
 
 
@@ -182,7 +179,6 @@ block content
 
 	.clearfix
 	.nspacer
-
 
 	.col-sm-12.col-xs-12.col-md-12
 		.pull-left

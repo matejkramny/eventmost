@@ -7,14 +7,20 @@ html
 		link(href="/favicon.ico", type="image/x-icon", rel="icon")
 		link(href="/favicon.ico", type="image/x-icon", rel="shortcut icon")
 		block css
-			link(rel="stylesheet", href="/v2/css/bootstrap.min.css")
-			link(rel="stylesheet", href="/v2/css/bootstrap-theme.min.css")
+			link(href="//netdna.bootstrapcdn.com/bootswatch/3.0.1/flatly/bootstrap.min.css", rel="stylesheet")
 			style.
 				.container-full {
 					margin-left: auto;
 					margin-right: auto;
 					padding-left: 10px;
 					padding-right: 10px;
+					width: 100%
+				}
+				html,body {
+					margin: 0;
+					padding: 0;
+					border: 0;
+					width: 100%;
 				}
 	body
 		block container

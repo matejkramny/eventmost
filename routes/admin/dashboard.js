@@ -6,6 +6,7 @@ exports.show = function(req, res) {
 		var twitterUsers = 0,
 		fbUsers = 0,
 		linkedInUsers = 0,
+		admins = 0,
 		last24hours = 0,
 		last48hours = 0,
 		lastWeek = 0,
@@ -20,6 +21,7 @@ exports.show = function(req, res) {
 			if (user.twitter.userid != null) twitterUsers++;
 			if (user.facebook.userid != null) fbUsers++;
 			if (user.linkedin.userid != null) linkedInUsers++;
+			if (user.admin == true) admins++;
 		
 			if (now - 86400000 < created) {
 				last24hours++;
@@ -44,6 +46,7 @@ exports.show = function(req, res) {
 			twitterUsers: twitterUsers,
 			facebookUsers: fbUsers,
 			linkedinUsers: linkedInUsers,
+			admins: admins,
 			last24hours: last24hours,
 			last48hours: last48hours,
 			lastWeek: lastWeek,

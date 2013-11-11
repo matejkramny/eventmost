@@ -1,4 +1,8 @@
-if (process.env == "production") require('newrelic');
+// Newrelic, only runs on the server
+if (process.env.NODE_ENV == "production") {
+	require('newrelic');
+}
+
 var express = require('express')
 	, routes = require('./routes')
 	, http = require('http')
