@@ -144,10 +144,15 @@ textarea:focus, input:focus{
 
 .home-big {padding-top:35px;}
 .pad-top {padding-top: 7px;}
+.pad-top-med {padding-top: 14px;}
+.pad-top-med1 {padding-top: 17px;}
+.pad-top-big {padding-top: 20px;}
+.pad-top-awsome {padding-top: 37px;}
 .pad-top-zero{padding-top: 0px;}
 
 .home-big2 {padding-bottom:35px;}
 .bottom-ten{margin-bottom: 10px;}
+.pad-bot-big{padding-bottom:18px;}
 
 
 .right {text-align: right;}
@@ -189,6 +194,10 @@ textarea:focus, input:focus{
 .bg-yellow-rounded {background-color: #fdd093; color: #542437;   border-color: #fdd093;
 border-radius: 10px;}
 .bg-green {background-color: #0992a3; color: #f1f1f2;}
+
+
+.summary-yellow-height{height: 280px;}
+.number-height{height: 170px;}
 
 .e{height:80px;}
 .ei{height:150px;}
