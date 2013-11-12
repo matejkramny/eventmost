@@ -1,95 +1,96 @@
 extends responsive
 
 block content
-	.container-fluid
-	    script#ProntoSrc(type='text/javascript', src='https://islpronto.islonline.net/live/islpronto/public/chat_info.js?d=eventmost')
-	    style
-	      .fadechat {
-	      opacity: 1;
-	      transition: opacity .25s ease-in-out;
-	      -moz-transition: opacity .25s ease-in-out;
-	      -webkit-transition: opacity .25s ease-in-out;
-	      }
-	      .fadechat:hover {
-	      opacity: 0.82;
-	      }
-	      .fademail {
-	      opacity: 1;
-	      transition: opacity .25s ease-in-out;
-	      -moz-transition: opacity .25s ease-in-out;
-	      -webkit-transition: opacity .25s ease-in-out;
-	      }
-	      .fademail:hover {
-	      opacity: 0.75;
-	      }
-	      .supporters {
-	      font-family: courier new, courier, monospace;
-	      font-size: 20px;}
-	      .supportersnum {
-	      }
-	    div
-	      a#islpronto_link(href='mailto:support@eventmost.com')
-	        img#islpronto_image.fademail(src='http://www.img-medicalgroup.com/en/buying/email_button.png', style='border:none')
-	    span#supporters.supporters
-	      | There are
-	      b no
-	      | supporters available.
-	    p
-	      span#available.supporters
-	    p
-	      span#supnames
-	    script(type='text/javascript')
-	      var supporters = document.getElementById('supporters');
-	      function getProntoInfo() {
-	      var prontoSrcUrl = "https://islpronto.islonline.net/live/islpronto/public/chat_info.js?d=eventmost";
-	      var old = document.getElementById('prontoInfo');
-	      if(old != null) { old.parentNode.removeChild(old); }
-	      var el = document.createElement('script');
-	      el.src = prontoSrcUrl;
-	      el.setAttribute('id', 'prontoInfo');
-	      document.body.appendChild(el);
-	      }
-	      setTimeout(getProntoInfo, 0);
-	      setInterval(getProntoInfo, 3000);
-	      function getSupps(){
-	      var supps = ISLProntoInfo.active_users;
-	      var supnames = document.getElementById('supnames')
-	      supnames.innerHTML = ''
-	      for(s in supps) {
-	      supnames.innerHTML = supnames.innerHTML + '<li>' + (supps[s].nick) + ' is ' + (supps[s].status) + '. <a href="mailto:' + (supps[s].email) + '">Send Email</a></li>';
-	      ;
-	      }}
-	      setTimeout(getSupps, 0);
-	      setInterval(getSupps, 3000);
-	      function Pronto() {
-	      if(ISLProntoInfo.supporters > 0) {
-	      var link = document.getElementById('islpronto_link');
-	      var textAvailable = document.getElementById('available');
-	      link.href = 'javascript:void(0)';
-	      link.onclick = ISLProntoInfo.onchat;
-	      var image = document.getElementById('islpronto_image');
-	      image.src = 'http://tipsytaxi.ucdavis.edu/wp-content/uploads/2013/01/live-chat-button.gif';
-	      image.className = 'fadechat';
-	      textAvailable.innerHTML = '<br>Currently online:';
-	      if(ISLProntoInfo.supporters > 1) {
-	      supporters.innerHTML = 'There are <b>' + ISLProntoInfo.supporters + '</b> supporters available.';
-	      }
-	      else {
-	      supporters.innerHTML = 'There is <b>1</b> supporter available.';
-	      };
-	      };
-	      if (ISLProntoInfo.supporters === 0) {
-	      var textAvailable = document.getElementById('available');
-	      supporters.innerHTML = 'There are <b>no</b> supporters available.';
-	      var link = document.getElementById('islpronto_link');
-	      link.href = 'mailto:support@eventmost.com';
-	      var image = document.getElementById('islpronto_image');
-	      image.src = 'http://www.img-medicalgroup.com/en/buying/email_button.png';
-	      image.className = 'fademail';
-	      document.getElementById('supnames').innerHTML = '';
-	      textAvailable.innerHTML = '';
-	      };
-	      };
-	      Pronto();
-	      setInterval ( "Pronto()", 3000)
-	    script#prontoInfo(src='https://islpronto.islonline.net/live/islpronto/public/chat_info.js?d=eventmost')
+	center
+		script#ProntoSrc(type='text/javascript', src='https://islpronto.islonline.net/live/islpronto/public/chat_info.js?d=eventmost')
+		style
+			.fadechat {
+			opacity: 1;
+			transition: opacity .25s ease-in-out;
+			-moz-transition: opacity .25s ease-in-out;
+			-webkit-transition: opacity .25s ease-in-out;
+			}
+			.fadechat:hover {
+			opacity: 0.82;
+			}
+			.fademail {
+			opacity: 1;
+			transition: opacity .25s ease-in-out;
+			-moz-transition: opacity .25s ease-in-out;
+			-webkit-transition: opacity .25s ease-in-out;
+			}
+			.fademail:hover {
+			opacity: 0.75;
+			}
+			.supporters {
+			font-size: 20px;}
+			.supportersnum {
+			}
+		div
+			a#islpronto_link(href='mailto:support@eventmost.com')
+				img#islpronto_image.fademail(src='http://www.img-medicalgroup.com/en/buying/email_button.png', style='border:none')
+			br
+			| Need images (Designers?)
+		span#supporters.supporters
+			| There are
+			b no
+			| supporters available.
+		p
+			span#available.supporters
+		p
+			span#supnames
+		script(type='text/javascript')
+			var supporters = document.getElementById('supporters');
+			function getProntoInfo() {
+			var prontoSrcUrl = "https://islpronto.islonline.net/live/islpronto/public/chat_info.js?d=eventmost";
+			var old = document.getElementById('prontoInfo');
+			if(old != null) { old.parentNode.removeChild(old); }
+			var el = document.createElement('script');
+			el.src = prontoSrcUrl;
+			el.setAttribute('id', 'prontoInfo');
+			document.body.appendChild(el);
+			}
+			setTimeout(getProntoInfo, 0);
+			setInterval(getProntoInfo, 3000);
+			function getSupps(){
+			var supps = ISLProntoInfo.active_users;
+			var supnames = document.getElementById('supnames')
+			supnames.innerHTML = ''
+			for(s in supps) {
+			supnames.innerHTML = supnames.innerHTML + '<li>' + (supps[s].nick) + ' is ' + (supps[s].status) + '. <a href="mailto:' + (supps[s].email) + '">Send Email</a></li>';
+			;
+			}}
+			setTimeout(getSupps, 0);
+			setInterval(getSupps, 3000);
+			function Pronto() {
+			if(ISLProntoInfo.supporters > 0) {
+			var link = document.getElementById('islpronto_link');
+			var textAvailable = document.getElementById('available');
+			link.href = 'javascript:void(0)';
+			link.onclick = ISLProntoInfo.onchat;
+			var image = document.getElementById('islpronto_image');
+			image.src = 'http://tipsytaxi.ucdavis.edu/wp-content/uploads/2013/01/live-chat-button.gif';
+			image.className = 'fadechat';
+			textAvailable.innerHTML = '<br>Currently online:';
+			if(ISLProntoInfo.supporters > 1) {
+			supporters.innerHTML = 'There are <b>' + ISLProntoInfo.supporters + '</b> supporters available.';
+			}
+			else {
+			supporters.innerHTML = 'There is <b>1</b> supporter available.';
+			};
+			};
+			if (ISLProntoInfo.supporters === 0) {
+			var textAvailable = document.getElementById('available');
+			supporters.innerHTML = 'There are <b>no</b> supporters available.';
+			var link = document.getElementById('islpronto_link');
+			link.href = 'mailto:support@eventmost.com';
+			var image = document.getElementById('islpronto_image');
+			image.src = 'http://www.img-medicalgroup.com/en/buying/email_button.png';
+			image.className = 'fademail';
+			document.getElementById('supnames').innerHTML = '';
+			textAvailable.innerHTML = '';
+			};
+			};
+			Pronto();
+			setInterval ( "Pronto()", 3000)
+		script#prontoInfo(src='https://islpronto.islonline.net/live/islpronto/public/chat_info.js?d=eventmost')
