@@ -125,6 +125,10 @@ function viewEvent (req, res) {
 }
 
 function viewRegistrationPage (req, res) {
+	if (!req.user && !req.session.redirectAfterLogin) {
+		req.session.redirectAfterLogin = "/event/"+req.params.id+"/registrationpage";
+	}
+	
 	res.format({
 		html: function() {
 			res.render('event/landingpage', { title: res.locals.ev.name });

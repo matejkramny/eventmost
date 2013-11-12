@@ -107,49 +107,39 @@ block content
 	.col-md-12.col-xs-12.col-sm-12
 		.line-purple
 
-		//- guest speakers large
-
-	.col-md-4.col-xs-4.col-sm-4.hide-mini3-except-smart
-		.font-evente.font-exception-thin.deifer-font3
-			| Guest speaker 
-		.pull-left(style="width:30%;")
-			img(src="/images/default_speaker-purple.svg", alt="", class="circularespond-small img-responsive")
-		.font-e.pull-left.break.nspacer.center(style="width:70%;")
-			| <b>Goerge Lucas</b> - <br />Director of Star Wars, <br />USA
-
-	.col-md-4.col-xs-4.col-sm-4.hide-mini3-except-smart
-		.font-evente.font-exception-thin.deifer-font3
-			| Guest speaker 
-		.pull-left(style="width:30%;")
-			img(src="/images/default_speaker-purple.svg", alt="", class="circularespond-small img-responsive")
-		.font-e.pull-left.break.nspacer.center(style="width:70%;")
-			| <b>Goerge McFly</b> - <br />Back to the Future, <br />USA
-
-	.col-md-4.col-xs-4.col-sm-4.hide-mini3-except-smart
-		.font-evente.font-exception-thin.deifer-font3
-			| Guest speaker 
-		.pull-left(style="width:30%;")
-			img(src="/images/default_speaker-purple.svg", alt="", class="circularespond-small img-responsive")
-		.font-e.pull-left.break.nspacer.center(style="width:70%;")
-			| <b>Goerge Lucas</b> - <br />Director of Star Wars, <br />USA
-
-		//- guest speakers smartphones
-
-	.col-md-6.col-xs-6.col-sm-6.hide-all2
-		.font-evente.font-exception-thin.deifer-font3
-			| Guest speaker 
-		.pull-left(style="width:30%;")
-			img(src="/images/default_speaker-purple.svg", alt="", class="circularespond-small img-responsive")
-		.font-e.pull-left.break.nspacer.center(style="width:70%;")
-			| <b>Goerge Lucas</b> - <br />Director of Star Wars, <br />USA
-
-	.col-md-6.col-xs-6.col-sm-6.hide-all2
-		.font-evente.font-exception-thin.deifer-font3
-			| Guest speaker 
-		.pull-left(style="width:30%;")
-			img(src="/images/default_speaker-purple.svg", alt="", class="circularespond-small img-responsive")
-		.font-e.pull-left.break.nspacer.center(style="width:70%;")
-			| <b>Goerge Lucas</b> - <br />Director of Star Wars, <br />USA
+	//- guest speakers large
+	for attendee in ev.attendees
+		//-desktop
+		.col-md-4.col-xs-4.col-sm-4.hide-mini3-except-smart
+			.font-evente.font-exception-thin.deifer-font3
+				= attendee.category
+			.pull-left(style="width:30%;")
+				img(src="/images/default_speaker-purple.svg", alt="", class="circularespond-small img-responsive")
+			.font-e.pull-left.break.nspacer.center(style="width:70%;")
+				a(href="/event/"+ev._id+"/attendee/"+attendee._id): b= attendee.user.getName()
+				br
+				- if(attendee.user.position.length > 0 && attendee.user.company.length > 0)
+					| - #{attendee.user.position},<br/> #{attendee.user.company}
+				- else if(attendee.user.position.length > 0)
+					| - #{attendee.user.position}
+				- else if(attendee.user.company.length > 0)
+					| - #{attendee.user.company}
+		//-mobile
+		.col-md-6.col-xs-6.col-sm-6.hide-all2
+			.font-evente.font-exception-thin.deifer-font3
+				= attendee.category
+			.pull-left(style="width:30%;")
+				img(src="/images/default_speaker-purple.svg", alt="", class="circularespond-small img-responsive")
+			.font-e.pull-left.break.nspacer.center(style="width:70%;")
+				b= attendee.user.getName()
+				br
+				if attendee.user.position.length > 0 && attendee.user.company.length > 0
+					| - #{attendee.user.position},<br/> #{attendee.user.company}
+				elseif attendee.user.position.length > 0
+					| - #{attendee.user.position}
+				elseif attendee.user.company.length > 0
+					| - #{attendee.user.company}
+	
 	.clearfix
 
 
@@ -157,7 +147,7 @@ block content
 	.nspacer
 	.col-md-12.col-xs-12.col-sm-12
 		.line-purple
-		//- end guest speakers
+	//- end guest speakers
 
 	.pull-right(style='height:35px;')
 		ul.pagination

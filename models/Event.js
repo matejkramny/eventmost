@@ -24,7 +24,10 @@ var scheme = schema({
 	}],
 	geo: {}, // don't store anything here. - temporary placeholder when the event is loaded
 	description: String,
-	avatar: { type: ObjectId, ref: 'Avatar' },
+	avatar: {
+		type: ObjectId,
+		ref: 'Avatar'
+	},
 	address: String,
 	allowAttendeesToCreateCategories: { type: Boolean, default: false },
 	allowAttendeesToComment: { type: Boolean, default: false },
@@ -61,8 +64,6 @@ var scheme = schema({
 			ref: 'User'
 		},
 		spam: { type: Boolean, default: false },
-		upVote: { type: Number, default: 0 },
-		downVote: { type: Number, default: 0 },
 		message: String
 	}]
 })
@@ -71,7 +72,7 @@ scheme.statics.getEvent = function (id, cb) {
 	try {
 		exports.Event
 			.findOne({ deleted: false, _id: mongoose.Types.ObjectId(id) })
-			.populate('attendees.user messages.user avatar')
+			.populate('attendees.user messages.user files.user avatar')
 			.exec(function(err, ev) {
 				if (err) throw err;
 				

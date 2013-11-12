@@ -78,7 +78,7 @@ function doPasswordLogin (req, res) {
 						user.twitter = null;
 						user.facebook = null;
 						user.linkedin = null;
-					
+						
 						res.send({
 							status: 200,
 							user: user

@@ -125,11 +125,10 @@ function joinEvent (req, res) {
 			}
 		}
 		
-		if (foundCategory) {
+		if (foundCategory || ev.allowAttendeesToCreateCategories == true) {
 			attendee.category = category;
 		} else {
 			// reject
-			// display flash stating they got the password wrong.
 			res.format({
 				html: function() {
 					req.session.flash.push("An Invalid category selected.")
@@ -144,6 +143,10 @@ function joinEvent (req, res) {
 			})
 			return;
 		}
+	}
+	
+	if (!attendee.category) {
+		attendee.category = "Attendee";
 	}
 	
 	ev.attendees.push(attendee);

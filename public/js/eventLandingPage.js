@@ -28,8 +28,8 @@ $(document).ready(function() {
 	$createOwnCategory.focus(function() {
 		// Unselect all eventCategoryList inputs..
 		deselectAllCategories();
-	}).blur(function() {
-		selectedCategory = $(this).attr('value');
+	}).bind("change paste keyup", function() {
+		selectedCategory = $(this).val();
 	})
 	
 	function accessEvent (checkCategories) {
