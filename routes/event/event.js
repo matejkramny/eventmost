@@ -9,7 +9,8 @@ var dropbox = require('./dropbox')
 
 exports.router = function (app) {
 	app.get('/event/:id/registrationpage', getEvent, attending, viewRegistrationPage)
-	app.get('/event/:id/*', redirectToRegistrationPage)
+		.get('/event/:id', redirectToRegistrationPage)
+		.get('/event/:id/*', redirectToRegistrationPage)
 	
 	app.all('/event/*', util.authorized)
 	add.router(app)
@@ -100,6 +101,7 @@ function redirectToRegistrationPage (req, res, next) {
 	if (req.user) {
 		next();
 	} else {
+		req.session.redirectAfterLogin = "/event/"+req.params.id+"/registrationpage";
 		res.redirect('/event/'+req.params.id+"/registrationpage")
 	}
 }
