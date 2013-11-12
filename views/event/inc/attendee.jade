@@ -1,16 +1,31 @@
 mixin attendee(attendee)
-	.row
-		.col-sm-3.col-mg-3.col-lg-3
-			img(src="/img/avatar.jpg", style="max-height: 80px;")
-		.col-sm-9.col-mg-9.col-lg-9
-			//- beware attendee._id not attendee.user._id
-			a(href="/event/"+ev._id+"/attendee/"+attendee._id): h5= attendee.user.getName()
-			h5 Category: #{attendee.category}
-			h5
-				if attendee.user.position
-					= attendee.user.position
-					if attendee.user.company
-						| ,
-				if attendee.user.company
-					= attendee.user.company
-	br
+	//-desktop
+	.col-md-4.col-xs-4.col-sm-4.hide-mini3-except-smart
+		.font-evente.font-exception-thin.deifer-font3
+			= attendee.category
+		.pull-left(style="width:30%;")
+			img(src="/images/default_speaker-purple.svg", alt="", class="circularespond-small img-responsive")
+		.font-e.pull-left.break.nspacer.center(style="width:70%;")
+			a(href="/event/"+ev._id+"/attendee/"+attendee._id): b= attendee.user.getName()
+			br
+			- if(attendee.user.position.length > 0 && attendee.user.company.length > 0)
+				| - #{attendee.user.position},<br/> #{attendee.user.company}
+			- else if(attendee.user.position.length > 0)
+				| - #{attendee.user.position}
+			- else if(attendee.user.company.length > 0)
+				| - #{attendee.user.company}
+	//-mobile
+	.col-md-6.col-xs-6.col-sm-6.hide-all2
+		.font-evente.font-exception-thin.deifer-font3
+			= attendee.category
+		.pull-left(style="width:30%;")
+			img(src="/images/default_speaker-purple.svg", alt="", class="circularespond-small img-responsive")
+		.font-e.pull-left.break.nspacer.center(style="width:70%;")
+			b= attendee.user.getName()
+			br
+			if attendee.user.position.length > 0 && attendee.user.company.length > 0
+				| - #{attendee.user.position},<br/> #{attendee.user.company}
+			elseif attendee.user.position.length > 0
+				| - #{attendee.user.position}
+			elseif attendee.user.company.length > 0
+				| - #{attendee.user.company}

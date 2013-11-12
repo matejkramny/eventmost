@@ -3,7 +3,7 @@ var dropbox = require('./dropbox')
 	, edit = require('./edit')
 	, list = require('./list')
 	, util = require('../../util')
-	, conversations = require('./conversations')
+	, messages = require('./messages')
 	, attendees = require('./attendees')
 	, models = require('../../models')
 
@@ -19,10 +19,10 @@ exports.router = function (app) {
 		.get('/event/:id', getEvent, attending, viewEvent)
 		
 		.post('/event/:id/post', attending, postMessage)
-		.get('/event/:id/conversations', attending, conversations.display)
 		
 		.get('/event/:id/registrationpage', attending, viewRegistrationPage)
 	
+	messages.router(app)
 	attendees.router(app)
 	list.router(app)
 	dropbox.router(app)
@@ -93,7 +93,7 @@ exports.attending = attending = function (req, res, next) {
 	res.locals.eventattending = attending;
 	res.locals.eventadmin = isAdmin;
 	res.locals.attendee = theAttendee;
-	
+	console.log(attending)
 	next()
 }
 

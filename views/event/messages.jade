@@ -1,0 +1,12 @@
+extends ../responsive
+
+include inc/navbar
+include inc/message
+
+append content
+	mixin navbar(3)
+	.clearfix
+	for msg in ev.messages
+		+message(msg)
+		.clearfix
+		br
