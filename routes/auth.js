@@ -112,9 +112,11 @@ function doPasswordLogin (req, res) {
 
 function authSuccess (req, res) {
 	if (req.session.redirectAfterLogin) {
-		res.redirect(req.session.redirectAfterLogin);
+		var redirect = req.session.redirectAfterLogin
 		
 		req.session.redirectAfterLogin = null;
+		
+		res.redirect(redirect);
 		
 		return;
 	}

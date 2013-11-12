@@ -209,15 +209,6 @@ eventMost.controller('businessCards', BusinessCards)
 		});
 	}
 })
-.directive('canvasDroppable', function() {
-	return function(scope, element, attrs) {
-		element.droppable({
-			drop: function(ev, ui) {
-				
-			}
-		})
-	}
-})
 .directive('cardImageUpload', function() {
 	return {
 		restrict: 'A',
