@@ -8,6 +8,7 @@ html
 		link(href="/favicon.ico", type="image/x-icon", rel="shortcut icon")
 		block css
 			link(href="//netdna.bootstrapcdn.com/bootswatch/3.0.1/flatly/bootstrap.min.css", rel="stylesheet")
+			link(href="//netdna.bootstrapcdn.com/font-awesome/4.0.2/css/font-awesome.min.css", rel="stylesheet")
 			style.
 				.container-full {
 					margin-left: auto;
@@ -31,7 +32,12 @@ html
 					.col-md-2.col-lg-2.col-sm-2(style="width: 16.5%")
 						a(href="/admin/")
 							img.img-responsive(src="/images/logo.svg", style="margin-top:20px;")
-						hr
+						hr	
+						ul.list-group
+							a.list-group-item(href="https://groop.islonline.net/start/ISLGroop?__ISL+Groop__session_code=117%2d329%2d777%2d748&addbase=+117%2d329%2d777%2d748")
+								i.fa.fa-users
+								|  Connect to Admin Meeting
+						hr	
 						ul.list-group.nav
 								a.list-group-item(href="/admin/", class= activePage == 1 ? "active" : null)
 									span.glyphicon.glyphicon-dashboard
