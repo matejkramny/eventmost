@@ -32,23 +32,23 @@ block content
 			.pull-left.bg-grey.psev.post-width.font-x 
 				| #{topic._id}
 		.clearfix
-		.nspacer
-		.col-md-2.col-xs-2.col-sm-2
-			.font-e1
-				| Guest speaker
-			img(src="/images/default_speaker.svg", alt="", class="circularespond img-responsive")
-		.col-md-10.col-xs-10.col-sm-10.nspacer-bigger
-			.font-e1.bigger-pad-left
-				| <b>Lucy Cook</b> - Director of Finance, Delloite	<br />
+		if topics > 1
 			.nspacer
-			.pull-left
-				img.pull-left(src="/images/bubble-left-grey.svg", alt="", style="vertical-align:top;")
-			.pull-left.bg-grey.psev.post-width.font-x 
-				| At vero eos et accusamus et iusto odio dignissimos <b>ducimus qui blanditiis</b> praesentium voluptatum deleniti atque corrupti quos dolores 
-				| et quas molestias excepturi sint occaecati cupiditate non provident,similique sunt.
-				| At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis <b>praesentium voluptatum deleniti</b> atque corrupti quos dolores 
-		.clearfix
-		.nspacer
+			.col-md-2.col-xs-2.col-sm-2
+				.font-e1
+					| #{topic.users[2].getName()}
+					img(src=topic.users[2].avatar, alt="", class="circularespond img-responsive")
+			.col-md-10.col-xs-10.col-sm-10.nspacer-bigger
+				.font-e1.bigger-pad-left
+					| #{topic.name}
+				.nspacer
+				.pull-left
+					img.pull-left(src="/images/bubble-left-grey.svg", alt="", style="vertical-align:top;")
+				.pull-left.bg-grey.psev.post-width.font-x 
+					| #{topic.message}
+			.clearfix
+			.nspacer
+		// Maybe we should have something like: a(href='inbox/messages') Click to view all
 
 	.col-md-12.col-xs-12.col-sm-12.hide-except-smart
 		.clearfix
@@ -188,31 +188,33 @@ block content
 	.nspacer
 
 		//- saved
-
 	.col-md-12.col-xs-12.col-sm-12
 		.center
 			.inline
 				.div
-					img(src="/images/default_speaker.svg", alt="", class="circularespond",)
+					img(src=user.savedProfiles[1].avatar alt="", class="circularespond",)
 				.font-s
-					| <b>Dart</b><br />
-					| Director of Finance, Delloite
+					| <b>#{user.savedProfiles[1]}</b><br />
+					| #{user.savedProfiles[1]}
 			.inline.big-pad-right.big-pad-left.pad-smart
 				.div
-					img(src="/images/default_speaker.svg", alt="", class="circularespond",)
+					img(src=user.savedProfiles[2].avatar, alt="", class="circularespond",)
 				.font-s
-					| <b>Hulk</b><br />
-					| Director of Finance, Delloite
+					| <b>#{user.savedProfiles[2]}</b><br />
+					| #{user.savedProfiles[2]}
 			.inline
 				.div
-					img(src="/images/default_speaker.svg", alt="", class="circularespond",)
+					img(src=user.savedProfiles[3].avatar, alt="", class="circularespond",)
 				.font-s
-					| <b>Chubaka</b><br />
-					| Director of Finance, Delloite
+					| <b>#{user.savedProfiles[3]}</b><br />
+					| #{user.savedProfiles[3]}
+	if (user.savedProfiles.length == 0)
+		| No one has saved your profile yet.
+		.clearfix
+		.nspacer
 
-	.clearfix
-	.nspacer
-
+	if user.savedProfiles.length > 3
+		// Maybe we should have something like: a(href='inbox/savedProfiles') Click to view all
 	.center(style='height:35px;')
 		ul.pagination
 			li

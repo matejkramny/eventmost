@@ -117,7 +117,7 @@ function saveUser (req, res) {
 			_id: user._id
 		})
 		req.user.save(function() {
-			res.redirect('/profiles')
+			res.redirect('inbox/savedProfiles')
 		})
 	});
 }
