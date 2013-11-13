@@ -10,7 +10,9 @@ exports.router = function (app) {
 }
 
 function showCards (req, res) {
-	res.render('profile/cards', { cards: cards, title: "Business cards" });
+	models.Card.find({ user: req.user._id }, { _id: 1 }).sort('-created').exec(function(err, cards) {
+		res.render('profile/cards', { cards: cards, title: "Business cards" });
+	});
 }
 
 function newCard (req, res) {
