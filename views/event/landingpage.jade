@@ -44,7 +44,7 @@ block content
 				- else
 					| th
 			.font-s.inline.semi-bold
-				= ev.start.getFullYear()
+				|  #{ev.start.getFullYear()}
 		.col-md-4.col-lg-4.col-sm-4.pad-left-zero.font-e.semi-bold
 			| Where
 			.line-purple
@@ -93,4 +93,5 @@ block content
 			else
 				button.btn.btn-primary.hide-prof-butt(style="font-size: 16px;", data-toggle="modal", href="#loginModal")
 					| Attend event
+	
 	include ../modals/registration

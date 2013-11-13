@@ -93,7 +93,7 @@ exports.attending = attending = function (req, res, next) {
 	res.locals.eventattending = attending;
 	res.locals.eventadmin = isAdmin;
 	res.locals.attendee = theAttendee;
-	console.log(attending)
+	
 	next()
 }
 
@@ -101,7 +101,7 @@ function redirectToRegistrationPage (req, res, next) {
 	if (req.user) {
 		next();
 	} else {
-		req.session.redirectAfterLogin = "/event/"+req.params.id+"/registrationpage";
+		req.session.redirectAfterLogin = "/event/"+req.params.id+"/registrationpage#openAttend";
 		res.redirect('/event/'+req.params.id+"/registrationpage")
 	}
 }
