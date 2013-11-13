@@ -1,0 +1,29 @@
+extends ../responsive
+
+include inc/navbar
+include inc/message
+
+append content
+	mixin navbar(3)
+	.clearfix
+	
+	for msg in ev.messages
+		+message(msg)
+		.clearfix
+		br
+	if ev.messages.length == 0
+		h3.text-center No messages have been posted yet :/
+		p.text-center.lead Use the comment box below to add some
+	
+	.col-sm-12.col-xs-12.col-md-12
+		.pull-left
+			img.pull-left.bubble-responsive(src="/images/bubble-left-blue.svg", alt="", style="vertical-align:top;")
+		.pull-left.bg-green.psev.post-width-text
+			form#commentForm(action="/event/"+ev._id+"/messages", method="POST")
+				input(type="hidden", name="_csrf", value=token)
+				textarea.postcommentarea(placeholder="Post a comment here...", name="message")
+				.pull-right
+					a(href="#", onclick="$('#commentForm').submit(); return false;")
+						img.img-responsive.post-butt(src="/images/post-button.svg")
+		.clearfix
+	.clearfix

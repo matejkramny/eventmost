@@ -10,6 +10,7 @@ exports.router = function (app) {
 		.get('/inbox/messages/new', newMessage)
 		.post('/inbox/messages/new', doNewMessage)
 		.get('/inbox/message/:id', getMessage, showMessage)
+		.post('/inbox/message/:id', getMessage, postMessage)
 }
 
 function getMessage (req, res, next) {
@@ -22,7 +23,7 @@ function getMessage (req, res, next) {
 		return;
 	}
 	
-	models.Topic.findOne({ _id: id }, function(err, topic) {
+	models.Topic.findOne({ _id: id }).populate('users').exec(function(err, topic) {
 		if (err) throw err;
 		
 		if (!topic) {
@@ -44,7 +45,92 @@ function getMessage (req, res, next) {
 }
 
 function showMessage (req, res) {
-	res.render('inbox/message', { pageName: "Message X", title: "Message X" })
+	res.render('inbox/message', { pageName: "Private Message", title: "Private Message" })
+}
+
+function postMessage (req, res) {
+	var id = req.params.id;
+	var text = req.body.message;
+	if (text.length == 0) {
+		res.format({
+			html: function() {
+				res.redirect('/inbox/message/'+id);
+			},
+			json: function() {
+				res.send({
+					status: 403,
+					message: "Too short"
+				})
+			}
+		})
+		return;
+	}
+	
+	var message = res.locals.message
+	if (message) {
+		var isUser = false;
+		for (var i = 0; i < message.users.length; i++) {
+			if (message.users[i]._id.equals(req.user._id)) {
+				isUser = true;
+				break;
+			}
+		}
+		
+		if (!isUser) {
+			//req.session.flash.push("Unauthorized")//- TODO Wrong flash
+			res.redirect('/')
+			return;
+		}
+		
+		message.lastUpdated = Date.now();
+		message.save(function(err) {
+			if (err) throw err;
+		});
+		
+		var msg = new models.Message({
+			topic: message._id,
+			message: text,
+			read: false,
+			timeSent: Date.now(),
+			sentBy: req.user._id
+		})
+		msg.save(function(err) {
+			res.format({
+				html: function() {
+					res.redirect('/inbox/message/'+message._id)
+				},
+				json: function() {
+					res.send({
+						sent: true
+					})
+				}
+			});
+			
+			// Dispatch email to the person (if they have an email..)
+			/*var dispatchTo = []
+			for (var i = 0; i < message.users.length; i++) {
+				if (message.users[i]._id.equals(req.user._id)) {
+					continue;
+				}
+				dispatchTo.push(message.users[i])
+			}*/
+			//notifyByEmail(dispatchTo, topic, message, req.user)
+		})
+	} else {
+		// 404
+		
+		res.format({
+			html: function() {
+				res.status(403);
+				res.redirect('/inbox')
+			},
+			json: function() {
+				res.send({
+					status: 404
+				})
+			}
+		})
+	}
 }
 
 function doNewMessage (req, res) {

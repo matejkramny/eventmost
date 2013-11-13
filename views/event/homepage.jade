@@ -2,6 +2,7 @@ extends ../responsive
 
 include inc/navbar
 include inc/attendee
+include inc/message
 
 append meta
 	meta(name="event_id", content="#{ev._id}")
@@ -53,35 +54,10 @@ block content
 								a(href='') My planned events
 	.clearfix.here-show
 
-
+	- var lastMessage = ev.messages.length > 0 ? ev.messages[ev.messages.length-1] : null;
 	//- most recent large
-	.col-md-3.col-xs-3.col-sm-3
-		.font-evente
-			.pad-top.font-exception-thin.deifer-font3
-				| Most recent comment
-			.nspacer-big.font-exception-thin.deifer-font3
-				| Guest speaker
-			.pad-top
-				img.circularespond.img-responsive(src="/images/default_speaker-purple.svg")
-
-
-
-
-
-
-	.col-md-8.col-xs-8.col-sm-7.postish-small(style="margin-top:70px;")
-			.font-e1.bigger-pad-left.font-exception-thin.no-left.don-show-here
-				| <b>Lucy Cook</b> - Director of Finance, Delloite	<br />
-			.font-e1.font-exception-thin.no-left.here-show
-				| <b>Lucy Cook</b> - Director of Finance, Delloite	<br />
-			.nspacer
-			.pull-left
-				img.pull-left.bubble-responsive(src="/images/bubble-left-grey.svg", alt="", style="vertical-align:top;")
-			.pull-left.bg-grey.psev.post-width-small.font-x 
-				| At vero eos et accusamus et iusto odio dignissimos <b>ducimus qui blanditiis</b> praesentium voluptatum deleniti atque corrupti quos dolores 
-				| et quas molestias excepturi sint occaecati cupiditate non provident,similique sunt.
-			button.btn.btn-primary.font-xs2.pull-right(type='submit', style="margin-top:-25px; border-radius: 10px; color:#fff; padding:7px; padding-left:12px; padding-right:12px;")
-				| DELETE
+	if lastMessage
+		+message(lastMessage, true)
 
 	//- arrange by large	
 	.nspacer.pull-right.font-bigs.font-thin.don-show-here(style="height:50px; margin-top:80px;")
@@ -109,36 +85,7 @@ block content
 
 	//- guest speakers large
 	for attendee in ev.attendees
-		//-desktop
-		.col-md-4.col-xs-4.col-sm-4.hide-mini3-except-smart
-			.font-evente.font-exception-thin.deifer-font3
-				= attendee.category
-			.pull-left(style="width:30%;")
-				img(src="/images/default_speaker-purple.svg", alt="", class="circularespond-small img-responsive")
-			.font-e.pull-left.break.nspacer.center(style="width:70%;")
-				a(href="/event/"+ev._id+"/attendee/"+attendee._id): b= attendee.user.getName()
-				br
-				- if(attendee.user.position.length > 0 && attendee.user.company.length > 0)
-					| - #{attendee.user.position},<br/> #{attendee.user.company}
-				- else if(attendee.user.position.length > 0)
-					| - #{attendee.user.position}
-				- else if(attendee.user.company.length > 0)
-					| - #{attendee.user.company}
-		//-mobile
-		.col-md-6.col-xs-6.col-sm-6.hide-all2
-			.font-evente.font-exception-thin.deifer-font3
-				= attendee.category
-			.pull-left(style="width:30%;")
-				img(src="/images/default_speaker-purple.svg", alt="", class="circularespond-small img-responsive")
-			.font-e.pull-left.break.nspacer.center(style="width:70%;")
-				b= attendee.user.getName()
-				br
-				if attendee.user.position.length > 0 && attendee.user.company.length > 0
-					| - #{attendee.user.position},<br/> #{attendee.user.company}
-				elseif attendee.user.position.length > 0
-					| - #{attendee.user.position}
-				elseif attendee.user.company.length > 0
-					| - #{attendee.user.company}
+		+attendee(attendee)
 	
 	.clearfix
 
@@ -156,33 +103,25 @@ block content
 			li.active
 				a(href='#') 1
 			li
-				a(href='#') 2
-			li
-				a(href='#') 3
-			li.disabled
-				a(href='#') ...
-			li
-				a(href='#') 5
-			li
 				a(href='#') »
-
-
+	
 	.clearfix
 	.nspacer
 
+	
 	.col-sm-12.col-xs-12.col-md-12
 		.pull-left
 			img.pull-left.bubble-responsive(src="/images/bubble-left-blue.svg", alt="", style="vertical-align:top;")
 		.pull-left.bg-green.psev.post-width-text
-			textarea.postcommentarea(placeholder="Post a comment here...")
-			.pull-right
-				a(href="#",) 
-					img(src="/images/post-button.svg", alt="", class="img-responsive post-butt")
+			form#commentForm(action="/event/"+ev._id+"/messages", method="POST")
+				input(type="hidden", name="_csrf", value=token)
+				textarea.postcommentarea(placeholder="Post a comment here...", name="message")
+				.pull-right
+					a(href="#", onclick="$('#commentForm').submit(); return false;")
+						img.img-responsive.post-butt(src="/images/post-button.svg")
 		.clearfix
 		.nspacer
 		.pull-right
-			a(href="",)
 			button.btn.btn-default.font-e.hide-prof-butt(type='submit', style="border-radius: 10px; color:#fff; padding:20px;")
 				| Exit event
-
 	.clearfix

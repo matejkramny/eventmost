@@ -1,0 +1,39 @@
+mixin message(msg, header)
+	.col-md-3.col-xs-3.col-sm-3
+		.font-evente
+			if header
+				.pad-top.font-exception-thin.deifer-font3
+					| Recent comment
+			
+			.font-exception-thin.deifer-font3(class= header ? "nspacer-big" : null)
+				= msg.attendee.category
+			.pad-top
+				img.circularespond.img-responsive(src="/images/default_speaker-purple.svg")
+
+	.col-md-8.col-xs-8.col-sm-7.postish-small(style="margin-top:"+(header ? "70px;" : "20px"))
+			.font-e1.bigger-pad-left.font-exception-thin.no-left.don-show-here
+				a(href="/event/"+ev._id+"/attendee/"+msg.attendee._id): b= msg.attendee.user.getName()
+				- if(msg.attendee.user.position.length > 0 && msg.attendee.user.company.length > 0)
+					|  - #{msg.attendee.user.position}, #{msg.attendee.user.company}
+				- else if(msg.attendee.user.position.length > 0)
+					|  - #{msg.attendee.user.position}
+				- else if(msg.attendee.user.company.length > 0)
+					|  - #{msg.attendee.user.company}
+				br
+			.font-e1.font-exception-thin.no-left.here-show
+				a(href="/event/"+ev._id+"/attendee/"+msg.attendee._id): b= msg.attendee.user.getName()
+				- if(msg.attendee.user.position.length > 0 && msg.attendee.user.company.length > 0)
+					|  - #{msg.attendee.user.position}, #{msg.attendee.user.company}
+				- else if(msg.attendee.user.position.length > 0)
+					|  - #{msg.attendee.user.position}
+				- else if(msg.attendee.user.company.length > 0)
+					|  - #{msg.attendee.user.company}
+				br
+			.nspacer
+			.pull-left
+				img.pull-left.bubble-responsive(src="/images/bubble-left-grey.svg", alt="", style="vertical-align:top;")
+			.pull-left.bg-grey.psev.post-width-small.font-x 
+				= msg.message	
+			if eventadmin
+				button.btn.btn-primary.font-xs2.pull-right(type='submit', style="margin-top:-25px; border-radius: 10px; color:#fff; padding:7px; padding-left:12px; padding-right:12px;")
+					| DELETE

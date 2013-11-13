@@ -13,13 +13,13 @@ mixin navbar
 
 	.col-md-4.col-xs-4.col-sm-4.nspacer-medium.hide-mini3-except-smart
 		.font-tw
-			a.link-purple(href=base,)
+			a.link-purple(href=base)
 				b= ev.name
 	.col-md-8.col-xs-8.col-sm-8.hide-mini3-except-smart
 		.font-x1.bg-yellow.center.pull-right.psev2.prof-wall(style="padding-top:15px;")
-			a.link-purple(href=base+"conversations") Conversations
+			a.link-purple(href=base+"messages") Conversations
 		.font-x1.bg-purple.center.pull-right.psev2.prof-wall(style="padding-top:15px;")
-			a.link-white(href=base+"notes") My notes
+			a.link-white(href=base+"") My notes
 		.font-x1.bg-green.center.pull-right.psev2.prof-wall
 			a.link-white(href=base+"dropbox") Event
 				br
@@ -63,12 +63,12 @@ mixin navbar
 						| dropbox
 			.inline.nspacer-small
 				.font-x1.bg-purple.center.psev2.prof-wall
-					a.link-white(href=base+"notes") My
+					a.link-white(href=base+"") My
 						br
 						| notes
 			.inline.nspacer-small
 				.font-x1.bg-yellow.center.psev2.prof-wall
-					a.link-purple(href=base+"conversations") Conversations
+					a.link-purple(href=base+"messages") Conversations
 						br
 						span.color-yellow Messages
 

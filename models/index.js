@@ -14,5 +14,8 @@ module.exports = {
 	Geolocation: require('./Geolocation').Geolocation,
 	EmailNotification: require('./EmailNotification').EmailNotification,
 	SocialMetadata: require('./SocialMetadata').SocialMetadata,
-	Avatar: require('./Avatar').Avatar
+	Avatar: require('./Avatar').Avatar,
+	Attendee: require('./Attendee').Attendee,
+	EventMessage: require('./EventMessage').EventMessage,
+	Ticket: require('./Ticket').Ticket
 }

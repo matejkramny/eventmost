@@ -5,45 +5,28 @@ block content
 	
 	.nspacer
 	//- saved
-	
 	.col-md-12.col-xs-12.col-sm-12
 		.center
-			.inline
-				.div
-					img(src="/images/default_speaker.svg", alt="", class="circularespond",)
-				.font-s
-					| <b>Dart</b><br />
-					| Director of Finance, Delloite
-			.inline.big-pad-right.big-pad-left.pad-smart
-				.div
-					img(src="/images/default_speaker.svg", alt="", class="circularespond",)
-				.font-s
-					| <b>Hulk</b><br />
-					| Director of Finance, Delloite
-			.inline
-				.div
-					img(src="/images/default_speaker.svg", alt="", class="circularespond",)
-				.font-s
-					| <b>Chubaka</b><br />
-					| Director of Finance, Delloite
-
-	.clearfix
-	.nspacer
-
-	.center(style='height:35px;')
-		ul.pagination
-			li
-				a(href='#') «
-			li.active
-				a(href='#') 1
-			li
-				a(href='#') 2
-			li
-				a(href='#') 3
-			li.disabled
-				a(href='#') ...
-			li
-				a(href='#') 5
-			li
-				a(href='#') »
+			for profile in user.savedProfiles
+				-var i = 0;
+				
+				.inline
+					.div
+						img(src=profile.avatar.url, alt="", class="circularespond",)
+					.font-s
+						a(href="/user/"+user._id): b= profile.getName()
+						br
+						if (profile.company && profile.position)
+							= profile.company
+							| , 
+							= profile.position
+						- else if (profile.company)
+							= profile.company
+						- else if (profile.position)
+							= profile.position
+	if (user.savedProfiles.length == 0)
+		| No one has saved your profile yet.
+		.clearfix
+		.nspacer
+	
 	.clearfix

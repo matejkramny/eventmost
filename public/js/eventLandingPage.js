@@ -70,7 +70,7 @@ $(document).ready(function() {
 				} else {
 					// basically refresh the page
 					$accessEventWarningMessage.html("All done, if the page doesn't reload automagically, hit F5 or Control+r or CMD+R");
-					window.location.reload();
+					window.location = "/event/"+$("head meta[name=event_id]").attr('content');
 				}
 			},
 			error: function(xhr, status, err) {
@@ -86,4 +86,17 @@ $(document).ready(function() {
 	$accessEvent.click(function() {
 		accessEvent(true);
 	})
+	
+	if (window.location.hash) {
+		var hash = window.location.hash.substring(1);
+	
+		if (hash == "openAttend") {
+			if ($("#accessEventDirect").length > 0) {
+				// redirect to attend event
+				$("#accessEventDirect").click()
+			} else {
+				$("#attendModal").modal('show')
+			}
+		}
+	}
 });

@@ -3,7 +3,7 @@ var dropbox = require('./dropbox')
 	, edit = require('./edit')
 	, list = require('./list')
 	, util = require('../../util')
-	, conversations = require('./conversations')
+	, messages = require('./messages')
 	, attendees = require('./attendees')
 	, models = require('../../models')
 
@@ -19,10 +19,10 @@ exports.router = function (app) {
 		.get('/event/:id', getEvent, attending, viewEvent)
 		
 		.post('/event/:id/post', attending, postMessage)
-		.get('/event/:id/conversations', attending, conversations.display)
 		
 		.get('/event/:id/registrationpage', attending, viewRegistrationPage)
 	
+	messages.router(app)
 	attendees.router(app)
 	list.router(app)
 	dropbox.router(app)
@@ -101,7 +101,7 @@ function redirectToRegistrationPage (req, res, next) {
 	if (req.user) {
 		next();
 	} else {
-		req.session.redirectAfterLogin = "/event/"+req.params.id+"/registrationpage";
+		req.session.redirectAfterLogin = "/event/"+req.params.id+"/registrationpage#openAttend";
 		res.redirect('/event/'+req.params.id+"/registrationpage")
 	}
 }

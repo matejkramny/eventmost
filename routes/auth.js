@@ -12,7 +12,7 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(function(id, done) {
-	models.User.findById(id, function(err, user) {
+	models.User.findById(id).populate('savedProfiles').exec(function(err, user) {
 		done(err, user)
 	})
 })
@@ -112,9 +112,11 @@ function doPasswordLogin (req, res) {
 
 function authSuccess (req, res) {
 	if (req.session.redirectAfterLogin) {
-		res.redirect(req.session.redirectAfterLogin);
+		var redirect = req.session.redirectAfterLogin
 		
 		req.session.redirectAfterLogin = null;
+		
+		res.redirect(redirect);
 		
 		return;
 	}

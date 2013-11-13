@@ -65,13 +65,13 @@ exports.profile = profile = function (req, res) {
 function viewUser (req, res) {
 	var id = req.params.id;
 	
-	models.User.findById(id, function(err, user) {
+	models.User.findById(id).populate('savedProfiles').exec(function(err, user) {
 		if (err) throw err;
 		
 		// check if user is self or user is 
 		var saved = false;
 		for (var i = 0; i < req.user.savedProfiles.length; i++) {
-			var uid = req.user.savedProfiles[i];
+			var uid = req.user.savedProfiles[i]._id;
 			if (uid.equals(user._id)) {
 				saved = true;
 				break;
@@ -117,7 +117,7 @@ function saveUser (req, res) {
 			_id: user._id
 		})
 		req.user.save(function() {
-			res.redirect('/profiles')
+			res.redirect('inbox/savedProfiles')
 		})
 	});
 }

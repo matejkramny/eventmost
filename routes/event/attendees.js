@@ -76,9 +76,9 @@ function joinEvent (req, res) {
 	var category = req.body.category;
 	
 	var ev = res.locals.ev;
-	var attendee = {
+	var attendee = new models.Attendee({
 		user: req.user._id
-	};
+	});
 	
 	if (res.locals.eventattending) {
 		res.format({
@@ -149,7 +149,8 @@ function joinEvent (req, res) {
 		attendee.category = "Attendee";
 	}
 	
-	ev.attendees.push(attendee);
+	attendee.save()
+	ev.attendees.push(attendee._id);
 	ev.save(function(err) {
 		if (err) throw err;
 	});

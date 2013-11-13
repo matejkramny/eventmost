@@ -1,9 +1,13 @@
 var mongoose = require('mongoose');
+var async = require('async')
 
 var schema = mongoose.Schema;
 var ObjectId = schema.ObjectId;
 var Geolocation = require('./Geolocation').Geolocation;
 var Avatar = require('./Avatar').Avatar
+var Attendee = require('./Attendee').Attendee
+var Ticket = require('./Ticket').Ticket
+var EventMessage = require('./EventMessage').EventMessage
 
 var scheme = schema({
 	deleted: { type: Boolean, default: false },
@@ -13,14 +17,8 @@ var scheme = schema({
 	start: { type: Date, required: true },
 	end: { type: Date, required: true },
 	attendees: [{
-		user: {
-			type: ObjectId,
-			ref: 'User'
-		},
-		category: String,
-		admin: { type: Boolean, default: false },
-		isAttending: { type: Boolean, default: true }, // gets set to false when the user exits the event..
-		ticket: { type: ObjectId }
+		type: ObjectId,
+		ref: 'Attendee'
 	}],
 	geo: {}, // don't store anything here. - temporary placeholder when the event is loaded
 	description: String,
@@ -34,11 +32,8 @@ var scheme = schema({
 	pricedTickets: { type: Boolean, default: false },
 	categories: [],
 	tickets: [{
-		price: { type: Number, required: true },
-		quantity: { type: Number, required: true },
-		type: { type: String, required: true },
-		customType: { type: String, required: false },
-		whopays: { type: String, required: true }
+		type: ObjectId,
+		ref: 'Ticket'
 	}],
 	accessRequirements: {
 		password: { type: Boolean, default: false },
@@ -58,13 +53,8 @@ var scheme = schema({
 		name: String
 	}],
 	messages: [{
-		posted: { type: Date, default: Date.now },
-		user: {
-			type: ObjectId,
-			ref: 'User'
-		},
-		spam: { type: Boolean, default: false },
-		message: String
+		type: ObjectId,
+		ref: 'EventMessage'
 	}]
 })
 
@@ -72,7 +62,7 @@ scheme.statics.getEvent = function (id, cb) {
 	try {
 		exports.Event
 			.findOne({ deleted: false, _id: mongoose.Types.ObjectId(id) })
-			.populate('attendees.user messages.user files.user avatar')
+			.populate('attendees.user files.user avatar attendees tickets messages')
 			.exec(function(err, ev) {
 				if (err) throw err;
 				
@@ -81,18 +71,53 @@ scheme.statics.getEvent = function (id, cb) {
 					return;
 				}
 				
-				if (ev.avatar == null || ev.avatar.url == null || ev.avatar.url.length == 0) {
-					var avatar = new Avatar({
-						url: "/images/event-avatar-new.svg"
-					})
-					avatar.save();
-					ev.avatar = avatar._id;
-					ev.save();
-				}
-				
-				ev.getGeo(function(geo) {
-					cb(ev);
-				})
+				// a workaround for mongoose's bug of populating..
+				async.parallel([
+					//populate messages
+					function(callback) {
+						async.each(ev.messages, function(message, cb) {
+							message.populate('attendee', function(err) {
+								cb(null)
+							})
+						}, function(err) {
+							// populate message.attendee.user
+							async.each(ev.messages, function(msg, cb2) {
+								msg.attendee.populate('user', function(err) {
+									cb2(null)
+								})
+							}, function() {
+								callback(null)
+							});
+						})
+					},
+					//populate attendees
+					function(callback) {
+						async.each(ev.attendees, function(attendee, cb) {
+							attendee.populate('user', function(err) {
+								cb(null)
+							})
+						}, function(err) {
+							callback(null)
+						})
+					},
+					//avatar etc
+					function(callback) {
+						if (ev.avatar == null || ev.avatar.url == null || ev.avatar.url.length == 0) {
+							var avatar = new Avatar({
+								url: "/images/event-avatar-new.svg"
+							})
+							avatar.save();
+							ev.avatar = avatar._id;
+							ev.save();
+						}
+			
+						ev.getGeo(function(geo) {
+							callback(null)
+						})
+					}
+				], function(err) {
+					cb(ev)
+				});
 			}
 		)
 	} catch (ex) {
@@ -104,11 +129,14 @@ scheme.methods.edit = function (body, user, files, cb) {
 	console.log(body);
 	
 	var self = this;
-	this.attendees = [{
+	this.attendees = [];
+	var planner = new Attendee ({
 		user: user._id,
 		category: 'Planner',
 		admin: true
-	}];
+	})
+	this.attendees.push(planner._id)
+	planner.save();
 	
 	if (body.name) {
 		this.name = body.name
@@ -194,13 +222,13 @@ scheme.methods.edit = function (body, user, files, cb) {
 		var tickets = body.tickets || [];
 		for (var i = 0; i < tickets.length; i++) {
 			var ticket = tickets[i];
-			var t = {
+			var t = new Ticket({
 				whopays: 'me',
 				type: 'standard',
 				cutomType: '',
 				quantity: 1,
 				price: 0.0
-			};
+			});
 			
 			if (typeof ticket.whopays === "string" && ticket.whopays == 'attendee') {
 				t.whopays = 'attendee';
@@ -217,8 +245,10 @@ scheme.methods.edit = function (body, user, files, cb) {
 			if (typeof ticket.quantity === "string") {
 				t.quantity = parseInt(ticket.quantity);
 			}
-		
-			this.tickets.push(t);
+			
+			t.save()
+			
+			this.tickets.push(t._id);
 		}
 	}
 	
@@ -284,6 +314,7 @@ scheme.methods.validate = function (cb) {
 		errs.push("Event finishes before it begins. End date must be after the start date")
 	}
 	
+	/* TODO later
 	for (var i = 0; i < this.tickets.length; i++) {
 		var t = this.tickets[i];
 		
@@ -299,7 +330,7 @@ scheme.methods.validate = function (cb) {
 		if (typeof t.whopays !== 'string' || !(t.whopays == 'me' || t.whopays == 'attendee')) {
 			errs.push("Ticket "+t.type+"-"+t.customType+" has invalid Who Pays attribute")
 		}
-	}
+	}*/
 	
 	cb(errs);
 }
