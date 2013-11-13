@@ -1,0 +1,29 @@
+mixin message(message)
+	- var otherUser;
+	- var name;
+	- var id;
+	for usr in message.users
+		if !usr._id.equals(user._id)
+			- otherUser = usr
+			- name = usr.getName()
+			- id = usr._id
+			- break;
+	
+	.col-md-2.col-xs-2.col-sm-2
+		.font-e1
+			a(href="/user/"+id)= name
+			if otherUser
+				img.circularespond.img-responsive(src=otherUser.avatar)
+	
+	.col-md-10.col-xs-10.col-sm-10.nspacer-bigger
+		.font-e1.bigger-pad-left
+			//- todo last message (who wrote it)
+			a(href="/inbox/message/"+message._id)= name
+		.nspacer
+		.pull-left
+			//-img.pull-left(src="/images/bubble-left-grey.svg", style="vertical-align:top;")
+		//-.pull-left.bg-grey.psev.post-width.font-x
+			//- todo last message content (shortened)
+			//-| #{message._id}
+	.clearfix
+	.nspacer

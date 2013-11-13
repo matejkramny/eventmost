@@ -1,5 +1,7 @@
 extends ../responsive
 
+include inc/message
+
 block content
 	include navbar
 	
@@ -16,38 +18,14 @@ block content
 
 		//- guest speakers
 	.col-md-12.col-xs-12.col-sm-12.hide-mini3-except-smart
-	if topics > 2
-		| Needs new page
-	for topic in topics
-		.col-md-2.col-xs-2.col-sm-2
-			.font-e1
-				| #{topic.users[1].getName()}
-				img(src=topic.users[1].avatar, alt="", class="circularespond img-responsive")
-		.col-md-10.col-xs-10.col-sm-10.nspacer-bigger
-			.font-e1.bigger-pad-left
-				| #{topic.name}
+	if topics.length > 2
+		//| Needs new page
+	
+	if (topics.length > 0)
+		+message(topics[0])
+		if topics.length > 1
 			.nspacer
-			.pull-left
-				img.pull-left(src="/images/bubble-left-grey.svg", alt="", style="vertical-align:top;")
-			.pull-left.bg-grey.psev.post-width.font-x 
-				| #{topic._id}
-		.clearfix
-		if topics > 1
-			.nspacer
-			.col-md-2.col-xs-2.col-sm-2
-				.font-e1
-					| #{topic.users[2].getName()}
-					img(src=topic.users[2].avatar, alt="", class="circularespond img-responsive")
-			.col-md-10.col-xs-10.col-sm-10.nspacer-bigger
-				.font-e1.bigger-pad-left
-					| #{topic.name}
-				.nspacer
-				.pull-left
-					img.pull-left(src="/images/bubble-left-grey.svg", alt="", style="vertical-align:top;")
-				.pull-left.bg-grey.psev.post-width.font-x 
-					| #{topic.message}
-			.clearfix
-			.nspacer
+			+message(topics[1])
 		// Maybe we should have something like: a(href='inbox/messages') Click to view all
 
 	.col-md-12.col-xs-12.col-sm-12.hide-except-smart

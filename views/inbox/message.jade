@@ -3,33 +3,21 @@ extends ../responsive
 block content
 	include navbar
 	
-	for message in messages
-		- var otherUser;
-		- var name;
-		- var id;
-		for usr in message.users
-			if !usr._id.equals(user._id)
-				- otherUser = usr
-				- name = usr.getName()
-				- id = usr._id
-				- break;
-		
+	for msg in messages
 		.col-md-2.col-xs-2.col-sm-2
 			.font-e1
-				a(href="/user/"+id)= name
-				if otherUser
-					img.circularespond.img-responsive(src=otherUser.avatar)
+				a(href="/user/"+msg.sentBy._id)= msg.sentBy.getName()
+				img.circularespond.img-responsive(src=msg.sentBy.avatar)
 		
 		.col-md-10.col-xs-10.col-sm-10.nspacer-bigger
 			.font-e1.bigger-pad-left
 				//- todo last message (who wrote it)
-				a(href="/inbox/message/"+message._id)= name
 			.nspacer
 			.pull-left
 				img.pull-left(src="/images/bubble-left-grey.svg", style="vertical-align:top;")
 			.pull-left.bg-grey.psev.post-width.font-x
 				//- todo last message content (shortened)
-				| #{message.message}
+				| #{msg.message}
 		.clearfix
 		.nspacer
 	.clearfix
