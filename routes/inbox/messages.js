@@ -163,6 +163,9 @@ function doNewMessage (req, res) {
 	});
 }
 function newMessage (req, res) {
+	doNewMessage(req, res);
+	return;
+	
 	var to;
 	if (req.query.to != null) {
 		try {
