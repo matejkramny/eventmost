@@ -14,7 +14,7 @@ block content
 					.div
 						img(src= profile.avatar.length > 0 ? profile.avatar : "/images/default_speaker.svg", alt="", class="circularespond",)
 					.font-s
-						a(href="/user/"+user._id): b= profile.getName()
+						a(href="/user/"+profile._id): b= profile.getName()
 						br
 						if (profile.company && profile.position)
 							= profile.company
