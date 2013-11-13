@@ -11,8 +11,8 @@ var fs = require('fs')
 	, wall = require('./wall')
 
 exports.router = function (app) {
-	app.get('/inbox/*', util.authorized)
-		.get('/inbox', util.authorized, show)
+	app.all('/inbox/*', util.authorized, populateInbox)
+		.get('/inbox', util.authorized, populateInbox, show)
 	
 	messages.router(app)
 	cards.router(app)
@@ -21,35 +21,39 @@ exports.router = function (app) {
 	topic.router(app)
 }
 
-function show (req, res) {
-	var withUser;
-	var search = [
-		{ users: req.user._id }
-	]
-	if (req.query.with != null) {
-		withUser = mongoose.Types.ObjectId(req.query.with);
-		search.push(withUser);
-	}
+function populateInbox (req, res, next) {
+	var u = req.user;
 	
-	models.Topic
-		.find({
-			$and: search
-		})
-		.populate('users')
-		.sort('-lastUpdated')
-		.exec(function(err, topics) {
-			if (err) throw err;
-			
-			res.format({
-				html: function() {
-					res.locals.topics = topics;
-					res.render('inbox/all', { pageName: "Inbox Dashboard", title: "Inbox" });
-				},
-				json: function() {
-					res.send({
-						topics: topics
-					})
-				}
+	async.parallel([
+		function(cb) {
+			models.Topic.find({ $and: [{ users: u._id }] }).sort('-lastUpdated').populate('users').exec(function(err, topics) {
+				res.locals.messages = topics;
+				cb(null)
+			});
+		},
+		function(cb) {
+			u.populate('receivedCards.user receivedCards.card', function(err) {
+				if (err) throw err;
+				
+				cb(null)
 			})
-		})
+		}
+	], function(err) {
+		if (err) throw err;
+		next()
+	})
+}
+
+function show (req, res) {
+	res.format({
+		html: function() {
+			res.locals.topics = res.locals.messages;
+			res.render('inbox/all', { pageName: "Inbox Dashboard", title: "Inbox" });
+		},
+		json: function() {
+			res.send({
+				topics: topics
+			})
+		}
+	})
 }

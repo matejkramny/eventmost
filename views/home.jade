@@ -21,7 +21,7 @@ append content
 		.nspacer.he1.hide-all2.pull-left(style="width:30%;")
 			a(href="/profile")
 				//- img(src=user.avatar, alt="" style="")
-				img.img-responsive(src=user.avatar)
+				img.img-responsive(src= user.avatar.length == 0 ? "/images/big-avatar.svg" : user.avatar)
 		a(href="/event/add")
 		.col-xs-8.nspacer.bg-purple.font-thin.center.he1.hide-all2.pull-right
 			a.link-ashen.space.iphone-size(href="/event/add", style="font-size:14px;") Create event

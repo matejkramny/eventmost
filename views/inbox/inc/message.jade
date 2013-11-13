@@ -3,46 +3,47 @@ mixin message(message)
 	- var name;
 	- var id;
 	for usr in message.users
-		if !usr._id.equals(user._id)
+		if (!usr._id.equals(user._id))
 			- otherUser = usr
 			- name = usr.getName()
 			- id = usr._id
-		
-		.hide-mini3-except-smart
-			.col-md-2.col-xs-2.col-sm-2
-				.font-e1
-					a(href="/user/"+id)= name
-					if otherUser
-						img.circularespond.img-responsive(src=otherUser.avatar)
+			- break;
 	
-			.col-md-10.col-xs-10.col-sm-10.nspacer-bigger
-				.font-e1.bigger-pad-left
-					//- todo last message (who wrote it)
-					a(href="/inbox/message/"+message._id)= name
-				.nspacer
-				.pull-left
-					//-img.pull-left(src="/images/bubble-left-grey.svg", style="vertical-align:top;")
-				//-.pull-left.bg-grey.psev.post-width.font-x
-					//- todo last message content (shortened)
-					//-| #{message._id}
-			.clearfix
+	.hide-mini3-except-smart
+		.col-md-2.col-xs-2.col-sm-2
+			.font-e1
+				a(href="/user/"+id)= name
+				if otherUser
+					img.circularespond.img-responsive(src= otherUser.avatar.length == 0 ? "/images/default_speaker.svg" : otherUser.avatar)
+
+		.col-md-10.col-xs-10.col-sm-10.nspacer-bigger
+			.font-e1.bigger-pad-left
+				//- todo last message (who wrote it)
+				a(href="/inbox/message/"+message._id)= name
 			.nspacer
-		
-		.col-md-12.col-xs-12.col-sm-12.hide-except-smart
+			.pull-left
+				//-img.pull-left(src="/images/bubble-left-grey.svg", style="vertical-align:top;")
+			//-.pull-left.bg-grey.psev.post-width.font-x
+				//- todo last message content (shortened)
+				//-| #{message._id}
+		.clearfix
+		.nspacer
+	
+	.col-md-12.col-xs-12.col-sm-12.hide-except-smart
+		.clearfix
+			.font-e1.pull-left
+				a(href="/user/"+id)= name
 			.clearfix
-				.font-e1.pull-left
-					a(href="/user/"+id)= name
-				.clearfix
-				.col-md-5.col-xs-5.col-sm-5
-					if otherUser
-						img.circularespond(src=otherUser.avatar, style="width:100%;")
-				.col-md-7.col-xs-7.col-sm-7
-					.font-e1(style="margin-top:30px;")
-						a(href="/inbox/message/"+message._id)= name
-			.clearfix
-			.col-md-12.col-xs-12.col-sm-12
-				//-.pull-left
-				//-	img.pull-left.bubble-responsive(src="/images/bubble-left-grey.svg", alt="", style="vertical-align:top;")
-				//-.pull-left.bg-grey.psev.post-width.font-x 
-				//-	| At vero eos et accusamus et iusto odio dignissimos <b>ducimus qui blanditiis</b> praesentium voluptatum deleniti atque corrupti quos dolores 
-			.clearfix
+			.col-md-5.col-xs-5.col-sm-5
+				if otherUser
+					img.circularespond(src=otherUser.avatar, style="width:100%;")
+			.col-md-7.col-xs-7.col-sm-7
+				.font-e1(style="margin-top:30px;")
+					a(href="/inbox/message/"+message._id)= name
+		.clearfix
+		.col-md-12.col-xs-12.col-sm-12
+			//-.pull-left
+			//-	img.pull-left.bubble-responsive(src="/images/bubble-left-grey.svg", alt="", style="vertical-align:top;")
+			//-.pull-left.bg-grey.psev.post-width.font-x 
+			//-	| At vero eos et accusamus et iusto odio dignissimos <b>ducimus qui blanditiis</b> praesentium voluptatum deleniti atque corrupti quos dolores 
+		.clearfix

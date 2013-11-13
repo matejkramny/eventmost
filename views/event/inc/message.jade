@@ -9,7 +9,7 @@ mixin message(msg, header)
 				= msg.attendee.category
 			.pad-top
 				img.circularespond.img-responsive(src="/images/default_speaker-purple.svg")
-
+	
 	.col-md-8.col-xs-8.col-sm-7.postish-small(style="margin-top:"+(header ? "70px;" : "20px"))
 			.font-e1.bigger-pad-left.font-exception-thin.no-left.don-show-here
 				a(href="/event/"+ev._id+"/attendee/"+msg.attendee._id): b= msg.attendee.user.getName()

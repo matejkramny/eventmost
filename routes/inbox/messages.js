@@ -23,24 +23,31 @@ function getMessage (req, res, next) {
 		return;
 	}
 	
-	models.Topic.findOne({ _id: id }).populate('users').exec(function(err, topic) {
+	var message = null;
+	for (var i = 0; i < res.locals.messages.length; i++) {
+		var msg = res.locals.messages[i];
+		if (msg._id.equals(id)) {
+			message = msg;
+			break;
+		}
+	}
+	
+	if (!message) {
+		res.redirect('/inbox/messages')
+		return;
+	}
+	
+	
+	models.Message.find({
+		topic: message._id
+	}).populate('sentBy')
+	  .sort('-timeSent').exec(function(err, messages) {
 		if (err) throw err;
 		
-		if (!topic) {
-			res.redirect('/inbox/messages')
-			return;
-		}
+		res.locals.message = message;
+		res.locals.messages = messages;
 		
-		models.Message.find({
-			topic: topic._id
-		}).populate('sentBy')
-		  .sort('-timeSent').exec(function(err, messages) {
-			if (err) throw err;
-			
-			res.locals.message = topic;
-			res.locals.messages = messages;
-			next()
-		})
+		next()
 	})
 }
 
@@ -170,34 +177,14 @@ function newMessage (req, res) {
 }
 
 function showMessages (req, res) {
-	var withUser;
-	var search = [
-		{ users: req.user._id }
-	]
-	if (req.query.with != null) {
-		withUser = mongoose.Types.ObjectId(req.query.with);
-		search.push(withUser);
-	}
-	
-	models.Topic
-		.find({
-			$and: search
-		})
-		.populate('users')
-		.sort('-lastUpdated')
-		.exec(function(err, topics) {
-			if (err) throw err;
-			
-			res.format({
-				html: function() {
-					res.locals.messages = topics;
-					res.render('inbox/messages', { pageName: "Private Messages", title: "Private Messages" });
-				},
-				json: function() {
-					res.send({
-						messages: topics
-					})
-				}
+	res.format({
+		html: function() {
+			res.render('inbox/messages', { pageName: "Private Messages", title: "Private Messages" });
+		},
+		json: function() {
+			res.send({
+				messages: topics
 			})
-		})
+		}
+	})
 }

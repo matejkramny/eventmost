@@ -10,9 +10,5 @@ exports.router = function (app) {
 }
 
 function showCards (req, res) {
-	req.user.populate('receivedCards.card receivedCards.from', function(err) {
-		if (err) throw err;
-		
-		res.render('inbox/business', { pageName: "Received Business Cards", title: "Private Messages" })
-	})
+	res.render('inbox/business', { pageName: "Received Business Cards", title: "Private Messages" })
 }
