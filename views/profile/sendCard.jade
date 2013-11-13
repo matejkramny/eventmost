@@ -11,6 +11,8 @@ block content
 				br.visible-xs
 				br.visible-xs
 		
+		p.text-center.lead Click on a business card to send it
+		
 		- for(var i = 0; i < cards.length; i)
 			.row
 				- for(var x = 0; x < 3; x++)
@@ -19,7 +21,7 @@ block content
 					- var card = cards[index];
 					- if (!card) continue;
 					
-					img.col-sm-4.col-xs-12.col-md-4.col-lg-4(src="/businesscards/"+card._id+".png")
+					a(href="/cards/send?to=#{sendTo}&id=#{card._id}"): img.col-sm-4.col-xs-12.col-md-4.col-lg-4(src="/businesscards/"+card._id+".png")
 			br.hidden-xs
 		if (cards.length == 0)
 			h3.text-center No business cards created yet

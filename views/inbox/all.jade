@@ -1,6 +1,7 @@
 extends ../responsive
 
 include inc/message
+include inc/card
 
 block content
 	include navbar
@@ -27,42 +28,8 @@ block content
 			.nspacer
 			+message(topics[1])
 		// Maybe we should have something like: a(href='inbox/messages') Click to view all
-
-	.col-md-12.col-xs-12.col-sm-12.hide-except-smart
-		.clearfix
-			.font-e1.pull-left
-				| Guest speaker
-			.clearfix
-			.col-md-5.col-xs-5.col-sm-5
-				img(src="/images/default_speaker.svg", alt="", class="circularespond", style="width:100%;")
-			.col-md-7.col-xs-7.col-sm-7
-				.font-e1(style="margin-top:30px;")
-					| <b>Lucy Cook</b> - Director of Finance, Delloite	<br />
-		.clearfix
-		.col-md-12.col-xs-12.col-sm-12
-			.pull-left
-				img.pull-left.bubble-responsive(src="/images/bubble-left-grey.svg", alt="", style="vertical-align:top;")
-			.pull-left.bg-grey.psev.post-width.font-x 
-				| At vero eos et accusamus et iusto odio dignissimos <b>ducimus qui blanditiis</b> praesentium voluptatum deleniti atque corrupti quos dolores 
-		.clearfix
-		.nspacer
-			.font-e1.pull-left
-				| Guest speaker
-			.clearfix
-			.col-md-5.col-xs-5.col-sm-5
-				img(src="/images/default_speaker.svg", alt="", class="circularespond", style="width:100%;")
-			.col-md-7.col-xs-7.col-sm-7
-				.font-e1(style="margin-top:30px;")
-					| <b>Lucy Cook</b> - Director of Finance, Delloite	<br />
-		.clearfix
-		.col-md-12.col-xs-12.col-sm-12
-			.pull-left
-				img.pull-left.bubble-responsive(src="/images/bubble-left-grey.svg", alt="", style="vertical-align:top;")
-			.pull-left.bg-grey.psev.post-width.font-x 
-				| At vero eos et accusamus et iusto odio dignissimos <b>ducimus qui blanditiis</b> praesentium voluptatum deleniti atque corrupti quos dolores 
-		.clearfix
-
-		//- end guest speakers
+	
+	//- end guest speakers
 
 	.center(style='height:35px;')
 		ul.pagination

@@ -1,5 +1,7 @@
 extends ../responsive
 
+include inc/card
+
 block content
 	include navbar
 	
@@ -8,49 +10,11 @@ block content
 	
 	//- business
 	
-	.col-md-3.col-xs-3.col-sm-3.inv-till-1
-		.right
-			img(src="/images/default_speaker.svg", alt="", class="circularespond",)
-	.col-md-2.col-xs-2.col-sm-2.inv-till-1
-		.center.nspacer-medium
-			img(src="/images/card-avatar.svg", alt="", class="pad-left-ten",)
-	.col-md-3.col-xs-3.col-sm-3.inv-till-1
-		.right
-			img(src="/images/default_speaker.svg", alt="", class="circularespond",)
-	.col-md-2.col-xs-2.col-sm-2.inv-till-1
-		.center.nspacer-medium
-			img(src="/images/card-avatar.svg", alt="", class="pad-left-ten ",)
-
-
-	.col-md-6.col-xs-6.col-sm-6.vis-till-1
-		.inline
-			.center
-				img(src="/images/default_speaker.svg", alt="", class="circularespond img-responsive",)
-		.inline
-			.center.nspacer-medium
-				img(src="/images/card-avatar.svg", alt="", class="pad-left-ten img-responsive",)
-
-	.col-md-6.col-xs-6.col-sm-6.vis-till-1
-		.inline
-			.center
-				img(src="/images/default_speaker.svg", alt="", class="circularespond img-responsive",)
-		.inline
-			.center.nspacer-medium
-				img(src="/images/card-avatar.svg", alt="", class="pad-left-ten img-responsive",)
-
-	.col-md-6.col-xs-6.col-sm-6.hide-all2
-			.center
-				img(src="/images/default_speaker.svg", alt="", class="circularespond-small img-responsive",)
-	.col-md-6.col-xs-6.col-sm-6.hide-all2
-			.center.nspacer-medium
-				img(src="/images/card-avatar.svg", alt="", class="img-responsive",)
-	.clearfix.hide-all2
-	.col-md-6.col-xs-6.col-sm-6.hide-all2.nspacer
-			.center
-				img(src="/images/default_speaker.svg", alt="", class="circularespond-small img-responsive",)
-	.col-md-6.col-xs-6.col-sm-6.hide-all2.nspacer
-			.center.nspacer-medium
-				img(src="/images/card-avatar.svg", alt="", class="img-responsive",)
-
+	if (user.receivedCards.length == 0)
+		h3.text-center No cards received
+	
+	for card in user.receivedCards
+		+card(card)
+	
 	//- end business
 	.clearfix

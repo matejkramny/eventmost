@@ -38,6 +38,17 @@ var scheme = schema({
 			ref: 'User'
 		}
 	],
+	receivedCards: [{
+		from: {
+			type: ObjectId,
+			ref: 'User'
+		},
+		card: {
+			type: ObjectId,
+			ref: 'Card'
+		},
+		sent: { type: Date, default: Date.now }
+	}],
 	privacy: {
 		allowPM: { type: Boolean, default: true },
 		allowWall: { type: Boolean, default: true },

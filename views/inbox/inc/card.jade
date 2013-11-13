@@ -1,0 +1,23 @@
+mixin card(card)
+	.col-md-3.col-xs-3.col-sm-3.inv-till-1
+		.right
+			img.circularespond(src="/images/default_speaker.svg")
+	.col-md-2.col-xs-2.col-sm-2.inv-till-1
+		.center.nspacer-medium
+			img.pad-left-ten(src="/businesscards/"+card.card._id)
+	//- mobile?
+	.col-md-6.col-xs-6.col-sm-6.vis-till-1
+		.inline
+			.center
+				img.circularespond.img-responsive(src="/images/default_speaker.svg")
+		.inline
+			.center.nspacer-medium
+				img.pad-left-ten.img-responsive(src="/businesscards/"+card.card._id)
+	//- mobile?
+	.col-md-6.col-xs-6.col-sm-6.hide-all2
+			.center
+				img.circularespond-small.img-responsive(src="/images/default_speaker.svg")
+	.col-md-6.col-xs-6.col-sm-6.hide-all2
+			.center.nspacer-medium
+				img.img-responsive(src="/businesscards/"+card.card._id)
+	.clearfix.hide-all2
