@@ -10,6 +10,7 @@ exports.router = function (app) {
 		.get('/inbox/messages/new', newMessage)
 		.post('/inbox/messages/new', doNewMessage)
 		.get('/inbox/message/:id', getMessage, showMessage)
+		.post('/inbox/message/:id', getMessage, postMessage)
 }
 
 function getMessage (req, res, next) {
@@ -45,6 +46,10 @@ function getMessage (req, res, next) {
 
 function showMessage (req, res) {
 	res.render('inbox/message', { pageName: "Message X", title: "Message X" })
+}
+
+function postMessage (req, res) {
+	
 }
 
 function doNewMessage (req, res) {

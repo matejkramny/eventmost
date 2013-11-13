@@ -5,30 +5,28 @@ block content
 	
 	.nspacer
 	//- saved
-	for profile in user.savedProfiles
-		-var i = 0;
-		.col-md-12.col-xs-12.col-sm-12
-			.center
+	.col-md-12.col-xs-12.col-sm-12
+		.center
+			for profile in user.savedProfiles
+				-var i = 0;
+				
 				.inline
 					.div
-						img(src=profile.avatar alt="", class="circularespond",)
+						img(src=profile.avatar.url, alt="", class="circularespond",)
 					.font-s
-						| <b>#{profile}</b><br />
-						| #{profile}
-				.inline.big-pad-right.big-pad-left.pad-smart
-					.div
-						img(src=profile.avatar, alt="", class="circularespond",)
-					.font-s
-						| <b>#{profile}</b><br />
-						| #{profile}
-				.inline
-					.div
-						img(src=profile.avatar, alt="", class="circularespond",)
-					.font-s
-						| <b>#{profile}</b><br />
-						| #{profile}
+						a(href="/user/"+user._id): b= profile.getName()
+						br
+						if (profile.company && profile.position)
+							= profile.company
+							| , 
+							= profile.position
+						- else if (profile.company)
+							= profile.company
+						- else if (profile.position)
+							= profile.position
 	if (user.savedProfiles.length == 0)
 		| No one has saved your profile yet.
 		.clearfix
 		.nspacer
+	
 	.clearfix

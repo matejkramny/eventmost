@@ -3,32 +3,42 @@ extends ../responsive
 block content
 	include navbar
 	
+	for message in messages
+		- var otherUser;
+		- var name;
+		- var id;
+		for usr in message.users
+			if !usr._id.equals(user._id)
+				- otherUser = usr
+				- name = usr.getName()
+				- id = usr._id
+				- break;
+		
+		.col-md-2.col-xs-2.col-sm-2
+			.font-e1
+				a(href="/user/"+id)= name
+				if otherUser
+					img.circularespond.img-responsive(src=otherUser.avatar)
+		
+		.col-md-10.col-xs-10.col-sm-10.nspacer-bigger
+			.font-e1.bigger-pad-left
+				//- todo last message (who wrote it)
+				a(href="/inbox/message/"+message._id)= name
+			.nspacer
+			.pull-left
+				img.pull-left(src="/images/bubble-left-grey.svg", style="vertical-align:top;")
+			.pull-left.bg-grey.psev.post-width.font-x
+				//- todo last message content (shortened)
+				| #{message.message}
+		.clearfix
+		.nspacer
+	.clearfix
+	
 	.nspacer
-	#main-content
-		form(action="/inbox/message/"+message._id+"/update", method="POST")
-			input(type="hidden", name="_csrf", value=token)
-			.search-box
-				.search-content
-					p= pageName
-		form(action="/inbox/message/"+message._id+"/new", method="POST")
-			input(type="hidden", name="_csrf", value=token)
-			.left(style="width: 100%;")
-				input.rounded-input#message(type="text", name="message", value="", placeholder="Enter a message", required="required", style="width: 75%; float: left;")
-				input.submit-btn.left#messageSubmit(type="submit", value="Send", style="width: 19%; float: right;")
-		br
-		br
-		for message in messages
-			.users-spacer(style="border-top:1px solid #444;margin-top:10px;")
-				.avatar.left(style="height: 20px;width:20px;")
-					img(src=message.sentBy.avatar, style="width: 20px; height: 20px;")
-				.left
-					p
-						a(href="/user/"+message.sentBy._id)= message.sentBy.getName()
-						|  at 
-						= message.timeSent.getHours()
-						| :
-						= message.timeSent.getMinutes()
-				.right
-					p= message.message
-			.clear
-	.clear
+	form(action="/inbox/message/"+message._id, method="POST")
+		input(type="hidden", name="_csrf", value=token)
+		.left(style="width: 100%;")
+			input.rounded-input#message(type="text", name="message", value="", placeholder="Enter a message", required="required", style="width: 75%; float: left;")
+			input.submit-btn.left#messageSubmit(type="submit", value="Send", style="width: 19%; float: right;")
+	
+	.clearfix
