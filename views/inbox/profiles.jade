@@ -12,7 +12,7 @@ block content
 				
 				.inline
 					.div
-						img(src=profile.avatar.url, alt="", class="circularespond",)
+						img(src= profile.avatar.length > 0 ? profile.avatar : "/images/default_speaker.svg", alt="", class="circularespond",)
 					.font-s
 						a(href="/user/"+user._id): b= profile.getName()
 						br
