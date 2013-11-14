@@ -52,7 +52,18 @@ function getMessage (req, res, next) {
 }
 
 function showMessage (req, res) {
-	res.render('inbox/message', { pageName: "Private Message", title: "Private Message" })
+	var otherUser = null;
+	for (var i = 0; i < res.locals.message.users.length; i++) {
+		if (!req.user._id.equals(res.locals.message.users[i]._id)) {
+			otherUser = res.locals.message.users[i];
+			break;
+		}
+	}
+	
+	var name = "Private Message"
+	if (otherUser)
+		name = "Private Message to "+otherUser.getName();
+	res.render('inbox/message', { pageName: name, title: name })
 }
 
 function postMessage (req, res) {
