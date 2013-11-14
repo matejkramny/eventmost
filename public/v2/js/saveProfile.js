@@ -35,7 +35,7 @@ $(document).ready(function() {
 	function xmlhttprequestResponse () {
 		if (avatarUploadRequest.readyState == 4) {
 			if (avatarUploadRequest.status == 200) {
-				result = JSON.parse(avatarUploadRequest.response);
+				result = avatarUploadRequest.response;
 				
 				if (result.status != 200) {
 					alert("Could not save profile :(\n"+result.err);
