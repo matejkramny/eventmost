@@ -159,10 +159,11 @@ function doNewMessage (req, res) {
 			users: [req.user._id, user._id]
 		})
 		topic.save();
-		res.redirect('/inbox/messages')
+		res.redirect('/inbox/message/'+topic._id)
 	});
 }
 function newMessage (req, res) {
+	// Dirty ol' hack
 	doNewMessage(req, res);
 	return;
 	

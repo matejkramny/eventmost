@@ -4,7 +4,7 @@ mixin attendee(attendee)
 		.font-evente.font-exception-thin.deifer-font3
 			= attendee.category
 		.pull-left(style="width:30%;")
-			img(src="/images/default_speaker-purple.svg", alt="", class="circularespond-small img-responsive")
+			img(src= attendee.user.avatar.length == 0 ? "/images/default_speaker-purple.svg" : attendee.user.avatar, alt="", class="circularespond-small img-responsive")
 		.font-e.pull-left.break.nspacer.center(style="width:70%;")
 			a(href="/event/"+ev._id+"/attendee/"+attendee._id): b= attendee.user.getName()
 			br
@@ -19,7 +19,7 @@ mixin attendee(attendee)
 		.font-evente.font-exception-thin.deifer-font3
 			= attendee.category
 		.pull-left(style="width:30%;")
-			img(src="/images/default_speaker-purple.svg", alt="", class="circularespond-small img-responsive")
+			img(src= attendee.user.avatar.length == 0 ? "/images/default_speaker-purple.svg" : attendee.user.avatar, alt="", class="circularespond-small img-responsive")
 		.font-e.pull-left.break.nspacer.center(style="width:70%;")
 			b= attendee.user.getName()
 			br

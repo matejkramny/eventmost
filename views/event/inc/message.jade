@@ -8,7 +8,7 @@ mixin message(msg, header)
 			.font-exception-thin.deifer-font3(class= header ? "nspacer-big" : null)
 				= msg.attendee.category
 			.pad-top
-				img.circularespond.img-responsive(src="/images/default_speaker-purple.svg")
+				img.circularespond.img-responsive(src= msg.attendee.user.avatar.length == 0 ? "/images/default_speaker-purple.svg" : msg.attendee.user.avatar)
 	
 	.col-md-8.col-xs-8.col-sm-7.postish-small(style="margin-top:"+(header ? "70px;" : "20px"))
 			.font-e1.bigger-pad-left.font-exception-thin.no-left.don-show-here

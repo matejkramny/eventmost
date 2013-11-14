@@ -11,7 +11,8 @@ append addonjs
 	include inc/mapjs
 
 block content
-	mixin navbar(4)
+	if (eventattending)
+		mixin navbar(4)
 	
 	.col-xs-12.hide-all2
 		form(method="POST", accept-charset="utf-8")
