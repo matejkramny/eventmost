@@ -64,6 +64,32 @@ function DEOPUSER (req, res, next) {
 	res.redirect('/admin/users')
 }
 
+function hire (req, res, next) {
+	models.User.findById(req.params.id, function (err, user) {
+		if (err) return handleError(err);
+		
+		user.adminMeeting = true;
+		user.save(function (err) {
+			if (err) return handleError(err);
+			res.send(user);
+		});
+	});
+	res.redirect('/admin/users')
+}
+
+function fire (req, res, next) {
+	models.User.findById(req.params.id, function (err, user) {
+		if (err) return handleError(err);
+		
+		user.adminMeeting = false;
+		user.save(function (err) {
+			if (err) return handleError(err);
+			res.send(user);
+		});
+	});
+	res.redirect('/admin/users')
+}
+
 function reviveEvent (req, res, next) {
 	models.Event.findById(req.params.id, function (err, event) {
 		if (err) return handleError(err);
@@ -100,4 +126,6 @@ exports.router = function (app) {
 		.get('/admin/users/:id/remove', authorize, removeUser)
 		.get('/admin/users/:id/op', authorize, OPUSER)
 		.get('/admin/users/:id/deop', authorize, DEOPUSER)
+		.get('/admin/users/:id/fire', authorize, fire)
+		.get('/admin/users/:id/hire', authorize, hire)
 }
