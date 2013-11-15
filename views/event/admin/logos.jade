@@ -1,0 +1,210 @@
+extends ../../responsive
+
+block content
+	.col-xs-12.hide-all2
+		form(method="POST", accept-charset="utf-8")
+			input.gonew2.pull-right.header-links(type="button", value="GO", style="width:10%;")
+			input(type="hidden", name="_csrf", value=token)
+			input.pull-right.font-s.search-input.pad-left-ten.header-links(type="search", placeholder="search events or people", style="width:87%;")
+	.clearfix.hide-all2
+
+
+		//- header of the content
+
+	.nspacer
+	.col-md-12.col-xs-12.col-sm-12
+		.inline
+			img(src="/images/other-logo.svg", alt="", class="img-responsive")
+		.inline
+			.font-lebig.inline.pad-left-ten.button-font
+				| Add logos
+			.font-evente.pad-left-ten.button-font
+				| You can add maximum 3 logos of the sponors. 
+		.inline.pull-right
+			button.btn.btn-primary.font-evente.hide-prof-butt.button-font(type='submit', style="border-radius: 10px; padding:5px; padding-right:15px; padding-left:15px;")
+				| Go back to event page
+	.clearfix
+
+	.nspacer
+	.col-md-12.col-xs-12.col-sm-12
+		.center.semi-bold.font-evente.button-font
+			| Choose how you’d like the top portion of your event forum to look:
+		.center.font-evente.button-font
+			| (The first three options are if you don’t have an event logo)
+
+
+	.clearfix
+
+		//- option 1
+
+
+	.nspacer-big
+
+	.col-md-6.col-xs-6.col-sm-6
+		.bg-yellow.font-bigs2.center.deifer-font2
+			| The Title of <br/>the Event
+		.font-lebig.center.setting-line.nspacer.deifer-font
+			| Thanks to our sponsor:
+	.col-md-6.col-xs-6.col-sm-6
+		img(src="/images/sponsor-logo.svg", alt="", class="img-responsive")
+
+	.clearfix
+	.nspacer
+	.col-md-12.col-xs-12.col-sm-12
+		.center
+			button.btn.btn-primary.font-evente.hide-prof-butt.button-font(type='submit', style="border-radius: 10px; padding:5px; padding-right:15px; padding-left:15px;")
+				| CHOOSE
+
+	
+		//- option 2
+	.nspacer-big
+
+	.col-md-12.col-xs-12.col-sm-12
+		.bg-yellow.font-bigs2.center.deifer-font2
+			| The Title of the Event
+		.font-lebig.center.setting-line.nspacer.deifer-font
+			| Thanks to our sponsors:
+
+	.clearfix
+	.nspacer-big
+
+	.col-md-4.col-xs-4.col-sm-4
+		img(src="/images/sponsor-logo.svg", alt="", class="img-responsive")
+
+	.col-md-4.col-xs-4.col-sm-4
+		.font-lebig.center.setting-line.nspacer.deifer-font.and
+			| and
+
+	.col-md-4.col-xs-4.col-sm-4
+		img(src="/images/sponsor-logo.svg", alt="", class="img-responsive")
+
+	.clearfix
+	.nspacer
+	.col-md-12.col-xs-12.col-sm-12
+		.center
+			button.btn.btn-primary.font-evente.hide-prof-butt.button-font(type='submit', style="border-radius: 10px; padding:5px; padding-right:15px; padding-left:15px;")
+				| CHOOSE
+
+
+		//- option 3
+
+	.nspacer-big
+
+	.col-md-12.col-xs-12.col-sm-12
+		.bg-yellow.font-bigs2.center.deifer-font2
+			| The Title of the Event
+		.font-lebig.center.setting-line.nspacer.deifer-font
+			| Thanks to our sponsors:
+
+	.clearfix
+	.nspacer-big
+
+	.col-md-4.col-xs-4.col-sm-4
+		img(src="/images/sponsor-logo.svg", alt="", class="img-responsive")
+
+	.col-md-4.col-xs-4.col-sm-4
+		img(src="/images/sponsor-logo.svg", alt="", class="img-responsive")
+
+	.col-md-4.col-xs-4.col-sm-4
+		img(src="/images/sponsor-logo.svg", alt="", class="img-responsive")
+
+	.clearfix
+	.nspacer
+	.col-md-12.col-xs-12.col-sm-12
+		.center
+			button.btn.btn-primary.font-evente.hide-prof-butt.button-font(type='submit', style="border-radius: 10px; padding:5px; padding-right:15px; padding-left:15px;")
+				| CHOOSE
+
+		//- option 4
+
+	.nspacer-big
+
+	.col-md-12.col-xs-12.col-sm-12
+		.bg-yellow.font-bigs2.center.deifer-font2
+			| The Title of the Event
+		.font-lebig.center.setting-line.nspacer.deifer-font
+			| Thanks to our sponsors:
+
+	.clearfix
+	.nspacer-big
+
+	.col-md-4.col-xs-4.col-sm-4
+		img(src="/images/your-logo.svg", alt="", class="img-responsive")
+
+	.col-md-4.col-xs-4.col-sm-4
+		.font-lebig.center.setting-line.nspacer.deifer-font.and
+			| Thanks to <br />our <br />sponsor:
+
+	.col-md-4.col-xs-4.col-sm-4
+		img(src="/images/sponsor-logo.svg", alt="", class="img-responsive")
+
+	.clearfix
+	.nspacer
+	.col-md-12.col-xs-12.col-sm-12
+		.center
+			button.btn.btn-primary.font-evente.hide-prof-butt.button-font(type='submit', style="border-radius: 10px; padding:5px; padding-right:15px; padding-left:15px;")
+				| CHOOSE
+
+		//- option 5
+	.nspacer-big
+
+	.col-md-3.col-xs-3.col-sm-3
+		img(src="/images/your-logo.svg", alt="", class="img-responsive")
+
+	.col-md-9.col-xs-9.col-sm-9
+		.bg-yellow.font-bigs2.center.deifer-font2
+			| The Title of the Event
+		.font-lebig.center.setting-line.nspacer.deifer-font
+			| Thanks to our sponsors:
+
+	.clearfix
+	.nspacer-big
+
+	.col-md-4.col-xs-4.col-sm-4
+		img(src="/images/sponsor-logo.svg", alt="", class="img-responsive")
+
+	.col-md-4.col-xs-4.col-sm-4
+		.font-lebig.center.setting-line.nspacer.deifer-font.and
+			| and
+
+	.col-md-4.col-xs-4.col-sm-4
+		img(src="/images/sponsor-logo.svg", alt="", class="img-responsive")
+
+	.clearfix
+	.nspacer
+	.col-md-12.col-xs-12.col-sm-12
+		.center
+			button.btn.btn-primary.font-evente.hide-prof-butt.button-font(type='submit', style="border-radius: 10px; padding:5px; padding-right:15px; padding-left:15px;")
+				| CHOOSE
+
+		//- option 6
+
+	.nspacer-big
+	
+	.col-md-3.col-xs-3.col-sm-3
+		img(src="/images/your-logo.svg", alt="", class="img-responsive")
+
+	.col-md-9.col-xs-9.col-sm-9
+		.bg-yellow.font-bigs2.center.deifer-font2
+			| The Title of the Event
+		.font-lebig.center.setting-line.nspacer.deifer-font
+			| Thanks to our sponsors:
+
+	.clearfix
+	.nspacer-big
+
+	.col-md-4.col-xs-4.col-sm-4
+		img(src="/images/sponsor-logo.svg", alt="", class="img-responsive")
+
+	.col-md-4.col-xs-4.col-sm-4
+		img(src="/images/sponsor-logo.svg", alt="", class="img-responsive")
+
+	.col-md-4.col-xs-4.col-sm-4
+		img(src="/images/sponsor-logo.svg", alt="", class="img-responsive")
+
+	.clearfix
+	.nspacer
+	.col-md-12.col-xs-12.col-sm-12
+		.center
+			button.btn.btn-primary.font-evente.hide-prof-butt.button-font(type='submit', style="border-radius: 10px; padding:5px; padding-right:15px; padding-left:15px;")
+				| CHOOSE
