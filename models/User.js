@@ -72,6 +72,7 @@ var scheme = schema({
 	},
 	requestEmail: { type: Boolean, default: false },
 	admin: { type: Boolean, default: false },
+	adminMeeting: { type: Boolean, default: false },
 	mailboxUnread: { type: Number, default: 0 }
 });
 
