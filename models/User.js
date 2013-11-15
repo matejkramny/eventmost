@@ -55,6 +55,21 @@ var scheme = schema({
 		allowLocation: { type: Boolean, default: true },
 		showProfile: { type: Boolean, default: true },
 	},
+	notification: {
+		email:  {
+			privateMessages: { type: Boolean, default: true },
+			businessCards: { type: Boolean, default: true },
+			comments: { type: Boolean, default: true },
+			savedProfile: { type: Boolean, default: true },
+		},
+		mobile: {
+			privateMessages: { type: Boolean, default: true },
+			businessCards: { type: Boolean, default: true },
+			comments: { type: Boolean, default: true },
+			savedProfile: { type: Boolean, default: true },
+			messages: { type: Boolean, default:true },
+		},
+	},
 	requestEmail: { type: Boolean, default: false },
 	admin: { type: Boolean, default: false },
 	mailboxUnread: { type: Number, default: 0 }

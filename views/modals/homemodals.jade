@@ -58,6 +58,7 @@
 	.modal-dialog
 		.modal-content
 			.modal-body.reveal-modal
+				input(type="hidden", name="_csrf", value=token)
 				h1 Notification settings
 				.center2
 					| <b>My email account can recive notification</b> <br /> <b>of receipt of a ____________ in EventMost:</b>
@@ -65,8 +66,8 @@
 					.left.right-al
 						| Private message
 					.left.switches
-						label.checkbox.toggle.candy(style='width: 100px;', onclick='')
-							input(type='checkbox', class="invisible")
+						label.radio-inline
+							input(type='checkbox', name="privateMessages", value="yes", checked= user.notification.email.privateMessages == true ? "checked" : null)
 							span
 								span No
 								span Yes
@@ -76,7 +77,7 @@
 						| Business Card
 					.left.switches
 						label.checkbox.toggle.candy(style='width: 100px;', onclick='')
-							input(type='checkbox', class="invisible")
+							input(type='checkbox', name="businessCards", value="yes", checked= user.notification.email.businessCards == true ? "checked" : null)
 							span
 								span No
 								span Yes
@@ -86,7 +87,7 @@
 						| Comment on my wall
 					.left.switches
 						label.checkbox.toggle.candy(style='width: 100px;', onclick='')
-							input(type='checkbox', class="invisible")
+							input(type='checkbox', name="comments", value="yes", checked= user.notification.email.comments == true ? "checked" : null)
 							span
 								span No
 								span Yes
@@ -96,7 +97,7 @@
 						| Someone saved my profile
 					.left.switches
 						label.checkbox.toggle.candy(style='width: 100px;', onclick='')
-							input(type='checkbox', class="invisible")
+							input(type='checkbox', name="savedProfile", value="yes", checked= user.notification.email.savedProfile == true ? "checked" : null)
 							span
 								span No
 								span Yes
@@ -109,7 +110,7 @@
 						| Private message
 					.left.switches
 						label.checkbox.toggle.candy(style='width: 100px;', onclick='')
-							input(type='checkbox', class="invisible")
+							input(type='checkbox', name="privateMessages", value="yes", checked= user.notification.mobile.privateMessages == true ? "checked" : null)
 							span
 								span No
 								span Yes
@@ -119,7 +120,7 @@
 						| Business Card
 					.left.switches
 						label.checkbox.toggle.candy(style='width: 100px;', onclick='')
-							input(type='checkbox', class="invisible")
+							input(type='checkbox', name="businessCards", value="yes", checked= user.notification.mobile.businessCards == true ? "checked" : null)
 							span
 								span No
 								span Yes
@@ -129,7 +130,7 @@
 						| Comment on my wall
 					.left.switches
 						label.checkbox.toggle.candy(style='width: 100px;', onclick='')
-							input(type='checkbox', class="invisible")
+							input(type='checkbox', name="comments", value="yes", checked= user.notification.mobile.comments == true ? "checked" : null)
 							span
 								span No
 								span Yes
@@ -139,7 +140,7 @@
 						| Someone saved my profile
 					.left.switches
 						label.checkbox.toggle.candy(style='width: 100px;', onclick='')
-							input(type='checkbox', class="invisible")
+							input(type='checkbox', name="savedProfile", value="yes", checked= user.notification.mobile.savedProfile == true ? "checked" : null)
 							span
 								span No
 								span Yes
@@ -149,15 +150,17 @@
 					| <b>My mobile device, via the EventMost app, can receive push notification of a message deemed important by the Event Planner?</b>
 				.center2.turn
 					label.checkbox.toggle.candy(style='width: 100px;', onclick='')
-						input(type='checkbox', class="invisible")
+						input(type='checkbox', name="message", value="yes", checked= user.notification.mobile.message == true ? "checked" : null)
 						span
 							span No
 							span Yes
 						a.slide-button
 					.clearfix
 				.center2
-					input.enter2(type="submit", value="Sumbit" )
-				.clearfix
-				a(href="/", class="close-reveal-modal") 
-					img(src="/img/x.svg")
+					.pop-input.center
+						button.btn.btn-primary.font.font-ah(type='submit', href="")
+							| Save
+					
+					a(href="#", class="close-reveal-modal", data-dismiss="modal") 
+						img(src="/img/x.svg")
 
