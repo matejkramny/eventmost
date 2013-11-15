@@ -666,7 +666,7 @@ text-indent: -999em; float: left; width: 70px; height: 70px; overflow: hidden; p
 #slider1 .next { background-position: 0px -70px; margin: 53px 0px 0px 0px; height: 65px;  }
 #slider1 .overview { list-style: none; position: absolute; padding: 0; margin: 0; left: 0 top: 0; }
 /* need to change the width for responisve design */
-#slider1 .overview li{ float: left; margin: 0px 10px 0 0; padding: 1px; width: 214px; color:#542437; font-size: 15px; opacity: 0.5;
+#slider1 .overview li{ float: left; margin: 0px 10px 0 0; padding: 1px; width: 215px; color:#542437; font-size: 16px; opacity: 0.5;
 -webkit-transition: all .2s ease-in-out; }
 #slider1 .overview li:hover{ z-index: 8999; opacity: 1.0; 
 transform: scale(1.1,1.1)  translate(10px, -10px);
