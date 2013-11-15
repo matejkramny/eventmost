@@ -1,19 +1,28 @@
 #privacyModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="", aria-hidden="true")
 	.modal-dialog
 		.modal-content
-			.modal-body.reveal-modal
+			.modal-body.reveal-modal(style="background-color:#fdd093;")
 				input(type="hidden", name="_csrf", value=token)
 				h1 Privacy settings
 				br
 				h3.text-center Allow people to private message me?
 				.text-center
+
 					label.radio-inline
 						input(type="radio", name="allowPM", value="yes", checked= user.privacy.allowPM == true ? "checked" : null)
 						| Yes
 					label.radio-inline
 						input(type="radio", name="allowPM", value="no", checked= user.privacy.allowPM == false ? "checked" : null)
 						| No
-				hr
+
+
+					label.checkbox.toggle.candy(style='width: 100px; margin:20px auto;', onclick='')
+						input.allowAttendeesToCreateTheirOwnCategories(type='checkbox', class="invisible")
+						span
+							span No
+							span Yes
+						a.slide-button
+
 				h3.text-center Allow people to comment on my wall?
 				.text-center
 					label.radio-inline
@@ -22,7 +31,14 @@
 					label.radio-inline
 						input(type="radio", name="allowWall", value="no", checked= user.privacy.allowWall == false ? "checked" : null)
 						| No
-				hr
+
+					label.checkbox.toggle.candy(style='width: 100px; margin:20px auto;', onclick='')
+						input.allowAttendeesToCreateTheirOwnCategories(type='checkbox', class="invisible")
+						span
+							span No
+							span Yes
+						a.slide-button
+
 				h3.text-center Turn off location ability?
 				p.text-center you will not be able to find Events in range
 				.text-center
@@ -32,7 +48,13 @@
 					label.radio-inline
 						input(type="radio", name="allowLocation", value="no", checked= user.privacy.allowLocation == false ? "checked" : null)
 						| No
-				hr
+
+					label.checkbox.toggle.candy(style='width: 100px; margin:20px auto;', onclick='')
+						input.allowAttendeesToCreateTheirOwnCategories(type='checkbox', class="invisible")
+						span
+							span No
+							span Yes
+						a.slide-button
 				h3.text-center Show my profile in events?
 				.row
 					.col-md-12.col-lg-12.col-sm-12.col-xs-12
@@ -44,7 +66,13 @@
 					label.radio-inline
 						input(type="radio", name="showProfile", value="no", checked= user.privacy.showProfile == false ? "checked" : null)
 						| No
-				br
+
+					label.checkbox.toggle.candy(style='width: 100px; margin:20px auto;', onclick='')
+						input.allowAttendeesToCreateTheirOwnCategories(type='checkbox', class="invisible")
+						span
+							span No
+							span Yes
+						a.slide-button
 				p.lead.text-center.statusText.hide Saving..
 				.pop-input.center
 					button.btn.btn-primary.font.font-ah(type='submit', href="")
@@ -56,104 +84,160 @@
 #notificationModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="", aria-hidden="true")
 	.modal-dialog
 		.modal-content
-			.modal-body.reveal-modal
+			.modal-body.reveal-modal(style="background-color:#fdd093;")
 				input(type="hidden", name="_csrf", value=token)
 				h1 Notification settings
 				.center2
 					| <b>My email account can recive notification</b> <br /> <b>of receipt of a ____________ in EventMost:</b>
 				.pop-input.center.headerspacer2
-					.left.right-al
+					.col-xs-6.col-lg-6.col-sm-6.right
 						| Private message
-					.left.switches
+					.col-xs-6.col-lg-6.col-sm-6.switches
 						label.radio-inline
 							input(type="radio", name="emailPrivateMessages", value="no", checked= user.notification.email.privateMessages == false ? "checked" : null)
 							| No
 						label.radio-inline
 							input(type="radio", name="emailPrivateMessages", value="yes", checked= user.notification.email.privateMessages == true ? "checked" : null)
 							| Yes
+
+						label.checkbox.toggle.candy(style='width: 100px; margin:20px auto;', onclick='')
+							input.allowAttendeesToCreateTheirOwnCategories(type='checkbox', class="invisible")
+							span
+								span No
+								span Yes
+							a.slide-button
 					.clearfix
-					.left.right-al
+					.col-xs-6.col-lg-6.col-sm-6.right
 						| Business Card
-					.left.switches
+					.col-xs-6.col-lg-6.col-sm-6.switches
 						label.radio-inline
 							input(type='radio', name="emailBusinessCards", value="no", checked= user.notification.email.businessCards == false ? "checked" : null)
 							| No
 						label.radio-inline
 							input(type='radio', name="emailBusinessCards", value="yes", checked= user.notification.email.businessCards == true ? "checked" : null)
 							| Yes
+
+						label.checkbox.toggle.candy(style='width: 100px; margin:20px auto;', onclick='')
+							input.allowAttendeesToCreateTheirOwnCategories(type='checkbox', class="invisible")
+							span
+								span No
+								span Yes
+							a.slide-button
 					.clearfix
-					.left.right-al
+					.col-xs-6.col-lg-6.col-sm-6.right
 						| Comment on my wall
-					.left.switches
+					.col-xs-6.col-lg-6.col-sm-6.switches
 						label.radio-inline
 							input(type='radio', name="emailComments", value="no", checked= user.notification.email.comments == false ? "checked" : null)
 							| No
 						label.radio-inline
 							input(type='radio', name="emailComments", value="yes", checked= user.notification.email.comments == true ? "checked" : null)
 							| Yes
+						label.checkbox.toggle.candy(style='width: 100px; margin:20px auto;', onclick='')
+							input.allowAttendeesToCreateTheirOwnCategories(type='checkbox', class="invisible")
+							span
+								span No
+								span Yes
+							a.slide-button
 					.clearfix
-					.left.right-al
+					.col-xs-6.col-lg-6.col-sm-6.right
 						| Someone saved my profile
-					.left.switches
+					.col-xs-6.col-lg-6.col-sm-6.switches
 						label.radio-inline
 							input(type='radio', name="emailSavedProfile", value="no", checked= user.notification.email.savedProfile == false ? "checked" : null)
 							| No
 						label.radio-inline
 							input(type='radio', name="emailSavedProfile", value="yes", checked= user.notification.email.savedProfile == true ? "checked" : null)
 							| Yes
+						label.checkbox.toggle.candy(style='width: 100px; margin:20px auto;', onclick='')
+							input.allowAttendeesToCreateTheirOwnCategories(type='checkbox', class="invisible")
+							span
+								span No
+								span Yes
+							a.slide-button
 					.clearfix
 				.center2
 					| <b>My mobile device, via the EventMost app,</b> <br /> <b>can receive a push notification of a ____________ <br /> in EventMost:</b>
 				.pop-input.center.headerspacer2
-					.left.right-al
+					.col-xs-6.col-lg-6.col-sm-6.right
 						| Private message
-					.left.switches
+					.col-xs-6.col-lg-6.col-sm-6.switches
 						label.radio-inline
 							input(type='radio', name="mobilePrivateMessages", value="no", checked= user.notification.mobile.privateMessages == false ? "checked" : null)
 							| No
 						label.radio-inline
 							input(type='radio', name="mobilePrivateMessages", value="yes", checked= user.notification.mobile.privateMessages == true ? "checked" : null)
 							| Yes
+						label.checkbox.toggle.candy(style='width: 100px; margin:20px auto;', onclick='')
+							input.allowAttendeesToCreateTheirOwnCategories(type='checkbox', class="invisible")
+							span
+								span No
+								span Yes
+							a.slide-button
 					.clearfix
-					.left.right-al
+					.col-xs-6.col-lg-6.col-sm-6.right
 						| Business Card
-					.left.switches
+					.col-xs-6.col-lg-6.col-sm-6.switches
 						label.radio-inline
 							input(type='radio', name="mobileBusinessCards", value="yes", checked= user.notification.mobile.businessCards == false ? "checked" : null)
 							| No
 						label.radio-inline
 							input(type='radio', name="mobileBusinessCards", value="yes", checked= user.notification.mobile.businessCards == true ? "checked" : null)
 							| Yes
+						label.checkbox.toggle.candy(style='width: 100px; margin:20px auto;', onclick='')
+							input.allowAttendeesToCreateTheirOwnCategories(type='checkbox', class="invisible")
+							span
+								span No
+								span Yes
+							a.slide-button
 					.clearfix
-					.left.right-al
+					.col-xs-6.col-lg-6.col-sm-6.right
 						| Comment on my wall
-					.left.switches
+					.col-xs-6.col-lg-6.col-sm-6.switches
 						label.radio-inline
 							input(type='radio', name="mobileComments", value="no", checked= user.notification.mobile.comments == false ? "checked" : null)
 							| No
 						label.radio-inline
 							input(type='radio', name="mobileComments", value="yes", checked= user.notification.mobile.comments == true ? "checked" : null)
 							| Yes
+						label.checkbox.toggle.candy(style='width: 100px; margin:20px auto;', onclick='')
+							input.allowAttendeesToCreateTheirOwnCategories(type='checkbox', class="invisible")
+							span
+								span No
+								span Yes
+							a.slide-button
 					.clearfix
-					.left.right-al
+					.col-xs-6.col-lg-6.col-sm-6.right
 						| Someone saved my profile
-					.left.switches
+					.col-xs-6.col-lg-6.col-sm-6.switches
 						label.radio-inline
 							input(type='radio', name="mobileSavedProfile", value="no", checked= user.notification.mobile.savedProfile == false ? "checked" : null)
 							| No
 						label.radio-inline
 							input(type='radio', name="mobileSavedProfile", value="yes", checked= user.notification.mobile.savedProfile == true ? "checked" : null)
 							| Yes
+						label.checkbox.toggle.candy(style='width: 100px; margin:20px auto;', onclick='')
+							input.allowAttendeesToCreateTheirOwnCategories(type='checkbox', class="invisible")
+							span
+								span No
+								span Yes
+							a.slide-button
 					.clearfix
 				.center2
 					| <b>My mobile device, via the EventMost app, can receive push notification of a message deemed important by the Event Planner?</b>
-				.center2.turn
+				.center
 						label.radio-inline
 							input(type='radio', name="mobileMessage", value="no", checked= user.notification.mobile.messages == false ? "checked" : null)
 							| No
 						label.radio-inline
 							input(type='radio', name="mobileMessage", value="yes", checked= user.notification.mobile.messages == true ? "checked" : null)
 							| Yes
+						label.checkbox.toggle.candy(style='width: 100px; margin:20px auto;', onclick='')
+							input.allowAttendeesToCreateTheirOwnCategories(type='checkbox', class="invisible")
+							span
+								span No
+								span Yes
+							a.slide-button
 					.clearfix
 				.center2
 					.pop-input.center
