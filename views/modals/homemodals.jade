@@ -52,7 +52,6 @@
 				
 				a(href="#", class="close-reveal-modal", data-dismiss="modal") 
 					img(src="/img/x.svg")
-	
 
 #notificationModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="", aria-hidden="true")
 	.modal-dialog
@@ -67,41 +66,41 @@
 						| Private message
 					.left.switches
 						label.radio-inline
-							input(type='checkbox', name="privateMessages", value="yes", checked= user.notification.email.privateMessages == true ? "checked" : null)
-							span
-								span No
-								span Yes
-							a.slide-button
+							input(type="radio", name="emailPrivateMessages", value="no", checked= user.notification.email.privateMessages == false ? "checked" : null)
+							| No
+						label.radio-inline
+							input(type="radio", name="emailPrivateMessages", value="yes", checked= user.notification.email.privateMessages == true ? "checked" : null)
+							| Yes
 					.clearfix
 					.left.right-al
 						| Business Card
 					.left.switches
-						label.checkbox.toggle.candy(style='width: 100px;', onclick='')
-							input(type='checkbox', name="businessCards", value="yes", checked= user.notification.email.businessCards == true ? "checked" : null)
-							span
-								span No
-								span Yes
-							a.slide-button
+						label.radio-inline
+							input(type='radio', name="emailBusinessCards", value="no", checked= user.notification.email.businessCards == false ? "checked" : null)
+							| No
+						label.radio-inline
+							input(type='radio', name="emailBusinessCards", value="yes", checked= user.notification.email.businessCards == true ? "checked" : null)
+							| Yes
 					.clearfix
 					.left.right-al
 						| Comment on my wall
 					.left.switches
-						label.checkbox.toggle.candy(style='width: 100px;', onclick='')
-							input(type='checkbox', name="comments", value="yes", checked= user.notification.email.comments == true ? "checked" : null)
-							span
-								span No
-								span Yes
-							a.slide-button
+						label.radio-inline
+							input(type='radio', name="emailComments", value="no", checked= user.notification.email.comments == false ? "checked" : null)
+							| No
+						label.radio-inline
+							input(type='radio', name="emailComments", value="yes", checked= user.notification.email.comments == true ? "checked" : null)
+							| Yes
 					.clearfix
 					.left.right-al
 						| Someone saved my profile
 					.left.switches
-						label.checkbox.toggle.candy(style='width: 100px;', onclick='')
-							input(type='checkbox', name="savedProfile", value="yes", checked= user.notification.email.savedProfile == true ? "checked" : null)
-							span
-								span No
-								span Yes
-							a.slide-button
+						label.radio-inline
+							input(type='radio', name="emailSavedProfile", value="no", checked= user.notification.email.savedProfile == false ? "checked" : null)
+							| No
+						label.radio-inline
+							input(type='radio', name="emailSavedProfile", value="yes", checked= user.notification.email.savedProfile == true ? "checked" : null)
+							| Yes
 					.clearfix
 				.center2
 					| <b>My mobile device, via the EventMost app,</b> <br /> <b>can receive a push notification of a ____________ <br /> in EventMost:</b>
@@ -109,52 +108,52 @@
 					.left.right-al
 						| Private message
 					.left.switches
-						label.checkbox.toggle.candy(style='width: 100px;', onclick='')
-							input(type='checkbox', name="privateMessages", value="yes", checked= user.notification.mobile.privateMessages == true ? "checked" : null)
-							span
-								span No
-								span Yes
-							a.slide-button
+						label.radio-inline
+							input(type='radio', name="mobilePrivateMessages", value="no", checked= user.notification.mobile.privateMessages == false ? "checked" : null)
+							| No
+						label.radio-inline
+							input(type='radio', name="mobilePrivateMessages", value="yes", checked= user.notification.mobile.privateMessages == true ? "checked" : null)
+							| Yes
 					.clearfix
 					.left.right-al
 						| Business Card
 					.left.switches
-						label.checkbox.toggle.candy(style='width: 100px;', onclick='')
-							input(type='checkbox', name="businessCards", value="yes", checked= user.notification.mobile.businessCards == true ? "checked" : null)
-							span
-								span No
-								span Yes
-							a.slide-button
+						label.radio-inline
+							input(type='radio', name="mobileBusinessCards", value="yes", checked= user.notification.mobile.businessCards == false ? "checked" : null)
+							| No
+						label.radio-inline
+							input(type='radio', name="mobileBusinessCards", value="yes", checked= user.notification.mobile.businessCards == true ? "checked" : null)
+							| Yes
 					.clearfix
 					.left.right-al
 						| Comment on my wall
 					.left.switches
-						label.checkbox.toggle.candy(style='width: 100px;', onclick='')
-							input(type='checkbox', name="comments", value="yes", checked= user.notification.mobile.comments == true ? "checked" : null)
-							span
-								span No
-								span Yes
-							a.slide-button
+						label.radio-inline
+							input(type='radio', name="mobileComments", value="no", checked= user.notification.mobile.comments == false ? "checked" : null)
+							| No
+						label.radio-inline
+							input(type='radio', name="mobileComments", value="yes", checked= user.notification.mobile.comments == true ? "checked" : null)
+							| Yes
 					.clearfix
 					.left.right-al
 						| Someone saved my profile
 					.left.switches
-						label.checkbox.toggle.candy(style='width: 100px;', onclick='')
-							input(type='checkbox', name="savedProfile", value="yes", checked= user.notification.mobile.savedProfile == true ? "checked" : null)
-							span
-								span No
-								span Yes
-							a.slide-button
+						label.radio-inline
+							input(type='radio', name="mobileSavedProfile", value="no", checked= user.notification.mobile.savedProfile == false ? "checked" : null)
+							| No
+						label.radio-inline
+							input(type='radio', name="mobileSavedProfile", value="yes", checked= user.notification.mobile.savedProfile == true ? "checked" : null)
+							| Yes
 					.clearfix
 				.center2
 					| <b>My mobile device, via the EventMost app, can receive push notification of a message deemed important by the Event Planner?</b>
 				.center2.turn
-					label.checkbox.toggle.candy(style='width: 100px;', onclick='')
-						input(type='checkbox', name="message", value="yes", checked= user.notification.mobile.message == true ? "checked" : null)
-						span
-							span No
-							span Yes
-						a.slide-button
+						label.radio-inline
+							input(type='radio', name="mobileMessage", value="no", checked= user.notification.mobile.messages == false ? "checked" : null)
+							| No
+						label.radio-inline
+							input(type='radio', name="mobileMessage", value="yes", checked= user.notification.mobile.messages == true ? "checked" : null)
+							| Yes
 					.clearfix
 				.center2
 					.pop-input.center
