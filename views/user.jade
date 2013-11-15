@@ -9,7 +9,6 @@ block content
 			input.pull-right.font-s.search-input.pad-left-ten.header-links(type="search", placeholder="search events or people", style="width:87%;")
 	.clearfix.hide-all2
 
-
 	.nspacer
 	.col-md-2.col-xs-2.col-sm-2.hide-mini3-except-smart
 		.pull-right
@@ -21,7 +20,13 @@ block content
 			a(href="mailto:#{user.email}", class="link-purple")
 				| #{user.email}
 		.clearfix
-	
+
+	.col-md-2.col-xs-2.col-sm-2.hide-mini3-except-smart
+		.pull-right
+			.text-right.font-s.nspacer-bigger
+				a(href="../profile" class="link-purple") <h3> Edit </h3>
+
+			
 	unless theUser._id.equals(user._id)
 		.col-md-6.col-xs-6.col-sm-6.lower.hide-mini3-except-smart
 			.right.iconsbox.spacerbig
