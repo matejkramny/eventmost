@@ -17,7 +17,7 @@ block content
 		.text-right.font-s.nspacer-bigger
 			| <b>#{theUser.getName()}</b> - #{theUser.position}, #{theUser.company}<br />
 			img(src="/images/message-icon-small.svg", alt="", class="pad-right-ten")
-			a(href="mailto:#{user.email}", class="link-purple")
+			a(href="mailto:#{theUser.email}", class="link-purple")
 				| #{user.email}
 		.clearfix
 
