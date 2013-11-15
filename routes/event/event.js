@@ -6,6 +6,7 @@ var dropbox = require('./dropbox')
 	, messages = require('./messages')
 	, attendees = require('./attendees')
 	, models = require('../../models')
+	, admin = require('./admin/admin')
 
 exports.router = function (app) {
 	app.get('/event/:id/registrationpage', getEvent, attending, viewRegistrationPage)
@@ -26,6 +27,7 @@ exports.router = function (app) {
 	attendees.router(app)
 	list.router(app)
 	dropbox.router(app)
+	admin.router(app)
 }
 
 // Middleware to get :id param into res.local
