@@ -175,6 +175,7 @@ exports.doEditProfile = doEditProfile = function (req, res) {
 		}
 	}
 	
+	//Privacy
 	if (typeof req.body.showProfile !== 'undefined') {
 		u.privacy.showProfile = req.body.showProfile == 'yes' ? true : false;
 	}
@@ -186,6 +187,36 @@ exports.doEditProfile = doEditProfile = function (req, res) {
 	}
 	if (typeof req.body.allowPM !== 'undefined') {
 		u.privacy.allowPM = req.body.allowPM == 'yes' ? true : false;
+	}
+	
+	//Notification - Email Stuff 
+	if (typeof req.body.emailPrivateMessages !== 'undefined') {
+		u.notification.email.privateMessages = req.body.emailPrivateMessages == 'yes' ? true : false;
+	}
+	if (typeof req.body.emailBusinessCards !== 'undefined') {
+		u.notification.email.businessCards = req.body.emailbusinessCards == 'yes' ? true : false;
+	}
+	if (typeof req.body.emailComments !== 'undefined') {
+		u.notification.email.comments = req.body.emailComments == 'yes' ? true : false;
+	}
+	if (typeof req.body.emailSavedProfile !== 'undefined') {
+		u.notification.email.savedProfile = req.body.emailSavedProfile == 'yes' ? true : false;
+	}
+	//Notification - Mobile Stuff 
+	if (typeof req.body.mobilePrivateMessages !== 'undefined') {
+		u.notification.mobile.privateMessages = req.body.mobilePrivateMessages == 'yes' ? true : false;
+	}
+	if (typeof req.body.mobileBusinessCards !== 'undefined') {
+		u.notification.mobile.businessCards = req.body.mobilebusinessCards == 'yes' ? true : false;
+	}
+	if (typeof req.body.mobileComments !== 'undefined') {
+		u.notification.mobile.comments = req.body.mobileComments == 'yes' ? true : false;
+	}
+	if (typeof req.body.mobileSavedProfile !== 'undefined') {
+		u.notification.mobile.savedProfile = req.body.mobileSavedProfile == 'yes' ? true : false;
+	}
+	if (typeof req.body.mobileMessage !== 'undefined') {
+		u.notification.mobile.messages = req.body.mobileMessage == 'yes' ? true : false;
 	}
 	
 	if (typeof req.body.company !== 'undefined') {
