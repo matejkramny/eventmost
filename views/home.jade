@@ -101,13 +101,14 @@ append content
 			.font-bigs.font-thin.center.home-big  
 				| Events nearby
 				img.home-big3(src="/images/location-icon.svg", class="img-responsive", style="width:80%; margin:auto;")
-		//- Events
+		//- All Events
 	.col-xs-4.bg-yellow.pad-right-zero.pad-left-zero.hide-all2.nspacer(style='height:242px;') 
 		a.link-purple2(href="/events", alt="Events")
 			.font-bigs.font-thin.center.home-big 
 				| All events<br />
 				img.home-big2(src="/images/purple-arrow.svg", class="img-responsive", style="width:70%; margin:auto;")
 	.clearfix.hide-all2
+		//- My Events
 	.col-xs-12.hide-all2
 		.bg-green.font-ah.pad-left-ten(style="min-height:27px;")
 			| My Events
@@ -198,7 +199,7 @@ append content
 		mixin eventItem(event)
 	if myevents.length == 0
 		.nspacer.col-md-12.col-xs-12.col-lg-12.col-sm-12
-			p.lead.text-center You have no events..
+			p.lead.text-center You have no events.
 				br
 				a(href="/event/add") Create an event
 	else

@@ -5,21 +5,21 @@
 			b= ev.name
 .col-md-8.col-xs-8.col-sm-8.hide-mini3-except-smart
 	.font-x1.bg-yellow.center.pull-right.psev2.prof-wall(style="padding-top:15px;")
-		a.link-purple(href="../../messages") Conversations
+		a.link-purple(href="../messages") Conversations
 	.font-x1.bg-purple.center.pull-right.psev2.prof-wall(style="padding-top:15px;")
-		a.link-white(href="../../") My notes
+		a.link-white(href="../") My notes
 	.font-x1.bg-green.center.pull-right.psev2.prof-wall
-		a.link-white(href="../../dropbox") Event
+		a.link-white(href="../dropbox") Event
 			br
 			| dropbox
 	.font-x1.bg-yellow.center.pull-right.psev2.prof-wall
-		a.link-purple(href="../../registrationpage") Registration
+		a.link-purple(href="../registrationpage") Registration
 			br
 			| page
 	.font-x1.bg-purple.center.pull-right.psev2.prof-wall(style="padding-top:15px;")
-		a.link-white(href="../../" + (attendee ? "attendee/"+attendee._id : "")) My profile
+		a.link-white(href="../" + (attendee ? "attendee/"+attendee._id : "")) My profile
 	.font-x1.bg-green.center.pull-right.psev2.prof-wall(style="padding-top:15px;")
-		a.link-white(href="../../attendees") Attendees
+		a.link-white(href="../attendees") Attendees
 .clearfix.hide-mini3-except-smart
 .col-md-6.col-xs-6.col-sm-6.hide-mini3-except-smart
 	.line-green(style="height:3px; margin-top:-3px;")
@@ -33,30 +33,30 @@
 	.center
 		.inline.nspacer-small
 			.font-x1.bg-green.center.psev2.prof-wall
-				a.link-white(href="../../attendees") Attendees<br /><span class="color-green">Messages</span>
+				a.link-white(href="../attendees") Attendees<br /><span class="color-green">Messages</span>
 		.inline.nspacer-small
 			.font-x1.bg-purple.center.psev2.prof-wall
-				a.link-white(href="../../" + (loggedIn == true ? base+"attendee/"+user._id : base+"attendees")) My 
+				a.link-white(href="../" + (loggedIn == true ? base+"attendee/"+user._id : base+"attendees")) My 
 					br
 					| profile
 		.inline.nspacer-small
 			.font-x1.bg-yellow.center.psev2.prof-wall
-				a.link-purple(href="../../registrationpage") Registration
+				a.link-purple(href="../registrationpage") Registration
 					br
 					| page
 		.inline.nspacer-small
 			.font-x1.bg-green.center.psev2.prof-wall
-				a.link-white(href="../../dropdown") Event
+				a.link-white(href="../dropdown") Event
 					br
 					| dropbox
 		.inline.nspacer-small
 			.font-x1.bg-purple.center.psev2.prof-wall
-				a.link-white(href="../../") My
+				a.link-white(href="../") My
 					br
 					| notes
 		.inline.nspacer-small
 			.font-x1.bg-yellow.center.psev2.prof-wall
-				a.link-purple(href="../../messages") Conversations
+				a.link-purple(href="../messages") Conversations
 					br
 					span.color-yellow Messages
 
