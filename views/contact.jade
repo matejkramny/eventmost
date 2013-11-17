@@ -40,6 +40,10 @@ block content
 		p
 			span#supnames
 		script(type='text/javascript')
+			//Edit these two
+			var offlineImg = 'http://www.img-medicalgroup.com/en/buying/email_button.png'
+			var onlineImg = 'http://tipsytaxi.ucdavis.edu/wp-content/uploads/2013/01/live-chat-button.gif'
+			//Leave these alone
 			var supporters = document.getElementById('supporters');
 			function getProntoInfo() {
 			var prontoSrcUrl = "https://islpronto.islonline.net/live/islpronto/public/chat_info.js?d=eventmost";
@@ -69,7 +73,7 @@ block content
 			link.href = 'javascript:void(0)';
 			link.onclick = ISLProntoInfo.onchat;
 			var image = document.getElementById('islpronto_image');
-			image.src = 'http://tipsytaxi.ucdavis.edu/wp-content/uploads/2013/01/live-chat-button.gif';
+			image.src = onlineImg;
 			image.className = 'fadechat';
 			textAvailable.innerHTML = '<br>Currently online:';
 			if(ISLProntoInfo.supporters > 1) {
@@ -85,7 +89,7 @@ block content
 			var link = document.getElementById('islpronto_link');
 			link.href = 'mailto:support@eventmost.com';
 			var image = document.getElementById('islpronto_image');
-			image.src = 'http://www.img-medicalgroup.com/en/buying/email_button.png';
+			image.src = offlineImg;
 			image.className = 'fademail';
 			document.getElementById('supnames').innerHTML = '';
 			textAvailable.innerHTML = '';
