@@ -6,50 +6,53 @@ block content
 	.nspacer
 	//- People who saved your profile
 	.col-md-12.col-xs-12.col-sm-12
-		.center	
-			b People who saved your profile
-		for saver in profileSavers
-			.inline
-				.div
-					img(src= saver.avatar.length > 0 ? saver.avatar : "/images/default_speaker.svg", alt="", class="circularespond",)
-				.font-s
-					a(href="/user/"+saver._id): b= saver.getName()
-						br
-						if (saver.company && saver.position)
-							= saver.company
-							| , 
-							= saver.position
-						- else if (saver.company)
-							= saver.company
-						- else if (saver.position)
-							= saver.position
-		if (profileSavers.length == 0)
-			b No Saved Profiles.
-		.clearfix
-		.nspacer-big
-	.line-green(style="height:3px; margin-top:-3px;")
+		.font-tw
+			b Those who saved your profile
+		.line-purple
+	.clearfix
 	.nspacer
+	for saver in profileSavers
+		.inline
+			.div
+				img(src= saver.avatar.length > 0 ? saver.avatar : "/images/default_speaker.svg", alt="", class="circularespond",)
+			.font-s
+				a(href="/user/"+saver._id): b= saver.getName()
+					br
+					if (saver.company && saver.position)
+						= saver.company
+						| , 
+						= saver.position
+					- else if (saver.company)
+						= saver.company
+					- else if (saver.position)
+						= saver.position
+	if (profileSavers.length == 0)
+		b No Saved Profiles.
+	.clearfix
+	.nspacer-big
 	//- Your Saved Profiles
 	.col-md-12.col-xs-12.col-sm-12
-		.center
+		.font-tw
 			b Profiles you saved
-			for profile in user.savedProfiles
-				-var i = 0;
-				.inline
-					.div
-						img(src= profile.avatar.length > 0 ? profile.avatar : "/images/default_speaker.svg", alt="", class="circularespond",)
-					.font-s
-						a(href="/user/"+profile._id): b= profile.getName()
-						br
-						if (profile.company && profile.position)
-							= profile.company
-							| , 
-							= profile.position
-						- else if (profile.company)
-							= profile.company
-						- else if (profile.position)
-							= profile.position
-	
+		.line-purple
+	.clearfix
+	.nspacer
+	for profile in user.savedProfiles
+		-var i = 0;
+		.inline
+			.div
+				img(src= profile.avatar.length > 0 ? profile.avatar : "/images/default_speaker.svg", alt="", class="circularespond",)
+			.font-s
+				a(href="/user/"+profile._id): b= profile.getName()
+				br
+				if (profile.company && profile.position)
+					= profile.company
+					| , 
+					= profile.position
+				- else if (profile.company)
+					= profile.company
+				- else if (profile.position)
+					= profile.position
 	if (user.savedProfiles.length == 0)
 		b No Saved Profiles.
 		.clearfix
