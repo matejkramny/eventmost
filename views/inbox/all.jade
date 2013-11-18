@@ -81,30 +81,27 @@ block content
 	.nspacer
 
 	//- saved
-	if (user.savedProfiles.length == 0)
+	if (savers.length == 0)
 		p.text-center No one has saved your profile yet.
 		.clearfix
 		.nspacer
-	else
-		.col-md-12.col-xs-12.col-sm-12
-			.center
-				- for(var i = 0; i < 3; i++)
-					- if (i+1 > user.savedProfiles.length)
-						- break;
-					.inline
-						.div
-							img(src=user.savedProfiles[i].avatar, alt="", class="circularespond",)
-						.font-s
-							b= user.savedProfiles[i].getName()
+	.col-md-12.col-xs-12.col-sm-12
+		.center
+			for saver in savers
+				.inline
+					.div
+						img(src= saver.avatar.length > 0 ? saver.avatar : "/images/default_speaker.svg", alt="", class="circularespond",)
+					.font-s
+						a(href="/user/"+saver._id): b= saver.getName()
 							br
-							if (user.savedProfiles[i].company && user.savedProfiles[i].position)
-								= user.savedProfiles[i].company
+							if (saver.company && saver.position)
+								= saver.company
 								| , 
-								= user.savedProfiles[i].position
-							- else if (user.savedProfiles[i].company)
-								= user.savedProfiles[i].company
-							- else if (user.savedProfiles[i].position)
-								= user.savedProfiles[i].position
+								= saver.position
+							- else if (saver.company)
+								= saver.company
+							- else if (saver.position)
+								= saver.position
 
 	if user.savedProfiles.length > 3
 		// Maybe we should have something like: a(href='inbox/savedProfiles') Click to view all
