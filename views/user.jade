@@ -47,19 +47,24 @@ block content
 				a(href="/user/"+theUser._id+"/save", class="link1")
 					img(src="/images/save-prof.svg", alt="", class="img-responsive inline res-butt pad-left-five")
 	else
-		//- Patryk, please change the /images/send-prv.svg to an image that says "Edit My Profile"
 		.col-md-offset-4.col-xs-offset-4.col-sm-offset-4.col-md-2.col-xs-2.col-sm-2.lower.hide-mini3-except-smart
 			.right.iconsbox.spacerbig
 				a(href="/profile", class="link1")
-					img(src="/images/send-prv.svg", alt="", class="img-responsive inline pad-right-ten res-butt")
+					button.btn.btn-primary.font-x(href="/profile" style="width:125px; padding:10px; padding-left:25px; padding-right:35px; margin-right:20px;")
+						| Edit Profile
+					.nspacer-small
 		.col-md-offset-4.col-xs-offset-4.col-sm-offset-4.col-md-2.col-xs-2.col-sm-2.lower-hide.hide-except-smart
 			.right.iconsbox.spacerbig
 				a(href="/profile", class="link1")
-					img(src="/images/send-prv.svg", alt="", class="img-responsive inline res-butt")
+					button.btn.btn-primary.font-x(href="/profile" style="width:125px; padding:10px; padding-left:25px; padding-right:35px; margin-right:20px;")
+						| Edit Profile
+					.nspacer-small
 		.hide-except-smart
 			.center
 				a(href="/profile", class="link1")
-					img(src="/images/send-prv.svg", alt="", class="img-responsive inline res-butt pad-left-five")
+					button.btn.btn-primary.font-x(href="/profile" style="width:125px; padding:10px; padding-left:25px; padding-right:35px; margin-right:20px;")
+						| Edit Profile
+					.nspacer-small
 	
 	.nspacer.hide-except-smart
 	.col-md-4.col-xs-4.col-sm-4.hide-except-smart
