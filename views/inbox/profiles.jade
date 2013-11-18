@@ -4,12 +4,38 @@ block content
 	include navbar
 	
 	.nspacer
-	//- saved
+	//- People who saved your profile
+	.col-md-12.col-xs-12.col-sm-12
+		.center	
+			b People who saved your profile
+		for saver in profileSavers
+			- var i = 0;
+			.inline
+				.div
+					img(src= saver.avatar.length > 0 ? saver.avatar : "/images/default_speaker.svg", alt="", class="circularespond",)
+				.font-s
+					a(href="/user/"+saver._id): b= saver.getName()
+						br
+						if (saver.company && saver.position)
+							= saver.company
+							| , 
+							= saver.position
+						- else if (saver.company)
+							= saver.company
+						- else if (saver.position)
+							= saver.position
+		if (profileSavers.length == 0)
+			b No Saved Profiles.
+		.clearfix
+		.nspacer-big
+	.line-green(style="height:3px; margin-top:-3px;")
+	.nspacer
+	//- Your Saved Profiles
 	.col-md-12.col-xs-12.col-sm-12
 		.center
+			b Profiles you saved
 			for profile in user.savedProfiles
 				-var i = 0;
-				
 				.inline
 					.div
 						img(src= profile.avatar.length > 0 ? profile.avatar : "/images/default_speaker.svg", alt="", class="circularespond",)
@@ -26,7 +52,7 @@ block content
 							= profile.position
 	
 	if (user.savedProfiles.length == 0)
-		| No one has saved your profile yet.
+		b No Saved Profiles.
 		.clearfix
 		.nspacer
 	
