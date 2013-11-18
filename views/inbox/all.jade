@@ -57,26 +57,20 @@ block content
 	
 	for card in user.receivedCards
 		+card(card)
+		img.col-sm-4.col-xs-12.col-md-4.col-lg-4(src="/businesscards/"+card._id+".png")
 	
 	//- end business
 
 	.clearfix
 	.nspacer-medium
-
+	if (user.receivedCards.length > 3)
+		//Link to view all
 	.center(style='height:35px;')
 		ul.pagination
 			li
 				a(href='#') «
 			li.active
 				a(href='#') 1
-			li
-				a(href='#') 2
-			li
-				a(href='#') 3
-			li.disabled
-				a(href='#') ...
-			li
-				a(href='#') 5
 			li
 				a(href='#') »
 	.clearfix
@@ -130,6 +124,10 @@ block content
 		.font-tw
 			| <b>Public messages</b>
 		.line-purple
+	.clearfix
+	.nspacer
+	//What are public messages?
+	p.text-center No Public Messages.
 	.clearfix
 	.nspacer
 
