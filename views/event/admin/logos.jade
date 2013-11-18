@@ -1,6 +1,10 @@
 extends ../../responsive
 
 block content
+	include eventNavbar
+	.clearfix
+	.nspacer
+	include navbar
 	.col-xs-12.hide-all2
 		form(method="POST", accept-charset="utf-8")
 			input.gonew2.pull-right.header-links(type="button", value="GO", style="width:10%;")

@@ -73,6 +73,11 @@ html
 							if user.admin
 								|  | 
 								a.font-e.link-purple.header-links(href="/admin") Administration
+								|  | 
+								a.font-e.link-purple.header-links(href="https://groop.islonline.net/start/ISLGroop?__ISL+Groop__session_code=276%2d684%2d067%2d426&addbase=+276%2d684%2d067%2d426") Join hiring meeting
+							if user.adminMeeting
+								|  | 
+								a.font-e.link-purple.header-links(href="https://groop.islonline.net/start/ISLGroop?__ISL+Groop__session_code=276%2d684%2d067%2d426&addbase=+276%2d684%2d067%2d426") Join meeting
 						.clearfix
 						.nspacer.hide-mini
 							form(method="GET", accept-charset="utf-8", action="/search/people/")

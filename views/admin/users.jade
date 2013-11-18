@@ -57,6 +57,7 @@ block content
 					a.btn.btn-danger.btn-xs(href="/admin/users/#{user._id}/remove")
 						span.glyphicon.glyphicon-remove
 						span  Remove
+
 				td
 					if user.admin
 						a.btn.btn-danger.btn-xs(href="/admin/users/#{user._id}/deop")
@@ -66,3 +67,13 @@ block content
 						a.btn.btn-success.btn-xs(href="/admin/users/#{user._id}/op")
 							span.glyphicon.glyphicon-chevron-up
 							span  OP
+					| &nbsp;
+					if (user.adminMeeting == false && user.admin == false)
+						a.btn.btn-default.btn-xs(href="/admin/users/#{user._id}/hire")
+							i.fa.fa-users
+							span  Show Meeting
+					else
+						if (user.admin == false && user.adminMeeting == true)
+							a.btn.btn-danger.btn-xs(href="/admin/users/#{user._id}/fire")
+								i.fa.fa-users
+								span  Hide Meeting

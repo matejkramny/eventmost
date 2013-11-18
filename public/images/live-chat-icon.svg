@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 17.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="200px" height="100px" viewBox="0 0 200 100" enable-background="new 0 0 200 100" xml:space="preserve">
+<rect fill="#FDD093" width="200" height="100"/>
+<rect x="100" y="26.893" fill="none" width="100" height="59.633"/>
+<text id="Email_us" transform="matrix(0.9791 0 0 1 118.7536 53.1728)"><tspan x="0" y="0" fill="#542437" font-family="'Raleway-Thin'" font-size="36">Live</tspan><tspan x="-5.382" y="29.2" fill="#542437" font-family="'Raleway-Thin'" font-size="36">Chat</tspan></text>
+<rect x="8.5" y="22.5" display="none" fill="#FDD093" stroke="#542437" stroke-miterlimit="10" width="93" height="62"/>
+<g id="layer1" transform="translate(0,-924.3622)" inkscape:label="Layer 1" inkscape:groupmode="layer" display="none">
+	<g id="g3735" transform="matrix(0.88372093,0,0,0.88372093,-70.767441,889.35607)" display="inline">
+		<path id="path2820" sodipodi:nodetypes="ccccc" fill="#FDD093" stroke="#542437" stroke-miterlimit="10" d="M96.546,66.812v65.702
+			h93.391V66.812C189.936,66.812,96.546,66.812,96.546,66.812z"/>
+		<path id="path2822" sodipodi:nodetypes="cccc" fill="#FDD093" stroke="#542437" stroke-miterlimit="10" d="M97.576,66.812
+			l45.596,35.466l45.686-35.466H97.576z"/>
+	</g>
+</g>
+<path id="path7605" fill="#FDD093" stroke="#542437" d="M46.855,13.293c-18.051,0-32.707,8.914-32.707,19.899
+	c0,7.888,7.557,14.71,18.5,17.929C31.202,61.626,21.42,69.23,21.42,69.23s17.499-4.292,21.049-16.321
+	c1.435,0.117,2.899,0.181,4.386,0.181c18.051,0,32.699-8.914,32.699-19.899S64.906,13.293,46.855,13.293z"/>
+<path id="path7608" fill="#FDD093" stroke="#542437" d="M67.26,30.969c13.845,0,25.086,8.14,25.086,18.171
+	c0,7.203-5.796,13.432-14.189,16.372c1.109,9.593,8.612,16.537,8.612,16.537s-13.421-3.92-16.144-14.903
+	c-1.1,0.107-2.224,0.165-3.364,0.165c-13.845,0-25.08-8.14-25.08-18.171S53.415,30.969,67.26,30.969z"/>
+</svg>

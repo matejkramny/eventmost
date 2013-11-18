@@ -31,6 +31,7 @@ exports.listEvents = function (req, res) {
 	})
 }
 
+// TODO fix this
 exports.listMyEvents = function (req, res) {
 	models.Event.find({ 'attendees.user': req.user._id })
 		.populate('avatar attendees.user')
