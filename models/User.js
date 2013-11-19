@@ -344,6 +344,7 @@ scheme.statics.createWithLinkedIn = function (meta, accessToken, accessTokenSecr
 		location: _meta.location.name,
 		website: _meta.publicProfileUrl,
 		interests: _meta.industry,
+		company: _meta.company.name,
 		position: _meta.headline,
 		desc: _meta.summary
 	})

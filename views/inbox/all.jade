@@ -57,9 +57,7 @@ block content
 		p.text-center No cards received
 	
 	for card in user.receivedCards
-		+card(card)
-		img.col-sm-4.col-xs-12.col-md-4.col-lg-4(src="/businesscards/"+card._id+".png")
-	
+		+card(card)	
 	//- end business
 
 	.clearfix
@@ -84,17 +82,28 @@ block content
 	.nspacer
 
 	//- saved
-	if (user.savedProfiles.length == 0)
+	if (savers.length == 0)
 		p.text-center No one has saved your profile yet.
 		.clearfix
 		.nspacer
-	else
-		.col-md-12.col-xs-12.col-sm-12
-			.center
-				- for(var i = 0; i < 3; i++)
-					- if (i+1 > user.savedProfiles.length)
-						- break;
-					+savedProfile(user.savedProfiles[i])
+
+	.col-md-12.col-xs-12.col-sm-12
+		.center
+			for saver in savers
+				.inline
+					.div
+						img(src= saver.avatar.length > 0 ? saver.avatar : "/images/default_speaker.svg", alt="", class="circularespond",)
+					.font-s
+						a(href="/user/"+saver._id): b= saver.getName()
+							br
+							if (saver.company && saver.position)
+								= saver.company
+								| , 
+								= saver.position
+							- else if (saver.company)
+								= saver.company
+							- else if (saver.position)
+								= saver.position
 
 	if user.savedProfiles.length > 3
 		// Maybe we should have something like: a(href='inbox/savedProfiles') Click to view all
