@@ -2,6 +2,7 @@ extends ../responsive
 
 include inc/message
 include inc/card
+include inc/savedProfile
 
 block content
 	include navbar
@@ -93,20 +94,7 @@ block content
 				- for(var i = 0; i < 3; i++)
 					- if (i+1 > user.savedProfiles.length)
 						- break;
-					.inline
-						.div
-							img(src=user.savedProfiles[i].avatar, alt="", class="circularespond",)
-						.font-s
-							b= user.savedProfiles[i].getName()
-							br
-							if (user.savedProfiles[i].company && user.savedProfiles[i].position)
-								= user.savedProfiles[i].company
-								| , 
-								= user.savedProfiles[i].position
-							- else if (user.savedProfiles[i].company)
-								= user.savedProfiles[i].company
-							- else if (user.savedProfiles[i].position)
-								= user.savedProfiles[i].position
+					+savedProfile(user.savedProfiles[i])
 
 	if user.savedProfiles.length > 3
 		// Maybe we should have something like: a(href='inbox/savedProfiles') Click to view all

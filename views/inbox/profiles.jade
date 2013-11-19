@@ -1,5 +1,7 @@
 extends ../responsive
 
+include inc/savedProfile
+
 block content
 	include navbar
 	
@@ -10,23 +12,10 @@ block content
 			for profile in user.savedProfiles
 				-var i = 0;
 				
-				.inline
-					.div
-						img(src= profile.avatar.length > 0 ? profile.avatar : "/images/default_speaker.svg", alt="", class="circularespond",)
-					.font-s
-						a(href="/user/"+profile._id): b= profile.getName()
-						br
-						if (profile.company && profile.position)
-							= profile.company
-							| , 
-							= profile.position
-						- else if (profile.company)
-							= profile.company
-						- else if (profile.position)
-							= profile.position
+				+savedProfile(profile)
 	
 	if (user.savedProfiles.length == 0)
-		| No one has saved your profile yet.
+		p.text-center.lead No one has saved your profile yet.
 		.clearfix
 		.nspacer
 	
