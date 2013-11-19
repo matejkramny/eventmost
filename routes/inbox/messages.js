@@ -198,7 +198,7 @@ function showMessages (req, res) {
 		},
 		json: function() {
 			res.send({
-				messages: topics
+				messages: res.locals.messages
 			})
 		}
 	})
