@@ -90,20 +90,7 @@ block content
 	.col-md-12.col-xs-12.col-sm-12
 		.center
 			for saver in savers
-				.inline
-					.div
-						img(src= saver.avatar.length > 0 ? saver.avatar : "/images/default_speaker.svg", alt="", class="circularespond",)
-					.font-s
-						a(href="/user/"+saver._id): b= saver.getName()
-							br
-							if (saver.company && saver.position)
-								= saver.company
-								| , 
-								= saver.position
-							- else if (saver.company)
-								= saver.company
-							- else if (saver.position)
-								= saver.position
+				+savedProfile(saver)
 
 	if user.savedProfiles.length > 3
 		// Maybe we should have something like: a(href='inbox/savedProfiles') Click to view all

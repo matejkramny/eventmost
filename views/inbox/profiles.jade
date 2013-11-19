@@ -13,21 +13,9 @@ block content
 		.line-purple
 	.clearfix
 	.nspacer
-	for saver in profileSavers
-		.inline
-			.div
-				img(src= saver.avatar.length > 0 ? saver.avatar : "/images/default_speaker.svg", alt="", class="circularespond",)
-			.font-s
-				a(href="/user/"+saver._id): b= saver.getName()
-					br
-					if (saver.company && saver.position)
-						= saver.company
-						| , 
-						= saver.position
-					- else if (saver.company)
-						= saver.company
-					- else if (saver.position)
-						= saver.position
+	.center
+		for saver in profileSavers
+			+savedProfile(saver)
 	if (profileSavers.length == 0)
 		b No Saved Profiles.
 	.clearfix
@@ -39,22 +27,9 @@ block content
 		.line-purple
 	.clearfix
 	.nspacer
-	for profile in user.savedProfiles
-		-var i = 0;
-		.inline
-			.div
-				img(src= profile.avatar.length > 0 ? profile.avatar : "/images/default_speaker.svg", alt="", class="circularespond",)
-			.font-s
-				a(href="/user/"+profile._id): b= profile.getName()
-				br
-				if (profile.company && profile.position)
-					= profile.company
-					| , 
-					= profile.position
-				- else if (profile.company)
-					= profile.company
-				- else if (profile.position)
-					= profile.position
+	.center
+		for profile in user.savedProfiles
+			+savedProfile(profile)
 	if (user.savedProfiles.length == 0)
 		b No Saved Profiles.
 		.clearfix
