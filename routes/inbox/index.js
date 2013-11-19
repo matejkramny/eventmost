@@ -27,8 +27,24 @@ function populateInbox (req, res, next) {
 	async.parallel([
 		function(cb) {
 			models.Topic.find({ $and: [{ users: u._id }] }).sort('-lastUpdated').populate('users').exec(function(err, topics) {
-				res.locals.messages = topics;
-				cb(null)
+				var messages = []
+				for (var i = 0; i < topics.length; i++) {
+					messages[i] = {
+						//lastMessage: ....
+						topic: topics[i]
+					}
+				}
+				async.each(messages, function(message, done) {
+					models.Message.findOne({ topic: message.topic._id }).sort('-timeSent').exec(function(err, msg) {
+						if (err) throw err;
+						
+						message.lastMessage = msg; //msg can be null!
+						done(null)
+					})
+				}, function(err) {
+					res.locals.messages = messages;
+					cb(null)
+				})
 			});
 		},
 		function(cb) {
