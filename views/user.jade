@@ -15,7 +15,12 @@ block content
 			img(src= theUser.avatar.length == 0 ? "/images/default_speaker.svg" : theUser.avatar, alt="", class="circularespond img-responsive")
 	.col-md-4.col-xs-4.col-sm-4.hide-mini3-except-smart
 		.text-right.font-s.nspacer-bigger
-			| <b>#{theUser.getName()}</b> - #{theUser.position}, #{theUser.company}<br />
+			| <b>#{theUser.getName()}</b> 
+			if (theUser.position)
+				| - #{theUser.position}
+			if (theUser.company)
+				| , #{theUser.company}
+			br
 			img(src="/images/message-icon-small.svg", alt="", class="pad-right-ten")
 			a(href="mailto:#{theUser.email}", class="link-purple")
 				| #{theUser.email}
