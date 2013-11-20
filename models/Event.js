@@ -64,6 +64,19 @@ var scheme = schema({
 		wallComments: { type: Number, default: 0},
 		savedProfiles: { type: Number, default: 0},
 		businessCards: { type: Number, default: 0}
+	}],
+	//EventLayout
+	sponsorLayout: [{
+		layout: { type: Number, default: 0}, //Should we have a default with no logo/sponsor logo?
+		sponsorLogo1: { 
+			type: ObjectId, 
+			ref: 'sponsorLogo1'},
+		sponsorLogo2: { 
+			type: ObjectId, 
+			ref: 'sponsorLogo2'},
+		sponsorLogo3: { 
+			type: ObjectId, 
+			ref: 'sponsorLogo3'}
 	}]
 })
 
