@@ -8,16 +8,20 @@ block content
 	for p in search.results
 		.row
 			a.col-md-2.col-sm-2.col-lg-2(href="/user/"+p._id)
-				img(src=p.avatar, style="max-height: 150px;")
+				img(src=p.avatar > 0 ? p.avatar : "/images/default_speaker.svg", alt="", class="circularespond",)
 			.col-md-10.col-sm-10.col-lg-10
 				.row
 					h4.col-md-12.col-sm-12.col-lg-12
 						a(href="/user/"+p._id): strong= p.getName()
 				.row
 					strong.col-md-12.col-sm-12.col-lg-12
-						= p.position
-						| , 
-						= p.company
-						|  in 
-						= p.location
+						if(p.position)
+							= p.position
+							| , 
+						if(p.company)
+							= p.company
+							| , 
+						if(p.location)
+							= p.location
 		br
+		.line-purple
