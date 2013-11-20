@@ -28,6 +28,8 @@ block content
 		if topics.length > 1
 			.nspacer
 			+message(topics[1])
+		if topics.length > 2
+			a(href="/inbox/messages", style="margin-left:30px;") #{topics.length-2} more recent conversations
 		// Maybe we should have something like: a(href='inbox/messages') Click to view all
 	else
 		p.text-center No Private messages
@@ -45,7 +47,7 @@ block content
 
 	.col-md-12.col-xs-12.col-sm-12
 		.font-tw
-			| <b>Business cards received</b>
+			b Business cards received
 		.line-purple
 
 	.clearfix
@@ -93,9 +95,7 @@ block content
 				+savedProfile(saver)
 		.clearfix
 		.nspacer
-
-	if user.savedProfiles.length > 6
-		// Maybe we should have something like: a(href='inbox/savedProfiles') Click to view all
+	
 	.center(style='height:35px;')
 		ul.pagination
 			li
@@ -108,10 +108,11 @@ block content
 
 	.col-md-12.col-xs-12.col-sm-12
 		.font-tw
-			| <b>Public messages</b>
+			b Public messages
 		.line-purple
 	.clearfix
 	.nspacer
+	
 	//What are public messages?
 	p.text-center No Public Messages.
 	.clearfix

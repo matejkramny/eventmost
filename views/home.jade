@@ -21,8 +21,7 @@ append content
 
 		.nspacer.he1.hide-all2.pull-left(style="width:30%;")
 			a(href="/profile")
-				//- img(src=user.avatar, alt="" style="")
-				img.img-responsive(src= user.avatar.length == 0 ? "/images/big-avatar.svg" : user.avatar)
+				img.img-responsive(src= user.avatar.length == 0 ? "/images/big-avatar.svg" : user.avatar, style="max-height: 120px; margin:0 auto;")
 		a(href="/event/add")
 		.col-xs-8.nspacer.bg-purple.font-thin.center.he1.hide-all2.pull-right
 			a.link-ashen.space.iphone-size(href="/event/add", style="font-size:14px;") Create event
@@ -42,8 +41,7 @@ append content
 
 	.col-md-3.col-xs-3.nspacer.he1.hide-mini
 		a(href="/profile")
-			//- img(src=user.avatar, alt="" style="")
-			img.img-responsive(src= user.avatar.length == 0 ? "/images/big-avatar.svg" : user.avatar)
+			img.img-responsive(src= user.avatar.length == 0 ? "/images/big-avatar.svg" : user.avatar, style="max-height: 120px; margin:0 auto;")
 	a(href="/event/add")
 		.col-md-9.col-xs-9.nspacer.bg-purple.font-bigs.font-thin.center.he1.img-responsive.hide-mini
 			a.link-ashen.space(href="/event/add") Create event

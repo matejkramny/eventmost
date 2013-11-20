@@ -68,11 +68,24 @@ function viewUser (req, res) {
 	models.User.findById(id).populate('savedProfiles').exec(function(err, user) {
 		if (err) throw err;
 		
+		if (!user) {
+			res.format({
+				json: function() {
+					res.send(404, {})
+				},
+				html: function() {
+					// flash..
+					res.redirect('/')
+				}
+			})
+			return;
+		}
+		
 		// check if user is self or user is 
 		var saved = false;
 		for (var i = 0; i < req.user.savedProfiles.length; i++) {
 			var uid = req.user.savedProfiles[i]._id;
-			if (uid.equals(user._id)) {
+			if (uid && uid.equals(user._id)) {
 				saved = true;
 				break;
 			}

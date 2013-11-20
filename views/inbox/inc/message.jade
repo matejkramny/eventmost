@@ -20,14 +20,16 @@ mixin message(message)
 		.col-md-10.col-xs-10.col-sm-10.nspacer-bigger
 			.font-e1.bigger-pad-left
 				//- todo last message (who wrote it)
-				a(href="/inbox/message/"+message.topic._id)= name
+				a(href="/inbox/message/"+message.topic._id) #{name}
 			.nspacer
 			.pull-left
 				img.pull-left(src="/images/bubble-left-grey.svg", style="vertical-align:top;")
 			.pull-left.bg-grey.psev.post-width.font-x
 				//- todo last message content (shortened)
-				if message.lastMessage
+				if message.lastMessage && message.lastMessage.message.length > 0
 					| #{message.lastMessage.message}
+				else
+					| Nothing
 		.clearfix
 		.nspacer
 	

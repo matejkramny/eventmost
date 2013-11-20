@@ -1,11 +1,11 @@
 mixin attendee(attendee)
 	//-desktop
 	.col-md-4.col-xs-4.col-sm-4.hide-mini3-except-smart
-		.font-evente.font-exception-thin.deifer-font3
-			= attendee.category
 		.pull-left(style="width:30%;")
-			img(src= attendee.user.avatar.length == 0 ? "/images/default_speaker-purple.svg" : attendee.user.avatar, alt="", class="circularespond-small img-responsive")
+			img.circularespond-small.img-responsive(src= attendee.user.avatar.length == 0 ? "/images/default_speaker-purple.svg" : attendee.user.avatar)
 		.font-e.pull-left.break.nspacer.center(style="width:70%;")
+			.font-evente.font-exception-thin.deifer-font3
+				= attendee.category
 			a(href="/event/"+ev._id+"/attendee/"+attendee._id): b= attendee.user.getName()
 			br
 			- if(attendee.user.position.length > 0 && attendee.user.company.length > 0)
@@ -16,11 +16,11 @@ mixin attendee(attendee)
 				| - #{attendee.user.company}
 	//-mobile
 	.col-md-6.col-xs-6.col-sm-6.hide-all2
-		.font-evente.font-exception-thin.deifer-font3
-			= attendee.category
 		.pull-left(style="width:30%;")
-			img(src= attendee.user.avatar.length == 0 ? "/images/default_speaker-purple.svg" : attendee.user.avatar, alt="", class="circularespond-small img-responsive")
+			img.circularespond-small.img-responsive(src= attendee.user.avatar.length == 0 ? "/images/default_speaker-purple.svg" : attendee.user.avatar)
 		.font-e.pull-left.break.nspacer.center(style="width:70%;")
+			.font-evente.font-exception-thin.deifer-font3
+				= attendee.category
 			b= attendee.user.getName()
 			br
 			if attendee.user.position.length > 0 && attendee.user.company.length > 0
