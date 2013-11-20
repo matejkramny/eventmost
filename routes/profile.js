@@ -8,24 +8,24 @@ exports.router = function (app) {
 		.post('/profile/edit', util.authorized, doEditProfile)
 		.get('/user/:id', util.authorized, viewUser)
 		.get('/user/:id/save', util.authorized, saveUser)
-		.get('/profiles', util.authorized, showProfiles)
+//		.get('/profiles', util.authorized, showProfiles)
 		.get('/user/:id/remove', util.authorized, removeProfile)
 }
 
-function showProfiles (req, res) {
-	req.user.populate('savedProfiles', function() {
-		res.format({
-			html: function() {
-				res.render('profiles', { profiles: req.user.savedProfiles || [], title: "Saved profiles" })
-			},
-			json: function() {
-				res.json({
-					profiles: req.user.savedProfiles
-				})
-			}
-		})
-	})
-}
+//function showProfiles (req, res) {
+//	req.user.populate('savedProfiles', function() {
+//		res.format({
+//			html: function() {
+//				res.render('profiles', { profiles: req.user.savedProfiles || [], title: "Saved profiles" })
+//			},
+//			json: function() {
+//				res.json({
+//					profiles: req.user.savedProfiles
+//				})
+//			}
+//		})
+//	})
+//}
 
 function removeProfile (req, res) {
 	var id = req.params.id;

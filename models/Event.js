@@ -55,6 +55,28 @@ var scheme = schema({
 	messages: [{
 		type: ObjectId,
 		ref: 'EventMessage'
+	}],
+	//Event Summary
+	summary: [{
+		views: { type: Number, default: 0}, //Track date too? (Views per day)
+		privateMessages: { type: Number, default: 0},
+		publicComments: {type: Number, default: 0},
+		wallComments: { type: Number, default: 0},
+		savedProfiles: { type: Number, default: 0},
+		businessCards: { type: Number, default: 0}
+	}],
+	//EventLayout
+	sponsorLayout: [{
+		layout: { type: Number, default: 0}, //Should we have a default with no logo/sponsor logo?
+		sponsorLogo1: { 
+			type: ObjectId, 
+			ref: 'sponsorLogo1'},
+		sponsorLogo2: { 
+			type: ObjectId, 
+			ref: 'sponsorLogo2'},
+		sponsorLogo3: { 
+			type: ObjectId, 
+			ref: 'sponsorLogo3'}
 	}]
 })
 

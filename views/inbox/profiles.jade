@@ -1,32 +1,37 @@
 extends ../responsive
 
+include inc/savedProfile
+
 block content
 	include navbar
 	
 	.nspacer
-	//- saved
+	//- People who saved your profile
 	.col-md-12.col-xs-12.col-sm-12
-		.center
-			for profile in user.savedProfiles
-				-var i = 0;
-				
-				.inline
-					.div
-						img(src= profile.avatar.length > 0 ? profile.avatar : "/images/default_speaker.svg", alt="", class="circularespond",)
-					.font-s
-						a(href="/user/"+profile._id): b= profile.getName()
-						br
-						if (profile.company && profile.position)
-							= profile.company
-							| , 
-							= profile.position
-						- else if (profile.company)
-							= profile.company
-						- else if (profile.position)
-							= profile.position
-	
+		.font-tw
+			b Those who saved your profile
+		.line-purple
+	.clearfix
+	.nspacer
+	.center
+		for saver in profileSavers
+			+savedProfile(saver)
+	if (profileSavers.length == 0)
+		b No Saved Profiles.
+	.clearfix
+	.nspacer-big
+	//- Your Saved Profiles
+	.col-md-12.col-xs-12.col-sm-12
+		.font-tw
+			b Profiles you saved
+		.line-purple
+	.clearfix
+	.nspacer
+	.center
+		for profile in user.savedProfiles
+			+savedProfile(profile)
 	if (user.savedProfiles.length == 0)
-		| No one has saved your profile yet.
+		b No Saved Profiles.
 		.clearfix
 		.nspacer
 	

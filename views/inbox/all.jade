@@ -2,6 +2,7 @@ extends ../responsive
 
 include inc/message
 include inc/card
+include inc/savedProfile
 
 block content
 	include navbar
@@ -56,14 +57,12 @@ block content
 		p.text-center No cards received
 	
 	for card in user.receivedCards
-		+card(card)
-		img.col-sm-4.col-xs-12.col-md-4.col-lg-4(src="/businesscards/"+card._id+".png")
-	
+		+card(card)	
 	//- end business
 
 	.clearfix
 	.nspacer-medium
-	if (user.receivedCards.length > 3)
+	if (user.receivedCards.length > 2)
 		//Link to view all
 	.center(style='height:35px;')
 		ul.pagination
@@ -83,32 +82,19 @@ block content
 	.nspacer
 
 	//- saved
-	if (user.savedProfiles.length == 0)
+	if (savers.length == 0)
 		p.text-center No one has saved your profile yet.
 		.clearfix
 		.nspacer
-	else
-		.col-md-12.col-xs-12.col-sm-12
-			.center
-				- for(var i = 0; i < 3; i++)
-					- if (i+1 > user.savedProfiles.length)
-						- break;
-					.inline
-						.div
-							img(src=user.savedProfiles[i].avatar, alt="", class="circularespond",)
-						.font-s
-							b= user.savedProfiles[i].getName()
-							br
-							if (user.savedProfiles[i].company && user.savedProfiles[i].position)
-								= user.savedProfiles[i].company
-								| , 
-								= user.savedProfiles[i].position
-							- else if (user.savedProfiles[i].company)
-								= user.savedProfiles[i].company
-							- else if (user.savedProfiles[i].position)
-								= user.savedProfiles[i].position
 
-	if user.savedProfiles.length > 3
+	.col-md-12.col-xs-12.col-sm-12
+		.center
+			for saver in savers
+				+savedProfile(saver)
+		.clearfix
+		.nspacer
+
+	if user.savedProfiles.length > 6
 		// Maybe we should have something like: a(href='inbox/savedProfiles') Click to view all
 	.center(style='height:35px;')
 		ul.pagination

@@ -122,6 +122,18 @@ server.listen(app.get('port'), function(){
 
 // routes
 routes.router(app);
+app.get('*', function(req, res) {
+	res.format({
+		html: function() {
+			res.redirect('/404')
+		},
+		json: function() {
+			res.send(404, {
+				message: "Not found"
+			})
+		}
+	})
+})
 
 // development only
 if ('development' == app.get('env')) {
@@ -143,3 +155,15 @@ if (process.env.NODE_ENV == 'production') {
 	ntime.expressErrorHandler()
 }
 app.use(bugsnag.errorHandler);
+app.use(function(err, req, res, next) {
+	res.format({
+		json: function() {
+			res.send(500, {
+				message: "Something went wrong."
+			})
+		},
+		html: function() {
+			res.redirect('/500');
+		}
+	})
+})

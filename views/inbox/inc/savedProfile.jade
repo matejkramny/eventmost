@@ -1,0 +1,17 @@
+mixin savedProfile(profile)
+	.col-md-2.col-xs-2.col-sm-2.inv-till-1
+		.center.nspacer-medium
+		img(src= profile.avatar.length > 0 ? profile.avatar : "/images/default_speaker.svg", alt="", class="circularespond",)
+		.font-s
+			a(href="/user/"+profile._id): b= profile.getName()
+			br
+			if (profile.company && profile.position)
+				= profile.company
+				| , 
+				= profile.position
+			- else if (profile.company)
+				= profile.company
+			- else if (profile.position)
+				= profile.position
+			- else
+				br

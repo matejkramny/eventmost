@@ -45,6 +45,9 @@ exports.router = function(app) {
 	
 	// Administration
 	admin.router(app)
+	
+	app.get('/404', render404);
+	app.get('/500', render500);
 }
 
 function getToken (req, res) {
@@ -105,4 +108,11 @@ function emailAvailable(req, res) {
 
 function testRoute (req, res) {
 	res.render('testroute'+req.url);
+}
+
+function render404 (req, res) {
+	res.render('404', { title: "Not Found" })
+}
+function render500 (req, res) {
+	res.render('500', { title: "Server Error" })
 }

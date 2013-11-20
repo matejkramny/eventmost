@@ -2,7 +2,8 @@ mixin message(message)
 	- var otherUser;
 	- var name;
 	- var id;
-	for usr in message.users
+	//- find out the person you're messaging
+	for usr in message.topic.users
 		if (!usr._id.equals(user._id))
 			- otherUser = usr
 			- name = usr.getName()
@@ -19,13 +20,14 @@ mixin message(message)
 		.col-md-10.col-xs-10.col-sm-10.nspacer-bigger
 			.font-e1.bigger-pad-left
 				//- todo last message (who wrote it)
-				a(href="/inbox/message/"+message._id)= name
+				a(href="/inbox/message/"+message.topic._id)= name
 			.nspacer
 			.pull-left
-				//-img.pull-left(src="/images/bubble-left-grey.svg", style="vertical-align:top;")
-			//-.pull-left.bg-grey.psev.post-width.font-x
+				img.pull-left(src="/images/bubble-left-grey.svg", style="vertical-align:top;")
+			.pull-left.bg-grey.psev.post-width.font-x
 				//- todo last message content (shortened)
-				//-| #{message._id}
+				if message.lastMessage
+					| #{message.lastMessage.message}
 		.clearfix
 		.nspacer
 	
@@ -39,7 +41,7 @@ mixin message(message)
 					img.circularespond(src=otherUser.avatar, style="width:100%;")
 			.col-md-7.col-xs-7.col-sm-7
 				.font-e1(style="margin-top:30px;")
-					a(href="/inbox/message/"+message._id)= name
+					a(href="/inbox/message/"+message.topic._id)= name
 		.clearfix
 		.col-md-12.col-xs-12.col-sm-12
 			//-.pull-left

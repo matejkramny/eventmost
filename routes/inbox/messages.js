@@ -25,7 +25,7 @@ function getMessage (req, res, next) {
 	
 	var message = null;
 	for (var i = 0; i < res.locals.messages.length; i++) {
-		var msg = res.locals.messages[i];
+		var msg = res.locals.messages[i].topic;
 		if (msg._id.equals(id)) {
 			message = msg;
 			break;
@@ -198,7 +198,7 @@ function showMessages (req, res) {
 		},
 		json: function() {
 			res.send({
-				messages: topics
+				messages: res.locals.messages
 			})
 		}
 	})
