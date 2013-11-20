@@ -62,7 +62,7 @@ block content
 
 	.clearfix
 	.nspacer-medium
-	if (user.receivedCards.length > 3)
+	if (user.receivedCards.length > 2)
 		//Link to view all
 	.center(style='height:35px;')
 		ul.pagination
@@ -91,8 +91,10 @@ block content
 		.center
 			for saver in savers
 				+savedProfile(saver)
+		.clearfix
+		.nspacer
 
-	if user.savedProfiles.length > 3
+	if user.savedProfiles.length > 6
 		// Maybe we should have something like: a(href='inbox/savedProfiles') Click to view all
 	.center(style='height:35px;')
 		ul.pagination
