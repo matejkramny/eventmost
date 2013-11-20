@@ -44,10 +44,10 @@ html
 							if user.mailboxUnread == 0
 								img.mail.pull-right.img-mess-smart(src="/images/notes-icon.svg", alt="", style="width:100%;")
 							else
-								img.img-mess-smart.img-responsive(src="/img/messages.svg") 
+								img.mail.pull-right.img-mess-smart(src="/images/message-icon.svg", alt="", style="width:100%;")
 							.row-fluid.minus2
 								.message-nr
-									h20= user.mailboxUnread
+									h20 0
 						.font-header-icon2
 							| Notes
 
@@ -57,7 +57,7 @@ html
 							if user.mailboxUnread == 0
 								img.mail.pull-right.img-mess-smart(src="/images/message-icon.svg", alt="", style="width:100%;")
 							else
-								img.img-mess-smart.img-responsive(src="/img/messages.svg") 
+								img.mail.pull-right.img-mess-smart(src="/images/message-icon.svg", alt="", style="width:100%;")
 							.row-fluid.minus2
 								.message-nr
 									h20= user.mailboxUnread

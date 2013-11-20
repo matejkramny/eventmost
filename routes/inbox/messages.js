@@ -100,6 +100,12 @@ function postMessage (req, res) {
 			return;
 		}
 		
+		//Updating User's notification
+		for (var i = 1; i < message.users.length; i++) {
+			message.users[i].mailboxUnread++;
+			message.users[i].save();
+		}
+
 		message.lastUpdated = Date.now();
 		message.save(function(err) {
 			if (err) throw err;
