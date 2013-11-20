@@ -23,14 +23,21 @@ block content
 	.nspacer-big
 
 	.col-md-4.col-xs-4.col-sm-4
-		img(src="/images/sponsor-logo.svg", alt="", class="img-responsive")
-
+		if ev._id.toString() == "528cdf4dfe490bc657000007"
+			img.img-responsive(src="/avatars/john-logo-1.jpg")
+			
+		else
+			img(src="/images/sponsor-logo.svg", alt="", class="img-responsive")
+		
 	.col-md-4.col-xs-4.col-sm-4
 		.font-lebig.center.setting-line.nspacer.deifer-font.and
 			| Thanks to our sponsors:
 
 	.col-md-4.col-xs-4.col-sm-4
-		img(src="/images/sponsor-logo.svg", alt="", class="img-responsive")
+		if ev._id.toString() == "528cdf4dfe490bc657000007"
+			img.img-responsive(src="/avatars/john-logo-2.png")
+		else
+			img(src="/images/sponsor-logo.svg", alt="", class="img-responsive")
 
 	.clearfix
 	.nspacer
