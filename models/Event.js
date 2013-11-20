@@ -176,7 +176,8 @@ scheme.methods.edit = function (body, user, files, cb) {
 		this.address = body.location
 	}
 	if (body.description) {
-		this.description = body.description
+		//TODO temporarily disabled, possible source of XSS attacks
+		this.description = "";//body.description
 	}
 	if (body.allowAttendeesToCreateCategories != null) {
 		this.allowAttendeesToCreateCategories = body.allowAttendeesToCreateCategories
