@@ -13,9 +13,9 @@ mixin message(message)
 	.hide-mini3-except-smart
 		.col-md-2.col-xs-2.col-sm-2
 			.font-e1
-				a(href="/user/"+id)= name
 				if otherUser
-					img.circularespond.img-responsive(src= otherUser.avatar.length == 0 ? "/images/default_speaker.svg" : otherUser.avatar)
+					a(href="/user/"+id)
+						img.circularespond.img-responsive(src= otherUser.avatar.length == 0 ? "/images/default_speaker.svg" : otherUser.avatar)
 
 		.col-md-10.col-xs-10.col-sm-10.nspacer-bigger
 			.font-e1.bigger-pad-left
@@ -40,7 +40,7 @@ mixin message(message)
 			.clearfix
 			.col-md-5.col-xs-5.col-sm-5
 				if otherUser
-					img.circularespond(src=otherUser.avatar, style="width:100%;")
+					img.circularespond.img-responsive(src= otherUser.avatar.length == 0 ? "/images/default_speaker.svg" : otherUser.avatar)
 			.col-md-7.col-xs-7.col-sm-7
 				.font-e1(style="margin-top:30px;")
 					a(href="/inbox/message/"+message.topic._id)= name
