@@ -1,13 +1,13 @@
 var mongoose = require('mongoose');
 var async = require('async')
 
-var schema = mongoose.Schema;
-var ObjectId = schema.ObjectId;
-var Geolocation = require('./Geolocation').Geolocation;
-var Avatar = require('./Avatar').Avatar
-var Attendee = require('./Attendee').Attendee
-var Ticket = require('./Ticket').Ticket
-var EventMessage = require('./EventMessage').EventMessage
+var schema = mongoose.Schema
+	, ObjectId = schema.ObjectId
+	, Geolocation = require('./Geolocation').Geolocation
+	, Avatar = require('./Avatar').Avatar
+	, Attendee = require('./Attendee').Attendee
+	, Ticket = require('./Ticket').Ticket
+	, EventMessage = require('./EventMessage').EventMessage
 
 var scheme = schema({
 	deleted: { type: Boolean, default: false },
@@ -56,27 +56,13 @@ var scheme = schema({
 		type: ObjectId,
 		ref: 'EventMessage'
 	}],
-	//Event Summary
-	summary: [{
-		views: { type: Number, default: 0}, //Track date too? (Views per day)
-		privateMessages: { type: Number, default: 0},
-		publicComments: {type: Number, default: 0},
-		wallComments: { type: Number, default: 0},
-		savedProfiles: { type: Number, default: 0},
-		businessCards: { type: Number, default: 0}
-	}],
 	//EventLayout
 	sponsorLayout: [{
-		layout: { type: Number, default: 0}, //Should we have a default with no logo/sponsor logo?
-		sponsorLogo1: { 
-			type: ObjectId, 
-			ref: 'sponsorLogo1'},
-		sponsorLogo2: { 
-			type: ObjectId, 
-			ref: 'sponsorLogo2'},
-		sponsorLogo3: { 
-			type: ObjectId, 
-			ref: 'sponsorLogo3'}
+		layout: { type: Number, default: 0 }, //Should we have a default with no logo/sponsor logo?
+		sponsorAvatars: [{
+			type: ObjectId,
+			ref: 'Avatar'
+		}]
 	}]
 })
 

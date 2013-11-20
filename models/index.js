@@ -17,5 +17,6 @@ module.exports = {
 	Avatar: require('./Avatar').Avatar,
 	Attendee: require('./Attendee').Attendee,
 	EventMessage: require('./EventMessage').EventMessage,
-	Ticket: require('./Ticket').Ticket
+	Ticket: require('./Ticket').Ticket,
+	EventStat: require('./EventStat').EventStat
 }
