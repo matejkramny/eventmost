@@ -1,8 +1,8 @@
 if flash.length > 0
-	.alert(style="margin-top:20px;")
+	.alert.bg-yellow(style="margin-top:20px;")
 		button.close.fui-cross(data-dismiss="alert")
-		h3 Alerts:
-		ul(style="list-style: none;")
+		h3.center Alerts:
+		ul.pad-left-zero(style="list-style: none;")
 			for aFlash in flash
-				li - #{aFlash}
+				li.center - #{aFlash}
 	- emptyFlash()
