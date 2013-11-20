@@ -291,7 +291,7 @@ $(document).ready(function() {
 	function xmlhttprequestResponse () {
 		if (avatarUploadRequest.readyState == 4) {
 			if (avatarUploadRequest.status == 200) {
-				result = JSON.parse(avatarUploadRequest.response);
+				result = avatarUploadRequest.response;
 				console.log(result);
 				console.log(typeof result);
 				if (result.status != 200) {
@@ -483,7 +483,7 @@ $(document).ready(function() {
 		var scope = angular.element($("#tickets")).scope();
 		var tickets = scope.tickets;
 		
-		var ed = $form.find('.tinyeditor').length > 0 ? editor : editor1;
+		var ed = $form.find('#tinyeditor').length > 0 ? editor : editor1;
 		var d = {
 			_csrf: $("head meta[name=_csrf]").attr('content'),
 			name: $form.find('input[name=eventName]').val(),
