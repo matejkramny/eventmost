@@ -55,6 +55,15 @@ var scheme = schema({
 	messages: [{
 		type: ObjectId,
 		ref: 'EventMessage'
+	}],
+	//Event Summary
+	summary: [{
+		views: { type: Number, default: 0}, //Track date too? (Views per day)
+		privateMessages: { type: Number, default: 0},
+		publicComments: {type: Number, default: 0},
+		wallComments: { type: Number, default: 0},
+		savedProfiles: { type: Number, default: 0},
+		businessCards: { type: Number, default: 0}
 	}]
 })
 
