@@ -9,12 +9,13 @@ var dropbox = require('./dropbox')
 	, admin = require('./admin/admin')
 
 exports.router = function (app) {
+	add.router(app)
+	
 	app.get('/event/:id/registrationpage', getEvent, attending, viewRegistrationPage)
 		.get('/event/:id', redirectToRegistrationPage)
 		.get('/event/:id/*', redirectToRegistrationPage)
 	
 	app.all('/event/*', util.authorized)
-	add.router(app)
 	
 	app.all('/event/:id/*', getEvent)
 		.get('/event/:id', getEvent, attending, viewEvent)

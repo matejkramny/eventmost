@@ -1,6 +1,7 @@
 /*custom.min*/
 	
-jQuery(document).ready(function($){
+$(document).ready(function(){
+	$('#slider1').tinycarousel();
 	//portfolio - show link
 	$('.slid-box-background').hover(
 		function () {

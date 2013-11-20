@@ -33,9 +33,9 @@ html
 				if loggedIn == false
 					.pull-right.logo-right
 							//- Only displayed when users are guests
-							button.btn.btn-warning.pb.pull-right(type='submit', data-toggle="modal", href="#signModal")
+							button.btn.btn-warning.pb.pull-right(type='button', data-toggle="modal", href="#signModal")
 								b SIGN UP
-							button.btn.btn-default.pb.pull-right(type='submit', data-toggle="modal", href="#loginModal", style="margin-right:-4px;")
+							button.btn.btn-default.pb.pull-right(type='button', data-toggle="modal", href="#loginModal", style="margin-right:-4px;")
 								b LOGIN
 				else
 					//- Only displayed when user is logged in
@@ -96,15 +96,14 @@ html
 			
 		//- usually globally persistent
 		block js
-			script(src="/v2/js/gan.js", async="true")
-			script(src="/v2/js/jquery.min.js", defer="true")
-			script(src="/v2/js/bootstrap.min.js", defer="true")
-			script(src="/v2/js/angular.min.js", defer="true")
-			script(src="/v2/js/angular-eventmost.js", defer="true")
-			script(src="/js/jquery-ui-1.10.3.custom.min.js", defer="true")
-			script(src="/js/jquery.ui.touch-punch.min.js", defer="true")
-			script(src="/js/jquery.tinycarousel.min.js", defer="true")
-			script(src="/js/tinycarousel2.js", defer="true")
+			script(src="/v2/js/gan.js", async)
+			script(src="/v2/js/jquery.min.js", defer)
+			script(src="/v2/js/bootstrap.min.js", defer)
+			script(src="/v2/js/angular.min.js", defer)
+			script(src="/v2/js/angular-eventmost.js", defer)
+			script(src="/js/jquery-ui-1.10.3.custom.min.js", defer)
+			script(src="/js/jquery.ui.touch-punch.min.js", defer)
+			script(src="/js/jquery.tinycarousel.min.js", defer)
 			script(src="/js/over-box.js", defer="true")
 			if !loggedIn
 				script(src="/v2/js/signin.js", defer="true")

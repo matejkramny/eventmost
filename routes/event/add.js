@@ -1,11 +1,12 @@
 var models = require('../../models'),
 	fs = require('fs')
+	util = require('../../util')
 
 exports.router = function (app) {
-	app.get('/event/add', addEvent)
-		.post('/event/add', doAddEvent)
-		.post('/event/add/avatar', uploadAvatarAsync)
-		.get('/event/:avatarid/avatar/remove', removeAvatar)
+	app.get('/event/add', util.authorized, addEvent)
+		.post('/event/add', util.authorized, doAddEvent)
+		.post('/event/add/avatar', util.authorized, uploadAvatarAsync)
+		.get('/event/:avatarid/avatar/remove', util.authorized, removeAvatar)
 }
 
 function addEvent (req, res) {
