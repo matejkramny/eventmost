@@ -51,7 +51,7 @@ function BusinessCards ($scope) {
 		var ur = $scope.uploadRequest
 		if (ur.readyState == 4) {
 			if (ur.status == 200) {
-				result = JSON.parse(ur.response);
+				result = ur.response;
 				
 				updateProgress(100);
 				
