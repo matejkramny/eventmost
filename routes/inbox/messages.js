@@ -101,7 +101,10 @@ function postMessage (req, res) {
 		}
 		
 		//Updating User's notification
-		for (var i = 1; i < message.users.length; i++) {
+		for (var i = 0; i < message.users.length; i++) {
+			// dont update this user
+			if (message.users[i]._id.equals(req.user._id)) continue;
+			
 			message.users[i].mailboxUnread++;
 			message.users[i].save();
 		}

@@ -59,6 +59,11 @@ function populateInbox (req, res, next) {
 				res.locals.savers = savers;
 				cb(null)
 			});
+		},
+		function (cb) {
+			req.user.mailboxUnread = 0;
+			req.user.save();
+			cb(null)
 		}
 	], function(err) {
 		if (err) throw err;
@@ -69,8 +74,6 @@ function populateInbox (req, res, next) {
 function show (req, res) {
 	res.format({
 		html: function() {
-			req.user.mailboxUnread = 0;
-			req.user.save();
 			res.locals.topics = res.locals.messages;
 			res.render('inbox/all', { pageName: "Inbox Dashboard", title: "Inbox" });
 		},
