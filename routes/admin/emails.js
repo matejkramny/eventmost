@@ -1,6 +1,10 @@
 var models = require('../../models')
 
-exports.show = function (req, res) {
+exports.router = function (app) {
+	app.get('/admin/emails', show)
+}
+
+function show (req, res) {
 	models.EmailNotification.find({})
 		.sort('-created')
 		.exec(function(err, emailNotifications) {

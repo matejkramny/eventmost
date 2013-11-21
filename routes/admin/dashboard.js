@@ -1,5 +1,11 @@
 var models = require('../../models')
-exports.show = function(req, res) {
+
+exports.router = function (app) {
+	app.get('/admin', show)
+}
+
+
+function show (req, res) {
 	models.User.find({}, function(err, users) {
 		if (err) throw err;
 	

@@ -7,32 +7,22 @@ html
 		link(href="/favicon.ico", type="image/x-icon", rel="icon")
 		link(href="/favicon.ico", type="image/x-icon", rel="shortcut icon")
 		block css
-			link(href="//netdna.bootstrapcdn.com/bootswatch/3.0.1/flatly/bootstrap.min.css", rel="stylesheet")
-			link(href="//netdna.bootstrapcdn.com/font-awesome/4.0.2/css/font-awesome.min.css", rel="stylesheet")
-			style.
-				.container-full {
-					margin-left: auto;
-					margin-right: auto;
-					padding-left: 10px;
-					padding-right: 10px;
-					width: 100%
-				}
-				html,body {
-					margin: 0;
-					padding: 0;
-					border: 0;
-					width: -webkit-calc(100% - 10px);
-					width: -moz-calc(100% - 10px);
-					width: calc(100% - 10px);
-				}
-	body
+			link(href="/css/bootstrap.flatly.min.css", rel="stylesheet")
+			link(href="/css/font-awesome.min.css", rel="stylesheet")
+			link(href="/v2/css/admin.css", rel="stylesheet")
+	body(ng-app="emAdmin")
 		block container
 			.container-full
 				.row
 					.col-md-2.col-lg-2.col-sm-2(style="width: 16.5%")
 						a(href="/admin/")
 							img.img-responsive(src="/images/logo.svg", style="margin-top:20px;")
-						hr	
+						hr
+						ul.list-group
+							a.list-group-item(href="/")
+								span.glyphicon.glyphicon-log-out
+								|   Back to EventMost
+						hr
 						ul.list-group.nav
 								a.list-group-item(href="/admin/", class= activePage == 1 ? "active" : null)
 									span.glyphicon.glyphicon-dashboard
@@ -54,16 +44,14 @@ html
 							a.list-group-item(href="https://islv6-islpronto.islonline.net/download/ISLPronto?custom=uc%2d486008499920")
 								i.fa.fa-download
 								|  Download Live Chat
-						hr	
-						ul.list-group
-							a.list-group-item(href="/")
-								span.glyphicon.glyphicon-log-out
-								|   Back to EventMost
 					.col-md-10.col-lg-10.col-sm-10(style="width: 83.5%")
 						block content
 		block js
-			script(src="/js/jquery.min.js")
-			script(src="/js/jquery-ui.custom.min.js")
-			script(src="/js/jquery-ui-timepicker-addon.js")
-			script(src="/js/gan.js")
-			script(src="/js/highcharts.js")
+			script(src="/v2/js/gan.js", async)
+			script(src="/v2/js/jquery.min.js", defer)
+			script(src="/v2/js/bootstrap.min.js", defer)
+			script(src="/js/highcharts.js", defer)
+			script(src="/v2/js/angular.min.js", defer)
+			script(src="/v2/js/angular-admin.js", defer)
+			script(src="/js/jquery-ui-1.10.3.custom.min.js", defer)
+			script(src="/js/jquery.ui.touch-punch.min.js", defer)

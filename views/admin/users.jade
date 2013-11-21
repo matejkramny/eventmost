@@ -1,79 +1,51 @@
 extends layout
 
 block content
-	h2= users.length
-		|  Users
-	table.table
-		thead
-			tr
-			th Name
-			th Surname
-			th Email
-			th Created
-			th Twitter
-			th Facebook
-			th LinkedIn
-			th Admin
-			th Remove
-			th OP
-		tbody
-		for user in users
-			tr
-				td= user.name
-				td= user.surname
-				td= user.email
-				td= user.created.getDate()
-					| /
-					= user.created.getMonth()+1
-					| /
-					= user.created.getFullYear()
-					|  
-					= user.created.getHours()
-					| :
-					= user.created.getMinutes()
-					| :
-					= user.created.getSeconds()
-				td
-					if user.twitter.userid == null
-						span
-					else
-						span.glyphicon.glyphicon-ok
-				td
-					if user.facebook.userid == null
-						span
-					else
-						span.glyphicon.glyphicon-ok
-				td
-					if user.linkedin.userid == null
-						span
-					else
-						span.glyphicon.glyphicon-ok
-				td
-					if user.admin == false
-						span
-					else
-						span.glyphicon.glyphicon-ok
-				td
-					a.btn.btn-danger.btn-xs(href="/admin/users/#{user._id}/remove")
-						span.glyphicon.glyphicon-remove
-						span  Remove
-
-				td
-					if user.admin
-						a.btn.btn-danger.btn-xs(href="/admin/users/#{user._id}/deop")
+	div(ng-controller="usersController", ng-init="setCsrf('#{token}')")
+		h2 {{ users.length }}
+			|  Users
+		table.table
+			thead
+				tr
+				tr
+					th Name
+					th Surname
+					th Email
+					th Created
+					th Twitter
+					th Facebook
+					th LinkedIn
+					th Admin
+					th Remove
+					th OP
+			tbody
+				tr(ng-repeat="user in users | orderBy:'-created'")
+					td {{ user.name }}
+					td {{ user.surname }}
+					td {{ user.email }}
+					td {{ user.created.getDate() }}/{{ user.created.getMonth()+1 }}/{{ user.created.getFullYear() }} {{ user.created.getHours() }}:{{ user.created.getMinutes() }}:{{ user.created.getSeconds() }}
+					td
+						span.glyphicon.glyphicon-ok(ng-show="user.twitter.userid != null")
+					td
+						span.glyphicon.glyphicon-ok(ng-show="user.facebook.userid != null")
+					td
+						span.glyphicon.glyphicon-ok(ng-show="user.linkedin.userid != null")
+					td
+						span.glyphicon.glyphicon-ok(ng-show="user.admin == true")
+					td
+						a.btn.btn-danger.btn-xs(ng-click="removeUser(user)")
+							span.glyphicon.glyphicon-remove
+							span  Remove
+				
+					td
+						a.btn.btn-danger.btn-xs(ng-click="deopUser(user)", ng-show="user.admin == true")
 							span.glyphicon.glyphicon-chevron-down
-							span  DEOP
-					else
-						a.btn.btn-success.btn-xs(href="/admin/users/#{user._id}/op")
+						a.btn.btn-success.btn-xs(ng-click="opUser(user)", ng-show="user.admin == false")
 							span.glyphicon.glyphicon-chevron-up
-							span  OP
-					| &nbsp;
-					if (user.adminMeeting == false && user.admin == false)
-						a.btn.btn-default.btn-xs(href="/admin/users/#{user._id}/hire")
+						| &nbsp;
+						a.btn.btn-default.btn-xs(ng-click="hireUser(user)", ng-show="user.adminMeeting == false")
 							i.fa.fa-users
-							span  Show Meeting
-					else
-						if (user.admin == false && user.adminMeeting == true)
-							a.btn.btn-danger.btn-xs(href="/admin/users/#{user._id}/fire")
-								i.fa.fa-users
-								span  Hide Meeting
+							span  Meeting
+						a.btn.btn-danger.btn-xs(ng-click="fireUser(user)", ng-show="user.adminMeeting == true")
+							i.fa.fa-users
+							span  Meeting

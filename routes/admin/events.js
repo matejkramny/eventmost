@@ -1,6 +1,14 @@
 var models = require('../../models')
 
-exports.show = function (req, res) {
+exports.router = function (app) {
+	app.get('/admin/events', show)
+		
+		.get('/admin/events/:id/delete', removeEvent)
+		.get('/admin/events/:id/remove', removeEventCompletely)
+		.get('/admin/events/:id/revive', reviveEvent)
+}
+
+function show (req, res) {
 	models.Event.find({}, function(err, events) {
 		if (err) throw err;
 
@@ -20,4 +28,43 @@ exports.show = function (req, res) {
 		res.locals.activePage = 3
 		res.render('admin/events', { layout: 'admin/layout', eventsNow: eventsNow, cDate: cDate, lDate: lDate, fDate: fDate });
 	})
+}
+
+function removeEventCompletely (req, res, next) {
+	models.Event.remove({ _id: req.params.id }, function(err) {
+		if (!err) {
+			res.redirect('/admin/events');
+		}
+		else {
+			throw err;
+		}
+	});
+}
+
+function reviveEvent (req, res, next) {
+	models.Event.findById(req.params.id, function (err, event) {
+		if (err) return handleError(err);
+		
+		event.deleted = false;
+		event.save(function (err) {
+			if (err) return handleError(err);
+			res.send(event);
+		});
+	});
+	
+	res.redirect('/admin/events')
+}
+
+function removeEvent (req, res, next) {
+	models.Event.findById(req.params.id, function (err, event) {
+		if (err) return handleError(err);
+		
+		event.deleted = true;
+		event.save(function (err) {
+			if (err) return handleError(err);
+			res.send(event);
+		});
+	});
+	
+	res.redirect('/admin/events')
 }

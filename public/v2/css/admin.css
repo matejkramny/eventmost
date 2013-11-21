@@ -1,0 +1,24 @@
+.container-full {
+	margin-left: auto;
+	margin-right: auto;
+	padding-left: 10px;
+	padding-right: 10px;
+	width: 100%
+}
+html, body {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	width: -webkit-calc(100% - 10px);
+	width: -moz-calc(100% - 10px);
+	width: calc(100% - 10px);
+}
+
+.normal-link {
+	color: inherit;
+	text-decoration: none;
+}
+.normal-link:hover {
+	color: inherit;
+	text-decoration: underline;
+}
