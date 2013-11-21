@@ -57,13 +57,13 @@ var scheme = schema({
 		ref: 'EventMessage'
 	}],
 	//EventLayout
-	sponsorLayout: [{
+	sponsorLayout: {
 		layout: { type: Number, default: 0 }, //Should we have a default with no logo/sponsor logo?
 		sponsorAvatars: [{
 			type: ObjectId,
 			ref: 'Avatar'
 		}]
-	}]
+	}
 })
 
 scheme.statics.getEvent = function (id, cb) {
@@ -137,14 +137,17 @@ scheme.methods.edit = function (body, user, files, cb) {
 	console.log(body);
 	
 	var self = this;
-	this.attendees = [];
-	var planner = new Attendee ({
-		user: user._id,
-		category: 'Planner',
-		admin: true
-	})
-	this.attendees.push(planner._id)
-	planner.save();
+	
+	if (this.attendees == null || this.attendees.length == 0) {
+		this.attendees = [];
+		var planner = new Attendee ({
+			user: user._id,
+			category: 'Planner',
+			admin: true
+		})
+		this.attendees.push(planner._id)
+		planner.save();
+	}
 	
 	if (body.name) {
 		this.name = body.name
@@ -288,6 +291,13 @@ scheme.methods.edit = function (body, user, files, cb) {
 				geo.remove();
 			}
 		});
+	}
+	
+	if (body.layout) {
+		var layout = parseInt(body.layout);
+		if (layout >= 0 && layout <= 5) {
+			this.sponsorLayout.layout = layout;
+		}
 	}
 	
 	// Validate the data

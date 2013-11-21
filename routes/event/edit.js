@@ -2,9 +2,9 @@ var models = require('../../models'),
 	attending = require('./event').attending
 
 exports.router = function (app) {
-	app.get('/event/:id/edit', attending, editEvent)
-		.post('/event/:id/edit', doEditEvent)
-		.get('/event/:id/delete', deleteEvent)
+	//app.get('/event/:id/edit', attending, editEvent)
+	app	.post('/event/:id/edit', doEditEvent)
+	//	.get('/event/:id/delete', deleteEvent)
 	
 }
 
@@ -34,7 +34,7 @@ function editEvent (req, res) {
 function doEditEvent (req, res) {
 	var errors = [];
 	
-	var ev = res.locals.event;
+	var ev = res.locals.ev;
 	
 	var canEdit = false;
 	for (var i = 0; i < ev.attendees.length; i++) {
@@ -44,6 +44,7 @@ function doEditEvent (req, res) {
 			break;
 		}
 	}
+	
 	if (!canEdit) {
 		res.format({
 			html: function() {
@@ -64,8 +65,8 @@ function doEditEvent (req, res) {
 	ev.edit(req.body, req.user, req.files, function(err) {
 		res.format({
 			html: function() {
-				req.session.flash = err || ["Event settings updated"];
-				res.redirect('/event/'+ev._id+"/edit")
+				//req.session.flash = err || ["Event settings updated"];
+				res.redirect('/event/'+ev._id)
 			},
 			json: function() {
 				res.send({

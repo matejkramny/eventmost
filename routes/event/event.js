@@ -24,6 +24,7 @@ exports.router = function (app) {
 		
 		.get('/event/:id/registrationpage', attending, viewRegistrationPage)
 	
+	edit.router(app)
 	messages.router(app)
 	attendees.router(app)
 	list.router(app)
