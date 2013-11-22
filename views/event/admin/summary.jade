@@ -1,10 +1,10 @@
 extends ../../responsive
 
+include ../inc/navbar
+
 block content
-	include eventNavbar
-	.clearfix
-	.nspacer
-	include navbar
+	+navbar
+	
 	.clearfix
 	.nspacer
 
@@ -199,7 +199,7 @@ block content
 	.nspacer-big	
 	.col-md-12.col-lg-12.col-xs-12
 		.font-evente.center.font-exception
-			| Attendees:
+			| #{ev.attendees.length} Attendees:
 
 	.nspacer-big
 
@@ -216,39 +216,13 @@ block content
 
 
 	.col-md-6.col-lg-6.col-xs-6
-		.nspacer
-		input.input-ashen-rounded(name="login", type="text")
-		.nspacer
-		input.input-ashen-rounded(name="login", type="text")
-		.nspacer
-		input.input-ashen-rounded(name="login", type="text")
-		.nspacer
-		input.input-ashen-rounded(name="login", type="text")
-		.nspacer
-		input.input-ashen-rounded(name="login", type="text")
-		.nspacer
-		input.input-ashen-rounded(name="login", type="text")
-		.nspacer
-		input.input-ashen-rounded(name="login", type="text")
-		.nspacer
-		input.input-ashen-rounded(name="login", type="text")
+		for attendee in ev.attendees
+			.nspacer
+			input.input-ashen-rounded(value=attendee.user.getName(), type="text")
 	.col-md-6.col-lg-6.col-xs-6
-		.nspacer
-		input.input-ashen-rounded(name="login", type="text")
-		.nspacer
-		input.input-ashen-rounded(name="login", type="text")
-		.nspacer
-		input.input-ashen-rounded(name="login", type="text")
-		.nspacer
-		input.input-ashen-rounded(name="login", type="text")
-		.nspacer
-		input.input-ashen-rounded(name="login", type="text")
-		.nspacer
-		input.input-ashen-rounded(name="login", type="text")
-		.nspacer
-		input.input-ashen-rounded(name="login", type="text")
-		.nspacer
-		input.input-ashen-rounded(name="login", type="text")
+		for attendee in ev.attendees
+			.nspacer
+			input.input-ashen-rounded(value=attendee.user.email, type="text")
 	.clearfix
 
 

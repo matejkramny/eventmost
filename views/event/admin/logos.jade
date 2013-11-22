@@ -1,6 +1,16 @@
 extends ../../responsive
 include ../inc/navbar
 
+mixin submit(value)
+	.clearfix
+	.nspacer
+	.col-md-12.col-xs-12.col-sm-12
+		.center
+			form(action="/event/"+ev._id+"/edit", method="POST")
+				input(type="hidden", name="_csrf", value=token)
+				input(type="hidden", name="layout", value=value)
+				input.btn.btn-primary.font-evente.hide-prof-butt.button-font(type="submit", style="border-radius: 10px; padding:5px; padding-right:15px; padding-left:15px;", value="CHOOSE")
+
 block content
 	+navbar
 	//- header of the content
@@ -30,183 +40,37 @@ block content
 
 	//- option 1
 	.nspacer-big
+	include ../layouts/0
 	
-	.col-md-6.col-xs-6.col-sm-6
-		.bg-yellow.font-bigs2.center.deifer-font2
-			= ev.name
-		.font-lebig.center.setting-line.nspacer.deifer-font
-			| Thanks to our sponsor:
-	.col-md-6.col-xs-6.col-sm-6
-		img(src="/images/sponsor-logo.svg", alt="", class="img-responsive")
-	
-	.clearfix
-	.nspacer
-	.col-md-12.col-xs-12.col-sm-12
-		.center
-			form(action="/event/"+ev._id+"/edit", method="POST")
-				input(type="hidden", name="_csrf", value=token)
-				input(type="hidden", name="layout", value="0")
-				input.btn.btn-primary.font-evente.hide-prof-butt.button-font(type="submit", style="border-radius: 10px; padding:5px; padding-right:15px; padding-left:15px;", value="CHOOSE")
+	+submit("0")
 	
 	
 	//- option 2
 	.nspacer-big
+	include ../layouts/1
+	
+	+submit("1")
 
-	.col-md-12.col-xs-12.col-sm-12
-		.bg-yellow.font-bigs2.center.deifer-font2
-			= ev.name
-		.font-lebig.center.setting-line.nspacer.deifer-font
-			| Thanks to our sponsors:
-
-	.clearfix
+	//- option 3
 	.nspacer-big
-
-	.col-md-4.col-xs-4.col-sm-4
-		img(src="/images/sponsor-logo.svg", alt="", class="img-responsive")
-
-	.col-md-4.col-xs-4.col-sm-4
-		.font-lebig.center.setting-line.nspacer.deifer-font.and
-			| and
-
-	.col-md-4.col-xs-4.col-sm-4
-		img(src="/images/sponsor-logo.svg", alt="", class="img-responsive")
-
-	.clearfix
-	.nspacer
-	.col-md-12.col-xs-12.col-sm-12
-		.center
-			form(action="/event/"+ev._id+"/edit", method="POST")
-				input(type="hidden", name="_csrf", value=token)
-				input(type="hidden", name="layout", value="1")
-				input.btn.btn-primary.font-evente.hide-prof-butt.button-font(type="submit", style="border-radius: 10px; padding:5px; padding-right:15px; padding-left:15px;", value="CHOOSE")
-
-
-		//- option 3
-
+	include ../layouts/2
+	
+	+submit("2")
+	
+	//- option 4
 	.nspacer-big
-
-	.col-md-12.col-xs-12.col-sm-12
-		.bg-yellow.font-bigs2.center.deifer-font2
-			= ev.name
-		.font-lebig.center.setting-line.nspacer.deifer-font
-			| Thanks to our sponsors:
-
-	.clearfix
+	include ../layouts/3
+	
+	+submit("3")
+	
+	//- option 5
 	.nspacer-big
-
-	.col-md-4.col-xs-4.col-sm-4
-		img(src="/images/sponsor-logo.svg", alt="", class="img-responsive")
-
-	.col-md-4.col-xs-4.col-sm-4
-		img(src="/images/sponsor-logo.svg", alt="", class="img-responsive")
-
-	.col-md-4.col-xs-4.col-sm-4
-		img(src="/images/sponsor-logo.svg", alt="", class="img-responsive")
-
-	.clearfix
-	.nspacer
-	.col-md-12.col-xs-12.col-sm-12
-		.center
-			form(action="/event/"+ev._id+"/edit", method="POST")
-				input(type="hidden", name="_csrf", value=token)
-				input(type="hidden", name="layout", value="2")
-				input.btn.btn-primary.font-evente.hide-prof-butt.button-font(type="submit", style="border-radius: 10px; padding:5px; padding-right:15px; padding-left:15px;", value="CHOOSE")
-
-		//- option 4
-
-	.nspacer-big
-
-	.col-md-12.col-xs-12.col-sm-12
-		.bg-yellow.font-bigs2.center.deifer-font2
-			= ev.name
-		.font-lebig.center.setting-line.nspacer.deifer-font
-			| Thanks to our sponsors:
-
-	.clearfix
-	.nspacer-big
-
-	.col-md-4.col-xs-4.col-sm-4
-		img(src="/images/your-logo.svg", alt="", class="img-responsive")
-
-	.col-md-4.col-xs-4.col-sm-4
-		.font-lebig.center.setting-line.nspacer.deifer-font.and
-			| Thanks to <br />our <br />sponsor:
-
-	.col-md-4.col-xs-4.col-sm-4
-		img(src="/images/sponsor-logo.svg", alt="", class="img-responsive")
-
-	.clearfix
-	.nspacer
-	.col-md-12.col-xs-12.col-sm-12
-		.center
-			form(action="/event/"+ev._id+"/edit", method="POST")
-				input(type="hidden", name="_csrf", value=token)
-				input(type="hidden", name="layout", value="3")
-				input.btn.btn-primary.font-evente.hide-prof-butt.button-font(type="submit", style="border-radius: 10px; padding:5px; padding-right:15px; padding-left:15px;", value="CHOOSE")
-
-		//- option 5
-	.nspacer-big
-
-	.col-md-3.col-xs-3.col-sm-3
-		img(src="/images/your-logo.svg", alt="", class="img-responsive")
-
-	.col-md-9.col-xs-9.col-sm-9
-		.bg-yellow.font-bigs2.center.deifer-font2
-			= ev.name
-		.font-lebig.center.setting-line.nspacer.deifer-font
-			| Thanks to our sponsors:
-
-	.clearfix
-	.nspacer-big
-
-	.col-md-4.col-xs-4.col-sm-4
-		img(src="/images/sponsor-logo.svg", alt="", class="img-responsive")
-
-	.col-md-4.col-xs-4.col-sm-4
-		.font-lebig.center.setting-line.nspacer.deifer-font.and
-			| and
-
-	.col-md-4.col-xs-4.col-sm-4
-		img(src="/images/sponsor-logo.svg", alt="", class="img-responsive")
-
-	.clearfix
-	.nspacer
-	.col-md-12.col-xs-12.col-sm-12
-		.center
-			form(action="/event/"+ev._id+"/edit", method="POST")
-				input(type="hidden", name="_csrf", value=token)
-				input(type="hidden", name="layout", value="4")
-				input.btn.btn-primary.font-evente.hide-prof-butt.button-font(type="submit", style="border-radius: 10px; padding:5px; padding-right:15px; padding-left:15px;", value="CHOOSE")
-
+	include ../layouts/4
+	
+	+submit("4")
+	
 	//- option 6
 	.nspacer-big
+	include ../layouts/5
 	
-	.col-md-3.col-xs-3.col-sm-3
-		img(src="/images/your-logo.svg", alt="", class="img-responsive")
-
-	.col-md-9.col-xs-9.col-sm-9
-		.bg-yellow.font-bigs2.center.deifer-font2
-			= ev.name
-		.font-lebig.center.setting-line.nspacer.deifer-font
-			| Thanks to our sponsors:
-
-	.clearfix
-	.nspacer-big
-
-	.col-md-4.col-xs-4.col-sm-4
-		img(src="/images/sponsor-logo.svg", alt="", class="img-responsive")
-
-	.col-md-4.col-xs-4.col-sm-4
-		img(src="/images/sponsor-logo.svg", alt="", class="img-responsive")
-
-	.col-md-4.col-xs-4.col-sm-4
-		img(src="/images/sponsor-logo.svg", alt="", class="img-responsive")
-
-	.clearfix
-	.nspacer
-	.col-md-12.col-xs-12.col-sm-12
-		.center
-			form(action="/event/"+ev._id+"/edit", method="POST")
-				input(type="hidden", name="_csrf", value=token)
-				input(type="hidden", name="layout", value="5")
-				input.btn.btn-primary.font-evente.hide-prof-butt.button-font(type="submit", style="border-radius: 10px; padding:5px; padding-right:15px; padding-left:15px;", value="CHOOSE")
+	+submit("5")
