@@ -15,7 +15,11 @@ mixin navbar
 		.font-tw
 			a.link-purple(href=base)  
 				| &#8592 
-				b= ev.name
+				if (ev.name.length > 15)
+					b= ev.name.substring(0,14)
+						| ...
+				else
+					b= ev.name
 	.col-md-8.col-xs-8.col-sm-8.hide-mini3-except-smart
 		.font-x1.bg-yellow.center.pull-right.psev2.prof-wall(style="padding-top:15px;")
 			a.link-purple(href=base+"messages") Conversations

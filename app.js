@@ -107,6 +107,12 @@ app.use(function(req, res, next) {
 		req.session.flash = []
 	}
 	
+	res.locals.recentEvent = null;
+	if (req.session.recentEvent) {
+		res.locals.recentEvent = req.session.recentEvent;
+		res.locals.recentEventName = req.session.recentEventName;
+	}
+	
 	res.locals.user = req.user;
 	res.locals.loggedIn = res.locals.user != null;
 	

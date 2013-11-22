@@ -68,6 +68,16 @@ function getEvent (req, res, next) {
 			return;
 		}
 		
+		req.session.recentEvent = ev._id;
+		
+		if (ev.name.length > 15) {
+			req.session.recentEventName = ev.name.substring(0, 14) + "..."
+		} else {
+			req.session.recentEventName = ev.name;
+		}
+		
+		console.log(req.session)
+		
 		res.locals.ev = ev;
 		
 		next()
