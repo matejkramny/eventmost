@@ -3,9 +3,9 @@ var models = require('../../models')
 exports.router = function (app) {
 	attending = require('./event').attending
 	
-	app.get('/event/:id/attendees', attending, list)
-		.get('/event/:id/attendee/:attendee', attending, showAttendee)
-		.post('/event/:id/join', attending, joinEvent)
+	app.get('/event/:id/attendees', list)
+		.get('/event/:id/attendee/:attendee', showAttendee)
+		.post('/event/:id/join', joinEvent)
 }
 
 function list (req, res) {

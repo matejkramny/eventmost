@@ -3,8 +3,8 @@ var models = require('../../models'),
 	attending = require('./event').attending
 
 exports.router = function (app) {
-	app.get('/event/:id/dropbox', attending, view)
-		.post('/event/:id/dropbox/upload', attending, doUpload)
+	app.get('/event/:id/dropbox', view)
+		.post('/event/:id/dropbox/upload', doUpload)
 		.post('/event/:id/dropbox/remove', doRemove)
 }
 

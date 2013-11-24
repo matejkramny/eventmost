@@ -16,8 +16,6 @@ exports.router = function (app) {
 	app.get('/event/:id/admin/email', eventEmail)
 	app.get('/event/:id/admin/feedback', eventFeedbackProfile)
 	app.get('/event/:id/admin/notifications', eventNotifications)
-	// example ..
-	// the middleware defined above is ran before viewSummary, in the order defined..
 	app.get('/event/:id/admin/summary', viewSummary)
 }
 

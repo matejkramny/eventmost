@@ -2,8 +2,8 @@ var models = require('../../models')
 	attending = require('./event').attending
 
 exports.router = function (app) {
-	app.get('/event/:id/messages', attending, display)
-		.post('/event/:id/messages', attending, postMessage)
+	app.get('/event/:id/messages', display)
+		.post('/event/:id/messages', postMessage)
 }
 
 function display (req, res) {

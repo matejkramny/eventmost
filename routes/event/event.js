@@ -15,14 +15,15 @@ exports.router = function (app) {
 		.get('/event/:id', redirectToRegistrationPage)
 		.get('/event/:id/*', redirectToRegistrationPage)
 	
-	app.all('/event/*', util.authorized)
+		.all('/event/*', util.authorized)
 	
-	app.all('/event/:id/*', getEvent)
-		.get('/event/:id', getEvent, attending, viewEvent)
+		.all('/event/:id/*', getEvent, attending)
+		.get('/event/:id/*', logImpression)
+		.get('/event/:id', getEvent, attending, logImpression, viewEvent)
 		
-		.post('/event/:id/post', attending, postMessage)
+		.post('/event/:id/post', postMessage)
 		
-		.get('/event/:id/registrationpage', attending, viewRegistrationPage)
+		.get('/event/:id/registrationpage', viewRegistrationPage)
 	
 	edit.router(app)
 	messages.router(app)
@@ -30,6 +31,28 @@ exports.router = function (app) {
 	list.router(app)
 	dropbox.router(app)
 	admin.router(app)
+}
+
+function logImpression (req, res, next) {
+	var ev = res.locals.ev;
+	var attendee = res.locals.attendee
+	var attending = res.locals.eventattending
+	var admin = res.locals.eventadmin
+	
+	// log impression
+	var impression = new models.EventStat({
+		event: ev._id,
+		location: req.url,
+		type: "impression",
+		attending: attending,
+		isAdmin: admin
+	})
+	if (attendee) {
+		impression.attendee = attendee._id
+	}
+	impression.save()
+	
+	next()
 }
 
 // Middleware to get :id param into res.local
@@ -75,8 +98,6 @@ function getEvent (req, res, next) {
 		} else {
 			req.session.recentEventName = ev.name;
 		}
-		
-		console.log(req.session)
 		
 		res.locals.ev = ev;
 		
