@@ -26,7 +26,7 @@ block content
 				| #{theUser.email}
 		.clearfix
 	
-	if !theUser._id.equals(user._id)
+	if (!theUser._id.equals(user._id))
 		.col-md-6.col-xs-6.col-sm-6.lower.hide-mini3-except-smart
 			.right.iconsbox.spacerbig
 				a(href="/inbox/messages/new?to="+theUser._id, class="link1")
@@ -51,6 +51,27 @@ block content
 					img(src="/images/send-business.svg", alt="", class="img-responsive inline res-butt pad-left-five")
 				a(href="/user/"+theUser._id+"/save", class="link1")
 					img(src="/images/save-prof.svg", alt="", class="img-responsive inline res-butt pad-left-five")
+		if (typeof ev !== 'undefined' && typeof eventadmin !== 'undefined' && eventadmin == true && theAttendee.admin == false)
+			.clearfix
+			br
+			.col-md-offset-10.col-xs-offset-10.col-sm-offset-10.col-md-2.col-xs-2.col-sm-2.lower.hide-mini3-except-smart
+				.right.iconsbox.spacerbig
+					a(href="/event/#{ev._id}/admin/addAdmin/#{theAttendee._id}", class="link1")
+						button.btn.btn-primary.font-x(href="/profile" style="width:100%; padding:10px; padding-left:25px; padding-right:35px; margin-right:20px; text-align:center;")
+							| Make<br/>Administrator
+						.nspacer-small
+			.col-md-offset-10.col-xs-offset-10.col-sm-offset-10.col-md-2.col-xs-2.col-sm-2.lower-hide.hide-except-smart
+				.right.iconsbox.spacerbig
+					a(href="/event/#{ev._id}/admin/addAdmin/#{theAttendee._id}", class="link1")
+						button.btn.btn-primary.font-x(href="/profile" style="width:100%; padding:10px; padding-left:25px; padding-right:35px; margin-right:20px; text-align: center;")
+							| Make Event<br/>Administrator
+						.nspacer-small
+			.hide-except-smart
+				.center
+					a(href="/event/#{ev._id}/admin/addAdmin/#{theAttendee._id}", class="link1")
+						button.btn.btn-primary.font-x(href="/profile" style="width:125px; padding:10px; padding-left:25px; padding-right:35px; margin-right:20px;")
+							| Make Event<br/>Administrator
+						.nspacer-small
 	else
 		.col-md-offset-4.col-xs-offset-4.col-sm-offset-4.col-md-2.col-xs-2.col-sm-2.lower.hide-mini3-except-smart
 			.right.iconsbox.spacerbig

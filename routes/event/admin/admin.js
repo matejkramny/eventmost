@@ -8,15 +8,16 @@ exports.router = function (app) {
 	app.get('/event/:id/admin', util.authorized, event.attending, mustBeAdmin, eventAdmin)
 	
 	// middleware that checks if (util.authorized = loggedin), (event.attending = is attending event), (mustbeadmin = checks if user is administrator)
-	app.get('/event/:id/admin/*', util.authorized, event.attending, mustBeAdmin)
+		.get('/event/:id/admin/*', util.authorized, event.attending, mustBeAdmin)
 	
 	// register other routes here
-	app.get('/event/:id/admin/logos', eventLogo)
-	app.get('/event/:id/admin/panel', eventPanel)
-	app.get('/event/:id/admin/email', eventEmail)
-	app.get('/event/:id/admin/feedback', eventFeedbackProfile)
-	app.get('/event/:id/admin/notifications', eventNotifications)
-	app.get('/event/:id/admin/summary', viewSummary)
+		.get('/event/:id/admin/logos', eventLogo)
+		.get('/event/:id/admin/panel', eventPanel)
+		.get('/event/:id/admin/email', eventEmail)
+		.get('/event/:id/admin/feedback', eventFeedbackProfile)
+		.get('/event/:id/admin/notifications', eventNotifications)
+		.get('/event/:id/admin/summary', viewSummary)
+		.get('/event/:id/admin/addAdmin/:attendee', addAdmin)
 }
 
 function mustBeAdmin (req, res, next) {
@@ -54,4 +55,27 @@ function eventLogo (req, res) {
 function viewSummary (req, res) {
 	// Display summary
 	res.render('event/admin/summary', { title: "Event Summary"})
+}
+
+function addAdmin (req, res) {
+	var att = req.params.attendee;
+	try {
+		att = mongoose.Types.ObjectId(att)
+	} catch (e) {
+		res.redirect('back')
+		return;
+	}
+	
+	var ev = res.locals.ev;
+	for (var i = 0; i < ev.attendees.length; i++) {
+		var attendee = ev.attendees[i];
+		
+		if (attendee._id.equals(att)) {
+			attendee.admin = true;
+			attendee.save()
+			break;
+		}
+	}
+	
+	res.redirect('back')
 }
