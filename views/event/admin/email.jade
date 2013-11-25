@@ -2,5 +2,48 @@ extends ../../responsive
 
 include ../inc/navbar
 
+append addonjs
+	script(src="/js/tiny.editor.packed.js", defer="true")
+	script(src="/v2/js/newMessage.js", defer="true")
+
 block content
 	+navbar
+	
+	form#newMessage(action="", method="POST")
+		input(type="hidden", name="_csrf", value=token)
+		.nspacer
+		
+		.clearfix
+		.nspacer-small
+		.col-lg-12.col-md-12.col-xs-12
+			.container.bg-purple.pad-top-zero.pad-right-zero(style="height:55px;")
+				.pull-left.subject
+					.font-evente.logo-text.nspacer-medium2.send-text
+						| SUBJECT:
+				.pull-left.subject-input
+						input.input-grey(name="subject", placeholder="Email Subject", type="text", style="height:43px;")
+			.clearfix
+
+		.col-lg-12.col-md-12.col-xs-12.no-float				
+			.nspacer-small
+			.bg-green
+				.pull-left
+					img.psev(src="/images/pencil.svg")
+				.pull-left.font2.font-thin.nspacer-small
+					| Email Content
+				.pull-right.pad-right-ten.nspacer
+					img(src="/images/optional-white.svg")
+				.clearfix
+			.clearfix
+
+			textarea#tinyeditor(style="height: 200px; width:1000px;", name="message", placeholder="Message...")
+	
+		.clearfix
+		.nspacer-small
+		.col-lg-12.col-md-12.col-xs-12
+			//-button.btn.btn-primary.font.pull-left(type='button', style="font-size:22px; margin-right:10px; height:55px; border:10px; padding:10px; padding-left:15px; padding-right:15px;")
+			//-	| Add file...
+			button.btn.btn-warning.font.pull-right(type='submit', onclick="$('#newMessage').submit()" style="font-size:22px; height:55px; border:10px; padding:10px; padding-left:15px; padding-right:15px;")
+				| SEND
+		.clearfix
+	
