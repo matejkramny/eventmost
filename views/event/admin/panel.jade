@@ -16,16 +16,16 @@ block content
 				.form-group
 					label.col-sm-4.col-md-4.col-xs-4.col-lg-4.control-label(for="name") Name
 					.col-sm-7.col-md-7.col-xs-8.col-lg-7
-						input#name.form-control(type="text", name="name", value=ev.name, placeholder="Event Name")
+						input#EventName.form-control(type="text", name="name", value=ev.name, placeholder="Event Name")
 				.form-group
 					label.col-sm-4.col-md-4.col-xs-4.col-lg-4.control-label(for="venueName") Venue Name
 					.col-sm-7.col-md-7.col-xs-8.col-lg-7
-						input#venueName.form-control(type="text", name="name", value=ev.venue_name, placeholder="Venue Name")
+						input#VenueName.form-control(type="text", name="name", value=ev.venue_name, placeholder="Venue Name")
 				.form-group
 					label.col-sm-4.col-md-4.col-xs-4.col-lg-4.control-label(for="address") Address
 					.col-sm-7.col-md-7.col-xs-8.col-lg-7
 						.input-group
-							input#address.form-control(type="text", name="name", value=ev.address, placeholder="Event Address")
+							input#EventAddress.form-control(type="text", name="name", value=ev.address, placeholder="Event Address")
 							span.input-group-addon
 								label.checkbox
 									input(type="checkbox")
@@ -41,11 +41,11 @@ block content
 				.form-group
 					label.col-sm-4.col-md-4.col-xs-4.col-lg-4.control-label(for="start") Start
 					.col-sm-7.col-md-7.col-xs-8.col-lg-7
-						input#start.form-control(type="datetime", name="start", placeholder="Start date")
+						input#start.form-control(type="datetime", name="start", value=ev.start, placeholder="mm/dd/yyyy")
 				.form-group
 					label.col-sm-4.col-md-4.col-xs-4.col-lg-4.control-label(for="end") End
 					.col-sm-7.col-md-7.col-xs-8.col-lg-7
-						input#start.form-control(type="datetime", name="end", placeholder="End date")
+						input#end.form-control(type="datetime", name="end", value=ev.end, placeholder="mm/dd/yyyy")
 				
 			.col-md-6.col-lg-6.col-sm-6
 				h2.text-center Sponsor Logos
@@ -80,3 +80,6 @@ block content
 					.form-group
 						.col-sm-7.col-md-7.col-xs-8.col-lg-7.col-sm-offset-4.col-md-offset-4.col-xs-offset-4.col-lg-offset-4
 							img.img-responsive(src= ev.sponsorLayout.sponsorAvatars.length > 2 ? ev.sponsorLayout.sponsorAvatars[2].url : "/images/sponsor-logo.svg")
+		.center
+			.submit
+				input.submit-btn(type="submit", value="Save settings")
