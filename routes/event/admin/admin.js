@@ -3,6 +3,9 @@ var fs = require('fs'),
 	, mongoose = require('mongoose')
 	, util = require('../../../util')
 	, event = require('../event')
+	, feedback = require('./feedback')
+	, summary = require('./summary')
+	, email = require('./email')
 
 exports.router = function (app) {
 	app.get('/event/:id/admin', util.authorized, event.attending, mustBeAdmin, eventAdmin)
@@ -13,11 +16,11 @@ exports.router = function (app) {
 	// register other routes here
 		.get('/event/:id/admin/logos', eventLogo)
 		.get('/event/:id/admin/panel', eventPanel)
-		.get('/event/:id/admin/email', eventEmail)
-		.get('/event/:id/admin/feedback', eventFeedbackProfile)
-		.get('/event/:id/admin/notifications', eventNotifications)
-		.get('/event/:id/admin/summary', viewSummary)
 		.get('/event/:id/admin/addAdmin/:attendee', addAdmin)
+	
+	email.router(app)
+	summary.router(app)
+	feedback.router(app)
 }
 
 function mustBeAdmin (req, res, next) {
@@ -32,29 +35,12 @@ function eventPanel (req, res){
 	res.render('event/admin/panel', {title: "Event Admin Panel"})
 }
 
-function eventEmail (req, res){
-	res.render('event/admin/email', {title: "Event Email"})
-}
-
-function eventFeedbackProfile (req, res){
-	res.render('event/admin/feedback', {title: "Feedback Profile"})
-}
-
-function eventNotifications (req, res){
-	res.render('event/admin/notifications', {title: "Event Notification"})
-}
-
 function eventAdmin (req, res) {
 	res.render('event/admin/panel', { title: "Admin Panel" });
 }
 
 function eventLogo (req, res) {
 	res.render('event/admin/logos', { title: "Add Logos"})
-}
-
-function viewSummary (req, res) {
-	// Display summary
-	res.render('event/admin/summary', { title: "Event Summary"})
 }
 
 function addAdmin (req, res) {

@@ -26,8 +26,8 @@ scheme.methods.edit = function (html, cb) {
 		
 		htmlData = '<!DOCTYPE html><html><head>\
 			<link rel="stylesheet" href="../../public/v2/css/bootstrap.min.css">\
-			<link href="../../public/css/cardcreator.css" rel="stylesheet">\
-			<link href="../../public/css/cardcreator_generator.css" rel="stylesheet">\
+			<link href="../../public/v2/css/cardcreator.css" rel="stylesheet">\
+			<link href="../../public/v2/css/cardcreator_generator.css" rel="stylesheet">\
 		</head><body>'
 		+ htmlData +
 		'</body></html>';
