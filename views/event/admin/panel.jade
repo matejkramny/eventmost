@@ -32,7 +32,7 @@ block content
 						input#sponsor1.form-control(type="file", name="sponsor1", placeholder="Avatar File", for="sponsor1Avatar")
 				.form-group
 					.col-sm-7.col-md-7.col-xs-8.col-lg-7.col-sm-offset-4.col-md-offset-4.col-xs-offset-4.col-lg-offset-4
-						img#sponsor1Avatar.img-responsive(src= ev.sponsorLayout.sponsorAvatars.length > 0 ? ev.sponsorLayout.sponsorAvatars[0].url : "/images/sponsor-logo.svg")
+						img#sponsor1Avatar.img-responsive(src= ev.sponsorLayout.sponsor1 ? ev.sponsorLayout.sponsor1.url : "/images/sponsor-logo.svg")
 				
 				if (ev.sponsorLayout.layout > 0 && ev.sponsorLayout.layout != 3)
 					.form-group
@@ -43,7 +43,7 @@ block content
 							input#sponsor2.form-control(type="file", name="sponsor2", placeholder="Avatar File", for="sponsor2Avatar")
 					.form-group
 						.col-sm-7.col-md-7.col-xs-8.col-lg-7.col-sm-offset-4.col-md-offset-4.col-xs-offset-4.col-lg-offset-4
-							img#sponsor2Avatar.img-responsive(src= ev.sponsorLayout.sponsorAvatars.length > 1 ? ev.sponsorLayout.sponsorAvatars[1].url : "/images/sponsor-logo.svg")
+							img#sponsor2Avatar.img-responsive(src= ev.sponsorLayout.sponsor2 ? ev.sponsorLayout.sponsor2.url : "/images/sponsor-logo.svg")
 				
 				if (ev.sponsorLayout.layout == 2 || ev.sponsorLayout.layout == 5)
 					.form-group
@@ -54,7 +54,7 @@ block content
 							input#sponsor3.form-control(type="file", name="sponsor3", placeholder="Avatar File", for="sponsor3Avatar")
 					.form-group
 						.col-sm-7.col-md-7.col-xs-8.col-lg-7.col-sm-offset-4.col-md-offset-4.col-xs-offset-4.col-lg-offset-4
-							img#sponsor3Avatar.img-responsive(src= ev.sponsorLayout.sponsorAvatars.length > 2 ? ev.sponsorLayout.sponsorAvatars[2].url : "/images/sponsor-logo.svg")
+							img#sponsor3Avatar.img-responsive(src= ev.sponsorLayout.sponsor3 ? ev.sponsorLayout.sponsor3.url : "/images/sponsor-logo.svg")
 			
 			.col-md-6.col-lg-6.col-sm-6
 				h2.text-center Event Settings

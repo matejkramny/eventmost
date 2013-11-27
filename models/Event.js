@@ -59,11 +59,19 @@ var scheme = schema({
 	//EventLayout
 	sponsorLayout: {
 		layout: { type: Number, default: 0 }, //Should we have a default with no logo/sponsor logo?
-		sponsorAvatars: [{
+		sponsor1: {
 			type: ObjectId,
 			ref: 'Avatar'
-		}]
-	}
+		},
+		sponsor2: {
+			type: ObjectId,
+			ref: 'Avatar'
+		},
+		sponsor3: {
+			type: ObjectId,
+			ref: 'Avatar'
+		}
+	},
 })
 
 scheme.statics.getEvent = function (id, cb) {
@@ -124,8 +132,7 @@ scheme.statics.getEvent = function (id, cb) {
 						})
 					},
 					function (callback) {
-						//ev.populate('sponsorLayout.sponsorAvatars', callback)
-						callback(null)
+						ev.populate('sponsorLayout.sponsor1 sponsorLayout.sponsor2 sponsorLayout.sponsor3', callback)
 					}
 				], function(err) {
 					cb(ev)
@@ -174,8 +181,8 @@ scheme.methods.edit = function (body, user, files, cb) {
 		}
 		if (files.sponsor1 != null) {
 			var av;
-			if (this.sponsorLayout.sponsorAvatars.length > 0) {
-				av = this.sponsorLayout.sponsorAvatars[0];
+			if (this.sponsorLayout.sponsor1) {
+				av = this.sponsorLayout.sponsor1;
 			}
 			
 			if (!av) {
@@ -184,17 +191,47 @@ scheme.methods.edit = function (body, user, files, cb) {
 				})
 			}
 			
-			this.sponsorLayout.sponsorAvatars[0] = av._id;
+			this.sponsorLayout.sponsor1 = av._id;
 			
 			av.doUpload(files.sponsor1, function() {
 				av.save()
 			})
 		}
 		if (files.sponsor2 != null) {
+			var av;
+			if (this.sponsorLayout.sponsor2) {
+				av = this.sponsorLayout.sponsor2;
+			}
 			
+			if (!av) {
+				av = new Avatar({
+					createdBy: user._id
+				})
+			}
+			
+			this.sponsorLayout.sponsor2 = av._id;
+			
+			av.doUpload(files.sponsor2, function() {
+				av.save()
+			})
 		}
 		if (files.sponsor3 != null) {
+			var av;
+			if (this.sponsorLayout.sponsor3) {
+				av = this.sponsorLayout.sponsor3;
+			}
 			
+			if (!av) {
+				av = new Avatar({
+					createdBy: user._id
+				})
+			}
+			
+			this.sponsorLayout.sponsor3 = av._id;
+			
+			av.doUpload(files.sponsor3, function() {
+				av.save()
+			})
 		}
 	}
 	

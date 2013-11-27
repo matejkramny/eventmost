@@ -17,7 +17,7 @@
 		| Thanks to <br />our <br />sponsor:
 
 .col-md-4.col-xs-4.col-sm-4
-	img.img-responsive(src="/images/sponsor-logo.svg")
+	img.img-responsive(src= ev.sponsorLayout.sponsor1 ? ev.sponsorLayout.sponsor1.url : "/images/sponsor-logo.svg")
 
 .clearfix
 .nspacer
