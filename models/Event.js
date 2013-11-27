@@ -203,15 +203,15 @@ scheme.methods.edit = function (body, user, files, cb) {
 	
 	// dates
 	if (typeof body.start == "string") {
-		this.start = parseInt(body.start);
-		if (this.start == NaN) {
-			this.start = null;
+		var date = parseInt(body.start);
+		if (date != NaN) {
+			this.start = date;
 		}
 	}
 	if (typeof body.end == "string") {
-		this.end = parseInt(body.end);
-		if (this.end == NaN) {
-			this.end = null;
+		var date = parseInt(body.end);
+		if (date != NaN) {
+			this.end = date;
 		}
 	}
 	

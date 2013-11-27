@@ -10,6 +10,8 @@ $(document).ready(function() {
 	} catch (e) {
 	}
 	
+	var editingEvent = null
+	
 	function getNear(coords) {
 		lat = coords.lat;
 		lng = coords.lng;
@@ -518,7 +520,7 @@ $(document).ready(function() {
 		
 		$.ajax({
 			dataType: "json",
-			url: "/event/add",
+			url: editingEvent == null ? "/event/add" : "/event/"+eventid+"/edit",
 			type: "POST",
 			data: data,
 			success: function(data, status, xhr) {
@@ -545,7 +547,12 @@ $(document).ready(function() {
 				//$form.find("input[name=eventName]").attr('disabled', true)
 				window.scrollTo(0,0);
 				
-				eventid = data.id;
+				if (!eventid) {
+					eventid = data.id;
+				} else {
+					window.location = '/event/'+eventid;
+				}
+				
 				$("#invitationLink").attr("href", "http://eventmost.com/event/"+eventid).html("eventmost.com/event/"+eventid);
 				$(".gotoeventbutton").attr("href", "/event/"+eventid);
 			},
@@ -602,6 +609,61 @@ $(document).ready(function() {
 		
 		return false;
 	})
+	
+	// Edit event
+	if (window.emEvent) {
+		editingEvent = window.emEvent;
+		var ev = editingEvent;
+		eventid = ev._id;
+		
+		// address & geolocation
+		$(".current-location-field").val(ev.address);
+		if (ev.geo && ev.geo.geo) {
+			lat = ev.geo.geo.lat;
+			lng = ev.geo.geo.lng;
+		}
+		
+		// avatar
+		if (ev.avatar) {
+			avatar_id = ev.avatar._id;
+			$(".avatar_preview").attr('src', ev.avatar.url);
+		}
+		
+		// name
+		$('form input[name=eventName]').val(ev.name)
+		// venue name
+		$('form input[name=venueName]').val(ev.venue_name)
+		
+		// Dates
+		var date = new Date(ev.start);
+		var time = ('0' + date.getHours()).slice(-2) + ":" + ('0' + date.getMinutes()).slice(-2);
+		$('#fromDateMobile, #fromDateDesktop').parent().find('input[type=time]').val(time);
+		$('#fromDateMobile, #fromDateDesktop').datepicker("setDate", date);
+		
+		date = new Date(ev.end)
+		time = ('0' + date.getHours()).slice(-2) + ":" + ('0' + date.getMinutes()).slice(-2);
+		$('#toDateMobile, #toDateDesktop').parent().find('input[type=time]').val(time)
+		$('#toDateMobile, #toDateDesktop').datepicker("setDate", date);
+		
+		// Description
+		$(editor.i.contentWindow.document.body)[0].innerHTML = ev.description || ""
+		$(editor1.i.contentWindow.document.body)[0].innerHTML = ev.description || ""
+		
+		// Categories
+		$(".selectedCategoriesList span").each(function() {
+			removeCategory($(this), $(this).attr("val"))
+		})
+		for (var i = 0; i < ev.categories.length; i++) {
+			addCategory(ev.categories[i])
+		}
+		
+		// TODO tickets
+		$('.allowAttendeesToCreateTheirOwnCategories').attr('checked', ev.allowAttendeesToCreateCategories || false);
+		$('.allowAttendeesToCommentOnTheEvent').attr('checked', ev.allowAttendeesToComment || false);
+		$('.includePricedTickets').attr('checked', ev.pricedTickets || false)
+		
+		$('.eventSubmitBtn').html('Save Event')
+	}
 });
 
 eventMost.controller('eventAdd', function($scope) {

@@ -2,6 +2,9 @@ extends ../../responsive
 
 include ../inc/navbar
 
+append addonjs
+	script(src="/v2/js/")
+
 block content
 	+navbar
 	.clearfix
@@ -10,43 +13,6 @@ block content
 	form.form-horizontal(action="/event/#{ev._id}/edit", method="POST")
 		input(type="hidden", name="_csrf", value=token)
 		.row
-			.col-md-6.col-lg-6.col-sm-6
-				h2.text-center Event Settings
-				br
-				.form-group
-					label.col-sm-4.col-md-4.col-xs-4.col-lg-4.control-label(for="name") Name
-					.col-sm-7.col-md-7.col-xs-8.col-lg-7
-						input#EventName.form-control(type="text", name="name", value=ev.name, placeholder="Event Name")
-				.form-group
-					label.col-sm-4.col-md-4.col-xs-4.col-lg-4.control-label(for="venueName") Venue Name
-					.col-sm-7.col-md-7.col-xs-8.col-lg-7
-						input#VenueName.form-control(type="text", name="name", value=ev.venue_name, placeholder="Venue Name")
-				.form-group
-					label.col-sm-4.col-md-4.col-xs-4.col-lg-4.control-label(for="address") Address
-					.col-sm-7.col-md-7.col-xs-8.col-lg-7
-						.input-group
-							input#EventAddress.form-control(type="text", name="name", value=ev.address, placeholder="Event Address")
-							span.input-group-addon
-								label.checkbox
-									input(type="checkbox")
-									|  Use my current location
-				.form-group
-					label.col-sm-4.col-md-4.col-xs-4.col-lg-4.control-label(for="logo") Logo
-					.col-sm-7.col-md-7.col-xs-8.col-lg-7
-						input#logo.form-control(type="file", name="avatar", placeholder="Avatar File")
-				.form-group
-					.col-sm-7.col-md-7.col-xs-8.col-lg-7.col-sm-offset-4.col-md-offset-4.col-xs-offset-4.col-lg-offset-4
-						img.img-responsive(src=ev.avatar.url)
-				
-				.form-group
-					label.col-sm-4.col-md-4.col-xs-4.col-lg-4.control-label(for="start") Start
-					.col-sm-7.col-md-7.col-xs-8.col-lg-7
-						input#start.form-control(type="datetime", name="start", value=ev.start, placeholder="mm/dd/yyyy")
-				.form-group
-					label.col-sm-4.col-md-4.col-xs-4.col-lg-4.control-label(for="end") End
-					.col-sm-7.col-md-7.col-xs-8.col-lg-7
-						input#end.form-control(type="datetime", name="end", value=ev.end, placeholder="mm/dd/yyyy")
-				
 			.col-md-6.col-lg-6.col-sm-6
 				h2.text-center Sponsor Logos
 				br
@@ -80,6 +46,24 @@ block content
 					.form-group
 						.col-sm-7.col-md-7.col-xs-8.col-lg-7.col-sm-offset-4.col-md-offset-4.col-xs-offset-4.col-lg-offset-4
 							img.img-responsive(src= ev.sponsorLayout.sponsorAvatars.length > 2 ? ev.sponsorLayout.sponsorAvatars[2].url : "/images/sponsor-logo.svg")
+			
+			.col-md-6.col-lg-6.col-sm-6
+				h2.text-center Event Settings
+				br
+				.from-group
+					.col-sm-7.col-md-7.col-xs-8.col-lg-7.col-sm-offset-4.col-md-offset-4.col-xs-offset-4.col-lg-offset-4
+						a.btn.btn-info(href="/event/#{ev._id}/edit") Edit Event
+				.clearfix
+				br
+				.form-group
+					label.col-sm-4.col-md-4.col-xs-4.col-lg-4.control-label(for="logo") Logo
+					.col-sm-7.col-md-7.col-xs-8.col-lg-7
+						input#logo.form-control(type="file", name="avatar", placeholder="Avatar File")
+				.form-group
+					.col-sm-7.col-md-7.col-xs-8.col-lg-7.col-sm-offset-4.col-md-offset-4.col-xs-offset-4.col-lg-offset-4
+						img.img-responsive(src=ev.avatar.url)
+				
+			
 		.center
 			.submit
-				input.submit-btn(type="submit", value="Save settings")
+				a.btn.btn-info(href="/event/#{ev._id}") Save Settings

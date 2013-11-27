@@ -5,13 +5,15 @@ append addonjs
 	script(src="/js/datepicker.js", defer="true")
 	script(src="/js/tiny.editor.packed.js", defer="true")
 	script(src="/js/jquery.jcarousel.min.js", defer="true")
+	script.
+		window.emEvent = !{JSON.stringify(ev)}
 	script(src="/v2/js/eventadd.js", defer="true")
 
 append content
 	include ../inc/flash
 	include ../modals/add-modal
-
-
+	
+	
 	div(ng-controller="eventAdd")
 		#afterPublishHide
 			//- smart
@@ -32,7 +34,7 @@ append content
 							.font.logo-text
 								| Event name
 						.pull-left.event-name-input
-								input.input-grey(name="eventName", type="text", required="required")
+							input.input-grey(name="eventName", type="text", required="required")
 					.clearfix
 					//- logo
 					.nspacer-small
@@ -70,7 +72,7 @@ append content
 							.font.logo-text
 								| Venue name
 						.pull-left.event-name-input
-								input.input-grey(name="venueName", type="text")
+							input.input-grey(name="venueName", type="text")
 
 				//- Event Address
 				.clearfix.hide-all2
