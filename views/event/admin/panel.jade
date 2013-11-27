@@ -2,8 +2,11 @@ extends ../../responsive
 
 include ../inc/navbar
 
+append meta
+	meta(name="event_id", content="#{ev._id}")
+
 append addonjs
-	script(src="/v2/js/")
+	script(src="/v2/js/adminPanel.js", defer)
 
 block content
 	+navbar
@@ -24,28 +27,34 @@ block content
 				.form-group
 					label.col-sm-4.col-md-4.col-xs-4.col-lg-4.control-label(for="sponsor1") Sponsor 1
 					.col-sm-7.col-md-7.col-xs-8.col-lg-7
-						input#sponsor1.form-control(type="file", name="sponsor1", placeholder="Avatar File")
+						.progress.hide
+							.progress-bar(aria-valuenow="", aria-valuemin="0", aria-valuemax="100", style="width: 100%")
+						input#sponsor1.form-control(type="file", name="sponsor1", placeholder="Avatar File", for="sponsor1Avatar")
 				.form-group
 					.col-sm-7.col-md-7.col-xs-8.col-lg-7.col-sm-offset-4.col-md-offset-4.col-xs-offset-4.col-lg-offset-4
-						img.img-responsive(src= ev.sponsorLayout.sponsorAvatars.length > 0 ? ev.sponsorLayout.sponsorAvatars[0].url : "/images/sponsor-logo.svg")
+						img#sponsor1Avatar.img-responsive(src= ev.sponsorLayout.sponsorAvatars.length > 0 ? ev.sponsorLayout.sponsorAvatars[0].url : "/images/sponsor-logo.svg")
 				
 				if (ev.sponsorLayout.layout > 0 && ev.sponsorLayout.layout != 3)
 					.form-group
 						label.col-sm-4.col-md-4.col-xs-4.col-lg-4.control-label(for="sponsor2") Sponsor 2
 						.col-sm-7.col-md-7.col-xs-8.col-lg-7
-							input#sponsor2.form-control(type="file", name="sponsor2", placeholder="Avatar File")
+							.progress.hide
+								.progress-bar(aria-valuenow="", aria-valuemin="0", aria-valuemax="100", style="width: 100%")
+							input#sponsor2.form-control(type="file", name="sponsor2", placeholder="Avatar File", for="sponsor2Avatar")
 					.form-group
 						.col-sm-7.col-md-7.col-xs-8.col-lg-7.col-sm-offset-4.col-md-offset-4.col-xs-offset-4.col-lg-offset-4
-							img.img-responsive(src= ev.sponsorLayout.sponsorAvatars.length > 1 ? ev.sponsorLayout.sponsorAvatars[1].url : "/images/sponsor-logo.svg")
+							img#sponsor2Avatar.img-responsive(src= ev.sponsorLayout.sponsorAvatars.length > 1 ? ev.sponsorLayout.sponsorAvatars[1].url : "/images/sponsor-logo.svg")
 				
 				if (ev.sponsorLayout.layout == 2 || ev.sponsorLayout.layout == 5)
 					.form-group
 						label.col-sm-4.col-md-4.col-xs-4.col-lg-4.control-label(for="sponsor3") Sponsor 3
 						.col-sm-7.col-md-7.col-xs-8.col-lg-7
-							input#sponsor3.form-control(type="file", name="sponsor3", placeholder="Avatar File")
+							.progress.hide
+								.progress-bar(aria-valuenow="", aria-valuemin="0", aria-valuemax="100", style="width: 100%")
+							input#sponsor3.form-control(type="file", name="sponsor3", placeholder="Avatar File", for="sponsor3Avatar")
 					.form-group
 						.col-sm-7.col-md-7.col-xs-8.col-lg-7.col-sm-offset-4.col-md-offset-4.col-xs-offset-4.col-lg-offset-4
-							img.img-responsive(src= ev.sponsorLayout.sponsorAvatars.length > 2 ? ev.sponsorLayout.sponsorAvatars[2].url : "/images/sponsor-logo.svg")
+							img#sponsor3Avatar.img-responsive(src= ev.sponsorLayout.sponsorAvatars.length > 2 ? ev.sponsorLayout.sponsorAvatars[2].url : "/images/sponsor-logo.svg")
 			
 			.col-md-6.col-lg-6.col-sm-6
 				h2.text-center Event Settings
@@ -58,11 +67,12 @@ block content
 				.form-group
 					label.col-sm-4.col-md-4.col-xs-4.col-lg-4.control-label(for="logo") Logo
 					.col-sm-7.col-md-7.col-xs-8.col-lg-7
-						input#logo.form-control(type="file", name="avatar", placeholder="Avatar File")
+						.progress.hide
+							.progress-bar(aria-valuenow="", aria-valuemin="0", aria-valuemax="100", style="width: 100%")
+						input#logo.form-control(type="file", name="avatar", placeholder="Avatar File", for="logoAvatar")
 				.form-group
 					.col-sm-7.col-md-7.col-xs-8.col-lg-7.col-sm-offset-4.col-md-offset-4.col-xs-offset-4.col-lg-offset-4
-						img.img-responsive(src=ev.avatar.url)
-				
+						img#logoAvatar.img-responsive(src=ev.avatar.url)
 			
 		.center
 			.submit

@@ -74,17 +74,19 @@ function uploadAvatarAsync (req, res) {
 		avatar = new models.Avatar({
 			createdBy: req.user._id
 	   	});
-		avatar.doUpload(req.files, doCallback)
+		avatar.doUpload(req.files.avatar, doCallback)
 	} else {
 		models.Avatar.findOne(avatarid, function(av) {
+			// TODO warning possible hackable area (specify avatar id, and upload an image. it should overwrite it)
 			if (!av) {
 				// Make a new avatar
 				av = new models.Avatar({
 					createdBy: req.user._id
 				});
 			}
+			
 			avatar = av;
-			av.doUpload(req.files, doCallback)
+			av.doUpload(req.files.avatar, doCallback)
 		})
 	}
 }

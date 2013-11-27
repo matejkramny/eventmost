@@ -122,6 +122,10 @@ scheme.statics.getEvent = function (id, cb) {
 						ev.getGeo(function(geo) {
 							callback(null)
 						})
+					},
+					function (callback) {
+						//ev.populate('sponsorLayout.sponsorAvatars', callback)
+						callback(null)
 					}
 				], function(err) {
 					cb(ev)
@@ -151,6 +155,47 @@ scheme.methods.edit = function (body, user, files, cb) {
 	
 	if (body.name) {
 		this.name = body.name
+	}
+	
+	// avatar, sponsor logos etc
+	if (files) {
+		if (files.avatar != null) {
+			var av = this.avatar
+			if (!av) {
+				av = new Avatar({
+					createdBy: user._id
+				})
+			}
+			
+			this.avatar = av._id;
+			av.doUpload(files.avatar, function() {
+				av.save()
+			})
+		}
+		if (files.sponsor1 != null) {
+			var av;
+			if (this.sponsorLayout.sponsorAvatars.length > 0) {
+				av = this.sponsorLayout.sponsorAvatars[0];
+			}
+			
+			if (!av) {
+				av = new Avatar({
+					createdBy: user._id
+				})
+			}
+			
+			this.sponsorLayout.sponsorAvatars[0] = av._id;
+			
+			av.doUpload(files.sponsor1, function() {
+				av.save()
+			})
+		}
+		if (files.sponsor2 != null) {
+			
+		}
+		if (files.sponsor3 != null) {
+			
+		}
 	}
 	
 	if (body.avatar) {

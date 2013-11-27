@@ -10,17 +10,17 @@ var scheme = schema({
 	created: { type: Date, default: Date.now }
 });
 
-scheme.methods.doUpload = function(files, cb) {
+scheme.methods.doUpload = function(avatar, cb) {
 	var self = this;
-	if (files.avatar != null && files.avatar.name.length != 0) {
-		var type = files.avatar.type;
+	if (avatar != null && avatar.name.length != 0) {
+		var type = avatar.type;
 		if (typeof type === "undefined" || type == null) {
-			type = files.avatar.headers['content-type'];
+			type = avatar.headers['content-type'];
 		}
 		
 		var ext;
 		if (typeof type === "undefined" || type == null) {
-			ext = files.avatar.name.split('.');
+			ext = avatar.name.split('.');
 		} else {
 			ext = type.split('/');
 		}
@@ -42,7 +42,7 @@ scheme.methods.doUpload = function(files, cb) {
 		
 		self.url = "/avatars/"+this._id+"."+ext;
 		
-		fs.readFile(files.avatar.path, function(err, avatar) {
+		fs.readFile(avatar.path, function(err, avatar) {
 			fs.writeFile(__dirname + "/../public"+self.url, avatar, function(err) {
 				if (err) throw err;
 				
