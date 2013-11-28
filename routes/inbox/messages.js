@@ -62,7 +62,7 @@ function showMessage (req, res) {
 	
 	var name = "Private Message"
 	if (otherUser)
-		name = "Private Message to "+otherUser.getName();
+		name = "PM to "+otherUser.getName();
 	res.render('inbox/message', { pageName: name, title: name })
 }
 

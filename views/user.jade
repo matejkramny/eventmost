@@ -1,13 +1,18 @@
 extends responsive
 
 block content
-
-	.col-xs-12.hide-all2
-		form(method="POST", accept-charset="utf-8")
-			input.gonew2.pull-right.header-links(type="button", value="GO", style="width:10%;")
-			input(type="hidden", name="_csrf", value=token)
-			input.pull-right.font-s.search-input.pad-left-ten.header-links(type="search", placeholder="search events or people", style="width:87%;")
-	.clearfix.hide-all2
+	if (typeof ev !== "undefined")
+		include event/inc/navbar
+		+navbar
+		.clearfix.hide-all2
+		br
+	else
+		.col-xs-12.hide-all2
+			form(method="POST", accept-charset="utf-8")
+				input.gonew2.pull-right.header-links(type="button", value="GO", style="width:10%;")
+				input(type="hidden", name="_csrf", value=token)
+				input.pull-right.font-s.search-input.pad-left-ten.header-links(type="search", placeholder="search events or people", style="width:87%;")
+		.clearfix.hide-all2
 
 	.nspacer
 	.col-md-2.col-xs-2.col-sm-2.hide-mini3-except-smart

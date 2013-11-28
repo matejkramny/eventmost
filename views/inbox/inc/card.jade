@@ -1,3 +1,4 @@
+//- TODO display user avatar and make it clickable (the image)
 mixin card(card)
 	.col-md-3.col-xs-3.col-sm-3.inv-till-1
 		.right
@@ -15,9 +16,9 @@ mixin card(card)
 				img.pad-left-ten.img-responsive(src="/businesscards/"+card.card._id+".png")
 	//- mobile?
 	.col-md-6.col-xs-6.col-sm-6.hide-all2
-			.center
-				img.circularespond-small.img-responsive(src="/images/default_speaker.svg")
+		.center
+			img.circularespond-small.img-responsive(src="/images/default_speaker.svg")
 	.col-md-6.col-xs-6.col-sm-6.hide-all2
-			.center.nspacer-medium
-				img.img-responsive(src="/businesscards/"+card.card._id+".png")
+		.center.nspacer-medium
+			img.img-responsive(src="/businesscards/"+card.card._id+".png")
 	.clearfix.hide-all2

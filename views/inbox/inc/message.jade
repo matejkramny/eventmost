@@ -12,11 +12,13 @@ mixin message(message)
 	
 	.hide-mini3-except-smart
 		.col-md-2.col-xs-2.col-sm-2
-			.font-e1
+			.font-e1(style="width:30%; overflow:hidden; border-radius:51px; -webkit-border-radius: 51px; -moz-border-radius:51px;width:102px;height:102px;border:1px solid #333;")
 				if otherUser
 					a(href="/user/"+id)
-						img.circularespond.img-responsive(src= otherUser.avatar.length == 0 ? "/images/default_speaker.svg" : otherUser.avatar)
-
+						img(src= otherUser.avatar.length == 0 ? "/images/default_speaker.svg" : otherUser.avatar, style="max-width:102px;margin:-1px auto auto -1px;")
+				else
+					a(href="#")
+						img(src= "/images/default_speaker.svg", style="max-width:102px;margin:-1px auto auto -1px;")
 		.col-md-10.col-xs-10.col-sm-10.nspacer-bigger
 			.font-e1.bigger-pad-left
 				//- todo last message (who wrote it)
