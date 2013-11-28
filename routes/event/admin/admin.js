@@ -11,7 +11,7 @@ exports.router = function (app) {
 	app.get('/event/:id/admin', util.authorized, event.attending, mustBeAdmin, eventAdmin)
 	
 	// middleware that checks if (util.authorized = loggedin), (event.attending = is attending event), (mustbeadmin = checks if user is administrator)
-		.get('/event/:id/admin/*', util.authorized, event.attending, mustBeAdmin)
+		.all('/event/:id/admin/*', util.authorized, event.attending, mustBeAdmin)
 	
 	// register other routes here
 		.get('/event/:id/admin/logos', eventLogo)

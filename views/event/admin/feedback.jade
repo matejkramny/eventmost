@@ -1,6 +1,22 @@
 extends ../../responsive
 
 include ../inc/navbar
+include ../inc/attendee
 
 block content
 	+navbar
+	.clearfix
+	
+	.col-sm-9.col-md-9.col-lg-6
+		h1 Feedback Profiles
+	.col-sm-3.col-md-3.col-lg-6
+		br.hidden-xs
+		a.nspacer.btn.btn-primary.pull-right(href="/event/#{ev._id}/admin/feedback/new") New Feedback Profile
+		br.visible-xs
+		br.visible-xs
+	.clearfix
+	
+	for attendee in ev.attendees
+		if (attendee.user.isFeedbackProfile && attendee.user.feedbackProfileEvent.equals(ev._id))
+			+attendee(attendee)
+	.clearfix

@@ -73,7 +73,10 @@ var scheme = schema({
 	requestEmail: { type: Boolean, default: false },
 	admin: { type: Boolean, default: false },
 	adminMeeting: { type: Boolean, default: false },
-	mailboxUnread: { type: Number, default: 0 }
+	mailboxUnread: { type: Number, default: 0 },
+	
+	isFeedbackProfile: { type: Boolean, default: false },
+	feedbackProfileEvent: { type: ObjectId, ref: 'Event' }
 });
 
 scheme.methods.setName = function (name) {

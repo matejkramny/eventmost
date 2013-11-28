@@ -55,6 +55,7 @@ $(document).ready(function() {
 		avatarUploadRequest.onreadystatechange = xmlhttprequestResponse(el);
 		avatarUploadRequest.upload.addEventListener('progress', xmlUploadProgress(el), false)
 		avatarUploadRequest.open("POST", "/event/"+$("head meta[name=event_id]").attr('content')+"/edit");
+		avatarUploadRequest.setRequestHeader('Accept', 'application/json');
 		avatarUploadRequest.send(form);
 	}
 	
@@ -90,7 +91,7 @@ $(document).ready(function() {
 				if (self.request.status == 200) {
 					result = self.request.response;
 					
-					if (result.status != 200) {
+					if (result && result.status != 200) {
 						alert("Could not upload image\n"+result.err);
 					}
 				} else {

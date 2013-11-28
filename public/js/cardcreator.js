@@ -28,11 +28,18 @@ function BusinessCards ($scope) {
 		$scope.uploadRequest = ur = new XMLHttpRequest();
 		ur.responseType = "json";
 		ur.onreadystatechange = $scope.readyStateChange
-		ur.upload.addEventListener('progress', $scope.uploadProgressChange, false)
+		ur.upload.addEventListener('progress', uploadProgressChange, false)
 		
 		ur.open("POST", "/card/new");
 		ur.setRequestHeader('Accept', 'application/json');
 		ur.send(form);
+	}
+	
+	function uploadProgressChange (ev) {
+		if (ev.lengthComputable) {
+			var percent = Math.round(ev.loaded * 100 / ev.total);
+			$scope.progress = percent;
+		}
 	}
 	
 	function updateProgress (val) {

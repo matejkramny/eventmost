@@ -19,10 +19,9 @@ exports.router = function(app) {
 			auth.display(req, res)
 		}
 	})
-		.get('/about', contact.about)
 		.get('/contact', contact.contactus)
 		.post('/contact', contact.doContact)
-		.get('/token', getToken)
+		.get('/token', getToken)// Used in the mobile apps
 		.get('/logout.json', logoutJSON)
 		.get('/loggedin', isloggedin)
 		.post('/emailavailable', emailAvailable)

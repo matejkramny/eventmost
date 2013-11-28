@@ -2,10 +2,6 @@ var models = require('../models'),
 	contact = models.Contact,
 	transport
 
-exports.about = function (req, res) {
-	res.render('about', { title: "About us" })
-}
-
 exports.contactus = function (req, res) {
 	res.render('contact', { title: "Contact us" })
 }
