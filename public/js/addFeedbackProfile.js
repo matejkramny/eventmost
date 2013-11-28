@@ -7,9 +7,16 @@ angular.module('eventMost')
 		position: "",
 		company: "",
 		website: "",
-		description: ""
+		desc: ""
 	}
 	$scope.progress = 0;
+	
+	$scope.init = function (profile) {
+		$scope.profile = profile.user;
+		$scope.profile._id = profile._id;
+		
+		$('.avatar-upload-image').attr('src', $scope.profile.avatar || "/images/big-avatar-blue.svg");
+	}
 	
 	var avatarUploadRequest;
 	
@@ -26,7 +33,8 @@ angular.module('eventMost')
 		avatarUploadRequest.responseType = "json";
 		avatarUploadRequest.onreadystatechange = xmlhttprequestResponse;
 		avatarUploadRequest.upload.addEventListener('progress', $scope.uploadProgressChange, false)
-		avatarUploadRequest.open("POST", "/event/"+$("head meta[name=event_id]").attr('content')+"/admin/feedback/new");
+		avatarUploadRequest.open("POST", "/event/"+$("head meta[name=event_id]").attr('content')+"/admin/feedback/edit");
+		avatarUploadRequest.setRequestHeader('Accept', 'application/json');
 		avatarUploadRequest.send(form);
 	}
 	
@@ -38,7 +46,6 @@ angular.module('eventMost')
 				if (result.status != 200) {
 					alert("Could not save profile :(\n"+result.err);
 				} else {
-					
 					window.location = "/event/"+$("head meta[name=event_id]").attr('content')+"/admin/feedback";
 				}
 			} else {

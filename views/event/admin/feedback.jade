@@ -18,5 +18,5 @@ block content
 	
 	for attendee in ev.attendees
 		if (attendee.user.isFeedbackProfile && attendee.user.feedbackProfileEvent.equals(ev._id))
-			+attendee(attendee)
+			+attendee(attendee, true)
 	.clearfix

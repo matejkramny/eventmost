@@ -85,16 +85,16 @@ mixin navbar
 		//- second inbox title plus buttons
 		.nspacer
 
-		.col-md-2.col-xs-2.col-sm-2.nspacer-medium.hide-mini3-except-smart
+		.col-md-4.col-xs-4.col-sm-4.nspacer-medium.hide-mini3-except-smart
 			.font-s
 				b Planner options
-		.col-md-10.col-xs-10.col-sm-10.hide-mini3-except-smart
+		.col-md-8.col-xs-8.col-sm-8.hide-mini3-except-smart
 			.font-x1.bg-yellow.center.pull-right.psev2.prof-wall(style="padding-top:15px;")
 				a.link-purple(href=base+"admin/logos") Event Layout
 			.font-x1.bg-purple.center.pull-right.psev2.prof-wall(style="padding-top:15px;")
 				a.link-white(href=base+"admin/email") Email Attendees
-			.font-x1.bg-green.center.pull-right.psev2.prof-wall(style="padding-top:15px;")
-				a.link-white(href=base+"admin/notifications") Push Notifications
+			//-.font-x1.bg-green.center.pull-right.psev2.prof-wall(style="padding-top:15px;")
+			//-	a.link-white(href=base+"admin/notifications") Push Notifications
 			.font-x1.bg-yellow.center.pull-right.psev2.prof-wall
 				a.link-purple(href=base+"admin/feedback") Feedback<br/>Profiles
 			.font-x1.bg-purple.center.pull-right.psev2.prof-wall(style="padding-top:15px;")
@@ -103,10 +103,9 @@ mixin navbar
 				a.link-white(href=base+"admin/panel") Admin Panel
 		.clearfix.hide-mini3-except-smart
 
-		.col-md-4.col-xs-4.col-sm-4.hide-mini3-except-smart
+		.col-md-6.col-xs-5.col-sm-6.hide-mini3-except-smart
 			.line-green(style="height:3px; margin-top:-3px;")
-
-
+		
 		.col-md-12.col-xs-12.col-sm-12.nspacer-medium.hide-all2
 			.center
 				.font-tw.inline
@@ -123,9 +122,9 @@ mixin navbar
 				.inline.nspacer-small
 					.font-x1.bg-yellow.center.psev2.prof-wall
 						a.link-purple(href=base+"admin/feedback") Feedback<br/>Profiles
-				.inline.nspacer-small
-					.font-x1.bg-green.center.psev2.prof-wall
-						a.link-white(href=base+"admin/notifications") Push <br/>Notifications
+				//-.inline.nspacer-small
+				//-	.font-x1.bg-green.center.psev2.prof-wall
+				//-		a.link-white(href=base+"admin/notifications") Push <br/>Notifications
 				.inline.nspacer-small
 					.font-x1.bg-purple.center.psev2.prof-wall
 						a.link-white(href=base+"admin/email") Email <br/>Attendees

@@ -7,7 +7,8 @@ var fs = require('fs'),
 exports.router = function (app) {
 	app.get('/event/:id/admin/feedback', eventFeedbackProfile)
 		.get('/event/:id/admin/feedback/new', newFeedbackProfile)
-		.post('/event/:id/admin/feedback/new', doNewFeedbackProfile)
+		.post('/event/:id/admin/feedback/edit', getProfile, doEditFeedbackProfile)
+		.get('/event/:id/admin/feedback/:fid', getProfile, editFeedbackProfile)
 }
 
 function eventFeedbackProfile (req, res) {
@@ -15,29 +16,87 @@ function eventFeedbackProfile (req, res) {
 }
 
 function newFeedbackProfile (req, res) {
-	res.render('event/admin/newFeedback', { title: "Create a new Feedback Profile" });
+	res.render('event/admin/editFeedback', { title: "Create a new Feedback Profile" });
 }
 
-function doNewFeedbackProfile (req, res) {
-	var profile = new models.User({
-		position: req.body.position,
-		company: req.body.company,
-		website: req.body.website,
-		desc: req.body.description,
-		isFeedbackProfile: true,
-		feedbackProfileEvent: res.locals.ev._id
-	})
+function getProfile (req, res, next) {
+	var fid = req.params.fid || req.body._id;
+	var ev = res.locals.ev;
+	
+	try {
+		fid = mongoose.Types.ObjectId(fid)
+	} catch (e) {
+		next()
+		return;
+	}
+	
+	var attendee;
+	for (var i = 0; i < ev.attendees.length; i++) {
+		if (ev.attendees[i]._id.equals(fid)) {
+			attendee = ev.attendees[i];
+			break;
+		}
+	}
+	
+	res.locals.feedbackProfile = attendee;
+	next()
+}
+
+function editFeedbackProfile (req, res) {
+	if (!res.locals.feedbackProfile) {
+		res.redirect('/event/'+res.locals.ev._id+'/admin/feedback')
+		return;
+	}
+	
+	res.render('event/admin/editFeedback', { title: "Edit Feedback Profile "+res.locals.feedbackProfile.user.getName() });
+}
+
+function doEditFeedbackProfile (req, res) {
+	var attendee = res.locals.feedbackProfile;
+	var profile;
+	
+	if (!attendee) {
+		profile = new models.User({
+			isFeedbackProfile: true,
+			feedbackProfileEvent: res.locals.ev._id
+		})
+	} else {
+		profile = attendee.user;
+	}
+	
+	profile.position = req.body.position;
+	profile.company = req.body.company;
+	profile.website = req.body.website;
+	profile.desc = req.body.desc;
 	profile.setName(req.body.name);
+	
+	if (req.files && req.files.avatar != null && req.files.avatar.name.length != 0) {
+		var ext = req.files.avatar.type.split('/');
+		var ext = ext[ext.length-1];
+		profile.avatar = "/profileavatars/"+profile._id+"."+ext;
+		
+		fs.readFile(req.files.avatar.path, function(err, avatar) {
+			fs.writeFile(__dirname + "/../../../public"+profile.avatar, avatar, function(err) {
+				if (err) throw err;
+			});
+		});
+	}
 	
 	profile.save();
 	
-	var attendee = new models.Attendee({
-		user: profile._id,
-		category: "Feedback Profile"
-	})
-	attendee.save()
+	if (!res.locals.feedbackProfile) {
+		attendee = new models.Attendee({
+			user: profile._id,
+			category: req.body.category || "Attendee"
+		})
+		attendee.save()
+		
+		res.locals.ev.attendees.push(attendee._id)
+	} else {
+		attendee.category = req.body.category || "Attendee";
+		attendee.save()
+	}
 	
-	res.locals.ev.attendees.push(attendee._id)
 	res.locals.ev.save()
 	
 	res.format({

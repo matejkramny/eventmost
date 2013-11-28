@@ -56,27 +56,51 @@ block content
 					img(src="/images/send-business.svg", alt="", class="img-responsive inline res-butt pad-left-five")
 				a(href="/user/"+theUser._id+"/save", class="link1")
 					img(src="/images/save-prof.svg", alt="", class="img-responsive inline res-butt pad-left-five")
-		if (typeof ev !== 'undefined' && typeof eventadmin !== 'undefined' && eventadmin == true && theAttendee.admin == false)
-			.clearfix
-			br
-			.col-md-offset-10.col-xs-offset-10.col-sm-offset-10.col-md-2.col-xs-2.col-sm-2.lower.hide-mini3-except-smart
-				.right.iconsbox.spacerbig
-					a(href="/event/#{ev._id}/admin/addAdmin/#{theAttendee._id}", class="link1")
-						button.btn.btn-primary.font-x(href="/profile" style="width:100%; padding:10px; padding-left:25px; padding-right:35px; margin-right:20px; text-align:center;")
-							| Make<br/>Administrator
-						.nspacer-small
-			.col-md-offset-10.col-xs-offset-10.col-sm-offset-10.col-md-2.col-xs-2.col-sm-2.lower-hide.hide-except-smart
-				.right.iconsbox.spacerbig
-					a(href="/event/#{ev._id}/admin/addAdmin/#{theAttendee._id}", class="link1")
-						button.btn.btn-primary.font-x(href="/profile" style="width:100%; padding:10px; padding-left:25px; padding-right:35px; margin-right:20px; text-align: center;")
-							| Make Event<br/>Administrator
-						.nspacer-small
-			.hide-except-smart
-				.center
-					a(href="/event/#{ev._id}/admin/addAdmin/#{theAttendee._id}", class="link1")
-						button.btn.btn-primary.font-x(href="/profile" style="width:125px; padding:10px; padding-left:25px; padding-right:35px; margin-right:20px;")
-							| Make Event<br/>Administrator
-						.nspacer-small
+		if (typeof ev !== 'undefined' && typeof eventadmin !== 'undefined')
+			//- Make administrator button
+			if (eventadmin == true && theAttendee.admin == false && theAttendee.user.isFeedbackProfile == false)
+				.clearfix
+				br
+				.col-md-offset-10.col-xs-offset-10.col-sm-offset-10.col-md-2.col-xs-2.col-sm-2.lower.hide-mini3-except-smart
+					.right.iconsbox.spacerbig
+						a(href="/event/#{ev._id}/admin/addAdmin/#{theAttendee._id}", class="link1")
+							button.btn.btn-primary.font-x(style="width:100%; padding:10px; padding-left:25px; padding-right:35px; margin-right:20px; text-align:center;")
+								| Make<br/>Administrator
+							.nspacer-small
+				.col-md-offset-10.col-xs-offset-10.col-sm-offset-10.col-md-2.col-xs-2.col-sm-2.lower-hide.hide-except-smart
+					.right.iconsbox.spacerbig
+						a(href="/event/#{ev._id}/admin/addAdmin/#{theAttendee._id}", class="link1")
+							button.btn.btn-primary.font-x(style="width:100%; padding:10px; padding-left:25px; padding-right:35px; margin-right:20px; text-align: center;")
+								| Make Event<br/>Administrator
+							.nspacer-small
+				.hide-except-smart
+					.center
+						a(href="/event/#{ev._id}/admin/addAdmin/#{theAttendee._id}", class="link1")
+							button.btn.btn-primary.font-x(style="width:125px; padding:10px; padding-left:25px; padding-right:35px; margin-right:20px;")
+								| Make Event<br/>Administrator
+							.nspacer-small
+			//- feedback profile button
+			if (eventadmin == true && theAttendee.user.isFeedbackProfile == true && ev._id.equals(theAttendee.user.feedbackProfileEvent))
+				.clearfix
+				br
+				.col-md-offset-10.col-xs-offset-10.col-sm-offset-10.col-md-2.col-xs-2.col-sm-2.lower.hide-mini3-except-smart
+					.right.iconsbox.spacerbig
+						a(href="/event/#{ev._id}/admin/feedback/#{theAttendee._id}", class="link1")
+							button.btn.btn-primary.font-x(style="width:100%; padding:10px; padding-left:25px; padding-right:35px; margin-right:20px; text-align:center;")
+								| Edit feedback<br/>profile
+							.nspacer-small
+				.col-md-offset-10.col-xs-offset-10.col-sm-offset-10.col-md-2.col-xs-2.col-sm-2.lower-hide.hide-except-smart
+					.right.iconsbox.spacerbig
+						a(href="/event/#{ev._id}/admin/feedback/#{theAttendee._id}", class="link1")
+							button.btn.btn-primary.font-x(style="width:100%; padding:10px; padding-left:25px; padding-right:35px; margin-right:20px; text-align: center;")
+								| Edit feedback<br/>profile
+							.nspacer-small
+				.hide-except-smart
+					.center
+						a(href="/event/#{ev._id}/admin/feedback/#{theAttendee._id}", class="link1")
+							button.btn.btn-primary.font-x(style="width:125px; padding:10px; padding-left:25px; padding-right:35px; margin-right:20px;")
+								| Edit feedback<br/>profile
+							.nspacer-small
 	else
 		.col-md-offset-4.col-xs-offset-4.col-sm-offset-4.col-md-2.col-xs-2.col-sm-2.lower.hide-mini3-except-smart
 			.right.iconsbox.spacerbig
