@@ -111,12 +111,13 @@
 
   
   .candy {
-    background-color: #d95a42;
+    background-color: #0992a3;
     border-radius: 5px;
     color: #542437;
     font-weight: bold;
     text-align: center;
     outline: none; 
+   cursor: pointer ! important;
   }
   .candy label {
     -webkit-transition: color 0.2s ease-out;
@@ -124,15 +125,18 @@
     -o-transition: color 0.2s ease-out;
     transition: color 0.2s ease-out;
     outline: none; 
+    cursor: pointer ! important;
   }
 
   .candy input:checked + label {
     color: #542437;
     outline: none; 
+    cursor: pointer ! important;
   }
   .candy .slide-button {
     border: none;
-    background-color: #ecd077;
+    cursor: pointer ! important;
+    background-color: #e6e7e8;
     border-radius: 5px;
     margin-top: 3px;
     width: 45px;

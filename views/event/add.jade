@@ -1,13 +1,13 @@
 extends ../responsive
 
 append addonjs
-	script(src="/v2/js/geo.js", defer="true")
-	script(src="/v2/js/datepicker.js", defer="true")
-	script(src="/v2/js/tiny.editor.packed.js", defer="true")
-	script(src="/v2/js/jquery.jcarousel.min.js", defer="true")
+	script(src="/js/geo.js", defer="true")
+	script(src="/js/datepicker.js", defer="true")
+	script(src="/js/tiny.editor.packed.js", defer="true")
+	script(src="/js/jquery.jcarousel.min.js", defer="true")
 	script.
 		window.emEvent = !{JSON.stringify(ev)}
-	script(src="/v2/js/eventadd.js", defer="true")
+	script(src="/js/eventadd.js", defer="true")
 
 append content
 	include ../inc/flash

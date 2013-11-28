@@ -11,9 +11,9 @@ html
 		
 		//- all css goes here
 		block css
-			link(rel="stylesheet", href="/v2/css/bootstrap.min.css")
-			link(rel="stylesheet", href="/v2/css/bootstrap-eventmost.css")
-			link(rel="stylesheet", href="/v2/css/toggle-switch.css")
+			link(rel="stylesheet", href="/css/bootstrap.min.css")
+			link(rel="stylesheet", href="/css/bootstrap-eventmost.css")
+			link(rel="stylesheet", href="/css/toggle-switch.css")
 			
 			//- Temporary hack until BS3.0.1 comes out.. 
 			style.
@@ -95,17 +95,17 @@ html
 			
 		//- usually globally persistent
 		block js
-			script(src="/v2/js/gan.js", async)
-			script(src="/v2/js/jquery.min.js", defer)
-			script(src="/v2/js/bootstrap.min.js", defer)
-			script(src="/v2/js/angular.min.js", defer)
-			script(src="/v2/js/angular-eventmost.js", defer)
-			script(src="/v2/js/jquery-ui-1.10.3.custom.min.js", defer)
-			script(src="/v2/js/jquery.ui.touch-punch.min.js", defer)
-			script(src="/v2/js/jquery.tinycarousel.min.js", defer)
-			script(src="/v2/js/over-box.js", defer)
+			script(src="/js/gan.js", async)
+			script(src="/js/jquery.min.js", defer)
+			script(src="/js/bootstrap.min.js", defer)
+			script(src="/js/angular.min.js", defer)
+			script(src="/js/angular-eventmost.js", defer)
+			script(src="/js/jquery-ui-1.10.3.custom.min.js", defer)
+			script(src="/js/jquery.ui.touch-punch.min.js", defer)
+			script(src="/js/jquery.tinycarousel.min.js", defer)
+			script(src="/js/over-box.js", defer)
 			if !loggedIn
-				script(src="/v2/js/signin.js", defer="true")
+				script(src="/js/signin.js", defer="true")
 				
 		//- page-specific
 		block addonjs

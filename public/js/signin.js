@@ -38,15 +38,15 @@ $(document).ready(function() {
 	});
 	
 	$("#openRegisterModal").click(function() {
-		$("#loginModal").trigger('reveal:close');
-		$("#signModal").reveal();
+		$("#loginModal").modal('hide');
+		$("#signModal").modal('show');
 	})
 	
 	function Form($form, $elements, options) {
 		this.form = $form;
 		this.elements = $elements;
 		this.options = options;
-		this.url = "/auth/password.json"
+		this.url = "/auth/password"
 		
 		var self = this;
 		
@@ -61,8 +61,8 @@ $(document).ready(function() {
 			
 			if (data.status == 200 && data.user != null) {
 				// Logged in
-				self.status.html("Logged in, reloading page.");
-				window.location = "/";
+				self.status.html("Logged in, reloading page!");
+				window.location = "/auth/success";
 			} else {
 				// Error
 				self.status.html(data.err)
@@ -109,17 +109,26 @@ $(document).ready(function() {
 		}
 	}
 	
-	new Form($loginForm, {
+	var loginForm = new Form($loginForm, {
 		"login": $loginUserEmail,
 		"password": $loginUserPassword
 	}, {});
-	new Form($registerForm, {
+	var registerForm = new Form($registerForm, {
 		"name": $registerUserName,
 		"login": $registerUserEmail,
 		"password": $registerUserPassword
 	}, {});
-	new Form($UserLoginForm, {
-		"login": $("#UserEmail"),
-		"password": $("#UserPassword")
-	})
+	
+	if (window.location.hash) {
+		var hash = window.location.hash.substring(1);
+	
+		if (hash == "login-failed") {
+			$("#loginModal").modal('show')
+			
+			var reason = decodeURIComponent((new RegExp('[?|&]' + "fail-reason" + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null;
+			if (reason) {
+				loginForm.status.html(reason)
+			}
+		}
+	}
 })

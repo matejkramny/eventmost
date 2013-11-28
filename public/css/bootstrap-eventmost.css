@@ -1052,7 +1052,7 @@ table.gridtable-payment-yellow td {
         .dropdown12 a, .dropdown12 a:visited { padding-left: 10px; padding-top:2px; color:#ecd078; text-decoration:none; outline:none; font-size: 14px;}
         .dropdown12 a:hover { color:#ecd078;  }
         .dropdown12 dt a:hover {  color:#ecd078; }
-        .dropdown12 dt a {background-image: url('../img/drop12.svg') ; display:block; 
+        .dropdown12 dt a {background-image: url('../images/drop12.svg') ; display:block; 
                       width:68px; height: 24px; }
         .dropdown12 dt a .dropx12 {cursor:pointer; display:block; padding:0px; color: #53777a; padding-left: 0px; }
         .dropdown12 dd ul {  color:#ecd078; display:none; font-weight: 400;
@@ -1667,9 +1667,9 @@ table.gridtable td {
 }
 .ticket-dropdown{width:190px;}
 .ticket-dropdown2{width:135px;}
-.disabled-image {   height: 100%; width:100%;  background-image: url('../../../img/dis-image.svg') ! important; z-index: 900; 
+.disabled-image {   height: 100%; width:100%;  background-image: url('../../../images/dis-image.svg') ! important; z-index: 900; 
 left:0px; top: 0px; position: absolute;}
-.disabled-lock { background-image: url('../../../img/dis-lock.svg') ! important; 
+.disabled-lock { background-image: url('../../../images/dis-lock.svg') ! important; 
 left:48%; top: 47%; z-index: 950; width: 63px; height: 72px; position:absolute; }
 
 

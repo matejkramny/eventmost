@@ -253,7 +253,7 @@ $(document).ready(function() {
 		file = null;
 		avatarUploadRequest = null;
 		
-		$("#avatar_preview").attr('src', '/img/default_logo.svg');
+		$("#avatar_preview").attr('src', '/images/default_logo.svg');
 		
 		var avId = $("#avatar_id").val();
 		$("#avatar_id").val('');
