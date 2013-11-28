@@ -5,8 +5,9 @@ append addonjs
 	script(src="/js/datepicker.js", defer="true")
 	script(src="/js/tiny.editor.packed.js", defer="true")
 	script(src="/js/jquery.jcarousel.min.js", defer="true")
-	script.
-		window.emEvent = !{JSON.stringify(ev)}
+	if (typeof ev !== "undefined")
+		script.
+			window.emEvent = !{JSON.stringify(ev)}
 	script(src="/js/eventadd.js", defer="true")
 
 append content
