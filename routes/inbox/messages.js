@@ -102,13 +102,18 @@ function postMessage (req, res) {
 		
 		//Updating User's notification
 		for (var i = 0; i < message.users.length; i++) {
+			var u = message.users[i];
+			
 			// dont update this user
-			if (message.users[i]._id.equals(req.user._id)) continue;
+			if (u._id.equals(req.user._id)) continue;
 			
-			message.users[i].mailboxUnread++;
-			notifyByEmail(message.users[i], message)
+			if (u.mailboxUnread == 0 && u.lastAccess.getTime() + 60 * 5 * 1000 < Date.now() && u.notification.email.privateMessages) {
+				console.log("Sending to email")
+				notifyByEmail(u, message)
+			}
+			u.mailboxUnread++;
 			
-			message.users[i].save();
+			u.save();
 		}
 
 		message.lastUpdated = Date.now();
