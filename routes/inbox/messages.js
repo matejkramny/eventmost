@@ -3,7 +3,7 @@ var fs = require('fs')
 	, mongoose = require('mongoose')
 	, util = require('../../util')
 	, async = require('async')
-	, transport = require('../../app').transport
+	, transport = require('../../config').transport
 
 exports.router = function (app) {
 	app.get('/inbox/messages', showMessages)
@@ -213,11 +213,14 @@ function notifyByEmail (person, message) {
 	
 	var options = {
 		from: "EventMost <notifications@eventmost.com>",
-		to: person.email,
+		to: person.getName()+" <"+person.email+">",
 		subject: "Notifications Pending on EventMost ",
-		html: "You have Notifications Pending on <strong>EventMost</strong>.<br/>\
-<br />To view your notifications, click <a href='http://eventmost.com/inbox/message/"+message._id+"'>here</a>\
-<br/><br/>You can turn off notifications in your settings. Please do not reply to this email, as we do not receive correspondence for this email address."
+		html: "<img src=\"http://eventmost.com/images/logo.svg\">\
+<br/><br/><p><strong>Hi "+person.getName()+",</strong><br/><br/>We're sorry to interrupt you, but you have some notifications pending on EventMost.<br/>\
+<br />Click <a href='http://eventmost.com/inbox/message/"+message._id+"'>here</a> to view your all your notifications.\
+<br /><br />Note: No more emails will be sent until you view the notifications.\
+</p><br/>You can turn off email notifications in your settings.<br/>\
+Please do not reply to this email, because we are super popular and probably won't have time to read it..."
 	}
 	transport.sendMail(options, function(err, response) {
 		if (err) throw err;
