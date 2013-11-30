@@ -63,10 +63,14 @@ if (process.env.NODE_ENV == 'production') {
 	});
 }
 
-var readHash = spawn_process('git', ['rev-parse', '--short', 'HEAD']);
-readHash.stdout.on('data', function (data) {
-	app.set('app version hash', data.toString().trim())
-})
+try {
+	var readHash = spawn_process('git', ['rev-parse', '--short', 'HEAD']);
+	readHash.stdout.on('data', function (data) {
+		app.set('app version hash', data.toString().trim())
+	})
+} catch (e) {
+	console.log("\n~= Unable to obtain git commit hash =~\n")
+}
 
 // all environments
 app.enable('trust proxy');
@@ -137,7 +141,12 @@ server.listen(app.get('port'), function(){
 
 // routes
 routes.router(app);
-app.get('*', function(req, res) {
+app.get('*', function(req, res, next) {
+	if (process.env.NODE_ENV == 'development') {
+		next()
+		return;
+	}
+	
 	res.format({
 		html: function() {
 			res.redirect('/404')

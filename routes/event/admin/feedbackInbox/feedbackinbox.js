@@ -11,8 +11,8 @@ var fs = require('fs')
 	, wall = require('./wall')
 
 exports.router = function (app) {
-	app.get('/event/:id/admin/feedback/:fid/inbox/*', util.authorized, populateInbox)
-		.get('/event/:id/admin/feedback/:fid/inbox', util.authorized, populateInbox, show)
+	app.get('/event/:id/admin/feedback/:fid/inbox/*', populateInbox)
+		.get('/event/:id/admin/feedback/:fid/inbox', populateInbox, show)
 	
 	messages.router(app)
 	cards.router(app)
@@ -22,9 +22,7 @@ exports.router = function (app) {
 }
 
 function populateInbox (req, res, next) {
-	var fid = req.params.fid;
-
-	//Convert from ID to User
+	var u = res.locals.feedbackProfile;
 	
 	async.parallel([
 		function(cb) {

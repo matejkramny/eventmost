@@ -10,6 +10,7 @@ exports.router = function (app) {
 		.get('/event/:id/admin/feedback/new', newFeedbackProfile)
 		.post('/event/:id/admin/feedback/edit', getProfile, doEditFeedbackProfile)
 		.get('/event/:id/admin/feedback/:fid', getProfile, editFeedbackProfile)
+		.get('/event/:id/admin/feedback/:fid/*', getProfile)
 
 		feedbackinbox.router(app)
 }

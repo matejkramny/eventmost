@@ -18,12 +18,11 @@ block content
 	.nspacer
 	for attendee in ev.attendees
 		if (attendee.user.isFeedbackProfile && attendee.user.feedbackProfileEvent.equals(ev._id))
-			+attendee(attendee, true)
+			+attendee(attendee, false)
 			.pull-right.text-left.pad-left-ten
-				<a href="/event/#{ev._id}/admin/feedback/#{attendee._id}/inbox/"> 
-				.right.iconsbox.spacerbig
-					img.img-mess-smart(src="/images/feedback-inbox.svg", alt="", style="width:100%; ")
-				</a>
+				a(href="/event/#{ev._id}/admin/feedback/#{attendee._id}/inbox/")
+					.right.iconsbox.spacerbig
+						img.img-mess-smart(src="/images/feedback-inbox.svg", style="width:100%;")
 			.pull-right.text-left.pad-left-ten
 				.right.iconsbox.spacerbig
 					a(href="/event/#{ev._id}/admin/feedback/#{attendee._id}")
