@@ -1,0 +1,45 @@
+extends ../../../responsive
+
+include ../../inc/navbar
+include ../../inc/attendee
+
+block content
+	+navbar
+	.clearfix
+	include navbar
+	
+	for msg in messages
+		.col-md-2.col-xs-2.col-sm-2
+			.font-e1
+				a(href="/user/"+msg.sentBy._id)= msg.sentBy.getName()
+				img.circularespond.img-responsive(src=msg.sentBy.avatar)
+		
+		.col-md-10.col-xs-10.col-sm-10.nspacer-bigger
+			.font-e1.bigger-pad-left
+				//- todo last message (who wrote it)
+			.nspacer
+			.pull-left
+				img.pull-left(src="/images/bubble-left-grey.svg", style="vertical-align:top;")
+			.pull-left.bg-grey.psev.post-width.font-x
+				//- todo last message content (shortened)
+				| #{msg.message}
+		.clearfix
+		.nspacer
+	.clearfix
+
+	if (messages.length == 0)
+		.nspacer
+		p.text-center.lead No Messages have been sent
+	
+	.col-sm-12.col-xs-12.col-md-12
+		.pull-left
+			img.pull-left.bubble-responsive(src="/images/bubble-left-blue.svg", alt="", style="vertical-align:top;")
+		.pull-left.bg-green.psev.post-width-text
+			form#commentForm(action="/inbox/message/"+message._id, method="POST")
+				input(type="hidden", name="_csrf", value=token)
+				textarea.postcommentarea(placeholder="Send a message...", name="message")
+				.pull-right
+					a#messageSubmit(href="#", onclick="$('#commentForm').submit(); return false;")
+						img.img-responsive.post-butt(src="/images/post-button.svg")
+		.clearfix
+	.clearfix

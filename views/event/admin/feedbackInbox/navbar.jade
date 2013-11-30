@@ -1,0 +1,56 @@
+.col-xs-12.hide-all2
+	form(method="POST", accept-charset="utf-8")
+		input.gonew2pull-right.header-links(type="button", value="GO", style="width:10%;")
+		input(type="hidden", name="_csrf", value=token)
+		input.pull-right.font-s.search-input.pad-left-ten.header-links(type="search", placeholder="search events or people", style="width:87%;")
+.clearfix.hide-all2
+
+
+//- inbox title plus buttons
+.nspacer
+
+.col-md-6.col-xs-6.col-sm-6.nspacer-medium.hide-mini3-except-smart
+	.font-tw
+		b= pageName
+.col-md-6.col-xs-6.col-sm-6.hide-mini3-except-smart
+	.font-x1.bg-purple.center.pull-right.psev2.prof-wall
+		a.link-white(href="./inbox/wall") Public <br />Messages
+	.font-x1.bg-green.center.pull-right.psev2.prof-wall
+		a.link-white(href="./inbox/savedProfiles") Those Who Saved<br />Your Profile
+	.font-x1.bg-yellow.center.pull-right.psev2.prof-wall
+		a.link-purple(href="./inbox/cards") Business <br />Cards
+	.font-x1.bg-purple.center.pull-right.psev2.prof-wall
+		a.link-white(href="./inbox/messages") Private<br />Messages
+	.font-x1.bg-green.center.pull-right.psev2.prof-wall(style="padding-top:15px;")
+		a.link-white(href="../inbox") All
+.clearfix.hide-mini3-except-smart
+.col-md-7.col-xs-7.col-sm-7.hide-mini3-except-smart
+	.line-green(style="height:3px; margin-top:-3px;")
+
+.col-md-12.col-xs-12.col-sm-12.nspacer-medium.hide-all2
+	.center
+		.font-tw.inline
+			b= pageName
+		.font-tw.inline
+			b= user.getName() 
+			//-|  - #{user.position}, #{user.company}
+.clearfix.hide-all2
+.col-md-12.col-xs-12.col-sm-12.hide-all2
+	.center
+		.inline.nspacer-small
+			.font-x1.bg-green.center.psev2.prof-wall
+				a.link-white(href="/inbox") All
+		.inline.nspacer-small
+			.font-x1.bg-purple.center.psev2.prof-wall
+				a.link-white(href="/inbox/messages") Private<br />Messages
+		.inline.nspacer-small
+			.font-x1.bg-yellow.center.psev2.prof-wall
+				a.link-purple(href="/inbox/cards") Business <br />Cards
+		.inline.nspacer-small
+			.font-x1.bg-green.center.psev2.prof-wall
+				a.link-white(href="/inbox/savedProfiles") Those Who Saved<br />Your Profile
+		.inline.nspacer-small
+			.font-x1.bg-purple.center.psev2.prof-wall
+				a.link-white(href="/inbox/wall") Public <br />Messages
+
+.clearfix

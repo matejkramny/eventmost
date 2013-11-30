@@ -1,0 +1,203 @@
+extends ../../../responsive
+
+include ../../inc/navbar
+include ../../inc/attendee
+
+append meta
+	meta(name="event_id", content="#{ev._id}")
+
+block content
+	+navbar
+	.clearfix
+	include navbar
+	
+	.nspacer
+	
+	p.lead.text-center No Public Messages so far..
+	
+	.hide
+		//- guest speakers2
+		.col-md-12.col-xs-12.col-sm-12.hide-mini3-except-smart
+			.col-md-2.col-xs-2.col-sm-2
+				.font-e1
+					| Guest speaker
+				img(src="/images/default_speaker.svg", alt="", class="circularespond img-responsive")
+			.col-md-10.col-xs-10.col-sm-10.nspacer-bigger
+				.font-e1.bigger-pad-left
+					| <b>Lucy Cook</b> - Director of Finance, Delloite	<br />
+				.nspacer
+				.pull-left
+					img.pull-left(src="/images/bubble-left-grey.svg", alt="", style="vertical-align:top;")
+				.pull-left.bg-grey.psev.post-width.font-x 
+					| At vero eos et accusamus et iusto odio dignissimos <b>ducimus qui blanditiis</b> praesentium voluptatum deleniti atque corrupti quos dolores 
+					| et quas molestias excepturi sint occaecati cupiditate non provident,similique sunt.
+			.clearfix
+			.nspacer
+			.col-md-2.col-xs-2.col-sm-2
+				.font-e1
+					| Guest speaker
+				img(src="/images/default_speaker.svg", alt="", class="circularespond img-responsive")
+			.col-md-10.col-xs-10.col-sm-10.nspacer-bigger
+				.font-e1.bigger-pad-left
+					| <b>Lucy Cook</b> - Director of Finance, Delloite	<br />
+				.nspacer
+				.pull-left
+					img.pull-left(src="/images/bubble-left-grey.svg", alt="", style="vertical-align:top;")
+				.pull-left.bg-grey.psev.post-width.font-x 
+					| At vero eos et accusamus et iusto odio dignissimos <b>ducimus qui blanditiis</b> praesentium voluptatum deleniti atque corrupti quos dolores 
+					| et quas molestias excepturi sint occaecati cupiditate non provident,similique sunt.
+					| At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis <b>praesentium voluptatum deleniti</b> atque corrupti quos dolores 
+			.clearfix
+			.nspacer
+
+		.col-md-12.col-xs-12.col-sm-12.hide-except-smart
+			.clearfix
+				.font-e1.pull-left
+					| Guest speaker
+				.clearfix
+				.col-md-5.col-xs-5.col-sm-5
+					img(src="/images/default_speaker.svg", alt="", class="circularespond", style="width:100%;")
+				.col-md-7.col-xs-7.col-sm-7
+					.font-e1(style="margin-top:30px;")
+						| <b>Lucy Cook</b> - Director of Finance, Delloite	<br />
+			.clearfix
+			.col-md-12.col-xs-12.col-sm-12
+				.pull-left
+					img.pull-left.bubble-responsive(src="/images/bubble-left-grey.svg", alt="", style="vertical-align:top;")
+				.pull-left.bg-grey.psev.post-width.font-x 
+					| At vero eos et accusamus et iusto odio dignissimos <b>ducimus qui blanditiis</b> praesentium voluptatum deleniti atque corrupti quos dolores 
+			.clearfix
+			.nspacer
+				.font-e1.pull-left
+					| Guest speaker
+				.clearfix
+				.col-md-5.col-xs-5.col-sm-5
+					img(src="/images/default_speaker.svg", alt="", class="circularespond", style="width:100%;")
+				.col-md-7.col-xs-7.col-sm-7
+					.font-e1(style="margin-top:30px;")
+						| <b>Lucy Cook</b> - Director of Finance, Delloite	<br />
+			.clearfix
+			.col-md-12.col-xs-12.col-sm-12
+				.pull-left
+					img.pull-left.bubble-responsive(src="/images/bubble-left-grey.svg", alt="", style="vertical-align:top;")
+				.pull-left.bg-grey.psev.post-width.font-x 
+					| At vero eos et accusamus et iusto odio dignissimos <b>ducimus qui blanditiis</b> praesentium voluptatum deleniti atque corrupti quos dolores 
+			.clearfix
+
+			//- end guest speakers2
+
+		.center(style='height:35px;')
+			ul.pagination
+				li
+					a(href='#') «
+				li.active
+					a(href='#') 1
+				li
+					a(href='#') 2
+				li
+					a(href='#') 3
+				li.disabled
+					a(href='#') ...
+				li
+					a(href='#') 5
+				li
+					a(href='#') »
+
+		.clearfix
+
+			//- buttons
+
+		.nspacer-big
+
+		.col-sm-12.col-xs-12.col-md-12
+			.center
+				.inline.nspacer-small
+					button.btn.btn-primary.font-e2.hide-prof-butt(type='submit', style="height:95px; width:100%; border-radius: 10px; color:#fff; padding:20px;")
+						| Invite someone via email <br />to take over this profile
+				.inline.nspacer-small.pad-on-smart
+					button.btn.btn-default.font-e2.hide-prof-butt(type='submit', style="height:95px; width:100%; border-radius: 10px; color:#fff; padding:20px;")
+						| Send this profile’s inbox <br /> to an email address
+				.inline.nspacer-small
+					button.btn.btn-info.font-e2.hide-prof-butt(type='submit', style="height:95px; width:100%; border-radius: 10px; padding:20px;")
+						| Send this profile’s inbox <br />to another EventMost user
+
+		.clearfix
+
+		.nspacer-awsome
+
+
+			//- search
+
+
+		.col-sm-5.col-xs-5.col-md-5.hide-mini3-except-smart
+			.font-e.right.nspacer
+				| Search EventMost:
+		.col-sm-4.col-xs-4.col-md-4.hide-mini3-except-smart
+			form(method="POST", accept-charset="utf-8")
+				input.gonew2.pull-right.header-links(type="button", value="GO", style="width:20%;")
+				input(type="hidden", name="_csrf", value=token)
+				input.pull-right.font-s.search-input.pad-left-ten.header-links(type="search", placeholder="search events or people", style="width:77%;")
+
+		.col-sm-12.col-xs-12.col-md-12.hide-all2
+			.font-e1.center.nspacer-small
+				| Search EventMost:
+		.clearfix.hide-all2
+		.col-sm-12.col-xs-12.col-md-12.hide-all2
+			.center
+				form(method="POST", accept-charset="utf-8")
+					input.gonew2.pull-right.header-links(type="button", value="GO", style="width:20%;")
+					input(type="hidden", name="_csrf", value=token)
+					input.pull-right.font-s.search-input.pad-left-ten.header-links(type="search", placeholder="search events or people", style="width:77%;")
+			//- end search
+		.clearfix
+
+		.nspacer-awsome
+		.col-md-12.col-xs-12.col-sm-12
+			.center
+				.inline
+					.div
+						img(src="/images/default_speaker.svg", alt="", class="circularespond-small",)
+					.font-xs2
+						| <b>Dart</b><br />
+						| Director of Finance, Delloite
+					p.check5-purple-small
+						input(name="", placeholder="", type="checkbox", id="creditcardsmaller", value="small")
+						label(for='creditcardsmaller',) 
+				.inline.big-pad-right.big-pad-left.pad-smart
+					.div
+						img(src="/images/default_speaker.svg", alt="", class="circularespond-small",)
+					.font-xs2
+						| <b>Hulk</b><br />
+						| Director of Finance, Delloite
+					p.check5-purple-small
+						input(name="", placeholder="", type="checkbox", id="creditcardsmaller2", value="small")
+						label(for='creditcardsmaller2',) 
+				.inline.big-pad-right.pad-smart
+					.div
+						img(src="/images/default_speaker.svg", alt="", class="circularespond-small",)
+					.font-xs2
+						| <b>Chubaka</b><br />
+						| Director of Finance, Delloite
+					p.check5-purple-small
+						input(name="", placeholder="", type="checkbox", id="creditcardsmaller3", value="small")
+						label(for='creditcardsmaller3',) 
+				.inline.pad-smart
+					.div
+						img(src="/images/default_speaker.svg", alt="", class="circularespond-small",)
+					.font-xs2
+						| <b>Gizmo</b><br />
+						| Director of Finance, Delloite
+					p.check5-purple-small
+						input(name="", placeholder="", type="checkbox", id="creditcardsmaller4", value="small")
+						label(for='creditcardsmaller4',) 
+
+				.psev.col-lg-10.col-md-10.col-xs-10.hide-mini3-except-smart
+					button.btn.btn-info.font-xs.font-ah.pull-right(type='submit', href="", style="font-size:20px; padding:5px; padding-left:15px; padding-right:15px; margin-right:0px;")
+						| <b>SEND</b>
+
+				.psev.col-lg-12.col-md-12.col-xs-12.hide-all2
+					.center
+						button.btn.btn-info.font-xs.font-ah(type='submit', href="", style="font-size:20px; padding:5px; padding-left:15px; padding-right:15px; margin-right:0px; margin-left:-10px;")
+							| <b>SEND</b>	
+
+				.clearfix

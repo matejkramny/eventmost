@@ -1,0 +1,28 @@
+extends ../../../responsive
+
+include ../../inc/navbar
+include ../../inc/attendee
+
+include inc/card
+
+append meta
+	meta(name="event_id", content="#{ev._id}")
+
+block content
+	+navbar
+	.clearfix
+	include navbar
+	
+	.clearfix
+	.nspacer
+	
+	//- business
+	
+	if (user.receivedCards.length == 0)
+		h3.text-center No cards received
+	
+	for card in user.receivedCards
+		+card(card)
+	
+	//- end business
+	.clearfix

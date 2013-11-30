@@ -3,12 +3,15 @@ var fs = require('fs'),
 	, mongoose = require('mongoose')
 	, util = require('../../../util')
 	, event = require('../event')
+	, feedbackinbox = require('./feedbackInbox/feedbackinbox')
 
 exports.router = function (app) {
 	app.get('/event/:id/admin/feedback', eventFeedbackProfile)
 		.get('/event/:id/admin/feedback/new', newFeedbackProfile)
 		.post('/event/:id/admin/feedback/edit', getProfile, doEditFeedbackProfile)
 		.get('/event/:id/admin/feedback/:fid', getProfile, editFeedbackProfile)
+
+		feedbackinbox.router(app)
 }
 
 function eventFeedbackProfile (req, res) {

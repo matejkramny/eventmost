@@ -1,0 +1,24 @@
+extends ../../../responsive
+
+include ../../inc/navbar
+include ../../inc/attendee
+
+include inc/message
+
+append meta
+	meta(name="event_id", content="#{ev._id}")
+
+block content
+	+navbar
+	.clearfix
+	include navbar
+	
+	.nspacer
+	
+	for message in messages
+		+message(message)
+	
+	if (messages.length == 0)
+		p.text-center.lead No Private Messages
+	
+	.clearfix
