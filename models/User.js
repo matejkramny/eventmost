@@ -74,7 +74,7 @@ var scheme = schema({
 	admin: { type: Boolean, default: false },
 	adminMeeting: { type: Boolean, default: false },
 	mailboxUnread: { type: Number, default: 0 },
-	lastAccess: { type: Boolean, default: Date.now }, // is being used to track user's online status. Notifications to email will only ever be sent when the lastAccess is > X minutes.
+	lastAccess: { type: Date, default: Date.now }, // is being used to track user's online status. Notifications to email will only ever be sent when the lastAccess is > X minutes.
 	
 	isFeedbackProfile: { type: Boolean, default: false },
 	feedbackProfileEvent: { type: ObjectId, ref: 'Event' }

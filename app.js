@@ -11,31 +11,20 @@ var express = require('express')
 	, util = require('./util')
 	, MongoStore = require('connect-mongo')(express)
 	, authmethods = require('./routes/auth')
-	, mailer = require('nodemailer')
 	, passport = require('passport')
+	, config = require('./config')
 
 var bugsnag = require("bugsnag");
-bugsnag.register("6c73b59b8d37503c8e8a70d67613d067", {
-	releaseStage: process.env.NODE_ENV == "production" ? "production" : "development",
+bugsnag.register(config.bugsnagKey, {
+	releaseStage: config.production ? "production" : "development",
 	notifyReleaseStages: ['production'],
 	appVersion: '0.2.0'
 })
 
-// Create SMTP transport method
-var transport = mailer.createTransport("Mandrill", {
-	auth: {
-		user: "matej@matej.me",
-		pass: "r8Zcz13BZIcJuiGXo2Kteg"
-	}
-})
-exports.getTransport = function() {
-	return transport;
-}
-
 var app = exports.app = express();
 
 var sessionStore; // session stored in database
-if (process.env.NODE_ENV == 'production') {
+if (config.production) {
 	// production mode
 	
 	// In short, this will ensure a unique database for each environment
@@ -47,8 +36,11 @@ if (process.env.NODE_ENV == 'production') {
 	}
 	
 	console.log("Production, mode "+mode);
-	var db = "mongodb://eventmost:OwaP0daelaek2aephi1phai9mopocah3Dakie9fi@127.0.0.1/eventmost"+mode;
-	mongoose.connect(db, {auto_reconnect: true, native_parser: true});
+	var db = config.db + mode;
+	mongoose.connect(db, {
+		auto_reconnect: true,
+		native_parser: true
+	});
 	sessionStore = new MongoStore({
 		url: db
 	});
@@ -56,7 +48,9 @@ if (process.env.NODE_ENV == 'production') {
 	// development mode
 	console.log("Development");
 	var db = "mongodb://127.0.0.1/eventmost";
-	mongoose.connect(db, {auto_reconnect: true, native_parser: true});
+	mongoose.connect(db, {
+		auto_reconnect: true, native_parser: true
+	});
 	sessionStore = new MongoStore({
 		url: db
 	});
@@ -147,7 +141,7 @@ server.listen(app.get('port'), function(){
 // routes
 routes.router(app);
 app.get('*', function(req, res, next) {
-	if (process.env.NODE_ENV == 'development') {
+	if (!config.production) {
 		next()
 		return;
 	}
@@ -165,19 +159,19 @@ app.get('*', function(req, res, next) {
 })
 
 // development only
-if ('development' == app.get('env')) {
+if (!config.production) {
 	app.use(express.errorHandler()); // Let xpress handle errors
 	app.set('view cache', false); // Tell Jade not to cache views
 }
 
-if (process.env.NODE_ENV == 'production') {
+if (config.production) {
 	console.log("Starting nodetime")
 	
 	// Make only one 'agent' running at the same time, free plan on nodetime only allows 1. :/
 	// If EventMost expands the number of processes a larger plan will be required
 	var ntime = require('nodetime')
 	ntime.profile({
-		accountKey: '5e94cba9ea3c85ec07684aa2ebca56885184bfb1', 
+		accountKey: config.nodetimeKey, 
 		appName: 'EventMost'
 	});
 	// Record errors with nodetime

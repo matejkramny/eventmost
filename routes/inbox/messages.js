@@ -3,7 +3,7 @@ var fs = require('fs')
 	, mongoose = require('mongoose')
 	, util = require('../../util')
 	, async = require('async')
-	, transport = require('../../app').transport
+	, inbox = require('./index')
 
 exports.router = function (app) {
 	app.get('/inbox/messages', showMessages)
@@ -102,13 +102,18 @@ function postMessage (req, res) {
 		
 		//Updating User's notification
 		for (var i = 0; i < message.users.length; i++) {
+			var u = message.users[i];
+			
 			// dont update this user
-			if (message.users[i]._id.equals(req.user._id)) continue;
+			if (u._id.equals(req.user._id)) continue;
 			
-			message.users[i].mailboxUnread++;
-			notifyByEmail(message.users[i], message)
+			if (u.mailboxUnread == 0 && u.lastAccess.getTime() + 60 * 5 * 1000 < Date.now() && u.notification.email.privateMessages) {
+				console.log("Sending to email")
+				inbox.emailNotification(u, "inbox/message/"+message._id)
+			}
+			u.mailboxUnread++;
 			
-			message.users[i].save();
+			u.save();
 		}
 
 		message.lastUpdated = Date.now();
@@ -203,35 +208,4 @@ function showMessages (req, res) {
 			})
 		}
 	})
-}
-
-function notifyByEmail (person, message) {
-	if (!person.email || person.email.length == 0) {
-		console.log("No email")
-		return;
-	}
-	
-	var options = {
-		from: "EventMost <notifications@eventmost.com>",
-		to: person.email,
-		subject: "Notifications Pending on EventMost ",
-		html: "You have Notifications Pending on <strong>EventMost</strong>.<br/>\
-<br />To view your notifications, click <a href='http://eventmost.com/inbox/message/"+message._id+"'>here</a>\
-<br/><br/>You can turn off notifications in your settings. Please do not reply to this email, as we do not receive correspondence for this email address."
-	}
-	transport.sendMail(options, function(err, response) {
-		if (err) throw err;
-		
-		console.log("Email sent.."+response.message)
-	})
-	
-	// Record that an email was sent
-	var emailNotification = new models.EmailNotification({
-		to: person,
-		email: person.email,
-		type: "newMessage"
-	})
-	emailNotification.save(function(err) {
-		if (err) throw err;
-	});
 }
