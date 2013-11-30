@@ -12,9 +12,9 @@ block content
 	
 	if (user.receivedCards.length == 0)
 		h3.text-center No cards received
-	
-	for card in user.receivedCards
-		+card(card)
+	.pull-left
+		for card in user.receivedCards
+			+card(card)
 	
 	//- end business
 	.clearfix

@@ -57,10 +57,9 @@ block content
 	
 	if (user.receivedCards.length == 0)
 		p.text-center No cards received
-	
-	for card in user.receivedCards
-		+card(card)	
-	//- end business
+	.pull-left
+		for card in user.receivedCards
+			+card(card)	
 
 	.clearfix
 	.nspacer-medium
@@ -75,7 +74,8 @@ block content
 			li
 				a(href='#') »
 	.clearfix
-
+	//- end business
+	
 	.col-md-12.col-xs-12.col-sm-12
 		.font-tw
 			b Those who saved your profile
