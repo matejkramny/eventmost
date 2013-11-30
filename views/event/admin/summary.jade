@@ -2,6 +2,10 @@ extends ../../responsive
 
 include ../inc/navbar
 
+append addonjs
+	script(src="/js/jquery.flot.min.js", defer)
+	sciprt(src="/js/eventSummary.js", defer)
+
 block content
 	+navbar
 	
@@ -10,12 +14,12 @@ block content
 
 	.col-md-12.col-lg-12.col-sm-12
 		.font-evente.center.font-exception
-			| Total number of registrations:
+			| Total number of registrations: #{ev.attendees.length}
 
 	.clearfix
 	.nspacer
 
-		//- yellow box
+	//- yellow box
 
 	.col-md-12.col-lg-12.col-sm-12.bg-yellow.summary-yellow-height
 		.col-md-3.col-lg-3.col-xs-4.nspacer.dont-show320-2
@@ -117,10 +121,25 @@ block content
 
 	.clearfix
 	.nspacer
-
-
-
-		//- graphs
+	
+	//- displays data in bar graphs
+	//- lists all event categories and shows:
+	//-		X(group) sent messages to X(group)
+	//-		X(group) sent b-cards to X(group)
+	//-		X(group) saved z profiles of X(group)
+	//-		X(group) did x to X(group)
+	//- then
+	//-		X(group) sent messages to Y(group)
+	//-		X(group) sent b-cards to Y(group)
+	//-		X(group) saved z profiles of Y(group)
+	//-		X(group) did x to Y(group)
+	//- then X with Z, Y with Z.
+	.col-md-3.col-lg-3.col-xs-3
+		.font-xs2.center
+			| Guest Speakers to Attendees
+		.center.nspacer-big
+			#graph(style="width:100%; height:100px;")
+	//- graphs
 	.col-md-3.col-lg-3.col-xs-3
 		.font-xs2.center
 			| Number of Event Messages:  <b>#{ev.messages.length}</b>
