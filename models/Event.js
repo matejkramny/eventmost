@@ -39,6 +39,16 @@ var scheme = schema({
 		password: { type: Boolean, default: false },
 		passwordString: String
 	},
+	views: [{
+		count: {
+			type: Number,
+			default: 0
+		},
+		date: {
+			type: Date,
+			defaul: Date.now
+		},
+	}],
 	files: [{
 		created: {
 			type: Date,

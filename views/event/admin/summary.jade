@@ -21,54 +21,49 @@ block content
 		.col-md-3.col-lg-3.col-xs-4.nspacer.dont-show320-2
 			.input-ashen-rounded
 				.font-s.psev.graphs-font.break
-					| Number of xyz attendees:
+					| Number of Attendees:
+					.pull-right
+						| <b>#{ev.attendees.length}</b>
 			.nspacer
 			.input-ashen-rounded
 				.font-s.psev.graphs-font.break
-					| Number of xyz attendees:
+					| Number of Admins:
+					- var counter = 0
+					for attendee in ev.attendees
+						if attendee.admin == true
+							- counter++
+					.pull-right
+						| <b> #{counter} </b>
 			.nspacer
-			.input-ashen-rounded
-				.font-s.psev.graphs-font.break
-					| Number of xyz attendees:
+			- var x = 0
+			for(x = 0, x < ev.categories.length, x++)
+				- var cat = ev.categories[x]
+				.input-ashen-rounded
+					.font-s.psev.graphs-font.break
+						| Number of #{cat}: 
+						- var counter = 0
+						for attendee in ev.attendees
+							if attendee.category == cat
+								- counter++
+						.pull-right
+							| <b> #{counter} </b>
+				.nspacer
 			.nspacer
-			.input-ashen-rounded
-				.font-s.psev.graphs-font.break
-					| Number of xyz attendees:
-			.nspacer
-			.input-ashen-rounded
-				.font-s.psev.graphs-font.break
-					| Number of xyz attendees:
-			.nspacer
-			.input-ashen-rounded
-				.font-s.psev.graphs-font.break
-					| Number of xyz attendees:
 
 		.col-md-8.col-lg-8.col-xs-8.nspacer.dont-show320-2
 			.input-ashen-rounded
 				.font-s.psev.graphs-font
-					| Number of attendees that entered via NOT trough your initial link:
+					| Number of attendees that entered via FaceBook:
 			.nspacer
 			.input-ashen-rounded
 				.font-s.psev.graphs-font
-					| Number of attendees that entered via NOT trough your initial link:
+					| Number of attendees that entered via Twitter:
 			.nspacer
 			.input-ashen-rounded
 				.font-s.psev.graphs-font
-					| Number of attendees that entered via NOT trough your initial link:
-			.nspacer
-			.input-ashen-rounded
-				.font-s.psev.graphs-font
-					| Number of attendees that entered via NOT trough your initial link:
-			.nspacer
-			.input-ashen-rounded
-				.font-s.psev.graphs-font
-					| Number of attendees that entered via NOT trough your initial link:
-			.nspacer
-			.input-ashen-rounded
-				.font-s.psev.graphs-font
-					| Number of attendees that entered via NOT trough your initial link:
+					| Number of attendees that entered via Other:
 
-		.col-md-1.col-lg-1.col-xs-1.pull-right.nspacer-awsome.inde.dont-show320-2
+		.col-md-1.col-lg-1.col-xs-1.pull-right.nspacer.inde.dont-show320-2
 			.div
 				img(src="/images/raport-icon.svg" class="img-responsive")
 				.font-s.center
