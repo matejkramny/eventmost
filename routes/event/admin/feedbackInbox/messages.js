@@ -149,7 +149,7 @@ function postMessage (req, res) {
 		res.format({
 			html: function() {
 				res.status(403);
-				res.redirect('/inbox')
+				res.redirect('/event/:id/admin/feedback/:fid/inbox')
 			},
 			json: function() {
 				res.send({
@@ -179,7 +179,7 @@ function doNewMessage (req, res) {
 			users: [req.user._id, user._id]
 		})
 		topic.save();
-		res.redirect('/inbox/message/'+topic._id)
+		res.redirect('/event/:id/admin/feedback/:fid/inbox/message/'+topic._id)
 	});
 }
 function newMessage (req, res) {

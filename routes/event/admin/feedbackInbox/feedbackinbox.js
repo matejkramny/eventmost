@@ -22,7 +22,9 @@ exports.router = function (app) {
 }
 
 function populateInbox (req, res, next) {
-	var u = req.user;
+	var fid = req.params.fid;
+
+	//Convert from ID to User
 	
 	async.parallel([
 		function(cb) {

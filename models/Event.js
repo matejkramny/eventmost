@@ -41,13 +41,13 @@ var scheme = schema({
 	},
 	views: [{
 		count: {
-			type: Number,
+			type: Number, 
 			default: 0
 		},
 		date: {
 			type: Date,
-			defaul: Date.now
-		},
+			default: Date.now
+		}
 	}],
 	files: [{
 		created: {

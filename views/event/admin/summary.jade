@@ -119,13 +119,12 @@ block content
 
 
 		//- graphs
-					
 	.col-md-3.col-lg-3.col-xs-3
 		.font-xs2.center
-			| Number of private messages sent:  <b>28</b>
+			| Number of Event Messages:  <b>#{ev.messages.length}</b>
 		.center.nspacer-big
 			img(src="/images/graph-temp.svg" class="img-responsive")
-		
+
 	.col-md-3.col-lg-3.col-xs-3
 		.font-xs2.center
 			| Number of private messages sent:  <b>28</b>
@@ -231,7 +230,10 @@ block content
 
 	.col-md-6.col-lg-6.col-xs-6
 		.nspacere.font-exception.font-evente.overfonts(style="padding-top:250px;")
-			| Page visits: <b>105</b><br />
+			| Page visits today: 
+			- var total = 0
+			for(counter = 0, counter < ev.views.length, counter++)
+				<b>105</b><br />
 			| Visits from promotional tools: <b>105</b>
 
 	.col-md-6.col-lg-6.col-xs-6
@@ -252,7 +254,7 @@ block content
 
 	.col-md-6.col-lg-6.col-xs-6
 		.nspacere.font-exception.font-evente.overfonts(style="padding-top:250px;")
-			| Tickets sold:: <b>105</b><br />
+			| Tickets sold: <b>105</b><br />
 			| Tickets sold from promotional tools: <b>105</b>
 
 	.col-md-6.col-lg-6.col-xs-6
