@@ -11,16 +11,16 @@ block content
 				br.visible-xs
 				br.visible-xs
 		
-		- for(var i = 0; i < cards.length; i)
+		- for(var i = 0; i < locals.cards.length; i)
 			.row
 				- for(var x = 0; x < 3; x++)
 					- var index = i++;
 					
-					- var card = cards[index];
+					- var card = locals.cards[index];
 					- if (!card) continue;
 					
 					img.col-sm-4.col-xs-12.col-md-4.col-lg-4(src="/businesscards/"+card._id+".png")
 			br.hidden-xs
-		if (cards.length == 0)
+		if (locals.cards.length == 0)
 			h3.text-center No business cards created yet
 			p.text-center.lead Create one using button in top right

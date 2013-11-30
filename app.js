@@ -13,7 +13,6 @@ var express = require('express')
 	, authmethods = require('./routes/auth')
 	, mailer = require('nodemailer')
 	, passport = require('passport')
-	, spawn_process = require('child_process').spawn
 
 var bugsnag = require("bugsnag");
 bugsnag.register("6c73b59b8d37503c8e8a70d67613d067", {
@@ -64,6 +63,7 @@ if (process.env.NODE_ENV == 'production') {
 }
 
 try {
+	var spawn_process = require('child_process').spawn
 	var readHash = spawn_process('git', ['rev-parse', '--short', 'HEAD']);
 	readHash.stdout.on('data', function (data) {
 		app.set('app version hash', data.toString().trim())
