@@ -60,7 +60,7 @@ var scheme = schema({
 			privateMessages: { type: Boolean, default: true },
 			businessCards: { type: Boolean, default: true },
 			comments: { type: Boolean, default: true },
-			savedProfile: { type: Boolean, default: true },
+			savedProfile: { type: Boolean, default: false },
 		},
 		mobile: {
 			privateMessages: { type: Boolean, default: true },
