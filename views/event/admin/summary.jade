@@ -23,7 +23,7 @@ block content
 				.font-s.psev.graphs-font.break
 					| Number of Attendees:
 					.pull-right
-						| <b>#{ev.attendees.length}</b>
+						b #{ev.attendees.length}
 			.nspacer
 			.input-ashen-rounded
 				.font-s.psev.graphs-font.break
@@ -33,21 +33,23 @@ block content
 						if attendee.admin == true
 							- counter++
 					.pull-right
-						| <b> #{counter} </b>
+						b #{counter}
 			.nspacer
-			- var x = 0
-			for(x = 0, x < ev.categories.length, x++)
-				- var cat = ev.categories[x]
+			//- People can choose their own categories (which aren't listed in ev.categories)
+			- var cats = []
+			- for(var x = 0; x < ev.attendees.length; x++)
+				- var cat = ev.attendees[x].category
+				- if (!cats[cat])
+					- cats[cat] = 0
+				- cats[cat]++
+			- for(var cat in cats)
 				.input-ashen-rounded
 					.font-s.psev.graphs-font.break
 						| Number of #{cat}: 
-						- var counter = 0
-						for attendee in ev.attendees
-							if attendee.category == cat
-								- counter++
 						.pull-right
-							| <b> #{counter} </b>
+							b #{cats[cat]}
 				.nspacer
+			
 			.nspacer
 
 		.col-md-8.col-lg-8.col-xs-8.nspacer.dont-show320-2

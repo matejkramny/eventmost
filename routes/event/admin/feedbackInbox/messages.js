@@ -183,7 +183,7 @@ function doNewMessage (req, res) {
 	});
 }
 function newMessage (req, res) {
-	// Dirty ol' hack
+	// Dirty old' hack -- skips the initial page that asks the user to send first message
 	doNewMessage(req, res);
 	return;
 	

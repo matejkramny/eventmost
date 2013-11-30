@@ -2,6 +2,7 @@ mixin message(message)
 	- var otherUser;
 	- var name;
 	- var id;
+	
 	//- find out the person you're messaging
 	for usr in message.topic.users
 		if (!usr._id.equals(user._id))
