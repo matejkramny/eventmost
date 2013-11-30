@@ -9,6 +9,7 @@ var fs = require('fs')
 	, cards = require('./cards')
 	, profiles = require('./profiles')
 	, wall = require('./wall')
+	, transport = require('../../config').transport
 
 exports.router = function (app) {
 	app.all('/inbox/*', util.authorized, populateInbox)
@@ -83,4 +84,38 @@ function show (req, res) {
 			})
 		}
 	})
+}
+
+exports.emailNotification = function (person, link) {
+	if (!person.email || person.email.length == 0) {
+		console.log("No email")
+		return;
+	}
+	
+	var options = {
+		from: "EventMost <notifications@eventmost.com>",
+		to: person.getName()+" <"+person.email+">",
+		subject: "Notifications Pending on EventMost ",
+		html: "<img src=\"http://eventmost.com/images/logo.svg\">\
+<br/><br/><p><strong>Hi "+person.getName()+",</strong><br/><br/>We're sorry to interrupt you, but you have some notifications pending on EventMost.<br/>\
+<br />Click <a href='http://eventmost.com/"+link+"'>here</a> to view your all your notifications.\
+<br /><br />Note: No more emails will be sent until you view the notifications.\
+</p><br/>You can turn off email notifications in your settings.<br/>\
+Please do not reply to this email, because we are super popular and probably won't have time to read it..."
+	}
+	transport.sendMail(options, function(err, response) {
+		if (err) throw err;
+		
+		console.log("Email sent.."+response.message)
+	})
+	
+	// Record that an email was sent
+	var emailNotification = new models.EmailNotification({
+		to: person,
+		email: person.email,
+		type: "newMessage"
+	})
+	emailNotification.save(function(err) {
+		if (err) throw err;
+	});
 }

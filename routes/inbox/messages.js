@@ -3,7 +3,7 @@ var fs = require('fs')
 	, mongoose = require('mongoose')
 	, util = require('../../util')
 	, async = require('async')
-	, transport = require('../../config').transport
+	, inbox = require('./index')
 
 exports.router = function (app) {
 	app.get('/inbox/messages', showMessages)
@@ -109,7 +109,7 @@ function postMessage (req, res) {
 			
 			if (u.mailboxUnread == 0 && u.lastAccess.getTime() + 60 * 5 * 1000 < Date.now() && u.notification.email.privateMessages) {
 				console.log("Sending to email")
-				notifyByEmail(u, message)
+				inbox.emailNotification(u, "inbox/message/"+message._id)
 			}
 			u.mailboxUnread++;
 			
@@ -208,38 +208,4 @@ function showMessages (req, res) {
 			})
 		}
 	})
-}
-
-function notifyByEmail (person, message) {
-	if (!person.email || person.email.length == 0) {
-		console.log("No email")
-		return;
-	}
-	
-	var options = {
-		from: "EventMost <notifications@eventmost.com>",
-		to: person.getName()+" <"+person.email+">",
-		subject: "Notifications Pending on EventMost ",
-		html: "<img src=\"http://eventmost.com/images/logo.svg\">\
-<br/><br/><p><strong>Hi "+person.getName()+",</strong><br/><br/>We're sorry to interrupt you, but you have some notifications pending on EventMost.<br/>\
-<br />Click <a href='http://eventmost.com/inbox/message/"+message._id+"'>here</a> to view your all your notifications.\
-<br /><br />Note: No more emails will be sent until you view the notifications.\
-</p><br/>You can turn off email notifications in your settings.<br/>\
-Please do not reply to this email, because we are super popular and probably won't have time to read it..."
-	}
-	transport.sendMail(options, function(err, response) {
-		if (err) throw err;
-		
-		console.log("Email sent.."+response.message)
-	})
-	
-	// Record that an email was sent
-	var emailNotification = new models.EmailNotification({
-		to: person,
-		email: person.email,
-		type: "newMessage"
-	})
-	emailNotification.save(function(err) {
-		if (err) throw err;
-	});
 }
