@@ -19,7 +19,7 @@ function getMessage (req, res, next) {
 	try {
 		id = mongoose.Types.ObjectId(id);
 	} catch (e) {
-		res.redirect('/event/:id/admin/feedback/:fid/inbox/messages');
+		res.redirect('/event/'+req.params.fid+'/admin/feedback/'+req.params.fid+'/inbox/messages');
 		return;
 	}
 	
@@ -33,7 +33,7 @@ function getMessage (req, res, next) {
 	}
 	
 	if (!message) {
-		res.redirect('/event/:id/admin/feedback/:fid/inbox/messages')
+		res.redirect('/event/'+req.params.fid+'/admin/feedback/'+req.params.fid+'/inbox/messages')
 		return;
 	}
 	
@@ -54,7 +54,7 @@ function getMessage (req, res, next) {
 function showMessage (req, res) {
 	var otherUser = null;
 	for (var i = 0; i < res.locals.message.users.length; i++) {
-		if (!req.user._id.equals(res.locals.message.users[i]._id)) {
+		if (!res.locals.feedbackProfile._id.equals(res.locals.message.users[i]._id)) {
 			otherUser = res.locals.message.users[i];
 			break;
 		}
@@ -72,7 +72,7 @@ function postMessage (req, res) {
 	if (text.length == 0) {
 		res.format({
 			html: function() {
-				res.redirect('/event/:id/admin/feedback/:fid/inbox/message/'+id);
+				res.redirect('/event/'+req.params.fid+'/admin/feedback/'+req.params.fid+'/inbox/message/'+id);
 			},
 			json: function() {
 				res.send({
@@ -88,7 +88,7 @@ function postMessage (req, res) {
 	if (message) {
 		var isUser = false;
 		for (var i = 0; i < message.users.length; i++) {
-			if (message.users[i]._id.equals(req.user._id)) {
+			if (message.users[i]._id.equals(res.locals.feedbackProfile._id)) {
 				isUser = true;
 				break;
 			}
@@ -103,7 +103,7 @@ function postMessage (req, res) {
 		//Updating User's notification
 		for (var i = 0; i < message.users.length; i++) {
 			// dont update this user
-			if (message.users[i]._id.equals(req.user._id)) continue;
+			if (message.users[i]._id.equals(res.locals.feedbackProfile._id)) continue;
 			
 			message.users[i].mailboxUnread++;
 			message.users[i].save();
@@ -119,12 +119,12 @@ function postMessage (req, res) {
 			message: text,
 			read: false,
 			timeSent: Date.now(),
-			sentBy: req.user._id
+			sentBy: res.locals.feedbackProfile._id
 		})
 		msg.save(function(err) {
 			res.format({
 				html: function() {
-					res.redirect('/event/:id/admin/feedback/:fid/inbox/message/'+message._id)
+					res.redirect('/event/'+req.params.fid+'/admin/feedback/'+req.params.fid+'/inbox/message/'+message._id)
 				},
 				json: function() {
 					res.send({
@@ -136,12 +136,12 @@ function postMessage (req, res) {
 			// Dispatch email to the person (if they have an email..)
 			/*var dispatchTo = []
 			for (var i = 0; i < message.users.length; i++) {
-				if (message.users[i]._id.equals(req.user._id)) {
+				if (message.users[i]._id.equals(res.locals.feedbackProfile._id)) {
 					continue;
 				}
 				dispatchTo.push(message.users[i])
 			}*/
-			//notifyByEmail(dispatchTo, topic, message, req.user)
+			//notifyByEmail(dispatchTo, topic, message, res.locals.feedbackProfile)
 		})
 	} else {
 		// 404
@@ -149,7 +149,7 @@ function postMessage (req, res) {
 		res.format({
 			html: function() {
 				res.status(403);
-				res.redirect('/event/:id/admin/feedback/:fid/inbox')
+				res.redirect('/event/'+req.params.fid+'/admin/feedback/'+req.params.fid+'/inbox')
 			},
 			json: function() {
 				res.send({
@@ -170,16 +170,16 @@ function doNewMessage (req, res) {
 	
 	models.User.findOne({ _id: to }, function(err, user) {
 		if (!user) {
-			res.redirect('/event/:id/admin/feedback/:fid/inbox/messages/new');
+			res.redirect('/event/'+req.params.fid+'/admin/feedback/'+req.params.fid+'/inbox/messages/new');
 			return;
 		}
 		
 		var topic = new models.Topic({
 			lastUpdated: Date.now(),
-			users: [req.user._id, user._id]
+			users: [res.locals.feedbackProfile._id, user._id]
 		})
 		topic.save();
-		res.redirect('/event/:id/admin/feedback/:fid/inbox/message/'+topic._id)
+		res.redirect('/event/'+req.params.fid+'/admin/feedback/'+req.params.fid+'/inbox/message/'+topic._id)
 	});
 }
 function newMessage (req, res) {

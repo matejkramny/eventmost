@@ -36,7 +36,7 @@ function newTopic (req, res) {
 				topic.save(function(err) {
 					if (err) throw err;
 			
-					res.redirect('/event/:id/admin/feedback/:fid/inbox/conversation/'+topic._id);
+					res.redirect('/event/'+req.params.fid+'/admin/feedback/'+req.params.fid+'/inbox/conversation/'+topic._id);
 				})
 			}
 		})
@@ -93,7 +93,7 @@ function showTopic(req, res) {
 			res.format({
 				html: function() {
 					res.status(404);
-					res.redirect('/event/:id/admin/feedback/:fid/inbox')
+					res.redirect('/event/'+req.params.fid+'/admin/feedback/'+req.params.fid+'/inbox')
 				},
 				json: function() {
 					res.send({
@@ -111,7 +111,7 @@ function newMessage(req, res) {
 	if (text.length == 0) {
 		res.format({
 			html: function() {
-				res.redirect('/event/:id/admin/feedback/:fid/inbox/conversation/'+id);
+				res.redirect('/event/'+req.params.fid+'/admin/feedback/'+req.params.fid+'/inbox/conversation/'+id);
 			},
 			json: function() {
 				res.send({
@@ -161,7 +161,7 @@ function newMessage(req, res) {
 			message.save(function(err) {
 				res.format({
 					html: function() {
-						res.redirect('/event/:id/admin/feedback/:fid/inbox/conversation/'+topic._id)
+						res.redirect('/event/'+req.params.fid+'/admin/feedback/'+req.params.fid+'/inbox/conversation/'+topic._id)
 					},
 					json: function() {
 						res.send({
@@ -186,7 +186,7 @@ function newMessage(req, res) {
 			res.format({
 				html: function() {
 					res.status(403);
-					res.redirect('/event/:id/admin/feedback/:fid/inbox')
+					res.redirect('/event/'+req.params.fid+'/admin/feedback/'+req.params.fid+'/inbox')
 				},
 				json: function() {
 					res.send({
@@ -274,7 +274,7 @@ function updateTopic(req, res) {
 		topic.name = title;
 		topic.lastUpdated = Date.now()
 		topic.save(function(err) {
-			res.redirect('/event/:id/admin/feedback/:fid/inbox/conversation/'+topic._id)
+			res.redirect('/event/'+req.params.fid+'/admin/feedback/'+req.params.fid+'/inbox/conversation/'+topic._id)
 		})
 	});
 }

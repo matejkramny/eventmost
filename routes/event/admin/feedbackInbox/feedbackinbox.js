@@ -55,7 +55,7 @@ function populateInbox (req, res, next) {
 			})
 		},
 		function(cb) {
-			models.User.find({savedProfiles: req.user._id }).exec(function(err, savers) {
+			models.User.find({ savedProfiles: u._id }).exec(function(err, savers) {
 				res.locals.savers = savers;
 				cb(null)
 			});
