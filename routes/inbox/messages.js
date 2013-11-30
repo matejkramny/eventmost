@@ -107,7 +107,7 @@ function postMessage (req, res) {
 			// dont update this user
 			if (u._id.equals(req.user._id)) continue;
 			
-			if (u.mailboxUnread == 0 && u.lastAccess.getTime() + 60 * 5 * 1000 < Date.now() && u.notification.email.privateMessages) {
+			if (u.notification.email.privateMessages) {
 				console.log("Sending to email")
 				inbox.emailNotification(u, "inbox/message/"+message._id)
 			}

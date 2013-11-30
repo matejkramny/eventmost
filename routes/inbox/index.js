@@ -87,6 +87,9 @@ function show (req, res) {
 }
 
 exports.emailNotification = function (person, link) {
+	if (!(u.mailboxUnread == 0 && u.lastAccess.getTime() + 60 * 5 * 1000 < Date.now())) {
+		return
+	}
 	if (!person.email || person.email.length == 0) {
 		console.log("No email")
 		return;
