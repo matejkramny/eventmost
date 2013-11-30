@@ -126,6 +126,13 @@ function saveUser (req, res) {
 	}, function(err, user) {
 		if (err) throw err;
 		
+		for (var i = 0; req.user.savedProfiles.length; i++) {
+			if (req.user.savedProfiles[i]._id.equals(user._id)) {
+				res.redirect('inbox/savedProfiles')
+				return;
+			}
+		}
+		
 		if (user.notification.email.savedProfile) {
 			inbox.emailNotification(user, "inbox/savedProfiles")
 		}
