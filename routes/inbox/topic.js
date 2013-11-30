@@ -198,42 +198,6 @@ function newMessage(req, res) {
 	})
 }
 
-function notifyByEmail (people, topic, message, from) {
-	console.log("Dispatching email to "+people.length+ " people");
-	async.each(people, function(person, cb) {
-		if (!person.email || person.email.length == 0) {
-			console.log("No email")
-			cb(null)
-			return;
-		}
-		
-		var options = {
-			from: "EventMost <noreply@eventmost.com>",
-			to: person.email,
-			subject: "New message from "+from.getName(),
-			html: "You have a new message on <strong>EventMost</strong>.<br />To view your message, click <a href='http://eventmost.com/conversation/"+topic._id+"'>here</a><br/><br/>You can turn off notifications in your settings. Please do not reply to this email, as we do not receive correspondence for this email address."
-		}
-		transport.sendMail(options, function(err, response) {
-			if (err) throw err;
-			
-			console.log("Email sent.."+response.message)
-		})
-		
-		// Record that an email was sent
-		var emailNotification = new models.EmailNotification({
-			to: person,
-			email: person.email,
-			type: "newMessage"
-		})
-		emailNotification.save(function(err) {
-			if (err) throw err;
-		});
-	}, function(err) {
-		if (err) throw err;
-		console.log("Completed sending emails")
-	})
-}
-
 function updateTopic(req, res) {
 	var id = req.params.id;
 	var title = req.body.topicname;

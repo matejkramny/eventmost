@@ -68,6 +68,9 @@ html
 					.col-md-6.col-xs-6.pull-right
 						.pull-right.nspacer-small
 							a.font-e.link-purple.header-links(href="/") Home
+							if !recentEvent
+								|  | 
+								a.font-e.link-purple.header-links(href="/event/add") Create event
 							if user.admin
 								|  | 
 								a.font-e.link-purple.header-links(href="/admin") Administration

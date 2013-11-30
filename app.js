@@ -23,10 +23,10 @@ bugsnag.register("6c73b59b8d37503c8e8a70d67613d067", {
 })
 
 // Create SMTP transport method
-var transport = mailer.createTransport("sendgrid", {
+var transport = mailer.createTransport("Mandrill", {
 	auth: {
-		user: "matej",
-		pass: "Ye1aeph9eex2eghein3ve4foh6aih5"
+		user: "matej@matej.me",
+		pass: "r8Zcz13BZIcJuiGXo2Kteg"
 	}
 })
 exports.getTransport = function() {
@@ -128,6 +128,11 @@ app.use(function(req, res, next) {
 	
 	res.locals.version = app.get('app version');
 	res.locals.versionHash = app.get('app version hash');
+	
+	if (req.user) {
+		req.user.lastAccess = Date.now()
+		req.user.save()
+	}
 	
 	// navigation bar
 	next();

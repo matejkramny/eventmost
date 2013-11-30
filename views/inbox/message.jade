@@ -3,7 +3,9 @@ extends ../responsive
 block content
 	include navbar
 	
-	for msg in messages
+	h1= JSON.stringify(messages)
+	
+	for msg in []
 		.col-md-2.col-xs-2.col-sm-2
 			.font-e1
 				a(href="/user/"+msg.sentBy._id)= msg.sentBy.getName()

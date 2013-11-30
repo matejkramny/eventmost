@@ -106,6 +106,8 @@ function postMessage (req, res) {
 			if (message.users[i]._id.equals(req.user._id)) continue;
 			
 			message.users[i].mailboxUnread++;
+			notifyByEmail(message.users[i], message)
+			
 			message.users[i].save();
 		}
 
@@ -132,16 +134,6 @@ function postMessage (req, res) {
 					})
 				}
 			});
-			
-			// Dispatch email to the person (if they have an email..)
-			/*var dispatchTo = []
-			for (var i = 0; i < message.users.length; i++) {
-				if (message.users[i]._id.equals(req.user._id)) {
-					continue;
-				}
-				dispatchTo.push(message.users[i])
-			}*/
-			//notifyByEmail(dispatchTo, topic, message, req.user)
 		})
 	} else {
 		// 404
@@ -211,4 +203,35 @@ function showMessages (req, res) {
 			})
 		}
 	})
+}
+
+function notifyByEmail (person, message) {
+	if (!person.email || person.email.length == 0) {
+		console.log("No email")
+		return;
+	}
+	
+	var options = {
+		from: "EventMost <notifications@eventmost.com>",
+		to: person.email,
+		subject: "Notifications Pending on EventMost ",
+		html: "You have Notifications Pending on <strong>EventMost</strong>.<br/>\
+<br />To view your notifications, click <a href='http://eventmost.com/inbox/message/"+message._id+"'>here</a>\
+<br/><br/>You can turn off notifications in your settings. Please do not reply to this email, as we do not receive correspondence for this email address."
+	}
+	transport.sendMail(options, function(err, response) {
+		if (err) throw err;
+		
+		console.log("Email sent.."+response.message)
+	})
+	
+	// Record that an email was sent
+	var emailNotification = new models.EmailNotification({
+		to: person,
+		email: person.email,
+		type: "newMessage"
+	})
+	emailNotification.save(function(err) {
+		if (err) throw err;
+	});
 }
