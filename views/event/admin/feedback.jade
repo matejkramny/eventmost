@@ -15,8 +15,20 @@ block content
 		br.visible-xs
 		br.visible-xs
 	.clearfix
-	
+	.nspacer
 	for attendee in ev.attendees
 		if (attendee.user.isFeedbackProfile && attendee.user.feedbackProfileEvent.equals(ev._id))
 			+attendee(attendee, true)
+			.pull-right.text-left.pad-left-ten
+				<a href="/event/#{ev._id}/admin/feedback/#{attendee._id}/inbox/"> 
+				.right.iconsbox.spacerbig
+					img.img-mess-smart(src="/images/feedback-inbox.svg", alt="", style="width:100%; ")
+				</a>
+			.pull-right.text-left.pad-left-ten
+				.right.iconsbox.spacerbig
+					a(href="/event/#{ev._id}/admin/feedback/#{attendee._id}")
+						img.img-mess-smart(src="/images/edit-prof.svg")
+					.nspacer
+		.clearfix
+		.nspacer
 	.clearfix

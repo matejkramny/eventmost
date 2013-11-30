@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="120px" height="121px" viewBox="0 0 120 121" enable-background="new 0 0 120 121" xml:space="preserve">
+<g>
+	<path fill="#0992A4" d="M120,115.408c0,3.088-2.15,5.592-4.807,5.592H4.806C2.153,121,0,118.496,0,115.408V5.591
+		C0,2.504,2.153,0,4.806,0h110.389C117.85,0,120,2.504,120,5.591V115.408z"/>
+	<g>
+		<g>
+			<path fill="#F1F2F2" d="M73.466,43.972l-11.364,11.44c-0.474,0.475-1.293,0.476-1.765-0.001L49.091,44.127l-22.51,16.366
+				c0.258,0.13,0.545,0.212,0.857,0.212h67.123c0.316,0,0.609-0.084,0.875-0.22L73.466,43.972z"/>
+			<path fill="#F1F2F2" d="M97.123,59.094c0.043-0.157,0.072-0.32,0.072-0.491V20.618l-21.916,22.06L97.123,59.094z"/>
+			<path fill="#F1F2F2" d="M47.272,43.026L24.805,20.481v38.316c0,0.177,0.031,0.345,0.076,0.507L47.272,43.026z"/>
+		</g>
+		<path fill="#F1F2F2" d="M61.904,52.649L95.98,18.35l-69.962-0.091l34.271,34.39C60.725,53.084,61.475,53.083,61.904,52.649z"/>
+	</g>
+</g>
+<rect x="24.706" y="77.694" fill="none" width="72.23" height="13.256"/>
+<text transform="matrix(1 0 0 1 33.1255 86.2139)" fill="#FFFFFF" font-family="'MyriadPro-Regular'" font-size="12">View Inbox</text>
+<rect x="26.581" y="83.447" fill="none" width="7.336" height="0.875"/>
+</svg>
