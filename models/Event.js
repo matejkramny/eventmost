@@ -58,6 +58,7 @@ var scheme = schema({
 			type: ObjectId,
 			ref: 'User'
 		},
+		extension: String,
 		file: String,
 		size: String,
 		name: String

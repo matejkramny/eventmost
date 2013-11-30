@@ -126,6 +126,12 @@ function saveUser (req, res) {
 	}, function(err, user) {
 		if (err) throw err;
 		
+		if (user.notification.email.savedProfile) {
+			inbox.emailNotification(user, "inbox/savedProfiles")
+		}
+		user.mailboxUnread++;
+		user.save();
+		
 		req.user.savedProfiles.push({
 			_id: user._id
 		})

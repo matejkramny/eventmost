@@ -84,6 +84,11 @@ function sendCard (req, res) {
 			if (err) throw err;
 			
 			if (user) {
+				if (user.notification.email.businessCards) {
+					inbox.emailNotification(user, "inbox/cards")
+				}
+				user.mailboxUnread++;
+				
 				// find the card
 				user.receivedCards.push({
 					from: req.user._id,

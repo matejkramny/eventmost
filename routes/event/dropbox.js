@@ -158,6 +158,7 @@ function doUpload (req, res) {
 	
 	var file = {
 		file: "/dropbox/"+ev._id+""+Date.now()+"."+ext,
+		extension: ext,
 		user: req.user._id,
 		created: Date.now(),
 		name: req.files.upload.name
