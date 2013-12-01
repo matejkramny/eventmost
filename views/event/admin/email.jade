@@ -9,10 +9,6 @@ append addonjs
 block content
 	+navbar
 	
-	form#newMessage(action="", method="POST")
-		input(type="hidden", name="_csrf", value=token)
-		.nspacer
-		
 	.clearfix
 	form#newMessage(action="", method="POST")
 	input(type="hidden", name="_csrf", value=token)
@@ -71,7 +67,7 @@ block content
 			.pull-left
 				img.psev(src="/images/pencil.svg")
 			.pull-left.font2.font-thin.nspacer-small
-				| Event description
+				| Message
 			.pull-right.pad-right-ten.nspacer
 				img(src="/images/optional-white.svg")
 			.clearfix
