@@ -87,6 +87,7 @@ html
 								input.pull-right.font-s.search-input.pad-left-ten.header-links(type="search", name="q", placeholder="search for people on EventMost", style="width:75%;", value= typeof search !== "undefined" ? search.query : null)
 			
 		.container
+			include inc/flash
 			block content
 			.row
 				footer.col-xs-12.col-md-12.col-sm-12.col-lg-12

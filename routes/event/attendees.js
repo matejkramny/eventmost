@@ -155,6 +155,9 @@ function joinEvent (req, res) {
 	ev.save(function(err) {
 		if (err) throw err;
 	});
+	
+	req.session.flash = ["Yay! You're now attending "+ev.name+"!"]
+	
 	res.format({
 		html: function() {
 			res.redirect('/event/'+ev._id);
