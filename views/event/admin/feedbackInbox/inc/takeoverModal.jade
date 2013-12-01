@@ -1,0 +1,39 @@
+#takeoverModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="", aria-hidden="true")
+	.modal-dialog
+		.modal-content
+			.modal-body.reveal-modal
+				a(href="#", class="close-reveal-modal", data-dismiss="modal") 
+					img(src="/images/x.svg")
+				h1 Select User
+				small Select a user from EventMost or enter an email address. You can send this feedback profile's inbox or full account control to another user
+				.clearfix
+				
+				.col-sm-5.col-xs-5.col-md-5.hide-mini3-except-smart
+					.font-e.right.nspacer
+						| Search EventMost:
+				.col-sm-7.col-xs-7.col-md-7.hide-mini3-except-smart
+					form#takeoverUser(method="POST", accept-charset="utf-8")
+						input.gonew2.pull-right.header-links(type="button", value="GO", style="width:20%;")
+						input.pull-right.font-s.search-input.pad-left-ten.header-links(type="search", placeholder="search people", style="width:77%;")
+				.clearfix
+				.nspacer
+				
+				.col-sm-5.col-xs-5.col-md-5.hide-mini3-except-smart
+					.font-e.right.nspacer
+						| Enter Email Address:
+				.col-sm-7.col-xs-7.col-md-7.hide-mini3-except-smart
+					form#takeoverEmail(method="POST", accept-charset="utf-8")
+						input.gonew2.pull-right.header-links(type="button", value="GO", style="width:20%;")
+						input.pull-right.font-s.search-input.pad-left-ten.header-links(type="email", placeholder="Target e-mail address", style="width:77%;")
+				.clearfix
+				
+				.nspacer
+				.col-sm-12.col-xs-12.col-md-12.hide#afterSelectingProfile
+					.center
+						.inline.nspacer-small
+							button#takeoverProfile.btn.btn-primary.font-e2.hide-prof-butt(type='submit', style="height:95px; width:100%; border-radius: 10px; color:#fff; padding:20px;")
+								| Invite user to take<br />over this profile
+						.inline.nspacer-small.pad-on-smart
+							button#sendInbox.btn.btn-default.font-e2.hide-prof-butt(type='submit', style="height:95px; width:100%; border-radius: 10px; color:#fff; padding:20px;")
+								| Send this profile’s inbox <br />to the selected user
+				.clearfix

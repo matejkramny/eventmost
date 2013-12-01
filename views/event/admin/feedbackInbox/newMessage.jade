@@ -3,9 +3,6 @@ extends ../../../responsive
 include ../../inc/navbar
 include ../../inc/attendee
 
-append meta
-	meta(name="event_id", content="#{ev._id}")
-
 append addonjs
 	script(src="/js/tiny.editor.packed.js", defer="true")
 	script(src="/js/newMessage.js", defer="true")

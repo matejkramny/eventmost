@@ -3,6 +3,8 @@ html
 	head
 		meta(http-equiv="Content-Type", content="text/html; charset=utf-8;")
 		meta(name="_csrf", content="#{token}")
+		if (typeof ev !== "undefined")
+			meta(name="event_id", content="#{ev._id}")
 		meta(name="viewport" content="width=device-width, initial-scale=1.0")
 		block meta
 		title EventMost - #{title}
@@ -15,7 +17,7 @@ html
 			link(rel="stylesheet", href="/css/bootstrap-eventmost.css")
 			link(rel="stylesheet", href="/css/toggle-switch.css")
 			
-			//- Temporary hack until BS3.0.1 comes out.. 
+			//- Temporary hack until we use BS3.0.1.. 
 			style.
 				.modal-open, .modal-open .navbar-fixed-top {
 					margin-right: auto !important;

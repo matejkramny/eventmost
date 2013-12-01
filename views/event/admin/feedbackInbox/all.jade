@@ -8,7 +8,10 @@ include inc/card
 include inc/savedProfile
 
 append meta
-	meta(name="event_id", content="#{ev._id}")
+	meta(name='feedback_id', content='#{feedbackProfile._id}')
+
+append addonjs
+	script(src="/js/takeoverProfile.js", defer)
 
 block content
 	+navbar
@@ -127,20 +130,11 @@ block content
 	.nspacer
 	.line-purple
 
-	.col-sm-5.col-xs-5.col-md-5.hide-mini3-except-smart
-		.font-e.right.nspacer
-			| Search EventMost:
-	.col-sm-4.col-xs-4.col-md-4.hide-mini3-except-smart
-		form(method="POST", accept-charset="utf-8")
-			input.gonew2.pull-right.header-links(type="button", value="GO", style="width:20%;")
-			input(type="hidden", name="_csrf", value=token)
-			input.pull-right.font-s.search-input.pad-left-ten.header-links(type="search", placeholder="search people", style="width:77%;")
-	.clearfix
-	.nspacer
-
+	
 	.col-sm-12.col-xs-12.col-md-12
 		.center	 
 			.inline.nspacer-small
-				button.btn.btn-primary.font-e2.hide-prof-butt(type='submit', style="height:95px; width:100%; border-radius: 10px; color:#fff; padding:20px;")
+				button.btn.btn-primary.font-e2.hide-prof-butt(type='submit', data-toggle="modal", href="#takeoverModal", style="height:95px; width:100%; border-radius: 10px; color:#fff; padding:20px;")
 					| Invite someone to take over this profile
 			.inline.nspacer-small.pad-on-smart
+	include inc/takeoverModal
