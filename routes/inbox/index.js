@@ -87,7 +87,7 @@ function show (req, res) {
 }
 
 exports.emailNotification = function (person, link) {
-	if (!(u.mailboxUnread == 0 && u.lastAccess.getTime() + 60 * 5 * 1000 < Date.now())) {
+	if (!(person.mailboxUnread == 0 && person.lastAccess.getTime() + 60 * 5 * 1000 < Date.now())) {
 		return
 	}
 	if (!person.email || person.email.length == 0) {
