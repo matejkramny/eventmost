@@ -12,7 +12,7 @@ block content
 		.col-md-2.col-xs-2.col-sm-2
 			.font-e1
 				a(href="/user/"+msg.sentBy._id)= msg.sentBy.getName()
-				img.circularespond.img-responsive(src=msg.sentBy.avatar)
+				img.circularespond.img-responsive(src= msg.sentBy.avatar.length == 0 ? "/images/default_speaker.svg" : msg.sentBy.avatar)
 		
 		.col-md-10.col-xs-10.col-sm-10.nspacer-bigger
 			.font-e1.bigger-pad-left
