@@ -23,7 +23,7 @@ mixin message(message)
 		.col-md-10.col-xs-10.col-sm-10.nspacer-bigger
 			.font-e1.bigger-pad-left
 				//- todo last message (who wrote it)
-				a(href="/inbox/message/"+message.topic._id) #{name}
+				a(href="inbox/message/"+message.topic._id) #{name}
 			.nspacer
 			.pull-left
 				img.pull-left(src="/images/bubble-left-grey.svg", style="vertical-align:top;")
@@ -46,7 +46,7 @@ mixin message(message)
 					img.circularespond.img-responsive(src= otherUser.avatar.length == 0 ? "/images/default_speaker.svg" : otherUser.avatar)
 			.col-md-7.col-xs-7.col-sm-7
 				.font-e1(style="margin-top:30px;")
-					a(href="/inbox/message/"+message.topic._id)= name
+					a(href="inbox/message/"+message.topic._id)= name
 		.clearfix
 		.col-md-12.col-xs-12.col-sm-12
 			//-.pull-left

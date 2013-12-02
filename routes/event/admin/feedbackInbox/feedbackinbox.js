@@ -11,7 +11,7 @@ var fs = require('fs')
 	, wall = require('./wall')
 
 exports.router = function (app) {
-	app.get('/event/:id/admin/feedback/:fid/inbox/*', populateInbox)
+	app.all('/event/:id/admin/feedback/:fid/inbox/*', populateInbox)
 		.get('/event/:id/admin/feedback/:fid/inbox', populateInbox, show)
 	
 	messages.router(app)
@@ -22,7 +22,7 @@ exports.router = function (app) {
 }
 
 function populateInbox (req, res, next) {
-	var u = res.locals.feedbackProfile;
+	var u = res.locals.feedbackProfile.user;
 	
 	async.parallel([
 		function(cb) {

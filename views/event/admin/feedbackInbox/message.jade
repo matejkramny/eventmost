@@ -35,7 +35,7 @@ block content
 		.pull-left
 			img.pull-left.bubble-responsive(src="/images/bubble-left-blue.svg", alt="", style="vertical-align:top;")
 		.pull-left.bg-green.psev.post-width-text
-			form#commentForm(action="/inbox/message/"+locals.message._id, method="POST")
+			form#commentForm(action="inbox/message/"+locals.message._id, method="POST")
 				input(type="hidden", name="_csrf", value=token)
 				textarea.postcommentarea(placeholder="Send a message...", name="message")
 				.pull-right

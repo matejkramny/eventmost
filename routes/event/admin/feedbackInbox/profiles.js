@@ -10,7 +10,7 @@ exports.router = function (app) {
 }
 
 exports.showSavedProfiles = function (req, res) {
-	models.User.find({ savedProfiles: res.locals.feedbackProfile._id })
+	models.User.find({ savedProfiles: res.locals.feedbackProfile.user._id })
 		.exec(function(err, saver) {
 		if (err) throw err;
 		if (saver) {

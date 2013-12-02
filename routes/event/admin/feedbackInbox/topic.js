@@ -8,9 +8,9 @@ var fs = require('fs')
 exports.router = function (app) {
 	app.get('/event/:id/admin/feedback/:fid/inbox/conversation/*', util.authorized)
 		.get('/event/:id/admin/feedback/:fid/inbox/conversation/new', newTopic)
-		.get('/event/:id/admin/feedback/:fid/inbox/conversation/:id', showTopic)
-		.post('/event/:id/admin/feedback/:fid/inbox/conversation/:id/new', newMessage)
-		.post('/event/:id/admin/feedback/:fid/inbox/conversation/:id/update', updateTopic)
+		.get('/event/:id/admin/feedback/:fid/inbox/conversation/:mid', showTopic)
+		.post('/event/:id/admin/feedback/:fid/inbox/conversation/:mid/new', newMessage)
+		.post('/event/:id/admin/feedback/:fid/inbox/conversation/:mid/update', updateTopic)
 }
 
 function newTopic (req, res) {
@@ -24,11 +24,11 @@ function newTopic (req, res) {
 			if (err) throw err;
 			
 			if (user) {
-				var name = "Conversation with "+req.user.getName() + " and 1 more";
+				var name = "Conversation with "+res.locals.feedbackProfile.user.getName() + " and 1 more";
 				var topic = new models.Topic({
 					lastUpdated: Date.now(),
 					users: [
-						req.user._id,
+						res.locals.feedbackProfile.user._id,
 						mongoose.Types.ObjectId(req.query.with)
 					],
 					name: name
@@ -48,7 +48,7 @@ function newTopic (req, res) {
 }
 
 function showTopic(req, res) {
-	var id = req.params.id;
+	var id = req.params.mid;
 	
 	models.Topic.findOne({
 		_id: mongoose.Types.ObjectId(id)
@@ -58,7 +58,7 @@ function showTopic(req, res) {
 		if (topic) {
 			var isUser = false;
 			for (var i = 0; i < topic.users.length; i++) {
-				if (topic.users[i]._id.equals(req.user._id)) {
+				if (topic.users[i]._id.equals(res.locals.feedbackProfile.user._id)) {
 					isUser = true;
 					break;
 				}
@@ -106,7 +106,7 @@ function showTopic(req, res) {
 }
 
 function newMessage(req, res) {
-	var id = req.params.id;
+	var id = req.params.mid;
 	var text = req.body.message;
 	if (text.length == 0) {
 		res.format({
@@ -126,7 +126,7 @@ function newMessage(req, res) {
 	models.Topic.findOne({
 		_id: mongoose.Types.ObjectId(id),
 		users: {
-			$in: [req.user._id]
+			$in: [res.locals.feedbackProfile.user._id]
 		}
 	}).populate('users').exec(function(err, topic) {
 		if (err) throw err;
@@ -134,7 +134,7 @@ function newMessage(req, res) {
 		if (topic) {
 			var isUser = false;
 			for (var i = 0; i < topic.users.length; i++) {
-				if (topic.users[i]._id.equals(req.user._id)) {
+				if (topic.users[i]._id.equals(res.locals.feedbackProfile.user._id)) {
 					isUser = true;
 					break;
 				}
@@ -156,7 +156,7 @@ function newMessage(req, res) {
 				message: text,
 				read: false,
 				timeSent: Date.now(),
-				sentBy: req.user._id
+				sentBy: res.locals.feedbackProfile.user._id
 			})
 			message.save(function(err) {
 				res.format({
@@ -173,12 +173,12 @@ function newMessage(req, res) {
 				// Dispatch email to the person (if they have an email..)
 				var dispatchTo = []
 				for (var i = 0; i < topic.users.length; i++) {
-					if (topic.users[i]._id.equals(req.user._id)) {
+					if (topic.users[i]._id.equals(res.locals.feedbackProfile.user._id)) {
 						continue;
 					}
 					dispatchTo.push(topic.users[i])
 				}
-				//notifyByEmail(dispatchTo, topic, message, req.user)
+				//notifyByEmail(dispatchTo, topic, message, res.locals.feedbackProfile.user)
 			})
 		} else {
 			// 404
@@ -235,7 +235,7 @@ function notifyByEmail (people, topic, message, from) {
 }
 
 function updateTopic(req, res) {
-	var id = req.params.id;
+	var id = req.params.mid;
 	var title = req.body.topicname;
 	
 	models.Topic.findOne({
@@ -259,7 +259,7 @@ function updateTopic(req, res) {
 		
 		var isUser = false;
 		for (var i = 0; i < topic.users.length; i++) {
-			if (topic.users[i].equals(req.user._id)) {
+			if (topic.users[i].equals(res.locals.feedbackProfile.user._id)) {
 				isUser = true;
 				break;
 			}
