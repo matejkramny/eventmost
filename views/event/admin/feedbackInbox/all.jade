@@ -31,16 +31,16 @@ block content
 
 		//- guest speakers
 	.col-md-12.col-xs-12.col-sm-12.hide-mini3-except-smart
-	if topics.length > 2
+	if locals.topics.length > 2
 		//| Needs new page
 	
-	if (topics.length > 0)
-		+message(topics[0])
-		if topics.length > 1
+	if (locals.topics.length > 0)
+		+message(locals.topics[0])
+		if locals.topics.length > 1
 			.nspacer
-			+message(topics[1])
-		if topics.length > 2
-			a(href="messages", style="margin-left:30px;") #{topics.length-2} more recent conversations
+			+message(locals.topics[1])
+		if locals.topics.length > 2
+			a(href="messages", style="margin-left:30px;") #{locals.topics.length-2} more recent conversations
 		// Maybe we should have something like: a(href='inbox/messages') Click to view all
 	else
 		p.text-center No Private messages
@@ -66,16 +66,16 @@ block content
 
 	//- business
 	
-	if (user.receivedCards.length == 0)
+	if (locals.user.receivedCards.length == 0)
 		p.text-center No cards received
 	
-	for card in user.receivedCards
+	for card in locals.user.receivedCards
 		+card(card)	
 	//- end business
 
 	.clearfix
 	.nspacer-medium
-	if (user.receivedCards.length > 2)
+	if (locals.user.receivedCards.length > 2)
 		//Link to view all
 	.center(style='height:35px;')
 		ul.pagination
@@ -95,14 +95,14 @@ block content
 	.nspacer
 
 	//- saved
-	if (savers.length == 0)
+	if (locals.savers.length == 0)
 		p.text-center No one has saved your profile yet.
 		.clearfix
 		.nspacer
 
 	.col-md-12.col-xs-12.col-sm-12
 		.center
-			for saver in savers
+			for saver in locals.savers
 				+savedProfile(saver)
 		.clearfix
 		.nspacer

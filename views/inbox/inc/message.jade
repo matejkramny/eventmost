@@ -4,7 +4,7 @@ mixin message(message)
 	- var id;
 	//- find out the person you're messaging
 	for usr in message.topic.users
-		if (!usr._id.equals(user._id))
+		if (!usr._id.equals(locals.user._id))
 			- otherUser = usr
 			- name = usr.getName()
 			- id = usr._id

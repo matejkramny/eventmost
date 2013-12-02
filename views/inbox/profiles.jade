@@ -14,9 +14,9 @@ block content
 	.clearfix
 	.nspacer
 	.center
-		for saver in profileSavers
+		for saver in locals.profileSavers
 			+savedProfile(saver)
-	if (profileSavers.length == 0)
+	if (locals.profileSavers.length == 0)
 		b(style="margin-left: 30px;") No Saved Profiles.
 	.clearfix
 	.nspacer-big
@@ -28,9 +28,9 @@ block content
 	.clearfix
 	.nspacer
 	.center
-		for profile in user.savedProfiles
+		for profile in locals.user.savedProfiles
 			+savedProfile(profile)
-	if (user.savedProfiles.length == 0)
+	if (locals.user.savedProfiles.length == 0)
 		b(style="margin-left: 30px;") No Saved Profiles.
 		.clearfix
 		.nspacer

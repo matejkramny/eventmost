@@ -12,10 +12,10 @@ block content
 	
 	.nspacer
 	
-	for message in messages
+	for message in locals.messages
 		+message(message)
 	
-	if (messages.length == 0)
+	if (locals.messages.length == 0)
 		p.text-center.lead No Private Messages
 	
 	.clearfix

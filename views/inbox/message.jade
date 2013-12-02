@@ -3,9 +3,7 @@ extends ../responsive
 block content
 	include navbar
 	
-	h1= JSON.stringify(messages)
-	
-	for msg in []
+	for msg in locals.messages
 		.col-md-2.col-xs-2.col-sm-2
 			.font-e1
 				a(href="/user/"+msg.sentBy._id)= msg.sentBy.getName()
@@ -24,7 +22,7 @@ block content
 		.nspacer
 	.clearfix
 
-	if (messages.length == 0)
+	if (locals.messages.length == 0)
 		.nspacer
 		p.text-center.lead No Messages have been sent
 	
@@ -32,7 +30,7 @@ block content
 		.pull-left
 			img.pull-left.bubble-responsive(src="/images/bubble-left-blue.svg", alt="", style="vertical-align:top;")
 		.pull-left.bg-green.psev.post-width-text
-			form#commentForm(action="/inbox/message/"+message._id, method="POST")
+			form#commentForm(action="/inbox/message/"+locals.message._id, method="POST")
 				input(type="hidden", name="_csrf", value=token)
 				textarea.postcommentarea(placeholder="Send a message...", name="message")
 				.pull-right
