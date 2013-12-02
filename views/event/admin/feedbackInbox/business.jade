@@ -15,10 +15,10 @@ block content
 	
 	//- business
 	
-	if (user.receivedCards.length == 0)
+	if (locals.feedbackProfile.user.receivedCards.length == 0)
 		h3.text-center No cards received
 	
-	for card in user.receivedCards
+	for card in locals.feedbackProfile.user.receivedCards
 		+card(card)
 	
 	//- end business

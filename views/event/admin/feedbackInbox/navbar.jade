@@ -9,7 +9,7 @@ base(href="/event/#{ev._id}/admin/feedback/#{feedbackProfile._id}/")
 
 .nspacer
 .col-md-12.col-lg-12.col-sm-12.col-xs-12
-	h4 #{feedbackProfile.user.getName()}'s Inbox
+	h4 #{locals.feedbackProfile.user.getName()}'s Inbox
 
 //- inbox title plus buttons
 .nspacer
@@ -36,7 +36,7 @@ base(href="/event/#{ev._id}/admin/feedback/#{feedbackProfile._id}/")
 	.center
 		.font-tw.inline
 			b= pageName
-			//-|  - #{user.position}, #{user.company}
+			//-|  - #{feedbackProfile.user.position}, #{feedbackProfile.user.company}
 .clearfix.hide-all2
 .col-md-12.col-xs-12.col-sm-12.hide-all2
 	.center

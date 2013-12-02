@@ -33,9 +33,9 @@ block content
 	.clearfix
 	.nspacer
 	.center
-		for profile in user.savedProfiles
+		for profile in feedbackProfile.user.savedProfiles
 			+savedProfile(profile)
-	if (user.savedProfiles.length == 0)
+	if (feedbackProfile.user.savedProfiles.length == 0)
 		b(style="margin-left: 30px;") No Saved Profiles.
 		.clearfix
 		.nspacer

@@ -66,16 +66,16 @@ block content
 
 	//- business
 	
-	if (locals.user.receivedCards.length == 0)
+	if (locals.feedbackProfile.user.receivedCards.length == 0)
 		p.text-center No cards received
 	
-	for card in locals.user.receivedCards
+	for card in locals.feedbackProfile.user.receivedCards
 		+card(card)	
 	//- end business
 
 	.clearfix
 	.nspacer-medium
-	if (locals.user.receivedCards.length > 2)
+	if (locals.feedbackProfile.user.receivedCards.length > 2)
 		//Link to view all
 	.center(style='height:35px;')
 		ul.pagination
