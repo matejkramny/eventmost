@@ -14,15 +14,19 @@ $(document).ready(function() {
 		}
 		text = text.val();
 		
-		$('#afterSelectingProfile').removeClass('hide')
+		if (isEmail) {
+			$("#sendInboxForm input[name=field], #takeoverForm input[name=field]").val(text);
+			$('#afterSelectingProfile').removeClass('hide')
+		}
 		
 		return false;
 	})
 	
-	$('#sendInbox').click(function() {
-		window.location = 'sendInbox/'+text;
-	})
-	$('#takeoverProfile').click(function() {
-		window.location = 'takeover/'+text;
+	$('#sendInbox, #takeoverProfile').click(function(ev) {
+		ev.preventDefault()
+		
+		$(this).parent().submit();
+		
+		return false;
 	})
 })

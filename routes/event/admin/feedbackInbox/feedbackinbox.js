@@ -9,10 +9,15 @@ var fs = require('fs')
 	, cards = require('./cards')
 	, profiles = require('./profiles')
 	, wall = require('./wall')
+	, transport = require('../../../../config').transport
 
 exports.router = function (app) {
-	app.all('/event/:id/admin/feedback/:fid/inbox/*', populateInbox)
-		.get('/event/:id/admin/feedback/:fid/inbox', populateInbox, show)
+	var base = '/event/:id/admin/feedback/:fid/inbox';
+	
+	app.all(base+'/*', populateInbox)
+		.get(base, populateInbox, show)
+		.post(base+'/takeover', takeoverFP)
+		.post(base+'/sendInbox', sendInbox)
 	
 	messages.router(app)
 	cards.router(app)
@@ -67,6 +72,7 @@ function populateInbox (req, res, next) {
 		}
 	], function(err) {
 		if (err) throw err;
+		
 		next()
 	})
 }
@@ -82,5 +88,81 @@ function show (req, res) {
 				topics: topics
 			})
 		}
+	})
+}
+
+function takeoverFP (req, res) {
+	var field = req.body.field;
+	
+	
+}
+function sendInbox (req, res) {
+	var field = req.body.field;
+	var u = res.locals.feedbackProfile.user;
+	var user = req.user;
+	
+	var messages = res.locals.messages;
+	
+	async.map(messages, function(message, cb) {
+		models.Message.find({
+			topic: message.topic._id
+		}).populate('sentBy')
+		  .sort('-timeSent').exec(function(err, messages) {
+			if (err) throw err;
+			
+			var contents = "";
+			for (var i = 0; i < messages.length; i++) {
+				contents += "<tr>\
+<td><a href=\"http://eventmost.com/user/"+messages[i].sentBy._id+"\">"+messages[i].sentBy.getName()+"</a></td>\
+<td>"+messages[i].timeSent+"</td>\
+<td>"+messages[i].message+"</td>\
+</tr>";
+			}
+			
+			var body = "\
+<table>\
+<thead>\
+<tr>\
+<td>From</td>\
+<td>Time</td>\
+<td>Content</td>\
+</tr>\
+</thead>\
+<tbody>\
+"+contents+"\
+</tbody>\
+</table>";
+			
+			cb(null, body)
+		})
+	}, function(err, bodies) {
+		var options = {
+			from: "EventMost <notifications@eventmost.com>",
+			to: field,
+			subject: u.getName()+"'s Inbox",
+			html: "<img src=\"http://eventmost.com/images/logo.svg\">\
+<br/><br/><p><strong>"+user.getName()+" is sending you Inbox of a feedback profile "+u.getName()+"</strong>\
+<br/><br/><hr/>\
+<h1>Private Messages</h1><br/>\
+"+bodies.join('<br/>')+"<br/><hr/></br>\
+Please do not reply to this email, because we are super popular and probably won't have time to read it..."
+		}
+		transport.sendMail(options, function(err, response) {
+			if (err) throw err;
+	
+			console.log("Email sent.."+response.message)
+		})
+
+		// Record that an email was sent
+		var emailNotification = new models.EmailNotification({
+			to: u._id,
+			email: field,
+			type: "sentInbox"
+		})
+		emailNotification.save(function(err) {
+			if (err) throw err;
+		});
+		
+		res.redirect('back');
 	})
 }
