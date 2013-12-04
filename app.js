@@ -56,6 +56,7 @@ if (config.production) {
 	});
 }
 
+/*
 try {
 	var spawn_process = require('child_process').spawn
 	var readHash = spawn_process('git', ['rev-parse', '--short', 'HEAD']);
@@ -64,7 +65,7 @@ try {
 	})
 } catch (e) {
 	console.log("\n~= Unable to obtain git commit hash =~\n")
-}
+}*/
 
 // all environments
 app.enable('trust proxy');
