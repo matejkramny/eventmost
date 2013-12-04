@@ -156,6 +156,7 @@ textarea:focus, input:focus{
 
 
 .right {text-align: right;}
+.left {text-align: left;}
 .center {text-align: center;}
 .auto {margin: auto !important;}
 .none {float:none;}

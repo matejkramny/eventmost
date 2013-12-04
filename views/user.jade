@@ -129,62 +129,98 @@ block content
 	.clearfix
 	.nspacer-big
 	.col-md-3.col-xs-3.col-sm-3.font-s.lower
-		.pull-left
-			.pull-left.text-right
-				| Name: <br />
+			.text-right.pull-left(style="width:30%;")
+				| Name: 
+			.pull-left.text-left.pad-left-ten.pull-left.break(style="width:70%;")
+				| <b>#{theUser.getName()}</b> 
+				<b>#{theUser.position}</b> 
+				<b>#{theUser.company}</b> 
+			.clearfix
+			.text-right.pull-left(style="width:30%;")
 				| Position: <br />
+			.pull-left.text-left.pad-left-ten.pull-left.break(style="width:70%;")
+				| <b>#{theUser.position}</b> 
+			.clearfix
+			.text-right.pull-left(style="width:30%;")
 				| Company: <br />
-			.text-left.pad-left-ten
-				<b>#{theUser.getName()}</b> <br />
-				<b>#{theUser.position}</b> <br />
-				<b>#{theUser.company}</b> <br />
+			.pull-left.text-left.pad-left-ten.pull-left.break(style="width:70%;")
+				| <b>#{theUser.company}</b>
+
 	.col-md-4.col-xs-4.col-sm-4.font-s.lower-hide
-		.pull-left
-			.pull-left.text-right
+			.pull-left.text-right(style="width:30%;")
 				| Name: <br />
+			.pull-right.pad-left-ten.break(style="width:70%;")
+				| <b>#{theUser.getName()}</b>
+			.clearfix
+			.pull-left.text-right(style="width:30%;")
 				| Position: <br />
+			.pull-right.pad-left-ten.break(style="width:70%;")
+				| <b>#{theUser.position}</b>
+			.clearfix
+			.pull-left.text-right(style="width:30%;")
 				| Company: <br />
-			.pull-right.pad-left-ten
-				| <b>#{theUser.getName()}</b> <br />
-				| <b>#{theUser.position}</b> <br />
+			.pull-right.pad-left-ten.break(style="width:70%;")
 				| <b>#{theUser.company}</b> 
 	.col-md-4.col-xs-4.col-sm-4.font-s.hide-mini3-except-smart
-		.pull-left
-			.pull-left.text-right
+			.pull-left.text-right(style="width:30%;")
 				| Website: <br />
+			.pull-right.pad-left-ten.break(style="width:70%;")
+				| <b><a href="#{theUser.website}" class="link-purple">#{theUser.website}</a></b> 
+			.clearfix
+			.pull-left.text-right(style="width:30%;")
 				| Location: <br />
+			.pull-right.pad-left-ten.break(style="width:70%;")
+				| <b>#{theUser.location}</b>
+			.clearfix
+			.pull-left.text-right(style="width:30%;")
 				| Interests: <br />
-				| Education: 
-			.pull-right.pad-left-ten.pad-left-ten
-				| <b><a href="#{theUser.website}" class="link-purple">#{theUser.website}</a></b> <br />
-				| <b>#{theUser.location}</b> <br />
-				| <b>#{theUser.interests}</b> <br />
-				| <b>#{theUser.education}</b> 
-	
+			.pull-right.pad-left-ten.break(style="width:70%;")
+				| <b>#{theUser.interests}</b>
+			.clearfix
+			.pull-left.text-right(style="width:30%;")
+				| Education: <br />
+			.pull-right.pad-left-ten.break(style="width:70%;")
+				| <b>#{theUser.education}</b>
+			.clearfix
 	.col-md-12.col-xs-12.col-sm-12.font-s.center.hide-except-smart
-		.pull-left
-			.pull-left.text-right
+			.pull-left.text-right(style="width:20%;")
 				| Name: <br />
+			.pull-right.pad-left-ten.break.left(style="width:80%;")
+				| <b>#{theUser.getName()}</b> 
+			.clearfix
+			.pull-left.text-right(style="width:20%;")
 				| Position: <br />
+			.pull-right.pad-left-ten.break(style="width:80%;")
+				| <b>#{theUser.position}</b>
+			.clearfix
+			.pull-left.text-right(style="width:20%;")
 				| Company: <br />
-			.pull-right.pad-left-ten
-				| <b>#{theUser.getName()}</b> <br />
-				| <b>#{theUser.position}</b> <br />
-				| <b>#{theUser.company}</b>
+			.pull-right.pad-left-ten.break.left(style="width:80%;")
+				| <b>#{theUser.company}</b> 
 	.clearfix.center.hide-all3
 	.nspacer.hide-all3
 	.col-md-12.col-xs-12.col-sm-12.font-s.hide-except-smart
-		.pull-left
-			.pull-left.text-right
+			.pull-left.text-right(style="width:20%;")
 				| Website: <br />
+			.pull-right.pad-left-ten.break.left(style="width:80%;")
+				| <b><a href="#{theUser.website}" class="link-purple">#{theUser.website}</a></b> 
+			.clearfix
+			.pull-left.text-right(style="width:20%;")
 				| Location: <br />
+			.pull-right.pad-left-ten.break.left(style="width:80%;")
+				| <b>#{theUser.location}</b> 
+			.clearfix
+			.pull-left.text-right(style="width:20%;")
 				| Interests: <br />
-				| Educaction: 
-			.pull-right.pad-left-ten
-				| <b>#{theUser.website}</b> <br />
-				| <b>#{theUser.location}</b> <br />
-				| <b>#{theUser.interests}</b> <br />
-				| <b>#{theUser.education}</b>
+			.pull-right.pad-left-ten.break.left(style="width:80%;")
+				| <b>#{theUser.interests}</b> 
+			.clearfix
+			.pull-left.text-right(style="width:20%;")
+				| Educaction: <br />
+			.pull-right.pad-left-ten.break.left(style="width:80%;")
+				| <b>#{theUser.education}</b> 
+			.clearfix
+
 	
 	.clearfix
 	.nspacer-big
