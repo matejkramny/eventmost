@@ -33,9 +33,25 @@ angular.module('eventMost')
 	}
 	
 	$scope.sendInvite = function () {
-		$http.post('inbox/takeover')
+		$scope.showAction = false;
+		
+		$scope.progress = "Sending Invite.."
+		$http.post('inbox/takeover', {
+			_csrf: $scope.csrf,
+			field: $scope.selectedProfile != null ? $scope.selectedProfile._id : $scope.email
+		}).success(function(data, status) {
+			var status = data.status;
+			
+			if (status == 200) {
+				$scope.progress = "Invitation Sent!"
+			} else {
+				$scope.progress = "Invite failed to send because: "+data.message
+			}
+		})
 	}
 	$scope.sendInbox = function () {
+		$scope.showAction = false;
+		
 		$scope.progress = "Sending Inbox.."
 		$http.post('inbox/sendInbox', {
 			_csrf: $scope.csrf,

@@ -27,9 +27,10 @@
 						input.pull-right.font-s.search-input.pad-left-ten.header-links(ng-model="email", type="email", required="required", placeholder="Target e-mail address", style="width:77%;")
 				.clearfix
 				
-				p.lead.text-center(ng-show="progress.length > 0")
+				.row
 					.nspacer-big
-					{{ progress }}
+					p.col-sm-12.col-lg-12.col-md-12.col-xs-12.lead.text-center(ng-show="progress.length > 0")
+						{{ progress }}
 				div(ng-show="showPeopleSearch")
 					.nspacer-big
 					div(ng-repeat="person in peopleSearch")

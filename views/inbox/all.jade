@@ -11,6 +11,48 @@ block content
 	
 	//- end inbox title plus buttons
 	
+	//- Takeover requests..
+	if (takeoverRequests.length > 0)
+		.col-md-12.col-xs-12.col-sm-12
+			.font-tw
+				b Take over Requests
+			.line-purple
+	- var i = 0;
+	for request in takeoverRequests
+		if (i % 2 == 0)
+			.clearfix
+		.col-md-2.col-xs-2.col-sm-2.inv-till-1
+			.center.nspacer-medium
+				img(src= request.takeoverUser.avatar.length > 0 ? request.takeoverUser.avatar : "/images/default_speaker.svg", style="max-width:102px;margin:-1px auto auto -1px;", class="circularespond")
+			.font-s.center
+				a(href="/user/"+request.takeoverUser._id): b= request.takeoverUser.getName()
+				br
+				if (request.takeoverUser.company && request.takeoverUser.position)
+					= request.takeoverUser.company
+					| , 
+					= request.takeoverUser.position
+				- else if (request.takeoverUser.company)
+					= request.takeoverUser.company
+				- else if (request.takeoverUser.position)
+					= request.takeoverUser.position
+				- else
+					br
+		.col-md-3.col-xs-3.col-sm-3.inv-till-1
+			.nspacer-medium
+				b Profile is from event 
+					a(href="/event/"+request.event._id) #{request.event.name}
+				br
+				b Was sent to you by 
+					a(href="/user/"+request.requestedBy._id) #{request.requestedBy.getName()}
+				br
+				br
+				b You can 
+					a(href="/inbox/takeoverRequest/"+request._id+"/"+request.secret+"/accept") accept
+					|  or 
+					a(href="/inbox/takeoverRequest/"+request._id+"/"+request.secret+"/accept") ignore
+					|  this request..
+		- i++;
+	.clearfix
 	.nspacer
 
 	.col-md-12.col-xs-12.col-sm-12

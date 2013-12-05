@@ -10,10 +10,14 @@ var fs = require('fs')
 	, profiles = require('./profiles')
 	, wall = require('./wall')
 	, transport = require('../../config').transport
+	, check = require('validator').check
 
 exports.router = function (app) {
 	app.all('/inbox/*', util.authorized, populateInbox)
 		.get('/inbox', util.authorized, populateInbox, show)
+		.get('/takeProfile/:tid/:secret', getRequest, takeover)
+		.post('/takeProfile/:tid/:secret', getRequest, doTakeover)
+		.get('/inbox/takeoverRequest/:tid/:secret/:action', getRequest, doMerge)
 	
 	messages.router(app)
 	cards.router(app)
@@ -56,7 +60,7 @@ function populateInbox (req, res, next) {
 			})
 		},
 		function(cb) {
-			models.User.find({savedProfiles: req.user._id }).exec(function(err, savers) {
+			models.User.find({ savedProfiles: req.user._id }).exec(function(err, savers) {
 				res.locals.savers = savers;
 				cb(null)
 			});
@@ -65,6 +69,18 @@ function populateInbox (req, res, next) {
 			req.user.mailboxUnread = 0;
 			req.user.save();
 			cb(null)
+		},
+		function (cb) {
+			// Find UserTakeoverRequest(s)...
+			models.UserTakeoverRequest.find({
+				user: req.user._id,
+				active: true
+			}).populate('user requestedBy takeoverUser event').exec(function(err, requests) {
+				if (err) throw err;
+				
+				res.locals.takeoverRequests = requests;
+				cb(null);
+			})
 		}
 	], function(err) {
 		if (err) throw err;
@@ -84,6 +100,102 @@ function show (req, res) {
 			})
 		}
 	})
+}
+
+function getRequest (req, res, next) {
+	var tid = req.params.tid;
+	var secret = req.params.secret;
+	
+	models.UserTakeoverRequest.findOne({
+		_id: tid,
+		secret: secret,
+		active: true
+	}).populate('event takeoverUser requestedBy user').exec(function(err, request) {
+		if (err || !request) {
+			res.redirect('back');
+			return;
+		}
+		
+		res.locals.takeoverRequest = request;
+		next();
+	})
+}
+function takeover (req, res) {
+	res.render('inbox/takeover')
+}
+function doTakeover (req, res) {
+	var password = req.body.password,
+		email = req.body.login;
+	
+	try {
+		check(email, "Please enter an email address").isEmail();
+		check(password, "Password must be at least 3 characters long..").min(3)
+	} catch (e) {
+		throw e;
+		req.session.flash = [e.message];
+		res.redirect('back')
+		return;
+	}
+	
+	models.User.find({
+		email: email
+	}, function(err, users) {
+		if (err) throw err;
+		
+		if (users.length == 0) {
+			// email is not used. good
+			var request = res.locals.takeoverRequest;
+			
+			request.takeoverUser.setPassword(password);
+			request.takeoverUser.email = email;
+			request.takeoverUser.isFeedbackProfile = false;
+			request.takeoverUser.feedbackProfileEvent = null;
+			request.takeoverUser.save();
+			
+			request.active = false;
+			request.wasAccepted = true;
+			request.actionTaken = Date.now();
+			request.save();
+			
+			res.redirect('/#login-failed');
+		} else {
+			// email is used.
+			req.session.flash = ["Email is already taken"];
+			res.redirect('back')
+		}
+	})
+}
+function doMerge (req, res) {
+	var request = res.locals.request;
+	
+	var action = req.params.action;
+	if (action != "accept" || action != "ignore") {
+		res.redirect('back');
+		return;
+	}
+	
+	request.actionTaken = Date.now();
+	
+	if (action == "ignore") {
+		request.wasIgnored = true;
+		request.active = false;
+		request.save()
+		
+		res.redirect('back');
+		return;
+	}
+	
+	// Accept
+	request.actionTaken = Date.now();
+	request.wasAccepted = true;
+	request.active = false;
+	request.save();
+	
+	request.takeoverUser.isFeedbackProfile = false;
+	request.takeoverUser.feedbackProfileEvent = null;
+	request.takeoverUser.save();
+	// TODO Modify Topics, Messages, User.carsd etc to this user's ID.
+	res.redirect('back')
 }
 
 exports.emailNotification = function (person, link) {

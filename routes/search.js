@@ -15,7 +15,9 @@ function searchPeople (req, res) {
 	}
 	
 	var split = q.split(' ');
-	var query = {};
+	var query = {
+		isFeedbackProfile: false
+	};
 	
 	if (split.length > 0 && split[0].length > 0) {
 		query.name = new RegExp(split[0], 'i');

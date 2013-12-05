@@ -36,7 +36,8 @@ function getProfile (req, res, next) {
 	
 	var attendee;
 	for (var i = 0; i < ev.attendees.length; i++) {
-		if (ev.attendees[i]._id.equals(fid)) {
+		var att = ev.attendees[i];
+		if (att._id.equals(fid) && att.user.isFeedbackProfile && att.user.feedbackProfileEvent.equals(ev._id)) {
 			attendee = ev.attendees[i];
 			break;
 		}
