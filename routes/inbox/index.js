@@ -112,6 +112,7 @@ function getRequest (req, res, next) {
 		active: true
 	}).populate('event takeoverUser requestedBy user').exec(function(err, request) {
 		if (err || !request) {
+			console.log("Redirecing")
 			res.redirect('back');
 			return;
 		}
@@ -166,10 +167,10 @@ function doTakeover (req, res) {
 	})
 }
 function doMerge (req, res) {
-	var request = res.locals.request;
+	var request = res.locals.takeoverRequest;
 	
 	var action = req.params.action;
-	if (action != "accept" || action != "ignore") {
+	if (action != "accept" && action != "ignore") {
 		res.redirect('back');
 		return;
 	}
