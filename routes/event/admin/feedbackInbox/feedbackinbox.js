@@ -10,6 +10,7 @@ var fs = require('fs')
 	, profiles = require('./profiles')
 	, wall = require('./wall')
 	, transport = require('../../../../config').transport
+	, check = require('validator').check
 
 exports.router = function (app) {
 	var base = '/event/:id/admin/feedback/:fid/inbox';
@@ -97,11 +98,46 @@ function takeoverFP (req, res) {
 	
 }
 function sendInbox (req, res) {
-	var field = req.body.field;
-	var u = res.locals.feedbackProfile.user;
-	var user = req.user;
+	var email = req.body.field
+		, u = res.locals.feedbackProfile.user
+		, user = req.user
+		, messages = res.locals.messages
+		, uid;
 	
-	var messages = res.locals.messages;
+	try {
+		uid = mongoose.Types.ObjectId(req.body.field)
+	} catch (e) {
+		uid = null;
+	}
+	
+	if (uid) {
+		models.User.findById(uid, function(err, userToEmail) {
+			if (err || !userToEmail) {
+				res.send({ status: 404 })
+				return;
+			}
+			
+			sendInboxToEmail(req, res, userToEmail.email);
+		})
+	} else {
+		sendInboxToEmail(req, res, email)
+	}
+}
+
+function sendInboxToEmail (req, res, email) {
+	var u = res.locals.feedbackProfile.user
+		, user = req.user
+		, messages = res.locals.messages;
+	
+	try {
+		check(email).isEmail();
+	} catch (e) {
+		res.send({
+			status: 405,
+			message: "Person has no email or email is malformed"
+		})
+		return;
+	}
 	
 	async.map(messages, function(message, cb) {
 		models.Message.find({
@@ -138,7 +174,7 @@ function sendInbox (req, res) {
 	}, function(err, bodies) {
 		var options = {
 			from: "EventMost <notifications@eventmost.com>",
-			to: field,
+			to: email,
 			subject: u.getName()+"'s Inbox",
 			html: "<img src=\"http://eventmost.com/images/logo.svg\">\
 <br/><br/><p><strong>"+user.getName()+" is sending you Inbox of a feedback profile "+u.getName()+"</strong>\
@@ -156,13 +192,16 @@ Please do not reply to this email, because we are super popular and probably won
 		// Record that an email was sent
 		var emailNotification = new models.EmailNotification({
 			to: u._id,
-			email: field,
+			email: email,
 			type: "sentInbox"
 		})
 		emailNotification.save(function(err) {
 			if (err) throw err;
 		});
 		
-		res.redirect('back');
+		res.send({
+			status: 200,
+			message: "Done"
+		})
 	})
 }

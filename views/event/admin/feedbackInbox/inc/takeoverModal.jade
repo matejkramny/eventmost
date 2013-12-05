@@ -1,4 +1,4 @@
-#takeoverModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="", aria-hidden="true")
+#takeoverModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="", aria-hidden="true", ng-controller="TakeoverController", ng-init="setCsrf('#{token}')")
 	.modal-dialog
 		.modal-content
 			.modal-body.reveal-modal
@@ -12,9 +12,9 @@
 					.font-e.right.nspacer
 						| Search EventMost:
 				.col-sm-7.col-xs-7.col-md-7.hide-mini3-except-smart
-					form#takeoverUser(method="POST", accept-charset="utf-8")
-						input.gonew2.pull-right.header-links(type="button", value="GO", style="width:20%;")
-						input.pull-right.font-s.search-input.pad-left-ten.header-links(type="search", placeholder="search people", style="width:77%;")
+					form(method="POST", accept-charset="utf-8")
+						input.gonew2.pull-right.header-links(type="button", ng-click="searchUser()", value="GO", style="width:20%;")
+						input.pull-right.font-s.search-input.pad-left-ten.header-links(ng-model="search", type="search", required="required", placeholder="search people", style="width:77%;")
 				.clearfix
 				.nspacer
 				
@@ -22,24 +22,45 @@
 					.font-e.right.nspacer
 						| Enter Email Address:
 				.col-sm-7.col-xs-7.col-md-7.hide-mini3-except-smart
-					form#takeoverEmail(method="POST", accept-charset="utf-8")
-						input.gonew2.pull-right.header-links(type="button", value="GO", style="width:20%;")
-						input.pull-right.font-s.search-input.pad-left-ten.header-links(type="email", placeholder="Target e-mail address", style="width:77%;")
+					form(method="POST", accept-charset="utf-8")
+						input.gonew2.pull-right.header-links(type="button", ng-click="doEmail()", value="GO", style="width:20%;")
+						input.pull-right.font-s.search-input.pad-left-ten.header-links(ng-model="email", type="email", required="required", placeholder="Target e-mail address", style="width:77%;")
 				.clearfix
 				
+				p.lead.text-center(ng-show="progress.length > 0")
+					.nspacer-big
+					{{ progress }}
+				div(ng-show="showPeopleSearch")
+					.nspacer-big
+					div(ng-repeat="person in peopleSearch")
+						.nspacer
+						.row
+							a.col-md-2.col-sm-2.col-lg-2(target="_blank", href="/user/{{person._id}}")
+								img.img-responsive(ng-src="{{person.avatar}}")
+							.col-md-8.col-sm-8.col-lg-8
+								.row
+									h4.col-md-12.col-sm-12.col-lg-12
+										a(target="_blank", href="/user/{{person._id}}"): strong {{person.fullName}}
+								.row
+									strong.col-md-12.col-sm-12.col-lg-12
+										span(ng-show="person.position.length > 0")
+											{{person.position}}, 
+										span(ng-show="person.company.length > 0")
+											{{person.company}}, 
+										span(ng-show="person.location.length > 0")
+											{{person.location}}
+							.col-md-2.col-sm-2.col-lg-2
+								a.btn.btn-default.btn-md(ng-click="selectProfile(person)") Select
+						br
+						.line-purple(ng-hide="$last")
+				
 				.nspacer
-				.col-sm-12.col-xs-12.col-md-12.hide#afterSelectingProfile
+				.col-sm-12.col-xs-12.col-md-12(ng-show="showAction")
 					.center
 						.inline.nspacer-small
-							form#takeoverForm(action="inbox/takeover", method="POST")
-								input(type="hidden", name="_csrf", value=token)
-								input(type="hidden", name="field")
-								button#takeoverProfile.btn.btn-primary.font-e2.hide-prof-butt(type='submit', style="height:95px; width:100%; border-radius: 10px; color:#fff; padding:20px;")
-									| Invite user to take<br />over this profile
+							button.btn.btn-primary.font-e2.hide-prof-butt(ng-click="sendInvite()", style="height:95px; width:100%; border-radius: 10px; color:#fff; padding:20px;")
+								| Invite user to take<br />over this profile
 						.inline.nspacer-small.pad-on-smart
-							form#sendInboxForm(action="inbox/sendInbox", method="POST")
-								input(type="hidden", name="_csrf", value=token)
-								input(type="hidden", name="field")
-								button#sendInbox.btn.btn-default.font-e2.hide-prof-butt(type='submit', style="height:95px; width:100%; border-radius: 10px; color:#fff; padding:20px;")
-									| Send this profile’s inbox <br />to the selected user
+							button.btn.btn-default.font-e2.hide-prof-butt(ng-click="sendInbox()", style="height:95px; width:100%; border-radius: 10px; color:#fff; padding:20px;")
+								| Send this profile’s inbox <br />to the selected user
 				.clearfix
