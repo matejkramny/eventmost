@@ -1,5 +1,6 @@
-var models = require('../models')
-	mongoose = require('mongoose')
+var models = require('../models'),
+	mongoose = require('mongoose'),
+	inbox = require('./inbox/index')
 
 exports.router = function (app) {
 	app.get('/cards', showCards)
