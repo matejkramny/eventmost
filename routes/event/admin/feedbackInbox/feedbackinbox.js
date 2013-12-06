@@ -10,6 +10,7 @@ var fs = require('fs')
 	, profiles = require('./profiles')
 	, wall = require('./wall')
 	, transport = require('../../../../config').transport
+	, check = require('validator').check
 
 exports.router = function (app) {
 	var base = '/event/:id/admin/feedback/:fid/inbox';
@@ -27,6 +28,11 @@ exports.router = function (app) {
 }
 
 function populateInbox (req, res, next) {
+	if (!res.locals.feedbackProfile) {
+		res.redirect('back')
+		return;
+	}
+	
 	var u = res.locals.feedbackProfile.user;
 	
 	async.parallel([
@@ -91,17 +97,136 @@ function show (req, res) {
 	})
 }
 
+function emailOrUser (req, res, next) {
+	var email = req.body.field
+		, u = res.locals.feedbackProfile.user
+		, user = req.user
+		, messages = res.locals.messages
+		, uid;
+	
+	try {
+		uid = mongoose.Types.ObjectId(req.body.field)
+	} catch (e) {
+		uid = null;
+	}
+	
+	var complete = function (email, user) {
+		try {
+			check(email).isEmail();
+		} catch (e) {
+			res.send({
+				status: 405,
+				message: "Person has no email or email is malformed"
+			})
+			return;
+		}
+		
+		next(email, user);
+	}
+	
+	if (uid) {
+		models.User.findById(uid, function(err, userToEmail) {
+			if (err || !userToEmail) {
+				res.send({ status: 404 })
+				return;
+			}
+			
+			complete(userToEmail.email, userToEmail);
+		})
+	} else {
+		complete(email)
+	}
+}
 function takeoverFP (req, res) {
-	var field = req.body.field;
+	var u = res.locals.feedbackProfile.user
+		, user = req.user;
 	
+	function complete(request, email, sendEmail) {
+		if (sendEmail) {
+			var options = {
+				from: "EventMost <notifications@eventmost.com>",
+				to: email,
+				subject: "Invite to Take Over a Feedback Profile",
+				html: "<img src=\"http://eventmost.com/images/logo.svg\">\
+	<br/><br/><p><strong>"+user.getName()+" has sent you a request to take over a feedback profile "+u.getName()+"</strong>\
+	<br/>To complete the transfer, please click <a href=\"http://eventmost.com/inbox\">here</a>, or just log in to EventMost and go to your inbox..\
+	<br/>If you don't have an account on EventMost, please click <a href=\"http://eventmost.com/takeProfile/"+request._id+"/"+request.secret+"\">here</a>\
+	<br/><br/>\
+	Please do not reply to this email, because we are super popular and probably won't have time to read it..."
+			}
+			transport.sendMail(options, function(err, response) {
+				if (err) throw err;
 	
+				console.log("Email sent.."+response.message)
+			})
+
+			// Record that an email was sent
+			var emailNotification = new models.EmailNotification({
+				to: u._id,
+				email: email,
+				type: "sentInvite"
+			})
+			emailNotification.save(function(err) {
+				if (err) throw err;
+			});
+		}
+		
+		res.send({
+			status: 200,
+			message: "Done"
+		})
+	}
+	
+	emailOrUser(req, res, function(email, user) {
+		if (!user) {
+			request = new models.UserTakeoverRequest({
+				email: email,
+				requestedBy: req.user._id,
+				event: res.locals.ev._id,
+				takeoverUser: u._id
+			})
+			request.generateSecret();
+			request.save(function(err) {
+				if (err) throw err;
+			});
+			
+			complete(request, email, true)
+			return;
+		}
+		
+		models.UserTakeoverRequest.findOne({
+			takeoverUser: u._id,
+			active: true
+		}, function(err, request) {
+			if (err != null || request == null) {
+				request = new models.UserTakeoverRequest({
+					user: user._id,
+					requestedBy: req.user._id,
+					event: res.locals.ev._id,
+					takeoverUser: u._id
+				})
+				request.generateSecret();
+				request.save(function (err) {
+					if (err) throw err;
+				});
+				
+				complete(request, email, true);
+			} else {
+				complete(request, email, false);
+			}
+		})
+	})
 }
 function sendInbox (req, res) {
-	var field = req.body.field;
-	var u = res.locals.feedbackProfile.user;
-	var user = req.user;
-	
-	var messages = res.locals.messages;
+	emailOrUser(req, res, function(email) {
+		sendInboxToEmail(req, res, email);
+	})
+}
+
+function sendInboxToEmail (req, res, email) {
+	var u = res.locals.feedbackProfile.user
+		, user = req.user
+		, messages = res.locals.messages;
 	
 	async.map(messages, function(message, cb) {
 		models.Message.find({
@@ -138,7 +263,7 @@ function sendInbox (req, res) {
 	}, function(err, bodies) {
 		var options = {
 			from: "EventMost <notifications@eventmost.com>",
-			to: field,
+			to: email,
 			subject: u.getName()+"'s Inbox",
 			html: "<img src=\"http://eventmost.com/images/logo.svg\">\
 <br/><br/><p><strong>"+user.getName()+" is sending you Inbox of a feedback profile "+u.getName()+"</strong>\
@@ -156,13 +281,16 @@ Please do not reply to this email, because we are super popular and probably won
 		// Record that an email was sent
 		var emailNotification = new models.EmailNotification({
 			to: u._id,
-			email: field,
+			email: email,
 			type: "sentInbox"
 		})
 		emailNotification.save(function(err) {
 			if (err) throw err;
 		});
 		
-		res.redirect('back');
+		res.send({
+			status: 200,
+			message: "Done"
+		})
 	})
 }

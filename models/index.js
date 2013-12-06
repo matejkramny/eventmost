@@ -18,5 +18,6 @@ module.exports = {
 	Attendee: require('./Attendee').Attendee,
 	EventMessage: require('./EventMessage').EventMessage,
 	Ticket: require('./Ticket').Ticket,
-	EventStat: require('./EventStat').EventStat
+	EventStat: require('./EventStat').EventStat,
+	UserTakeoverRequest: require('./UserTakeoverRequest').UserTakeoverRequest
 }

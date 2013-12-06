@@ -6,6 +6,7 @@ exports.router = function (app) {
 	app.get('/search/people/', searchPeople)
 }
 
+//TODO remove sensitive fields (password?) from the results
 function searchPeople (req, res) {
 	var q = req.query.q;
 	
@@ -14,7 +15,9 @@ function searchPeople (req, res) {
 	}
 	
 	var split = q.split(' ');
-	var query = {};
+	var query = {
+		isFeedbackProfile: false
+	};
 	
 	if (split.length > 0 && split[0].length > 0) {
 		query.name = new RegExp(split[0], 'i');
@@ -23,15 +26,44 @@ function searchPeople (req, res) {
 		query.surname = new RegExp(split[1], 'i');
 	}
 	
-	console.log(query)
 	models.User.find(query).sort("-name-surname").exec(function(err, people) {
 		if (err) throw err;
 		
-		res.locals.search = {
-			query: q,
-			results: people
-		}
-		res.render('search/results')
+		res.format({
+			json: function() {
+				var ppl = [];
+				for (var i = 0; i < people.length; i++) {
+					var person = people[i];
+					
+					ppl.push({
+						_id: person._id,
+						fullName: person.getName(),
+						name: person.name,
+						surname: person.surname,
+						avatar: person.avatar.length > 0 ? person.avatar : "/images/default_speaker.svg",
+						desc: person.desc,
+						education: person.education,
+						website: person.website,
+						position: person.position,
+						company: person.company,
+						location: person.location
+					})
+				}
+				
+				res.send({
+					query: q,
+					results: ppl
+				})
+			},
+			html: function() {
+				res.locals.search = {
+					query: q,
+					results: people
+				}
+				
+				res.render('search/results')
+			}
+		})
 	});
 }
 

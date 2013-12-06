@@ -1,0 +1,49 @@
+extends ../responsive
+
+block content
+	.nspacer-big
+	h4.text-center 
+		a(href="/user/#{takeoverRequest.requestedBy._id}", target="_blank") #{takeoverRequest.requestedBy.getName()}
+		|  has Invited you to take over a feedback profile from an event called 
+		a(href="/event/#{takeoverRequest.event._id}", target="_blank") #{takeoverRequest.event.name}
+	br
+	.row
+		.col-md-6.col-sm-6.col-xs-12.col-lg-6
+			h1 Feedback Profile Details
+			dl.dl-horizontal
+				dt Name
+				dd #{takeoverRequest.takeoverUser.name}
+				dt Surname
+				dd #{takeoverRequest.takeoverUser.surname}
+				dt Email
+				dd #{takeoverRequest.takeoverUser.email}
+				dt Company
+				dd #{takeoverRequest.takeoverUser.company}
+				dt Position
+				dd #{takeoverRequest.takeoverUser.position}
+				dt Location
+				dd #{takeoverRequest.takeoverUser.location}
+				dt Description
+				dd #{takeoverRequest.takeoverUser.desc}
+				dt Website
+				dd #{takeoverRequest.takeoverUser.website}
+				dt Interests
+				dd #{takeoverRequest.takeoverUser.interests}
+				dt Education
+				dd #{takeoverRequest.takeoverUser.education}
+		.col-md-6.col-sm-6.col-xs-12.col-lg-6.reveal-modal
+			h1 New Credentials
+			h4.text-center We need to give the feedback profile some way of logging in. Please provide a username and password for the feedback profile.
+			form(action="/takeProfile/#{takeoverRequest._id}/#{takeoverRequest.secret}", method="POST")
+				input(type="hidden", name="_csrf", value=token)
+				.formStatus.center
+				.pop-input.center
+					input.login(name="login", placeholder="email", type="email", required="required")
+				.pop-input.center
+					input.pass(name="password", placeholder="password", type="password", required="required")
+				.pop-input.center
+					input.btn.btn-primary.font.font-ah(type='submit', value="CONTINUE")
+				.clearfix
+				.nspacer
+			.clearfix
+	br

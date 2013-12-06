@@ -56,16 +56,17 @@ if (config.production) {
 	});
 }
 
-/*
-try {
-	var spawn_process = require('child_process').spawn
-	var readHash = spawn_process('git', ['rev-parse', '--short', 'HEAD']);
-	readHash.stdout.on('data', function (data) {
-		app.set('app version hash', data.toString().trim())
-	})
-} catch (e) {
-	console.log("\n~= Unable to obtain git commit hash =~\n")
-}*/
+if (process.platform.match(/^win/) == null) {
+	try {
+		var spawn_process = require('child_process').spawn
+		var readHash = spawn_process('git', ['rev-parse', '--short', 'HEAD']);
+		readHash.stdout.on('data', function (data) {
+			app.set('app version hash', data.toString().trim())
+		})
+	} catch (e) {
+		console.log("\n~= Unable to obtain git commit hash =~\n")
+	}
+}
 
 // all environments
 app.enable('trust proxy');
