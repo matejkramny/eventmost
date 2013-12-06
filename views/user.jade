@@ -19,7 +19,7 @@ block content
 		.pull-right
 			img(src= theUser.avatar.length == 0 ? "/images/default_speaker.svg" : theUser.avatar, alt="", class="circularespond img-responsive")
 	.col-md-4.col-xs-4.col-sm-4.hide-mini3-except-smart
-		.text-right.font-s.nspacer-bigger
+		.font-s.nspacer-bigger.big-pad-left
 			| <b>#{theUser.getName()}</b> 
 			if (theUser.position)
 				| - #{theUser.position}
@@ -29,6 +29,41 @@ block content
 			img(src="/images/message-icon-small.svg", alt="", class="pad-right-ten")
 			a(href="mailto:#{theUser.email}", class="link-purple")
 				| #{theUser.email}
+		.nspacer
+		.text-right.font-s.pull-left(style="width:30%;")
+			| Name: 
+		.pull-left.font-s.text-left.pad-left-ten.pull-left.break(style="width:70%;")
+			| <b>#{theUser.getName()}</b> 
+		.clearfix
+		.text-right.font-s.pull-left.nspacer-small-m(style="width:30%;")
+			| Position: <br />
+		.pull-left.font-s.text-left.pad-left-ten.pull-left.break.nspacer-small-m(style="width:70%;")
+			| <b>#{theUser.position}</b> 
+		.clearfix
+		.text-right.font-s.pull-left.nspacer-small-m(style="width:30%;")
+			| Company: <br />
+		.pull-left.font-s.text-left.pad-left-ten.pull-left.break.nspacer-small-m(style="width:70%;")
+			| <b>#{theUser.company}</b>
+		.clearfix
+		.pull-left.font-s.text-right.nspacer-small-m(style="width:30%;")
+			| Website: <br />
+		.pull-right.font-s.pad-left-ten.break.nspacer-small-m(style="width:70%;")
+			| <b><a href="#{theUser.website}" class="link-purple">#{theUser.website}</a></b> 
+		.clearfix
+		.pull-left.font-s.text-right.nspacer-small-m(style="width:30%;")
+			| Location: <br />
+		.pull-right.font-s.pad-left-ten.break.nspacer-small-m(style="width:70%;")
+			| <b>#{theUser.location}</b>
+		.clearfix
+		.pull-left.font-s.text-right.nspacer-small-m(style="width:30%;")
+			| Interests: <br />
+		.pull-right.font-s.pad-left-ten.break.nspacer-small-m(style="width:70%;")
+			| <b>#{theUser.interests}</b>
+		.clearfix
+		.pull-left.font-s.text-right.nspacer-small-m(style="width:30%;")
+			| Education: <br />
+		.pull-right.font-s.pad-left-ten.break.nspacer-small-m(style="width:70%;")
+			| <b>#{theUser.education}</b>
 		.clearfix
 	
 	if (!theUser._id.equals(user._id))
@@ -128,60 +163,7 @@ block content
 
 	.clearfix
 	.nspacer-big
-	.col-md-3.col-xs-3.col-sm-3.font-s.lower
-			.text-right.pull-left(style="width:30%;")
-				| Name: 
-			.pull-left.text-left.pad-left-ten.pull-left.break(style="width:70%;")
-				| <b>#{theUser.getName()}</b> 
-				<b>#{theUser.position}</b> 
-				<b>#{theUser.company}</b> 
-			.clearfix
-			.text-right.pull-left(style="width:30%;")
-				| Position: <br />
-			.pull-left.text-left.pad-left-ten.pull-left.break(style="width:70%;")
-				| <b>#{theUser.position}</b> 
-			.clearfix
-			.text-right.pull-left(style="width:30%;")
-				| Company: <br />
-			.pull-left.text-left.pad-left-ten.pull-left.break(style="width:70%;")
-				| <b>#{theUser.company}</b>
 
-	.col-md-4.col-xs-4.col-sm-4.font-s.lower-hide
-			.pull-left.text-right(style="width:30%;")
-				| Name: <br />
-			.pull-right.pad-left-ten.break(style="width:70%;")
-				| <b>#{theUser.getName()}</b>
-			.clearfix
-			.pull-left.text-right(style="width:30%;")
-				| Position: <br />
-			.pull-right.pad-left-ten.break(style="width:70%;")
-				| <b>#{theUser.position}</b>
-			.clearfix
-			.pull-left.text-right(style="width:30%;")
-				| Company: <br />
-			.pull-right.pad-left-ten.break(style="width:70%;")
-				| <b>#{theUser.company}</b> 
-	.col-md-4.col-xs-4.col-sm-4.font-s.hide-mini3-except-smart
-			.pull-left.text-right(style="width:30%;")
-				| Website: <br />
-			.pull-right.pad-left-ten.break(style="width:70%;")
-				| <b><a href="#{theUser.website}" class="link-purple">#{theUser.website}</a></b> 
-			.clearfix
-			.pull-left.text-right(style="width:30%;")
-				| Location: <br />
-			.pull-right.pad-left-ten.break(style="width:70%;")
-				| <b>#{theUser.location}</b>
-			.clearfix
-			.pull-left.text-right(style="width:30%;")
-				| Interests: <br />
-			.pull-right.pad-left-ten.break(style="width:70%;")
-				| <b>#{theUser.interests}</b>
-			.clearfix
-			.pull-left.text-right(style="width:30%;")
-				| Education: <br />
-			.pull-right.pad-left-ten.break(style="width:70%;")
-				| <b>#{theUser.education}</b>
-			.clearfix
 	.col-md-12.col-xs-12.col-sm-12.font-s.center.hide-except-smart
 			.pull-left.text-right(style="width:20%;")
 				| Name: <br />
