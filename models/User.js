@@ -11,6 +11,7 @@ var scheme = schema({
 		type: Date,
 		default: Date.now
 	},
+	disabled: { type: Boolean, default: false },
 	email: String,
 	password: String,
 	name: { type: String, default: "" },
