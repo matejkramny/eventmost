@@ -120,8 +120,11 @@ function fire (req, res) {
 }
 
 function removeUser (req, res) {
-	models.User.remove({ _id: req.params.id }, function(err) {
+	models.User.findById(req.params.id, function(err, user) {
 		if (err) throw err;
+		
+		user.disabled = true;
+		user.save();
 		
 		res.format({
 			html: function() {

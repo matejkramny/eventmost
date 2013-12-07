@@ -168,19 +168,6 @@ if (!config.production) {
 	app.set('view cache', false); // Tell Jade not to cache views
 }
 
-if (config.production) {
-	console.log("Starting nodetime")
-	
-	// Make only one 'agent' running at the same time, free plan on nodetime only allows 1. :/
-	// If EventMost expands the number of processes a larger plan will be required
-	var ntime = require('nodetime')
-	ntime.profile({
-		accountKey: config.nodetimeKey, 
-		appName: 'EventMost'
-	});
-	// Record errors with nodetime
-	ntime.expressErrorHandler()
-}
 app.use(bugsnag.errorHandler);
 app.use(function(err, req, res, next) {
 	res.format({

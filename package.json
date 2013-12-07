@@ -24,7 +24,6 @@
 	"passport-twitter": "latest",
 	"passport-linkedin": "matejkramny/passport-linkedin",
 	"socket.io": "latest",
-	"nodetime": "latest",
 	"nodemailer": "latest",
 	"bugsnag": "bugsnag/bugsnag-node",
 	"should": "latest",

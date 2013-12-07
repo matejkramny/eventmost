@@ -156,7 +156,8 @@ scheme.statics.getHash = function (password) {
 
 scheme.statics.authenticatePassword = function (email, password, cb, extra) {
 	exports.User.findOne({
-		email: email
+		email: email,
+		disabled: false
 	}, function(err, user) {
 		if (err) throw err;
 		
@@ -177,7 +178,8 @@ scheme.statics.authenticatePassword = function (email, password, cb, extra) {
 }
 scheme.statics.authenticateTwitter = function (accessToken, accessSecret, meta, cb) {
 	var query = {
-		'twitter.userid': meta.id
+		'twitter.userid': meta.id,
+		disabled: false
 	}
 	
 	exports.User.find(query, function(err, users) {
@@ -200,7 +202,8 @@ scheme.statics.authenticateTwitter = function (accessToken, accessSecret, meta, 
 }
 scheme.statics.authenticateFacebook = function (accessToken, accessSecret, meta, cb) {
 	var query = {
-		'facebook.userid': meta.id
+		'facebook.userid': meta.id,
+		disabled: false
 	}
 	
 	exports.User.find(query, function(err, users) {
@@ -223,7 +226,8 @@ scheme.statics.authenticateFacebook = function (accessToken, accessSecret, meta,
 }
 scheme.statics.authenticateLinkedIn = function (accessToken, accessSecret, meta, cb) {
 	var query = {
-		'linkedin.userid': meta.id
+		'linkedin.userid': meta.id,
+		disabled: false
 	}
 	
 	exports.User.find(query, function(err, users) {
