@@ -2,6 +2,7 @@ var fs = require('fs'),
 	models = require('../models')
 	, mongoose = require('mongoose')
 	, util = require('../util')
+	, inbox = require('./inbox/index')
 
 exports.router = function (app) {
 	app.get('/profile', util.authorized, profile)
