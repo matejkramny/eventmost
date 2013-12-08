@@ -1,11 +1,12 @@
 var models = require('../../models'),
-	fs = require('fs')
-	attending = require('./event').attending
+	fs = require('fs'),
+	attending = require('./event').attending,
+	config = require('../../config')
 
 exports.router = function (app) {
 	app.get('/event/:id/dropbox', view)
 		.post('/event/:id/dropbox/upload', doUpload)
-		.post('/event/:id/dropbox/remove', doRemove)
+		.get('/event/:id/dropbox/:fid/remove', doRemove)
 }
 
 function view (req, res) {
@@ -39,18 +40,18 @@ function view (req, res) {
 }
 
 function doRemove (req, res, next) {
-	var filepath = req.body.file;
+	var id = req.params.fid;
 	var ev = res.locals.ev;
+	var isPlanner = res.locals.eventadmin;
 	
-	// must be planner of the event
-	var isPlanner = false;
-	for (var i = 0; i < ev.attendees.length; i++) {
-		var at = ev.attendees[i];
-		if (at.admin && at.user._id.equals(req.user._id)) {
-			var isPlanner = true;
-			break;
-		}
+	try {
+		id = mongoose.Types.ObjectId(id);
+	} catch (e) {
+		req.session.flash.push("Bad File ID")
+		res.redirect('/event/'+ev._id);
+		return;
 	}
+	
 	if (!isPlanner) {
 		req.session.flash.push("Unauthorized")
 		res.redirect('/event/'+ev._id);
@@ -64,12 +65,19 @@ function doRemove (req, res, next) {
 	}
 	
 	// check which file to remove (id'd by filepath.. they are essentially unique)
-	for (file in ev.files) {
-		var f = ev.files[file];
-	
-		if (f.file == filepath) {
+	for (var i = 0; i < ev.files.length; i++) {
+		var f = ev.files[i];
+		
+		if (f._id && f._id.equals(id)) {
 			// Remove this file
 			ev.files.splice(f, 1);
+			
+			try {
+				fs.unlink(config.path+"/public"+f.file)
+			} catch (e) {
+				console.log("Failed to delete dropbox file..");
+			}
+			
 			break;
 		}
 	}
@@ -79,6 +87,7 @@ function doRemove (req, res, next) {
 	})
 	res.format({
 		html: function() {
+			req.session.flash.push("Dropbox File Removed");
 			res.redirect('/event/'+ev._id+'/dropbox')
 		},
 		json: function() {
@@ -184,7 +193,19 @@ function doUpload (req, res) {
 			ev.save(function(err) {
 				if (err) throw err;
 			});
-			res.redirect('/event/'+ev._id+"/dropbox")
+			
+			res.format({
+				html: function() {
+					req.session.flash.push("File Uploaded")
+					res.redirect('/event/'+ev._id+"/dropbox")
+				},
+				json: function() {
+					req.session.flash.push("File Uploaded")
+					res.send({
+						status: 200
+					})
+				}
+			})
 		});
 	});
 }

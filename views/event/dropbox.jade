@@ -2,48 +2,69 @@ extends ../responsive
 
 include inc/navbar
 
+append addonjs
+	script(src="/js/fileUpload.js", defer)
+
 block content
 	+navbar
 	
-	br
-	form.pull-right#uploadForm(action="/event/"+ev._id+"/dropbox/upload", method="POST", enctype="multipart/form-data")
-		input(type="hidden", name="_csrf", value=token)
-		.pull-left
-			input(name="upload", type="file")
-		.pull-left
-			button.btn.btn-success#file_upload_wrapper(onclick="$('#uploadForm').submit()")
-				span.glyphicon.glyphicon-cloud-upload
-				|  Upload
-		.clearfix
 	.clearfix
-	hr
+	
+	//- header of the content
+	
+	.nspacer
+	
+	.col-lg-12.col-md-12.col-xs-12
+		.col-lg-2.col-md-2.col-xs-2.pad-right-zero
+			img.img-responsive(src="/images/dropbox-icon.svg")
+		.col-lg-7.col-md-7.col-xs-7.font-lebig.pad-left-zero.nspacer-big.fontish.back-spacer
+			| Event Dropbox
+		.col-lg-3.col-md-3.col-xs-3.pad-right-zero
+			a.pull-right(href="#", upload-file, progress="#fileProgress", file="#file", csrf=token, url="/event/"+ev._id+"/dropbox/upload")
+				img(src="/images/upload-button.svg", style="width:100%;")
+			input#file.hide(type="file")
+	
+	.clearfix
+	.progress#fileProgress(ng-show="progress > 0")
+		.progress-bar(ng-class="{ 'progress-bar-success': progress >= 100 }", aria-valuenow="{{progress}}", aria-valuemax="100", aria-valuemin="0", ng-style="{ width: progress+'%' }")
+	
+	//- content
+	
 	for file in ev.files
-		.row
-			.col-sm-4.col-lg-4.col-md-4.col-xs-4
+		//- slide
+		.nspacer-big
+		.col-lg-12.col-md-12.col-xs-12
+			.width18.pad-right-zero.pull-left
 				if (file.extension=="png" || file.extension=="svg" || file.extension=="gif" || file.extension=="jpg" || file.extension=="jpeg")
 					img.img-responsive(src=file.file)
 				else
 					img.img-responsive(src="/images/dropbox/"+file.extension+".svg")
-			.col-sm-8.col-lg-8.col-md-8.col-xs-8
-				.pull-left
-					h5= file.name
-					| #{file.extension}
-					h5 Size: #{file.size}
-					h5 Created: #{file.created.toString()}
-				form.pull-right#deleteForm(method="POST", action="/event/"+ev._id+"/dropbox/remove")
-					input(type="hidden", name="_csrf", value=token)
-					input(type="hidden", name="file", value=file.file)
-					
-					a.btn-sm.btn.btn-success(href=file.file)
-						span.glyphicon.glyphicon-cloud-download
-						|  Download
-					if eventadmin
-						| &nbsp;
-						a.btn-sm.btn.btn-danger(href="#", onclick="$('#deleteForm').submit()")
-							span.glyphicon.glyphicon-remove
-							|  Remove
-		br
+			
+			.width53.pull-left.pad-left-five(style="width: "+(eventadmin ? 53 : 67)+"%;")
+				.bg-ashen.font-evente.filename
+					= file.name
+					br
+					= file.size
+					| , uploaded 
+					= file.created.getDate()
+					| /
+					= file.created.getMonth()+1
+					| /
+					= file.created.getFullYear()
+
+			.width14.pull-right.pad-left-five
+				a(href=file.file, target="_blank")
+					img(src="/images/download-button.svg"  style="width:100%;")
+			
+			if (eventadmin)
+				.width14.pull-right.pad-left-five
+					a(href="/event/"+ev._id+"/dropbox/"+file._id+"/remove")
+						img(src="/images/delete-button.svg"  style="width:100%;")
+				
+		.clearfix
 	
-	if ev.files.length == 0
+	if (ev.files.length == 0)
 		h3.text-center No Files have been uploaded yet
 		p.text-center.lead Use form above to add some
+	
+	//-include ../modals/dropboxPermissions
