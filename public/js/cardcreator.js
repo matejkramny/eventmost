@@ -9,7 +9,8 @@ function BusinessCards ($scope) {
 	$scope.canvasStyles = {
 		backgroundColor: "#FFFFFF",
 		width: "500px",
-		height: "250px"
+		height: "250px",
+		'margin-top':'0px'
 	};
 	
 	$scope.uploadRequest;
