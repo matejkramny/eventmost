@@ -7,7 +7,7 @@
 					input(type="hidden", name="_csrf", value=token)
 					.formStatus.center
 					.pop-input.center
-						input.login#LoginUserEmail(name="login", placeholder="email", type="email", required="required")
+						input.login#LoginUserEmail(name="login", ng-model="email", placeholder="email", type="email", required="required")
 					.pop-input.center
 						input.pass#LoginUserPassword(name="password", placeholder="password", type="password", required="required")
 					.pop-input.center
@@ -42,7 +42,7 @@
 					.pop-input.center
 						input.name#RegisterUserName(name="name", placeholder="name", maxlength="128", type="text",)
 					.pop-input.center
-						input.login#RegisterUserEmail(name="login", placeholder="email", maxlength="128", type="email", required="required", )
+						input.login#RegisterUserEmail(name="login", ng-model="email", placeholder="email", maxlength="128", type="email", required="required", )
 					.pop-input.center
 						input.pass#RegisterUserPassword(name="password", placeholder="password", type="password", required="required",)
 					.pop-input.center

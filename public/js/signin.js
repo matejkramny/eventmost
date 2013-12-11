@@ -65,7 +65,7 @@ $(document).ready(function() {
 				window.location = "/auth/success";
 			} else {
 				// Error
-				self.status.html(data.err)
+				self.status.html(data.err.join("<br/>"))
 			}
 		}
 		this.error = function(jqxhr, status, error) {
