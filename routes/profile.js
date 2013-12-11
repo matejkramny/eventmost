@@ -8,8 +8,9 @@ exports.router = function (app) {
 	app.get('/profile', util.authorized, profile)
 		.post('/profile/edit', util.authorized, doEditProfile)
 		.get('/user/:id', util.authorized, viewUser)
-		.get('/user/:id/save', util.authorized, saveUser)
-		.get('/user/:id/remove', util.authorized, removeProfile)
+		.all('/user/:id/*', util.authorized)
+		.get('/user/:id/save', saveUser)
+		.get('/user/:id/remove', removeProfile)
 }
 
 function removeProfile (req, res) {

@@ -28,67 +28,72 @@ html
 		block container
 		header
 			.container
-				.pull-left.col-md-4.col-xs-4
-					a(href="/")
-						img.nspacer.logos(src="/images/logo.svg")
+				.row
+					.pull-left.col-md-4.col-xs-4
+						a(href="/")
+							img.nspacer.logos(src="/images/logo.svg")
 				
-				if loggedIn == false
-					.pull-right.logo-right
-							//- Only displayed when users are guests
-							button.btn.btn-warning.pb.pull-right(type='button', data-toggle="modal", href="#signModal")
-								b SIGN UP
-							button.btn.btn-default.pb.pull-right(type='button', data-toggle="modal", href="#loginModal", style="margin-right:-4px;")
-								b LOGIN
-				else
-					//- Only displayed when user is logged in
-					.pull-right.width7
-						a.image(href="/inbox")
-							if user.mailboxUnread == 0
+					if loggedIn == false
+						.pull-right.logo-right
+								//- Only displayed when users are guests
+								button.btn.btn-warning.pb.pull-right(type='button', data-toggle="modal", href="#signModal")
+									b SIGN UP
+								button.btn.btn-default.pb.pull-right(type='button', data-toggle="modal", href="#loginModal", style="margin-right:-4px;")
+									b LOGIN
+					else
+						//- Only displayed when user is logged in
+						.pull-right.width7
+							a.image(href="/inbox")
 								img.mail.pull-right.img-mess-smart(src="/images/notes-icon.svg", alt="", style="width:100%;")
-							else
-								img.mail.pull-right.img-mess-smart(src="/images/message-icon.svg", alt="", style="width:100%;")
-							.row-fluid.minus2
-								.message-nr
-									h20 0
-						.font-header-icon2
-							| Notes
+								.row-fluid.minus2
+									.message-nr
+										h20 0
+							.font-header-icon2
+								| Notes
 
 
-					.pull-right.width7
-						a.image(href="/inbox")
-							if user.mailboxUnread == 0
-								img.mail.pull-right.img-mess-smart(src="/images/message-icon.svg", alt="", style="width:100%;")
-							else
-								img.mail.pull-right.img-mess-smart(src="/images/message-icon.svg", alt="", style="width:100%;")
-							.row-fluid.minus2
-								.message-nr
-									h20= user.mailboxUnread
-						.font-header-icon
-							| Inbox
+						.pull-right.width7
+							a.image(href="/inbox")
+								if user.mailboxUnread == 0
+									img.mail.pull-right.img-mess-smart(src="/images/message-icon.svg", alt="", style="width:100%;")
+								else
+									img.mail.pull-right.img-mess-smart(src="/images/message-icon.svg", alt="", style="width:100%;")
+								.row-fluid.minus2
+									.message-nr
+										h20= user.mailboxUnread
+							.font-header-icon
+								| Inbox
 
 
-					.col-md-6.col-xs-6.pull-right
-						.pull-right.nspacer-small
-							a.font-e.link-purple.header-links(href="/") Home
-							if !recentEvent
-								|  | 
-								a.font-e.link-purple.header-links(href="/event/add") Create event
-							if user.admin
-								|  | 
-								a.font-e.link-purple.header-links(href="/admin") Administration
-							if recentEvent
-								|  | 
-								a.font-e.link-purple.header-links(href="/event/"+recentEvent) Return to Event: #{recentEventName}
-							if user.adminMeeting
-								|  | 
-								a.font-e.link-purple.header-links(href="https://groop.islonline.net/start/ISLGroop?__ISL+Groop__session_code=276%2d684%2d067%2d426&addbase=+276%2d684%2d067%2d426") Join meeting
-						.clearfix
-						.nspacer.hide-mini
-							form(method="GET", accept-charset="utf-8", action="/search/people/")
-								input.gonew2.pull-right.header-links(type="submit", value="GO", style="width:10%;")
-								input.pull-right.font-s.search-input.pad-left-ten.header-links(type="search", name="q", placeholder="search for people on EventMost", style="width:75%;", value= typeof search !== "undefined" ? search.query : null)
+						.col-md-6.col-xs-6.pull-right
+							.pull-right.nspacer-small
+								a.font-e.link-purple.header-links(href="/") Home
+								if !recentEvent
+									|  | 
+									a.font-e.link-purple.header-links(href="/event/add") Create event
+								if user.admin
+									|  | 
+									a.font-e.link-purple.header-links(href="/admin") Administration
+								if recentEvent
+									|  | 
+									a.font-e.link-purple.header-links(href="/event/"+recentEvent) Return to Event: #{recentEventName}
+								if user.adminMeeting
+									|  | 
+									a.font-e.link-purple.header-links(href="https://groop.islonline.net/start/ISLGroop?__ISL+Groop__session_code=276%2d684%2d067%2d426&addbase=+276%2d684%2d067%2d426") Join meeting
+							.clearfix
+							.nspacer.hide-mini
+								form(method="GET", accept-charset="utf-8", action="/search/people/")
+									input.gonew2.pull-right.header-links(type="submit", value="GO", style="width:10%;")
+									input.pull-right.font-s.search-input.pad-left-ten.header-links(type="search", name="q", placeholder="search for people on EventMost", style="width:75%;", value= typeof search !== "undefined" ? search.query : null)
 			
 		.container
+			.col-xs-12.hide-all2
+				form(method="POST", accept-charset="utf-8")
+					input.gonew2pull-right.header-links(type="button", value="GO", style="width:10%;")
+					input(type="hidden", name="_csrf", value=token)
+					input.pull-right.font-s.search-input.pad-left-ten.header-links(type="search", placeholder="search events or people", style="width:87%;")
+			.clearfix.hide-all2
+			
 			include inc/flash
 			block content
 			.row

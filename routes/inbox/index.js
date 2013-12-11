@@ -53,7 +53,7 @@ function populateInbox (req, res, next) {
 			});
 		},
 		function(cb) {
-			u.populate('receivedCards.user receivedCards.card', function(err) {
+			u.populate('receivedCards.from receivedCards.card', function(err) {
 				if (err) throw err;
 				
 				cb(null)

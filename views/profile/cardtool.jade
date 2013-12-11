@@ -17,221 +17,223 @@ block content
 	.container(ng-controller="businessCards")
 		//- navbar could be added to navbar.jade
 		.nspacer
-		.col-md-4.col-sm-4.col-lg-4.col-xs-12.nspacer
-			.font2.fontol
-				a.link-purple(href="#")
-					| Create a business card
-		.col-md-8.col-sm-8.col-lg-8.col-xs-12
-			.hide-mini3-except-smart
-				.font-x1.bg-purple.center.pull-right.psev2.prof-wall(style="padding-top:15px;")
-					a.link-white(href="#", ng-click="sendCard()") Save
-				.font-x1.bg-yellow.center.pull-right.psev2.prof-wall
-					a.link-purple(ng-disabled="!libraryBox.enabled", ng-click="removeElement()") Remove
-						br
-						| selected box
-				.font-x1.bg-purple.center.pull-right.psev2.prof-wall
-					a.link-white(ng-click="createImage()") Add
-						br
-						| an image
-				.font-x1.bg-green.center.pull-right.psev2.prof-wall
-					a.link-white(ng-click="createTextBox()") Add
-						br
-						| a text box
-			.center.hide-all2
-				.inline.nspacer-small
-					.font-x1.bg-green.center.psev2.prof-wall
-						a.link-white(ng-click="createTextBox()") Add
-							br
-							| a text box
-				.inline.nspacer-small
-					.font-x1.bg-purple.center.psev2.prof-wall
-						a.link-white(ng-click="createImage()") Add
-							br
-							| an image 
-				.inline.nspacer-small
-					.font-x1.bg-yellow.center.psev2.prof-wall
+		.row
+			.col-md-4.col-sm-4.col-lg-4.col-xs-12.nspacer
+				.font2.fontol
+					a.link-purple(href="#")
+						| Create a business card
+			.col-md-8.col-sm-8.col-lg-8.col-xs-12
+				.hide-mini3-except-smart
+					.font-x1.bg-purple.center.pull-right.psev2.prof-wall(style="padding-top:15px;")
+						a.link-white(href="#", ng-click="sendCard()") Save
+					.font-x1.bg-yellow.center.pull-right.psev2.prof-wall
 						a.link-purple(ng-disabled="!libraryBox.enabled", ng-click="removeElement()") Remove
 							br
 							| selected box
-				.inline.nspacer-small
-					.font-x1.bg-purple.center.psev2.prof-wall
-						a.link-white(href="#", ng-click="sendCard()") Save
-		.clearfix.hide-mini3-except-smart
-		.col-md-7.col-xs-7.hide-mini3-except-smart
-			.line-green(style="height:3px; margin-top:-3px;")
+					.font-x1.bg-purple.center.pull-right.psev2.prof-wall
+						a.link-white(ng-click="createImage()") Add
+							br
+							| an image
+					.font-x1.bg-green.center.pull-right.psev2.prof-wall
+						a.link-white(ng-click="createTextBox()") Add
+							br
+							| a text box
+				.center.hide-all2
+					.inline.nspacer-small
+						.font-x1.bg-green.center.psev2.prof-wall
+							a.link-white(ng-click="createTextBox()") Add
+								br
+								| a text box
+					.inline.nspacer-small
+						.font-x1.bg-purple.center.psev2.prof-wall
+							a.link-white(ng-click="createImage()") Add
+								br
+								| an image 
+					.inline.nspacer-small
+						.font-x1.bg-yellow.center.psev2.prof-wall
+							a.link-purple(ng-disabled="!libraryBox.enabled", ng-click="removeElement()") Remove
+								br
+								| selected box
+					.inline.nspacer-small
+						.font-x1.bg-purple.center.psev2.prof-wall
+							a.link-white(href="#", ng-click="sendCard()") Save
+			.clearfix.hide-mini3-except-smart
+			.col-md-7.col-xs-7.hide-mini3-except-smart
+				.line-green(style="height:3px; margin-top:-3px;")
 		
 		.clearfix
+		.nspacer
 		.progress.hide
 			.progress-bar#uploadProgress(role="progressbar", aria-valuenow="", aria-valuemin="0", aria-valuemax="100", style="")
-		.row
 		
-		.col-md-6.col-lg-6.nspacer.pad-left-zero
-			.font-evente.color-green
-				| Card Background
-			.nspacer-big
-			form.form-horizontal
-				.form-group(ng-hide="hasBackgroundImage")
-					label.col-lg-5.col-md-5.col-xs-5.font-e.nspacer(for="bgTemplate") Choose a template
-					.col-lg-7.col-md-7.col-xs-7.nspacer-small
-						a#bgTemplate.btn.btn-primary.btn-sm.font-s(href="#businessCardLibrary", data-toggle="modal") Browse Library
-						| &nbsp;
-						a.btn.btn-danger.btn-sm.font-s(ng-show="hasTemplateBackground", ng-click="removeTemplate()") Remove
-				.form-group(ng-hide="hasTemplateBackground || hasBackgroundImage")
-					label.col-lg-5.col-md-5.col-xs-5.font-e.nspacer(for="bgColour") Colour
-					.col-lg-7.col-md-7.col-xs-7
-						input#bgColour.form-control.input-ashen-rounded(type="color", ng-model="canvasStyles.backgroundColor", style="font-size:14px;")
-				.form-group(ng-hide="hasTemplateBackground")
-					label.col-lg-5.col-md-5.col-xs-5.font-e.nspacer(for="bgImage") Upload an Image
-					.col-lg-7.col-md-7.col-xs-7.nspacer-small
-						input#bgImage.input-ashen-rounded(type="file", card-image-upload, upload-target="background", style="font-size:1px; height:34px; display:none;cursor:pointer;")
-						a.btn.btn-primary.btn-sm.font-s(ng-hide="hasBackgroundImage", onclick="$('#bgImage').click()") Select a file
-					button.btn.btn-danger(ng-show="hasBackgroundImage", ng-click="removeBackgroundImage()") Remove Uploaded Image
+		.row
+			.col-md-6.col-lg-6.nspacer
+				.font-evente.color-green
+					| Card Background
+				.nspacer-big
+				form.form-horizontal
+					.form-group(ng-hide="hasBackgroundImage")
+						label.col-lg-5.col-md-5.col-xs-5.font-e.nspacer(for="bgTemplate") Choose a template
+						.col-lg-7.col-md-7.col-xs-7.nspacer-small
+							a#bgTemplate.btn.btn-primary.btn-sm.font-s(href="#businessCardLibrary", data-toggle="modal") Browse Library
+							| &nbsp;
+							a.btn.btn-danger.btn-sm.font-s(ng-show="hasTemplateBackground", ng-click="removeTemplate()") Remove
+					.form-group(ng-hide="hasTemplateBackground || hasBackgroundImage")
+						label.col-lg-5.col-md-5.col-xs-5.font-e.nspacer(for="bgColour") Colour
+						.col-lg-7.col-md-7.col-xs-7
+							input#bgColour.form-control.input-ashen-rounded(type="color", ng-model="canvasStyles.backgroundColor", style="font-size:14px;")
+					.form-group(ng-hide="hasTemplateBackground")
+						label.col-lg-5.col-md-5.col-xs-5.font-e.nspacer(for="bgImage") Upload an Image
+						.col-lg-7.col-md-7.col-xs-7.nspacer-small
+							input#bgImage.input-ashen-rounded(type="file", card-image-upload, upload-target="background", style="font-size:1px; height:34px; display:none;cursor:pointer;")
+							a.btn.btn-primary.btn-sm.font-s(ng-hide="hasBackgroundImage", onclick="$('#bgImage').click()") Select a file
+						button.btn.btn-danger(ng-show="hasBackgroundImage", ng-click="removeBackgroundImage()") Remove Uploaded Image
 
-			#cardCanvas.nspacer
-				.canvas(ng-style="canvasStyles", ng-class="{ preview: preview }")
-					.libraryBox(ng-click="selectBox(libraryBox)", id="{{ libraryBox.id }}", card-directive, ng-repeat="libraryBox in libraryBoxes")
-						input(type="text", ng-hide="libraryBox.image", disabled="disabled", value="{{ libraryBox.text }}", ng-style="libraryBox.style")
-						div.img(ng-src="{{ libraryBox.src }}", ng-show="libraryBox.image", ng-click="selectBox(libraryBox)", ng-style="libraryBox.style")
-						.handle
-			.nspacer	
-			form.form-horizontal
-				.form-group
-					label.col-lg-5.col-md-5.col-xs-5.font-e.nspacer(for="component") Select Component
-					.col-lg-7.col-md-7.col-xs-7.nspacer
-						.dropdown-select-component.input-ashen-rounded
-							select#component.form-control.input-ashen-rounded(ng-model="boxId", ng-change="changeBox()", ng-options="box.id as box.text group by box.type for box in libraryBoxes", style="font-size:14px;")
-			.clearfix
-		.col-md-6.col-lg-6.nspacer.pad-right-zero
-			.c
-				form.form-horizontal(ng-hide="libraryBox.image == null")
-					div(ng-hide="libraryBox.image == true")
-						h4.color-green Text Formatting
-						.form-group
-							label.col-lg-5.col-md-5.col-xs-5.control-label(for="textValue") Content
-							.col-lg-7.col-md-7.col-xs-7
-								input#textValue.form-control.input-ashen-rounded(type="text", placeholder="What's inside the box", ng-model="libraryBox.text" style="font-size:14px;")
-						.form-group
-							label.col-lg-5.col-md-5.col-xs-5.control-label(for="textSize") Size
-							.col-lg-7.col-md-7.col-xs-7
-								input#textSize.form-control.input-ashen-rounded(type="number", placeholder="Measured in pixels", ng-model="libraryBox.style.fontSize" style="font-size:14px;")
-						.form-group
-							label.col-lg-5.col-md-5.col-xs-5.control-label(for="textBgColour") Formatting
-							.col-lg-7.col-md-7.col-xs-7
-								p.check5-green-small.pull-left
-									input(name="", placeholder="", type="checkbox", id="Italics", value="small", ng-true-value="italic", ng-false-value="normal", ng-model="libraryBox.style.fontStyle")
-									label(for='Italics',)
-								.ital.pull-left.nspacer
-									| Italics	
+				#cardCanvas.nspacer
+					.canvas(ng-style="canvasStyles", ng-class="{ preview: preview }")
+						.libraryBox(ng-click="selectBox(libraryBox)", id="{{ libraryBox.id }}", card-directive, ng-repeat="libraryBox in libraryBoxes")
+							input(type="text", ng-hide="libraryBox.image", disabled="disabled", value="{{ libraryBox.text }}", ng-style="libraryBox.style")
+							div.img(ng-src="{{ libraryBox.src }}", ng-show="libraryBox.image", ng-click="selectBox(libraryBox)", ng-style="libraryBox.style")
+							.handle
+				.nspacer	
+				form.form-horizontal
+					.form-group
+						label.col-lg-5.col-md-5.col-xs-5.font-e.nspacer(for="component") Select Component
+						.col-lg-7.col-md-7.col-xs-7.nspacer
+							.dropdown-select-component.input-ashen-rounded
+								select#component.form-control.input-ashen-rounded(ng-model="boxId", ng-change="changeBox()", ng-options="box.id as box.text group by box.type for box in libraryBoxes", style="font-size:14px;")
+				.clearfix
+			.col-md-6.col-lg-6.nspacer
+				.c
+					form.form-horizontal(ng-hide="libraryBox.image == null")
+						div(ng-hide="libraryBox.image == true")
+							h4.color-green Text Formatting
+							.form-group
+								label.col-lg-5.col-md-5.col-xs-5.control-label(for="textValue") Content
+								.col-lg-7.col-md-7.col-xs-7
+									input#textValue.form-control.input-ashen-rounded(type="text", placeholder="What's inside the box", ng-model="libraryBox.text" style="font-size:14px;")
+							.form-group
+								label.col-lg-5.col-md-5.col-xs-5.control-label(for="textSize") Size
+								.col-lg-7.col-md-7.col-xs-7
+									input#textSize.form-control.input-ashen-rounded(type="number", placeholder="Measured in pixels", ng-model="libraryBox.style.fontSize" style="font-size:14px;")
+							.form-group
+								label.col-lg-5.col-md-5.col-xs-5.control-label(for="textBgColour") Formatting
+								.col-lg-7.col-md-7.col-xs-7
+									p.check5-green-small.pull-left
+										input(name="", placeholder="", type="checkbox", id="Italics", value="small", ng-true-value="italic", ng-false-value="normal", ng-model="libraryBox.style.fontStyle")
+										label(for='Italics',)
+									.ital.pull-left.nspacer
+										| Italics	
 
+									.clearfix
+
+									p.check5-green-small.pull-left
+										input(name="", placeholder="", type="checkbox", id="Bold", value="small", ng-true-value="bold", ng-false-value="normal", ng-model="libraryBox.style.fontWeight")
+										label(for='Bold',)
+									.ital.pull-left.nspacer
+										| Bold	
+
+							.form-group
+								label.col-lg-5.col-md-5.col-xs-5.control-label(for="textType") Type
+								.col-lg-7.col-md-7.col-xs-7
+									.dropdown-select.input-ashen-rounded
+										select#textType.form-control.input-ashen-rounded(type="color", ng-model="libraryBox.style.fontFamily" style="font-size:14px;")
+											option(value="Raleway") Raleway
+											option(value="Helvetica") Helvetica
+											option(value="Arial") Arial
+											option(value="Tahoma") Tahoma
+											option(value="sans-serif") Sans-Serif
+											option(value="Courier New") Courier New
+											option(value="Georgia") Georgia
+											option(value="Times New Roman") Times New Roman
+											option(value="Verdana") Verdana
+											option(value="Geneva") Geneva
+							.form-group
+								label.col-lg-5.col-md-5.col-xs-5.control-label(for="textColour") Colour
+								.col-lg-7.col-md-7.col-xs-7
+									input#textColour.form-control.input-ashen-rounded(type="color", ng-model="libraryBox.style.color" style="font-size:14px;")
+							.form-group
+								label.col-lg-5.col-md-5.col-xs-5.control-label(for="textBgColour") Background Colour
+								.col-lg-7.col-md-7.col-xs-7
+									p.check5-green-small.pull-left
+										input(type="checkbox", id="Transparent", ng-model="libraryBox.style.background", ng-false-value="", ng-true-value="none", ng-change="libraryBox.style.backgroundColor = ''")
+										label(for='Transparent')
+									.ital.pull-left.nspacer
+										| Transparent
+									.clearfix
+									input.form-control.input-ashen-rounded(type="color", ng-model="libraryBox.style.backgroundColor", ng-hide="libraryBox.style.background == 'none'" style="font-size:14px;")
+							.form-group
+								label.col-lg-5.col-md-5.col-xs-5.control-label(for="textLeftOffset") Left Offset
+								.col-lg-7.col-md-7.col-xs-7
+									input#textLeftOffset.form-control.input-ashen-rounded(type="number", placeholder="Space between the border and text", ng-model="libraryBox.style.paddingLeft" style="font-size:14px;")
+					
+						div(ng-show="libraryBox.image == true")
+							h4.color-green Image Formatting
+							.form-group
+								label.col-lg-5.col-md-5.col-xs-5.control-label(for="imageNote") Note
+								.col-lg-7.col-md-7.col-xs-7
+									input#imageNote.form-control.input-ashen-rounded(type="text", placeholder="Image note" ng-model="libraryBox.text" style="font-size:14px;")
+							.form-group(ng-hide="libraryBox.hasBackgroundImage")
+								label.col-lg-5.col-md-5.col-xs-5.control-label(for="imageBgColour") Colour
+								.col-lg-7.col-md-7.col-xs-7
+									input#imageBgColour.form-control.input-ashen-rounded(type="color", ng-model="libraryBox.style.backgroundColor" style="font-size:14px;")
+							.form-group
+								label.col-lg-5.col-md-5.col-xs-5.control-label(for="imageBgImage") File
+								.col-lg-7.col-md-7.col-xs-7
+									input#imageBgImage.form-control(type="file", card-image-upload, upload-target="image", style="display:none;")
+									button.btn.btn-primary.btn-sm.font-s(ng-hide="libraryBox.hasBackgroundImage", onclick="$('#imageBgImage').click()") Select a file
+									button.btn.btn-danger(ng-show="libraryBox.hasBackgroundImage", ng-click="removeBoxBackgroundImage()") Remove Uploaded Image
+							.form-group(ng-show="libraryBox.hasBackgroundImage")
+								label.col-lg-5.col-md-5.col-xs-5.control-label(for="imageBgColour") Image Position
+								.col-lg-5.col-md-5.col-xs-5
+									input#imageBgColour.form-control.input-ashen-rounded(type="text", ng-model="libraryBox.style.backgroundPositionX", placeholder="x = 0px" style="font-size:14px;")
+								.col-lg-5.col-md-5.col-xs-5
+									input#imageBgColour.form-control.input-ashen-rounded(type="text", ng-model="libraryBox.style.backgroundPositionY", placeholder="y = 0px" style="font-size:14px;")
 								.clearfix
-
-								p.check5-green-small.pull-left
-									input(name="", placeholder="", type="checkbox", id="Bold", value="small", ng-true-value="bold", ng-false-value="normal", ng-model="libraryBox.style.fontWeight")
-									label(for='Bold',)
-								.ital.pull-left.nspacer
-									| Bold	
-
+								.nspacer
+								label.col-lg-5.col-md-5.col-xs-5.control-label(for="imageBgColour") Image Size
+								.col-lg-7.col-md-7.col-xs-7
+									input#imageBgColour.form-control.input-ashen-rounded(type="text", ng-model="libraryBox.style.backgroundSize", placeholder="100% 100%" style="font-size:14px;")
+							.form-group(ng-show="libraryBox.hasBackgroundImage")
+								label.col-lg-5.col-md-5.col-xs-5.control-label(for="imageBgColour") Grayscale
+								.col-lg-7.col-md-7.col-xs-7
+									input#imageBgColour.form-control.input-ashen-rounded(type="number", ng-model="libraryBox.blackandwhite", placeholder="0", min="0", max="100" style="font-size:14px;")
+						
+						
+						h4.color-green Border formatting
 						.form-group
-							label.col-lg-5.col-md-5.col-xs-5.control-label(for="textType") Type
+							label.col-lg-5.col-md-5.col-xs-5.control-label(for="borderType") Type
 							.col-lg-7.col-md-7.col-xs-7
 								.dropdown-select.input-ashen-rounded
-									select#textType.form-control.input-ashen-rounded(type="color", ng-model="libraryBox.style.fontFamily" style="font-size:14px;")
-										option(value="Raleway") Raleway
-										option(value="Helvetica") Helvetica
-										option(value="Arial") Arial
-										option(value="Tahoma") Tahoma
-										option(value="sans-serif") Sans-Serif
-										option(value="Courier New") Courier New
-										option(value="Georgia") Georgia
-										option(value="Times New Roman") Times New Roman
-										option(value="Verdana") Verdana
-										option(value="Geneva") Geneva
-						.form-group
-							label.col-lg-5.col-md-5.col-xs-5.control-label(for="textColour") Colour
-							.col-lg-7.col-md-7.col-xs-7
-								input#textColour.form-control.input-ashen-rounded(type="color", ng-model="libraryBox.style.color" style="font-size:14px;")
-						.form-group
-							label.col-lg-5.col-md-5.col-xs-5.control-label(for="textBgColour") Background Colour
-							.col-lg-7.col-md-7.col-xs-7
-								p.check5-green-small.pull-left
-									input(type="checkbox", id="Transparent", ng-model="libraryBox.style.background", ng-false-value="", ng-true-value="none", ng-change="libraryBox.style.backgroundColor = ''")
-									label(for='Transparent')
-								.ital.pull-left.nspacer
-									| Transparent
-								.clearfix
-								input.form-control.input-ashen-rounded(type="color", ng-model="libraryBox.style.backgroundColor", ng-hide="libraryBox.style.background == 'none'" style="font-size:14px;")
-						.form-group
-							label.col-lg-5.col-md-5.col-xs-5.control-label(for="textLeftOffset") Left Offset
-							.col-lg-7.col-md-7.col-xs-7
-								input#textLeftOffset.form-control.input-ashen-rounded(type="number", placeholder="Space between the border and text", ng-model="libraryBox.style.paddingLeft" style="font-size:14px;")
-					
-					div(ng-show="libraryBox.image == true")
-						h4.color-green Image Formatting
-						.form-group
-							label.col-lg-5.col-md-5.col-xs-5.control-label(for="imageNote") Note
-							.col-lg-7.col-md-7.col-xs-7
-								input#imageNote.form-control.input-ashen-rounded(type="text", placeholder="Image note" ng-model="libraryBox.text" style="font-size:14px;")
-						.form-group(ng-hide="libraryBox.hasBackgroundImage")
-							label.col-lg-5.col-md-5.col-xs-5.control-label(for="imageBgColour") Colour
-							.col-lg-7.col-md-7.col-xs-7
-								input#imageBgColour.form-control.input-ashen-rounded(type="color", ng-model="libraryBox.style.backgroundColor" style="font-size:14px;")
-						.form-group
-							label.col-lg-5.col-md-5.col-xs-5.control-label(for="imageBgImage") File
-							.col-lg-7.col-md-7.col-xs-7
-								input#imageBgImage.form-control(type="file", card-image-upload, upload-target="image", style="display:none;")
-								button.btn.btn-primary.btn-sm.font-s(ng-hide="libraryBox.hasBackgroundImage", onclick="$('#imageBgImage').click()") Select a file
-								button.btn.btn-danger(ng-show="libraryBox.hasBackgroundImage", ng-click="removeBoxBackgroundImage()") Remove Uploaded Image
-						.form-group(ng-show="libraryBox.hasBackgroundImage")
-							label.col-lg-5.col-md-5.col-xs-5.control-label(for="imageBgColour") Image Position
-							.col-lg-5.col-md-5.col-xs-5
-								input#imageBgColour.form-control.input-ashen-rounded(type="text", ng-model="libraryBox.style.backgroundPositionX", placeholder="x = 0px" style="font-size:14px;")
-							.col-lg-5.col-md-5.col-xs-5
-								input#imageBgColour.form-control.input-ashen-rounded(type="text", ng-model="libraryBox.style.backgroundPositionY", placeholder="y = 0px" style="font-size:14px;")
-							.clearfix
-							.nspacer
-							label.col-lg-5.col-md-5.col-xs-5.control-label(for="imageBgColour") Image Size
-							.col-lg-7.col-md-7.col-xs-7
-								input#imageBgColour.form-control.input-ashen-rounded(type="text", ng-model="libraryBox.style.backgroundSize", placeholder="100% 100%" style="font-size:14px;")
-						.form-group(ng-show="libraryBox.hasBackgroundImage")
-							label.col-lg-5.col-md-5.col-xs-5.control-label(for="imageBgColour") Grayscale
-							.col-lg-7.col-md-7.col-xs-7
-								input#imageBgColour.form-control.input-ashen-rounded(type="number", ng-model="libraryBox.blackandwhite", placeholder="0", min="0", max="100" style="font-size:14px;")
-						
-						
-					h4.color-green Border formatting
-					.form-group
-						label.col-lg-5.col-md-5.col-xs-5.control-label(for="borderType") Type
-						.col-lg-7.col-md-7.col-xs-7
-							.dropdown-select.input-ashen-rounded
-								select#borderType.form-control.input-ashen-rounded(type="text", ng-model="libraryBox.style.borderStyle" style="font-size:14px;")
-									option(value="none") None
-									option(value="solid") Solid
-									option(value="dotted") Dotted
-									option(value="dashed") Dashed
-									option(value="double") Double
-									option(value="groove") Groove
-									option(value="ridge") Ridge
-									option(value="inset") Inset
-									option(value="outset") Outset
-					div(ng-hide="libraryBox.style.borderStyle == 'none'")
-						.form-group
-							label.col-lg-5.col-md-5.col-xs-5.control-label(for="borderSize") Size
-							.col-lg-7.col-md-7.col-xs-7
-								input#borderSize.form-control.input-ashen-rounded(type="number", placeholder="Border Size measured in Pixels", ng-model="libraryBox.style.borderWidth"  style="font-size:14px;")
-						.form-group
-							label.col-lg-5.col-md-5.col-xs-5.control-label(for="borderColour") Colour
-							.col-lg-7.col-md-7.col-xs-7
-								input#borderColour.form-control.input-ashen-rounded(type="color", ng-model="libraryBox.style.borderColor"  style="font-size:14px;")
-						.form-group
-							label.col-lg-5.col-md-5.col-xs-5.control-label(for="borderRadius") Corner Radius
-							.col-lg-7.col-md-7.col-xs-7
-								input#borderRadius.form-control.input-ashen-rounded(type="number", placeholder="Corner radius", ng-model="libraryBox.style.borderRadius"  style="font-size:14px;")
+									select#borderType.form-control.input-ashen-rounded(type="text", ng-model="libraryBox.style.borderStyle" style="font-size:14px;")
+										option(value="none") None
+										option(value="solid") Solid
+										option(value="dotted") Dotted
+										option(value="dashed") Dashed
+										option(value="double") Double
+										option(value="groove") Groove
+										option(value="ridge") Ridge
+										option(value="inset") Inset
+										option(value="outset") Outset
+						div(ng-hide="libraryBox.style.borderStyle == 'none'")
+							.form-group
+								label.col-lg-5.col-md-5.col-xs-5.control-label(for="borderSize") Size
+								.col-lg-7.col-md-7.col-xs-7
+									input#borderSize.form-control.input-ashen-rounded(type="number", placeholder="Border Size measured in Pixels", ng-model="libraryBox.style.borderWidth"  style="font-size:14px;")
+							.form-group
+								label.col-lg-5.col-md-5.col-xs-5.control-label(for="borderColour") Colour
+								.col-lg-7.col-md-7.col-xs-7
+									input#borderColour.form-control.input-ashen-rounded(type="color", ng-model="libraryBox.style.borderColor"  style="font-size:14px;")
+							.form-group
+								label.col-lg-5.col-md-5.col-xs-5.control-label(for="borderRadius") Corner Radius
+								.col-lg-7.col-md-7.col-xs-7
+									input#borderRadius.form-control.input-ashen-rounded(type="number", placeholder="Corner radius", ng-model="libraryBox.style.borderRadius"  style="font-size:14px;")
 				
-				div(ng-show="libraryBox.id == null")
-					h4.font-exception.lead To get started, 
-						a.link-purple(ng-click="createTextBox()", style="cursor:pointer;") add a text box
-						|  or 
-						a.link-purple(ng-click="createImage()", style="cursor:pointer;") an image
-						|  to the canvas
+					div(ng-show="libraryBox.id == null")
+						h4.font-exception.lead To get started, 
+							a.link-purple(ng-click="createTextBox()", style="cursor:pointer;") add a text box
+							|  or 
+							a.link-purple(ng-click="createImage()", style="cursor:pointer;") an image
+							|  to the canvas
 	
 		include ../modals/businesscardLibrary

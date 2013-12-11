@@ -11,148 +11,118 @@ block content
 	
 	//- end inbox title plus buttons
 	
-	//- Takeover requests..
-	if (takeoverRequests.length > 0)
+	.row
+		//- Takeover requests..
+		if (takeoverRequests.length > 0)
+			.col-md-12.col-xs-12.col-sm-12
+				.font-tw
+					b Take over Requests
+				.line-purple
+	.row
+		- var i = 0;
+		for request in takeoverRequests
+			if (i % 2 == 0)
+				.clearfix
+			.col-md-2.col-xs-2.col-sm-2.inv-till-1
+				.center.nspacer-medium
+					img(src= request.takeoverUser.avatar.length > 0 ? request.takeoverUser.avatar : "/images/default_speaker.svg", style="max-width:102px;margin:-1px auto auto -1px;", class="circularespond")
+				.font-s.center
+					a(href="/user/"+request.takeoverUser._id): b= request.takeoverUser.getName()
+					br
+					if (request.takeoverUser.company && request.takeoverUser.position)
+						= request.takeoverUser.company
+						| , 
+						= request.takeoverUser.position
+					- else if (request.takeoverUser.company)
+						= request.takeoverUser.company
+					- else if (request.takeoverUser.position)
+						= request.takeoverUser.position
+					- else
+						br
+			.col-md-3.col-xs-3.col-sm-3.inv-till-1
+				.nspacer-medium
+					b Profile is from event 
+						a(href="/event/"+request.event._id) #{request.event.name}
+					br
+					b Was sent to you by 
+						a(href="/user/"+request.requestedBy._id) #{request.requestedBy.getName()}
+					br
+					br
+					b You can 
+						a(href="/inbox/takeoverRequest/"+request._id+"/"+request.secret+"/accept") accept
+						|  or 
+						a(href="/inbox/takeoverRequest/"+request._id+"/"+request.secret+"/ignore") ignore
+						|  this request..
+			- i++;
+	.nspacer
+	
+	.row
 		.col-md-12.col-xs-12.col-sm-12
 			.font-tw
-				b Take over Requests
+				b Private messages
 			.line-purple
-	- var i = 0;
-	for request in takeoverRequests
-		if (i % 2 == 0)
-			.clearfix
-		.col-md-2.col-xs-2.col-sm-2.inv-till-1
-			.center.nspacer-medium
-				img(src= request.takeoverUser.avatar.length > 0 ? request.takeoverUser.avatar : "/images/default_speaker.svg", style="max-width:102px;margin:-1px auto auto -1px;", class="circularespond")
-			.font-s.center
-				a(href="/user/"+request.takeoverUser._id): b= request.takeoverUser.getName()
-				br
-				if (request.takeoverUser.company && request.takeoverUser.position)
-					= request.takeoverUser.company
-					| , 
-					= request.takeoverUser.position
-				- else if (request.takeoverUser.company)
-					= request.takeoverUser.company
-				- else if (request.takeoverUser.position)
-					= request.takeoverUser.position
-				- else
-					br
-		.col-md-3.col-xs-3.col-sm-3.inv-till-1
-			.nspacer-medium
-				b Profile is from event 
-					a(href="/event/"+request.event._id) #{request.event.name}
-				br
-				b Was sent to you by 
-					a(href="/user/"+request.requestedBy._id) #{request.requestedBy.getName()}
-				br
-				br
-				b You can 
-					a(href="/inbox/takeoverRequest/"+request._id+"/"+request.secret+"/accept") accept
-					|  or 
-					a(href="/inbox/takeoverRequest/"+request._id+"/"+request.secret+"/ignore") ignore
-					|  this request..
-		- i++;
-	.clearfix
-	.nspacer
-
-	.col-md-12.col-xs-12.col-sm-12
-		.font-tw
-			b Private messages
-		.line-purple
-
-		//- guest speakers
-	.col-md-12.col-xs-12.col-sm-12.hide-mini3-except-smart
-	if locals.topics.length > 2
-		//| Needs new page
 	
-	if (locals.topics.length > 0)
-		+message(locals.topics[0])
-		if locals.topics.length > 1
-			.nspacer
-			+message(locals.topics[1])
+	.row
+		//- guest speakers
+		.col-md-12.col-xs-12.col-sm-12.hide-mini3-except-smart
 		if locals.topics.length > 2
-			a(href="/inbox/messages", style="margin-left:30px;") #{locals.topics.length-2} more recent conversations
-		// Maybe we should have something like: a(href='inbox/messages') Click to view all
-	else
-		p.text-center No Private messages
+			//| Needs new page
+	
+		if (locals.topics.length > 0)
+			+message(locals.topics[0])
+			if locals.topics.length > 1
+				.nspacer
+				+message(locals.topics[1])
+			if locals.topics.length > 2
+				a(href="/inbox/messages", style="margin-left:30px;") #{locals.topics.length-2} more recent conversations
+			// Maybe we should have something like: a(href='inbox/messages') Click to view all
+		else
+			p.text-center No Private messages
 	
 	//- end guest speakers
-
-	.center(style='height:35px;')
-		ul.pagination
-			li
-				a(href='#') «
-			li.active
-				a(href='#') 1
-			li
-				a(href='#') »
-
-	.col-md-12.col-xs-12.col-sm-12
-		.font-tw
-			b Business cards received
-		.line-purple
-
-	.clearfix
+	.row
+		.col-md-12.col-xs-12.col-sm-12
+			.font-tw
+				b Business cards received
+			.line-purple
 	.nspacer
 
 	//- business
+	.row
+		if (locals.user.receivedCards.length == 0)
+			p.text-center No cards received
+		.pull-left
+			for card in locals.user.receivedCards
+				+card(card)	
 	
-	if (locals.user.receivedCards.length == 0)
-		p.text-center No cards received
-	.pull-left
-		for card in locals.user.receivedCards
-			+card(card)	
-
-	.clearfix
 	.nspacer-medium
-	if (locals.user.receivedCards.length > 2)
-		//Link to view all
-	.center(style='height:35px;')
-		ul.pagination
-			li
-				a(href='#') «
-			li.active
-				a(href='#') 1
-			li
-				a(href='#') »
-	.clearfix
 	//- end business
 	
-	.col-md-12.col-xs-12.col-sm-12
-		.font-tw
-			b Those who saved your profile
-		.line-purple
-	.clearfix
+	.row
+		.col-md-12.col-xs-12.col-sm-12
+			.font-tw
+				b Those who saved your profile
+			.line-purple
 	.nspacer
-
+	
 	//- saved
 	if (locals.savers.length == 0)
 		p.text-center No one has saved your profile yet.
 		.clearfix
 		.nspacer
-
-	.col-md-12.col-xs-12.col-sm-12
-		.center
-			for saver in locals.savers
-				+savedProfile(saver)
-		.clearfix
-		.nspacer
+	.row
+		.col-md-12.col-xs-12.col-sm-12
+			.center
+				for saver in locals.savers
+					+savedProfile(saver)
+			.clearfix
+			.nspacer
 	
-	.center(style='height:35px;')
-		ul.pagination
-			li
-				a(href='#') «
-			li.active
-				a(href='#') 1
-			li
-				a(href='#') »
-	.clearfix
-
-	.col-md-12.col-xs-12.col-sm-12
-		.font-tw
-			b Public messages
-		.line-purple
-	.clearfix
+	.row
+		.col-md-12.col-xs-12.col-sm-12
+			.font-tw
+				b Public messages
+			.line-purple
 	.nspacer
 	
 	//What are public messages?

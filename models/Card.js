@@ -4,13 +4,13 @@ var schema = mongoose.Schema;
 var ObjectId = schema.ObjectId;
 var fs = require('fs')
 	, exec = require('child_process').exec
+	config = require('../config')
 
 var scheme = schema({
 	user: {
 		type: ObjectId,
 		ref: 'User'
 	},
-	html: String,
 	location: String,
 	created: { type: Date, default: Date.now() }
 });
@@ -25,17 +25,17 @@ scheme.methods.edit = function (html, cb) {
 		if (err) throw err;
 		
 		htmlData = '<!DOCTYPE html><html><head>\
-			<link rel="stylesheet" href="../../public/css/bootstrap.min.css">\
-			<link href="../../public/css/cardcreator.css" rel="stylesheet">\
-			<link href="../../public/css/cardcreator_generator.css" rel="stylesheet">\
+			<link rel="stylesheet" href="css/bootstrap.min.css">\
+			<link href="css/cardcreator.css" rel="stylesheet">\
+			<link href="css/cardcreator_generator.css" rel="stylesheet">\
 		</head><body>'
 		+ htmlData +
 		'</body></html>';
 		
-		fs.writeFile(__dirname+"/../data/cardhtml/"+self._id+".html", htmlData, function(err) {
+		fs.writeFile(config.path+"/data/cardhtml/"+self._id+".html", htmlData, function(err) {
 			if (err) throw err;
 			
-			var url = "file://"+__dirname+"/../data/cardhtml/"+self._id+".html"
+			var url = "file://"+config.path+"/data/cardhtml/"+self._id+".html"
 			
 			self.save(function(err) {
 				if (err) throw err;
@@ -43,7 +43,7 @@ scheme.methods.edit = function (html, cb) {
 				console.log("Loading. "+url)
 				
 				try {
-					var proc = exec('webkit2png -o '+__dirname+'/../public/businesscards/'+self._id+'.png -x 500 250 "'+url+'"')
+					var proc = exec('fab -f '+config.path+'/scripts/create_card.py -H eventmost@198.50.168.248 getCard:id="'+self._id+'"')
 					proc.stdout.on('data', function(chunk) {
 						console.log(chunk)
 					})

@@ -1,19 +1,23 @@
 var models = require('../models'),
 	mongoose = require('mongoose'),
-	inbox = require('./inbox/index')
+	inbox = require('./inbox/index'),
+	config = require('../config'),
+	fs = require('fs'),
+	util = require('../util')
 
 exports.router = function (app) {
-	app.get('/cards', showCards)
+	app.get('/cards', util.authorized, showCards)
+		.all('/card/*', util.authorized)
 		.get('/card/new', newCard)
 		.get('/card/:id', getCard)
 		.post('/card/new', doNewCard)
-		.get('/cards/send', sendCard)
+		.get('/cards/send', util.authorized, sendCard)
 }
 
 function showCards (req, res) {
 	models.Card.find({ user: req.user._id }, { _id: 1 }).sort('-created').exec(function(err, cards) {
 		res.locals.cards = cards;
-		console.log(res.locals)
+		
 		res.render('profile/cards', { title: "Business cards" });
 	});
 }
@@ -30,7 +34,11 @@ function getCard (req, res) {
 		
 		if (card) {
 			res.status(200);
-			res.end(card.html);
+			fs.readFile(config.path+"/data/cardhtml/"+card._id+".html", function(err, html) {
+				if (err) throw err;
+				
+				res.end(html)
+			});
 		} else {
 			res.status(404);
 			res.json({});

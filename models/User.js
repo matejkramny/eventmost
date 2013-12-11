@@ -163,9 +163,13 @@ scheme.statics.authenticatePassword = function (email, password, cb, extra) {
 		
 		if (user == null) {
 			// register user
-			exports.User.createWithPassword(email, password, function(err, regUser) {
-				cb(null, regUser);
-			}, extra);
+			if (!extra || !extra.name || extra.name.length == 0) {
+				cb(["Please Register (enter Name)"]);
+			} else {
+				exports.User.createWithPassword(email, password, function(err, regUser) {
+					cb(null, regUser);
+				}, extra);
+			}
 		} else {
 			// check if password is ok
 			if (user.password == exports.User.getHash(password)) {
