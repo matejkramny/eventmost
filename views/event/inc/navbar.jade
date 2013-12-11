@@ -1,14 +1,6 @@
 mixin navbar
 	- var base = "/event/"+ev._id+"/";
-	.row
-		.col-xs-12.hide-all2
-			form(method="POST", accept-charset="utf-8")
-				input.gonew2.pull-right.header-links(type="button", value="GO", style="width:10%;")
-				input(type="hidden", name="_csrf", value=token)
-				input.pull-right.font-s.search-input.pad-left-ten.header-links(type="search", placeholder="search events or people", style="width:87%;")
-		.clearfix.hide-all2
-
-
+	
 	//- inbox title plus buttons
 	.nspacer
 	.row
@@ -26,7 +18,7 @@ mixin navbar
 							img.pad-left-ten(src="/images/menu-registration.svg", alt="", style="")
 				.inline.nspacer-small
 					.font-x1.bg-purple.center.psev2.prof-wall
-						a.link-white(href=base+"dropdown") Event dropbox <br />
+						a.link-white(href=base+"dropbox") Event dropbox <br />
 							img(src="/images/menu-drop.svg", alt="", style="")
 
 	.clearfix

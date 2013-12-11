@@ -1,240 +1,256 @@
-.nspacer-big
-.col-lg-12.col-md-12.col-xs-12
-	.center.font-evente.color-green				
-		| Who can view this file:
+.modal.fade#dropboxSettings(tabindex="-1", aria-hidden="true")
+	.modal-dialog
+		.modal-content.reveal-modal
+			a.close-reveal-modal(href="#" data-dismiss="modal") 
+				img(src="/images/x.svg")
+			.nspacer
+			
+			h1 Dropbox Settings
+			
+			.nspacer-awsome
+			
+			.col-lg-12.col-md-12.col-xs-12
+				.font-evente.pull-left.fontish
+					| Allow attendees to upload files?
+				.pull-left
+					label.checkbox.toggle.candy(style='width: 100px; margin-left:20px; margin-top:4px;', onclick='')
+						input.allowAttendeesToCreateTheirOwnCategories(type='checkbox', class="invisible")
+						span
+							span No
+							span Yes
+						a.slide-button
+			.clearfix
 
-.clearfix
+.modal.fade#filesharingModal(tabindex="-1", aria-hidden="true")
+	.modal-dialog
+		.modal-content.reveal-modal
+			a.close-reveal-modal(href="#" data-dismiss="modal") 
+				img(src="/images/x.svg")
+			.nspacer-big
+			.col-lg-12.col-md-12.col-xs-12
+				.center.font-evente.color-green				
+					| Who can view this file:
 
-.nspacer-big
-.no-float.width15.all
-	.font-evente.pad-right-five.pull-left.pad-top.fontish
-		| All attendees
-	.ww.pull-left
-		p.check5-green-small
-			input(name="", placeholder="", type="checkbox", id="creditcardsmaller4", value="small")
-			label(for='creditcardsmaller4',)	 
+			.clearfix
 
-.clearfix
+			.nspacer-big
+			.no-float.width15.all
+				.font-evente.pad-right-five.pull-left.pad-top.fontish
+					| All attendees
+				.ww.pull-left
+					p.check5-green-small
+						input(name="", placeholder="", type="checkbox", id="creditcardsmaller4", value="small")
+						label(for='creditcardsmaller4')	 
 
-
-
-
-	//- dropdowns large
-.no-float.width53.other53.dont-show320
-
-	.width48.inline
-		.font-evente.center.cat-text.fontish
-			| Certain attendee <br />categories
-		.clearfix
-		.no-float.font-exception-thin
-			ul.nav.navbar-nav.nav-last
-				li.dropdown.dropdown-menu-last1
-					a.dropdown-toggle.dropdown-toggle-last(href='#', data-toggle='dropdown')
-						| Choose categories
-						b.caret
-					ul.dropdown-menu.dropdown-menu-last.pull-right
-						li
-							a(href='/', style="min-height:45px; white-space:normal")
-								.pull-left.nspacer.pad-right-ten(style="width:80%;")
-									| guest speaker
-								.pull-right
-									p.check5-purple-solid(style="height:25px;")
-										input(name="", placeholder="", type="checkbox", id="creditcardsmaller441", value="small")
-										label(for='creditcardsmaller441',)
-						li
-							a(href='/', style="min-height:45px; white-space:normal")
-								.pull-left.nspacer.pad-right-ten(style="width:80%;")
-									| guest speaker
-								.pull-right
-									p.check5-purple-solid(style="height:25px;")
-										input(name="", placeholder="", type="checkbox", id="creditcardsmaller442", value="small")
-										label(for='creditcardsmaller442',)
-						li
-							a(href='/', style="min-height:45px; white-space:normal")
-								.pull-left.nspacer.pad-right-ten(style="width:80%;")
-									| guest speaker
-								.pull-right
-									p.check5-purple-solid(style="height:25px;")
-										input(name="", placeholder="", type="checkbox", id="creditcardsmaller443", value="small")
-										label(for='creditcardsmaller443',)
-						li.border-bottom
-							a(href='/', style="min-height:45px; white-space:normal")
-								.pull-left.nspacer.pad-right-ten(style="width:80%;")
-									| guest speaker long name etc tojokof
-								.pull-right
-									p.check5-purple-solid(style="height:25px;")
-										input(name="", placeholder="", type="checkbox", id="creditcardsmaller444", value="small")
-										label(for='creditcardsmaller444',)
-								.clearfix
-
-
-
-	.width48.inline
-		.font-evente.center.cat-text2.fontish
-			| Cetrain individuals
-		.clearfix
-		.no-float.font-exception-thin
-			ul.nav.navbar-nav.nav-last
-				li.dropdown.dropdown-menu-last1
-					a.dropdown-toggle.dropdown-toggle-last(href='#', data-toggle='dropdown')
-						| Choose individuals
-						b.caret
-					ul.dropdown-menu.dropdown-menu-last.pull-right
-						li
-							a(href='/', style="min-height:45px; white-space:normal")
-								.pull-left.nspacer.pad-right-ten(style="width:80%;")
-									| guest speaker
-								.pull-right
-									p.check5-purple-solid(style="height:25px;")
-										input(name="", placeholder="", type="checkbox", id="creditcardsmaller1441", value="small")
-										label(for='creditcardsmaller1441',)
-						li
-							a(href='/', style="min-height:45px; white-space:normal")
-								.pull-left.nspacer.pad-right-ten(style="width:80%;")
-									| guest speaker
-								.pull-right
-									p.check5-purple-solid(style="height:25px;")
-										input(name="", placeholder="", type="checkbox", id="creditcardsmaller1442", value="small")
-										label(for='creditcardsmaller1442',)
-						li
-							a(href='/', style="min-height:45px; white-space:normal")
-								.pull-left.nspacer.pad-right-ten(style="width:80%;")
-									| guest speaker
-								.pull-right
-									p.check5-purple-solid(style="height:25px;")
-										input(name="", placeholder="", type="checkbox", id="creditcardsmaller1443", value="small")
-										label(for='creditcardsmaller1443',)
-						li.border-bottom
-							a(href='/', style="min-height:45px; white-space:normal")
-								.pull-left.nspacer.pad-right-ten(style="width:80%;")
-									| guest speaker long name etc tojokof
-								.pull-right
-									p.check5-purple-solid(style="height:25px;")
-										input(name="", placeholder="", type="checkbox", id="creditcardsmaller1444", value="small")
-										label(for='creditcardsmaller1444',)
-								.clearfix
-	.clearfix
+			.clearfix
 
 
 
 
-.clearfix
+				//- dropdowns large
+			.no-float.width53.other53.dont-show320
 
-	//- dropdowns up to 480
-
-	.col-xs-12.show320
-		.font-evente.cat-text.fontish
-			| Certain attendee categories
-		.clearfix
-		.font-exception-thin
-			ul.nav.navbar-nav.nav-last
-				li.dropdown.dropdown-menu-last1
-					a.dropdown-toggle.dropdown-toggle-last(href='#', data-toggle='dropdown')
-						| Choose categories
-						b.caret
-					ul.dropdown-menu.dropdown-menu-last.pull-right
-						li
-							a(href='/', style="min-height:45px; white-space:normal")
-								.pull-left.nspacer.pad-right-ten(style="width:80%;")
-									| guest speaker
-								.pull-right
-									p.check5-purple-solid(style="height:25px;")
-										input(name="", placeholder="", type="checkbox", id="creditcardsmaller441", value="small")
-										label(for='creditcardsmaller441',)
-						li
-							a(href='/', style="min-height:45px; white-space:normal")
-								.pull-left.nspacer.pad-right-ten(style="width:80%;")
-									| guest speaker
-								.pull-right
-									p.check5-purple-solid(style="height:25px;")
-										input(name="", placeholder="", type="checkbox", id="creditcardsmaller442", value="small")
-										label(for='creditcardsmaller442',)
-						li
-							a(href='/', style="min-height:45px; white-space:normal")
-								.pull-left.nspacer.pad-right-ten(style="width:80%;")
-									| guest speaker
-								.pull-right
-									p.check5-purple-solid(style="height:25px;")
-										input(name="", placeholder="", type="checkbox", id="creditcardsmaller443", value="small")
-										label(for='creditcardsmaller443',)
-						li.border-bottom
-							a(href='/', style="min-height:45px; white-space:normal")
-								.pull-left.nspacer.pad-right-ten(style="width:80%;")
-									| guest speaker long name etc tojokof
-								.pull-right
-									p.check5-purple-solid(style="height:25px;")
-										input(name="", placeholder="", type="checkbox", id="creditcardsmaller444", value="small")
-										label(for='creditcardsmaller444',)
-								.clearfix
-
-
-
-	.col-xs-12.show320
-		.font-evente.cat-text.fontish
-			| Cetrain individuals
-		.clearfix
-		.font-exception-thin
-			ul.nav.navbar-nav.nav-last
-				li.dropdown.dropdown-menu-last1
-					a.dropdown-toggle.dropdown-toggle-last(href='#', data-toggle='dropdown')
-						| Choose individuals
-						b.caret
-					ul.dropdown-menu.dropdown-menu-last.pull-right
-						li
-							a(href='/', style="min-height:45px; white-space:normal")
-								.pull-left.nspacer.pad-right-ten(style="width:80%;")
-									| guest speaker
-								.pull-right
-									p.check5-purple-solid(style="height:25px;")
-										input(name="", placeholder="", type="checkbox", id="creditcardsmaller1441", value="small")
-										label(for='creditcardsmaller1441',)
-						li
-							a(href='/', style="min-height:45px; white-space:normal")
-								.pull-left.nspacer.pad-right-ten(style="width:80%;")
-									| guest speaker
-								.pull-right
-									p.check5-purple-solid(style="height:25px;")
-										input(name="", placeholder="", type="checkbox", id="creditcardsmaller1442", value="small")
-										label(for='creditcardsmaller1442',)
-						li
-							a(href='/', style="min-height:45px; white-space:normal")
-								.pull-left.nspacer.pad-right-ten(style="width:80%;")
-									| guest speaker
-								.pull-right
-									p.check5-purple-solid(style="height:25px;")
-										input(name="", placeholder="", type="checkbox", id="creditcardsmaller1443", value="small")
-										label(for='creditcardsmaller1443',)
-						li.border-bottom
-							a(href='/', style="min-height:45px; white-space:normal")
-								.pull-left.nspacer.pad-right-ten(style="width:80%;")
-									| guest speaker long name etc tojokof
-								.pull-right
-									p.check5-purple-solid(style="height:25px;")
-										input(name="", placeholder="", type="checkbox", id="creditcardsmaller1444", value="small")
-										label(for='creditcardsmaller1444',)
-								.clearfix
+				.width48.inline
+					.font-evente.center.cat-text.fontish
+						| Certain attendee <br />categories
+					.clearfix
+					.no-float.font-exception-thin
+						ul.nav.navbar-nav.nav-last
+							li.dropdown.dropdown-menu-last1
+								a.dropdown-toggle.dropdown-toggle-last(href='#', data-toggle='dropdown')
+									| Choose categories
+									b.caret
+								ul.dropdown-menu.dropdown-menu-last.pull-right
+									li
+										a(href='/', style="min-height:45px; white-space:normal")
+											.pull-left.nspacer.pad-right-ten(style="width:80%;")
+												| guest speaker
+											.pull-right
+												p.check5-purple-solid(style="height:25px;")
+													input(name="", placeholder="", type="checkbox", id="creditcardsmaller441", value="small")
+													label(for='creditcardsmaller441',)
+									li
+										a(href='/', style="min-height:45px; white-space:normal")
+											.pull-left.nspacer.pad-right-ten(style="width:80%;")
+												| guest speaker
+											.pull-right
+												p.check5-purple-solid(style="height:25px;")
+													input(name="", placeholder="", type="checkbox", id="creditcardsmaller442", value="small")
+													label(for='creditcardsmaller442',)
+									li
+										a(href='/', style="min-height:45px; white-space:normal")
+											.pull-left.nspacer.pad-right-ten(style="width:80%;")
+												| guest speaker
+											.pull-right
+												p.check5-purple-solid(style="height:25px;")
+													input(name="", placeholder="", type="checkbox", id="creditcardsmaller443", value="small")
+													label(for='creditcardsmaller443',)
+									li.border-bottom
+										a(href='/', style="min-height:45px; white-space:normal")
+											.pull-left.nspacer.pad-right-ten(style="width:80%;")
+												| guest speaker long name etc tojokof
+											.pull-right
+												p.check5-purple-solid(style="height:25px;")
+													input(name="", placeholder="", type="checkbox", id="creditcardsmaller444", value="small")
+													label(for='creditcardsmaller444',)
+											.clearfix
 
 
 
+				.width48.inline
+					.font-evente.center.cat-text2.fontish
+						| Cetrain individuals
+					.clearfix
+					.no-float.font-exception-thin
+						ul.nav.navbar-nav.nav-last
+							li.dropdown.dropdown-menu-last1
+								a.dropdown-toggle.dropdown-toggle-last(href='#', data-toggle='dropdown')
+									| Choose individuals
+									b.caret
+								ul.dropdown-menu.dropdown-menu-last.pull-right
+									li
+										a(href='/', style="min-height:45px; white-space:normal")
+											.pull-left.nspacer.pad-right-ten(style="width:80%;")
+												| guest speaker
+											.pull-right
+												p.check5-purple-solid(style="height:25px;")
+													input(name="", placeholder="", type="checkbox", id="creditcardsmaller1441", value="small")
+													label(for='creditcardsmaller1441',)
+									li
+										a(href='/', style="min-height:45px; white-space:normal")
+											.pull-left.nspacer.pad-right-ten(style="width:80%;")
+												| guest speaker
+											.pull-right
+												p.check5-purple-solid(style="height:25px;")
+													input(name="", placeholder="", type="checkbox", id="creditcardsmaller1442", value="small")
+													label(for='creditcardsmaller1442',)
+									li
+										a(href='/', style="min-height:45px; white-space:normal")
+											.pull-left.nspacer.pad-right-ten(style="width:80%;")
+												| guest speaker
+											.pull-right
+												p.check5-purple-solid(style="height:25px;")
+													input(name="", placeholder="", type="checkbox", id="creditcardsmaller1443", value="small")
+													label(for='creditcardsmaller1443',)
+									li.border-bottom
+										a(href='/', style="min-height:45px; white-space:normal")
+											.pull-left.nspacer.pad-right-ten(style="width:80%;")
+												| guest speaker long name etc tojokof
+											.pull-right
+												p.check5-purple-solid(style="height:25px;")
+													input(name="", placeholder="", type="checkbox", id="creditcardsmaller1444", value="small")
+													label(for='creditcardsmaller1444',)
+											.clearfix
+				.clearfix
 
-.nspacer-big
 
-.col-lg-12.col-md-12.col-xs-12
-	.center.font-evente.fontish
-		| File will be viewable <b>but not downloadable </b> for anyone who has acccess to your event. <br />
-		Would you like to allow general public to also be able to view this file, but not downloand it?<br />
-		<b>!(such could help with brand promotion)!</b>
 
-.clearfix
-.nspacer-awsome
 
-.col-lg-12.col-md-12.col-xs-12
-	.font-evente.pull-left.fontish
-		| Allow attendees to upload files?
-	.pull-left
-		label.checkbox.toggle.candy(style='width: 100px; margin-left:20px; margin-top:4px;', onclick='')
-			input.allowAttendeesToCreateTheirOwnCategories(type='checkbox', class="invisible")
-			span
-				span No
-				span Yes
-			a.slide-button
+			.clearfix
+
+				//- dropdowns up to 480
+
+				.col-xs-12.show320
+					.font-evente.cat-text.fontish
+						| Certain attendee categories
+					.clearfix
+					.font-exception-thin
+						ul.nav.navbar-nav.nav-last
+							li.dropdown.dropdown-menu-last1
+								a.dropdown-toggle.dropdown-toggle-last(href='#', data-toggle='dropdown')
+									| Choose categories
+									b.caret
+								ul.dropdown-menu.dropdown-menu-last.pull-right
+									li
+										a(href='/', style="min-height:45px; white-space:normal")
+											.pull-left.nspacer.pad-right-ten(style="width:80%;")
+												| guest speaker
+											.pull-right
+												p.check5-purple-solid(style="height:25px;")
+													input(name="", placeholder="", type="checkbox", id="creditcardsmaller441", value="small")
+													label(for='creditcardsmaller441',)
+									li
+										a(href='/', style="min-height:45px; white-space:normal")
+											.pull-left.nspacer.pad-right-ten(style="width:80%;")
+												| guest speaker
+											.pull-right
+												p.check5-purple-solid(style="height:25px;")
+													input(name="", placeholder="", type="checkbox", id="creditcardsmaller442", value="small")
+													label(for='creditcardsmaller442',)
+									li
+										a(href='/', style="min-height:45px; white-space:normal")
+											.pull-left.nspacer.pad-right-ten(style="width:80%;")
+												| guest speaker
+											.pull-right
+												p.check5-purple-solid(style="height:25px;")
+													input(name="", placeholder="", type="checkbox", id="creditcardsmaller443", value="small")
+													label(for='creditcardsmaller443',)
+									li.border-bottom
+										a(href='/', style="min-height:45px; white-space:normal")
+											.pull-left.nspacer.pad-right-ten(style="width:80%;")
+												| guest speaker long name etc tojokof
+											.pull-right
+												p.check5-purple-solid(style="height:25px;")
+													input(name="", placeholder="", type="checkbox", id="creditcardsmaller444", value="small")
+													label(for='creditcardsmaller444',)
+											.clearfix
+
+
+
+				.col-xs-12.show320
+					.font-evente.cat-text.fontish
+						| Cetrain individuals
+					.clearfix
+					.font-exception-thin
+						ul.nav.navbar-nav.nav-last
+							li.dropdown.dropdown-menu-last1
+								a.dropdown-toggle.dropdown-toggle-last(href='#', data-toggle='dropdown')
+									| Choose individuals
+									b.caret
+								ul.dropdown-menu.dropdown-menu-last.pull-right
+									li
+										a(href='/', style="min-height:45px; white-space:normal")
+											.pull-left.nspacer.pad-right-ten(style="width:80%;")
+												| guest speaker
+											.pull-right
+												p.check5-purple-solid(style="height:25px;")
+													input(name="", placeholder="", type="checkbox", id="creditcardsmaller1441", value="small")
+													label(for='creditcardsmaller1441',)
+									li
+										a(href='/', style="min-height:45px; white-space:normal")
+											.pull-left.nspacer.pad-right-ten(style="width:80%;")
+												| guest speaker
+											.pull-right
+												p.check5-purple-solid(style="height:25px;")
+													input(name="", placeholder="", type="checkbox", id="creditcardsmaller1442", value="small")
+													label(for='creditcardsmaller1442',)
+									li
+										a(href='/', style="min-height:45px; white-space:normal")
+											.pull-left.nspacer.pad-right-ten(style="width:80%;")
+												| guest speaker
+											.pull-right
+												p.check5-purple-solid(style="height:25px;")
+													input(name="", placeholder="", type="checkbox", id="creditcardsmaller1443", value="small")
+													label(for='creditcardsmaller1443',)
+									li.border-bottom
+										a(href='/', style="min-height:45px; white-space:normal")
+											.pull-left.nspacer.pad-right-ten(style="width:80%;")
+												| guest speaker long name etc tojokof
+											.pull-right
+												p.check5-purple-solid(style="height:25px;")
+													input(name="", placeholder="", type="checkbox", id="creditcardsmaller1444", value="small")
+													label(for='creditcardsmaller1444',)
+											.clearfix
+
+
+
+
+			.nspacer-big
+
+			.col-lg-12.col-md-12.col-xs-12
+				.center.font-evente.fontish
+					| File will be viewable <b>but not downloadable </b> for anyone who has acccess to your event. <br />
+					Would you like to allow general public to also be able to view this file, but not downloand it?<br />
+					<b>!(such could help with brand promotion)!</b>
+
+			.clearfix

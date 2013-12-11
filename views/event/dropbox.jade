@@ -17,16 +17,19 @@ block content
 	.col-lg-12.col-md-12.col-xs-12
 		.col-lg-2.col-md-2.col-xs-2.pad-right-zero
 			img.img-responsive(src="/images/dropbox-icon.svg")
-		.col-lg-7.col-md-7.col-xs-7.font-lebig.pad-left-zero.nspacer-big.fontish.back-spacer
+		.col-lg-5.col-md-5.col-xs-5.font-lebig.pad-left-zero.nspacer-big.fontish.back-spacer
 			| Event Dropbox
-		.col-lg-3.col-md-3.col-xs-3.pad-right-zero
-			a.pull-right(href="#", upload-file, progress="#fileProgress", file="#file", csrf=token, url="/event/"+ev._id+"/dropbox/upload")
+		.col-lg-5.col-md-5.col-xs-5.pad-right-zero
+			a.pad-left-five.pull-right(href="#" upload-file progress="#fileProgress" file="#file" csrf=token url="/event/"+ev._id+"/dropbox/upload")
 				img(src="/images/upload-button.svg", style="width:100%;")
+			if (eventadmin)
+				a.pull-right(href="#", data-toggle="modal", data-target="#dropboxSettings")
+					img(src="/images/settings-button.svg", style="width:100%;")
 			input#file.hide(type="file")
 	
 	.clearfix
 	.progress#fileProgress(ng-show="progress > 0")
-		.progress-bar(ng-class="{ 'progress-bar-success': progress >= 100 }", aria-valuenow="{{progress}}", aria-valuemax="100", aria-valuemin="0", ng-style="{ width: progress+'%' }")
+		.progress-bar(ng-class="{ 'progress-bar-success': progress >= 100 }" aria-valuenow="{{progress}}" aria-valuemax="100" aria-valuemin="0" ng-style="{ width: progress+'%' }")
 	
 	//- content
 	
@@ -40,7 +43,12 @@ block content
 				else
 					img.img-responsive(src="/images/dropbox/"+file.extension+".svg")
 			
-			.width53.pull-left.pad-left-five(style="width: "+(eventadmin ? 53 : 67)+"%;")
+			- var width = 67;
+			if (file.user._id.equals(locals.user._id))
+				- width = 53; // 2 buttons
+			if (eventadmin)
+				- width = 39; // 3 buttons
+			.width53.pull-left.pad-left-five(style="width: "+width+"%;")
 				.bg-ashen.font-evente.filename
 					= file.name
 					br
@@ -51,15 +59,18 @@ block content
 					= file.created.getMonth()+1
 					| /
 					= file.created.getFullYear()
-
+			
 			.width14.pull-right.pad-left-five
 				a(href=file.file, target="_blank")
-					img(src="/images/download-button.svg"  style="width:100%;")
+					img(src="/images/download-button.svg" style="width:100%;")
 			
-			if (eventadmin)
+			if (eventadmin || file.user._id.equals(locals.user._id))
 				.width14.pull-right.pad-left-five
 					a(href="/event/"+ev._id+"/dropbox/"+file._id+"/remove")
-						img(src="/images/delete-button.svg"  style="width:100%;")
+						img(src="/images/delete-button.svg" style="width:100%;")
+				.width14.pull-right.pad-left-five
+					a(href="#", data-toggle="modal", data-target="#filesharingModal")
+						img(src="/images/edit-sharing-button.svg" style="width:100%")
 				
 		.clearfix
 	
@@ -67,4 +78,4 @@ block content
 		h3.text-center No Files have been uploaded yet
 		p.text-center.lead Use form above to add some
 	
-	//-include ../modals/dropboxPermissions
+	include ../modals/dropboxPermissions
