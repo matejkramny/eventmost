@@ -1,25 +1,26 @@
 .nspacer
+.row
 
-.col-md-3.col-xs-3.col-sm-3
-	img.img-responsive(src=ev.avatar.url)
+	.col-md-3.col-xs-3.col-sm-3
+		img.img-responsive(src="/images/default-event-logo.svg" alt="", )
 
-.col-md-9.col-xs-9.col-sm-9
-	.bg-yellow.font-bigs2.center.deifer-font2
-		= ev.name
-	.font-lebig.center.setting-line.nspacer.deifer-font
-		| Thanks to our sponsors:
+	.col-md-9.col-xs-9.col-sm-9
+		.bg-yellow.font-bigs2.center.deifer-font2.break.psev
+			= ev.name
+		.clearfix
+		.nspacer
+		
+		.col-md-3.col-xs-3.col-sm-3.font2.center.font-new.pad-right-zero.pad-left-zero
+			| Thanks to <br />our sponsors:
+		.col-md-4.col-xs-4.col-sm-4.font2.center.pad-right-zero.pad-left-zero
+			img.img-responsive(src="/images/defaultsponsor-logo.svg" alt="", )
+		.col-md-1.col-xs-1.col-sm-1.font2.center.font-new.pad-right-zero.pad-left-zero.and-new
+			| and
+		.col-md-4.col-xs-4.col-sm-4.font2.pad-right-zero.pad-left-zero
+			img.img-responsive.pull-right(src="/images/defaultsponsor-logo.svg" alt="",)
+		.clearfix
+	.clearfix
 
-.clearfix
-.nspacer-big
 
-.col-md-4.col-xs-4.col-sm-4
-	img.img-responsive(src= ev.sponsorLayout.sponsor1 ? ev.sponsorLayout.sponsor1.url : "/images/sponsor-logo.svg")
 
-.col-md-4.col-xs-4.col-sm-4
-	img.img-responsive(src= ev.sponsorLayout.sponsor2 ? ev.sponsorLayout.sponsor2.url : "/images/sponsor-logo.svg")
 
-.col-md-4.col-xs-4.col-sm-4
-	img.img-responsive(src= ev.sponsorLayout.sponsor3 ? ev.sponsorLayout.sponsor3.url : "/images/sponsor-logo.svg")
-
-.clearfix
-.nspacer

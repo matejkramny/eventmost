@@ -1,88 +1,33 @@
 mixin navbar
 	- var base = "/event/"+ev._id+"/";
-	.col-xs-12.hide-all2
-		form(method="POST", accept-charset="utf-8")
-			input.gonew2.pull-right.header-links(type="button", value="GO", style="width:10%;")
-			input(type="hidden", name="_csrf", value=token)
-			input.pull-right.font-s.search-input.pad-left-ten.header-links(type="search", placeholder="search events or people", style="width:87%;")
-	.clearfix.hide-all2
+	.row
+		.col-xs-12.hide-all2
+			form(method="POST", accept-charset="utf-8")
+				input.gonew2.pull-right.header-links(type="button", value="GO", style="width:10%;")
+				input(type="hidden", name="_csrf", value=token)
+				input.pull-right.font-s.search-input.pad-left-ten.header-links(type="search", placeholder="search events or people", style="width:87%;")
+		.clearfix.hide-all2
 
 
 	//- inbox title plus buttons
 	.nspacer
-
-	.col-md-4.col-xs-4.col-sm-4.nspacer-medium.hide-mini3-except-smart
-		.font-tw
-			a.link-purple(href=base)  
-				| &#8592 
-				if (ev.name.length > 15)
-					b= ev.name.substring(0,14)
-						| ...
-				else
-					b= ev.name
-	.col-md-8.col-xs-8.col-sm-8.hide-mini3-except-smart
-		.font-x1.bg-purple.center.pull-right.psev2.prof-wall(style="padding-top:5px;")
-			a.link-white(href=base+"messages") Conversations
-				br
-				img(src="/images/menu-conversation.svg", alt="", style="")
-		.font-x1.bg-purple.center.pull-right.psev2.prof-wall(style="padding-top:5px;")
-			a.link-white(href=base+"") My notes
-				br
-				img(src="/images/menu-notes.svg", alt="", style="")
-		.font-x1.bg-purple.center.pull-right.psev2.prof-wall
-			a.link-white(href=base+"dropbox") Event dropbox
-				br
-				img(src="/images/menu-drop.svg", alt="", style="")
-		.font-x1.bg-purple.pull-right.psev2.prof-wall
-			a.link-white(href=base+"registrationpage") Registration
-				br
-				| page
-				img.pad-left-ten(src="/images/menu-registration.svg", alt="", style="")
-		.font-x1.bg-purple.center.pull-right.psev2.prof-wall(style="padding-top:5px;")
-			a.link-white(href=base+ (attendee ? "attendee/"+attendee._id : "")) My profile <br />
-				img(src="/images/menu-profile.svg", alt="", style="")
-		.font-x1.bg-purple.center.pull-right.psev2.prof-wall(style="padding-top:5px;")
-			a.link-white(href=base+"attendees") Attendees <br />
-				img(src="/images/menu-attendees.svg", alt="", style="")
-	.clearfix.hide-mini3-except-smart
-	.col-md-5.col-xs-5.col-sm-5.hide-mini3-except-smart
-		.line-purple(style="height:3px; margin-top:-3px;")
-	
-	.col-md-12.col-xs-12.col-sm-12.nspacer-medium.hide-all2
-		.center
-			a.link-purple(href=base)
-				b= ev.name
-	.clearfix.hide-all2
-	.col-md-12.col-xs-12.col-sm-12.hide-all2
-		.center
-			.inline.nspacer-small
-				.font-x1.bg-purple.center.psev2.prof-wall
-					a.link-white(href=base+"attendees") Attendees <br />
-						img(src="/images/menu-attendees.svg", alt="", style="")
-			.inline.nspacer-small
-				.font-x1.bg-purple.center.psev2.prof-wall
-					a.link-white(href= (loggedIn == true ? base+"attendee/"+user._id : base+"attendees")) My profile <br />
-						img(src="/images/menu-profile.svg", alt="", style="")
-			.inline.nspacer-small
-				.font-x1.bg-purple.psev2.prof-wall
-					a.link-white(href=base+"registrationpage") Registration
-						br
-						| page
-						img.pad-left-ten(src="/images/menu-registration.svg", alt="", style="")
-			.inline.nspacer-small
-				.font-x1.bg-purple.center.psev2.prof-wall
-					a.link-white(href=base+"dropdown") Event dropbox <br />
-						img(src="/images/menu-drop.svg", alt="", style="")
-			.inline.nspacer-small
-				.font-x1.bg-purple.center.psev2.prof-wall
-					a.link-white(href=base+"") My notes 
-						br
-						img(src="/images/menu-notes.svg", alt="", style="")
-			.inline.nspacer-small
-				.font-x1.bg-purple.center.psev2.prof-wall
-					a.link-white(href=base+"messages") Conversations
-						br
-						img(src="/images/menu-conversation.svg", alt="", style="")
+	.row
+		.col-md-12.col-xs-12.col-sm-12
+			.pull-right
+				.inline.nspacer-small
+					.font-x1.bg-purple.center.psev2.prof-wall
+						a.link-white(href= (loggedIn == true ? base+"attendee/"+user._id : base+"attendees")) My profile <br />
+							img(src="/images/menu-profile.svg", alt="", style="")
+				.inline.nspacer-small
+					.font-x1.bg-purple.psev2.prof-wall
+						a.link-white(href=base+"registrationpage") Registration
+							br
+							| page
+							img.pad-left-ten(src="/images/menu-registration.svg", alt="", style="")
+				.inline.nspacer-small
+					.font-x1.bg-purple.center.psev2.prof-wall
+						a.link-white(href=base+"dropdown") Event dropbox <br />
+							img(src="/images/menu-drop.svg", alt="", style="")
 
 	.clearfix
 

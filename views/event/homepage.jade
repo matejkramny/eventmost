@@ -12,7 +12,7 @@ block content
 	
 	case ev.sponsorLayout.layout
 		when 0
-			include layouts/0
+			include layouts/5
 		when 1
 			include layouts/1
 		when 2
@@ -24,93 +24,246 @@ block content
 		when 5
 			include layouts/5
 
-	//- arrange by tablet-portrait	
-	.col-xs-12.hide-all2.here-show(style="height:50px; margin-top:0px;")
-			.pull-right.font-exception-thin
-				ul.nav.navbar-nav.nav-ashen
-					li.dropdown
-						a.dropdown-toggle.dropdown-toggle-ashen(href='#', data-toggle='dropdown')
-							| Arrange by
-							b.caret
-						ul.dropdown-menu.dropdown-menu-ashen.pull-right
-							li
-								a(href='') Most recent to latest
-							li
-								a(href='') Latest to most recent
-							li
-								a(href='') Events name A-Z
-							li
-								a(href='') My planned events
-	.clearfix.here-show
 
-	- var lastMessage = ev.messages.length > 0 ? ev.messages[ev.messages.length-1] : null;
-	//- most recent large
-	if lastMessage
-		+message(lastMessage, true)
 
-	//- arrange by large	
-	.nspacer.pull-right.font-bigs.font-thin.don-show-here(style="height:50px; margin-top:80px;")
-				.pull-right.mfresponsive2.font-exception-thin
-					ul.nav.navbar-nav.nav-ashen
-						li.dropdown
-							a.dropdown-toggle.dropdown-toggle-ashen(href='#', data-toggle='dropdown')
-								| Arrange by
-								b.caret
-							ul.dropdown-menu.dropdown-menu-ashen.pull-right
-								li
-									a(href='') Most recent to latest
-								li
-									a(href='') Latest to most recent
-								li
-									a(href='') Events name A-Z
-								li
-									a(href='') My planned events
 
-	.clearfix
+	//- comment post
 	.nspacer
+	.row
+		.col-sm-12.col-xs-12.col-md-12
+			.pull-left
+				img.pull-left.bubble-responsive(src="/images/bubble-left-blue.svg", alt="", style="vertical-align:top;")
+			.pull-left.bg-green.psev.post-width-text-new
+				form#commentForm(action="/event/"+ev._id+"/messages", method="POST")
+					input(type="hidden", name="_csrf", value=token)
+					textarea.postcommentarea1(placeholder="Post a comment here...", name="message")
+					.pull-right
+						a(href="#", onclick="$('#commentForm').submit(); return false;")
+							img.post-butt(src="/images/post-button-new.svg")
+			.clearfix
 
-	.col-md-12.col-xs-12.col-sm-12
-		.line-purple
-
-	//- guest speakers large
-	for attendee in ev.attendees
-		+attendee(attendee)
-	
-	.clearfix
-
-
-
-	.nspacer
-	.col-md-12.col-xs-12.col-sm-12
-		.line-purple
-	//- end guest speakers
-
-	.pull-right(style='height:35px;')
-		ul.pagination
-			li
-				a(href='#') «
-			li.active
-				a(href='#') 1
-			li
-				a(href='#') »
-	
-	.clearfix
-	.nspacer
-
-	
-	.col-sm-12.col-xs-12.col-md-12
-		.pull-left
-			img.pull-left.bubble-responsive(src="/images/bubble-left-blue.svg", alt="", style="vertical-align:top;")
-		.pull-left.bg-green.psev.post-width-text
-			form#commentForm(action="/event/"+ev._id+"/messages", method="POST")
-				input(type="hidden", name="_csrf", value=token)
-				textarea.postcommentarea(placeholder="Post a comment here...", name="message")
-				.pull-right
-					a(href="#", onclick="$('#commentForm').submit(); return false;")
-						img.img-responsive.post-butt(src="/images/post-button.svg")
-		.clearfix
+		//- other comments
 		.nspacer
-		.pull-right
-			button.btn.btn-default.font-e.hide-prof-butt(type='submit', style="border-radius: 10px; color:#fff; padding:20px;")
-				a(href="/" class="btn btn-default font-e") Exit event
+		.underpost.pull-right.break
+			.pull-left(style="overflow:hidden; border-radius:30px; -webkit-border-radius: 30px; -moz-border-radius:30px;width:60px;height:60px;border:0px solid #542437;")
+				img(src= attendee.user.avatar.length == 0 ? "/images/default_speaker-purple.svg" : attendee.user.avatar, style="width:60px;margin:0px auto auto 0px;")
+			.pull-left.pad-left-ten.width85.width85posts
+				.font16.bold
+					| Anna Marie
+				.font14.font14sm.break.small-post
+					| Duis aute irure dolor in reprehenderit in voluptate velit  dolor in reprehenderi esse cillum dolore  dolor in reprehenderi eu fugiat nulla pari... hngndndgn Excepteur sint occaecat cupidatat non...
+				.pull-left.font14.font14md
+					a.link-green.bold(href="#")
+						| Like 
+				.pull-left.font14.font14md.color-green.pad-left-five
+					| | posted @ 19:00 |
+				.pull-left.font14.font14md.color-green.pad-left-five
+					img.pull-left(src="/images/mini-thumb.svg" alt="") 
+					.pad-left-five.pull-left
+						| <b>Anna Marie</b> liked this.	|
+				.pull-left.font14.font14md.color-green.pad-left-five
+					img.pull-left(src="/images/mini-bubble.svg" alt="") 
+					.pad-left-five.pull-left
+						a.link-green(href="#")
+							| View 2 more commnets
+				.clearfix
+			.pull-left
+				//- after clicking the arrow the rest of the comment should appear i think
+				a(href="#")
+					img.psev(src="/images/small-arrow-down.svg", alt="", style="padding-top:28px;")
+			.pull-right
+				//- button only visible for creator and planner
+				button.btn.btn-primary.font14.pull-right.nspacer(type='submit', style="border-radius: 10px; padding:7px; padding-left:12px; padding-right:12px;")
+					a.link-white(href="/" class="") delete
+		.clearfix
+
+		.underpost-smaller.pull-right.break.nspacer
+			.pull-left(style="overflow:hidden; border-radius:22px; -webkit-border-radius: 22px; -moz-border-radius:22px;width:44px;height:44px;border:0px solid #542437;")
+				img(src= attendee.user.avatar.length == 0 ? "/images/default_speaker-purple.svg" : attendee.user.avatar, style="width:44px;margin:0px auto auto 0px;")
+			.pull-left.pad-left-ten.width85.width85posts
+				.font14.font14sm.break.small-post
+					| <span class="font16 bold">Anna Marie</span> Duis aute irure dolor in reprehenderit in voluptate velit  dolor in reprehenderi esse cillum dolore  dolor in sdfdjfd reprehenderi eu fugiat nulla pariatur. hngndndgn Excepteur sint occaecat cupidatat non..
+				.pull-left.font14.font14md.color-green.pad-left-five
+					| posted @ 50 minutes ago |
+				.pull-left.font14.font14md.pad-left-five
+					a.link-green.bold(href="#")
+						| Like 
+				.clearfix
+			.pull-left
+				//- after clicking the arrow the rest of the comment should appear i think
+				a(href="#")
+					img.psev(src="/images/small-arrow-down.svg", alt="", style="padding-top:10px;")
+			.pull-right
+				//- button only visible for creator and planner
+				button.btn.btn-primary.font14.pull-right.nspacer(type='submit', style="border-radius: 10px; padding:7px; padding-left:12px; padding-right:12px;")
+					a.link-white(href="/" class="") delete
+
+		.clearfix
+
+		.underpost-smaller.pull-right.break.nspacer
+			.pull-left(style="overflow:hidden; border-radius:22px; -webkit-border-radius: 22px; -moz-border-radius:22px;width:44px;height:44px;border:0px solid #542437;")
+				img(src= attendee.user.avatar.length == 0 ? "/images/default_speaker-purple.svg" : attendee.user.avatar, style="width:44px;margin:0px auto auto 0px;")
+			.pull-left.pad-left-ten.width85.width85posts
+				.font14.font14sm.break.small-post
+					| <span class="font16 bold">Anna Marie</span> Duis aute irure dolor in reprehenderit in voluptate velit  dolor in reprehenderi esse cillum dolore  dolor in reprehenderi eu fugiat nulla pariatur. hngndndgn Excepteur sint occaecat cupidatat non..
+				.pull-left.font14.font14md.color-green.pad-left-five
+					| posted @ 50 minutes ago |
+				.pull-left.font14.font14md.pad-left-five
+					a.link-green.bold(href="#")
+						| Like 
+				.clearfix
+			.pull-left
+				//- after clicking the arrow the rest of the comment should appear i think
+				a(href="#")
+					img.psev(src="/images/small-arrow-down.svg", alt="", style="padding-top:10px;")
+			.pull-right
+				//- button only visible for creator and planner
+				button.btn.btn-primary.font14.pull-right.nspacer(type='submit', style="border-radius: 10px; padding:7px; padding-left:12px; padding-right:12px;")
+					a.link-white(href="/" class="") delete
+
+		.clearfix
+
+		.underpost-smaller.pull-right.break.nspacer
+			.pull-left(style="overflow:hidden; border-radius:22px; -webkit-border-radius: 22px; -moz-border-radius:22px;width:44px;height:44px;border:0px solid #542437;")
+				img(src= attendee.user.avatar.length == 0 ? "/images/default_speaker-purple.svg" : attendee.user.avatar, style="width:44px;margin:0px auto auto 0px;")
+			.pull-left.pad-left-ten.width85.width85posts
+				.font14.font14sm.break.nspacer-small
+					input.search-input.width100.psev(type"text" placeholder="Write a comment...", name="message" )
+				button.btn.btn-default.font14.pull-right.nspacer(type='submit', style="border-radius: 10px; padding:7px; padding-left:12px; padding-right:12px;")
+					a.link-white(href="/" class="") Sumbit
+			.clearfix
+
 	.clearfix
+	.nspacer-bigger
+	.row
+
+		.col-sm-12.col-xs-12.col-md-12
+			.pull-right
+				a.dark-grey(href="/")
+					| see more comments &or;
+		.clearfix
+
+	.line-dark-grey
+	.clearfix
+	.row
+		.col-sm-12.col-xs-12.col-md-12
+			.center.font
+				| Attendees 
+				img(src="/images/purple-arrow-down.svg" alt="")
+
+	.clearfix
+	.nspacer-bigger
+
+	.row
+
+
+		.col-sm-4.col-xs-4.col-md-4.nspacer
+			.grey-rounded-box
+				.pull-left.circle-avatar-new
+					img.image-circle-avatar-new(src= attendee.user.avatar.length == 0 ? "/images/default_speaker-purple.svg" : attendee.user.avatar, )
+				.pull-left.center.font-exception-thin.width-attendees.pad-left-ten
+					.font20a.nspacer
+						| Planner
+					//- font-change script added when to long name font size changes like in example
+					.bold.break.color-green.font-change.font-attendee
+						| matthew.delahey@new.ox.ac.uk
+					.bold.break.font-change.font-attendee
+						| with long names font  changes to smaller
+					//- important every column has nspacer so there is a nice space between them and also image circle dosen't have black border
+
+		.col-sm-4.col-xs-4.col-md-4.nspacer
+				.pull-left.circle-avatar-new
+					img.image-circle-avatar-new(src= attendee.user.avatar.length == 0 ? "/images/default_speaker-purple.svg" : attendee.user.avatar, )
+				.pull-left.center.font-exception-thin.width-attendees.pad-left-ten
+					.font20a.nspacer
+						| Attendee 
+					//- font-change script added when to long name font size changes like in example
+					.bold.break.color-green.font-change.font-attendee
+						| matthew delahey
+					.bold.break.font-change.font-attendee
+						| - MBA Candidate
+		.col-sm-4.col-xs-4.col-md-4.nspacer
+				.pull-left.circle-avatar-new
+					img.image-circle-avatar-new(src= attendee.user.avatar.length == 0 ? "/images/default_speaker-purple.svg" : attendee.user.avatar, )
+				.pull-left.center.font-exception-thin.width-attendees.pad-left-ten
+					.font20a.nspacer
+						| Attendee 
+					//- font-change script added when to long name font size changes like in example
+					.bold.break.color-green.font-change.font-attendee
+						| matthew delahey
+					.bold.break.font-change.font-attendee
+						| - MBA Candidate
+
+	.clearfix
+
+	.row
+
+		.col-sm-4.col-xs-4.col-md-4.nspacer
+				.pull-left.circle-avatar-new
+					img.image-circle-avatar-new(src= attendee.user.avatar.length == 0 ? "/images/default_speaker-purple.svg" : attendee.user.avatar, )
+				.pull-left.center.font-exception-thin.width-attendees.pad-left-ten
+					.font20a.nspacer
+						| Attendee 
+					//- font-change script added when to long name font size changes like in example
+					.bold.break.color-green.font-change.font-attendee
+						| matthew delahey
+					.bold.break.font-change.font-attendee
+						| - MBA Candidate
+
+		.col-sm-4.col-xs-4.col-md-4.nspacer
+				.pull-left.circle-avatar-new
+					img.image-circle-avatar-new(src= attendee.user.avatar.length == 0 ? "/images/default_speaker-purple.svg" : attendee.user.avatar, )
+				.pull-left.center.font-exception-thin.width-attendees.pad-left-ten
+					.font20a.nspacer
+						| Attendee 
+					//- font-change script added when to long name font size changes like in example
+					.bold.break.color-green.font-change.font-attendee
+						| matthew delahey
+					.bold.break.font-change.font-attendee
+						| - MBA Candidate
+
+		.col-sm-4.col-xs-4.col-md-4.nspacer
+				.pull-left.circle-avatar-new
+					img.image-circle-avatar-new(src= attendee.user.avatar.length == 0 ? "/images/default_speaker-purple.svg" : attendee.user.avatar, )
+				.pull-left.center.font-exception-thin.width-attendees.pad-left-ten
+					.font20a.nspacer
+						| Attendee 
+					//- font-change script added when to long name font size changes like in example
+					.bold.break.color-green.font-change.font-attendee
+						| matthew delahey
+					.bold.break.font-change.font-attendee
+						| - MBA Candidate
+
+
+
+
+
+
+		//- guest speakers large sorry couln't find a planner over there so I left it for you guys
+		//- for attendee in ev.attendees
+		//- 	+attendee(attendee)
+	
+	.clearfix
+
+
+
+	.nspacer
+	.row
+		.col-md-12.col-xs-12.col-sm-12
+			.line-dark-grey
+		//- end guest speakers
+
+		.pull-right(style='height:35px;')
+			ul.pagination
+				li
+					a(href='#') «
+				li.active
+					a(href='#') 1
+				li
+					a(href='#') »
+	
+	.clearfix
+	.nspacer
+
+	
+
