@@ -27,12 +27,13 @@ function BusinessCards ($scope) {
 		form.append("html", html, "html");
 		
 		$scope.uploadRequest = ur = new XMLHttpRequest();
+		avatarUploadRequest.open("POST", "/card/new", true);
 		ur.responseType = "json";
+		ur.setRequestHeader("accept", "application/json");
+		
 		ur.onreadystatechange = $scope.readyStateChange
 		ur.upload.addEventListener('progress', uploadProgressChange, false)
 		
-		ur.open("POST", "/card/new");
-		ur.setRequestHeader('Accept', 'application/json');
 		ur.send(form);
 	}
 	

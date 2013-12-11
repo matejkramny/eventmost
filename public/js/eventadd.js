@@ -241,10 +241,11 @@ $(document).ready(function() {
 		form.append("_csrf", $("head meta[name=_csrf]").attr('content'));
 		form.append("avatar", file);
 		avatarUploadRequest = new XMLHttpRequest();
+		avatarUploadRequest.open("POST", "/event/add/avatar", true);
 		avatarUploadRequest.responseType = "json";
+		avatarUploadRequest.setRequestHeader("accept", "application/json");
 		avatarUploadRequest.onreadystatechange = xmlhttprequestResponse;
 		avatarUploadRequest.upload.addEventListener('progress', xmlUploadProgress, false)
-		avatarUploadRequest.open("POST", "/event/add/avatar");
 		avatarUploadRequest.send(form);
 	}
 	$(".file_upload_wrapper").click(uploadAvatar);

@@ -30,11 +30,11 @@ angular.module('eventMost')
 		}
 		form.append("avatar", file);
 		avatarUploadRequest = new XMLHttpRequest();
+		avatarUploadRequest.open("POST", "/event/"+$("head meta[name=event_id]").attr('content')+"/admin/feedback/edit", true);
 		avatarUploadRequest.responseType = "json";
+		avatarUploadRequest.setRequestHeader("accept", "application/json");
 		avatarUploadRequest.onreadystatechange = xmlhttprequestResponse;
 		avatarUploadRequest.upload.addEventListener('progress', $scope.uploadProgressChange, false)
-		avatarUploadRequest.open("POST", "/event/"+$("head meta[name=event_id]").attr('content')+"/admin/feedback/edit");
-		avatarUploadRequest.setRequestHeader('Accept', 'application/json');
 		avatarUploadRequest.send(form);
 	}
 	

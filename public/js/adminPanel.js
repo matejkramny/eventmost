@@ -51,11 +51,12 @@ $(document).ready(function() {
 		form.append("_csrf", $("head meta[name=_csrf]").attr('content'));
 		form.append(el.attr('name'), file);
 		avatarUploadRequest = new XMLHttpRequest();
+		avatarUploadRequest.open("POST", "/event/"+$("head meta[name=event_id]").attr('content')+"/edit", true);
 		avatarUploadRequest.responseType = "json";
+		avatarUploadRequest.setRequestHeader("accept", "application/json");
+		
 		avatarUploadRequest.onreadystatechange = xmlhttprequestResponse(el);
 		avatarUploadRequest.upload.addEventListener('progress', xmlUploadProgress(el), false)
-		avatarUploadRequest.open("POST", "/event/"+$("head meta[name=event_id]").attr('content')+"/edit");
-		avatarUploadRequest.setRequestHeader('Accept', 'application/json');
 		avatarUploadRequest.send(form);
 	}
 	

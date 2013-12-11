@@ -58,11 +58,12 @@ angular.module('eventMost')
 				form.append("upload", file);
 				
 				uploadRequest = new XMLHttpRequest();
+				uploadRequest.open("POST", attrs['url'], true);
 				uploadRequest.responseType = "json";
+				uploadRequest.setRequestHeader('Accept', 'application/json');
 				uploadRequest.onreadystatechange = responseHandler;
 				uploadRequest.upload.addEventListener('progress', progressHandler, false)
-				uploadRequest.open("POST", attrs['url']);
-				uploadRequest.setRequestHeader('Accept', 'application/json');
+				
 				uploadRequest.send(form);
 			})
 		}

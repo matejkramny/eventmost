@@ -24,9 +24,10 @@ $(document).ready(function() {
 		}
 		form.append("avatar", file);
 		avatarUploadRequest = new XMLHttpRequest();
+		avatarUploadRequest.open("POST", "/profile/edit", true);
 		avatarUploadRequest.responseType = "json";
+		avatarUploadRequest.setRequestHeader("accept", "application/json");
 		avatarUploadRequest.onreadystatechange = xmlhttprequestResponse;
-		avatarUploadRequest.open("POST", "/profile/edit");
 		avatarUploadRequest.send(form);
 		
 		return false;
