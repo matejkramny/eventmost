@@ -13,8 +13,12 @@ block content
 	if (locals.user.receivedCards.length == 0)
 		h3.text-center No cards received
 	.pull-left
-		for card in locals.user.receivedCards
-			+card(card)
+		- for (var i = 0; i < locals.user.receivedCards.length; i++)
+			- var card = locals.user.receivedCards[i];
+			.row
+				+card(card)
+				if (i+1 < locals.user.receivedCards.length)
+					+card(locals.user.receivedCards[i++])
 	
 	//- end business
 	.clearfix

@@ -1,9 +1,10 @@
 var fs = require('fs'),
 	models = require('../models')
 	, mongoose = require('mongoose')
+	, util = require('../util')
 
 exports.router = function (app) {
-	app.get('/search/people/', searchPeople)
+	app.get('/search/people/', util.authorized, searchPeople)
 }
 
 //TODO remove sensitive fields (password?) from the results

@@ -2,14 +2,16 @@ var models = require('../models'),
 	mongoose = require('mongoose'),
 	inbox = require('./inbox/index'),
 	config = require('../config'),
-	fs = require('fs')
+	fs = require('fs'),
+	util = require('../util')
 
 exports.router = function (app) {
-	app.get('/cards', showCards)
+	app.get('/cards', util.authorized, showCards)
+		.all('/card/*', util.authorized)
 		.get('/card/new', newCard)
 		.get('/card/:id', getCard)
 		.post('/card/new', doNewCard)
-		.get('/cards/send', sendCard)
+		.get('/cards/send', util.authorized, sendCard)
 }
 
 function showCards (req, res) {

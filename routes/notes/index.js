@@ -7,7 +7,7 @@ var fs = require('fs')
 
 exports.router = function (app) {
 	app.all('/notes/*',  util.authorized)
-	.get('/notes', util.authorized, showNotes)
+		.get('/notes', util.authorized, showNotes)
 }
 
 function showNotes (req, res) {
