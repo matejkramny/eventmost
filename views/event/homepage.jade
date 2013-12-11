@@ -50,20 +50,20 @@ block content
 			.pull-left.pad-left-ten.width85.width85posts
 				.font16.bold
 					| Anna Marie
-				.font14.font14sm.break.small-post
+				.font14.font14sm.break.small-post.font-exception
 					| Duis aute irure dolor in reprehenderit in voluptate velit  dolor in reprehenderi esse cillum dolore  dolor in reprehenderi eu fugiat nulla pari... hngndndgn Excepteur sint occaecat cupidatat non...
-				.pull-left.font14.font14md
+				.pull-left.font14.font14md.font-exception
 					a.link-green.bold(href="#")
 						| Like 
-				.pull-left.font14.font14md.color-green.pad-left-five
+				.pull-left.font14.font14md.color-green.pad-left-five.font-exception
 					| | posted @ 19:00 |
-				.pull-left.font14.font14md.color-green.pad-left-five
+				.pull-left.font14.font14md.color-green.pad-left-five.font-exception
 					img.pull-left(src="/images/mini-thumb.svg" alt="") 
 					.pad-left-five.pull-left
 						| <b>Anna Marie</b> liked this.	|
-				.pull-left.font14.font14md.color-green.pad-left-five
+				.pull-left.font14.font14md.color-green.pad-left-five.font-exception
 					img.pull-left(src="/images/mini-bubble.svg" alt="") 
-					.pad-left-five.pull-left
+					.pad-left-five.pull-left.font-exception
 						a.link-green(href="#")
 							| View 2 more commnets
 				.clearfix
@@ -81,11 +81,11 @@ block content
 			.pull-left(style="overflow:hidden; border-radius:22px; -webkit-border-radius: 22px; -moz-border-radius:22px;width:44px;height:44px;border:0px solid #542437;")
 				img(src= attendee.user.avatar.length == 0 ? "/images/default_speaker-purple.svg" : attendee.user.avatar, style="width:44px;margin:0px auto auto 0px;")
 			.pull-left.pad-left-ten.width85.width85posts
-				.font14.font14sm.break.small-post
+				.font14.font14sm.break.small-post.font-exception
 					| <span class="font16 bold">Anna Marie</span> Duis aute irure dolor in reprehenderit in voluptate velit  dolor in reprehenderi esse cillum dolore  dolor in sdfdjfd reprehenderi eu fugiat nulla pariatur. hngndndgn Excepteur sint occaecat cupidatat non..
-				.pull-left.font14.font14md.color-green.pad-left-five
+				.pull-left.font14.font14md.color-green.pad-left-five.font-exception
 					| posted @ 50 minutes ago |
-				.pull-left.font14.font14md.pad-left-five
+				.pull-left.font14.font14md.pad-left-five.font-exception
 					a.link-green.bold(href="#")
 						| Like 
 				.clearfix
@@ -104,11 +104,11 @@ block content
 			.pull-left(style="overflow:hidden; border-radius:22px; -webkit-border-radius: 22px; -moz-border-radius:22px;width:44px;height:44px;border:0px solid #542437;")
 				img(src= attendee.user.avatar.length == 0 ? "/images/default_speaker-purple.svg" : attendee.user.avatar, style="width:44px;margin:0px auto auto 0px;")
 			.pull-left.pad-left-ten.width85.width85posts
-				.font14.font14sm.break.small-post
+				.font14.font14sm.break.small-post.font-exception
 					| <span class="font16 bold">Anna Marie</span> Duis aute irure dolor in reprehenderit in voluptate velit  dolor in reprehenderi esse cillum dolore  dolor in reprehenderi eu fugiat nulla pariatur. hngndndgn Excepteur sint occaecat cupidatat non..
-				.pull-left.font14.font14md.color-green.pad-left-five
+				.pull-left.font14.font14md.color-green.pad-left-five.font-exception
 					| posted @ 50 minutes ago |
-				.pull-left.font14.font14md.pad-left-five
+				.pull-left.font14.font14md.pad-left-five.font-exception
 					a.link-green.bold(href="#")
 						| Like 
 				.clearfix
@@ -162,12 +162,12 @@ block content
 				.pull-left.circle-avatar-new
 					img.image-circle-avatar-new(src= attendee.user.avatar.length == 0 ? "/images/default_speaker-purple.svg" : attendee.user.avatar, )
 				.pull-left.center.font-exception-thin.width-attendees.pad-left-ten
-					.font20a.nspacer
+					.font20a.nspacer.font-exception
 						| Planner
 					//- font-change script added when to long name font size changes like in example
-					.bold.break.color-green.font-change.font-attendee
+					.bold.break.color-green.font-change.font-attendee.font-exception
 						| matthew.delahey@new.ox.ac.uk
-					.bold.break.font-change.font-attendee
+					.bold.break.font-change.font-attendee.font-exception
 						| with long names font  changes to smaller
 					//- important every column has nspacer so there is a nice space between them and also image circle dosen't have black border
 
@@ -175,23 +175,23 @@ block content
 				.pull-left.circle-avatar-new
 					img.image-circle-avatar-new(src= attendee.user.avatar.length == 0 ? "/images/default_speaker-purple.svg" : attendee.user.avatar, )
 				.pull-left.center.font-exception-thin.width-attendees.pad-left-ten
-					.font20a.nspacer
+					.font20a.nspacer.font-exception
 						| Attendee 
 					//- font-change script added when to long name font size changes like in example
-					.bold.break.color-green.font-change.font-attendee
+					.bold.break.color-green.font-change.font-attendee.font-exception
 						| matthew delahey
-					.bold.break.font-change.font-attendee
+					.bold.break.font-change.font-attendee.font-exception
 						| - MBA Candidate
 		.col-sm-4.col-xs-4.col-md-4.nspacer
 				.pull-left.circle-avatar-new
 					img.image-circle-avatar-new(src= attendee.user.avatar.length == 0 ? "/images/default_speaker-purple.svg" : attendee.user.avatar, )
 				.pull-left.center.font-exception-thin.width-attendees.pad-left-ten
-					.font20a.nspacer
+					.font20a.nspacer.font-exception
 						| Attendee 
 					//- font-change script added when to long name font size changes like in example
-					.bold.break.color-green.font-change.font-attendee
+					.bold.break.color-green.font-change.font-attendee.font-exception
 						| matthew delahey
-					.bold.break.font-change.font-attendee
+					.bold.break.font-change.font-attendee.font-exception
 						| - MBA Candidate
 
 	.clearfix
@@ -202,36 +202,36 @@ block content
 				.pull-left.circle-avatar-new
 					img.image-circle-avatar-new(src= attendee.user.avatar.length == 0 ? "/images/default_speaker-purple.svg" : attendee.user.avatar, )
 				.pull-left.center.font-exception-thin.width-attendees.pad-left-ten
-					.font20a.nspacer
+					.font20a.nspacer.font-exception
 						| Attendee 
 					//- font-change script added when to long name font size changes like in example
-					.bold.break.color-green.font-change.font-attendee
+					.bold.break.color-green.font-change.font-attendee.font-exception
 						| matthew delahey
-					.bold.break.font-change.font-attendee
+					.bold.break.font-change.font-attendee.font-exception
 						| - MBA Candidate
 
 		.col-sm-4.col-xs-4.col-md-4.nspacer
 				.pull-left.circle-avatar-new
 					img.image-circle-avatar-new(src= attendee.user.avatar.length == 0 ? "/images/default_speaker-purple.svg" : attendee.user.avatar, )
 				.pull-left.center.font-exception-thin.width-attendees.pad-left-ten
-					.font20a.nspacer
+					.font20a.nspacer.font-exception
 						| Attendee 
 					//- font-change script added when to long name font size changes like in example
-					.bold.break.color-green.font-change.font-attendee
+					.bold.break.color-green.font-change.font-attendee.font-exception
 						| matthew delahey
-					.bold.break.font-change.font-attendee
+					.bold.break.font-change.font-attendee.font-exception
 						| - MBA Candidate
 
 		.col-sm-4.col-xs-4.col-md-4.nspacer
 				.pull-left.circle-avatar-new
 					img.image-circle-avatar-new(src= attendee.user.avatar.length == 0 ? "/images/default_speaker-purple.svg" : attendee.user.avatar, )
 				.pull-left.center.font-exception-thin.width-attendees.pad-left-ten
-					.font20a.nspacer
+					.font20a.nspacer.font-exception
 						| Attendee 
 					//- font-change script added when to long name font size changes like in example
-					.bold.break.color-green.font-change.font-attendee
+					.bold.break.color-green.font-change.font-attendee.font-exception
 						| matthew delahey
-					.bold.break.font-change.font-attendee
+					.bold.break.font-change.font-attendee.font-exception
 						| - MBA Candidate
 
 
