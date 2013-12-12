@@ -3,8 +3,8 @@ extends ../responsive
 include inc/navbar
 
 append addonjs
-	script(src="/js/eventLandingPage.js", defer="true")
-	script(src="/js/drops.js", defer="true")
+	script(src="/js/eventLandingPage#{minified}.js", defer)
+	script(src="/js/drops#{minified}.js", defer)
 	include inc/mapjs
 
 block content

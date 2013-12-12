@@ -1,8 +1,8 @@
 extends ../responsive
 
 append addonjs
-	script(src="/js/tiny.editor.packed.js", defer="true")
-	script(src="/js/newMessage.js", defer="true")
+	script(src="/js/tiny.editor.packed#{minified}.js", defer)
+	script(src="/js/newMessage#{minified}.js", defer)
 
 block content
 	include navbar

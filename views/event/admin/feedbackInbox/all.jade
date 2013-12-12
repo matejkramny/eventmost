@@ -11,7 +11,7 @@ append meta
 	meta(name='feedback_id', content='#{feedbackProfile._id}')
 
 append addonjs
-	script(src="/js/takeoverProfile.js", defer)
+	script(src="/js/takeoverProfile#{minified}.js", defer)
 
 block content
 	+navbar

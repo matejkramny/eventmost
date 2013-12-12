@@ -1,10 +1,10 @@
 extends responsive
 
 append addonjs
-	script(src="/js/geo.js", defer="true")
-	script(src="/js/angular-nearEvents.js", defer="true")
-	script(src="/js/privacyModal.js", defer="defer")
-	script(src="/js/notificationModal.js", defer="defer")
+	script(src="/js/geo#{minified}.js", defer)
+	script(src="/js/angular-nearEvents#{minified}.js", defer)
+	script(src="/js/privacyModal#{minified}.js", defer)
+	script(src="/js/notificationModal#{minified}.js", defer)
 
 append content
 	include event/inc/item

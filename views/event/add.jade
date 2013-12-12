@@ -1,9 +1,9 @@
 extends ../responsive
 
 append addonjs
-	script(src="/js/geo.js", defer="true")
-	script(src="/js/datepicker.js", defer="true")
-	script(src="/js/tiny.editor.packed.js", defer="true")
+	script(src="/js/geo#{minified}.js", defer)
+	script(src="/js/datepicker#{minified}.js", defer)
+	script(src="/js/tiny.editor.packed#{minified}.js", defer)
 	script(src="/js/jquery.jcarousel.min.js", defer="true")
 	if (typeof ev !== "undefined")
 		script.

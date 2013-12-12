@@ -4,8 +4,8 @@ include inc/item
 
 append addonjs
 	if typeof findNear !== "undefined" && findNear
-		script(src="/js/geo.js", defer="true")
-		script(src="/js/angular-nearEvents.js", defer="true")
+		script(src="/js/geo#{minified}.js", defer)
+		script(src="/js/angular-nearEvents#{minified}.js", defer)
 
 block content
 	include inc/listnavbar
