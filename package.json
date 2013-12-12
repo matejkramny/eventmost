@@ -1,32 +1,37 @@
 {
-  "name": "eventmost",
-  "version": "0.2.0",
-  "private": true,
-  "scripts": {
-    "start": "node app.js"
-  },
-  "start": "app.js",
-  "subdomain": "eventmost",
-  "domains": [
-  ],
-  "dependencies": {
-    "express": "latest",
-    "jade": "latest",
-    "mongoose": "latest",
-    "csv": "latest",
-    "crypto": "latest",
-    "async": "latest",
-    "validator": "latest",
-    "connect-mongo": "latest",
-	"nodemailer": "latest",
-	"passport": "latest",
-	"passport-facebook": "latest",
-	"passport-twitter": "latest",
-	"passport-linkedin": "matejkramny/passport-linkedin",
-	"socket.io": "latest",
-	"nodemailer": "latest",
-	"bugsnag": "bugsnag/bugsnag-node",
-	"should": "latest",
-	"newrelic": "latest"
-  }
+	"name": "eventmost",
+	"version": "0.2.1",
+	"private": true,
+	"scripts": {
+	"start": "node app.js"
+	},
+	"start": "app.js",
+	"subdomain": "eventmost",
+	"domains": [
+	],
+	"dependencies": {
+		"express": "latest",
+		"jade": "latest",
+		"mongoose": "latest",
+		"csv": "latest",
+		"crypto": "latest",
+		"async": "latest",
+		"validator": "latest",
+		"connect-mongo": "latest",
+		"nodemailer": "latest",
+		"passport": "latest",
+		"passport-facebook": "latest",
+		"passport-twitter": "latest",
+		"passport-linkedin": "matejkramny/passport-linkedin",
+		"socket.io": "latest",
+		"nodemailer": "latest",
+		"bugsnag": "bugsnag/bugsnag-node",
+		"should": "latest",
+		"newrelic": "latest",
+		"grunt": "latest",
+		"grunt-contrib-uglify": "latest",
+		"grunt-contrib-cssmin": "latest",
+		"grunt-contrib-jshint": "latest",
+		"grunt-contrib-watch": "latest"
+	}
 }

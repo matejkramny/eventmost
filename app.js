@@ -132,6 +132,8 @@ app.use(function(req, res, next) {
 		req.user.save()
 	}
 	
+	res.locals.minCSS = config.production;
+	
 	// navigation bar
 	next();
 });
