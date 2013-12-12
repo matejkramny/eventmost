@@ -124,6 +124,7 @@ function saveDropbox (req, res) {
 	
 	res.format({
 		html: function() {
+			req.session.flash = ["Dropbox Settings Updated"]
 			res.redirect('back')
 		},
 		json: function() {
