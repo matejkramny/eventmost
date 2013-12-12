@@ -27,6 +27,7 @@ var scheme = schema({
 		ref: 'Avatar'
 	},
 	address: String,
+	allowDropboxUpload: { type: Boolean, default: false },
 	allowAttendeesToCreateCategories: { type: Boolean, default: false },
 	allowAttendeesToComment: { type: Boolean, default: false },
 	pricedTickets: { type: Boolean, default: false },

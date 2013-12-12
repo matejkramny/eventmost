@@ -9,16 +9,26 @@
 			
 			.nspacer-awsome
 			
-			.col-lg-12.col-md-12.col-xs-12
-				.font-evente.pull-left.fontish
-					| Allow attendees to upload files?
-				.pull-left
-					label.checkbox.toggle.candy(style='width: 100px; margin-left:20px; margin-top:4px;', onclick='')
-						input.allowAttendeesToCreateTheirOwnCategories(type='checkbox', class="invisible")
-						span
-							span No
-							span Yes
-						a.slide-button
+			form(action="/event/#{ev._id}/dropbox", method="POST")
+				input(name="_csrf" value=token type="hidden")
+				.row
+					.col-lg-12.col-md-12.col-xs-12
+						.font-evente.pull-left.fontish(style="margin-left:10px;")
+							| Allow attendees to upload files?
+						.pull-left
+							label.checkbox.toggle.candy(style='width: 100px; margin-left:20px; margin-top:4px;' onclick='')
+								input.allowAttendeesToUploadToDropbox.invisible(type='checkbox' name="allowDropboxUpload" value="yes" checked= ev.allowDropboxUpload == true ? "checked" : null)
+								span
+									span No
+									span Yes
+								a.slide-button
+				.clearfix
+				.row
+					.col-lg-12.col-md-12.col-xs-12.col-sm-12
+						.center
+							input.btn.btn-info(type="submit", value="SAVE SETTINGS")
+						.clearfix
+				.nspacer-big
 			.clearfix
 
 .modal.fade#filesharingModal(tabindex="-1", aria-hidden="true")

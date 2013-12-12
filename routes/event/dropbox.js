@@ -5,6 +5,7 @@ var models = require('../../models'),
 
 exports.router = function (app) {
 	app.get('/event/:id/dropbox', view)
+		.post('/event/:id/dropbox', saveDropbox)
 		.post('/event/:id/dropbox/upload', doUpload)
 		.get('/event/:id/dropbox/:fid/remove', doRemove)
 }
@@ -99,7 +100,43 @@ function doRemove (req, res, next) {
 	})
 }
 
+function saveDropbox (req, res) {
+	if (!res.locals.eventadmin) {
+		res.format({
+			html: function() {
+				res.redirect('back');
+			},
+			json: function() {
+				res.send({
+					status: 403,
+					message: "Not Admin"
+				})
+			}
+		})
+		
+		return;
+	}
+	
+	var ev = res.locals.ev;
+	
+	ev.allowDropboxUpload = req.body.allowDropboxUpload == 'yes' ? true : false;
+	ev.save()
+	
+	res.format({
+		html: function() {
+			res.redirect('back')
+		},
+		json: function() {
+			res.send({
+				status: 200,
+				message: "Saved"
+			})
+		}
+	})
+}
+
 function doUpload (req, res) {
+	//TODO check attendee(s) can upload files
 	if (!res.locals.eventattending) {
 		res.format({
 			html: function() {

@@ -20,8 +20,9 @@ block content
 		.col-lg-5.col-md-5.col-xs-5.font-lebig.pad-left-zero.nspacer-big.fontish.back-spacer
 			| Event Dropbox
 		.col-lg-5.col-md-5.col-xs-5.pad-right-zero
-			a.pad-left-five.pull-right(href="#" upload-file progress="#fileProgress" file="#file" csrf=token url="/event/"+ev._id+"/dropbox/upload")
-				img(src="/images/upload-button.svg", style="width:100%;")
+			if (eventadmin || ev.allowDropboxUpload)
+				a.pad-left-five.pull-right(href="#" upload-file progress="#fileProgress" file="#file" csrf=token url="/event/"+ev._id+"/dropbox/upload")
+					img(src="/images/upload-button.svg", style="width:100%;")
 			if (eventadmin)
 				a.pull-right(href="#", data-toggle="modal", data-target="#dropboxSettings")
 					img(src="/images/settings-button.svg", style="width:100%;")
@@ -43,10 +44,8 @@ block content
 				else
 					img.img-responsive(src="/images/dropbox/"+file.extension+".svg")
 			
-			- var width = 67;
-			if (file.user._id.equals(locals.user._id))
-				- width = 53; // 2 buttons
-			if (eventadmin)
+			- var width = 67; // 1btn
+			if (eventadmin || file.user._id.equals(locals.user._id))
 				- width = 39; // 3 buttons
 			.width53.pull-left.pad-left-five(style="width: "+width+"%;")
 				.bg-ashen.font-evente.filename
