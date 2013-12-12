@@ -2,7 +2,8 @@
 .row
 
 	.col-md-3.col-xs-3.col-sm-3
-		img.img-responsive(src="/images/default-event-logo.svg" alt="", )
+		//- "/images/default-event-logo.svg"
+		img.img-responsive(src=ev.avatar.url alt="")
 
 	.col-md-9.col-xs-9.col-sm-9
 		.bg-yellow.font-bigs2.center.deifer-font2.break.psev.font-exception
@@ -13,11 +14,11 @@
 		.col-md-3.col-xs-3.col-sm-3.font2.center.font-new.pad-right-zero.pad-left-zero.font-exception
 			| Thanks to <br />our sponsors:
 		.col-md-4.col-xs-4.col-sm-4.font2.center.pad-right-zero.pad-left-zero
-			img.img-responsive(src="/images/defaultsponsor-logo.svg" alt="", )
+			img.img-responsive(src= ev.sponsorLayout.sponsor1 ? ev.sponsorLayout.sponsor1.url : "/images/defaultsponsor-logo.svg" alt="")
 		.col-md-1.col-xs-1.col-sm-1.font2.center.font-new.pad-right-zero.pad-left-zero.and-new.font-exception-thin
 			| and
 		.col-md-4.col-xs-4.col-sm-4.font2.pad-right-zero.pad-left-zero
-			img.img-responsive.pull-right(src="/images/defaultsponsor-logo.svg" alt="",)
+			img.img-responsive.pull-right(src= ev.sponsorLayout.sponsor2 ? ev.sponsorLayout.sponsor2.url : "/images/defaultsponsor-logo.svg" alt="")
 		.clearfix
 	.clearfix
 

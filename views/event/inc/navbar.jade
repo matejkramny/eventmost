@@ -12,7 +12,7 @@ mixin navbar
 			.pull-right
 				.inline.nspacer-small
 					.font-x1.bg-purple.center.psev2.prof-wall
-						a.link-white(href= (loggedIn == true ? base+"attendee/"+user._id : base+"attendees")) My profile <br />
+						a.link-white(href= (eventattending == true ? base+"attendee/"+attendee._id : base+"attendees")) My profile <br />
 							img(src="/images/menu-profile.svg", alt="", style="")
 				.inline.nspacer-small
 					.font-x1.bg-purple.psev2.prof-wall
