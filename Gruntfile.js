@@ -36,7 +36,7 @@ module.exports = function (grunt) {
 		
 		watch: {
 			scripts: {
-				files: ['public/js/*.js', 'routes/**', 'app.js', 'config.js', 'util.js', 'scripts/*.js'],
+				files: ['public/js/*.js', 'routes/**', 'app.js', 'config.js', 'util.js', 'scripts/*.js', '!public/js/*.min.js'],
 				tasks: ['jshint'],
 			},
 			options: {
@@ -50,5 +50,5 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-jshint')
 	grunt.loadNpmTasks('grunt-contrib-watch')
 	
-	grunt.registerTask('default', ['uglify', 'cssmin', 'jshint']);
+	grunt.registerTask('default', ['uglify', 'cssmin']);
 }
