@@ -4,6 +4,7 @@ include inc/navbar
 
 append addonjs
 	script(src="/js/fileUpload#{minified}.js", defer)
+	script(src="/js/dropbox#{minified}.js", defer)
 
 block content
 	+navbar
@@ -33,48 +34,48 @@ block content
 		.progress-bar(ng-class="{ 'progress-bar-success': progress >= 100 }" aria-valuenow="{{progress}}" aria-valuemax="100" aria-valuemin="0" ng-style="{ width: progress+'%' }")
 	
 	//- content
-	
-	for file in ev.files
-		//- slide
-		.nspacer-big
-		.col-lg-12.col-md-12.col-xs-12
-			.width18.pad-right-zero.pull-left
-				if (file.extension=="png" || file.extension=="svg" || file.extension=="gif" || file.extension=="jpg" || file.extension=="jpeg")
-					img.img-responsive(src=file.file)
-				else
-					img.img-responsive(src="/images/dropbox/"+file.extension+".svg")
+	div(ng-controller="dropboxSharingController" ng-init="setCategories(#{JSON.stringify(ev.categories)}); setAttendees(#{JSON.stringify(ev.attendees)});")
+		for file in ev.files
+			//- slide
+			.nspacer-big
+			.col-lg-12.col-md-12.col-xs-12
+				.width18.pad-right-zero.pull-left
+					if (file.extension=="png" || file.extension=="svg" || file.extension=="gif" || file.extension=="jpg" || file.extension=="jpeg")
+						img.img-responsive(src=file.file)
+					else
+						img.img-responsive(src="/images/dropbox/"+file.extension+".svg")
 			
-			- var width = 67; // 1btn
-			if (eventadmin || file.user._id.equals(locals.user._id))
-				- width = 39; // 3 buttons
-			.width53.pull-left.pad-left-five(style="width: "+width+"%;")
-				.bg-ashen.font-evente.filename
-					= file.name
-					br
-					= file.size
-					| , uploaded 
-					= file.created.getDate()
-					| /
-					= file.created.getMonth()+1
-					| /
-					= file.created.getFullYear()
+				- var width = 67; // 1btn
+				if (eventadmin || file.user._id.equals(locals.user._id))
+					- width = 39; // 3 buttons
+				.width53.pull-left.pad-left-five(style="width: "+width+"%;")
+					.bg-ashen.font-evente.filename
+						= file.name
+						br
+						= file.size
+						| , uploaded 
+						= file.created.getDate()
+						| /
+						= file.created.getMonth()+1
+						| /
+						= file.created.getFullYear()
 			
-			.width14.pull-right.pad-left-five
-				a(href=file.file, target="_blank")
-					img(src="/images/download-button.svg" style="width:100%;")
-			
-			if (eventadmin || file.user._id.equals(locals.user._id))
 				.width14.pull-right.pad-left-five
-					a(href="/event/"+ev._id+"/dropbox/"+file._id+"/remove")
-						img(src="/images/delete-button.svg" style="width:100%;")
-				.width14.pull-right.pad-left-five
-					a(href="#", data-toggle="modal", data-target="#filesharingModal")
-						img(src="/images/edit-sharing-button.svg" style="width:100%")
+					a(href=file.file target="_blank")
+						img(src="/images/download-button.svg" style="width:100%;")
+			
+				if (eventadmin || file.user._id.equals(locals.user._id))
+					.width14.pull-right.pad-left-five
+						a(href="/event/"+ev._id+"/dropbox/"+file._id+"/remove")
+							img(src="/images/delete-button.svg" style="width:100%;")
+					.width14.pull-right.pad-left-five
+						a(href="#" data-toggle="modal" data-target="#filesharingModal" ng-click="setFile(#{JSON.stringify(file)})")
+							img(src="/images/edit-sharing-button.svg" style="width:100%")
 				
-		.clearfix
+			.clearfix
 	
-	if (ev.files.length == 0)
-		h3.text-center No Files have been uploaded yet
-		p.text-center.lead Use form above to add some
+		if (ev.files.length == 0)
+			h3.text-center No Files have been uploaded yet
+			p.text-center.lead Use form above to add some
 	
-	include ../modals/dropboxPermissions
+		include ../modals/dropboxPermissions

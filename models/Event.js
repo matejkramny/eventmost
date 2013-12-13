@@ -53,7 +53,15 @@ var scheme = schema({
 		extension: String,
 		file: String,
 		size: String,
-		name: String
+		name: String,
+		permissions: {
+			categories: [String],
+			attendees: [{
+				type: ObjectId,
+				ref: 'Attendee'
+			}],
+			all: { type: Boolean, default: true }
+		}
 	}],
 	messages: [{
 		type: ObjectId,
