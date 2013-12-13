@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
-var async = require('async')
+var async = require('async');
+var sanitizer = require('sanitizer');
 
 var schema = mongoose.Schema
 	, ObjectId = schema.ObjectId
@@ -263,8 +264,7 @@ scheme.methods.edit = function (body, user, files, cb) {
 		this.address = body.location
 	}
 	if (body.description) {
-		//TODO temporarily disabled, possible source of XSS attacks
-		this.description = "";//body.description
+		this.description = sanitizer.sanitize(body.description);
 	}
 	if (body.allowAttendeesToCreateCategories != null) {
 		this.allowAttendeesToCreateCategories = body.allowAttendeesToCreateCategories
