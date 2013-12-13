@@ -312,7 +312,7 @@ if (!jQuery) { throw new Error("Bootstrap requires jQuery") }
   }
 
   Carousel.DEFAULTS = {
-    interval: 5000
+    interval: 1000
   , pause: 'hover'
   , wrap: true
   }
