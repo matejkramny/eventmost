@@ -34,7 +34,7 @@ block content
 		.progress-bar(ng-class="{ 'progress-bar-success': progress >= 100 }" aria-valuenow="{{progress}}" aria-valuemax="100" aria-valuemin="0" ng-style="{ width: progress+'%' }")
 	
 	//- content
-	div(ng-controller="dropboxSharingController" ng-init="setCategories(#{JSON.stringify(ev.categories)}); setAttendees(#{JSON.stringify(ev.attendees)});")
+	div(ng-controller="dropboxSharingController" ng-init="setCategories(#{JSON.stringify(ev.categories)});")
 		for file in ev.files
 			//- slide
 			.nspacer-big
