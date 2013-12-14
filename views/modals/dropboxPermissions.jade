@@ -54,7 +54,7 @@
 					.row
 						.col-lg-2.col-md-2.col-xs-2.col-sm-2.col-lg-offset-1.col-xs-offset-1.col-md-offset-1.col-sm-offset-1
 							p.check5-green-small
-								input#creditcardsmaller4(type="checkbox" ng-model="file.all")
+								input#creditcardsmaller4(type="checkbox" ng-model="file.permissions.all")
 								label(for='creditcardsmaller4')
 						.col-lg-9.col-md-9.col-xs-9.col-sm-9
 							.font-evente.pad-right-five.pad-top.fontish
@@ -69,10 +69,10 @@
 								li(ng-repeat="category in categories" ng-class="{ 'border-bottom': $last }")
 									a(href='#' style="min-height:45px; white-space:normal;", onclick="$('#dropboxCategory{{$index}}').trigger('click')")
 										.col-md-9.col-lg-9.col-sm-9.col-xs-9.nspacer(for="dropboxCategory{{$index}}")
-											| {{ category }}
+											| {{ category.name }}
 										.col-md-2.col-lg-2.col-sm-2.col-xs-2
 											p.check5-purple-solid(style="height:25px;")
-												input(type="checkbox" id="dropboxCategory{{$index}}")
+												input(type="checkbox" id="dropboxCategory{{$index}}" ng-model="category.checked" ng-change="updateCategories()")
 												label(for="dropboxCategory{{$index}}" ng-click="toggle")
 			
 			.clearfix
@@ -80,5 +80,5 @@
 			.row
 				.col-md-12.col-lg-12.col-sm-12.col-xs-12
 					.center
-						button.btn.btn-info(dropbox-save) Save Sharing Settings
+						button.btn.btn-info(dropbox-save) Good To Go
 			.nspacer

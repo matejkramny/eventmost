@@ -119,12 +119,35 @@ function saveDropbox (req, res) {
 	
 	var ev = res.locals.ev;
 	
+	try {
+		var pid = mongoose.Types.ObjectId(req.body.file);
+		
+		var found = false;
+		var file;
+		for (var i = 0; i < ev.files.length; i++) {
+			if (ev.files[i]._id.equals(pid)) {
+				found = true;
+				file = ev.files[i]
+				break;
+			}
+		}
+		
+		if (found) {
+			var perms = JSON.parse(req.body.permissions);
+			
+			file.permissions.all = perms.all;
+			file.permissions.categories = perms.categories;
+		}
+	} catch (e) {
+		throw e;
+	}
+	
 	ev.allowDropboxUpload = req.body.allowDropboxUpload == 'yes' ? true : false;
 	ev.save()
 	
+	req.session.flash = ["Dropbox Settings Updated"]
 	res.format({
 		html: function() {
-			req.session.flash = ["Dropbox Settings Updated"]
 			res.redirect('back')
 		},
 		json: function() {

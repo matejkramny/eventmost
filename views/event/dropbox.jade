@@ -34,8 +34,17 @@ block content
 		.progress-bar(ng-class="{ 'progress-bar-success': progress >= 100 }" aria-valuenow="{{progress}}" aria-valuemax="100" aria-valuemin="0" ng-style="{ width: progress+'%' }")
 	
 	//- content
-	div(ng-controller="dropboxSharingController" ng-init="setCategories(#{JSON.stringify(ev.categories)});")
+	div(ng-controller="dropboxSharingController")
 		for file in ev.files
+			if (!eventadmin && file.permissions.all == false)
+				- var isInCategory = false;
+				for category in file.permissions.categories
+					if (category == attendee.category)
+						- isInCategory = true;
+						- break;
+				if (!isInCategory)
+					- continue;
+			
 			//- slide
 			.nspacer-big
 			.col-lg-12.col-md-12.col-xs-12
@@ -69,7 +78,7 @@ block content
 						a(href="/event/"+ev._id+"/dropbox/"+file._id+"/remove")
 							img(src="/images/delete-button.svg" style="width:100%;")
 					.width14.pull-right.pad-left-five
-						a(href="#" data-toggle="modal" data-target="#filesharingModal" ng-click="setFile(#{JSON.stringify(file)})")
+						a(href="#" data-toggle="modal" data-target="#filesharingModal" ng-click="setFile(#{JSON.stringify(file)}); setCategories(#{JSON.stringify(ev.categories)});")
 							img(src="/images/edit-sharing-button.svg" style="width:100%")
 				
 			.clearfix

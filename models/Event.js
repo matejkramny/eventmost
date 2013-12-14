@@ -56,10 +56,6 @@ var scheme = schema({
 		name: String,
 		permissions: {
 			categories: [String],
-			attendees: [{
-				type: ObjectId,
-				ref: 'Attendee'
-			}],
 			all: { type: Boolean, default: true }
 		}
 	}],
