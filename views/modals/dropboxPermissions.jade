@@ -40,26 +40,26 @@
 			.row
 				.col-lg-12.col-md-12.col-xs-12
 					.text-center.font-evente.color-green
-						| Who can view {{ file.name }}
+						| Who can view: 
+						span(style="color:#542437;") {{ file.name }}
 			
 			.clearfix
 			
 			.nspacer-big
-			.row
-				.col-lg-1.col-md-1.col-xs-1.col-sm-1.col-lg-offset-3.col-md-offset-3.col-sm-offset-3.col-xs-offset-3
-					p.check5-green-small
-						input#creditcardsmaller4(type="checkbox" ng-model="file.all")
-						label(for='creditcardsmaller4')
-				.col-lg-4.col-md-4.col-xs-4.col-sm-4
-					.font-evente.pad-right-five.pad-top.fontish
-						| All attendees
-				
+			
 			//- dropdowns large
 			.row
 				.col-md-6.col-lg-6.col-sm-6.col-xs-6
-					.font-evente.center.cat-text.fontish
-						| Show to categories
-					
+					.nspacer-big
+					.row
+						.col-lg-2.col-md-2.col-xs-2.col-sm-2.col-lg-offset-1.col-xs-offset-1.col-md-offset-1.col-sm-offset-1
+							p.check5-green-small
+								input#creditcardsmaller4(type="checkbox" ng-model="file.all")
+								label(for='creditcardsmaller4')
+						.col-lg-9.col-md-9.col-xs-9.col-sm-9
+							.font-evente.pad-right-five.pad-top.fontish
+								| All attendees
+				.col-md-6.col-lg-6.col-sm-6.col-xs-6
 					ul.nav.navbar-nav.nav-last
 						li.dropdown.dropdown-menu-last1
 							a.dropdown-toggle.dropdown-toggle-last(href='#', data-toggle='dropdown')
@@ -74,31 +74,5 @@
 											p.check5-purple-solid(style="height:25px;")
 												input(type="checkbox" id="dropboxCategory{{$index}}")
 												label(for="dropboxCategory{{$index}}" ng-click="toggle")
-				.col-md-6.col-lg-6.col-sm-6.col-xs-6
-					.font-evente.center.cat-text2.fontish
-						| Select Attendees
-					ul.nav.navbar-nav.nav-last
-						li.dropdown.dropdown-menu-last1
-							a.dropdown-toggle.dropdown-toggle-last(href='#', data-toggle='dropdown')
-								| Choose Attendees
-								b.caret
-							
-							ul.dropdown-menu.dropdown-menu-last.pull-right
-								li(ng-repeat="attendee in attendees" ng-class="{ 'border-bottom': $last }")
-									a(href='#' style="min-height:45px; white-space:normal;", onclick="$('#dropboxAttendee{{$index}}').trigger('click')")
-										.col-md-9.col-lg-9.col-sm-9.col-xs-9.nspacer(for="dropboxAttendee{{$index}}")
-											| {{ attendee.user.name }} {{ attendee.user.surname }}
-										.col-md-2.col-lg-2.col-sm-2.col-xs-2
-											p.check5-purple-solid(style="height:25px;")
-												input(type="checkbox" id="dropboxAttendee{{$index}}")
-												label(for="dropboxAttendee{{$index}}" ng-click="toggle")
-
-			.nspacer-big
-
-			.col-lg-12.col-md-12.col-xs-12
-				.center.font-evente.fontish
-					| File will be viewable <b>but not downloadable </b> for anyone who has acccess to your event. <br />
-					Would you like to allow general public to also be able to view this file, but not downloand it?<br />
-					<b>!(such could help with brand promotion)!</b>
-
+			
 			.clearfix
