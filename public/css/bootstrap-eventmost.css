@@ -249,6 +249,7 @@ border-radius: 10px;}
 .width85{width: 85%;}
 .width53{width: 53%;}
 .width48{width: 48%;}
+.width45{width: 45%;}
 .width23{width: 23%;}
 .width18{width: 18%;}
 .width15{width: 15%;}
@@ -263,7 +264,7 @@ border-radius: 10px;}
 .button-event{width:20%;}
 
 
-.filename{padding: 21px; height:100px; font-size: 20px;}
+.filename{padding: 21px; min-height:100px; font-size: 20px;}
 
 .create-e-img{margin-top:-20px; padding-top:20px; margin-left:0px;}
 .create-height{height:158px;}

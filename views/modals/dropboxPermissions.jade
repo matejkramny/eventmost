@@ -12,16 +12,17 @@
 			form(action="/event/#{ev._id}/dropbox", method="POST")
 				input(name="_csrf" value=token type="hidden")
 				.row
-					.col-lg-12.col-md-12.col-xs-12
-						.font-evente.pull-left.fontish(style="margin-left:10px;")
-							| Allow attendees to upload files?
-						.pull-left
-							label.checkbox.toggle.candy(style='width: 100px; margin-left:20px; margin-top:4px;' onclick='')
-								input.allowAttendeesToUploadToDropbox.invisible(type='checkbox' name="allowDropboxUpload" value="yes" checked= ev.allowDropboxUpload == true ? "checked" : null)
-								span
-									span No
-									span Yes
-								a.slide-button
+					.col-lg-10.col-md-10.col-xs-10.no-float
+						
+							.font-evente.pull-left.fontish(style="margin-left:30px;")
+								| Allow attendees to upload files?
+							.pull-left
+								label.checkbox.toggle.candy(style='width: 100px; margin-left:20px; margin-top:4px;' onclick='')
+									input.allowAttendeesToUploadToDropbox.invisible(type='checkbox' name="allowDropboxUpload" value="yes" checked= ev.allowDropboxUpload == true ? "checked" : null)
+									span
+										span No
+										span Yes
+									a.slide-button
 				.clearfix
 				.row
 					.col-lg-12.col-md-12.col-xs-12.col-sm-12
@@ -36,11 +37,11 @@
 		.modal-content.reveal-modal
 			a.close-reveal-modal(href="#" data-dismiss="modal") 
 				img(src="/images/x.svg")
-			.nspacer-big
+			.nspacer-awsome
 			.row
-				.col-lg-12.col-md-12.col-xs-12
+				.col-lg-10.col-md-10.col-xs-10.no-float
 					.text-center.font-evente.color-green
-						| Who can view: 
+						| <b>Who can view:</b> 
 						span(style="color:#542437;") {{ file.name }}
 			
 			.clearfix
@@ -52,7 +53,7 @@
 				.col-md-6.col-lg-6.col-sm-6.col-xs-6
 					.nspacer-big
 					.row
-						.col-lg-2.col-md-2.col-xs-2.col-sm-2.col-lg-offset-1.col-xs-offset-1.col-md-offset-1.col-sm-offset-1
+						.col-lg-2.col-md-2.col-xs-2.col-sm-2.col-lg-offset-1.col-xs-offset-1.col-md-offset-1.col-sm-offset-1(style="margin-left:25px;")
 							p.check5-green-small
 								input#creditcardsmaller4(type="checkbox" ng-model="file.permissions.all")
 								label(for='creditcardsmaller4')
@@ -73,7 +74,7 @@
 										.col-md-2.col-lg-2.col-sm-2.col-xs-2
 											p.check5-purple-solid(style="height:25px;")
 												input(type="checkbox" id="dropboxCategory{{$index}}" ng-model="category.checked" ng-change="updateCategories()")
-												label(for="dropboxCategory{{$index}}" ng-click="toggle")
+												label(for="dropboxCategory{{$index}}" ng-click="toggle" style="padding-top:10px;")
 			
 			.clearfix
 			
