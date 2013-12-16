@@ -83,11 +83,17 @@ block content
 						.width14.pull-right.pad-left-five
 							a(href="#" data-toggle="modal" data-target="#filesharingModal" ng-click="setFile(#{JSON.stringify(file)}); setCategories(#{JSON.stringify(ev.categories)});")
 								img(src="/images/edit-sharing-button.svg" style="width:100%")
+
+				.clearfix
 				
 			.clearfix
+
+		.clearfix
 	
 		if (ev.files.length == 0)
 			h3.text-center No Files have been uploaded yet
 			p.text-center.lead Use form above to add some
 	
 		include ../modals/dropboxPermissions
+
+		.clearfix

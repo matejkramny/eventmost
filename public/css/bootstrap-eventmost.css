@@ -2187,7 +2187,7 @@ p.check5:not(#foo) > input[type=checkbox] + label:hover               { backgrou
 
 .other53{width: 70% !important;}
 .all{width:18%;}
-.filename{padding: 21px; height:82px; font-size: 17px;}
+.filename{padding: 21px; min-height:82px; font-size: 17px;}
 .half-round-purple {width: 96.2%;}
 #slider1 .overview li{ width: 240px; word-wrap:break-word;}
 .slider-text {width: 160%;}
@@ -2255,7 +2255,7 @@ min-height: 100px;
   .width85posts {width: 82%;}
 .post-width-text-new{width:95.4%;}
 .graphs-font{font-size: 14px;}
-.filename{padding: 21px; height:82px; font-size: 17px;}
+.filename{padding: 21px; min-height:82px; font-size: 17px;}
 .half-round-purple {width: 96.2%;}
 #slider1 .overview li{ width: 240px; word-wrap:break-word;}
 .slider-text {width: 160%;}
@@ -2344,7 +2344,7 @@ min-height: 100px;
 .graphs-font{font-size: 10px !important;}
 .other53{width: 70% !important;}
 .all{width:25%;}
-.filename{padding: 11px; height:62px; font-size: 14px;}
+.filename{padding: 11px; min-height:62px; font-size: 14px;}
 .half-round-purple {width: 95%;}
 .and{padding-top: 30px;}
 .post-width-small{width:82%;}
@@ -2553,7 +2553,7 @@ min-height: 100px;
 .graphs-font{font-size: 10px !important;}
 .other53{width: 70% !important;}
 .all{width:25%;}
-.filename{padding: 11px; height:58px; font-size: 14px;}
+.filename{padding: 11px; min-height:58px; font-size: 14px !important;}
 .half-round-purple {width: 94.8%;}
 .and{padding-top: 25px;}
 .don-show-here{display: none;}
@@ -2758,7 +2758,7 @@ min-height: 100px;
 .dropdown-menu-last{background-color: #f1f1f2 !important;}
 .other53{width: 80% !important;}
 .all{width:37%;}
-.filename{padding: 7px; height:46px; font-size: 11px;}
+.filename{padding: 7px; min-height:46px; font-size: 11px !important;}
 .button-font{font-size: 13px;}
 .half-round-purple {width: 94%;}
   .and{padding-top: 15px;}
@@ -2897,7 +2897,7 @@ min-height: 100px;
 .fontish{font-size: 14px !important;}
 .fontish2{font-size: 12px !important;}
 .back-spacer{margin-top: 0px; padding-left: 5px;}
-.filename{padding: 2px; padding-left: 10px; height:37px; font-size: 11px;}
+.filename{padding: 2px; padding-left: 10px; min-height:37px; font-size: 11px !important;}
 .button-font{font-size: 13px;}
 .half-round-purple {width: 91%;}
 .and{margin-top: -15px;}
@@ -3004,7 +3004,7 @@ table.gridtable-payment-yellow {font-size: 10px;}
 .font-header-icon{padding-left: 0px; font-size: 8px;} 
 .dont-show320, .dont-show320-2{display:none;}
 .show320, .show320-2{display:block;}
-.filename{padding: 2px; padding-left: 10px; height:34px; font-size: 9px;}
+.filename{padding: 2px; padding-left: 10px; min-height:34px; font-size: 9px !important;}
 }
 
 /* Event registraion page */
