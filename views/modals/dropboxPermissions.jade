@@ -42,7 +42,7 @@
 				.col-lg-10.col-md-10.col-xs-10.no-float
 					.text-center.font-evente.color-green
 						| <b>Who can view:</b> 
-						span(style="color:#542437;") {{ file.name }}
+						span.break(style="color:#542437;") {{ file.name }}
 			
 			.clearfix
 			
@@ -72,8 +72,8 @@
 										.col-md-9.col-lg-9.col-sm-9.col-xs-9.nspacer(for="dropboxCategory{{$index}}")
 											| {{ category.name }}
 										.col-md-2.col-lg-2.col-sm-2.col-xs-2
-											p.check5-purple-solid(style="height:25px;")
-												input(type="checkbox" id="dropboxCategory{{$index}}" ng-model="category.checked" ng-change="updateCategories()")
+											p.check5-purple-solid
+												input(type="checkbox" id="dropboxCategory{{$index}}" ng-model="category.checked" ng-change="updateCategories()" style="margin-left:-10px;")
 												label(for="dropboxCategory{{$index}}" ng-click="toggle" style="padding-top:10px;")
 			
 			.clearfix
@@ -81,5 +81,5 @@
 			.row
 				.col-md-12.col-lg-12.col-sm-12.col-xs-12
 					.center
-						button.btn.btn-info(dropbox-save) Good To Go
+						button.btn.btn-info.font-e(dropbox-save) Good To Go
 			.nspacer
