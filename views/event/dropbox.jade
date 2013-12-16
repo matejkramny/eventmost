@@ -62,7 +62,11 @@ block content
 					.width53.pull-left.pad-left-five(style="width: "+width+"%;")
 						.bg-ashen.font-evente.filename.font-change2.break
 							.bold
-								= file.name
+								if (file.name.length > 40)
+									abbr(title=file.name)= file.name.substring(0, 40)
+										| &hellip;
+								else
+									= file.name
 							.nspacer
 							= file.size
 							| , uploaded 
