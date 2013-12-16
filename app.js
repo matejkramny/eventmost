@@ -132,7 +132,7 @@ app.use(function(req, res, next) {
 		req.user.save()
 	}
 	
-	res.locals.minified = config.production ? ".min" : "";
+	res.locals.minified = "";//config.production ? ".min" : "";
 	
 	// navigation bar
 	next();
