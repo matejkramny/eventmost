@@ -20,27 +20,27 @@ block content
 		.row
 			.col-md-4.col-sm-4.col-lg-4.col-xs-12.nspacer
 				.font2.fontol
-					a.link-purple(href="#")
+					a.link-purple.bold(href="#")
 						| Create a business card
-			.col-md-8.col-sm-8.col-lg-8.col-xs-12
+			.col-md-8.col-sm-8.col-lg-8.col-xs-12.pull-right.pad-right-zero
 				.hide-mini3-except-smart
-					.font-x1.bg-purple.center.pull-right.psev2.prof-wall(style="padding-top:15px;")
+					.font-x1.bg-purple.center.pull-right.psev2.prof-wall(style="padding-top:15px; ")
 						a.link-white(href="#", ng-click="sendCard()") Save
-					.font-x1.bg-yellow.center.pull-right.psev2.prof-wall
-						a.link-purple(ng-disabled="!libraryBox.enabled", ng-click="removeElement()") Remove
+					.font-x1.bg-purple.center.pull-right.psev2.prof-wall(style="margin-right:5px;")
+						a.link-white(ng-disabled="!libraryBox.enabled", ng-click="removeElement()") Remove
 							br
 							| selected box
-					.font-x1.bg-purple.center.pull-right.psev2.prof-wall
+					.font-x1.bg-purple.center.pull-right.psev2.prof-wall(style="margin-right:5px;")
 						a.link-white(ng-click="createImage()") Add
 							br
 							| an image
-					.font-x1.bg-green.center.pull-right.psev2.prof-wall
+					.font-x1.bg-purple.center.pull-right.psev2.prof-wall(style="margin-right:5px;")
 						a.link-white(ng-click="createTextBox()") Add
 							br
 							| a text box
 				.center.hide-all2
 					.inline.nspacer-small
-						.font-x1.bg-green.center.psev2.prof-wall
+						.font-x1.bg-purple.center.psev2.prof-wall
 							a.link-white(ng-click="createTextBox()") Add
 								br
 								| a text box
@@ -50,16 +50,18 @@ block content
 								br
 								| an image 
 					.inline.nspacer-small
-						.font-x1.bg-yellow.center.psev2.prof-wall
-							a.link-purple(ng-disabled="!libraryBox.enabled", ng-click="removeElement()") Remove
+						.font-x1.bg-purple.center.psev2.prof-wall
+							a.link-white(ng-disabled="!libraryBox.enabled", ng-click="removeElement()") Remove
 								br
 								| selected box
 					.inline.nspacer-small
 						.font-x1.bg-purple.center.psev2.prof-wall
 							a.link-white(href="#", ng-click="sendCard()") Save
+							br
+							.color-purple
+								| &nbsp
 			.clearfix.hide-mini3-except-smart
-			.col-md-7.col-xs-7.hide-mini3-except-smart
-				.line-green(style="height:3px; margin-top:-3px;")
+
 		
 		.clearfix
 		.nspacer
