@@ -1896,7 +1896,8 @@ left:48%; top: 47%; z-index: 950; width: 63px; height: 72px; position:absolute; 
 
 
 @media only screen and (max-width: 480px) {
-
+.ca-nav span.ca-nav-next{display: none;
+}
 .d-s-s-s{display: none;}
 .d-s-s-s1{display: block;}
 .and{margin-top: -25px;}
