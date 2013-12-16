@@ -96,23 +96,6 @@ scheme.statics.getEvent = function (id, cb) {
 				
 				// a workaround for mongoose's bug of populating..
 				async.parallel([
-					//populate messages
-					function(callback) {
-						async.each(ev.messages, function(message, cb) {
-							message.populate('attendee', function(err) {
-								cb(null)
-							})
-						}, function(err) {
-							// populate message.attendee.user
-							async.each(ev.messages, function(msg, cb2) {
-								msg.attendee.populate('user', function(err) {
-									cb2(null)
-								})
-							}, function() {
-								callback(null)
-							});
-						})
-					},
 					//populate attendees
 					function(callback) {
 						async.each(ev.attendees, function(attendee, cb) {
@@ -148,6 +131,43 @@ scheme.statics.getEvent = function (id, cb) {
 		)
 	} catch (ex) {
 		cb();
+	}
+}
+
+scheme.methods.getComments = function (cb) {
+	var self = this;
+	try {
+		async.each(self.messages, function(message, cb) {
+			message.populate('attendee likes comments', function(err) {
+				async.parallel([
+					function(cb) {
+						message.attendee.populate('user', function() { cb(null) });
+					},
+					function(cb) {
+						async.each(message.likes, function(like, cb) {
+							like.populate('user', function() { cb(null) });
+						}, function() {
+							cb(null);
+						})
+					},
+					function(cb) {
+						async.each(message.comments, function(comment, cb) {
+							comment.populate('attendee', function() {
+								comment.attendee.populate('user', function() { cb(null) });
+							});
+						}, function() {
+							cb(null);
+						})
+					}
+				], function() {
+					cb(null);
+				})
+			});
+		}, function() {
+			cb();
+		})
+	} catch (e) {
+		cb()
 	}
 }
 

@@ -6,6 +6,7 @@ include inc/message
 
 append addonjs
 	//-include inc/mapjs
+	script(src="/js/mif.js", defer)
 
 block content
 	+navbar
@@ -14,13 +15,13 @@ block content
 		when 0
 			include layouts/5
 		when 1
-			include layouts/1
+			include layouts/5
 		when 2
-			include layouts/2
+			include layouts/5
 		when 3
-			include layouts/3
+			include layouts/5
 		when 4
-			include layouts/4
+			include layouts/5
 		when 5
 			include layouts/5
 
@@ -29,119 +30,103 @@ block content
 
 	//- comment post
 	.nspacer
-	.row
-		.col-sm-12.col-xs-12.col-md-12
-			.pull-left
-				img.pull-left.bubble-responsive(src="/images/bubble-left-blue.svg", alt="", style="vertical-align:top;")
-			.pull-left.bg-green.psev.post-width-text-new
-				form#commentForm(action="/event/"+ev._id+"/messages", method="POST")
-					input(type="hidden", name="_csrf", value=token)
-					textarea.postcommentarea1(placeholder="Post a comment here...", name="message")
+	div(ng-controller="commentsController", ng-init="init({ url: '/event/#{ev._id}/', user: '#{user._id}', csrf: '#{token}' });")
+		.row
+			.col-sm-12.col-xs-12.col-md-12
+				.pull-left
+					img.pull-left.bubble-responsive(src="/images/bubble-left-blue.svg", alt="", style="vertical-align:top;")
+				.pull-left.bg-green.psev.post-width-text-new
+					form#commentForm(action="/event/"+ev._id+"/comment", method="POST")
+						input(type="hidden", name="_csrf", value=token)
+						textarea.postcommentarea1(placeholder="Post a comment here...", name="message")
+						.pull-right
+							a(href="#", onclick="$('#commentForm').submit(); return false;")
+								img.post-butt(src="/images/post-button-new.svg")
+				.clearfix
+
+			//- other comments
+			div(ng-repeat="comment in comments")
+				.nspacer
+				.underpost.pull-right.break
+					.pull-left(style="overflow:hidden; border-radius:30px; -webkit-border-radius: 30px; -moz-border-radius:30px;width:60px;height:60px;border:0px solid #542437;")
+						img(src= attendee.user.avatar.length == 0 ? "/images/default_speaker-purple.svg" : attendee.user.avatar, style="width:60px;margin:0px auto auto 0px;")
+					.pull-left.pad-left-ten.width85.width85posts
+						.font16.bold
+							| {{ comment.attendee.user.name }} {{ comment.attendee.user.surname }}
+						.font14.font14sm.break.small-post.font-exception
+							| {{ comment.message }}
+						.pull-left.font14.font14md.font-exception
+							//- TODO hide if user._id == comment.attendee.user._id
+							a.link-green.bold(href="#")
+								| Like 
+						.pull-left.font14.font14md.color-green.pad-left-five.font-exception
+							| | posted @ 19:00 |
+						.pull-left.font14.font14md.color-green.pad-left-five.font-exception
+							img.pull-left(src="/images/mini-thumb.svg" alt="") 
+							.pad-left-five.pull-left
+								span(ng-repeat="like in comment.likes")
+									| <b>{{ like.user.name }} {{ like.user.surname }}</b> liked this.	|
+								span(ng-show="comment.likes.length == 0")
+									| 0 Likes	|
+						.pull-left.font14.font14md.color-green.pad-left-five.font-exception
+							img.pull-left(src="/images/mini-bubble.svg" alt="") 
+							.pad-left-five.pull-left.font-exception
+								a.link-green(href="#")
+									| View 2 more commnets
+						.clearfix
+					.pull-left
+						//- after clicking the arrow the rest of the comment should appear i think
+						a(href="#")
+							img.psev(src="/images/small-arrow-down.svg", alt="", style="padding-top:28px;")
 					.pull-right
-						a(href="#", onclick="$('#commentForm').submit(); return false;")
-							img.post-butt(src="/images/post-button-new.svg")
+						//- button only visible for creator and planner
+						button.btn.btn-primary.font14.pull-right.nspacer(type='submit', style="border-radius: 10px; padding:7px; padding-left:12px; padding-right:12px;")
+							a.link-white(href="/" class="") delete
+				.clearfix
+
+				div(ng-repeat="subcomment in comment.comments")
+					.underpost-smaller.pull-right.break.nspacer
+						.pull-left(style="overflow:hidden; border-radius:22px; -webkit-border-radius: 22px; -moz-border-radius:22px;width:44px;height:44px;border:0px solid #542437;")
+							img(src= attendee.user.avatar.length == 0 ? "/images/default_speaker-purple.svg" : attendee.user.avatar, style="width:44px;margin:0px auto auto 0px;")
+						.pull-left.pad-left-ten.width85.width85posts
+							.font14.font14sm.break.small-post.font-exception
+								| <span class="font16 bold">{{ subcomment.attendee.user.name }} {{ subcomment.attendee.user.surname }}</span> {{ subcomment.message }}
+							.pull-left.font14.font14md.color-green.pad-left-five.font-exception
+								| posted @ 50 minutes ago |
+							.pull-left.font14.font14md.pad-left-five.font-exception
+								a.link-green.bold(href="#")
+									| Like 
+							.clearfix
+						.pull-left
+							//- after clicking the arrow the rest of the comment should appear i think
+							a(href="#")
+								img.psev(src="/images/small-arrow-down.svg", alt="", style="padding-top:10px;")
+						.pull-right
+							//- button only visible for creator and planner
+							button.btn.btn-primary.font14.pull-right.nspacer(type='submit', style="border-radius: 10px; padding:7px; padding-left:12px; padding-right:12px;")
+								a.link-white(href="/" class="") delete
+
+					.clearfix
+				
+				.underpost-smaller.pull-right.break.nspacer
+					.pull-left(style="overflow:hidden; border-radius:22px; -webkit-border-radius: 22px; -moz-border-radius:22px;width:44px;height:44px;border:0px solid #542437;")
+						img(src= attendee.user.avatar.length == 0 ? "/images/default_speaker-purple.svg" : attendee.user.avatar, style="width:44px;margin:0px auto auto 0px;")
+					.pull-left.pad-left-ten.width85.width85posts
+						.font14.font14sm.break.nspacer-small
+							input.search-input.width100.psev(type"text" placeholder="Write a comment..." ng-model="comment.temp_comment")
+						button.btn.btn-default.font14.pull-right.nspacer(style="border-radius: 10px; padding:7px; padding-left:12px; padding-right:12px;" ng-click="submitSubComment(comment)")
+							| Submit
+					.clearfix
+		
+		.clearfix
+		.nspacer-bigger
+		.row
+
+			.col-sm-12.col-xs-12.col-md-12
+				.pull-right
+					a.dark-grey(href="/")
+						| see more comments &or;
 			.clearfix
-
-		//- other comments
-		.nspacer
-		.underpost.pull-right.break
-			.pull-left(style="overflow:hidden; border-radius:30px; -webkit-border-radius: 30px; -moz-border-radius:30px;width:60px;height:60px;border:0px solid #542437;")
-				img(src= attendee.user.avatar.length == 0 ? "/images/default_speaker-purple.svg" : attendee.user.avatar, style="width:60px;margin:0px auto auto 0px;")
-			.pull-left.pad-left-ten.width85.width85posts
-				.font16.bold
-					| Anna Marie
-				.font14.font14sm.break.small-post.font-exception
-					| Duis aute irure dolor in reprehenderit in voluptate velit  dolor in reprehenderi esse cillum dolore  dolor in reprehenderi eu fugiat nulla pari... hngndndgn Excepteur sint occaecat cupidatat non...
-				.pull-left.font14.font14md.font-exception
-					a.link-green.bold(href="#")
-						| Like 
-				.pull-left.font14.font14md.color-green.pad-left-five.font-exception
-					| | posted @ 19:00 |
-				.pull-left.font14.font14md.color-green.pad-left-five.font-exception
-					img.pull-left(src="/images/mini-thumb.svg" alt="") 
-					.pad-left-five.pull-left
-						| <b>Anna Marie</b> liked this.	|
-				.pull-left.font14.font14md.color-green.pad-left-five.font-exception
-					img.pull-left(src="/images/mini-bubble.svg" alt="") 
-					.pad-left-five.pull-left.font-exception
-						a.link-green(href="#")
-							| View 2 more commnets
-				.clearfix
-			.pull-left
-				//- after clicking the arrow the rest of the comment should appear i think
-				a(href="#")
-					img.psev(src="/images/small-arrow-down.svg", alt="", style="padding-top:28px;")
-			.pull-right
-				//- button only visible for creator and planner
-				button.btn.btn-primary.font14.pull-right.nspacer(type='submit', style="border-radius: 10px; padding:7px; padding-left:12px; padding-right:12px;")
-					a.link-white(href="/" class="") delete
-		.clearfix
-
-		.underpost-smaller.pull-right.break.nspacer
-			.pull-left(style="overflow:hidden; border-radius:22px; -webkit-border-radius: 22px; -moz-border-radius:22px;width:44px;height:44px;border:0px solid #542437;")
-				img(src= attendee.user.avatar.length == 0 ? "/images/default_speaker-purple.svg" : attendee.user.avatar, style="width:44px;margin:0px auto auto 0px;")
-			.pull-left.pad-left-ten.width85.width85posts
-				.font14.font14sm.break.small-post.font-exception
-					| <span class="font16 bold">Anna Marie</span> Duis aute irure dolor in reprehenderit in voluptate velit  dolor in reprehenderi esse cillum dolore  dolor in sdfdjfd reprehenderi eu fugiat nulla pariatur. hngndndgn Excepteur sint occaecat cupidatat non..
-				.pull-left.font14.font14md.color-green.pad-left-five.font-exception
-					| posted @ 50 minutes ago |
-				.pull-left.font14.font14md.pad-left-five.font-exception
-					a.link-green.bold(href="#")
-						| Like 
-				.clearfix
-			.pull-left
-				//- after clicking the arrow the rest of the comment should appear i think
-				a(href="#")
-					img.psev(src="/images/small-arrow-down.svg", alt="", style="padding-top:10px;")
-			.pull-right
-				//- button only visible for creator and planner
-				button.btn.btn-primary.font14.pull-right.nspacer(type='submit', style="border-radius: 10px; padding:7px; padding-left:12px; padding-right:12px;")
-					a.link-white(href="/" class="") delete
-
-		.clearfix
-
-		.underpost-smaller.pull-right.break.nspacer
-			.pull-left(style="overflow:hidden; border-radius:22px; -webkit-border-radius: 22px; -moz-border-radius:22px;width:44px;height:44px;border:0px solid #542437;")
-				img(src= attendee.user.avatar.length == 0 ? "/images/default_speaker-purple.svg" : attendee.user.avatar, style="width:44px;margin:0px auto auto 0px;")
-			.pull-left.pad-left-ten.width85.width85posts
-				.font14.font14sm.break.small-post.font-exception
-					| <span class="font16 bold">Anna Marie</span> Duis aute irure dolor in reprehenderit in voluptate velit  dolor in reprehenderi esse cillum dolore  dolor in reprehenderi eu fugiat nulla pariatur. hngndndgn Excepteur sint occaecat cupidatat non..
-				.pull-left.font14.font14md.color-green.pad-left-five.font-exception
-					| posted @ 50 minutes ago |
-				.pull-left.font14.font14md.pad-left-five.font-exception
-					a.link-green.bold(href="#")
-						| Like 
-				.clearfix
-			.pull-left
-				//- after clicking the arrow the rest of the comment should appear i think
-				a(href="#")
-					img.psev(src="/images/small-arrow-down.svg", alt="", style="padding-top:10px;")
-			.pull-right
-				//- button only visible for creator and planner
-				button.btn.btn-primary.font14.pull-right.nspacer(type='submit', style="border-radius: 10px; padding:7px; padding-left:12px; padding-right:12px;")
-					a.link-white(href="/" class="") delete
-
-		.clearfix
-
-		.underpost-smaller.pull-right.break.nspacer
-			.pull-left(style="overflow:hidden; border-radius:22px; -webkit-border-radius: 22px; -moz-border-radius:22px;width:44px;height:44px;border:0px solid #542437;")
-				img(src= attendee.user.avatar.length == 0 ? "/images/default_speaker-purple.svg" : attendee.user.avatar, style="width:44px;margin:0px auto auto 0px;")
-			.pull-left.pad-left-ten.width85.width85posts
-				.font14.font14sm.break.nspacer-small
-					input.search-input.width100.psev(type"text" placeholder="Write a comment...", name="message" )
-				button.btn.btn-default.font14.pull-right.nspacer(type='submit', style="border-radius: 10px; padding:7px; padding-left:12px; padding-right:12px;")
-					a.link-white(href="/" class="") Sumbit
-			.clearfix
-
-	.clearfix
-	.nspacer-bigger
-	.row
-
-		.col-sm-12.col-xs-12.col-md-12
-			.pull-right
-				a.dark-grey(href="/")
-					| see more comments &or;
-		.clearfix
 
 	.line-dark-grey
 	.clearfix

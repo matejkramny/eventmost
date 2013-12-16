@@ -3,28 +3,109 @@ var models = require('../../models')
 
 exports.router = function (app) {
 	app.get('/event/:id/messages', display)
-		.post('/event/:id/messages', postMessage)
+		.get('/event/:id/comments', getComments)
+		.post('/event/:id/comment', postComment)
 }
 
 function display (req, res) {
 	res.render('event/messages', { title: "Event Messages" })
 }
 
-function postMessage (req, res) {
+function getComments (req, res) {
+	res.locals.ev.getComments(function() {
+		res.format({
+			json: function() {
+				res.send({
+					status: 200,
+					comments: res.locals.ev.messages
+				})
+			}
+		})
+	})
+}
+
+function postComment (req, res) {
 	var message = req.body.message;
+	var inResponse = req.body.inResponse;
 	
 	if (!message) {
-		res.redirect('/event/'+res.locals.ev._id);
+		res.format({
+			html: function() {
+				res.redirect('/event/'+res.locals.ev._id);
+			},
+			json: function() {
+				res.send({
+					status: 404,
+					message: "No Message Received"
+				})
+			}
+		})
 		return;
 	}
 	
-	var msg = new models.EventMessage({
-		attendee: res.locals.attendee._id,
-		message: message
-	})
-	msg.save()
-	res.locals.ev.messages.push(msg._id);
-	res.locals.ev.save()
+	try {
+		inResponse = mongoose.Types.ObjectId(inResponse);
+	} catch (e) {}
 	
-	res.redirect("/event/"+res.locals.ev._id+"/messages")
+	if (inResponse != null) {
+		models.EventMessage.findById(inResponse, function(err, msg) {
+			if (err || !msg) {
+				res.format({
+					html: function() {
+						res.redirect('/event/'+res.locals.ev._id);
+					},
+					json: function() {
+						res.send({
+							status: 404,
+							message: "No Such Message"
+						})
+					}
+				})
+				return;
+			}
+			
+			var message = new models.EventMessage({
+				attendee: res.locals.attendee._id,
+				message: req.body.message,
+				inResponse: true
+			})
+			
+			msg.comments.push(message._id);
+			
+			message.save();
+			msg.save();
+			
+			res.format({
+				html: function() {
+					res.redirect("/event/"+res.locals.ev._id)
+				},
+				json: function() {
+					res.send({
+						status: 200,
+						message: "Comment Sent"
+					})
+				}
+			})
+		})
+	} else {
+		var msg = new models.EventMessage({
+			attendee: res.locals.attendee._id,
+			message: message
+		})
+		msg.save()
+		res.locals.ev.messages.push(msg._id);
+		res.locals.ev.save()
+		
+		res.format({
+			html: function() {
+				res.redirect("/event/"+res.locals.ev._id)
+			},
+			json: function() {
+				res.send({
+					status: 200,
+					message: "Comment Sent"
+				})
+			}
+		})
+	}
 }
