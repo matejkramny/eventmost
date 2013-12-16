@@ -1,50 +1,45 @@
-.col-xs-12.hide-all2
-	form(method="POST", accept-charset="utf-8")
-		input.gonew2.pull-right.header-links(type="button", value="GO", style="width:10%;")
-		input(type="hidden", name="_csrf", value=token)
-		input.pull-right.font-s.search-input.pad-left-ten.header-links(type="search", placeholder="search events or people", style="width:87%;")
-.clearfix.hide-all2
-
 
 //- inbox title plus buttons
 .nspacer
+.row.hide-mini3-except-smart
+	.col-md-3.col-xs-3.col-sm-3.nspacer-medium.hide-mini3-except-smart
+		.font-tw
+			a.link-purple(href="", style="text-decoration: none !important;")
+				b= pagename
+	.col-md-9.col-xs-9.col-sm-9.hide-mini3-except-smart.pad-right-zero
+		.font-x1.bg-purple.center.pull-right.psev2.prof-wall(style="padding-top:15px;")
+			a.link-white(href="/event/add") Create Event
+		.font-x1.bg-purple.center.pull-right.psev2.prof-wall(style="padding-top:15px; margin-right:5px;")
+			a.link-white(href="/events/near") Near Events
+		.font-x1.bg-purple.center.pull-right.psev2.prof-wall(style="margin-right:5px;")
+			a.link-white(href="/events/my") Created<br/>Events
+		.font-x1.bg-purple.center.pull-right.psev2.prof-wall(style="margin-right:5px;")
+			a.link-white(href="/events") All <br/>Events
+	.clearfix.hide-mini3-except-smart
 
-.col-md-7.col-xs-7.col-sm-7.nspacer-medium.hide-mini3-except-smart
-	.font-tw
+.row.hide-all2
+	.col-md-12.col-xs-12.col-sm-12.nspacer-medium.hide-all2
+		.center(style="margin-top:-40px;")
+			a.link-purple(href="", style="text-decoration: none !important;")
+				b= pagename
+	.clearfix.hide-all2
 
-.col-md-5.col-xs-5.col-sm-5.hide-mini3-except-smart
-	.font-x1.bg-yellow.center.pull-right.psev2.prof-wall(style="padding-top:15px;")
-		a.link-purple(href="/event/add") Create Event
-	.font-x1.bg-purple.center.pull-right.psev2.prof-wall(style="padding-top:15px;")
-		a.link-white(href="/events/near") Near Events
-	.font-x1.bg-green.center.pull-right.psev2.prof-wall
-		a.link-white(href="/events/my") Created<br/>Events
-	.font-x1.bg-yellow.center.pull-right.psev2.prof-wall
-		a.link-purple(href="/events") All <br/>Events
-.clearfix.hide-mini3-except-smart
-.col-md-8.col-xs-8.col-sm-8.hide-mini3-except-smart
-	.line-purple(style="height:3px; margin-top:-3px;")
+.row.hide-all2
+	.col-md-12.col-xs-12.col-sm-12.hide-all2
+		.center(style="margin-top:-35px;")
+			.inline.nspacer-small
+				.font-x1.bg-purple.center.psev2.prof-wall
+					a.link-white(href="/events/") All<br/>Events
+			.inline.nspacer-small
+				.font-x1.bg-purple.center.psev2.prof-wall
+					a.link-white(href="/events/my") Created <br/>Events
+			.inline.nspacer-small
+				.font-x1.bg-purple.center.psev2.prof-wall
+					a.link-white(href="/events/near") Events <br/>Nearby
+			.inline.nspacer-small
+				.font-x1.bg-purple.center.psev2.prof-wall
+					a.link-white(href="/event/add") Create <br/>Event
 
-.col-md-12.col-xs-12.col-sm-12.nspacer-medium.hide-all2
-	.center
-		a(href="", style="text-decoration: none !important; color: black;")
-			b= pagename
-.clearfix.hide-all2
-.col-md-12.col-xs-12.col-sm-12.hide-all2
-	.center
-		.inline.nspacer-small
-			.font-x1.bg-green.center.psev2.prof-wall
-				a.link-white(href="/events/") All<br/>Events
-		.inline.nspacer-small
-			.font-x1.bg-purple.center.psev2.prof-wall
-				a.link-white(href="/events/my") Created <br/>Events
-		.inline.nspacer-small
-			.font-x1.bg-yellow.center.psev2.prof-wall
-				a.link-purple(href="/events/near") Events <br/>Nearby
-		.inline.nspacer-small
-			.font-x1.bg-green.center.psev2.prof-wall
-				a.link-white(href="/event/add") Create <br/>Event
-
-.clearfix
+	.clearfix
 
 //- end inbox title plus buttons

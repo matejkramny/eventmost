@@ -511,6 +511,21 @@ min-height: 116px;
 }
 /* inputs */
 
+#buttonbrowse{
+position: relative;
+left:-1px;
+background-color:#542437;
+color: #fff;
+padding-left: 10px;
+padding-right: 10px;
+  height: 36px;
+      border: 0px solid white; 
+}​
+.sponsor-browse{
+    border: 5px solid white; 
+    background: rgba(255,255,255,0.5);
+    margin: 0 0 10px 0;
+}
 .search-input {
   background-color: #fff;
   color: #542437;
