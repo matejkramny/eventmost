@@ -44,19 +44,4 @@ var eventMost = angular.module('emAdmin', [])
 			_csrf: $scope.csrf
 		})
 	}
-	
-	$scope.hireUser = function (user) {
-		user.adminMeeting = true;
-		
-		$http.post("/admin/users/"+user._id+"/hire", {
-			_csrf: $scope.csrf
-		})
-	}
-	$scope.fireUser = function (user) {
-		user.adminMeeting = false;
-		
-		$http.post("/admin/users/"+user._id+"/fire", {
-			_csrf: $scope.csrf
-		})
-	}
 })

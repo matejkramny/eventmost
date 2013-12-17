@@ -5,8 +5,6 @@ exports.router = function (app) {
 		.post('/admin/users/:id/remove', removeUser)
 		.post('/admin/users/:id/op', getUser, OPUSER)
 		.post('/admin/users/:id/deop', getUser, DEOPUSER)
-		.post('/admin/users/:id/fire', getUser, fire)
-		.post('/admin/users/:id/hire', getUser, hire)
 }
 
 function show (req, res) {
@@ -69,42 +67,6 @@ function DEOPUSER (req, res) {
 	var user = res.locals._user;
 	
 	user.admin = false;
-	user.save(function (err) {
-		if (err) throw err;
-	});
-	
-	res.format({
-		html: function() {
-			res.redirect('/admin/users')
-		},
-		json: function() {
-			res.send(200, {});
-		}
-	})
-}
-
-function hire (req, res) {
-	var user = res.locals._user;
-	
-	user.adminMeeting = true;
-	user.save(function (err) {
-		if (err) throw err;
-	});
-	
-	res.format({
-		html: function() {
-			res.redirect('/admin/users')
-		},
-		json: function() {
-			res.send(200, {});
-		}
-	})
-}
-
-function fire (req, res) {
-	var user = res.locals._user;
-	
-	user.adminMeeting = false;
 	user.save(function (err) {
 		if (err) throw err;
 	});

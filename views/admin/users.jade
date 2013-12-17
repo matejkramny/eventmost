@@ -38,14 +38,11 @@ block content
 							span  Remove
 				
 					td
-						a.btn.btn-danger.btn-xs(ng-click="deopUser(user)", ng-show="user.admin == true")
-							span.glyphicon.glyphicon-chevron-down
-						a.btn.btn-success.btn-xs(ng-click="opUser(user)", ng-show="user.admin == false")
-							span.glyphicon.glyphicon-chevron-up
-						| &nbsp;
-						a.btn.btn-default.btn-xs(ng-click="hireUser(user)", ng-show="user.adminMeeting == false")
-							i.fa.fa-users
-							span  Meeting
-						a.btn.btn-danger.btn-xs(ng-click="fireUser(user)", ng-show="user.adminMeeting == true")
-							i.fa.fa-users
-							span  Meeting
+						.btn-group
+							a.btn.btn-danger.btn-xs(ng-click="deopUser(user)", ng-show="user.admin == true")
+								span.glyphicon.glyphicon-chevron-down
+							a.btn.btn-success.btn-xs(ng-click="opUser(user)", ng-show="user.admin == false")
+								span.glyphicon.glyphicon-chevron-up
+							a.btn.btn-default.btn-xs(ng-click="editUser(user)")
+								i.fa.fa-edit.fa-fw
+								|  Edit
