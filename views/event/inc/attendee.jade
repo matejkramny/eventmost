@@ -3,7 +3,7 @@ mixin attendee(attendee, feedbackEditLink)
 		- feedbackEditLink = false;
 	
 	.col-sm-4.col-xs-4.col-md-4.nspacer
-		div(class= attendee.user._id.equals(user._id) ? "grey-rounded-box" : null)
+		div(class= attendee.admin ? "grey-rounded-box" : null)
 			.pull-left.circle-avatar-new
 				img.image-circle-avatar-new(src= attendee.user.avatar.length == 0 ? "/images/default_speaker-purple.svg" : attendee.user.avatar)
 			.pull-left.center.font-exception-thin.width-attendees.pad-left-ten
