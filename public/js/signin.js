@@ -9,6 +9,8 @@ $(document).ready(function() {
 	$registerUserEmail = $("#RegisterUserEmail")
 	$registerUserPassword = $("#RegisterUserPassword")
 	
+	$('.enable_popover').popover()
+	
 	$registerUserEmail.blur(function() {
 		// Check email availability
 		var $status = $registerForm.find('.formStatus');

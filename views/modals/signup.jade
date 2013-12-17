@@ -2,17 +2,18 @@
 	.modal-dialog
 		.modal-content
 			.modal-body.reveal-modal
-				h1 Hello !
+				h1 Log In
 				form#LoginForm(action="/auth/password", method="POST")
 					input(type="hidden", name="_csrf", value=token)
-					.pop-input.center.font-e.font-reg(style="margin-top:15px;")
-						| Login in with
+					.pop-input.center.font-e.font-reg(style="margin-top:15px; font-size:15px;")
+						span(style="position:relative; top:5px; right:15px; font-size: 20px;") Recommended 
+						i.fa.fa-hand-o-right(style="font-size:40px; position:relative; top:10px; right: 10px;")
 						a.pad-left-ten(href="/auth/facebook")
-							img.icon-min(src="/images/face-icon.svg")
+							img.icon-min(src="/images/face-icon.svg" style="width:50px;")
 						a.pad-left-ten(href="/auth/twitter")
-							img.icon-min(src="/images/twit-icon.svg")
+							img.icon-min(src="/images/twit-icon.svg" style="width:50px;")
 						a.pad-left-ten(href="/auth/linkedin")
-							img.icon-min(src="/images/in-icon.svg")
+							img.icon-min(src="/images/in-icon.svg" style="width:50px;")
 					.clearfix
 					br
 					.formStatus.center
@@ -35,19 +36,18 @@
 	.modal-dialog
 		.modal-content
 			.modal-body.reveal-modal
-				h1 Hello !
-				.center
-					| To create an account please fill our form.
+				h1 Register
 				form#RegisterForm(action="/auth/password", method="POST")
 					input(type="hidden", name="_csrf", value=token)
-					.pop-input.center.font-e.font-reg(style="margin-top:15px;")
-						| Sign up with
+					.pop-input.center.font-e.font-reg(style="margin-top:15px; font-size:15px;")
+						span(style="position:relative; top:5px; right:15px; font-size: 20px;") Recommended 
+						i.fa.fa-hand-o-right(style="font-size:40px; position:relative; top:10px; right: 10px;")
 						a.pad-left-ten(href="/auth/facebook")
-							img.icon-min(src="/images/face-icon.svg")
+							img.icon-min(src="/images/face-icon.svg" style="width:50px;")
 						a.pad-left-ten(href="/auth/twitter")
-							img.icon-min(src="/images/twit-icon.svg")
+							img.icon-min(src="/images/twit-icon.svg" style="width:50px;")
 						a.pad-left-ten(href="/auth/linkedin")
-							img.icon-min(src="/images/in-icon.svg")
+							img.icon-min(src="/images/in-icon.svg" style="width:50px;")
 					.clearfix
 					br
 					.formStatus.center
