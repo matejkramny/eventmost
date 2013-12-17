@@ -144,6 +144,7 @@ function redirectToRegistrationPage (req, res, next) {
 function viewEvent (req, res) {
 	res.format({
 		html: function() {
+			res.locals.hideArrow = true;
 			if (res.locals.eventattending) {
 				res.render('event/homepage', { title: res.locals.ev.name });
 			} else {

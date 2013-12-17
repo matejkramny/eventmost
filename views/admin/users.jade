@@ -16,8 +16,7 @@ block content
 					th: abbr(title="Facebook") Fb
 					th: abbr(title="LinkedIn") in
 					th Admin
-					th Remove
-					th OP
+					th &nbsp;
 			tbody
 				tr(ng-repeat="user in users | orderBy:'-created'")
 					td {{ user.name }}
@@ -33,16 +32,13 @@ block content
 					td
 						span.glyphicon.glyphicon-ok(ng-show="user.admin == true")
 					td
-						a.btn.btn-danger.btn-xs(ng-click="removeUser(user)")
-							span.glyphicon.glyphicon-remove
-							span  Remove
-				
-					td
 						.btn-group
+							a.btn.btn-info.btn-xs(ng-click="editUser(user)")
+								i.fa.fa-edit.fa-fw
 							a.btn.btn-danger.btn-xs(ng-click="deopUser(user)", ng-show="user.admin == true")
 								span.glyphicon.glyphicon-chevron-down
 							a.btn.btn-success.btn-xs(ng-click="opUser(user)", ng-show="user.admin == false")
 								span.glyphicon.glyphicon-chevron-up
-							a.btn.btn-default.btn-xs(ng-click="editUser(user)")
-								i.fa.fa-edit.fa-fw
-								|  Edit
+							a.btn.btn-danger.btn-xs(ng-click="removeUser(user)")
+								span.glyphicon.glyphicon-remove
+								span(ng-show="user.askedConfirm == true")  U Sure?

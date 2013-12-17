@@ -16,6 +16,11 @@ var eventMost = angular.module('emAdmin', [])
 	}
 	
 	$scope.removeUser = function(user) {
+		if (user.askedConfirm != true) {
+			user.askedConfirm = true;
+			return;
+		}
+		
 		var users = $scope.users;
 		for (var i = 0; i < users.length; i++) {
 			if (users[i]._id == user._id) {
