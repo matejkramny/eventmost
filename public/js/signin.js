@@ -41,6 +41,10 @@ $(document).ready(function() {
 		$("#loginModal").modal('hide');
 		$("#signModal").modal('show');
 	})
+	$("#openLoginModal").click(function() {
+		$("#signModal").modal('hide');
+		$("#loginModal").modal('show');
+	})
 	
 	function Form($form, $elements, options) {
 		this.form = $form;

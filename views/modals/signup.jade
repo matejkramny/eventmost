@@ -5,6 +5,16 @@
 				h1 Hello !
 				form#LoginForm(action="/auth/password", method="POST")
 					input(type="hidden", name="_csrf", value=token)
+					.pop-input.center.font-e.font-reg(style="margin-top:15px;")
+						| Login in with
+						a.pad-left-ten(href="/auth/facebook")
+							img.icon-min(src="/images/face-icon.svg")
+						a.pad-left-ten(href="/auth/twitter")
+							img.icon-min(src="/images/twit-icon.svg")
+						a.pad-left-ten(href="/auth/linkedin")
+							img.icon-min(src="/images/in-icon.svg")
+					.clearfix
+					br
 					.formStatus.center
 					.pop-input.center
 						input.login#LoginUserEmail(name="login", ng-model="email", placeholder="email", type="email", required="required")
@@ -14,18 +24,10 @@
 						button.btn.btn-primary.font.font-ah(type='submit', authentication-login)
 							| ENTER
 					.clearfix
-					.pop-input.center.font-e.font-reg(style="margin-top:15px;")
-						| Login in with
-						a.pad-left-ten(href="/auth/facebook")
-							img(src="/images/face-icon.svg", alt="", class="icon-min")
-						a.pad-left-ten(href="/auth/twitter")
-							img(src="/images/twit-icon.svg", alt="", class="icon-min")
-						a.pad-left-ten(href="/auth/linkedin")
-							img(src="/images/in-icon.svg", alt="", class="icon-min")
 				.clearfix
 				.pop-input.center
-					| Want to create an account? 
-					a.link-purple#openRegisterModal(href="#") Enter here!
+					| Want to 
+					a.link-purple#openRegisterModal(href="#") create an account? 
 				a(href="#" class="close-reveal-modal" data-dismiss="modal") 
 					img(src="/images/x.svg")
 			
@@ -38,6 +40,16 @@
 					| To create an account please fill our form.
 				form#RegisterForm(action="/auth/password", method="POST")
 					input(type="hidden", name="_csrf", value=token)
+					.pop-input.center.font-e.font-reg(style="margin-top:15px;")
+						| Sign up with
+						a.pad-left-ten(href="/auth/facebook")
+							img.icon-min(src="/images/face-icon.svg")
+						a.pad-left-ten(href="/auth/twitter")
+							img.icon-min(src="/images/twit-icon.svg")
+						a.pad-left-ten(href="/auth/linkedin")
+							img.icon-min(src="/images/in-icon.svg")
+					.clearfix
+					br
 					.formStatus.center
 					.pop-input.center
 						input.name#RegisterUserName(name="name", placeholder="name", maxlength="128", type="text",)
@@ -49,13 +61,7 @@
 						button.btn.btn-primary.font.font-ah(type='submit', href="",)
 							| REGISTER
 					.clearfix
-					.pop-input.center.font-e.font-reg(style="margin-top:15px;")
-						| Sign up with
-						a.pad-left-ten(href="/auth/facebook")
-							img(src="/images/face-icon.svg", alt="", class="icon-min")
-						a.pad-left-ten(href="/auth/twitter")
-							img(src="/images/twit-icon.svg", alt="", class="icon-min")
-						a.pad-left-ten(href="/auth/linkedin")
-							img(src="/images/in-icon.svg", alt="", class="icon-min")
+					.pop-input.center
+						a.link-purple#openLoginModal(href="#") Already Registered?
 					a(href="#", class="close-reveal-modal", data-dismiss="modal") 
 						img(src="/images/x.svg")
