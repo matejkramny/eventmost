@@ -57,15 +57,16 @@ block content
 							| {{ comment.message }}
 						.pull-left.font14.font14md.font-exception
 							//- TODO hide if user._id == comment.attendee.user._id
-							a.link-green.bold(href="#")
-								| Like 
+							a.link-green.bold(href="#", ng-hide="user == comment.attendee.user._id")
+								| Like | 
 						.pull-left.font14.font14md.color-green.pad-left-five.font-exception
-							| | posted @ 19:00 |
+							| posted @ 19:00 |
 						.pull-left.font14.font14md.color-green.pad-left-five.font-exception
 							img.pull-left(src="/images/mini-thumb.svg" alt="") 
 							.pad-left-five.pull-left
 								span(ng-repeat="like in comment.likes")
-									| <b>{{ like.user.name }} {{ like.user.surname }}</b> liked this.	|
+									b {{ like.user.name }} {{ like.user.surname }}
+									|  liked this.	|
 								span(ng-show="comment.likes.length == 0")
 									| 0 Likes	|
 						.pull-left.font14.font14md.color-green.pad-left-five.font-exception
@@ -78,7 +79,7 @@ block content
 						//- after clicking the arrow the rest of the comment should appear i think
 						a(href="#")
 							img.psev(src="/images/small-arrow-down.svg", alt="", style="padding-top:28px;")
-					.pull-right
+					.pull-right(ng-show="user == comment.attendee.user._id")
 						//- button only visible for creator and planner
 						button.btn.btn-primary.font14.pull-right.nspacer(type='submit', style="border-radius: 10px; padding:7px; padding-left:12px; padding-right:12px;")
 							a.link-white(href="/" class="") delete
@@ -90,12 +91,13 @@ block content
 							img(src= attendee.user.avatar.length == 0 ? "/images/default_speaker-purple.svg" : attendee.user.avatar, style="width:44px;margin:0px auto auto 0px;")
 						.pull-left.pad-left-ten.width85.width85posts
 							.font14.font14sm.break.small-post.font-exception
-								| <span class="font16 bold">{{ subcomment.attendee.user.name }} {{ subcomment.attendee.user.surname }}</span> {{ subcomment.message }}
+								span.font16.bold {{ subcomment.attendee.user.name }} {{ subcomment.attendee.user.surname }}
+								|  {{ subcomment.message }}
 							.pull-left.font14.font14md.color-green.pad-left-five.font-exception
-								| posted @ 50 minutes ago |
+								| posted @ 50 minutes ago
 							.pull-left.font14.font14md.pad-left-five.font-exception
-								a.link-green.bold(href="#")
-									| Like 
+								a.link-green.bold(href="#" ng-hide="user == comment.attendee.user._id")
+									|  | Like 
 							.clearfix
 						.pull-left
 							//- after clicking the arrow the rest of the comment should appear i think
