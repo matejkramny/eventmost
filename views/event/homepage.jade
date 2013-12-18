@@ -143,9 +143,9 @@ block content
 	- for (var i = 0; i < attendees; i++)
 		.row
 			+attendee(locals.ev.attendees[i], false)
-			if (++i < attendees-1)
+			if (++i < attendees)
 				+attendee(locals.ev.attendees[i], false)
-			if (++i < attendees-1)
+			if (++i < attendees)
 				+attendee(locals.ev.attendees[i], false)
 		.clearfix
 	
