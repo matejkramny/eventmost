@@ -42,3 +42,73 @@ block content
 							a.btn.btn-danger.btn-xs(ng-click="removeUser(user)")
 								span.glyphicon.glyphicon-remove
 								span(ng-show="user.askedConfirm == true")  U Sure?
+		.modal.fade#userModal
+			.modal-dialog
+				.modal-content
+					.modal-header
+						button.close(type="button" data-dismiss="modal")
+						h4.modal-title {{ user.name }} {{ user.surname }}
+					.modal-body
+						form.form-horizontal
+							.form-group
+								label.control-label.col-sm-4.col-md-4.col-lg-4.col-xs-4(for="userName") Name
+								.col-sm-6.col-md-6.col-lg-6.col-xs-6
+									input#userName.form-control(type="text" ng-model="user.name")
+							.form-group
+								label.control-label.col-sm-4.col-md-4.col-lg-4.col-xs-4(for="userSurname") Surname
+								.col-sm-6.col-md-6.col-lg-6.col-xs-6
+									input#userSurname.form-control(type="text" ng-model="user.surname")
+							.form-group
+								label.control-label.col-sm-4.col-md-4.col-lg-4.col-xs-4(for="userEmail") Email
+								.col-sm-6.col-md-6.col-lg-6.col-xs-6
+									input#userEmail.form-control(type="email" ng-model="user.email")
+							.form-group
+								label.control-label.col-sm-4.col-md-4.col-lg-4.col-xs-4(for="userPosition") Position
+								.col-sm-6.col-md-6.col-lg-6.col-xs-6
+									input#userPosition.form-control(type="text" ng-model="user.position")
+							.form-group
+								label.control-label.col-sm-4.col-md-4.col-lg-4.col-xs-4(for="userCompany") Company
+								.col-sm-6.col-md-6.col-lg-6.col-xs-6
+									input#userCompany.form-control(type="text" ng-model="user.company")
+							.form-group
+								label.control-label.col-sm-4.col-md-4.col-lg-4.col-xs-4(for="userPosition") Website
+								.col-sm-6.col-md-6.col-lg-6.col-xs-6
+									input#userWebsite.form-control(type="url" ng-model="user.website")
+							.form-group
+								label.control-label.col-sm-4.col-md-4.col-lg-4.col-xs-4(for="userLocation") Location
+								.col-sm-6.col-md-6.col-lg-6.col-xs-6
+									input#userLocation.form-control(type="text" ng-model="user.location")
+							.form-group
+								label.control-label.col-sm-4.col-md-4.col-lg-4.col-xs-4(for="userInterests") Interests
+								.col-sm-6.col-md-6.col-lg-6.col-xs-6
+									input#userInterests.form-control(type="text" ng-model="user.interests")
+							.form-group
+								label.control-label.col-sm-4.col-md-4.col-lg-4.col-xs-4(for="userEducation") Education
+								.col-sm-6.col-md-6.col-lg-6.col-xs-6
+									input#userEducation.form-control(type="text" ng-model="user.education")
+							.form-group
+								label.control-label.col-sm-4.col-md-4.col-lg-4.col-xs-4(for="userFB")
+									abbr(title="Facebbok") Fb
+									|  User ID
+								.col-sm-6.col-md-6.col-lg-6.col-xs-6
+									input#userFB.form-control(type="text" ng-model="user.facebook.userid" disabled)
+							.form-group
+								label.control-label.col-sm-4.col-md-4.col-lg-4.col-xs-4(for="userTW")
+									abbr(title="Twitter") Tw
+									|  User ID
+								.col-sm-6.col-md-6.col-lg-6.col-xs-6
+									input#userTW.form-control(type="text" ng-model="user.twitter.userid" disabled)
+							.form-group
+								label.control-label.col-sm-4.col-md-4.col-lg-4.col-xs-4(for="userIN")
+									abbr(title="LinkedIn") in
+									|  User ID
+								.col-sm-6.col-md-6.col-lg-6.col-xs-6
+									input#userIN.form-control(type="text" ng-model="user.linkedin.userid" disabled)
+							.form-group
+								label.control-label.col-sm-4.col-md-4.col-lg-4.col-xs-4(for="userPosition") Position
+								.col-sm-6.col-md-6.col-lg-6.col-xs-6
+									input#userPosition.form-control(type="text" ng-model="user.position")
+							.form-group
+								label.control-label.col-sm-4.col-md-4.col-lg-4.col-xs-4(for="userMailbox") Mailbox Items
+								.col-sm-6.col-md-6.col-lg-6.col-xs-6
+									input#userMailbox.form-control(type="number" ng-model="user.mailboxUnread")

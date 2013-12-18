@@ -2,6 +2,7 @@ var eventMost = angular.module('emAdmin', [])
 
 .controller('usersController', function($scope, $http) {
 	$scope.users = []
+	$scope.user = null;
 	
 	$http.get('/admin/users')
 	.success(function(data, status) {
@@ -48,5 +49,10 @@ var eventMost = angular.module('emAdmin', [])
 		$http.post("/admin/users/"+user._id+"/deop", {
 			_csrf: $scope.csrf
 		})
+	}
+	
+	$scope.editUser = function (user) {
+		$scope.user = user;
+		$("#userModal").modal('show')
 	}
 })
