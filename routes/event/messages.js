@@ -26,7 +26,7 @@ function getComments (req, res) {
 
 function postComment (req, res) {
 	var message = req.body.message;
-	var inResponse = req.body.inResponse;
+	var inResponse = req.body.inResponse || "";
 	
 	if (!message) {
 		res.format({
@@ -45,9 +45,12 @@ function postComment (req, res) {
 	
 	try {
 		inResponse = mongoose.Types.ObjectId(inResponse);
-	} catch (e) {}
+	} catch (e) {
+		inResponse = null;
+	}
 	
 	if (inResponse != null) {
+		console.log(req.body)
 		models.EventMessage.findById(inResponse, function(err, msg) {
 			if (err || !msg) {
 				res.format({
@@ -95,7 +98,7 @@ function postComment (req, res) {
 		msg.save()
 		res.locals.ev.messages.push(msg._id);
 		res.locals.ev.save()
-		
+		console.log("Yeah")
 		res.format({
 			html: function() {
 				res.redirect("/event/"+res.locals.ev._id)
