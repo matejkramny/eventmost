@@ -136,6 +136,7 @@ scheme.statics.getEvent = function (id, cb) {
 
 scheme.methods.getComments = function (cb) {
 	var self = this;
+	// this is horrible.. not sure how we could go about fixing this..
 	try {
 		async.each(self.messages, function(message, cb) {
 			message.populate('attendee likes comments', function(err) {
@@ -152,8 +153,21 @@ scheme.methods.getComments = function (cb) {
 					},
 					function(cb) {
 						async.each(message.comments, function(comment, cb) {
-							comment.populate('attendee', function() {
-								comment.attendee.populate('user', function() { cb(null) });
+							comment.populate('likes attendee', function() {
+								async.parallel([
+									function(cb) {
+										comment.attendee.populate('user', function() { cb(null) });
+									},
+									function(cb) {
+										async.each(comment.likes, function(like, cb) {
+											like.populate('user', function() { cb(null) });
+										}, function() {
+											cb(null);
+										})
+									}
+								], function() {
+									cb(null)
+								})
 							});
 						}, function() {
 							cb(null);

@@ -30,18 +30,16 @@ block content
 
 	//- comment post
 	.nspacer
-	div(ng-controller="commentsController", ng-init="init({ url: '/event/#{ev._id}/', user: '#{user._id}', csrf: '#{token}' });")
+	div(ng-controller="commentsController", ng-init='init({ url: "/event/#{ev._id}/", user: "#{user._id}", csrf: "#{token}", attendee: #{JSON.stringify(attendee)} });')
 		.row
 			.col-sm-12.col-xs-12.col-md-12
 				.pull-left
 					img.pull-left.bubble-responsive(src="/images/bubble-left-blue.svg", alt="", style="vertical-align:top;")
 				.pull-left.bg-green.psev.post-width-text-new
-					form#commentForm(action="/event/"+ev._id+"/comment", method="POST")
-						input(type="hidden", name="_csrf", value=token)
-						textarea.postcommentarea1(placeholder="Post a comment here...", name="message")
-						.pull-right
-							a(href="#", onclick="$('#commentForm').submit(); return false;")
-								img.post-butt(src="/images/post-button-new.svg")
+					textarea.postcommentarea1(placeholder="Post a comment here...", ng-model="temp_comment")
+					.pull-right
+						a(href="", ng-click="submitComment(null)")
+							img.post-butt(src="/images/post-button-new.svg")
 				.clearfix
 
 			//- other comments
@@ -56,19 +54,25 @@ block content
 						.font14.font14sm.break.small-post.font-exception
 							| {{ comment.message }}
 						.pull-left.font14.font14md.font-exception
-							//- TODO hide if user._id == comment.attendee.user._id
-							a.link-green.bold(href="#", ng-hide="user == comment.attendee.user._id")
+							a.link-green.bold(href="" ng-click="likeComment(comment)" ng-hide="user == comment.attendee.user._id")
 								| Like | 
 						.pull-left.font14.font14md.color-green.pad-left-five.font-exception
 							| posted @ 19:00 |
 						.pull-left.font14.font14md.color-green.pad-left-five.font-exception
-							img.pull-left(src="/images/mini-thumb.svg" alt="") 
+							img.pull-left(src="/images/mini-thumb.svg")
 							.pad-left-five.pull-left
-								span(ng-repeat="like in comment.likes")
-									b {{ like.user.name }} {{ like.user.surname }}
-									|  liked this.	|
+								span(ng-repeat="like in comment.likes | limitTo:3")
+									b(ng-show="$middle") , 
+									b(ng-show="!$first && $last")  and 
+									b(ng-show="comment.likes.length > 3 && $last") {{ comment.likes.length - 3 }} others
+									span(ng-hide="comment.likes.length > 3 && $last")
+										b(ng-hide="user == like.user._id") {{ like.user.name }} {{ like.user.surname }}
+										b(ng-show="user == like.user._id") You
+								span(ng-show="comment.likes.length > 0")
+									|  like this.
 								span(ng-show="comment.likes.length == 0")
-									| 0 Likes	|
+									| 0 Likes
+								|	|
 						.pull-left.font14.font14md.color-green.pad-left-five.font-exception
 							img.pull-left(src="/images/mini-bubble.svg" alt="") 
 							.pad-left-five.pull-left.font-exception
@@ -82,7 +86,7 @@ block content
 					.pull-right(ng-show="user == comment.attendee.user._id")
 						//- button only visible for creator and planner
 						button.btn.btn-primary.font14.pull-right.nspacer(type='submit', style="border-radius: 10px; padding:7px; padding-left:12px; padding-right:12px;")
-							a.link-white(href="/" class="") delete
+							a.link-white(href="#") delete
 				.clearfix
 
 				div(ng-repeat="subcomment in comment.comments")
@@ -94,10 +98,24 @@ block content
 								span.font16.bold {{ subcomment.attendee.user.name }} {{ subcomment.attendee.user.surname }}
 								|  {{ subcomment.message }}
 							.pull-left.font14.font14md.color-green.pad-left-five.font-exception
-								| posted @ 50 minutes ago
+								| posted @ 50 minutes ago	|
+							.pull-left.font14.font14md.color-green.pad-left-five.font-exception
+								img.pull-left(src="/images/mini-thumb.svg")
+								.pad-left-five.pull-left
+									span(ng-repeat="like in subcomment.likes | limitTo:3")
+										b(ng-show="$middle") , 
+										b(ng-show="!$first && $last")  and 
+										b(ng-show="subcomment.likes.length > 3 && $last") {{ subcomment.likes.length - 3 }} others
+										span(ng-hide="subcomment.likes.length > 3 && $last")
+											b(ng-hide="user == like.user._id") {{ like.user.name }} {{ like.user.surname }}
+											b(ng-show="user == like.user._id") You
+									span(ng-show="subcomment.likes.length > 0")
+										|  like this.
+									span(ng-show="subcomment.likes.length == 0")
+										| 0 Likes
 							.pull-left.font14.font14md.pad-left-five.font-exception
-								a.link-green.bold(href="#" ng-hide="user == comment.attendee.user._id")
-									|  | Like 
+								a.link-green.bold(href="" ng-click="likeComment(subcomment)" ng-hide="user == subcomment.attendee.user._id")
+									|	| Like 
 							.clearfix
 						.pull-left
 							//- after clicking the arrow the rest of the comment should appear i think
@@ -106,7 +124,7 @@ block content
 						.pull-right
 							//- button only visible for creator and planner
 							button.btn.btn-primary.font14.pull-right.nspacer(type='submit', style="border-radius: 10px; padding:7px; padding-left:12px; padding-right:12px;")
-								a.link-white(href="/" class="") delete
+								a.link-white(href="#") delete
 
 					.clearfix
 				
@@ -116,7 +134,7 @@ block content
 					.pull-left.pad-left-ten.width85.width85posts
 						.font14.font14sm.break.nspacer-small
 							input.search-input.width100.psev(type"text" placeholder="Write a comment..." ng-model="comment.temp_comment")
-						button.btn.btn-default.font14.pull-right.nspacer(style="border-radius: 10px; padding:7px; padding-left:12px; padding-right:12px;" ng-click="submitSubComment(comment)")
+						button.btn.btn-default.font14.pull-right.nspacer(style="border-radius: 10px; padding:7px; padding-left:12px; padding-right:12px;" ng-click="submitComment(comment)")
 							| Submit
 					.clearfix
 		
