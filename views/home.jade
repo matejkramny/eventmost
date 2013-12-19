@@ -119,7 +119,7 @@ append content
 	//- User card
 	.col-md-3.col-xs-3.nspacer.hide-mini
 		.bg-ashen(style='height:312px;') 
-			p.break.font-e.center.font-thin2(style='padding-top:10px;')
+			p.break.font-e.center.font-thin2.pad-left-ten.pad-right-ten(style='padding-top:10px;')
 				a.link-purple(href="/user/"+user._id)= user.getName()
 			.pull-left.pad-left-ten
 				img(src="/images/i.svg", alt="", height="16px" width="16px;")
@@ -144,7 +144,7 @@ append content
 			.clearfix
 			.center.nspacer
 				a(href="/logout", class="logout link-yellow")
-					button.btn.btn-default.font-e(type='submit', data-reveal-id="loginModal" style="border-radius: 8px; margin-bottom:10px;")
+					button.btn.btn-default.font-e.difffont(type='submit', data-reveal-id="loginModal" style="border-radius: 8px; margin-bottom:10px;")
 						| Logout
 	//- Events nearby
 	.col-md-9.col-xs-9.nspacer.pad-right-zero.pad-left-zero.three.hide-mini
@@ -180,7 +180,7 @@ append content
 									a(href='#') My planned events
 	.clearfix.hide-mini
 	
-	
+	.exc-spac
 	//- My Events
 	for event in myevents
 		mixin eventItem(event)

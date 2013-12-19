@@ -373,7 +373,7 @@ a.link-white:hover {
 
 
 .circle-avatar-new{overflow:hidden; border-radius:58px; -webkit-border-radius: 58px; -moz-border-radius:58px;width:116px;height:116px;border:0px solid #333;}
-.image-circle-avatar-new{max-width:116px;margin:0px auto auto 0px;}
+.image-circle-avatar-new{max-width:116px; max-height:116px; margin:0px auto auto 0px;}
 .grey-rounded-box{
   -moz-border-radius: 105px;
 border-radius: 105px;
@@ -1974,7 +1974,7 @@ h1 {font-size: 35px !important;}
     vertical-align: middle; text-shadow: #fff 0 0px 0; }
   .event {font-size: 10px; word-wrap:break-word; color: #542437;overflow: hidden; height:auto;}
   .event:hover {background-color: #fff; overflow: hidden; height:auto;}
-  .rbox {overflow: hidden; height: auto; width: 60%; margin-top: -15px; font-size: 10px; height: 60px;}
+  .rbox {overflow: hidden; height: auto;  margin-top: -15px; font-size: 10px; height: 60px;}
   .smart-minus {margin-top: -7px;}
 footer {font-size: 10px;}
 .img-mess-smart {width: 26px; height: 27px;}
@@ -2243,7 +2243,7 @@ p.check5:not(#foo) > input[type=checkbox] + label:hover               { backgrou
 .width85posts {width: 77% !important;}
 .width-attendees{width: 50%;}
 .circle-avatar-new{overflow:hidden; border-radius:50px; -webkit-border-radius: 50px; -moz-border-radius:50px;width:100px;height:100px;border:0px solid #333;}
-.image-circle-avatar-new{max-width:100px;margin:0px auto auto 0px;}
+.image-circle-avatar-new{max-width:100px; max-height:100px; margin:0px auto auto 0px;}
 .grey-rounded-box{
   -moz-border-radius: 105px;
 border-radius: 105px;
@@ -2255,6 +2255,7 @@ min-height: 100px;
 
 
 @media only screen and (min-width: 981px) and (max-width: 1024px) {
+  .difffont{font-size: 12px!important;}
   .width85posts {width: 82%;}
 .post-width-text-new{width:95.4%;}
 .graphs-font{font-size: 14px;}
@@ -2361,9 +2362,16 @@ min-height: 100px;
 #slider1 {height:440px;}
 #slider1 .viewport{height:440px;}
 .lf {margin-left: 0px;}
-.c-two {width:140px;}
+.c-two {width:140px; }
+
 .event {font-size: 11px;}
-.slid-box-background h4{font-size:16px;}
+  .event {height: 120px;}
+  .event:hover {height: 120px;}
+  .rbox {overflow: hidden; height: 113px;}
+.slid-box-background h4{font-size:16px; height:137px; }
+.slid-box article{ float:left;  height:120px; } 
+
+
 .font-bigs {font-size: 30px;}
 .font-s, .resfont {font-size: 12px;}
 .space {letter-spacing:10px;}
@@ -2500,6 +2508,7 @@ min-height: 100px;
 }
 
 @media only screen and (min-width: 686px) and (max-width: 768px) {
+
   .ca-container{
   position:relative;
   margin:10px auto;
@@ -2542,7 +2551,7 @@ min-height: 100px;
 .font20a{font-size: 18px;}
 .width-attendees{width: 50%;}
 .circle-avatar-new{overflow:hidden; border-radius:40px; -webkit-border-radius: 40px; -moz-border-radius:40px;width:80px;height:80px;border:0px solid #333;}
-.image-circle-avatar-new{max-width:80px;margin:0px auto auto 0px;}
+.image-circle-avatar-new{max-width:80px; max-height:80px; margin:0px auto auto 0px;}
 .grey-rounded-box{
   -moz-border-radius: 105px;
 border-radius: 105px;
@@ -2701,7 +2710,7 @@ table.gridtable th {font-size: 12px;}
 @media only screen and (max-width: 700px) {
   .width-attendees{width: 50%;}
 .circle-avatar-new{overflow:hidden; border-radius:40px; -webkit-border-radius: 40px; -moz-border-radius:40px;width:80px;height:80px;border:0px solid #333;}
-.image-circle-avatar-new{max-width:80px;margin:0px auto auto 0px;}
+.image-circle-avatar-new{max-width:80px; max-height:80px; margin:0px auto auto 0px;}
 .grey-rounded-box{
   -moz-border-radius: 105px;
 border-radius: 105px;
@@ -2733,11 +2742,27 @@ min-height: 100px;
 .subject-input{width:85.9%; margin-top:6px !important;}
 }
 
+
+
+@media only screen and (max-width: 770px) {
+  .exc-spac{margin-top: 75px;}
+.event {font-size: 11px;}
+  .event {height: 120px;}
+  .event:hover {height: 120px;}
+  .rbox {overflow: hidden; height: 113px;}
+.slid-box-background h4{font-size:16px; height:137px; }
+.slid-box article{ float:left;  height:120px; } 
+.c-two {width:140px;}
+}
+
 @media only screen and (max-width: 600px) {
   .width-attendees{width: 100%; text-align: left!important;}
 }
 @media only screen and (min-width: 481px) and (max-width: 685px) {
-
+  .no-pads{padding-left: 0px; padding-right: 0px;}
+  .exwidth65{width: 20%!important;}
+    .exwidth66{width: 30%!important;}
+ .exc-spac{margin-top: 0px;}
   .width85posts {width: 70% !important;}
 .font14md{font-size: 12px;}
 .font14sm{font-size: 12px;}
@@ -2831,7 +2856,7 @@ min-height: 100px;
 .font-e {font-size: 12px;}
 .e{height:86px;}
 /*over-shadow*/
-  .rbox {overflow: hidden; height: auto; width: 60%; margin-top: -15px; font-size: 10px; height: 200px;}
+  .rbox {overflow: hidden; height: auto; margin-top: -15px; font-size: 10px; height: 200px;}
   .hide-mini {display: none;}
   .hide-all2 {display: inline;}
 .message-nr h20 {font-size: 12px; font-weight: 400; color: #542437;  margin-top: 15px; margin-left: 15px; position: absolute;
@@ -2877,9 +2902,23 @@ min-height: 100px;
 
 @media only screen and (max-width: 600px) {
 .summary-yellow-height{height: auto; padding-bottom: 10px;}
-
+.no-pads{padding-left: 0px; padding-right: 0px;}
 }
-
+@media only screen and (max-width: 500px) {
+.event {font-size: 11px;}
+  .event {height: 100px;}
+  .event:hover {height: 100px;}
+  .rbox {overflow: hidden; height: 113px;}
+.slid-box-background h4{font-size:16px; height:137px; }
+.slid-box article{ float:left;  height:80px; } 
+.c-two {width:80px;}
+.slid-box-background {margin-top: 0px;}
+.slid-box-background h4{display: none;}
+.eye{display: none;}
+.rbox h4{font-size: 12px; font-weight: bold;}
+.exc-spac{margin-top: 0px!important;}
+.no-pads{padding-left: 0px; padding-right: 0px;}
+}
 
 @media only screen and (max-width: 480px) {
     .width85posts {width: 70% !important;}
@@ -2991,6 +3030,21 @@ table.gridtable-payment-yellow {font-size: 10px;}
 
 
 @media only screen and (max-width: 360px) {
+  .event {font-size: 11px;}
+  .no-pads1{padding-right: 0px; padding-left: 0px;}
+  .event {height: 80px;}
+  .event:hover {height: 80px;}
+  .rbox {overflow: hidden; height: 113px;}
+.slid-box-background h4{font-size:16px; height:137px; }
+.slid-box article{ float:left;  height:40px; } 
+.c-two {width:40px;}
+.slid-box-background {margin-top: 0px;}
+.slid-box-background h4{display: none;}
+.eye{display: none;}
+.rbox h4{font-size: 12px; font-weight: bold;}
+.exc-spac{margin-top: 0px!important;}
+.no-pads{padding-left: 0px; padding-right: 0px;}
+
   .font20a{font-size: 16px;}
   .font-attendee{font-size: 10px !important;}
       .width85posts {width: 60% !important;}
