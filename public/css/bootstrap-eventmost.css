@@ -256,6 +256,8 @@ border-radius: 10px;}
 .width14{width: 14%;}
 .width7{width: 6%;}
 
+
+.linknamewidth{width: 65%;}
 .post-width-text{width:95%;}
 .post-width-text-new{width:96.3%;}
 
@@ -2231,7 +2233,7 @@ p.check5:not(#foo) > input[type=checkbox] + label:hover               { backgrou
 
 @media only screen and (max-width: 1000px) {
 
-
+.linknamewidth{width: 60%;}
 .show-not{display: none;}
 .show-not1{display: block;}
 .fontol {font-size: 16px;}
@@ -2740,11 +2742,14 @@ min-height: 100px;
 .send-to-input{width:78.2%; margin-top:6px !important;}
 .subject{width:13.3%; line-height:30px;}
 .subject-input{width:85.9%; margin-top:6px !important;}
+.linknamewidth{font-size: 16px!important;}
+
 }
 
 
 
 @media only screen and (max-width: 770px) {
+  .linknamewidth{font-size: 20px!important; width: 40%;}
   .exc-spac{margin-top: 75px;}
 .event {font-size: 11px;}
   .event {height: 120px;}
@@ -2759,6 +2764,7 @@ min-height: 100px;
   .width-attendees{width: 100%; text-align: left!important;}
 }
 @media only screen and (min-width: 481px) and (max-width: 685px) {
+    .linknamewidth{font-size: 20px!important; width: 100%; text-align: center!important; font-weight: bold;}
   .no-pads{padding-left: 0px; padding-right: 0px;}
   .exwidth65{width: 20%!important;}
     .exwidth66{width: 30%!important;}
@@ -2921,6 +2927,7 @@ min-height: 100px;
 }
 
 @media only screen and (max-width: 480px) {
+      .linknamewidth{font-size: 16px!important; width: 100%; text-align: center!important; font-weight: bold;}
     .width85posts {width: 70% !important;}
 .font14md{font-size: 12px;}
 .font14sm{font-size: 12px;}
