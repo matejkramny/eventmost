@@ -153,7 +153,8 @@ function postComment (req, res) {
 				json: function() {
 					res.send({
 						status: 200,
-						message: "Comment Sent"
+						message: "Comment Sent",
+						cid: msg._id
 					})
 				}
 			})
@@ -166,7 +167,7 @@ function postComment (req, res) {
 		msg.save()
 		res.locals.ev.messages.push(msg._id);
 		res.locals.ev.save()
-		console.log("Yeah")
+		
 		res.format({
 			html: function() {
 				res.redirect("/event/"+res.locals.ev._id)
@@ -174,7 +175,8 @@ function postComment (req, res) {
 			json: function() {
 				res.send({
 					status: 200,
-					message: "Comment Sent"
+					message: "Comment Sent",
+					cid: msg._id
 				})
 			}
 		})

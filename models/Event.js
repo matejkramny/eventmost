@@ -136,6 +136,7 @@ scheme.statics.getEvent = function (id, cb) {
 
 scheme.methods.getComments = function (cb) {
 	var self = this;
+	// this is horrible.. not sure how we could go about fixing this..
 	try {
 		async.each(self.messages, function(message, cb) {
 			message.populate('attendee likes comments', function(err) {

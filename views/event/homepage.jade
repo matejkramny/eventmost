@@ -36,12 +36,10 @@ block content
 				.pull-left
 					img.pull-left.bubble-responsive(src="/images/bubble-left-blue.svg", alt="", style="vertical-align:top;")
 				.pull-left.bg-green.psev.post-width-text-new
-					form#commentForm(action="/event/"+ev._id+"/comment", method="POST")
-						input(type="hidden", name="_csrf", value=token)
-						textarea.postcommentarea1(placeholder="Post a comment here...", name="message")
-						.pull-right
-							a(href="#", onclick="$('#commentForm').submit(); return false;")
-								img.post-butt(src="/images/post-button-new.svg")
+					textarea.postcommentarea1(placeholder="Post a comment here...", ng-model="temp_comment")
+					.pull-right
+						a(href="", ng-click="submitComment(null)")
+							img.post-butt(src="/images/post-button-new.svg")
 				.clearfix
 
 			//- other comments
@@ -136,7 +134,7 @@ block content
 					.pull-left.pad-left-ten.width85.width85posts
 						.font14.font14sm.break.nspacer-small
 							input.search-input.width100.psev(type"text" placeholder="Write a comment..." ng-model="comment.temp_comment")
-						button.btn.btn-default.font14.pull-right.nspacer(style="border-radius: 10px; padding:7px; padding-left:12px; padding-right:12px;" ng-click="submitSubComment(comment)")
+						button.btn.btn-default.font14.pull-right.nspacer(style="border-radius: 10px; padding:7px; padding-left:12px; padding-right:12px;" ng-click="submitComment(comment)")
 							| Submit
 					.clearfix
 		

@@ -4,6 +4,7 @@ angular.module('eventMost')
 	$scope.url = "";
 	$scope.user = "";
 	$scope.csrf = "";
+	$scope.temp_comment = "";
 	
 	$scope.init = function (opts) {
 		$scope.url = opts.url;
@@ -21,20 +22,41 @@ angular.module('eventMost')
 		})
 	}
 	
-	$scope.submitSubComment = function (comment) {
-		var msg = comment.temp_comment;
-		if (msg.length == 0) {
+	$scope.submitComment = function (comment) {
+		var msg;
+		if (comment) {
+			msg = comment;
+		} else {
+			msg = $scope;
+		}
+		
+		if (msg.temp_comment.length == 0) {
 			return;
 		}
 		
-		comment.temp_comment = "Sending.."
+		var c = {
+			message: msg.temp_comment,
+			attendee: $scope.attendee,
+			likes: [],
+			comments: [],
+			posted: Date.now()
+		};
 		
-		$http.post($scope.url+'comment', {
+		msg.comments.push(c)
+		
+		var opts = {
 			_csrf: $scope.csrf,
-			inResponse: comment._id,
-			message: msg
-		}).success(function(data, status) {
-			comment.temp_comment = "";
+			message: msg.temp_comment
+		}
+		
+		if (comment) {
+			opts.inResponse = comment._id
+		}
+		
+		$http.post($scope.url+'comment', opts)
+		.success(function(data, status) {
+			msg.temp_comment = "";
+			c._id = data.cid;
 		})
 	}
 	
