@@ -152,8 +152,21 @@ scheme.methods.getComments = function (cb) {
 					},
 					function(cb) {
 						async.each(message.comments, function(comment, cb) {
-							comment.populate('attendee', function() {
-								comment.attendee.populate('user', function() { cb(null) });
+							comment.populate('likes attendee', function() {
+								async.parallel([
+									function(cb) {
+										comment.attendee.populate('user', function() { cb(null) });
+									},
+									function(cb) {
+										async.each(comment.likes, function(like, cb) {
+											like.populate('user', function() { cb(null) });
+										}, function() {
+											cb(null);
+										})
+									}
+								], function() {
+									cb(null)
+								})
 							});
 						}, function() {
 							cb(null);

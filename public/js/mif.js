@@ -9,6 +9,7 @@ angular.module('eventMost')
 		$scope.url = opts.url;
 		$scope.user = opts.user;
 		$scope.csrf = opts.csrf;
+		$scope.attendee = opts.attendee;
 		
 		$scope.reload()
 	}
@@ -37,4 +38,18 @@ angular.module('eventMost')
 		})
 	}
 	
+	$scope.likeComment = function (comment) {
+		for (var i = 0; i < comment.likes.length; i++) {
+			if (comment.likes[i].attendee._id == $scope.attendee._id) {
+				return;
+			}
+		}
+		
+		comment.likes.push($scope.attendee)
+		
+		$http.post($scope.url+'like', {
+			_csrf: $scope.csrf,
+			comment: comment._id
+		})
+	}
 })

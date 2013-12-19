@@ -5,6 +5,7 @@ exports.router = function (app) {
 	app.get('/event/:id/messages', display)
 		.get('/event/:id/comments', getComments)
 		.post('/event/:id/comment', postComment)
+		.post('/event/:id/like', likeComment)
 }
 
 function display (req, res) {
@@ -22,6 +23,73 @@ function getComments (req, res) {
 			}
 		})
 	})
+}
+
+function likeComment (req, res) {
+	var cid = req.body.comment;
+	
+	try {
+		models.EventMessage.findById(cid, function(err, comment) {
+			if (err || !comment) {
+				res.format({
+					html: function() {
+						res.redirect('/event/'+res.locals.ev._id);
+					},
+					json: function() {
+						res.send(404, {})
+					}
+				})
+				return;
+			}
+			
+			var att = res.locals.attendee;
+			var found = false;
+			for (var i = 0; i < comment.likes.length; i++) {
+				if (comment.likes[i].attendee.equals(attendee._id)) {
+					found = true;
+					break;
+				}
+			}
+			
+			if (found) {
+				res.format({
+					html: function() {
+						res.redirect('/event/'+res.locals.ev._id);
+					},
+					json: function() {
+						res.send({
+							status: 400,
+							message: "You like this already"
+						})
+					}
+				})
+			} else {
+				comment.likes.push(att._id);
+				comment.save();
+				
+				res.format({
+					html: function() {
+						res.redirect('/event/'+res.locals.ev._id);
+					},
+					json: function() {
+						res.send({
+							status: 200,
+							message: "Liked"
+						})
+					}
+				})
+			}
+		})
+	} catch (e) {
+		res.format({
+			html: function() {
+				res.redirect('/event/'+res.locals.ev._id);
+			},
+			json: function() {
+				res.send(404, {})
+			}
+		})
+	}
 }
 
 function postComment (req, res) {
