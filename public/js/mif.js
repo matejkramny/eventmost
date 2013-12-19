@@ -62,7 +62,7 @@ angular.module('eventMost')
 	
 	$scope.likeComment = function (comment) {
 		for (var i = 0; i < comment.likes.length; i++) {
-			if (comment.likes[i].attendee._id == $scope.attendee._id) {
+			if (comment.likes[i]._id == $scope.attendee._id) {
 				return;
 			}
 		}
