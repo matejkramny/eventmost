@@ -28,26 +28,14 @@ block content
 		.col-md-4.col-lg-4.col-sm-4.pad-left-zero.font-e.semi-bold
 			| When
 			.line-purple
-			.font-s.inline.semi-bold
-				= ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][ev.start.getMonth()]
-				|  
-				- var day = ev.start.getDate()
-				= day
-				- if(day == 1 || day == 21 || day == 31)
-					| st
-				- else if (day == 2 || day == 22)
-					| nd
-				- else if (day == 3 || day == 23)
-					| rd
-				- else
-					| th
-				|  #{ev.start.getFullYear()}
+			.font-s.inline.semi-bold(title= locals.moment(ev.start).fromNow())
+				= locals.moment(ev.start).format('dddd Do MMMM YYYY [at] h:mm:ss a')
 		.col-md-4.col-lg-4.col-sm-4.pad-left-zero.font-e.semi-bold
 			| Where
 			.line-purple
 			.font-s.inline.semi-bold
 				- if (ev.address || ev.venue_name)
-					img.inline.pad-right-five(src="/images/mapster.svg", alt="")
+					img.inline.pad-right-five(src="/images/mapster.svg" alt="")
 				.inline
 					= ev.address
 				.inline
@@ -55,9 +43,13 @@ block content
 				- if (!ev.address && !ev.venue_name)
 					| Event does not have a location
 		.col-md-4.col-lg-4.col-sm-4.pad-left-zero.font-e.semi-bold
-			| Event Organizer
+			| Event Organizers
 			.line-purple
 			.font-s.inline.semi-bold
+				for attendee in locals.ev.attendees
+					if (attendee.admin && attendee.isAttending)
+						a(href="/user/"+attendee.user._id)= attendee.user.getName()
+						br
 			// event organiser name here?
 		.clearfix
 		.nspacer

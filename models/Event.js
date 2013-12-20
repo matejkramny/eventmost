@@ -110,7 +110,7 @@ scheme.statics.getEvent = function (id, cb) {
 					function(callback) {
 						if (ev.avatar == null || ev.avatar.url == null || ev.avatar.url.length == 0) {
 							var avatar = new Avatar({
-								url: "/images/event-avatar-new.svg"
+								url: "/images/event-avatar-new2.svg"
 							})
 							avatar.save();
 							ev.avatar = avatar._id;
@@ -289,7 +289,7 @@ scheme.methods.edit = function (body, user, files, cb) {
 	
 	if (!this.avatar) {
 		var avatar = new Avatar({
-			url: "/images/event-avatar-new.svg"
+			url: "/images/event-avatar-new2.svg"
 		})
 		avatar.save();
 		this.avatar = avatar._id;

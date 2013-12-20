@@ -1,6 +1,7 @@
 var models = require('../../models')
 	, util = require('../../util')
 	, async = require('async')
+	, moment = require('moment')
 
 exports.router = function (app) {
 	app.get('/events', exports.listEvents)
@@ -18,6 +19,7 @@ exports.listEvents = function (req, res) {
 		if (evs) {
 			res.format({
 				html: function() {
+					res.locals.moment = moment;
 					res.render('event/list', { events: evs, pagename: "Events", title: "Events" });
 				},
 				json: function() {
@@ -41,6 +43,7 @@ exports.listMyEvents = function (req, res) {
 		if (evs) {
 			res.format({
 				html: function() {
+					res.locals.moment = moment;
 					res.render('event/list', { events: evs, pagename: "My events", title: "My Events" });
 				},
 				json: function() {
@@ -64,6 +67,7 @@ exports.listNearEvents = function (req, res) {
 		// render a blank page, and tell it to ask user for browser positioning
 		res.format({
 			html: function() {
+				res.locals.moment = moment;
 				res.render('event/list', { events: [], findNear: true, pagename: "Events near you", title: "Events nearby" });
 			},
 			json: function() {

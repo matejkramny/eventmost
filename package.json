@@ -3,11 +3,13 @@
 	"version": "0.2.1",
 	"private": true,
 	"scripts": {
-	"start": "node app.js"
+		"start": "node app.js"
 	},
 	"start": "app.js",
 	"subdomain": "eventmost",
 	"domains": [
+		"eventmost.com",
+		"www.eventmost.com"
 	],
 	"dependencies": {
 		"express": "latest",
@@ -33,6 +35,7 @@
 		"grunt-contrib-cssmin": "latest",
 		"grunt-contrib-jshint": "latest",
 		"grunt-contrib-watch": "latest",
-		"sanitizer": "latest"
+		"sanitizer": "latest",
+		"moment": "latest"
 	}
 }

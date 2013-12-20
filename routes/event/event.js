@@ -7,6 +7,7 @@ var dropbox = require('./dropbox')
 	, attendees = require('./attendees')
 	, models = require('../../models')
 	, admin = require('./admin/admin')
+	, moment = require('moment')
 
 exports.router = function (app) {
 	add.router(app)
@@ -167,6 +168,9 @@ function viewRegistrationPage (req, res) {
 	
 	res.format({
 		html: function() {
+			res.locals.moment = moment;
+			if (!res.locals.eventattending)
+				res.locals.hideArrow = true;
 			res.render('event/landingpage', { title: res.locals.ev.name });
 		}
 	});

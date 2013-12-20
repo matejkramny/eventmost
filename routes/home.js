@@ -1,4 +1,5 @@
 var models = require('../models');
+var moment = require('moment')
 
 exports.display = function (req, res) {
 	var skip = req.query.skip || 0;
@@ -27,7 +28,8 @@ exports.display = function (req, res) {
 							title: "Home",
 							myevents: evs || [],
 							myeventsTotal: total,
-							myeventsSkip: skip
+							myeventsSkip: skip,
+							moment: moment
 						});
 					},
 					json: function() {

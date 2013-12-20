@@ -2,7 +2,7 @@ mixin eventItem(event)
 	.nspacer.col-md-12.col-xs-12.col-lg-12.col-sm-12.no-pads
 		.pull-left.event(style='width:101.4%;')
 			a.slid-box(href="/event/"+event._id)
-				article.c-two(style="background: url(/images/event-avatar-new2.svg) top left; background-size: 100% 100%; ")
+				article.c-two(style="background: url(#{event.avatar.url}) top left; background-size: 100% 100%; ")
 					.slid-box-background
 						h4 
 							.eye.hide2
@@ -15,9 +15,16 @@ mixin eventItem(event)
 				.col-lg-2.col-md-2.col-sm-2.col-xs-2.psev.pad-left-ten.rbox.eh.no-pads1(style="max-height:144px;")
 					.pad-left-ten
 						h4 When
-						| Maecenas dictum tristique bibendum. Nulla erat libero, tincidunt a dui pharetra, aliquet aliquam
+						= locals.moment(event.start).fromNow()
+						br
+						br
+						= locals.moment(event.start).format('dddd Do MMMM YYYY [at] h:mm:ss a')
 				.col-lg-3.col-md-3.col-sm-3.col-xs-3.psev.pad-left-ten.rbox.eh.exwidth65.no-pads1(style="max-height:144px;")
 					.pad-left-ten
 						h4 Where
-						| Maecenas dictum tristique bibendum. Nulla erat libero, tincidunt a dui pharetra, aliquet aliquam eros. Quisque pulvinar metus nibh, id posuere leo posuere at. Duis mollis gravida nulla vel pulvinar. Aliquam commodo dolor libero, vitae gravida augue luctus ut. Etiam vitae neque mi. Aliquam eros sem, mattis nec ligula a, lacinia pellentesque nisi. 
+						if (event.venue_name)
+							= event.venue_name
+						br
+						if (event.address)
+							= event.address
 	.clearfix
