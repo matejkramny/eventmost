@@ -19,8 +19,15 @@ block content
 			.form-group
 				select.form-control(ng-model="year" ng-change="drawGraph()" ng-options="year as year for year in years")
 			.form-group
+				| &nbsp;
+			.form-group
 				select.form-control(ng-model="month" ng-change="drawGraph()" ng-options="month as month for month in months")
 					option(value="") Show Year
+			.form-group
+				| &nbsp;
+				label
+					input(type="checkbox" ng-model="showLine" ng-change="drawGraph()")
+					|  Line Graph
 		.clearfix
 		
 		//- pretty graph

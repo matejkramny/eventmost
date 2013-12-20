@@ -1,3 +1,10 @@
+var isLocalStorageCapable = false;
+try {
+	if ('localStorage' in window && window['localStorage'] !== null) {
+		isLocalStorageCapable = true;
+	}
+} catch (e) {}
+
 var eventMost = angular.module('emAdmin', [])
 
 .controller('usersController', function($scope, $http) {
@@ -9,6 +16,14 @@ var eventMost = angular.module('emAdmin', [])
 	$scope.month = $scope.months[moment().month()];
 	$scope.years = [];
 	$scope.year = moment().year();
+	$scope.showLine = true;
+	if (isLocalStorageCapable) {
+		if (typeof localStorage['admin-saved'] !== 'undefined') {
+			$scope.month = localStorage['admin-month'];
+			$scope.year = parseInt(localStorage['admin-year']);
+			$scope.showLine = (parseInt(localStorage['admin-showLine']) == 0 ? false : true);
+		}
+	}
 	
 	$('.highchart').highcharts({
         title: {
@@ -119,6 +134,13 @@ var eventMost = angular.module('emAdmin', [])
 	}
 	
 	$scope.drawGraph = function () {
+		if (isLocalStorageCapable) {
+			localStorage['admin-saved'] = Date.now();
+			localStorage['admin-showLine'] = $scope.showLine == false ? 0 : 1;
+			localStorage['admin-year'] = $scope.year;
+			localStorage['admin-month'] = $scope.month;
+		}
+		
 		if ($scope.month == null) {
 			$scope.drawYear($scope.year);
 		} else {
@@ -152,6 +174,8 @@ var eventMost = angular.module('emAdmin', [])
 		chart.xAxis[0].categories = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 		chart.addSeries({
             name: 'Users',
+			color: '#18bc9c',
+			type: $scope.showLine ? 'line' : 'bar',
             data: months
         })
 	}
@@ -187,6 +211,8 @@ var eventMost = angular.module('emAdmin', [])
 		chart.xAxis[0].categories = dayNames
 		chart.addSeries({
             name: month,
+			color: '#18bc9c',
+			type: $scope.showLine ? 'line' : 'bar',
             data: days
         });
 	}
