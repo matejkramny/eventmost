@@ -1,15 +1,53 @@
 var eventMost = angular.module('emAdmin', [])
 
 .controller('usersController', function($scope, $http) {
-	$scope.users = []
+	$scope.allUsers = []
+	$scope.users = [];
 	$scope.user = null;
+	
+	$scope.months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+	$scope.month = $scope.months[moment().month()];
+	$scope.years = [];
+	$scope.year = moment().year();
+	
+	$('.highchart').highcharts({
+        title: {
+            text: 'Signups Over Time',
+            x: -20 //center
+        },
+		xAxis: {
+			categories: []
+		},
+        yAxis: {
+            title: {
+				text: '# of Signups'
+            },
+			min: 0,
+			allowDecimals: false,
+            plotLines: [{
+                value: 0,
+                width: 1,
+                color: '#808080'
+            }]
+        },
+        legend: {
+			enabled: false
+        },
+		series: [],
+		credits: {
+			enabled: false
+		}
+    });
 	
 	$http.get('/admin/users')
 	.success(function(data, status) {
 		for (var i = 0; i < data.users.length; i++) {
 			data.users[i].created = new Date(data.users[i].created);
 		}
-		$scope.users = data.users;
+		$scope.allUsers = data.users;
+		
+		$scope.aggregateScopeSelectors();
+		$scope.drawGraph()
 	})
 	
 	$scope.setCsrf = function(csrf) {
@@ -22,10 +60,10 @@ var eventMost = angular.module('emAdmin', [])
 			return;
 		}
 		
-		var users = $scope.users;
+		var users = $scope.allUsers;
 		for (var i = 0; i < users.length; i++) {
 			if (users[i]._id == user._id) {
-				$scope.users.splice(i, 1);
+				$scope.allUsers.splice(i, 1);
 				break;
 			}
 		}
@@ -55,4 +93,102 @@ var eventMost = angular.module('emAdmin', [])
 		$scope.user = user;
 		$("#userModal").modal('show')
 	}
+	
+	$scope.aggregateScopeSelectors = function () {
+		var years = [];
+		
+		for (var i = 0; i < $scope.allUsers.length; i++) {
+			var user = $scope.allUsers[i];
+			
+			var date = new Date(user.created);
+			var year = date.getFullYear();
+			
+			var found = false;
+			for (var x = 0; x < years.length; x++) {
+				if (years[x] == year) {
+					found = true;
+					break;
+				}
+			}
+			if (!found) {
+				years.push(year);
+			}
+		}
+		
+		$scope.years = years;
+	}
+	
+	$scope.drawGraph = function () {
+		if ($scope.month == null) {
+			$scope.drawYear($scope.year);
+		} else {
+			$scope.drawMonth($scope.month);
+		}
+	}
+	
+	$scope.drawYear = function (year) {
+		var months = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+		$scope.users = [];
+		
+		for (var i = 0; i < $scope.allUsers.length; i++) {
+			var user = $scope.allUsers[i];
+			
+			var date = new Date(user.created);
+			var month = date.getMonth();
+			var _year = date.getFullYear();
+			
+			if (year != _year) continue;
+			
+			$scope.users.push(user);
+			months[month]++;
+		}
+		
+		var chart = $('.highchart').highcharts();
+		
+		for (var i = 0; i < chart.series.length; i++) {
+			chart.series[i].remove();
+		}
+		
+		chart.xAxis[0].categories = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+		chart.addSeries({
+            name: 'Users',
+            data: months
+        })
+	}
+	
+	$scope.drawMonth = function (month) {
+		$scope.users = [];
+		var days = [];
+		var dayNames = [];
+		var numDays = moment().daysInMonth();
+		for (var i = 0; i < numDays; i++) {
+			days.push(0);
+			dayNames.push("" + (i+1));
+		}
+		
+		for (var i = 0; i < $scope.allUsers.length; i++) {
+			var user = $scope.allUsers[i];
+			
+			var m = moment(new Date(user.created));
+			var _month = $scope.months[m.month()];
+			if (_month != month) continue;
+			
+			$scope.users.push(user);
+			
+			days[m.day()]++;
+		}
+		
+		var chart = $('.highchart').highcharts();
+		
+		for (var i = 0; i < chart.series.length; i++) {
+			chart.series[i].remove();
+		}
+		
+		chart.xAxis[0].categories = dayNames
+		chart.addSeries({
+            name: month,
+            data: days
+        });
+	}
+	
 })

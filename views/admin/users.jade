@@ -2,8 +2,30 @@ extends layout
 
 block content
 	div(ng-controller="usersController", ng-init="setCsrf('#{token}')")
-		h2 {{ users.length }}
+		h2.pull-left {{ users.length }}
 			|  Users
+			small(ng-hide="month == null")  Signed up on {{ month }} {{ year }}
+			small(ng-show="month == null")  Signed up in {{ year }}
+		h2.pull-right
+			|  {{ allUsers.length }} Users
+			small  in Total
+		.clearfix
+		
+		hr
+		form.form-inline.text-center
+			.form-group
+				label.control-label Select Date
+				| &nbsp;
+			.form-group
+				select.form-control(ng-model="year" ng-change="drawGraph()" ng-options="year as year for year in years")
+			.form-group
+				select.form-control(ng-model="month" ng-change="drawGraph()" ng-options="month as month for month in months")
+					option(value="") Show Year
+		.clearfix
+		
+		//- pretty graph
+		div.highchart
+		
 		table.table
 			thead
 				tr
