@@ -16,8 +16,10 @@ block content
 		br.visible-xs
 	.clearfix
 	.nspacer
+	- var fps = 0;
 	for attendee in ev.attendees
 		if (attendee.user.isFeedbackProfile && attendee.user.feedbackProfileEvent.equals(ev._id))
+			- fps++;
 			+attendee(attendee, false)
 			.pull-right.text-left.pad-left-ten
 				a(href="/event/#{ev._id}/admin/feedback/#{attendee._id}/inbox/")
@@ -30,4 +32,6 @@ block content
 					.nspacer
 		.clearfix
 		.nspacer
+	if (fps == 0)
+		p.text-center.lead No Feedback Profiles. You can create one in the <strong>upper right corner</strong>.
 	.clearfix
