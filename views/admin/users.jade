@@ -53,11 +53,11 @@ block content
 					td {{ user.email }}
 					td {{ user.created.getDate() }}/{{ user.created.getMonth()+1 }}/{{ user.created.getFullYear() }} {{ user.created.getHours() }}:{{ user.created.getMinutes() }}:{{ user.created.getSeconds() }}
 					td
-						span.glyphicon.glyphicon-ok(ng-show="user.twitter.userid != null")
+						span.glyphicon.glyphicon-ok(ng-show="user.twitter.userid != null" title="{{ user.twitter.userid }}")
 					td
-						span.glyphicon.glyphicon-ok(ng-show="user.facebook.userid != null")
+						span.glyphicon.glyphicon-ok(ng-show="user.facebook.userid != null" title="{{ user.facebook.userid }}")
 					td
-						span.glyphicon.glyphicon-ok(ng-show="user.linkedin.userid != null")
+						span.glyphicon.glyphicon-ok(ng-show="user.linkedin.userid != null" title="{{ user.linkedin.userid }}")
 					td
 						span.glyphicon.glyphicon-ok(ng-show="user.admin == true")
 					td
