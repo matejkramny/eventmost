@@ -19,7 +19,7 @@ block content
 			img.img-responsive(src="/images/dropbox-icon.svg")
 		.col-lg-5.col-md-5.col-xs-5.font-lebig.pad-left-zero.nspacer-big.fontish.back-spacer
 			| Event Dropbox
-		.col-lg-4.col-md-4.col-xs-4.pull-right	
+		.col-lg-4.col-md-4.col-xs-4.pull-right
 			.width48.pull-right
 				if (eventadmin || ev.allowDropboxUpload)
 					a.pad-left-five.pull-right(href="#" upload-file progress="#fileProgress" file="#file" csrf=token url="/event/"+ev._id+"/dropbox/upload")
