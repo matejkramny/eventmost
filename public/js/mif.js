@@ -1,5 +1,5 @@
 angular.module('eventMost')
-.controller('commentsController', function($scope, $http) {
+.controller('commentsController', function($scope, $http, $filter) {
 	$scope.comments = [];
 	$scope.url = "";
 	$scope.user = "";
@@ -18,45 +18,49 @@ angular.module('eventMost')
 	
 	$scope.reload = function () {
 		$http.get($scope.url+'comments').success(function(data, status) {
-			$scope.comments = data.comments;
-			console.log(data.comments)
+			$scope.comments = $filter('orderBy')(data.comments, 'posted', 'true');
 		})
 	}
 	
-	$scope.submitComment = function (comment) {
+	$scope.submitComment = function (text, comment) {
 		var msg;
+		
+		if (typeof comment === 'undefined') {
+			comment = null;
+		}
+		
 		if (comment) {
 			msg = comment;
 		} else {
 			msg = $scope;
 		}
 		
-		if (msg.temp_comment.length == 0) {
+		if (text.length == 0) {
 			return;
 		}
 		
 		var c = {
-			message: msg.temp_comment,
+			message: text,
 			attendee: $scope.attendee,
 			likes: [],
 			comments: [],
 			posted: Date.now()
 		};
 		
-		msg.comments.push(c)
-		
 		var opts = {
 			_csrf: $scope.csrf,
-			message: msg.temp_comment
+			message: text
 		}
 		
 		if (comment) {
-			opts.inResponse = comment._id
+			opts.inResponse = comment._id;
+			msg.comments.push(c);
+		} else {
+			msg.comments.splice(0, 0, c)
 		}
 		
 		$http.post($scope.url+'comment', opts)
 		.success(function(data, status) {
-			msg.temp_comment = "";
 			c._id = data.cid;
 		})
 	}
@@ -74,5 +78,25 @@ angular.module('eventMost')
 			_csrf: $scope.csrf,
 			comment: comment._id
 		})
+	}
+})
+
+.directive('commentForm', function() {
+	return {
+		restrict: 'A',
+		scope: { comment: '=', text: '@' },
+		link: function(scope, element, attrs) {
+			$(element).keyup(function(e) {
+				if (e.keyCode == 13) {
+					if (scope.comment) {
+						scope.comment.showComments = true;
+						scope.$parent.submitComment(scope.text, scope.comment);
+					} else {
+						scope.$parent.submitComment(scope.text);
+					}
+					scope.text = '';
+				}
+			})
+		}
 	}
 })
