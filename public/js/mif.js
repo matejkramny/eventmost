@@ -5,6 +5,7 @@ angular.module('eventMost')
 	$scope.user = "";
 	$scope.csrf = "";
 	$scope.temp_comment = "";
+	$scope.commentLimit = 2;
 	
 	$scope.init = function (opts) {
 		$scope.url = opts.url;

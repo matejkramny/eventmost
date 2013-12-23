@@ -34,20 +34,20 @@ block content
 		.row
 			.col-sm-12.col-xs-12.col-md-12
 				.pull-left
-					img.pull-left.bubble-responsive(src="/images/bubble-left-blue.svg", alt="", style="vertical-align:top;")
+					img.pull-left.bubble-responsive(src="/images/bubble-left-blue.svg" style="vertical-align:top;")
 				.pull-left.bg-green.psev.post-width-text-new
-					textarea.postcommentarea1(placeholder="Post a comment here...", ng-model="temp_comment")
+					textarea.postcommentarea1(placeholder="Post a comment here..." ng-model="temp_comment" click-to-comment comment="")
 					.pull-right
 						a(href="", ng-click="submitComment(null)")
 							img.post-butt(src="/images/post-button-new.svg")
 				.clearfix
 
 			//- other comments
-			div(ng-repeat="comment in comments")
+			div(ng-repeat="comment in comments | orderBy:'posted':true | limitTo:commentLimit")
 				.nspacer
 				.underpost.pull-right.break
 					.pull-left(style="overflow:hidden; border-radius:30px; -webkit-border-radius: 30px; -moz-border-radius:30px;width:60px;height:60px;border:0px solid #542437;")
-						img(src= attendee.user.avatar.length == 0 ? "/images/default_speaker-purple.svg" : attendee.user.avatar, style="width:60px;margin:0px auto auto 0px;")
+						img(ng-init="comment.attendee.user.avatar = comment.attendee.user.avatar || '/images/default_speaker-purple.svg'" ng-src="{{comment.attendee.user.avatar}}" style="width:60px;margin:0px auto auto 0px;")
 					.pull-left.pad-left-ten.width85.width85posts
 						.font16.bold
 							| {{ comment.attendee.user.name }} {{ comment.attendee.user.surname }}
@@ -72,12 +72,12 @@ block content
 									|  like this.
 								span(ng-show="comment.likes.length == 0")
 									| 0 Likes
-								|	|
-						.pull-left.font14.font14md.color-green.pad-left-five.font-exception
+								span(ng-show="comment.comments.length > 0")	|
+						.pull-left.font14.font14md.color-green.pad-left-five.font-exception(ng-hide="comment.comments.length == 0")
 							img.pull-left(src="/images/mini-bubble.svg" alt="") 
 							.pad-left-five.pull-left.font-exception
-								a.link-green(href="#")
-									| View 2 more commnets
+								a.link-green(href="" ng-click="comment.showComments = !comment.showComments ")
+									| Show {{ comment.comments.length }} commets
 						.clearfix
 					.pull-left
 						//- after clicking the arrow the rest of the comment should appear i think
@@ -89,10 +89,10 @@ block content
 							a.link-white(href="#") delete
 				.clearfix
 
-				div(ng-repeat="subcomment in comment.comments")
+				div(ng-show="comment.showComments" ng-repeat="subcomment in comment.comments | orderBy:'posted'")
 					.underpost-smaller.pull-right.break.nspacer
 						.pull-left(style="overflow:hidden; border-radius:22px; -webkit-border-radius: 22px; -moz-border-radius:22px;width:44px;height:44px;border:0px solid #542437;")
-							img(src= attendee.user.avatar.length == 0 ? "/images/default_speaker-purple.svg" : attendee.user.avatar, style="width:44px;margin:0px auto auto 0px;")
+							img(ng-init="subcomment.attendee.user.avatar = subcomment.attendee.user.avatar || '/images/default_speaker-purple.svg'" ng-src="{{subcomment.attendee.user.avatar}}", style="width:44px;margin:0px auto auto 0px;")
 						.pull-left.pad-left-ten.width85.width85posts
 							.font14.font14sm.break.small-post.font-exception
 								span.font16.bold {{ subcomment.attendee.user.name }} {{ subcomment.attendee.user.surname }}
@@ -140,12 +140,12 @@ block content
 		
 		.clearfix
 		.nspacer-bigger
-		.row
+		.row(ng-show="comments.length > commentLimit")
 
 			.col-sm-12.col-xs-12.col-md-12
 				.pull-right
-					a.dark-grey(href="/")
-						| see more comments &or;
+					a.dark-grey(href="" ng-click="commentLimit = 999")
+						| show {{ comments.length - commentLimit }} more comments &or;
 			.clearfix
 
 	.line-dark-grey
