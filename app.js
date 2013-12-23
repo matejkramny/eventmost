@@ -13,6 +13,7 @@ var express = require('express')
 	, authmethods = require('./routes/auth')
 	, passport = require('passport')
 	, config = require('./config')
+	, socketPassport = require('passport.socketio')
 
 var bugsnag = require("bugsnag");
 bugsnag.register(config.bugsnagKey, {
@@ -23,38 +24,15 @@ bugsnag.register(config.bugsnagKey, {
 
 var app = exports.app = express();
 
-var sessionStore; // session stored in database
-if (config.production) {
-	// production mode
-	
-	// In short, this will ensure a unique database for each environment
-	var mode = process.env.NODE_MODE;
-	if (mode == "dev" || mode == "staging") {
-		mode = "-"+mode;
-	} else {
-		mode = "";
-	}
-	
-	console.log("Production, mode "+mode);
-	var db = config.db + mode;
-	mongoose.connect(db, {
-		auto_reconnect: true,
-		native_parser: true
-	});
-	sessionStore = new MongoStore({
-		url: db
-	});
-} else {
-	// development mode
-	console.log("Development");
-	var db = "mongodb://127.0.0.1/eventmost";
-	mongoose.connect(db, {
-		auto_reconnect: true, native_parser: true
-	});
-	sessionStore = new MongoStore({
-		url: db
-	});
-}
+mongoose.connect(config.db, {
+	auto_reconnect: true,
+	native_parser: true
+});
+var sessionStore = new MongoStore({
+	mongoose_connection: mongoose.connection
+});
+
+config.configureConnection(mongoose.connection);
 
 if (process.platform.match(/^win/) == null) {
 	try {
@@ -74,7 +52,7 @@ app.set('port', process.env.PORT || 3000); // Port
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade'); // Templating engine
 app.set('view cache', true); // Cache views
-app.set('app version', '0.2.0'); // App version
+app.set('app version', '0.2.1'); // App version
 app.locals.pretty = process.env.NODE_ENV != 'production' // Pretty HTML outside production mode
 
 //app.use(bugsnag.requestHandler);
@@ -86,7 +64,8 @@ app.use(express.bodyParser()); // Parse the request body
 app.use(express.cookieParser()); // Parse cookies from header
 app.use(express.methodOverride());
 app.use(express.session({ // Session store
-	secret: "K3hsadkasdoijqwpoie",
+	key: config.sessionKey,
+	secret: config.sessionSecret,
 	store: sessionStore,
 	cookie: {
 		maxAge: 604800000 // 7 days in s * 10^3
@@ -142,7 +121,21 @@ var server = http.createServer(app)
 server.listen(app.get('port'), function(){
 	console.log('Express server listening on port ' + app.get('port'));
 });
-//exports.io = require('socket.io').listen(server)
+exports.io = io = require('socket.io').listen(server)
+
+io.set('authorization', socketPassport.authorize({
+	cookieParser: express.cookieParser,
+	key: config.sessionKey,
+	secret: config.sessionSecret,
+	store: sessionStore,
+	success: function(data, accept) {
+		console.log("Successfully connected!")
+	},
+	fail: function(data, message, error, accept) {
+		console.log("Failed to connect to socket ", message)
+	}
+}))
+io.set('log level', 1);
 
 // routes
 routes.router(app);

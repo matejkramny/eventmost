@@ -28,7 +28,6 @@
 		"socket.io": "latest",
 		"nodemailer": "latest",
 		"bugsnag": "bugsnag/bugsnag-node",
-		"should": "latest",
 		"newrelic": "latest",
 		"grunt": "latest",
 		"grunt-contrib-uglify": "latest",
@@ -36,6 +35,10 @@
 		"grunt-contrib-jshint": "latest",
 		"grunt-contrib-watch": "latest",
 		"sanitizer": "latest",
-		"moment": "latest"
+		"moment": "latest",
+		"passport.socketio": "latest"
+	},
+	"devDependencies": {
+		"should": "latest"
 	}
 }
