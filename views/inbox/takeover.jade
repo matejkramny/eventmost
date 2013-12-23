@@ -2,7 +2,7 @@ extends ../responsive
 
 block content
 	.nspacer-big
-	h4.text-center 
+	h4.text-center
 		a(href="/user/#{takeoverRequest.requestedBy._id}", target="_blank") #{takeoverRequest.requestedBy.getName()}
 		|  has Invited you to take over a feedback profile from an event called 
 		a(href="/event/#{takeoverRequest.event._id}", target="_blank") #{takeoverRequest.event.name}
