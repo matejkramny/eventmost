@@ -8,6 +8,7 @@ var dropbox = require('./dropbox')
 	, models = require('../../models')
 	, admin = require('./admin/admin')
 	, moment = require('moment')
+	, socket = require('./socket')
 
 exports.router = function (app) {
 	add.router(app)
@@ -32,6 +33,10 @@ exports.router = function (app) {
 	list.router(app)
 	dropbox.router(app)
 	admin.router(app)
+}
+
+exports.socket = function (sock) {
+	socket.socket(sock);
 }
 
 function logImpression (req, res, next) {
@@ -146,6 +151,7 @@ function viewEvent (req, res) {
 	res.format({
 		html: function() {
 			res.locals.hideArrow = true;
+			res.locals.moment = moment;
 			if (res.locals.eventattending) {
 				res.render('event/homepage', { title: res.locals.ev.name });
 			} else {

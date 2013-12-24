@@ -9,6 +9,7 @@ var schema = mongoose.Schema
 	, Attendee = require('./Attendee').Attendee
 	, Ticket = require('./Ticket').Ticket
 	, EventMessage = require('./EventMessage').EventMessage
+	, config = require('../config')
 
 var scheme = schema({
 	deleted: { type: Boolean, default: false },
@@ -81,11 +82,20 @@ var scheme = schema({
 	},
 })
 
-scheme.statics.getEvent = function (id, cb) {
+scheme.statics.getEvent = function (id, cb, simple) {
+	if (typeof simple === 'undefined') {
+		simple = false;
+	}
+	
+	var populate = 'files.user avatar attendees tickets messages';
+	if (simple) {
+		populate = 'attendees';
+	}
+	
 	try {
 		exports.Event
 			.findOne({ deleted: false, _id: mongoose.Types.ObjectId(id) })
-			.populate('attendees.user files.user avatar attendees tickets messages')
+			.populate(populate)
 			.exec(function(err, ev) {
 				if (err) throw err;
 				
@@ -94,8 +104,7 @@ scheme.statics.getEvent = function (id, cb) {
 					return;
 				}
 				
-				// a workaround for mongoose's bug of populating..
-				async.parallel([
+				var stack = [
 					//populate attendees
 					function(callback) {
 						async.each(ev.attendees, function(attendee, cb) {
@@ -105,9 +114,12 @@ scheme.statics.getEvent = function (id, cb) {
 						}, function(err) {
 							callback(null)
 						})
-					},
+					}
+				];
+				
+				if (!simple) {
 					//avatar etc
-					function(callback) {
+					stack.push(function(callback) {
 						if (ev.avatar == null || ev.avatar.url == null || ev.avatar.url.length == 0) {
 							var avatar = new Avatar({
 								url: "/images/event-avatar-new2.svg"
@@ -116,20 +128,26 @@ scheme.statics.getEvent = function (id, cb) {
 							ev.avatar = avatar._id;
 							ev.save();
 						}
-			
+						
 						ev.getGeo(function(geo) {
 							callback(null)
 						})
-					},
-					function (callback) {
+					});
+					stack.push(function (callback) {
 						ev.populate('sponsorLayout.sponsor1 sponsorLayout.sponsor2 sponsorLayout.sponsor3', callback)
-					}
-				], function(err) {
+					})
+				}
+				
+				async.parallel(stack, function() {
 					cb(ev)
 				});
 			}
 		)
 	} catch (ex) {
+		if (!config.production) {
+			throw ex;
+		}
+		
 		cb();
 	}
 }

@@ -19,7 +19,7 @@
 		"crypto": "latest",
 		"async": "latest",
 		"validator": "latest",
-		"connect-mongo": "latest",
+		"session-mongoose": "latest",
 		"nodemailer": "latest",
 		"passport": "latest",
 		"passport-facebook": "latest",

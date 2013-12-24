@@ -11,6 +11,7 @@ var auth = require('./auth'),
 	util = require('../util'),
 	models = require('../models')
 
+// HTTP router
 exports.router = function(app) {
 	app.get('/', function(req, res) {
 		if (req.user) {
@@ -47,6 +48,11 @@ exports.router = function(app) {
 	
 	app.get('/404', render404);
 	app.get('/500', render500);
+}
+
+// WS router
+exports.socket = function (socket) {
+	events.socket(socket)
 }
 
 function getToken (req, res) {

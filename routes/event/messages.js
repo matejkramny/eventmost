@@ -1,5 +1,6 @@
 var models = require('../../models')
-	attending = require('./event').attending
+	, attending = require('./event').attending
+	, socket = require('./socket')
 
 exports.router = function (app) {
 	app.get('/event/:id/messages', display)
@@ -146,6 +147,16 @@ function postComment (req, res) {
 			message.save();
 			msg.save();
 			
+			socket.notifyComment(res.locals.ev, {
+				_id: message._id,
+				attendee: res.locals.attendee,
+				message: message.message,
+				inResponse: true,
+				posted: new Date(),
+				likes: [],
+				comments: []
+			}, msg)
+			
 			res.format({
 				html: function() {
 					res.redirect("/event/"+res.locals.ev._id)
@@ -167,6 +178,15 @@ function postComment (req, res) {
 		msg.save()
 		res.locals.ev.messages.push(msg._id);
 		res.locals.ev.save()
+		
+		socket.notifyComment(res.locals.ev, {
+			_id: msg._id,
+			attendee: res.locals.attendee,
+			message: message,
+			posted: new Date(),
+			likes: [],
+			comments: []
+		})
 		
 		res.format({
 			html: function() {

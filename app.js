@@ -9,7 +9,7 @@ var express = require('express')
 	, path = require('path')
 	, mongoose = require('mongoose')
 	, util = require('./util')
-	, MongoStore = require('connect-mongo')(express)
+	, MongoStore = require('session-mongoose')(express)
 	, authmethods = require('./routes/auth')
 	, passport = require('passport')
 	, config = require('./config')
@@ -26,10 +26,14 @@ var app = exports.app = express();
 
 mongoose.connect(config.db, {
 	auto_reconnect: true,
-	native_parser: true
+	native_parser: true,
+	server: {
+		auto_reconnect: true
+	}
 });
 var sessionStore = new MongoStore({
-	mongoose_connection: mongoose.connection
+	connection: mongoose.connection,
+	interval: 120000
 });
 
 config.configureConnection(mongoose.connection);
@@ -58,7 +62,7 @@ app.locals.pretty = process.env.NODE_ENV != 'production' // Pretty HTML outside 
 //app.use(bugsnag.requestHandler);
 app.use(express.logger('dev')); // Pretty log
 app.use(express.limit('25mb')); // File upload limit
-//TODO SERVE STATIC SHIT ONLY FOR DEVELOPMENT.. PRODUCTION STUFF GETS SERVED BY NGINX. make a switch in process.env
+//TODO SERVE STATIC FILES ONLY FOR DEVELOPMENT.. PRODUCTION STUFF GETS SERVED BY NGINX. make a switch in process.env
 app.use("/", express.static(path.join(__dirname, 'public'))); // serve static files
 app.use(express.bodyParser()); // Parse the request body
 app.use(express.cookieParser()); // Parse cookies from header
@@ -121,24 +125,25 @@ var server = http.createServer(app)
 server.listen(app.get('port'), function(){
 	console.log('Express server listening on port ' + app.get('port'));
 });
+
 exports.io = io = require('socket.io').listen(server)
 
 io.set('authorization', socketPassport.authorize({
 	cookieParser: express.cookieParser,
 	key: config.sessionKey,
 	secret: config.sessionSecret,
-	store: sessionStore,
-	success: function(data, accept) {
-		console.log("Successfully connected!")
-	},
-	fail: function(data, message, error, accept) {
-		console.log("Failed to connect to socket ", message)
-	}
+	store: sessionStore
 }))
 io.set('log level', 1);
 
-// routes
+// HTTP routes
 routes.router(app);
+
+// WS routes
+io.sockets.on('connection', function(socket) {
+	routes.socket(socket)
+});
+
 app.get('*', function(req, res, next) {
 	if (!config.production) {
 		next()

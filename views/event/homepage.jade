@@ -25,13 +25,10 @@ block content
 			include layouts/5
 		when 5
 			include layouts/5
-
-
-
-
+	
 	//- comment post
 	.nspacer
-	div(ng-controller="commentsController", ng-init='init({ url: "/event/#{ev._id}/", user: "#{user._id}", csrf: "#{token}", attendee: #{JSON.stringify(attendee)} });')
+	div(ng-controller="commentsController" ng-cloak ng-init='init({ id: "#{ev._id}", user: "#{user._id}", csrf: "#{token}", attendee: #{JSON.stringify(attendee)} });')
 		.row
 			.col-sm-12.col-xs-12.col-md-12
 				.pull-left
@@ -42,7 +39,14 @@ block content
 						a(href="", ng-click="submitComment(null)")
 							img.post-butt(src="/images/post-button-new.svg")
 				.clearfix
-
+			
+			.col-md-12.col-sm-12.col-lg-12.col-xs-12(style="margin-top:10px;", ng-hide="newComments.length == 0")
+				.alert.bg-yellow.alert-dismissable
+					button.close(data-dismiss="alert") &times;
+					strong {{ newComments.length }} New Comment
+						span(ng-show="newComments.length > 0") s
+						|  Available. 
+						a(href="" ng-click="showNewComments()") Show New Comments
 			//- other comments
 			div(ng-repeat="comment in comments | limitTo:commentLimit")
 				.nspacer

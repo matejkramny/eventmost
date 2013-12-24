@@ -98,6 +98,10 @@ textarea:focus, input:focus{
     outline: 0;
 }
 
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+	display: none !important;
+}
+
 .font-header-icon{font-size:12px; padding-left: 7px; margin-top: 67px; position: absolute;}
 .font-header-icon2{font-size:12px; padding-left: 14px; margin-top: 67px; position: absolute;}
 

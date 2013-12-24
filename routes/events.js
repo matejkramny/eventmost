@@ -6,3 +6,7 @@ var models = require('../models')
 exports.router = function (app) {
 	event.router(app);
 }
+
+exports.socket = function (sock) {
+	event.socket(sock)
+}

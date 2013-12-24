@@ -3,15 +3,46 @@ angular.module('eventMost')
 	$scope.comments = [];
 	$scope.url = "";
 	$scope.user = "";
+	$scope.eventid = "";
 	$scope.csrf = "";
 	$scope.temp_comment = "";
 	$scope.commentLimit = 2;
 	
+	$scope.newComments = [];
+	
+	var sock = io.connect();
+	sock.on('connect', function() {
+		if ($scope.eventid.length == 0) return;
+		
+		sock.emit('register event.comments', {
+			event: $scope.eventid
+		})
+	})
+	sock.on('comment', function(message) {
+		if (message.attendee.user._id == $scope.user) return;
+		
+		$scope.newComments.push(message);
+		if (!$scope.$$phase) {
+			$scope.$digest()
+		}
+	})
+	
+	$scope.showNewComments = function () {
+		var all = $scope.comments.concat($scope.newComments);
+		$scope.newComments = [];
+		$scope.comments = $filter('orderBy')(all, 'posted', 'true')
+	}
+	
 	$scope.init = function (opts) {
-		$scope.url = opts.url;
+		$scope.url = "/event/"+opts.id+"/";
+		$scope.eventid = opts.id;
 		$scope.user = opts.user;
 		$scope.csrf = opts.csrf;
 		$scope.attendee = opts.attendee;
+		
+		sock.emit('register event.comments', {
+			event: $scope.eventid
+		})
 		
 		$scope.reload()
 	}
@@ -56,7 +87,7 @@ angular.module('eventMost')
 			opts.inResponse = comment._id;
 			msg.comments.push(c);
 		} else {
-			msg.comments.splice(0, 0, c)
+			$scope.comments.splice(0, 0, c)
 		}
 		
 		$http.post($scope.url+'comment', opts)
