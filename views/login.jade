@@ -1,16 +1,15 @@
 extends responsive
 
 block addonjs
-	script(src="/js/geo.js", defer="defer")
-	script(src="/js/angular-nearEvents.js", defer="defer")
-
+	script(src="/js/geo.js" defer="defer")
+	script(src="/js/angular-nearEvents.js" defer="defer")
 
 append content
 	.nspacer-big.center
 		.font-big
-			img(src="/images/big-purple-star.svg", alt="" class="starr ex-st" style="margin-top:-10px;")
+			img.starr.ex-st(src="/images/big-purple-star.svg" style="margin-top:-10px;")
 			|  Why use us 
-			img(src="/images/big-purple-star.svg", alt="" class="starr ex-st2" style="margin-top:-10px;")
+			img.starr.ex-st2(src="/images/big-purple-star.svg" style="margin-top:-10px;")
 		h4 Not only can you register your event here, you can also:
 		.clearfix
 
@@ -18,9 +17,9 @@ append content
 		.row
 			.hide-all.col-xs-12
 				.bg-yellow.center.psev(style="width:100%; height:45px; font-size:14px; padding-top:12px;")
-					a(href="", class="link-purple")
+					a(href="" class="link-purple")
 						| Create event
-
+	
 	#ca-container.ca-container.hide2
 			.ca-wrapper
 				.ca-item.ca-item-1
@@ -101,14 +100,12 @@ append content
 
 		.clearfix
 		.center.nspacer-big.hide2
-				button.btn.btn-warning.font.big-pad.big-pad-left.big-pad-right.font-exception(type='button', data-toggle="modal", href="#loginModal", style="font-weight:500;")
+				button.btn.btn-warning.font.big-pad.big-pad-left.big-pad-right.font-exception(type='button' data-toggle="modal" href="#loginModal" style="font-weight:500;")
 					| Create event
 	.row
-	
 		.col-md-12.col-xs-12
 			.nspacer-big
 				h2 Events near you
 		.clearfix
 		#nearbyEventsPlaceholder
 			p.text-center.lead.font-exception
-	
