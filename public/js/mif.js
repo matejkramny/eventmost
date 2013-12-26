@@ -50,6 +50,7 @@ angular.module('eventMost')
 	$scope.reload = function () {
 		$http.get($scope.url+'comments').success(function(data, status) {
 			$scope.comments = $filter('orderBy')(data.comments, 'posted', 'true');
+			$scope.processCommentTime();
 		})
 	}
 	
@@ -66,7 +67,7 @@ angular.module('eventMost')
 			msg = $scope;
 		}
 		
-		if (text.length == 0) {
+		if (!text || text.length == 0) {
 			return;
 		}
 		
@@ -82,6 +83,8 @@ angular.module('eventMost')
 			_csrf: $scope.csrf,
 			message: text
 		}
+		
+		$scope.processComment(c);
 		
 		if (comment) {
 			opts.inResponse = comment._id;
@@ -110,6 +113,31 @@ angular.module('eventMost')
 			comment: comment._id
 		})
 	}
+	
+	$scope.processComment = function (comment) {
+		var mom = moment(comment.posted);
+		comment.postedAgo = mom.fromNow()
+		comment.postedFormatted = mom.format('dddd Do MMMM YYYY [at] h:mm:ss a')
+	}
+	
+	$scope.processCommentTime = function () {
+		for (var i = 0; i < $scope.comments.length; i++) {
+			var comm = $scope.comments[i];
+			
+			$scope.processComment(comm)
+			for (var x = 0; x < comm.comments.length; x++) {
+				$scope.processComment(comm.comments[x]);
+			}
+		}
+		
+		if (!$scope.$$phase) {
+			$scope.$digest();
+		}
+	}
+	
+	setInterval(function() {
+		$scope.processCommentTime();
+	}, 60 * 1000);
 })
 
 .directive('commentForm', function() {
@@ -117,16 +145,36 @@ angular.module('eventMost')
 		restrict: 'A',
 		scope: { comment: '=', text: '@' },
 		link: function(scope, element, attrs) {
+			scope.submitComment = function (comment) {
+				if (comment) {
+					scope.comment.showComments = true;
+				}
+				
+				scope.$parent.submitComment(scope.text, comment);
+				scope.text = '';
+			}
+			
 			$(element).keyup(function(e) {
 				if (e.keyCode == 13) {
-					if (scope.comment) {
-						scope.comment.showComments = true;
-						scope.$parent.submitComment(scope.text, scope.comment);
-					} else {
-						scope.$parent.submitComment(scope.text);
-					}
-					scope.text = '';
+					scope.submitComment(scope.comment)
 				}
+			})
+		}
+	}
+})
+.directive('submitComment', function() {
+	return {
+		restrict: 'A',
+		link: function(s, element) {
+			$(element).click(function() {
+				var elem = $(element).parent().find('input');
+				if (elem.length == 0) {
+					elem = $('textarea.postcommentarea1');
+				}
+				
+				var scope = angular.element(elem).scope()
+				
+				scope.submitComment(scope.comment)
 			})
 		}
 	}

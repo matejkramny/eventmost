@@ -6,8 +6,9 @@ include inc/message
 
 append addonjs
 	//-include inc/mapjs
-	script(src="/socket.io/socket.io.js", defer)
-	script(src="/js/mif.js", defer)
+	script(src="/socket.io/socket.io.js" defer)
+	script(src="/js/moment.min.js" defer)
+	script(src="/js/mif.js" defer)
 
 block content
 	+navbar
@@ -36,7 +37,7 @@ block content
 				.pull-left.bg-green.psev.post-width-text-new
 					textarea.postcommentarea1(placeholder="Post a comment here..." ng-model="text" comment-form)
 					.pull-right
-						a(href="", ng-click="submitComment(null)")
+						a(href="" submit-comment)
 							img.post-butt(src="/images/post-button-new.svg")
 				.clearfix
 			
@@ -61,8 +62,8 @@ block content
 						.pull-left.font14.font14md.font-exception
 							a.link-green.bold(href="" ng-click="likeComment(comment)" ng-hide="user == comment.attendee.user._id")
 								| Like | 
-						.pull-left.font14.font14md.color-green.pad-left-five.font-exception
-							| posted @ 19:00 |
+						.pull-left.font14.font14md.color-green.pad-left-five.font-exception(title="{{comment.postedFormatted}}")
+							| posted {{comment.postedAgo}} |
 						.pull-left.font14.font14md.color-green.pad-left-five.font-exception
 							img.pull-left(src="/images/mini-thumb.svg")
 							.pad-left-five.pull-left
@@ -79,12 +80,12 @@ block content
 									| 0 Likes
 								span(ng-show="comment.comments.length > 0") 	|
 						.pull-left.font14.font14md.color-green.pad-left-five.font-exception(ng-hide="comment.comments.length == 0")
-							img.pull-left(src="/images/mini-bubble.svg" alt="")
+							img.pull-left(src="/images/mini-bubble.svg")
 							.pad-left-five.pull-left.font-exception
 								a.link-green(href="" ng-click="comment.showComments = !comment.showComments ")
-									span(ng-hide="comment.showComments") Show
-									span(ng-show="comment.showComments") Hide
-									|  {{ comment.comments.length }} commets
+									span(ng-hide="comment.showComments") Show {{ comment.comments.length - 2 }} more comment
+										span(ng-show="comment.comments.length - 2 > 1") s
+									span(ng-show="comment.showComments") Hide comments
 						.clearfix
 					.pull-left
 						//- after clicking the arrow the rest of the comment should appear i think
@@ -96,16 +97,16 @@ block content
 							a.link-white(href="#") delete
 				.clearfix
 
-				div(ng-show="comment.showComments" ng-repeat="subcomment in comment.comments | orderBy:'posted':false")
-					.underpost-smaller.pull-right.break.nspacer
+				div(ng-repeat="subcomment in comment.comments")
+					.underpost-smaller.pull-right.break.nspacer(ng-hide="comment.comments.length - 1 - $index > 1 && !comment.showComments")
 						.pull-left(style="overflow:hidden; border-radius:22px; -webkit-border-radius: 22px; -moz-border-radius:22px;width:44px;height:44px;border:0px solid #542437;")
 							img(ng-init="subcomment.attendee.user.avatar = subcomment.attendee.user.avatar || '/images/default_speaker-purple.svg'" ng-src="{{subcomment.attendee.user.avatar}}", style="width:44px;margin:0px auto auto 0px;")
 						.pull-left.pad-left-ten.width85.width85posts
 							.font14.font14sm.break.small-post.font-exception
 								span.font16.bold {{ subcomment.attendee.user.name }} {{ subcomment.attendee.user.surname }}
 								|  {{ subcomment.message }}
-							.pull-left.font14.font14md.color-green.pad-left-five.font-exception
-								| posted @ 50 minutes ago	|
+							.pull-left.font14.font14md.color-green.pad-left-five.font-exception(title="{{subcomment.postedFormatted}}")
+								| posted {{subcomment.postedAgo}}	|
 							.pull-left.font14.font14md.color-green.pad-left-five.font-exception
 								img.pull-left(src="/images/mini-thumb.svg")
 								.pad-left-five.pull-left
@@ -127,12 +128,11 @@ block content
 						.pull-left
 							//- after clicking the arrow the rest of the comment should appear i think
 							a(href="#")
-								img.psev(src="/images/small-arrow-down.svg", alt="", style="padding-top:10px;")
+								img.psev(src="/images/small-arrow-down.svg" style="padding-top:10px;")
 						.pull-right
 							//- button only visible for creator and planner
 							button.btn.btn-primary.font14.pull-right.nspacer(type='submit', style="border-radius: 10px; padding:7px; padding-left:12px; padding-right:12px;")
 								a.link-white(href="#") delete
-
 					.clearfix
 				
 				.underpost-smaller.pull-right.break.nspacer
@@ -141,7 +141,7 @@ block content
 					.pull-left.pad-left-ten.width85.width85posts
 						.font14.font14sm.break.nspacer-small
 							input.search-input.width100.psev(type"text" placeholder="Write a comment..." ng-model="text" comment-form comment="comment")
-						button.btn.btn-default.font14.pull-right.nspacer(style="border-radius: 10px; padding:7px; padding-left:12px; padding-right:12px;" ng-click="submitComment(comment)")
+						button.btn.btn-default.font14.pull-right.nspacer(submit-comment style="border-radius: 10px; padding:7px; padding-left:12px; padding-right:12px;")
 							| Submit
 					.clearfix
 		
