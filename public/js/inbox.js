@@ -3,6 +3,11 @@ angular.module('eventMost')
 	$scope.messages = [];
 	$scope.message = {};
 	
+	var sock = io.connect();
+	sock.on('connect', function() {
+		console.log("Connected")
+	})
+	
 	$scope.selectMessage = function (message) {
 		$scope.message = message;
 		$http.get('/inbox/message/'+message.topic._id).success(function(data, status) {

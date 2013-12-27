@@ -5,6 +5,8 @@ include inc/card
 include inc/savedProfile
 
 append addonjs
+	script(src="/socket.io/socket.io.js" defer)
+	script(src="/js/moment.min.js" defer)
 	script(src="/js/inbox.js" defer)
 
 block content
