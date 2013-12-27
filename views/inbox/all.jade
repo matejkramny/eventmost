@@ -20,11 +20,13 @@ block content
 				li(ng-repeat="message in messages")
 					a(href="" ng-click="selectMessage(message)") {{ message.topic._id }}
 		.col-md-8.col-sm-8.col-xs-12.col-lg-8
-			strong(ng-repeat="user in message.message.users") {{ user.name }} {{ user.surname }}
-				span(ng-hide="$last") , 
+			h4.text-center
+				span(ng-repeat="user in message.message.users") {{ user.name }} {{ user.surname }}
+					span(ng-hide="$last") , 
+			hr
 			.row(ng-repeat="message in message.messages")
 				.col-md-2.col-lg-2.col-sm-2.col-xs-2
-					img.img-circular(ng-src="{{ message.sentBy.avatar }}")
+					strong {{ message.sentBy.name }} {{ message.sentBy.surname }}:
 				.col-md-8.col-lg-8.col-sm-8.col-xs-8
 					| {{ message.message }}
 				.col-md-2.col-lg-2.col-sm-2.col-xs-2

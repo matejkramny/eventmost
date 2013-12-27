@@ -2,6 +2,7 @@ angular.module('eventMost')
 .controller('inboxController', function($scope, $http) {
 	$scope.messages = [];
 	$scope.message = {};
+	$scope.msg = "";
 	
 	var sock = io.connect();
 	sock.on('connect', function() {
@@ -23,6 +24,7 @@ angular.module('eventMost')
 			message: $scope.msg,
 			timeSent: "now"
 		})
+		$scope.msg = "";
 	}
 	
 	$http.get('/inbox/messages').success(function(data, status) {
