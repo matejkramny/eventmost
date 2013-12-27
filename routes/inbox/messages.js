@@ -63,7 +63,18 @@ function showMessage (req, res) {
 	var name = "Private Message"
 	if (otherUser)
 		name = "PM to "+otherUser.getName();
-	res.render('inbox/message', { pageName: name, title: name })
+		
+	res.format({
+		html: function() {
+			res.render('inbox/message', { pageName: name, title: name })
+		},
+		json: function() {
+			res.send({
+				message: res.locals.message,
+				messages: res.locals.messages
+			})
+		}
+	})
 }
 
 function postMessage (req, res) {
