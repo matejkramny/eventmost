@@ -14,26 +14,26 @@ block content
 	
 	.clearfix
 	
-	.row(ng-controller="inboxController")
+	.row(ng-controller="inboxController" ng-cloak ng-init="init({ csrf: '#{token}' })")
 		.col-md-4.col-sm-4.col-xs-12.col-lg-4
 			ul.nav.nav-pills.nav-stacked
-				li(ng-repeat="message in messages")
-					a(href="" ng-click="selectMessage(message)") {{ message.topic._id }}
+				li(ng-repeat="m in messages" ng-class="{ active: message.message._id == m.topic._id }")
+					a(href="" ng-click="selectMessage(m)")
+						span(ng-repeat="user in m.topic.users") {{ user.name }} {{ user.surname }}
+							span(ng-hide="$last") , 
 		.col-md-8.col-sm-8.col-xs-12.col-lg-8
-			h4.text-center
-				span(ng-repeat="user in message.message.users") {{ user.name }} {{ user.surname }}
-					span(ng-hide="$last") , 
+			div#messages(style="height: 300px; overflow-x:hidden; overflow-y:scroll;")
+				.row(ng-repeat="message in message.messages")
+					.col-md-2.col-lg-2.col-sm-2.col-xs-2.text-right
+						strong {{ message.sentBy.name }} {{ message.sentBy.surname }}:
+					.col-md-7.col-lg-7.col-sm-7.col-xs-7
+						| {{ message.message }}
+					.col-md-3.col-lg-3.col-sm-3.col-xs-3.text-right
+						| {{ message.time }}
 			hr
-			.row(ng-repeat="message in message.messages")
-				.col-md-2.col-lg-2.col-sm-2.col-xs-2
-					strong {{ message.sentBy.name }} {{ message.sentBy.surname }}:
-				.col-md-8.col-lg-8.col-sm-8.col-xs-8
-					| {{ message.message }}
-				.col-md-2.col-lg-2.col-sm-2.col-xs-2
-					| {{ message.timeSent }}
 			.row
 				.col-md-10.col-lg-10.col-sm-10.col-xs-10
-					input.form-control(ng-model="msg" placeholder="Enter Message")
+					input#inputMessage.form-control(ng-model="msg" placeholder="Enter Message")
 				.col-md-2.col-lg-2.col-sm-2.col-xs-2
 					button.form-control.btn.btn-info(ng-click="sendMessage()") Send
 	//- end inbox title plus buttons

@@ -53,6 +53,7 @@ exports.router = function(app) {
 // WS router
 exports.socket = function (socket) {
 	events.socket(socket)
+	inbox.socket(socket)
 }
 
 function getToken (req, res) {

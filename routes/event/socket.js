@@ -58,14 +58,10 @@ function registerEventComments (data) {
 exports.notifyComment = function (ev, msg, responseTo) {
 	var sockets = io.sockets.clients();
 	
-	console.log("Getting")
-	
 	for (var i = 0; i < sockets.length; i++) {
 		var s = sockets[i];
 		
 		s.get('event', function(err, value) {
-			console.log(err)
-			console.log(value);
 			if (err || !value) return;
 			
 			if (ev._id.equals(value)) {

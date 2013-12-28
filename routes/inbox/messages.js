@@ -139,6 +139,19 @@ function postMessage (req, res) {
 			timeSent: Date.now(),
 			sentBy: req.user._id
 		})
+		
+		inbox.pushMessageToSockets({
+			message: {
+				_id: msg._id,
+				topic: msg.topic,
+				message: msg.message,
+				read: msg.read,
+				timeSent: msg.timeSent,
+				sentBy: req.user
+			},
+			topic: message
+		});
+		
 		msg.save(function(err) {
 			res.format({
 				html: function() {

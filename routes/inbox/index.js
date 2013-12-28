@@ -26,6 +26,9 @@ exports.router = function (app) {
 	topic.router(app)
 }
 
+exports.socket = function (socket) {
+}
+
 function populateInbox (req, res, next) {
 	var u = req.user;
 	
@@ -197,6 +200,23 @@ function doMerge (req, res) {
 	request.takeoverUser.save();
 	// TODO Modify Topics, Messages, User.carsd etc to this user's ID.
 	res.redirect('back')
+}
+
+exports.pushMessageToSockets = function (data) {
+	var sockets = io.sockets.clients();
+	
+	for (var i = 0; i < sockets.length; i++) {
+		var s = sockets[i];
+		var user = s.handshake.user;
+		
+		for (var x = 0; x < data.topic.users.length; x++) {
+			if (data.topic.users[x]._id.equals(user._id)) {
+				s.emit('inbox notification', data)
+				
+				break;
+			}
+		}
+	}
 }
 
 exports.emailNotification = function (person, link) {
