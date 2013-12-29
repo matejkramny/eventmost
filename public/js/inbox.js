@@ -3,6 +3,10 @@ angular.module('eventMost')
 	$scope.messages = [];
 	$scope.message = {};
 	$scope.msg = "";
+	$scope.peopleSearch = [];
+	$scope.search = "";
+	$scope.progress = "";
+	$scope.showPeopleSearch = false;
 	
 	var sock = io.connect();
 	sock.on('connect', function() {
@@ -64,6 +68,20 @@ angular.module('eventMost')
 			$scope.sendMessage();
 		}
 	})
+	
+	$scope.searchUser = function () {
+		$scope.progress = "Searching for "+$scope.search;
+		$http.get("/search/people/?q="+$scope.search).success(function(data, status) {
+			$scope.showPeopleSearch = true;
+			$scope.peopleSearch = data.results;
+			$scope.progress = "";
+		})
+	}
+	$scope.selectProfile = function (profile) {
+		$scope.showAction = true;
+		$scope.selectedProfile = profile;
+		$scope.showPeopleSearch = false;
+	}
 	
 	setTimeout($scope.calculateTime, 60 * 1000);
 })
