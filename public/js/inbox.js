@@ -78,7 +78,8 @@ angular.module('eventMost')
 		})
 	}
 	$scope.selectProfile = function (profile) {
-		$scope.showAction = true;
+		$scope.progress = "Creating message to "+profile.name +" "+profile.surname;
+		//TODO make post to create message. then switch to the message....
 		$scope.selectedProfile = profile;
 		$scope.showPeopleSearch = false;
 	}

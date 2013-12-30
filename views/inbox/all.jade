@@ -78,16 +78,6 @@ block content
 							a.btn.btn-default.btn-md(ng-click="selectProfile(person)") Select
 					br
 					.line-purple(ng-hide="$last")
-			
-			.nspacer
-			.col-sm-12.col-xs-12.col-md-12(ng-show="showAction")
-				.center
-					.inline.nspacer-small
-						button.btn.btn-primary.font-e2.hide-prof-butt(ng-click="sendInvite()", style="height:95px; width:100%; border-radius: 10px; color:#fff; padding:20px;")
-							| Invite user to take<br />over this profile
-					.inline.nspacer-small.pad-on-smart
-						button.btn.btn-default.font-e2.hide-prof-butt(ng-click="sendInbox()", style="height:95px; width:100%; border-radius: 10px; color:#fff; padding:20px;")
-							| Send this profile’s inbox <br />to the selected user
 			.clearfix
 			
 	//- end inbox title plus buttons
