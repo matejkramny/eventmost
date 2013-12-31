@@ -81,12 +81,13 @@ angular.module('eventMost')
 	$scope.selectProfile = function (profile) {
 		$scope.progress = "Creating message to "+profile.name +" "+profile.surname;
 		//TODO make post to create message. then switch to the message....
-		$http.post('/messages/new?to='+profile._id, { csrf: $scope.csrf })
+		$http.post('/inbox/messages/new?to='+profile._id, { _csrf: $scope.csrf })
 			.success(function(data, status) {
-				
+				$scope.messages.splice(0, 0, data.message);
+				$scope.selectMessage($scope.messages[0]);
 			})
-			.failure(function(data, status) {
-				
+			.error(function(data, status) {
+				$scope.status = "Something went wrong :/";
 			})
 		$scope.selectedProfile = profile;
 		$scope.showPeopleSearch = false;

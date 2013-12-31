@@ -15,6 +15,7 @@ block content
 	.clearfix
 	
 	.row(ng-controller="inboxController" ng-cloak ng-init="init({ csrf: '#{token}' })")
+		.col-md-12.col-sm-12.col-xs-12.col-lg-12(ng-hide="status.length == 0"): strong {{ status }}
 		.col-md-4.col-sm-4.col-xs-12.col-lg-4
 			ul.nav.nav-pills.nav-stacked(style="height: 300px; overflow-x:hidden; overflow-y:scroll;")
 				li(ng-class="{ active: !message }")
@@ -34,6 +35,9 @@ block content
 						| {{ message.message }}
 					.col-md-3.col-lg-3.col-sm-3.col-xs-3.text-right
 						| {{ message.time }}
+				.row(ng-show="message.messages.length == 0")
+					.col-md-12.col-lg-12.col-sm-12.col-xs-12.text-center(style="margin-top:100px;")
+						h3 No Messages
 			hr
 			.row
 				.col-md-10.col-lg-10.col-sm-10.col-xs-10

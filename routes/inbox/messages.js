@@ -217,7 +217,14 @@ function doNewMessage (req, res) {
 			json: function() {
 				res.send({
 					status: 200,
-					message: topic
+					message: {
+						lastMessage: '',
+						topic: {
+							users: [req.user, user],
+							lastUpdated: topic.lastUpdated,
+							_id: topic._id
+						}
+					}
 				})
 			}
 		})
