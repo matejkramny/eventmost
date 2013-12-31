@@ -191,7 +191,17 @@ function doNewMessage (req, res) {
 	
 	models.User.findOne({ _id: to }, function(err, user) {
 		if (!user) {
-			res.redirect('/inbox/messages/new');
+			res.format({
+				html: function() {
+					res.redirect('back');
+				},
+				json: function() {
+					res.send(400, {
+						message: 'No Such User'
+					});
+				}
+			});
+			
 			return;
 		}
 		
@@ -200,7 +210,17 @@ function doNewMessage (req, res) {
 			users: [req.user._id, user._id]
 		})
 		topic.save();
-		res.redirect('/inbox/message/'+topic._id)
+		res.format({
+			html: function() {
+				redirect('/inbox/message/'+topic._id)
+			},
+			json: function() {
+				res.send({
+					status: 200,
+					message: topic
+				})
+			}
+		})
 	});
 }
 function newMessage (req, res) {

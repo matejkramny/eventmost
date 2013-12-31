@@ -7,6 +7,7 @@ angular.module('eventMost')
 	$scope.search = "";
 	$scope.progress = "";
 	$scope.showPeopleSearch = false;
+	$scope.csrf = "";
 	
 	var sock = io.connect();
 	sock.on('connect', function() {
@@ -80,6 +81,13 @@ angular.module('eventMost')
 	$scope.selectProfile = function (profile) {
 		$scope.progress = "Creating message to "+profile.name +" "+profile.surname;
 		//TODO make post to create message. then switch to the message....
+		$http.post('/messages/new?to='+profile._id, { csrf: $scope.csrf })
+			.success(function(data, status) {
+				
+			})
+			.failure(function(data, status) {
+				
+			})
 		$scope.selectedProfile = profile;
 		$scope.showPeopleSearch = false;
 	}
