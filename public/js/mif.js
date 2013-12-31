@@ -8,8 +8,6 @@ angular.module('eventMost')
 	$scope.temp_comment = "";
 	$scope.commentLimit = 2;
 	
-	$scope.newComments = [];
-	
 	var sock = io.connect();
 	sock.on('connect', function() {
 		if ($scope.eventid.length == 0) return;
@@ -21,17 +19,44 @@ angular.module('eventMost')
 	sock.on('comment', function(message) {
 		if (message.attendee.user._id == $scope.user) return;
 		
-		$scope.newComments.push(message);
+		if (message.inResponse) {
+			for (var i = 0; i < $scope.comments.length; i++) {
+				if ($scope.comments[i]._id == message.responseTo) {
+					$scope.comments[i].comments.push(message);
+				}
+			}
+		} else {
+			$scope.comments.splice(0, 0, message);
+			$scope.comments = $filter('orderBy')($scope.comments, 'posted', 'true')
+		}
+		
+		$scope.processCommentTime();
+		
 		if (!$scope.$$phase) {
 			$scope.$digest()
 		}
 	})
-	
-	$scope.showNewComments = function () {
-		var all = $scope.comments.concat($scope.newComments);
-		$scope.newComments = [];
-		$scope.comments = $filter('orderBy')(all, 'posted', 'true')
-	}
+	sock.on('like', function(data) {
+		if (data.attendee.user._id == $scope.user) return;
+		
+		for (var i = 0; i < $scope.comments.length; i++) {
+			if ($scope.comments[i]._id == data.comment) {
+				$scope.comments[i].likes.push(data.attendee);
+				break;
+			}
+			
+			for (var x = 0; x < $scope.comments[i].comments.length; x++) {
+				if ($scope.comments[i].comments[x]._id == data.comment) {
+					$scope.comments[i].comments[x].likes.push(data.attendee);
+					break;
+				}
+			}
+		}
+		
+		if (!$scope.$$phase) {
+			$scope.$digest();
+		}
+	})
 	
 	$scope.init = function (opts) {
 		$scope.url = "/event/"+opts.id+"/";
@@ -112,12 +137,22 @@ angular.module('eventMost')
 			_csrf: $scope.csrf,
 			comment: comment._id
 		})
+		
+		$scope.processCommentTime();
 	}
 	
 	$scope.processComment = function (comment) {
 		var mom = moment(comment.posted);
 		comment.postedAgo = mom.fromNow()
 		comment.postedFormatted = mom.format('dddd Do MMMM YYYY [at] h:mm:ss a')
+		
+		comment.showLike = true;
+		for (var i = 0; i < comment.likes.length; i++) {
+			if (comment.likes[i].user._id == $scope.user) {
+				comment.showLike = false;
+				break;
+			}
+		}
 	}
 	
 	$scope.processCommentTime = function () {

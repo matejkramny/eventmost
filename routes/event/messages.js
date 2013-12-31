@@ -46,7 +46,7 @@ function likeComment (req, res) {
 			var att = res.locals.attendee;
 			var found = false;
 			for (var i = 0; i < comment.likes.length; i++) {
-				if (comment.likes[i].attendee.equals(attendee._id)) {
+				if (comment.likes[i].equals(att._id)) {
 					found = true;
 					break;
 				}
@@ -67,6 +67,8 @@ function likeComment (req, res) {
 			} else {
 				comment.likes.push(att._id);
 				comment.save();
+				
+				socket.notifyLike(res.locals.ev, comment, att)
 				
 				res.format({
 					html: function() {
@@ -152,6 +154,7 @@ function postComment (req, res) {
 				attendee: res.locals.attendee,
 				message: message.message,
 				inResponse: true,
+				responseTo: msg._id,
 				posted: new Date(),
 				likes: [],
 				comments: []

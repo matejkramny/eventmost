@@ -41,13 +41,6 @@ block content
 							img.post-butt(src="/images/post-button-new.svg")
 				.clearfix
 			
-			.col-md-12.col-sm-12.col-lg-12.col-xs-12(style="margin-top:10px;", ng-hide="newComments.length == 0")
-				.alert.bg-yellow.alert-dismissable
-					button.close(data-dismiss="alert") &times;
-					strong {{ newComments.length }} New Comment
-						span(ng-show="newComments.length > 0") s
-						|  Available. 
-						a(href="" ng-click="showNewComments()") Show New Comments
 			//- other comments
 			div(ng-repeat="comment in comments | limitTo:commentLimit")
 				.nspacer
@@ -60,7 +53,7 @@ block content
 						.font14.font14sm.break.small-post.font-exception
 							| {{ comment.message }}
 						.pull-left.font14.font14md.font-exception
-							a.link-green.bold(href="" ng-click="likeComment(comment)" ng-hide="user == comment.attendee.user._id")
+							a.link-green.bold(href="" ng-click="likeComment(comment)" ng-show="comment.showLike")
 								| Like | 
 						.pull-left.font14.font14md.color-green.pad-left-five.font-exception(title="{{comment.postedFormatted}}")
 							| posted {{comment.postedAgo}} |
@@ -118,7 +111,7 @@ block content
 									span(ng-show="subcomment.likes.length == 0")
 										| 0 Likes
 							.pull-left.font14.font14md.pad-left-five.font-exception
-								a.link-green.bold(href="" ng-click="likeComment(subcomment)" ng-hide="user == subcomment.attendee.user._id")
+								a.link-green.bold(href="" ng-click="likeComment(subcomment)" ng-show="subcomment.showLike")
 									|	| Like 
 							.clearfix
 						.pull-right

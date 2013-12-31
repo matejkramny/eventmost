@@ -3,6 +3,7 @@ var mongoose = require('mongoose')
 	, models = require('../../models')
 	, io = require('../../app').io // has to fetch it
 
+// the app doesn't immediately have the socket property available.. perhaps it would after 500ms
 setTimeout(function() {
 	io = require('../../app').io;
 }, 500)
@@ -66,6 +67,25 @@ exports.notifyComment = function (ev, msg, responseTo) {
 			
 			if (ev._id.equals(value)) {
 				s.emit('comment', msg)
+			}
+		})
+	}
+}
+
+exports.notifyLike = function (ev, comment, attendee) {
+	var sockets = io.sockets.clients();
+	
+	for (var i = 0; i < sockets.length; i++) {
+		var s = sockets[i];
+		
+		s.get('event', function(err, value) {
+			if (err || !value) return;
+			
+			if (ev._id.equals(value)) {
+				s.emit('like', {
+					comment: comment._id,
+					attendee: attendee
+				})
 			}
 		})
 	}
