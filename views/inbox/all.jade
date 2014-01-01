@@ -10,14 +10,13 @@ append addonjs
 	script(src="/js/inbox.js" defer)
 
 block content
-	include navbar
-	
-	.clearfix
-	
+	h3(style="margin-left:20px;") Inbox
+	.nspacer
 	.row(ng-controller="inboxController" ng-cloak ng-init="init({ csrf: '#{token}' })")
 		.col-md-12.col-sm-12.col-xs-12.col-lg-12(ng-hide="status.length == 0"): strong {{ status }}
 		.col-md-4.col-sm-4.col-xs-12.col-lg-4
-			ul.nav.nav-pills.nav-stacked(style="height: 300px; overflow-x:hidden; overflow-y:scroll;")
+			ul.nav.nav-pills.nav-stacked(style="height: 380px; overflow-x:hidden; border-top: 1px solid #333; border-bottom:1px solid #333; overflow-y:scroll;")
+				.nspacer
 				li(ng-class="{ active: !message }")
 					a(href="" ng-click="message = null")
 						i.fa.fa-fw.fa-pencil-square-o
@@ -26,9 +25,10 @@ block content
 					a(href="" ng-click="selectMessage(m)")
 						span(ng-repeat="user in m.topic.users") {{ user.name }} {{ user.surname }}
 							span(ng-hide="$last") , 
+				.nspacer
 		.col-md-8.col-sm-8.col-xs-12.col-lg-8(ng-hide="message == null")
-			div#messages(style="height: 300px; overflow-x:hidden; overflow-y:scroll;")
-				.row(ng-repeat="message in message.messages")
+			div#messages(style="height: 300px; border-top: 1px solid #333; border-bottom:1px solid #333; overflow-x:hidden; overflow-y:scroll;")
+				.row(ng-repeat="message in message.messages" ng-class="{ nspacer: $first }")
 					.col-md-2.col-lg-2.col-sm-2.col-xs-2.text-right
 						strong {{ message.sentBy.name }} {{ message.sentBy.surname }}:
 					.col-md-7.col-lg-7.col-sm-7.col-xs-7
@@ -41,7 +41,7 @@ block content
 			hr
 			.row
 				.col-md-10.col-lg-10.col-sm-10.col-xs-10
-					input#inputMessage.form-control(ng-model="msg" placeholder="Enter Message")
+					input#inputMessage.form-control(ng-model="msg" required placeholder="Enter Message")
 				.col-md-2.col-lg-2.col-sm-2.col-xs-2
 					button.form-control.btn.btn-info(ng-click="sendMessage()") Send
 		.col-md-8.col-sm-8.col-xs-12.col-lg-8(ng-show="message == null")
@@ -131,28 +131,6 @@ block content
 			- i++;
 	.nspacer
 	
-	.row
-		.col-md-12.col-xs-12.col-sm-12
-			.font-tw
-				b Private messages
-			.line-purple
-	
-	.row
-		//- guest speakers
-		.col-md-12.col-xs-12.col-sm-12.hide-mini3-except-smart
-		if locals.topics.length > 2
-			//| Needs new page
-	
-		if (locals.topics.length > 0)
-			+message(locals.topics[0])
-			if locals.topics.length > 1
-				.nspacer
-				+message(locals.topics[1])
-			if locals.topics.length > 2
-				a(href="/inbox/messages", style="margin-left:30px;") #{locals.topics.length-2} more recent conversations
-			// Maybe we should have something like: a(href='inbox/messages') Click to view all
-		else
-			p.text-center No Private messages
 	
 	//- end guest speakers
 	.row
@@ -193,14 +171,3 @@ block content
 			.clearfix
 			.nspacer
 	
-	.row
-		.col-md-12.col-xs-12.col-sm-12
-			.font-tw
-				b Public messages
-			.line-purple
-	.nspacer
-	
-	//What are public messages?
-	p.text-center No Public Messages.
-	.clearfix
-	.nspacer
