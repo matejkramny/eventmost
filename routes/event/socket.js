@@ -56,7 +56,7 @@ function registerEventComments (data) {
 	}, true)
 }
 
-exports.notifyComment = function (ev, msg, responseTo) {
+function getSocket (ev, cb) {
 	var sockets = io.sockets.clients();
 	
 	for (var i = 0; i < sockets.length; i++) {
@@ -66,27 +66,23 @@ exports.notifyComment = function (ev, msg, responseTo) {
 			if (err || !value) return;
 			
 			if (ev._id.equals(value)) {
-				s.emit('comment', msg)
+				cb(s)
 			}
 		})
 	}
 }
 
+exports.notifyComment = function (ev, msg, responseTo) {
+	getSocket(ev, function(socket) {
+		socket.emit('comment', msg)
+	})
+}
+
 exports.notifyLike = function (ev, comment, attendee) {
-	var sockets = io.sockets.clients();
-	
-	for (var i = 0; i < sockets.length; i++) {
-		var s = sockets[i];
-		
-		s.get('event', function(err, value) {
-			if (err || !value) return;
-			
-			if (ev._id.equals(value)) {
-				s.emit('like', {
-					comment: comment._id,
-					attendee: attendee
-				})
-			}
+	getSocket(ev, function(socket) {
+		socket.emit('like', {
+			comment: comment._id,
+			attendee: attendee
 		})
-	}
+	})
 }
