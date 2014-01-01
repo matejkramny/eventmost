@@ -25,13 +25,15 @@ block content
 					a(href="" ng-click="selectMessage(m)")
 						span(ng-repeat="user in m.topic.users") {{ user.name }} {{ user.surname }}
 							span(ng-hide="$last") , 
+						span.badge.pull-right(ng-show="m.unread > 0") {{m.unread}} New
 				.nspacer
 		.col-md-8.col-sm-8.col-xs-12.col-lg-8(ng-hide="message == null")
 			div#messages(style="height: 300px; border-top: 1px solid #333; border-bottom:1px solid #333; overflow-x:hidden; overflow-y:scroll;")
 				.row(ng-repeat="message in message.messages" ng-class="{ nspacer: $first }")
 					.col-md-2.col-lg-2.col-sm-2.col-xs-2.text-right
-						strong {{ message.sentBy.name }} {{ message.sentBy.surname }}:
-					.col-md-7.col-lg-7.col-sm-7.col-xs-7
+						strong
+							a(href="/user/{{message.sentBy._id}}" target="_blank" style="color: #542437") {{ message.sentBy.name }} {{ message.sentBy.surname }}:
+					p.col-md-7.col-lg-7.col-sm-7.col-xs-7(style="margin-bottom:0;")
 						| {{ message.message }}
 					.col-md-3.col-lg-3.col-sm-3.col-xs-3.text-right
 						| {{ message.time }}

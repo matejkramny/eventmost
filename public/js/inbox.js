@@ -15,10 +15,18 @@ angular.module('eventMost')
 	})
 	
 	sock.on('inbox notification', function(data) {
-		if ($scope.message.message._id == data.topic._id) {
-			$scope.message.messages.push(data.message)
-			
-			$scope.calculateTime();
+		for (var i = 0; i < $scope.messages.length; i++) {
+			if ($scope.messages[i].topic._id == data.topic._id) {
+				if (data.topic._id == $scope.message.message._id) {
+					$scope.message.messages.push(data.message);
+				} else {
+					$scope.messages[i].unread++;
+				}
+				
+				$scope.calculateTime();
+				
+				break;
+			}
 		}
 	})
 	
@@ -27,6 +35,7 @@ angular.module('eventMost')
 	}
 	
 	$scope.selectMessage = function (message) {
+		message.unread = 0;
 		$http.get('/inbox/message/'+message.topic._id).success(function(data, status) {
 			$scope.message = {
 				message: data.message,
@@ -59,8 +68,14 @@ angular.module('eventMost')
 	
 	$http.get('/inbox/messages').success(function(data, status) {
 		$scope.messages = data.messages;
+		for (var i = 0; i < $scope.messages.length; i++) {
+			$scope.messages[i].unread = 0;
+		}
+		
 		if ($scope.messages.length > 0) {
 			$scope.selectMessage($scope.messages[0])
+		} else {
+			$scope.message = null;
 		}
 	});
 	
