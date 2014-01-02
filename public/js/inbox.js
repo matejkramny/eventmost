@@ -72,7 +72,7 @@ angular.module('eventMost')
 		for (var i = 0; i < $scope.messages.length; i++) {
 			var m = $scope.messages[i];
 			for (var x = 0; x < m.topic.users.length; x++) {
-				if (m.topic.users[x] && m.topic.users[x]._id == $scope.user) {
+				if (m.topic.users[x] && m.topic.users[x]._id != $scope.user) {
 					m.otherUser = m.topic.users[x];
 					break;
 				}
