@@ -104,12 +104,26 @@ angular.module('eventMost')
 		})
 	}
 	$scope.selectProfile = function (profile) {
+		$scope.search = "";
+		$scope.peopleSearch = [];
+		
+		for (var i = 0; i < $scope.messages.length; i++) {
+			var m = $scope.messages[i];
+			for (var x = 0; x < m.topic.users.length; x++) {
+				if (m.topic.users[x] && m.topic.users[x]._id == profile._id) {
+					$scope.selectMessage(m);
+					return;
+				}
+			}
+		}
+		
 		$scope.progress = "Creating message to "+profile.name +" "+profile.surname;
-		//TODO make post to create message. then switch to the message....
 		$http.post('/inbox/messages/new?to='+profile._id, { _csrf: $scope.csrf })
 			.success(function(data, status) {
 				$scope.messages.splice(0, 0, data.message);
 				$scope.selectMessage($scope.messages[0]);
+				$scope.progress = "";
+				$scope.showPeopleSearch = false;
 			})
 			.error(function(data, status) {
 				$scope.status = "Something went wrong :/";
