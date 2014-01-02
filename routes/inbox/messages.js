@@ -212,7 +212,7 @@ function doNewMessage (req, res) {
 		topic.save();
 		res.format({
 			html: function() {
-				redirect('/inbox/message/'+topic._id)
+				res.redirect('/inbox');
 			},
 			json: function() {
 				res.send({
