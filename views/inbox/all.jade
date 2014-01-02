@@ -15,7 +15,7 @@ block content
 			.col-md-4.col-sm-4.col-xs-12.col-lg-4
 				h3(style="margin-left:20px;") Inbox
 			.col-md-8.col-sm-8.col-xs-12.col-lg-8
-				h3: a(href="/user/{{message.otherUser._id}}" target="_blank" style="color: #542437") {{ message.otherUser.name }} {{ message.otherUser.surname }}
+				h3: a(ng-cloak href="/user/{{message.otherUser._id}}" target="_blank" style="color: #542437") {{ message.otherUser.name }} {{ message.otherUser.surname }}
 		.nspacer
 		.row(ng-cloak ng-init="init({ csrf: '#{token}', user: '#{user._id}' })")
 			.col-md-12.col-sm-12.col-xs-12.col-lg-12(ng-hide="status.length == 0"): strong {{ status }}
