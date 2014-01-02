@@ -40,7 +40,8 @@ angular.module('eventMost')
 		$http.get('/inbox/message/'+message.topic._id).success(function(data, status) {
 			$scope.message = {
 				message: data.message,
-				messages: data.messages
+				messages: data.messages,
+				otherUser: message.otherUser
 			}
 			$scope.calculateTime();
 			setTimeout($scope.calculateTime, 50);
