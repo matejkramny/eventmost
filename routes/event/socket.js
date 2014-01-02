@@ -82,7 +82,13 @@ exports.notifyLike = function (ev, comment, attendee) {
 	getSocket(ev, function(socket) {
 		socket.emit('like', {
 			comment: comment._id,
-			attendee: attendee
+			attendee: {
+				user: {
+					_id: attendee.user._id,
+					name: attendee.user.name,
+					surname: attendee.user.surname
+				}
+			},
 		})
 	})
 }
