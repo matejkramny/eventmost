@@ -157,12 +157,6 @@ function viewEvent (req, res) {
 			} else {
 				res.render('event/landingpage', { title: res.locals.ev.name });
 			}
-		},
-		json: function() {
-			res.send({
-				event: res.locals.event,
-				attending: res.locals.eventattending
-			});
 		}
 	});
 }

@@ -30,12 +30,6 @@ function view (req, res) {
 	res.format({
 		html: function() {
 			res.render('event/dropbox', { title: "Dropbox" })
-		},
-		json: function() {
-			res.send({
-				event: res.locals.ev,
-				attending: res.locals.eventattending
-			})
 		}
 	})
 }
@@ -263,7 +257,8 @@ function doUpload (req, res) {
 				json: function() {
 					req.session.flash.push("File Uploaded")
 					res.send({
-						status: 200
+						status: 200,
+						message: 'Uploaded'
 					})
 				}
 			})
