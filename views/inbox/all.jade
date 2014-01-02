@@ -12,7 +12,7 @@ append addonjs
 block content
 	h3(style="margin-left:20px;") Inbox
 	.nspacer
-	.row(ng-controller="inboxController" ng-cloak ng-init="init({ csrf: '#{token}' })")
+	.row(ng-controller="inboxController" ng-cloak ng-init="init({ csrf: '#{token}', user: '#{user._id}' })")
 		.col-md-12.col-sm-12.col-xs-12.col-lg-12(ng-hide="status.length == 0"): strong {{ status }}
 		.col-md-4.col-sm-4.col-xs-12.col-lg-4
 			ul.nav.nav-pills.nav-stacked(style="height: 380px; overflow-x:hidden; border-top: 1px solid #333; border-bottom:1px solid #333; overflow-y:scroll;")
@@ -23,8 +23,8 @@ block content
 						|  New Message
 				li(ng-repeat="m in messages" ng-class="{ active: message.message._id == m.topic._id }")
 					a(href="" ng-click="selectMessage(m)")
-						span(ng-repeat="user in m.topic.users") {{ user.name }} {{ user.surname }}
-							span(ng-hide="$last") , 
+						img(ng-src="{{m.otherUser.avatar}}" style="width:30px;height:30px; border-radius:15px;")
+						span(style="margin-left:10px;") {{ m.otherUser.name }} {{ m.otherUser.surname }}
 						span.badge.pull-right(ng-show="m.unread > 0") {{m.unread}} New
 				.nspacer
 		.col-md-8.col-sm-8.col-xs-12.col-lg-8(ng-hide="message == null")

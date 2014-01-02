@@ -32,6 +32,7 @@ angular.module('eventMost')
 	
 	$scope.init = function (opts) {
 		$scope.csrf = opts.csrf;
+		$scope.user = opts.user;
 	}
 	
 	$scope.selectMessage = function (message) {
@@ -69,7 +70,15 @@ angular.module('eventMost')
 	$http.get('/inbox/messages').success(function(data, status) {
 		$scope.messages = data.messages;
 		for (var i = 0; i < $scope.messages.length; i++) {
-			$scope.messages[i].unread = 0;
+			var m = $scope.messages[i];
+			for (var x = 0; x < m.topic.users.length; x++) {
+				if (m.topic.users[x] && m.topic.users[x]._id == $scope.user) {
+					m.otherUser = m.topic.users[x];
+					break;
+				}
+			}
+			
+			m.unread = 0;
 		}
 		
 		if ($scope.messages.length > 0) {
