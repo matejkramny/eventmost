@@ -4,11 +4,9 @@ var fs = require('fs')
 	, util = require('../../util')
 	, async = require('async')
 	, transport = require('../../app').transport
-	, topic = require('./topic')
 	, messages = require('./messages')
 	, cards = require('./cards')
 	, profiles = require('./profiles')
-	, wall = require('./wall')
 	, transport = require('../../config').transport
 	, check = require('validator').check
 
@@ -22,8 +20,6 @@ exports.router = function (app) {
 	messages.router(app)
 	cards.router(app)
 	profiles.router(app)
-	wall.router(app)
-	topic.router(app)
 }
 
 exports.socket = function (socket) {

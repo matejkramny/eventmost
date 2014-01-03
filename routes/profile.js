@@ -114,13 +114,13 @@ function saveUser (req, res) {
 		
 		for (var i = 0; req.user.savedProfiles.length; i++) {
 			if (req.user.savedProfiles[i]._id.equals(user._id)) {
-				res.redirect('inbox/savedProfiles')
+				res.redirect('inbox')
 				return;
 			}
 		}
 		
 		if (user.notification.email.savedProfile) {
-			inbox.emailNotification(user, "inbox/savedProfiles")
+			inbox.emailNotification(user, "inbox")
 		}
 		user.mailboxUnread++;
 		user.save();
@@ -129,7 +129,7 @@ function saveUser (req, res) {
 			_id: user._id
 		})
 		req.user.save(function() {
-			res.redirect('inbox/savedProfiles')
+			res.redirect('inbox')
 		})
 	});
 }
