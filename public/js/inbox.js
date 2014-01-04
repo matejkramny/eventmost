@@ -68,19 +68,27 @@ angular.module('eventMost')
 		$scope.msg = "";
 	}
 	
-	$http.get('/inbox/messages').success(function(data, status) {
-		$scope.messages = data.messages;
+	$scope.processOtherUser = function () {
 		for (var i = 0; i < $scope.messages.length; i++) {
 			var m = $scope.messages[i];
 			for (var x = 0; x < m.topic.users.length; x++) {
 				if (m.topic.users[x] && m.topic.users[x]._id != $scope.user) {
 					m.otherUser = m.topic.users[x];
+					if (!m.otherUser.avatar || m.otherUser.avatar.length == 0) {
+						m.otherUser.avatar = "/images/default_speaker.svg";
+					}
+					
 					break;
 				}
 			}
 			
 			m.unread = 0;
 		}
+	}
+	
+	$http.get('/inbox/messages').success(function(data, status) {
+		$scope.messages = data.messages;
+		$scope.processOtherUser();
 		
 		if ($scope.messages.length > 0) {
 			$scope.selectMessage($scope.messages[0])
@@ -124,6 +132,7 @@ angular.module('eventMost')
 				$scope.selectMessage($scope.messages[0]);
 				$scope.progress = "";
 				$scope.showPeopleSearch = false;
+				$scope.processOtherUser();
 			})
 			.error(function(data, status) {
 				$scope.status = "Something went wrong :/";
