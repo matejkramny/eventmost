@@ -216,7 +216,7 @@ exports.doEditProfile = doEditProfile = function (req, res) {
 		u.notification.email.privateMessages = req.body.emailPrivateMessages == 'yes' ? true : false;
 	}
 	if (typeof req.body.emailBusinessCards !== 'undefined') {
-		u.notification.email.businessCards = req.body.emailbusinessCards == 'yes' ? true : false;
+		u.notification.email.businessCards = req.body.emailBusinessCards == 'yes' ? true : false;
 	}
 	if (typeof req.body.emailComments !== 'undefined') {
 		u.notification.email.comments = req.body.emailComments == 'yes' ? true : false;
@@ -229,7 +229,7 @@ exports.doEditProfile = doEditProfile = function (req, res) {
 		u.notification.mobile.privateMessages = req.body.mobilePrivateMessages == 'yes' ? true : false;
 	}
 	if (typeof req.body.mobileBusinessCards !== 'undefined') {
-		u.notification.mobile.businessCards = req.body.mobilebusinessCards == 'yes' ? true : false;
+		u.notification.mobile.businessCards = req.body.mobileBusinessCards == 'yes' ? true : false;
 	}
 	if (typeof req.body.mobileComments !== 'undefined') {
 		u.notification.mobile.comments = req.body.mobileComments == 'yes' ? true : false;
