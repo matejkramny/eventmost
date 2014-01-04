@@ -22,6 +22,7 @@ $(document).ready(function() {
 			if (name == "avatar") continue;
 			form.append(name, formData[name]);
 		}
+		
 		form.append("avatar", file);
 		avatarUploadRequest = new XMLHttpRequest();
 		avatarUploadRequest.open("POST", "/profile/edit", true);
@@ -39,7 +40,7 @@ $(document).ready(function() {
 				result = avatarUploadRequest.response;
 				
 				if (result.status != 200) {
-					alert("Could not save profile :(\n"+result.err);
+					$("#profileSaveStatus").html("Could not save profile :(<br/>"+result.err.join('<br/>'));
 				} else {
 					$("#profileSaveStatus").html("<b>Saved!</b>")
 					window.location = "/";

@@ -3,6 +3,7 @@ var fs = require('fs'),
 	, mongoose = require('mongoose')
 	, util = require('../util')
 	, inbox = require('./inbox/index')
+	, check = require('validator').check
 
 exports.router = function (app) {
 	app.get('/profile', util.authorized, profile)
@@ -149,7 +150,8 @@ exports.doEditProfile = doEditProfile = function (req, res) {
 		res.format({
 			json: function() {
 				res.send({
-					status: 200
+					status: errors.length == 0 ? 200 : 400,
+					err: errors
 				})
 			},
 			html: function() {
@@ -160,31 +162,39 @@ exports.doEditProfile = doEditProfile = function (req, res) {
 		})
 	}
 	
-	if (req.body.email && req.body.email.length == 0 && req.body.name && req.body.name.length == 0 && req.body.surname && req.body.surname.length == 0) {
-		errors.push("You must enter an email address, your first name or your last name.");
-	} else {
+	console.log(req.body);
+	
+	try {
+		if (typeof req.body.email !== 'undefined') {
+			check(req.body.email, 'Please Enter an Email Address').notNull().isEmail()
+			
+			if (u.email != req.body.email) {
+				blocking = true;
+				models.User.find({ email: req.body.email }, function(err, emails) {
+					if (err) throw err;
+					if (emails.length) {
+						// email taken
+						errors.push("Email "+req.body.email+" is already taken")
+					} else {
+						// email free
+						u.email = req.body.email;
+					}
+			
+					cb()
+				});
+			}
+		}
+		
 		if (typeof req.body.name !== 'undefined') {
+			check(req.body.name, 'Please Enter your First Name').notNull()
 			u.name = req.body.name;
 		}
 		if (typeof req.body.surname !== 'undefined') {
+			check(req.body.surname, 'Please Enter your Last Name').notNull()
 			u.surname = req.body.surname;
 		}
-		
-		if (typeof req.body.email !== 'undefined' && u.email != req.body.email) {
-			blocking = true;
-			models.User.find({ email: req.body.email }, function(err, emails) {
-				if (err) throw err;
-				if (emails.length) {
-					// email taken
-					errors.push("Email "+req.body.email+" is already taken")
-				} else {
-					// email free
-					u.email = req.body.email;
-				}
-			
-				cb()
-			});
-		}
+	} catch (e) {
+		errors.push(e.message)
 	}
 	
 	//Privacy
