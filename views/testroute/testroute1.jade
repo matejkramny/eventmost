@@ -1,321 +1,418 @@
-extends ../responsive
+extends ../esct-ver1
 
 append addonjs
-	script(src="/js/drops#{minified}.js", defer)
 
 block content
+		.container-inner 
+			//- A. Top Layer
+			.white-box
+				.green.font.pull-left
+					| A. Top Layer
+				.pull-right
+					//- navigation
+					.navbar.navbar-layer(role="navigation")
+							ul.nav.navbar-nav.n-layer
+								li.dropdown.dropdown-layer-out
+									a(href="#" class="dropdown-toggle " data-toggle="dropdown") 
+										img(src="/images-esct/dropdown.svg" alt="")
+									ul.dropdown-menu.dropdown-layer
+										li
+											a(href='#') + Add new layer
+										li
+											a(href='#') + Copy this layer
+										li
+											a(href='#') + Delete this layer
+				.clearfix
+				.dotted-line
+				.center.spacer.grey
+					a.small-pad(href="#" class="link-grey") link 1
+					| |
+					a.small-pad(href="#" class="link-grey") link 2
+					| |
+					a.small-pad(href="#" class="link-grey") link 3
+					| |
+					a.small-pad(href="#" class="link-grey") link 4
+					| |
+					a.small-pad(href="#" class="link-grey") link 5
+					| |
+					a.small-pad(href="#" class="link-grey") link 6		
+				.spacer2
+				.company.center
+					| Company Name / Logo
+				.ebrima.font-big.bold.center
+					| Event Title / Logo
+				.spacer
+				.ebrima.font-big.bold.center.green.company2
+					| Feb 14.
+					span.font 2014
+				.ebrima.font-medium.bold.center
+					| 4:00 a.m.
+				.spacer
+				.ebrima.font.bold.center.green
+					| Venue Name Venue Name Venue Name
+				.spacer
+				.center
+					button.btn.btn-lg.btn-danger.font-button.big-padding.awsome-pad(type="button")
+						| Register
+			.spacer
 
-	.col-xs-12.hide-all2
-		form(method="POST", accept-charset="utf-8")
-			input.gonew2.pull-right.header-links(type="button", value="GO", style="width:10%;")
-			input(type="hidden", name="_csrf", value=token)
-			input.pull-right.font-s.search-input.pad-left-ten.header-links(type="search", placeholder="search events or people", style="width:87%;")
-	.clearfix.hide-all2
+			//- B. Thin Layer
+			.white-box
+				.green.font.pull-left
+					| B. Thin Layer
+				.pull-right
+					//- navigation
+					.navbar.navbar-layer(role="navigation")
+							ul.nav.navbar-nav.n-layer
+								li.dropdown.dropdown-layer-out
+									a(href="#" class="dropdown-toggle " data-toggle="dropdown") 
+										img(src="/images-esct/dropdown.svg" alt="")
+									ul.dropdown-menu.dropdown-layer
+										li
+											a(href='#') + Add new layer
+										li
+											a(href='#') + Copy this layer
+										li
+											a(href='#') + Delete this layer
+				.clearfix
+				.dotted-line
+				.center.spacer.red.font-button.bold
+					| The punch line or tag line for this event!
+			.spacer
 
-	.col-lg-10.col-md-10.col-xs-10.no-float.hide-mini
-		.center2
-			.half-round
-				.pad-left-ten
-					| <b>Your order</b>
-		table.gridtable-payment
-			tr
-				th.sixty
-					| REGISTRATION TYPE
-				th
-					| PRICE
-				th
-					| FEE
-				th
-					| QUANTITY
-			tr
-				td
-					| I would like to register as an idividual
-				td
-					| £25.00
-				td
-					| £2.15
-				td
-					dl.dropdown6
-						dt
-							a.dropx6(href="#")
-								| 
-						dd
-							ul
-								li
-									a(href="#",) 1
-								li
-									a(href="#",) 2
-								li
-									a(href="#",) 3
-								li
-									a(href="#",) 4
-								li
-									a(href="#",) 5
-								li
-									a(href="#",) 6
-								li
-									a(href="#",) 7
-								li
-									a(href="#",) 8
-								li
-									a(href="#",) 9
-								li
-									a(href="#",) 10
-								li
-									a(href="#",) 11
-								li
-									a(href="#",) 12
-			tr
-				td
-					| Total
-				td
-					| £50.00
-				td
-					| 
-				td
-					| £54.30
-		.center2
-			.half-round
-				| <b>Choose payment method</b>
-		.nspacer
-		.col-lg-6.col-md-6.col-xs-6
-			.center
-				.pull-left
-					p.check5
-						input(name="", placeholder="", type="checkbox", id="creditcard", value="css3")
-						label(for='creditcard',)
-				.font2.color-green.pull-left.nspacer
-					| Credit Card
-		.nspacer
-		.col-lg-6.col-md-6.col-xs-6
-			.center
-				.pull-left
-					p.check5
-						input(name="", placeholder="", type="checkbox", id="paypal", value="css3")
-						label(for='paypal',)
-				.font2.color-green.pull-left.nspacer
-					| Paypal
-		.clearfix
-		.col-lg-6.col-md-6.col-xs-6
-				img(src="/images/credit-cards.svg", alt="", class="img-responsive")
-		.col-lg-6.col-md-6.col-xs-6
-				img(src="/images/paypal.svg", alt="", class="img-responsive")
-		.clearfix
-		.nspacer-big
-		.col-lg-6.col-md-6.col-xs-6.col-land
-			.pad-left-zero.col-lg-4.col-md-4.col-xs-4.font-x.nspacer.right
-				| Card owner:
-			.psev.col-lg-8.col-md-8.col-xs-8.payment-input
-				input.input-yellow-rounded.font-x#LoginUserEmail(name="login", type="email", required="required",)
-			.nspacer-big
-			.pad-left-zero.col-lg-4.col-md-4.col-xs-4.font-x.nspacer.right
-				| Card number:
-			.psev.col-lg-8.col-md-8.col-xs-8.payment-input
-				input.input-yellow-rounded.font-x#LoginUserEmail(name="login", type="email", required="required",)
-			.nspacer-big
-			.pad-left-zero.col-lg-4.col-md-4.col-xs-4.font-x.nspacer.right
-				| Expiration date:
-			.psev.col-lg-8.col-md-8.col-xs-8.payment-input
-				input.input-yellow-rounded.font-x#LoginUserEmail(name="login", type="email", required="required",)
-			.nspacer-big
-			.pad-left-zero.col-lg-4.col-md-4.col-xs-4.font-x.nspacer.right
-				| CVV:
-			.psev.col-lg-8.col-md-8.col-xs-8.payment-input
-				input.input-yellow-rounded.font-x#LoginUserEmail(name="login", type="email", required="required",)
-			.nspacer-big
-			.pad-left-zero.col-lg-4.col-md-4.col-xs-4.font-x.nspacer.right
-				| Address:
-			.psev.col-lg-8.col-md-8.col-xs-8.payment-input
-				input.input-yellow-rounded.font-x#LoginUserEmail(name="login", type="email", required="required",)
-			.nspacer-big
-			.pad-left-zero.col-lg-4.col-md-4.col-xs-4.font-x.nspacer.right
-				| ZIP Code:
-			.psev.col-lg-8.col-md-8.col-xs-8.payment-input
-				input.input-yellow-rounded.font-x#LoginUserEmail(name="login", type="email", required="required",)
-			.nspacer-big
-			.pad-left-zero.col-lg-4.col-md-4.col-xs-4.font-x.nspacer.right
-				| City:
-			.psev.col-lg-8.col-md-8.col-xs-8.payment-input
-				input.input-yellow-rounded.font-x#LoginUserEmail(name="login", type="email", required="required",)
-			.clearfix
-			.psev.col-lg-12.col-md-12.col-xs-12.payment-button
-				button.btn.btn-info.font-xs.font-ah.pull-right(type='submit', href="", style="padding:5px; padding-left:15px; padding-right:15px; margin-right:20px;")
-					| <b>PAY NOW</b>
-		.clearfix
-		.nspacer-awsome
-		.center2
-			.font2
-				<b>Success</b>, you payment has been processed
-		.center2
-			img(src="/images/bubble-blue.svg", alt="",)
-		.center2
-			.font2
-				<b>Thank you!</b>
-		.center.font-e
-			| Now you may access the event.
-		.col-lg-12.col-md-12.col-xs-12.center2
-			button.btn.btn-primary.font-e.font-ah(type='submit', href="", style="height:70px; padding:10px; padding-left:35px; padding-right:35px; margin-right:20px;")
-				| Access event
-			button.btn.btn-primary.font-e.font-ah(type='submit', href="", style="height:70px; padding:10px; padding-left:35px; padding-right:35px; margin-left:20px;")
-				| Go back <br />to homepage
+			//- C. Main Content Layer
+			.white-box
+				.green.font.pull-left
+					| C. Main Content Layer
+				.pull-right
+					//- navigation
+					.navbar.navbar-layer(role="navigation")
+							ul.nav.navbar-nav.n-layer
+								li.dropdown.dropdown-layer-out
+									a(href="#" class="dropdown-toggle " data-toggle="dropdown") 
+										img(src="/images-esct/dropdown.svg" alt="")
+									ul.dropdown-menu.dropdown-layer
+										li
+											a(href='#') + Add new layer
+										li
+											a(href='#') + Copy this layer
+										li
+											a(href='#') + Delete this layer
+				.clearfix
+				.dotted-line
+				.spacer
+				.center.grey.company.ebrima
+					a.font-button.bold(href="#" class="link-purple") The Event
+				.spacer
+				.pull-left.width40
+					img.img-responsive(src="/images-esct/event-avatar.png" alt="")
+				.pull-left.width50
+						span.red.font-button Here is where you put all of your content.
+						br
+						| It is the pitch to potential attendees concerning why exactly they 
+						| should go to your event. Though you can get into a discussion here 
+						| about the different guest speaker you will be having, or the venue, 
+						| or location, or the time table, you will have othher layers below 
+						| for which to do this.
+						.spacer-small
+						| Also here you might want to put the 
+						span.red.font-button information about  
+						br 
+						span.red.font-button your company, 
+						| society, or organisation. Whether you want to 
+						| put that in the paragraph above this one is just a matter of taste.
+				.clearfix
+			.spacer
 
-
-
-	.col-lg-12.col-md-12.col-xs-12.no-float.hide-except-smart
-	.nspacer.hide-except-smart
-		.center
-			.half-round
-				.pad-left-ten
-					| <b>Your order</b>
-		table.gridtable-payment
-			tr
-				th.sixty
-					| REGISTRATION TYPE
-				th
-					| PRICE
-				th
-					| FEE
-				th
-					| QUANTITY
-			tr
-				td
-					| I would like to register as an idividual
-				td
-					| £25.00
-				td
-					| £2.15
-				td
-					dl.dropdown6
-						dt
-							a.dropx6(href="#")
-								| 
-						dd
-							ul
-								li
-									a(href="#",) 1
-								li
-									a(href="#",) 2
-								li
-									a(href="#",) 3
-								li
-									a(href="#",) 4
-								li
-									a(href="#",) 5
-								li
-									a(href="#",) 6
-								li
-									a(href="#",) 7
-								li
-									a(href="#",) 8
-								li
-									a(href="#",) 9
-								li
-									a(href="#",) 10
-								li
-									a(href="#",) 11
-								li
-									a(href="#",) 12
-			tr
-				td
-					| Total
-				td
-					| £50.00
-				td
-					| 
-				td
-					| £54.30
-		.center2
-			.half-round
-				| <b>Choose payment method</b>
-		.nspacer
-	.col-lg-6.col-md-6.col-xs-6.pad-left-zero.hide-except-smart
-		.pull-left
-			p.check5
-				input(name="", placeholder="", type="checkbox", id="creditcardsmaller", value="small")
-				label(for='creditcardsmaller',)
-		.color-green.pull-left.nspacer(style="font-size:14px;")
-			| Credit Card
-	.col-lg-6.col-md-6.col-xs-6.pad-right-zero.hide-except-smart
-		.pull-left
-			p.check5
-				input(name="", placeholder="", type="checkbox", id="paypalsmaller", value="cs1")
-				label(for='paypalsmaller',)
-		.color-green.pull-left.nspacer
-			| Paypal
-	.clearfix.hide-except-smart
-		.clearfix
-		.col-lg-6.col-md-6.col-xs-6
-				img(src="/images/credit-cards.svg", alt="", class="img-responsive")
-		.col-lg-6.col-md-6.col-xs-6
-				img(src="/images/paypal.svg", alt="", class="img-responsive")
-		.clearfix
-		.nspacer-big
-	.col-lg-12.col-md-12.col-xs-12.hide-except-smart
-			.pad-left-zero.col-lg-4.col-md-4.col-xs-4.font-x.nspacer.right
-				| Card owner:
-			.psev.col-lg-8.col-md-8.col-xs-8
-				input.input-yellow-rounded.font-x#LoginUserEmail(name="login", type="email", required="required",)
-			.nspacer-big
-			.clearfix
-			.pad-left-zero.col-lg-4.col-md-4.col-xs-4.font-x.nspacer.right
-				| Card number:
-			.psev.col-lg-8.col-md-8.col-xs-8
-				input.input-yellow-rounded.font-x#LoginUserEmail(name="login", type="email", required="required",)
-			.nspacer-big
-			.clearfix
-			.pad-left-zero.col-lg-4.col-md-4.col-xs-4.font-x.nspacer.right
-				| Expiration date:
-			.psev.col-lg-8.col-md-8.col-xs-8
-				input.input-yellow-rounded.font-x#LoginUserEmail(name="login", type="email", required="required",)
-			.nspacer-big
-			.clearfix
-			.pad-left-zero.col-lg-4.col-md-4.col-xs-4.font-x.nspacer.right
-				| CVV:
-			.psev.col-lg-8.col-md-8.col-xs-8
-				input.input-yellow-rounded.font-x#LoginUserEmail(name="login", type="email", required="required",)
-			.nspacer-big
-			.clearfix
-			.pad-left-zero.col-lg-4.col-md-4.col-xs-4.font-x.nspacer.right
-				| Address:
-			.psev.col-lg-8.col-md-8.col-xs-8
-				input.input-yellow-rounded.font-x#LoginUserEmail(name="login", type="email", required="required",)
-			.nspacer-big
-			.clearfix
-			.pad-left-zero.col-lg-4.col-md-4.col-xs-4.font-x.nspacer.right
-				| ZIP Code:
-			.psev.col-lg-8.col-md-8.col-xs-8
-				input.input-yellow-rounded.font-x#LoginUserEmail(name="login", type="email", required="required",)
-			.nspacer-big
-			.clearfix
-			.pad-left-zero.col-lg-4.col-md-4.col-xs-4.font-x.nspacer.right
-				| City:
-			.psev.col-lg-8.col-md-8.col-xs-8
-				input.input-yellow-rounded.font-x#LoginUserEmail(name="login", type="email", required="required",)
-			.clearfix
-			.psev.col-lg-12.col-md-12.col-xs-12
-				button.btn.btn-info.font-xs.font-ah.pull-right(type='submit', href="", style="font-size:12px; padding:5px; padding-left:15px; padding-right:15px; margin-right:0px;")
-					| <b>PAY NOW</b>
-		.clearfix.hide-except-smart
-	.col-lg-12.col-md-12.col-xs-12.hide-except-smart
-		.nspacer-awsome.hide-except-smart
-		.center2.hide-except-smart
-			.font2
-				<b>Success</b>, you payment has been processed
-		.nspacer-awsome.hide-all
-		.center
-			img(src="/images/bubble-blue.svg", alt="",)
-		.center2.hide-all
-			.font2
-				<b>Thank you!</b>
-		.center
-			| Now you may access the event.
-		.col-lg-12.col-md-12.col-xs-12.center2.hide-all
-		.center
-			button.btn.btn-primary.font-e.font-ah(type='submit', href="", style="font-size:12px; height:70px; padding:5px; padding-left:15px; padding-right:15px; margin-right:10px;")
-				| Access event
-			button.btn.btn-primary.font-e.font-ah(type='submit', href="", style="font-size:12px; height:70px; padding:5px; padding-left:15px; padding-right:15px; margin-left:10px;")
-				| Go back <br />to homepage
-	.clearfix
-
-
-				
+			//- D. Guest Speaker Layer 
+			.white-box
+				.green.font.pull-left
+					| D. Guest Speaker Layer 
+				.pull-right
+					//- navigation
+					.navbar.navbar-layer(role="navigation")
+							ul.nav.navbar-nav.n-layer
+								li.dropdown.dropdown-layer-out
+									a(href="#" class="dropdown-toggle " data-toggle="dropdown") 
+										img(src="/images-esct/dropdown.svg" alt="")
+									ul.dropdown-menu.dropdown-layer
+										li
+											a(href='#') + Add new layer
+										li
+											a(href='#') + Copy this layer
+										li
+											a(href='#') + Delete this layer
+				.clearfix
+				.dotted-line
+				.spacer
+				.center.green.company.ebrima.font-button.bold
+					| The Speakers
+				.comma
+					img(src="/images-esct/comma.svg" alt="")
+				.spacer2
+				.row
+					.col-md-4.col-xs-4
+						.center
+							img(src="/images-esct/speaker-avatar.svg" alt="")
+						.spacer
+						.center.green.font-button.company3.font-change
+							| Anna Noname
+						.spacer
+						.center
+							| Large Paragraph about the person
+							| or just name and link to further info
+							| Large Paragraph about the person
+							| or just name and link to further info	
+					.col-md-4.col-xs-4
+						.center
+							img(src="/images-esct/speaker-avatar.svg" alt="")
+						.spacer
+						.center.green.font-button.company3.font-change
+							| when there is a very long name font-change.js works to change the font size of a given class
+						.spacer
+						.center
+							| Large Paragraph about the person
+							| or just name and link to further info
+							| Large Paragraph about the person
+							| or just name and link to further info		
+					.col-md-4.col-xs-4
+						.center
+							img(src="/images-esct/speaker-avatar.svg" alt="")
+						.spacer
+						.center.green.font-button.company3.font-change
+							| Anna Noname
+						.spacer
+						.center
+							| Large Paragraph about the person
+							| or just name and link to further info
+							| Large Paragraph about the person
+							| or just name and link to further info				
+			.spacer
+			//- E. Venue Layer 
+			.white-box
+				.green.font.pull-left
+					| E. Venue Layer 
+				.pull-right
+					//- navigation
+					.navbar.navbar-layer(role="navigation")
+							ul.nav.navbar-nav.n-layer
+								li.dropdown.dropdown-layer-out
+									a(href="#" class="dropdown-toggle " data-toggle="dropdown") 
+										img(src="/images-esct/dropdown.svg" alt="")
+									ul.dropdown-menu.dropdown-layer
+										li
+											a(href='#') + Add new layer
+										li
+											a(href='#') + Copy this layer
+										li
+											a(href='#') + Delete this layer
+				.clearfix
+				.dotted-line
+				.spacer
+				.pull-left.width35
+					img.img-responsive(src="/images-esct/event-avatar.png" alt="")
+				.pull-left.width35
+					.google-maps
+						iframe(width='350', height='19', frameborder='0', scrolling='no', marginheight='0', marginwidth='0', src='https://maps.google.pl/maps?f=q&source=s_q&hl=en&geocode=&q=Gdynia,+Poland&aq=0&oq=gdynia+poland&sll=52.025459,19.204102&sspn=11.244804,28.54248&ie=UTF8&hq=&hnear=Gdynia,+Pomeranian+Voivodeship&t=m&z=11&ll=54.51889,18.530541&output=embed')
+				.pull-right.width25
+					.venue-spacer
+					.red.font-button.right.ebrima.bold.dotted
+						| The Venue
+					.right
+						| Text about the venue or help in getting to the
+						| location or a pitch about how great the venue is
+				.clearfix
+			.spacer
+			//- F. Schedule Layer 
+			.white-box
+				.green.font.pull-left
+					| F. Schedule Layer 
+				.pull-right
+					//- navigation
+					.navbar.navbar-layer(role="navigation")
+							ul.nav.navbar-nav.n-layer
+								li.dropdown.dropdown-layer-out
+									a(href="#" class="dropdown-toggle " data-toggle="dropdown") 
+										img(src="/images-esct/dropdown.svg" alt="")
+									ul.dropdown-menu.dropdown-layer
+										li
+											a(href='#') + Add new layer
+										li
+											a(href='#') + Copy this layer
+										li
+											a(href='#') + Delete this layer
+				.clearfix
+				.dotted-line
+				.spacer
+				.center.grey.company.ebrima
+					.font-button.bold.purple
+						| Time Table
+				.spacer
+				.pull-left.width20.right
+					button.btn.btn-lg.btn-default.font-small.bigs-padding.huge-pad(type="button")
+						| Day 1
+					.spacer-small
+					button.btn.btn-lg.btn-default.font-small.bigs-padding.huge-pad(type="button")
+						| Day 2
+					.spacer-small
+					button.btn.btn-lg.btn-default.font-small.bigs-padding.huge-pad(type="button")
+						| Day 3
+				.pull-left.left-marg.width70
+					.rounded-box-purple
+						.col-md-3.col-xs-3
+							input.red.font-button.input-white.spacer-mini-min(type="text", value="time", placeholder="time")
+						.col-md-9.col-xs-9				
+							input.input-white.spacer-mini(type="text", value="Registration time", placeholder="Registration time")
+					.spacer-small
+					.rounded-box-purple
+						.col-md-3.col-xs-3
+							input.red.font-button.input-white.spacer-mini-min(type="text", value="time", placeholder="time")
+						.col-md-9.col-xs-9				
+							input.input-white.spacer-mini(type="text", value="Lorem Ipsum Dolor", placeholder="Lorem Ipsum Dolor")
+					.spacer-small
+					.rounded-box-purple
+						.col-md-3.col-xs-3
+							input.red.font-button.input-white.spacer-mini-min(type="text", value="time", placeholder="time")
+						.col-md-9.col-xs-9				
+							input.input-white.spacer-mini(type="text", value="Lorem Ipsum Dolor", placeholder="Lorem Ipsum Dolor")
+					.spacer-small
+					.rounded-box-purple
+						.col-md-3.col-xs-3
+							input.red.font-button.input-white.spacer-mini-min(type="text", value="time", placeholder="time")
+						.col-md-9.col-xs-9				
+							input.input-white.spacer-mini(type="text", value="Lorem Ipsum Dolor", placeholder="Lorem Ipsum Dolor")
+				.clearfix
+			.spacer
+			//- G. Path to Register Layer 
+			.white-box
+				.green.font.pull-left
+					| G. Path to Register Layer 
+				.pull-right
+					//- navigation
+					.navbar.navbar-layer(role="navigation")
+							ul.nav.navbar-nav.n-layer
+								li.dropdown.dropdown-layer-out
+									a(href="#" class="dropdown-toggle " data-toggle="dropdown") 
+										img(src="/images-esct/dropdown.svg" alt="")
+									ul.dropdown-menu.dropdown-layer
+										li
+											a(href='#') + Add new layer
+										li
+											a(href='#') + Copy this layer
+										li
+											a(href='#') + Delete this layer
+				.clearfix
+				.dotted-line
+				.spacer2
+				.row
+					.col-md-7.col-xs-7
+						.red.font.center.big-venet-spacer
+							| Want to attend The Big Event ?
+					.col-md-5.col-xs-5
+						button.btn.btn-lg.btn-default.font-button.bigs-padding.huge-pad.bold.purple(type="button")
+							| Sign Up Now
+							i.left-marg-s.fa.fa-arrow-circle-o-right 
+			.spacer
+			//- H. Promotion/Contact Layer 
+			.white-box
+				.green.font.pull-left
+					| H. Promotion/Contact Layer 
+				.pull-right
+					//- navigation
+					.navbar.navbar-layer(role="navigation")
+							ul.nav.navbar-nav.n-layer
+								li.dropdown.dropdown-layer-out
+									a(href="#" class="dropdown-toggle " data-toggle="dropdown") 
+										img(src="/images-esct/dropdown.svg" alt="")
+									ul.dropdown-menu.dropdown-layer
+										li
+											a(href='#') + Add new layer
+										li
+											a(href='#') + Copy this layer
+										li
+											a(href='#') + Delete this layer
+				.clearfix
+				.dotted-line
+				.spacer
+				.center.grey.company.ebrima
+					.font-button.bold.green
+						| Connect
+				.spacer2
+				.width80.no-float
+					.row
+						.col-md-3.col-xs-3
+							a(href="#") 
+								.rounded-box-green-thick
+									.right.green.fa-facebook-size.bigs-padding(style="padding-bottom:0px !important;")
+										i.fa.fa-facebook
+									.center.font-button.green.comfortaa
+										| Facebook
+									.center.comfortaa.green
+										| Lorem ipsum dolor
+						.col-md-3.col-xs-3
+							.rounded-box-green-thick
+								.center.green.fa-twitter-size
+									i.fa.fa-twitter
+								.center.font-button.green.comfortaa.twit-spacer
+									| Twitter
+								.center.comfortaa.green
+									| Lorem ipsum dolor
+						.col-md-3.col-xs-3
+							.rounded-box-green-thick
+								.center.green.fa-linkedin-size
+									i.fa.fa-linkedin
+								.center.font-button.green.comfortaa.linkedin-spacer
+									| Linked In
+								.center.comfortaa.green
+									| Lorem ipsum dolor
+						.col-md-3.col-xs-3
+							.rounded-box-green-thick
+								.center.green.fa-envelope-size
+									i.fa.fa-envelope
+								.center.font-button.green.comfortaa.mail-spacer
+									| Mail
+								.center.comfortaa.green
+									| Lorem ipsum dolor
+			.spacer
+			//- I. Sponsors and Partnerships Layer 
+			.white-box
+				.green.font.pull-left
+					| I. Sponsors and Partnerships Layer 
+				.pull-right
+					//- navigation
+					.navbar.navbar-layer(role="navigation")
+							ul.nav.navbar-nav.n-layer
+								li.dropdown.dropdown-layer-out
+									a(href="#" class="dropdown-toggle " data-toggle="dropdown") 
+										img(src="/images-esct/dropdown.svg" alt="")
+									ul.dropdown-menu.dropdown-layer
+										li
+											a(href='#') + Add new layer
+										li
+											a(href='#') + Copy this layer
+										li
+											a(href='#') + Delete this layer
+				.clearfix
+				.dotted-line
+				.spacer
+				.center.grey.company.ebrima
+					.font-button.bold.red
+						| Sponsors
+				.spacer2
+				.row
+					.col-md-4.col-xs-4
+						.rounded-box-green-thin
+							.center
+								a(href="#") 
+									img(src="/images-esct/logo-avatar.svg" alt="")
+					.col-md-4.col-xs-4
+						.rounded-box-green-thin
+							.center
+								a(href="#") 
+									img(src="/images-esct/logo-avatar.svg" alt="")
+					.col-md-4.col-xs-4
+						.rounded-box-green-thin
+							.center
+								a(href="#") 
+									img(src="/images-esct/logo-avatar.svg" alt="")
+			.spacer
