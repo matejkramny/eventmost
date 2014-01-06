@@ -271,8 +271,6 @@ p.check5:not(#foo) > input[type=checkbox]:focus:checked + label           { back
 .company{
   background: url('../../../images-esct/dot.svg') repeat-x;
    width: 60%; margin: 0px auto; padding-bottom: 5px;}
-.company2{border: 10px dotted #404041; border-style: none none dotted; width: 26%; margin: 0px auto; line-height: 30px; }
-.company3{border: 7px dotted #404041; border-style: none none dotted; width: 90%; margin: 0px auto; line-height: 30px; }
 .dotted{border: 7px dotted #404041; border-style: none none dotted; line-height: 30px; }
 .comma{
   position: absolute;
