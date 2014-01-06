@@ -66,172 +66,169 @@ html
 
 			
 
-			block content
-			footer
-				.center.purple.font.bold
-					| Options
-				.company
-					| &nbsp;
-				.spacer
-				.font-button.left-marg.bold
-					| 01. Combine more than one translucent layer to have the same foundation?
-				.spacer
-				.no-float.widthchecks
-					//- checkbox hack works on label makes the normal checkbox invisible needs unique id for input and on label / would be nice to make the "yes" give opacity 50% if not checked
-					.font-button.bg-white.inline.dark.reg-padding.bigs-pad.pull-left.check-height.bold
-						| Yes
-					.bg-grey.pull-left.dark.check-height
-						p.check5.pull-left
-							input(type="checkbox", id="uniqueID", value="small")
-							label(for='uniqueID')
+		block content
+		footer
+			.center.purple.font.bold
+				| Options
+			.company
+				| &nbsp;
+			.spacer
+			.font-button.left-marg.bold
+				| 01. Combine more than one translucent layer to have the same foundation?
+			.spacer
+			.no-float.widthchecks
+				//- checkbox hack works on label makes the normal checkbox invisible needs unique id for input and on label / would be nice to make the "yes" give opacity 50% if not checked
+				.font-button.bg-white.inline.dark.reg-padding.bigs-pad.pull-left.check-height.bold
+					| Yes
+				.bg-grey.pull-left.dark.check-height
+					p.check5.pull-left
+						input(type="checkbox", id="uniqueID", value="small")
+						label(for='uniqueID')
+				.clearfix
+			.spacer
+			.font-button.left-marg.bold
+				| 02. Re-arange layers:
+			.spacer2
+			.row
+				.width25.pull-left
+					.bg-darkgrey.bigs-padding.center.width100.re-arrange-height
+						.fa-twitter-size.white.re-arrange-pad
+							i.fa.fa-random
+						.font-button.white
+							| Re-arrange layers ?
+				.width25.pull-left
+					//- theese user should be able to grab and switch places
+					a(href='#')
+						.bg-darkgrey.center.white.width100.reg-padding.comfortaa.font16.bold.lay-button-height
+							| Top
+					a(href='#')
+						.bg-darkish.center.white.width100.reg-padding.comfortaa.font16.bold.lay-button-height
+							| Content
+					a(href='#')
+						.bg-purple.center.white.width100.reg-padding.comfortaa.font16.bold.lay-button-height
+							| Venue
+					a(href='#')
+						.bg-green.center.white.width100.reg-padding.comfortaa.font16.bold.lay-button-height
+							| Sponsors
+					a(href='#')
+						.bg-red.center.white.width100.reg-padding.comfortaa.font16.bold.lay-button-height
+							| Register
+				.pull-left
+					.bold.purple.font-button.left-marg-big.or-padd
+						| or
+				.pull-left.width40.center.left-marg.drag-padd
+					img(src="/images-esct/drag.svg" alt="")
+					.font-button.spacer-small.bold
+						| Drag a layer from the main page 
+						br
+						| (this page) 
+				.clearfix
+			.spacer
+			.font-button.left-marg.bold
+				| 03. Import a layer form a different tempante?
+			.spacer2
+			.row
+				.col-md-6.col-xs-6.right.bold.font-button.bold
+					| Template:
 					.clearfix
-				.spacer
-				.font-button.left-marg.bold
-					| 02. Re-arange layers:
-				.spacer2
-				.row
-					.width25.pull-left
-						.bg-darkgrey.bigs-padding.center.width100.re-arrange-height
-							.fa-twitter-size.white.re-arrange-pad
-								i.fa.fa-random
-							.font-button.white
-								| Re-arrange layers ?
-					.width25.pull-left
-						//- theese user should be able to grab and switch places
+					.spacer-small
+					.width70.pull-right
 						a(href='#')
-							.bg-darkgrey.center.white.width100.reg-padding.comfortaa.font16.bold.lay-button-height
-								| Top
-						a(href='#')
-							.bg-darkish.center.white.width100.reg-padding.comfortaa.font16.bold.lay-button-height
-								| Content
-						a(href='#')
-							.bg-purple.center.white.width100.reg-padding.comfortaa.font16.bold.lay-button-height
-								| Venue
-						a(href='#')
-							.bg-green.center.white.width100.reg-padding.comfortaa.font16.bold.lay-button-height
-								| Sponsors
-						a(href='#')
-							.bg-red.center.white.width100.reg-padding.comfortaa.font16.bold.lay-button-height
-								| Register
-					.pull-left
-						.bold.purple.font-button.left-marg-big.or-padd
-							| or
-					.pull-left.width40.center.left-marg.drag-padd
-						img(src="/images-esct/drag.svg" alt="")
-						.font-button.spacer-small.bold
-							| Drag a layer from the main page 
-							br
-							| (this page) 
+							.bg-green.white.width100.small-padding.ebrima.font-button.bold.left.small-pad
+								| No 01.
 					.clearfix
-				.spacer
-				.font-button.left-marg.bold
-					| 03. Import a layer form a different tempante?
-				.spacer2
-				.row
-					.col-md-6.col-xs-6.right.bold.font-button.bold
-						| Template:
-						.clearfix
-						.spacer-small
-						.width70.pull-right
-							a(href='#')
-								.bg-green.white.width100.small-padding.ebrima.font-button.bold.left.small-pad
-									| No 01.
-						.clearfix
-						.spacer-small
-						.width65.pull-right
-							a(href='#')
-								.bg-green.white.width100.small-padding.ebrima.font-button.bold.left.small-pad
-									| No 02.
-						.clearfix
-						.spacer-small
-						.width60.pull-right
-							a(href='#')
-								.bg-green.white.width100.small-padding.ebrima.font-button.bold.left.small-pad
-									| No 03.
-						.clearfix
-						.spacer-small
-						.width55.pull-right
-							a(href='#')
-								.bg-green.white.width100.small-padding.ebrima.font-button.bold.left.small-pad
-									| No 04.
-						.clearfix
-					.col-md-6.col-xs-6.bold.font-button.bold
-						| Layer:
-						.clearfix
-						.spacer-small
-						.width70
-							a(href='#')
-								.bg-green.white.width100.small-padding.ebrima.font-button.bold.right.small-pad
-									| No A.
-						.clearfix
-						.spacer-small
-						.width65
-							a(href='#')
-								.bg-green.white.width100.small-padding.ebrima.font-button.bold.right.small-pad
-									| No B.
-						.clearfix
-						.spacer-small
-						.width60
-							a(href='#')
-								.bg-green.white.width100.small-padding.ebrima.font-button.bold.right.small-pad
-									| No C.
-						.clearfix
-						.spacer-small
-						.width55
-							a(href='#')
-								.bg-green.white.width100.small-padding.ebrima.font-button.bold.right.small-pad
-									| No D.
-						.clearfix
-						.spacer-small
-						.width50
-							a(href='#')
-								.bg-green.white.width100.small-padding.ebrima.font-button.bold.right.small-pad
-									| No E.
-						.clearfix
-						.spacer-small
-						.width45
-							a(href='#')
-								.bg-green.white.width100.small-padding.ebrima.font-button.bold.right.small-pad
-									| No F.
-						.clearfix
-						.spacer-small
-						.width40
-							a(href='#')
-								.bg-green.white.width100.small-padding.ebrima.font-button.bold.right.small-pad
-									| No G.
-						.clearfix
-						.spacer-small
-						.width35
-							a(href='#')
-								.bg-green.white.width100.small-padding.ebrima.font-button.bold.right.small-pad
-									| No H.
-						.clearfix
-				.spacer3
-				.row
-					.col-md-5.col-xs-5
-						.font-button.left-marg.spacer-small.bold
-							| 04. Create your own domain name:
-					.col-md-7.col-xs-7
-						.width70.pull-left				
-							input.input-white.font-button.purple.reg-padding(type="text", value="EventName Event", placeholder="EventName Event")
-						.width30.pull-left
-							button.btn.btn-lg.btn-info.font-button.width100(type="button")
-								| enter
+					.spacer-small
+					.width65.pull-right
+						a(href='#')
+							.bg-green.white.width100.small-padding.ebrima.font-button.bold.left.small-pad
+								| No 02.
 					.clearfix
-				.spacer2
-				//- this should be visible after hitting enter
-				.center
-					.fa-twitter-size.green
-						i.fa.fa-rocket
-					.dark.font.bold.ebrima
-						| Success!
-					.font-button.ebrima
-						a.link-green(href='#')
-							| your domain: https://www.eventnameevent.com/eventmost
-				.spacer2
-
-
-
+					.spacer-small
+					.width60.pull-right
+						a(href='#')
+							.bg-green.white.width100.small-padding.ebrima.font-button.bold.left.small-pad
+								| No 03.
+					.clearfix
+					.spacer-small
+					.width55.pull-right
+						a(href='#')
+							.bg-green.white.width100.small-padding.ebrima.font-button.bold.left.small-pad
+								| No 04.
+					.clearfix
+				.col-md-6.col-xs-6.bold.font-button.bold
+					| Layer:
+					.clearfix
+					.spacer-small
+					.width70
+						a(href='#')
+							.bg-green.white.width100.small-padding.ebrima.font-button.bold.right.small-pad
+								| No A.
+					.clearfix
+					.spacer-small
+					.width65
+						a(href='#')
+							.bg-green.white.width100.small-padding.ebrima.font-button.bold.right.small-pad
+								| No B.
+					.clearfix
+					.spacer-small
+					.width60
+						a(href='#')
+							.bg-green.white.width100.small-padding.ebrima.font-button.bold.right.small-pad
+								| No C.
+					.clearfix
+					.spacer-small
+					.width55
+						a(href='#')
+							.bg-green.white.width100.small-padding.ebrima.font-button.bold.right.small-pad
+								| No D.
+					.clearfix
+					.spacer-small
+					.width50
+						a(href='#')
+							.bg-green.white.width100.small-padding.ebrima.font-button.bold.right.small-pad
+								| No E.
+					.clearfix
+					.spacer-small
+					.width45
+						a(href='#')
+							.bg-green.white.width100.small-padding.ebrima.font-button.bold.right.small-pad
+								| No F.
+					.clearfix
+					.spacer-small
+					.width40
+						a(href='#')
+							.bg-green.white.width100.small-padding.ebrima.font-button.bold.right.small-pad
+								| No G.
+					.clearfix
+					.spacer-small
+					.width35
+						a(href='#')
+							.bg-green.white.width100.small-padding.ebrima.font-button.bold.right.small-pad
+								| No H.
+					.clearfix
+			.spacer3
+			.row
+				.col-md-5.col-xs-5
+					.font-button.left-marg.spacer-small.bold
+						| 04. Create your own domain name:
+				.col-md-7.col-xs-7
+					.width70.pull-left				
+						input.input-white.font-button.purple.reg-padding(type="text", value="EventName Event", placeholder="EventName Event")
+					.width30.pull-left
+						button.btn.btn-lg.btn-info.font-button.width100(type="button")
+							| enter
+				.clearfix
+			.spacer2
+			//- this should be visible after hitting enter
+			.center
+				.fa-twitter-size.green
+					i.fa.fa-rocket
+				.dark.font.bold.ebrima
+					| Success!
+				.font-button.ebrima
+					a.link-green(href='#')
+						| your domain: https://www.eventnameevent.com/eventmost
+			.spacer2
 		//- usually globally persistent
 		block js
 			script(src="/js-esct/jquery.min.js", defer)

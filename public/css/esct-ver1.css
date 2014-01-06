@@ -27,11 +27,18 @@ body {
   font-size: 14px;
 }
 
-header {width:980px; margin: 0px auto;}
-footer { margin-top: 10px; width:980px; margin: 0px auto}
+header {width:960px; margin: 0px auto;}
+footer { margin-top: 10px; width:960px; margin: 0px auto}
 
-.container-inner {width:980px; margin: 0px auto;}
+.container-tool{width:1200px; margin: 0px auto; background-color: #fff;}
+.container-inner {width:960px; margin: 0px auto;}
 .logo {padding-left: 20px;}
+
+/*tool*/
+.side{width:10%; overflow: hidden; padding:5px; padding-top: 10px;}
+.main{width:80%; overflow: hidden; padding:5px; padding-top: 10px; min-height:700px;}
+.fix-layer{position: absolute; top:325px; left:345px; }
+
 /*spacers*/
 .mail-spacer{margin-top: 24px;}
 .linkedin-spacer{margin-top: 18px;}
@@ -74,6 +81,9 @@ footer { margin-top: 10px; width:980px; margin: 0px auto}
 .red{color: #be1e2d;}
 .purple{color: #542437;}
 
+.font-ultrasmall{font-size: 6px;}
+.font-mini{font-size: 10px;}
+.font-tiny{font-size: 12px;}
 .font-small{font-size: 14px;}
 .font16{font-size: 16px;}
 .font-button{font-size: 20px;}
@@ -103,16 +113,20 @@ footer { margin-top: 10px; width:980px; margin: 0px auto}
 .awsome-pad{padding-left: 40px; padding-right: 40px;}
 .huge-pad{padding-left: 55px; padding-right: 55px;}
 
+.left-marg-t{padding-left: 5px;}
 .left-marg-s{padding-left: 10px;}
 .left-marg{padding-left: 20px;}
 .left-marg-big{padding-left: 30px;}
 
+.right-marg-s{margin-right: 10px;}
+a, a:visited, a:focus, a:active, a:hover{
+    outline:0 none !important;
+}
 .check-height{height: 50px;}
 .widthchecks{width: 120px;}
 .enter-height {height: 35px;}
 .lay-button-height {height: 45px;}
 .re-arrange-height{ height: 225px;}
-
 
 .width20{width: 20%;}
 .width25{width: 25% !important;}
@@ -152,12 +166,47 @@ a.link-green{
 a.link-green:hover {
   color: #542437;
 }
+a.link-dark{
+  color: #404041;
+}
+a.link-dark:hover {
+  color: #0892a3;
+}
 /*buttons*/
-.btn-info{background-color:#542437; opacity: 0.8; border-radius: 0; border:none;}
+.btn-info{background-color:#542437; opacity: 0.8; border-radius: 0; border:none; outline: 0;}
+.btn-info:active, .btn-info:focus{background-color:#542437; outline: 0;}
 .btn-info:hover{background-color:#542437; opacity: 1.0;}
 .btn-danger:hover{background-color:#be1e2d;}
+.btn-danger:active, .btn-danger:focus{background-color:#be1e2d; outline: 0;}
 .btn-default{background-color:none; border: 1px solid #542437;}
+.btn-default:active, .btn-default:focus{ outline: 0;}
+.btn-default-green{background-color:#fff; border: 1px solid #0892a3;}
+.btn-default-green:active, .btn-default-green:focus{ outline: 0;}
 
+.image-upload > input
+{
+    display: none;
+    width: 50px;
+}
+.image-upload {cursor: pointer !important;}
+
+.radio-wrap{width: 27px; height: 27px;}
+.radio {
+  background:  url('../../../images-esct/radio.svg') no-repeat;
+  background-position: 0 0;
+  width: 27px;
+  height: 27px;
+}
+.radio:hover {
+  background-position: 0 -27px;
+}
+.radio-checked {
+  margin-top: 10px;
+  background:  url('../../../images-esct/radio2.svg') no-repeat;
+  width: 27px;
+  height: 27px;
+  background-position: 0 0;
+}
 /*inputs*/
 
 .input-white{
@@ -165,7 +214,7 @@ a.link-green:hover {
   max-width: 100%;
   min-width: 100%;
 }
-textarea:focus, input:focus{
+textarea:focus, input:focus, button:focus{
     outline: 0;
 }
 
@@ -242,25 +291,24 @@ p.check5:not(#foo) > input[type=checkbox]:focus:checked + label           { back
 .dropdown-menu > li > a { font-weight:bold; margin-left:-4px; border-bottom:1px solid #e6e7e8; width:100%; color: #e6e7e8; font-size: 16px; font-family: 'Comfortaa', cursive; padding-left: 10px; white-space: normal;   word-wrap:break-word !important; word-break:break-all;}
 .dropdown-menu > li > a:hover {font-weight:bold; color: #fff; border-bottom:1px solid #fff;  background-color:#542437; }
 .dropdown-toggle{height:40px;}
-.nav > li > a:hover{background-color: #fff;}
-.nav > li > a:focus {background-color: #fff;}
+.nav > li > a:hover{background-color: rgba(0,0,0,0) !important;}
+.nav > li > a:focus {background-color: rgba(0,0,0,0) !important;}
 
 .no-border-bottom {border-bottom:none !important;}
 
 /*layer navigation*/
-.n-layer > .open > a, .n-layer > .open > a:hover, .n-layer > .open > a:focus {background-color: #fff!important;}
+.n-layer > .open > a, .n-layer > .open > a:hover, .n-layer > .open > a:focus {background-color: rgba(0,0,0,0) !important;}
 
-.navbar-layer .navbar-nav > .open > a, .navbar-layer .navbar-nav > .open > a:hover, .navbar-layer .navbar-nav > .open > a:focus {background-color: #fff!important;}
-.dropdown-layer-out a:hover{background-color: #fff!important;}
+.navbar-layer .navbar-nav > .open > a, .navbar-layer .navbar-nav > .open > a:hover, .navbar-layer .navbar-nav > .open > a:focus {background-color: rgba(0,0,0,0) !important;}
+.dropdown-layer-out a:hover{background-color: rgba(0,0,0,0) !important;}
 .navbar-layer{margin-top: -13px; height: 20px; margin-bottom: 0px; }
-.dropdown-layer-out:hover{background-color: #fff;}
+.dropdown-layer-out:hover{background-color: rgba(0,0,0,0) !important;}
 
 
-.dropdown-layer {z-index: 999; box-shadow: none; width:98%;  background-color: #fff; margin-left: -80px; border:none!important; color:#404041; }
-.dropdown-layer > li > a {background-color:#fff;  border-bottom:none; width:100%;color:#404041; font-size: 12px; font-family: 'Comfortaa', cursive; padding-left: 10px; white-space: normal;   word-wrap:break-word !important; word-break:break-all;}
-.dropdown-layer > li > a:hover { color: #0892a3;   background-color:#fff; }
-
-
+.dropdown-layer {z-index: 999; box-shadow: none; width:98%; background-color: #fff !important; margin-left: -80px; border:none!important; color:#404041; }
+.dropdown-layer > li > a {background-color: #fff;  border-bottom:none; width:100%;color:#404041; font-size: 12px; font-family: 'Comfortaa', cursive; padding-left: 10px; white-space: normal;   word-wrap:break-word !important; word-break:break-all;}
+.dropdown-layer > li > a:hover { color: #0892a3;   background-color: #fff; }
+.dropdown-layer-disabled > li > a:hover {background-color: #fff !important; }
 
 /*layers*/
 
@@ -273,7 +321,17 @@ p.check5:not(#foo) > input[type=checkbox]:focus:checked + label           { back
   color: #404041;
   font-size: 14px;
    }
+  .grey-box {
+  background: url('../../../images-esct/grey-box-bg.svg') repeat;
+  border-radius:0px;
+  width: 100%;
+  height:auto;
+  padding: 20px;
+  color: #404041;
+  font-size: 14px;
+   }
 .dotted-line {border: 2px dotted #542437; border-style: none none dotted; color: #fff; background-color: #fff;}
+.dotted-line-green {border: 2px dotted #0892a3; border-style: none none dotted; color: #fff; background-color: #fff;}
 .company{
   background: url('../../../images-esct/dot.svg') repeat-x;
    width: 60%; margin: 0px auto; padding-bottom: 5px;}
