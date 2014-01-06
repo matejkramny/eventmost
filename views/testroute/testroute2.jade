@@ -82,6 +82,67 @@ block content
 						.spacer2
 						input.radio(type="radio" id="two" value="two")
 				.clearfix
+
+
+				//- Layer which is being edited
+				.spacer		
+				.container-inner
+					//- A. Top Layer
+					//- white box class changed to grey box
+					.grey-box
+						.green.font.pull-left
+							| A. Top Layer
+						.pull-right
+							//- navigation
+							.navbar.navbar-layer(role="navigation")
+									ul.nav.navbar-nav.n-layer
+										li.dropdown.dropdown-layer-out
+											a(href="#" class="dropdown-toggle " data-toggle="dropdown") 
+												img(src="/images-esct/dropdown.svg" alt="")
+											ul.dropdown-menu.dropdown-layer
+												li
+													a(href='#') + Add new layer
+												li
+													a(href='#') + Copy this layer
+												li
+													a(href='#') + Delete this layer
+						.clearfix
+						.dotted-line
+						.center.spacer.grey
+							a.small-pad(href="#" class="link-grey") link 1
+							| |
+							a.small-pad(href="#" class="link-grey") link 2
+							| |
+							a.small-pad(href="#" class="link-grey") link 3
+							| |
+							a.small-pad(href="#" class="link-grey") link 4
+							| |
+							a.small-pad(href="#" class="link-grey") link 5
+							| |
+							a.small-pad(href="#" class="link-grey") link 6		
+						.spacer2
+						.center
+							| Company Name / Logo
+							.company
+								| &nbsp;
+						.ebrima.font-big.bold.center
+							| Event Title / Logo
+						.spacer
+						.ebrima.font-big.bold.center.green
+							| Feb 14.
+							span.font 2014
+						.company.width25.spacer-small-min
+							| &nbsp;
+						.ebrima.font-medium.bold.center
+							| 4:00 a.m.
+						.spacer
+						.ebrima.font.bold.center.green
+							| Venue Name Venue Name Venue Name
+						.spacer
+						.center
+							button.btn.btn-lg.btn-danger.font-button.big-padding.awsome-pad(type="button")
+								| Register
+					.spacer
 			//- Right side
 			.side.pull-left
 				.center.green.font-small.bold
@@ -154,61 +215,5 @@ block content
 						a(href="#" class="link-dark")
 							img(src="images-esct/square.svg" alt="")
 			.clearfix
-			.container-inner.fix-layer
-				//- A. Top Layer
-				//- white box class changed to grey box
-				.grey-box
-					.green.font.pull-left
-						| A. Top Layer
-					.pull-right
-						//- navigation
-						.navbar.navbar-layer(role="navigation")
-								ul.nav.navbar-nav.n-layer
-									li.dropdown.dropdown-layer-out
-										a(href="#" class="dropdown-toggle " data-toggle="dropdown") 
-											img(src="/images-esct/dropdown.svg" alt="")
-										ul.dropdown-menu.dropdown-layer
-											li
-												a(href='#') + Add new layer
-											li
-												a(href='#') + Copy this layer
-											li
-												a(href='#') + Delete this layer
-					.clearfix
-					.dotted-line
-					.center.spacer.grey
-						a.small-pad(href="#" class="link-grey") link 1
-						| |
-						a.small-pad(href="#" class="link-grey") link 2
-						| |
-						a.small-pad(href="#" class="link-grey") link 3
-						| |
-						a.small-pad(href="#" class="link-grey") link 4
-						| |
-						a.small-pad(href="#" class="link-grey") link 5
-						| |
-						a.small-pad(href="#" class="link-grey") link 6		
-					.spacer2
-					.center
-						| Company Name / Logo
-						.company
-							| &nbsp;
-					.ebrima.font-big.bold.center
-						| Event Title / Logo
-					.spacer
-					.ebrima.font-big.bold.center.green
-						| Feb 14.
-						span.font 2014
-					.company.width25.spacer-small-min
-						| &nbsp;
-					.ebrima.font-medium.bold.center
-						| 4:00 a.m.
-					.spacer
-					.ebrima.font.bold.center.green
-						| Venue Name Venue Name Venue Name
-					.spacer
-					.center
-						button.btn.btn-lg.btn-danger.font-button.big-padding.awsome-pad(type="button")
-							| Register
-				.spacer
+
 
