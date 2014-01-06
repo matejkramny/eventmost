@@ -3,8 +3,12 @@ $(document).ready(function() {
 		$("#privacyModal .statusText").removeClass('hide').html("Saving..")
 		
 		var data = {};
-		$("#privacyModal input[type=radio]:checked, #privacyModal input[type=hidden]").each(function() {
-			data[$(this).attr("name")] = $(this).val()
+		$("#privacyModal input[type=checkbox], #privacyModal input[type=hidden]").each(function() {
+			if ($(this).attr("type") == 'checkbox' && !$(this).is(':checked')) {
+				data[$(this).attr("name")] = 'no';
+			} else {
+				data[$(this).attr("name")] = $(this).val()
+			}
 		})
 		
 		$.ajax({

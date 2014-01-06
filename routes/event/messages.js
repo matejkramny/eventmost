@@ -151,7 +151,13 @@ function postComment (req, res) {
 			
 			socket.notifyComment(res.locals.ev, {
 				_id: message._id,
-				attendee: res.locals.attendee,
+				attendee: {
+					user: {
+						_id: res.locals.attendee.user._id,
+						name: res.locals.attendee.user.name,
+						surname: res.locals.attendee.user.surname
+					}
+				},
 				message: message.message,
 				inResponse: true,
 				responseTo: msg._id,
@@ -184,7 +190,13 @@ function postComment (req, res) {
 		
 		socket.notifyComment(res.locals.ev, {
 			_id: msg._id,
-			attendee: res.locals.attendee,
+			attendee: {
+				user: {
+					_id: res.locals.attendee.user._id,
+					name: res.locals.attendee.user.name,
+					surname: res.locals.attendee.user.surname
+				}
+			},
 			message: message,
 			posted: new Date(),
 			likes: [],

@@ -32,6 +32,7 @@ angular.module('eventMost')
 	
 	$scope.init = function (opts) {
 		$scope.csrf = opts.csrf;
+		$scope.user = opts.user;
 	}
 	
 	$scope.selectMessage = function (message) {
@@ -39,7 +40,8 @@ angular.module('eventMost')
 		$http.get('/inbox/message/'+message.topic._id).success(function(data, status) {
 			$scope.message = {
 				message: data.message,
-				messages: data.messages
+				messages: data.messages,
+				otherUser: message.otherUser
 			}
 			$scope.calculateTime();
 			setTimeout($scope.calculateTime, 50);
@@ -66,11 +68,27 @@ angular.module('eventMost')
 		$scope.msg = "";
 	}
 	
+	$scope.processOtherUser = function () {
+		for (var i = 0; i < $scope.messages.length; i++) {
+			var m = $scope.messages[i];
+			for (var x = 0; x < m.topic.users.length; x++) {
+				if (m.topic.users[x] && m.topic.users[x]._id != $scope.user) {
+					m.otherUser = m.topic.users[x];
+					if (!m.otherUser.avatar || m.otherUser.avatar.length == 0) {
+						m.otherUser.avatar = "/images/default_speaker.svg";
+					}
+					
+					break;
+				}
+			}
+			
+			m.unread = 0;
+		}
+	}
+	
 	$http.get('/inbox/messages').success(function(data, status) {
 		$scope.messages = data.messages;
-		for (var i = 0; i < $scope.messages.length; i++) {
-			$scope.messages[i].unread = 0;
-		}
+		$scope.processOtherUser();
 		
 		if ($scope.messages.length > 0) {
 			$scope.selectMessage($scope.messages[0])
@@ -94,12 +112,27 @@ angular.module('eventMost')
 		})
 	}
 	$scope.selectProfile = function (profile) {
+		$scope.search = "";
+		$scope.peopleSearch = [];
+		
+		for (var i = 0; i < $scope.messages.length; i++) {
+			var m = $scope.messages[i];
+			for (var x = 0; x < m.topic.users.length; x++) {
+				if (m.topic.users[x] && m.topic.users[x]._id == profile._id) {
+					$scope.selectMessage(m);
+					return;
+				}
+			}
+		}
+		
 		$scope.progress = "Creating message to "+profile.name +" "+profile.surname;
-		//TODO make post to create message. then switch to the message....
 		$http.post('/inbox/messages/new?to='+profile._id, { _csrf: $scope.csrf })
 			.success(function(data, status) {
 				$scope.messages.splice(0, 0, data.message);
 				$scope.selectMessage($scope.messages[0]);
+				$scope.progress = "";
+				$scope.showPeopleSearch = false;
+				$scope.processOtherUser();
 			})
 			.error(function(data, status) {
 				$scope.status = "Something went wrong :/";

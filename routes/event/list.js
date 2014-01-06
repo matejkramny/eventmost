@@ -12,6 +12,7 @@ exports.router = function (app) {
 exports.listEvents = function (req, res) {
 	models.Event.find({ deleted: false })
 		.populate('avatar attendees.user')
+		.select('name start end address venue_name avatar')
 		.sort('-created')
 		.exec(function(err, evs) {
 		// TODO limit mount of events received
@@ -35,25 +36,28 @@ exports.listEvents = function (req, res) {
 
 // TODO fix this
 exports.listMyEvents = function (req, res) {
-	models.Event.find({ 'attendees.user': req.user._id })
-		.populate('avatar attendees.user')
-		.sort('-created')
-		.exec(function(err, evs) {
-		if (err) throw err;
-		if (evs) {
-			res.format({
-				html: function() {
-					res.locals.moment = moment;
-					res.render('event/list', { events: evs, pagename: "My events", title: "My Events" });
-				},
-				json: function() {
-					res.send({
-						events: evs,
-						pagename: "My events"
-					})
-				}
-			})
-		}
+	models.Attendee.find({ 'user': req.user._id }, '_id', function(err, attendees) {
+		models.Event.find({ 'attendees': { $in: attendees }})
+			.populate('avatar attendees.user')
+			.select('name start end address venue_name avatar')
+			.sort('-created')
+			.exec(function(err, evs) {
+			if (err) throw err;
+			if (evs) {
+				res.format({
+					html: function() {
+						res.locals.moment = moment;
+						res.render('event/list', { events: evs, pagename: "My events", title: "My Events" });
+					},
+					json: function() {
+						res.send({
+							events: evs,
+							pagename: "My events"
+						})
+					}
+				})
+			}
+		})
 	})
 }
 
@@ -97,6 +101,7 @@ exports.listNearEvents = function (req, res) {
 			}
 		}).populate('event')
 		.limit(limit)
+		.select('name start end address venue_name avatar')
 		.exec(function(err, geos) {
 			if (err) throw err;
 		

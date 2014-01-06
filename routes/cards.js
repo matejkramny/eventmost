@@ -75,7 +75,7 @@ function sendCard (req, res) {
 		try {
 			id = mongoose.Types.ObjectId(id);
 		} catch (e) {
-			res.redirect('/user/'+to);
+			res.redirect('back');
 			return;
 		}
 	}
@@ -94,7 +94,7 @@ function sendCard (req, res) {
 			
 			if (user) {
 				if (user.notification.email.businessCards) {
-					inbox.emailNotification(user, "inbox/cards")
+					inbox.emailNotification(user, "inbox")
 				}
 				user.mailboxUnread++;
 				
@@ -106,6 +106,7 @@ function sendCard (req, res) {
 				user.save()
 			}
 			
+			req.session.flash = ["Business Card Sent"]
 			res.redirect('/user/'+to);
 		});
 	}

@@ -3,12 +3,12 @@ var models = require('../../models')
 exports.router = function (app) {
 	attending = require('./event').attending
 	
-	app.get('/event/:id/attendees', list)
+	app.get('/event/:id/attendees', listAttendees)
 		.get('/event/:id/attendee/:attendee', showAttendee)
 		.post('/event/:id/join', joinEvent)
 }
 
-function list (req, res) {
+function listAttendees (req, res) {
 	if (!res.locals.eventattending) {
 		res.format({
 			html: function() {
@@ -28,13 +28,13 @@ function list (req, res) {
 	res.format({
 		html: function() {
 			res.render('event/attendees', { title: "Attendees at "+res.locals.ev.name })
-		},
+		}/*,
 		json: function() {
 			res.send({
 				event: res.locals.ev,
 				attending: res.locals.eventattending
 			})
-		}
+		}*/
 	});
 }
 

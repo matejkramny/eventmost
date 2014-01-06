@@ -160,11 +160,11 @@ scheme.methods.getComments = function (cb) {
 			message.populate('attendee likes comments', function(err) {
 				async.parallel([
 					function(cb) {
-						message.attendee.populate('user', function() { cb(null) });
+						message.attendee.populate('user', 'name surname _id avatar', function() { cb(null) });
 					},
 					function(cb) {
 						async.each(message.likes, function(like, cb) {
-							like.populate('user', function() { cb(null) });
+							like.populate('user', 'name surname _id avatar', function() { cb(null) });
 						}, function() {
 							cb(null);
 						})
@@ -174,11 +174,11 @@ scheme.methods.getComments = function (cb) {
 							comment.populate('likes attendee', function() {
 								async.parallel([
 									function(cb) {
-										comment.attendee.populate('user', function() { cb(null) });
+										comment.attendee.populate('user', 'name surname _id avatar', function() { cb(null) });
 									},
 									function(cb) {
 										async.each(comment.likes, function(like, cb) {
-											like.populate('user', function() { cb(null) });
+											like.populate('user', 'name surname _id avatar', function() { cb(null) });
 										}, function() {
 											cb(null);
 										})

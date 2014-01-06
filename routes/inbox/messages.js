@@ -7,7 +7,7 @@ var fs = require('fs')
 
 exports.router = function (app) {
 	app.get('/inbox/messages', showMessages)
-		.get('/inbox/messages/new', newMessage)
+		.get('/inbox/messages/new', doNewMessage)
 		.post('/inbox/messages/new', doNewMessage)
 		.get('/inbox/message/:id', getMessage, showMessage)
 		.post('/inbox/message/:id', getMessage, postMessage)
@@ -83,7 +83,7 @@ function postMessage (req, res) {
 	if (text.length == 0) {
 		res.format({
 			html: function() {
-				res.redirect('/inbox/message/'+id);
+				res.redirect('/inbox');
 			},
 			json: function() {
 				res.send({
@@ -120,7 +120,7 @@ function postMessage (req, res) {
 			
 			if (u.notification.email.privateMessages) {
 				console.log("Sending to email")
-				inbox.emailNotification(u, "inbox/message/"+message._id)
+				inbox.emailNotification(u, "inbox")
 			}
 			u.mailboxUnread++;
 			
@@ -155,7 +155,7 @@ function postMessage (req, res) {
 		msg.save(function(err) {
 			res.format({
 				html: function() {
-					res.redirect('/inbox/message/'+message._id)
+					res.redirect('/inbox')
 				},
 				json: function() {
 					res.send({
@@ -212,7 +212,7 @@ function doNewMessage (req, res) {
 		topic.save();
 		res.format({
 			html: function() {
-				redirect('/inbox/message/'+topic._id)
+				res.redirect('/inbox');
 			},
 			json: function() {
 				res.send({
@@ -229,23 +229,6 @@ function doNewMessage (req, res) {
 			}
 		})
 	});
-}
-function newMessage (req, res) {
-	// Dirty ol' hack
-	doNewMessage(req, res);
-	return;
-	
-	var to;
-	if (req.query.to != null) {
-		try {
-			to = mongoose.Types.ObjectId(req.query.to);
-		} catch (e) {}
-	}
-	
-	models.User.findOne({ _id: to }, function(err, user) {
-		res.locals.toUser = user;
-		res.render('inbox/newMessage', { pageName: "New Private Message", title: "New Private Message" });
-	})
 }
 
 function showMessages (req, res) {
