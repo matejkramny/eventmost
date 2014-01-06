@@ -47,7 +47,7 @@ html
 										li
 											a(href='#') Option 1
 										li
-											a(href='#') very long option Vivamus hendrerit felis sit amet arcu tempus luctus. Etiam convallis diam nisi, at lobortis ipsum pharetra in. Maecenas gravida lacinia tempus
+											a.no-border-bottom(href='#') very long option Vivamus hendrerit felis sit amet arcu tempus luctus. Etiam convallis diam nisi, at lobortis ipsum pharetra in. Maecenas gravida lacinia tempus
 							ul.nav.navbar-nav.nav-border-bottom
 								li.dropdown
 									a(href="#" class="dropdown-toggle" data-toggle="dropdown") Choose Tamplate
@@ -55,7 +55,7 @@ html
 										li
 											a(href='#') Option 1
 										li
-											a(href='#') Option 2
+											a.no-border-bottom(href='#') Option 2
 							ul.nav.navbar-nav
 								li.nav-border-round
 									a(href='#') Save Project
@@ -68,15 +68,17 @@ html
 
 			block content
 			footer
-				.center.purple.company.comfortaa.font.bold
+				.center.purple.font.bold
 					| Options
+				.company
+					| &nbsp;
 				.spacer
-				.comfortaa.font-button.left-marg
+				.font-button.left-marg.bold
 					| 01. Combine more than one translucent layer to have the same foundation?
 				.spacer
 				.no-float.widthchecks
 					//- checkbox hack works on label makes the normal checkbox invisible needs unique id for input and on label / would be nice to make the "yes" give opacity 50% if not checked
-					.comfortaa.font-button.bg-white.inline.dark.reg-padding.bigs-pad.pull-left.check-height
+					.font-button.bg-white.inline.dark.reg-padding.bigs-pad.pull-left.check-height.bold
 						| Yes
 					.bg-grey.pull-left.dark.check-height
 						p.check5.pull-left
@@ -84,7 +86,7 @@ html
 							label(for='uniqueID')
 					.clearfix
 				.spacer
-				.comfortaa.font-button.left-marg
+				.font-button.left-marg.bold
 					| 02. Re-arange layers:
 				.spacer2
 				.row
@@ -112,21 +114,21 @@ html
 							.bg-red.center.white.width100.reg-padding.comfortaa.font16.bold.lay-button-height
 								| Register
 					.pull-left
-						.comfortaa.bold.purple.font-button.left-marg-big.or-padd
+						.bold.purple.font-button.left-marg-big.or-padd
 							| or
 					.pull-left.width40.center.left-marg.drag-padd
 						img(src="/images-esct/drag.svg" alt="")
-						.font-button.spacer-small
+						.font-button.spacer-small.bold
 							| Drag a layer from the main page 
 							br
 							| (this page) 
 					.clearfix
 				.spacer
-				.comfortaa.font-button.left-marg
+				.font-button.left-marg.bold
 					| 03. Import a layer form a different tempante?
 				.spacer2
 				.row
-					.col-md-6.col-xs-6.right.bold.font-button.comfortaa
+					.col-md-6.col-xs-6.right.bold.font-button.bold
 						| Template:
 						.clearfix
 						.spacer-small
@@ -153,7 +155,7 @@ html
 								.bg-green.white.width100.small-padding.ebrima.font-button.bold.left.small-pad
 									| No 04.
 						.clearfix
-					.col-md-6.col-xs-6.bold.font-button.comfortaa
+					.col-md-6.col-xs-6.bold.font-button.bold
 						| Layer:
 						.clearfix
 						.spacer-small
@@ -207,11 +209,11 @@ html
 				.spacer3
 				.row
 					.col-md-5.col-xs-5
-						.comfortaa.font-button.left-marg.spacer-small
+						.font-button.left-marg.spacer-small.bold
 							| 04. Create your own domain name:
 					.col-md-7.col-xs-7
 						.width70.pull-left				
-							input.input-white.comfortaa.font-button.purple.reg-padding(type="text", value="EventName Event", placeholder="EventName Event")
+							input.input-white.font-button.purple.reg-padding(type="text", value="EventName Event", placeholder="EventName Event")
 						.width30.pull-left
 							button.btn.btn-lg.btn-info.font-button.width100(type="button")
 								| enter

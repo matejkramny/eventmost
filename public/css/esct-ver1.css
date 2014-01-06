@@ -36,7 +36,7 @@ footer { margin-top: 10px; width:980px; margin: 0px auto}
 .mail-spacer{margin-top: 24px;}
 .linkedin-spacer{margin-top: 18px;}
 .twit-spacer{margin-top: 8px;}
-.venue-spacer{margin-top: 85px;}
+.venue-spacer{margin-top: 75px;}
 .big-venet-spacer{margin-top: 15px;}
 .re-arrange-pad{padding-top: 45px;}
 .or-padd{padding-top: 95px;}
@@ -44,6 +44,7 @@ footer { margin-top: 10px; width:980px; margin: 0px auto}
 
 .spacer-mini-min{margin-top: -2px;}
 .spacer-mini{margin-top: 2px;}
+.spacer-small-min{margin-top: -7px !important;}
 .spacer-small{margin-top: 7px;}
 .spacer{margin-top: 15px;}
 .spacer2{margin-top: 25px;}
@@ -107,14 +108,14 @@ footer { margin-top: 10px; width:980px; margin: 0px auto}
 .left-marg-big{padding-left: 30px;}
 
 .check-height{height: 50px;}
-.widthchecks{width: 115px;}
+.widthchecks{width: 120px;}
 .enter-height {height: 35px;}
 .lay-button-height {height: 45px;}
 .re-arrange-height{ height: 225px;}
 
 
 .width20{width: 20%;}
-.width25{width: 25%;}
+.width25{width: 25% !important;}
 .width30{width: 30%;}
 .width35{width: 35%;}
 .width40{width: 40%;}
@@ -126,7 +127,8 @@ footer { margin-top: 10px; width:980px; margin: 0px auto}
 .width70{width: 70%;}
 .width75{width: 75%;}
 .width80{width: 80%;}
-.width100{width: 100%;}
+.width98{width: 98% !important;}
+.width100{width: 100% !important;}
 /*links*/
 a{text-decoration: none;}
 a:hover{text-decoration: none;}
@@ -236,13 +238,14 @@ p.check5:not(#foo) > input[type=checkbox]:focus:checked + label           { back
 .navbar {
   margin-bottom: 20px;
 }
-.dropdown-menu {z-index: 999; box-shadow: none; width:98%; margin-left: 5px;}
-.dropdown-menu > li > a {width:150px; color: #542437; font-size: 14px; padding-left: 10px; white-space: normal;   word-wrap:break-word !important; word-break:break-all;}
-.dropdown-menu > li > a:hover {color: #0892a3; border-bottom: none; background-color:#fff; }
+.dropdown-menu {z-index: 999; box-shadow: none; width:98%; margin-left: 5px; background-color: #542437; }
+.dropdown-menu > li > a { font-weight:bold; margin-left:-4px; border-bottom:1px solid #e6e7e8; width:100%; color: #e6e7e8; font-size: 16px; font-family: 'Comfortaa', cursive; padding-left: 10px; white-space: normal;   word-wrap:break-word !important; word-break:break-all;}
+.dropdown-menu > li > a:hover {font-weight:bold; color: #fff; border-bottom:1px solid #fff;  background-color:#542437; }
 .dropdown-toggle{height:40px;}
 .nav > li > a:hover{background-color: #fff;}
 .nav > li > a:focus {background-color: #fff;}
 
+.no-border-bottom {border-bottom:none !important;}
 
 /*layer navigation*/
 .n-layer > .open > a, .n-layer > .open > a:hover, .n-layer > .open > a:focus {background-color: #fff!important;}
@@ -265,7 +268,9 @@ p.check5:not(#foo) > input[type=checkbox]:focus:checked + label           { back
   font-size: 14px;
    }
 .dotted-line {border: 2px dotted #542437; border-style: none none dotted; color: #fff; background-color: #fff;}
-.company{border: 10px dotted #404041; border-style: none none dotted; width: 60%; margin: 0px auto; padding-bottom: 5px;}
+.company{
+  background: url('../../../images-esct/dot.svg') repeat-x;
+   width: 60%; margin: 0px auto; padding-bottom: 5px;}
 .company2{border: 10px dotted #404041; border-style: none none dotted; width: 26%; margin: 0px auto; line-height: 30px; }
 .company3{border: 7px dotted #404041; border-style: none none dotted; width: 90%; margin: 0px auto; line-height: 30px; }
 .dotted{border: 7px dotted #404041; border-style: none none dotted; line-height: 30px; }
