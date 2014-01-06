@@ -249,12 +249,18 @@ p.check5:not(#foo) > input[type=checkbox]:focus:checked + label           { back
 
 /*layer navigation*/
 .n-layer > .open > a, .n-layer > .open > a:hover, .n-layer > .open > a:focus {background-color: #fff!important;}
-.dropdown-layer{margin-left: -80px; border:none!important; color:#404041; }
+
 .navbar-layer .navbar-nav > .open > a, .navbar-layer .navbar-nav > .open > a:hover, .navbar-layer .navbar-nav > .open > a:focus {background-color: #fff!important;}
 .dropdown-layer-out a:hover{background-color: #fff!important;}
-.dropdown-layer > li > a{color:#404041; }
 .navbar-layer{margin-top: -13px; height: 20px; margin-bottom: 0px; }
 .dropdown-layer-out:hover{background-color: #fff;}
+
+
+.dropdown-layer {z-index: 999; box-shadow: none; width:98%;  background-color: #fff; margin-left: -80px; border:none!important; color:#404041; }
+.dropdown-layer > li > a {background-color:#fff;  border-bottom:none; width:100%;color:#404041; font-size: 12px; font-family: 'Comfortaa', cursive; padding-left: 10px; white-space: normal;   word-wrap:break-word !important; word-break:break-all;}
+.dropdown-layer > li > a:hover { color: #0892a3;   background-color:#fff; }
+
+
 
 /*layers*/
 
