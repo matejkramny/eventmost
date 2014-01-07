@@ -49,7 +49,7 @@ block content
 						img(ng-init="comment.attendee.user.avatar = comment.attendee.user.avatar || '/images/default_speaker-purple.svg'" ng-src="{{comment.attendee.user.avatar}}" style="width:60px;margin:0px auto auto 0px;")
 					.pull-left.pad-left-ten.width85.width85posts
 						.font16.bold
-							| {{ comment.attendee.user.name }} {{ comment.attendee.user.surname }}
+							a.link-green(href="/user/{{comment.attendee.user._id}}" target="_blank") {{ comment.attendee.user.name }} {{ comment.attendee.user.surname }}
 						.font14.font14sm.break.small-post.font-exception
 							| {{ comment.message }}
 						.pull-left.font14.font14md.font-exception
@@ -65,7 +65,7 @@ block content
 									b(ng-show="!$first && $last")  and 
 									b(ng-show="comment.likes.length > 3 && $last") {{ comment.likes.length - 3 }} others
 									span(ng-hide="comment.likes.length > 3 && $last")
-										b(ng-hide="user == like.user._id") {{ like.user.name }} {{ like.user.surname }}
+										a.link-green(href="/user/{{like.user._id}}" target="_blank"): b(ng-hide="user == like.user._id") {{ like.user.name }} {{ like.user.surname }}
 										b(ng-show="user == like.user._id") You
 								span(ng-show="comment.likes.length > 0")
 									|  like this.
@@ -92,7 +92,7 @@ block content
 							img(ng-init="subcomment.attendee.user.avatar = subcomment.attendee.user.avatar || '/images/default_speaker-purple.svg'" ng-src="{{subcomment.attendee.user.avatar}}", style="width:44px;margin:0px auto auto 0px;")
 						.pull-left.pad-left-ten.width85.width85posts
 							.font14.font14sm.break.small-post.font-exception
-								span.font16.bold {{ subcomment.attendee.user.name }} {{ subcomment.attendee.user.surname }}
+								a.link-green(href="/user/{{comment.attendee.user._id}}" target="_blank"): span.font16.bold {{ subcomment.attendee.user.name }} {{ subcomment.attendee.user.surname }}
 								|  {{ subcomment.message }}
 							.pull-left.font14.font14md.color-green.pad-left-five.font-exception(title="{{subcomment.postedFormatted}}")
 								| posted {{subcomment.postedAgo}}	|
@@ -104,7 +104,7 @@ block content
 										b(ng-show="!$first && $last")  and 
 										b(ng-show="subcomment.likes.length > 3 && $last") {{ subcomment.likes.length - 3 }} others
 										span(ng-hide="subcomment.likes.length > 3 && $last")
-											b(ng-hide="user == like.user._id") {{ like.user.name }} {{ like.user.surname }}
+											a.link-green(href="/user/{{like.user._id}}" target="_blank"): b(ng-hide="user == like.user._id") {{ like.user.name }} {{ like.user.surname }}
 											b(ng-show="user == like.user._id") You
 									span(ng-show="subcomment.likes.length > 0")
 										|  like this.
