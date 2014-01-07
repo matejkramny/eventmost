@@ -1,9 +1,10 @@
 //- TODO display user avatar and make it clickable (the image)
 mixin card(card)
-	.col-md-2.col-xs-2.col-sm-2.col-lg-2
-		.right
-			img.img-responsive.circularespond(src= card.from.avatar.length > 0 ? card.from.avatar : "/images/default_speaker.svg")
-	.col-md-3.col-xs-3.col-sm-3.col-lg-3
-		.center.nspacer-medium
+	.col-md-2.col-xs-2.col-sm-2.col-lg-2.nspacer-medium
+		.pull-right
+			a(href="/user/#{card.from._id}"): img.img-responsive.circularespond(src= card.from.avatar.length > 0 ? card.from.avatar : "/images/default_speaker.svg" style="max-width:102px;")
+			a(href="/user/#{card.from._id}"): span= card.from.getName()
+	.col-md-3.col-xs-3.col-sm-3.col-lg-3.nspacer-medium
+		.center
 			img.pad-left-ten.img-responsive(src="/businesscards/"+card.card._id+".png")
 	.col-md-1.col-xs-1.col-sm-1.col-lg-1
