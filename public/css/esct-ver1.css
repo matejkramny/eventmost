@@ -37,7 +37,71 @@ footer { margin-top: 10px; width:960px; margin: 0px auto}
 /*tool*/
 .side{width:10%; overflow: hidden; padding:5px; padding-top: 10px;}
 .main{width:80%; overflow: hidden; padding:5px; padding-top: 10px; min-height:700px;}
-.fix-layer{position: absolute; top:325px; left:345px; }
+.arrow-down{position: absolute; bottom: 0; right: 0;}
+.marking-border {
+border-style: solid; border-width: 26px 41px 25px 36px; 
+-moz-border-image: url(../../../images-esct/marking-border.svg) 26 41 25 36 repeat; 
+-webkit-border-image: url(../../../images-esct/marking-border.svg) 26 41 25 36 repeat; 
+-o-border-image: url(../../../images-esct/marking-border.svg) 26 41 25 36 repeat; 
+border-image: url(../../../images-esct/marking-border.svg) 26 41 25 36 fill repeat;
+padding: 5px;
+width: auto;
+}
+ 
+/* 
+  Required Styles
+*/
+#aToolTip {
+  position: absolute;
+  display: none;
+  z-index: 50000;
+}
+
+  #aToolTip .aToolTipContent {
+    position:relative;
+    margin:0;
+    padding:0;
+  }
+/* 
+  END: Required Styles
+*/
+/**
+  Default Theme
+*/
+.defaultTheme {
+  border:0px solid #444;
+  background:#fff;
+  color:#0892a3;
+  font-weight: bold;
+  margin:0;
+  padding:6px 12px; 
+  max-width: 200px;
+  
+  
+  -moz-box-shadow: 2px 2px 5px #111; /* for Firefox 3.5+ */
+  -webkit-box-shadow: 2px 2px 5px #111; /* for Safari and Chrome */
+  box-shadow: 2px 2px 5px #111; /* for Safari and Chrome */
+}
+  
+  .defaultTheme #aToolTipCloseBtn {
+    display:block;
+    height:18px;
+    width:18px;
+    background:url(../images/closeBtn.png) no-repeat;
+    text-indent:-9999px;
+    outline:none;
+    position:absolute;
+    top:-20px;
+    right:-30px;
+    margin:2px;
+    padding:4px;
+  }
+
+  
+
+
+
+
 
 /*spacers*/
 .mail-spacer{margin-top: 24px;}
@@ -119,9 +183,7 @@ footer { margin-top: 10px; width:960px; margin: 0px auto}
 .left-marg-big{padding-left: 30px;}
 
 .right-marg-s{margin-right: 10px;}
-a, a:visited, a:focus, a:active, a:hover{
-    outline:0 none !important;
-}
+
 .check-height{height: 50px;}
 .widthchecks{width: 120px;}
 .enter-height {height: 35px;}
@@ -145,9 +207,18 @@ a, a:visited, a:focus, a:active, a:hover{
 .width100{width: 100% !important;}
 /*links*/
 a{text-decoration: none;}
+a, a:visited, a:focus, a:active, a:hover{
+    outline:0 none !important;
+}
 a:hover{text-decoration: none;}
 
+a.disabled{
+  color: #404041;
+}
+a.disabled:hover {
+  color: #404041;
 
+}
 a.link-grey{
   color: #a7a9ab;
 }
@@ -320,8 +391,9 @@ p.check5:not(#foo) > input[type=checkbox]:focus:checked + label           { back
   padding: 20px;
   color: #404041;
   font-size: 14px;
-   }
-  .grey-box {
+}
+.grey-box {
+  position: relative;
   background: url('../../../images-esct/grey-box-bg.svg') repeat;
   border-radius:0px;
   width: 100%;

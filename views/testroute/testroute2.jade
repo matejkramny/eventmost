@@ -88,38 +88,21 @@ block content
 				.spacer		
 				.container-inner
 					//- A. Top Layer
-					//- white box class changed to grey box
+					//- white box class changed to grey box and top of the layer dissappears
 					.grey-box
-						.green.font.pull-left
-							| A. Top Layer
-						.pull-right
-							//- navigation
-							.navbar.navbar-layer(role="navigation")
-									ul.nav.navbar-nav.n-layer
-										li.dropdown.dropdown-layer-out
-											a(href="#" class="dropdown-toggle " data-toggle="dropdown") 
-												img(src="/images-esct/dropdown.svg" alt="")
-											ul.dropdown-menu.dropdown-layer
-												li
-													a(href='#') + Add new layer
-												li
-													a(href='#') + Copy this layer
-												li
-													a(href='#') + Delete this layer
-						.clearfix
-						.dotted-line
 						.center.spacer.grey
-							a.small-pad(href="#" class="link-grey") link 1
+							//- for marking - marking-border class, and for tips normalTip exampleTip
+							a.small-pad.marking-border.something(href="#" class="disabled normalTip exampleTip" title="Press SHIFT button and hold while stretching to stretch in both dimensions at same time") link 1
 							| |
-							a.small-pad(href="#" class="link-grey") link 2
+							a.small-pad(href="#" class="disabled" title="") link 2
 							| |
-							a.small-pad(href="#" class="link-grey") link 3
+							a.small-pad(href="#" class="disabled") link 3
 							| |
-							a.small-pad(href="#" class="link-grey") link 4
+							a.small-pad(href="#" class="disabled") link 4
 							| |
-							a.small-pad(href="#" class="link-grey") link 5
+							a.small-pad(href="#" class="disabled") link 5
 							| |
-							a.small-pad(href="#" class="link-grey") link 6		
+							a.small-pad(href="#" class="disabled") link 6		
 						.spacer2
 						.center
 							| Company Name / Logo
@@ -140,8 +123,11 @@ block content
 							| Venue Name Venue Name Venue Name
 						.spacer
 						.center
-							button.btn.btn-lg.btn-danger.font-button.big-padding.awsome-pad(type="button")
+							button.btn.btn-lg.btn-danger.font-button.big-padding.awsome-pad(type="button" )
 								| Register
+						.arrow-down
+							a(href="#")
+								img(src="images-esct/arrow-down.svg" alt="")
 					.spacer
 			//- Right side
 			.side.pull-left
