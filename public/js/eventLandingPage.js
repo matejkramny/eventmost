@@ -96,6 +96,7 @@ $(document).ready(function() {
 				$("#accessEventDirect").click()
 			} else {
 				$("#attendModal").modal('show')
+				window.location.hash = "";
 			}
 		}
 	}

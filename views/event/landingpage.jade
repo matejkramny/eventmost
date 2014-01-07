@@ -68,19 +68,20 @@ block content
 		// tickets required
 		if ev.pricedTickets
 			include inc/payment
-
+	
 	.col-md-12.col-lg-12.col-sm-12
 		.nspacer.center
 			if loggedIn
 				if ev.categories.length > 0 || ev.allowAttendeesToCreateCategories
-					button.btn.btn-primary.hide-prof-butt(type='button', data-toggle="modal", href="#attendModal", style="border-radius: 10px; padding:10px; padding-right:25px; padding-left:25px;")
+					button.btn.btn-primary.hide-prof-butt(type='button' data-toggle="modal" href="#attendModal" style="border-radius: 10px; padding:10px; padding-right:25px; padding-left:25px;")
 						| Attend event
 				else
 					p.accessEventWarningMessage.hide(style="font-size: 16px;")
 					a.btn.btn-primary.hide-prof-butt#accessEventDirect(href="#")
 						| Attend event
 			else
-				button.btn.btn-primary.hide-prof-butt(style="font-size: 16px;", data-toggle="modal", href="#loginModal")
+				button.btn.btn-primary.hide-prof-butt(style="font-size: 16px;" data-toggle="modal" href="#signModal")
 					| Attend event
 	
-	include ../modals/registration
+	if (!eventattending && loggedIn)
+		include ../modals/registration
