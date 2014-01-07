@@ -286,7 +286,9 @@ border-radius: 10px;}
 .setting-line{line-height: 30px;}
 
 a{outline: none!important;}
-
+a, a:visited, a:focus, a:active, a:hover{
+    outline:0 none !important;
+}
 .dont-show320, .dont-show320-2{display:block;}
 .show320, .show320-2{display:none;}
 /* links*/

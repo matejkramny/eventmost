@@ -1,87 +1,205 @@
-extends ../base
+extends ../esct
+
+append addonjs
 
 block content
-	.avatar2.headerSpacer 
-		a(href="/profile")
-			img(src=user.avatar, alt="")
-	.right.span13p
-		.center2
-			img(src="/img/card-template2.svg", alt="")
-		h5.color.center.tf
-			| <b>One last step</b>. Please fill text boxes<br />
-			| and your bussines card is ready!<br />
-			| <b> All fields are optional</b>
-		.left.span4
-			.smallslid5.color.headerSpacer.smallt
-				| Name
-			input(name="", placeholder="", type="text", id="", required="required", class="file_input_textbox_credit")
-		.right.span5.zer
-			.smallslid5.color.headerSpacer.smallt
-				| Company name
-			input(name="", placeholder="", type="text", id="", required="required", class="file_input_textbox_credit")
-		.clearfix
-		.left.span4
-			.smallslid5.color.headerSpacer.smallt
-				| Position
-			input(name="", placeholder="", type="text", id="", required="required", class="file_input_textbox_credit")
-		.right.span5.zer
-			.smallslid5.color.headerSpacer.smallt
-				| Address
-			input(name="", placeholder="", type="text", id="", required="required", class="file_input_textbox_credit")
-		.clearfix
-		.left.span4
-			.smallslid5.color.headerSpacer.smallt
-				| Phone number
-			input(name="", placeholder="", type="text", id="", required="required", class="file_input_textbox_credit")
-		.right.span5.zer
-			.smallslid5.color.headerSpacer.smallt
-				| Email address
-			input(name="", placeholder="", type="text", id="", required="required", class="file_input_textbox_credit")
-		.clearfix
-		.left.span4
-			.smallslid5.color.headerSpacer.smallt
-				| Website address
-			input(name="", placeholder="", type="text", id="", required="required", class="file_input_textbox_credit")
-		.right.span5.zer
-			.smallslid5.color.headerSpacer.smallt
-			input.card-sumbit(type="submit", value="Submit")
-		.clearfix
+		.container-tool
+			//- left side
+			.side.pull-left
+				.center
+					button.btn.btn-default-green.purple.font-small.small-padding.bold(type="button")
+							| Back to
+							br
+							| Full Template
+				.spacer
+				.font-small.bold.center
+					a(href="#" class="link-purple") View Full Site
+						img.spacer-small(src="images-esct/full-site.svg" alt="")
+				.spacer2
+				.font-small.bold.center.green
+					| Action
+				.spacer-small
+				.font-tiny.bold.left-marg-s
+					a(href="#" class="link-dark") link
+					br
+					a(href="#" class="link-dark") section of site
+					br
+					a(href="#" class="link-dark") mouse over
+			//- main
+			.main.pull-left
+				.left-marg-s.font-button.green.bold
+					| Choose background:
+				.width70.pull-left
+					.dotted-line-green
+					.spacer-small
+					.width30.pull-left
+						.font-small.dark.bold.left-marg-s
+							| Upload
+							br
+							| picture
+						.spacer-small
+						.image-upload.left-marg-s.pull-left
+							label(for="file-input")
+								img(src="images-esct/fake-upload.svg" alt="", style="cursor:pointer")
+							input(id="file-input" type="file")
+						.pull-left.left-marg-s
+							a(href="#" class="link-dark")
+								img(src="images-esct/upload.svg" alt="", style="cursor:pointer")
+					.pull-left
+						.font-small.dark.bold.spacer-small
+							| or
+					.width30.pull-left.left-marg-s
+						.font-small.dark.bold.left-marg-s
+							| Choose one 
+							br
+							| of ours
+						.spacer-small
+						//- just a placeholder for color tool from where to pick
+						img.left-marg-s(src="images-esct/color-pallete.svg" alt="")
+					.pull-left
+						.font-small.dark.bold.spacer-small
+							| or
+					.width30.pull-left.left-marg-s
+						.font-small.dark.bold.left-marg-s
+							| Choose color
+							br
+							| and texture
+						.spacer-small
+						//- just a placeholder for color tool from where to pick
+						img.left-marg-s(src="images-esct/colors.png" alt="")
+					.clearfix
+				.width30.pull-left.left-marg-s
+					.pull-left.left-marg
+						.dark.font-small.bold.spacer-small
+							| Add gadient
+						.spacer2
+						.dark.font-small.bold.spacer-small
+							| Make this layer
+							br
+							| a transparent surface
+					.radio-wrap.pull-right.right-marg-s
+						input.radio(type="radio" id="one" value="one")
+						.spacer2
+						input.radio(type="radio" id="two" value="two")
+				.clearfix
 
-				.headerspacer2
-	//- User card
-	.avatar.redbox
-		p.prof= user.getName()
-		.box2
-			.left
-				img(src="/img/i.svg", alt="")
-			.set
-				a.link4(href="/profile", alt="", title="") Edit profile
-			if user.admin
-				.set
-					a.link4(href="/admin", alt="", title="") Administration
-		img(src="/img/card.svg", alt="")
-		a.link4(href="/cards", alt="", title="")
-			| Choose your bussines card
-		.headerSpacer
-		.clearfix
-		.box2
-			.left
-				img(src="/img/i.svg", alt="")
-			.set
-				a.link4(href="", alt="", title="", data-reveal-id="NotificationModal")
-					| Notification settings
-		.clearfix
-		.box2
-			.left
-				img(src="/img/i.svg", alt="")
-			.set
-				a.link4(href="", alt="", title="", data-reveal-id="PrivacyModal")
-					| Privacy settings
-		.clearfix
-		a(href="/logout", class="logout") Logout
+
+				//- Layer which is being edited
+				.spacer		
+				.container-inner
+					//- A. Top Layer
+					//- white box class changed to grey box and top of the layer dissappears
+					.grey-box
+						.center.spacer.grey
+							//- for marking - marking-border class, and for tips normalTip exampleTip
+							a.small-pad.marking-border.something(href="#" class="disabled normalTip exampleTip" title="Press SHIFT button and hold while stretching to stretch in both dimensions at same time") link 1
+							| |
+							a.small-pad(href="#" class="disabled" title="") link 2
+							| |
+							a.small-pad(href="#" class="disabled") link 3
+							| |
+							a.small-pad(href="#" class="disabled") link 4
+							| |
+							a.small-pad(href="#" class="disabled") link 5
+							| |
+							a.small-pad(href="#" class="disabled") link 6		
+						.spacer2
+						.center
+							| Company Name / Logo
+							.company
+								| &nbsp;
+						.ebrima.font-big.bold.center
+							| Event Title / Logo
+						.spacer
+						.ebrima.font-big.bold.center.green
+							| Feb 14.
+							span.font 2014
+						.company.width25.spacer-small-min
+							| &nbsp;
+						.ebrima.font-medium.bold.center
+							| 4:00 a.m.
+						.spacer
+						.ebrima.font.bold.center.green
+							| Venue Name Venue Name Venue Name
+						.spacer
+						.center
+							button.btn.btn-lg.btn-danger.font-button.big-padding.awsome-pad(type="button" )
+								| Register
+						.arrow-down
+							a(href="#")
+								img(src="images-esct/arrow-down.svg" alt="")
+					.spacer
+			//- Right side
+			.side.pull-left
+				.center.green.font-small.bold
+					| Tool bar
+				.dotted-line-green
+				.spacer
+				.center.dark.font-small.bold
+					a(href="#" class="link-dark")
+						| Text field
+						img(src="images-esct/text.svg" alt="")
+				.spacer3
+				.width50.pull-left
+					a(href="#" class="link-dark")
+						.center.dark.font-mini.bold
+							| Image
+							br
+							span.font-ultrasmall
+								| (ractangular frame)
+						.center
+							img(src="images-esct/rec-image.svg" alt="")
+				.width50.pull-left
+					a(href="#" class="link-dark")
+						.center.dark.font-mini.bold
+							| Image
+							br
+							span.font-ultrasmall
+								| (circular frame)
+						.center
+							img(src="images-esct/cir-image.svg" alt="" )
+				.clearfix
+				.spacer3
+				.center.dark.font-small.bold
+					a(href="#" class="link-dark")
+						| Placeholder
+						img(src="images-esct/placeholder.svg" alt="")
+				.spacer3
+				.width50.pull-left
+					a(href="#" class="link-dark")
+						.center.dark.font-tiny.bold
+							| vertical
+							br
+							| line
+						.center
+							img(src="images-esct/vertical-line.svg" alt="")
+				.width50.pull-left
+					a(href="#" class="link-dark")
+						.center.dark.font-tiny.bold
+							| Horizontal
+							br
+							| line
+						.center
+							img(src="images-esct/horizontal-line.svg" alt="" )
+				.clearfix
+				.spacer2
+				.center.dark.font-small.bold
+					a(href="#" class="link-dark")
+						| Map
+						img(src="images-esct/map.svg" alt="")
+				.spacer3
+				.center.dark.font-small.bold
+					| Shape
+				.center.spacer-small
+					.width30.pull-left.center
+						a(href="#" class="link-dark")
+							img(src="images-esct/triangle.svg" alt="")
+					.width30.pull-left.center.left-marg-t
+						a(href="#" class="link-dark")
+							img(src="images-esct/circle.svg" alt="")
+					.width30.pull-right.center
+						a(href="#" class="link-dark")
+							img(src="images-esct/square.svg" alt="")
+			.clearfix
 
 
-
-	.row-fluid.headerSpacer 
-
-		.clearfix
