@@ -59,6 +59,7 @@ function addAdmin (req, res) {
 		if (attendee._id.equals(att)) {
 			attendee.admin = true;
 			attendee.save()
+			req.session.flash = [attendee.user.getName()+" was Made Admin"];
 			break;
 		}
 	}
