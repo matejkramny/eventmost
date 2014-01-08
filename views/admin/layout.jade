@@ -24,26 +24,18 @@ html
 								|   Back to EventMost
 						hr
 						ul.list-group.nav
-								a.list-group-item(href="/admin/", class= activePage == 1 ? "active" : null)
+								a.list-group-item(href="/admin/" class= activePage == 1 ? "active" : null)
 									span.glyphicon.glyphicon-dashboard
 									|  Dashboard
-								a.list-group-item(href="/admin/users", class= activePage == 2 ? "active" : null)
+								a.list-group-item(href="/admin/users" class= activePage == 2 ? "active" : null)
 									span.glyphicon.glyphicon-user
 									|  Users
-								a.list-group-item(href="/admin/events", class= activePage == 3 ? "active" : null)
+								a.list-group-item(href="/admin/events" class= activePage == 3 ? "active" : null)
 									span.fa.fa-calendar
 									|  Events
-								a.list-group-item(href="/admin/emails", class= activePage == 4 ? "active" : null)
+								a.list-group-item(href="/admin/emails" class= activePage == 4 ? "active" : null)
 									span.glyphicon.glyphicon-envelope
 									|  Emails
-						hr
-						ul.list-group
-							a.list-group-item(href="https://groop.islonline.net/start/ISLGroop?__ISL+Groop__session_code=117%2d329%2d777%2d748&addbase=+117%2d329%2d777%2d748")
-								i.fa.fa-users
-								|  Connect to Admin Meeting
-							a.list-group-item(href="https://islv6-islpronto.islonline.net/download/ISLPronto?custom=uc%2d486008499920")
-								i.fa.fa-download
-								|  Download Live Chat
 					.col-md-10.col-lg-10.col-sm-10(style="width: 83.5%")
 						block content
 		block js

@@ -218,3 +218,21 @@ var eventMost = angular.module('emAdmin', [])
 	}
 	
 })
+
+.controller('metaController', function($scope, $http) {
+	$scope.meta = null;
+	$scope.partialUrl = null;
+	
+	$http.get('/admin/meta')
+	.success(function(data, status) {
+		$scope.metas = data.meta;
+		
+		if (!$scope.$$phase) {
+			$scope.$digest();
+		}
+	})
+	
+	$scope.showMeta = function (meta) {
+		window.location = '/admin/meta/'+meta._id
+	}
+})

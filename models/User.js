@@ -311,8 +311,8 @@ scheme.statics.createWithFacebook = function (meta, accessToken, accessTokenSecr
 		created: Date.now(),
 		avatar: 'http://graph.facebook.com/'+_meta.id+'/picture?type=large'
 	})
-	if (_meta.location) {
-		user.location = _meta.location;
+	if (_meta.location && _meta.location.name) {
+		user.location = _meta.location.name;
 	} if (_meta.first_name) {
 		user.name = _meta.first_name;
 	} if (_meta.last_name) {

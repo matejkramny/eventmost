@@ -1,0 +1,18 @@
+extends layout
+
+mixin list(l, first)
+	ul(class=first ? "list-unstyled" : null)
+		- for (p in l)
+			- if (!l.hasOwnProperty(p)) continue;
+			li
+				b= p
+					|  
+				- if (typeof l[p] == 'object')
+					+list(l[p], false)
+				- else
+					span= l[p]
+
+block content
+	a(href="/admin/meta") Return
+	
+	+list(meta, true)
