@@ -75,6 +75,9 @@ var eventMost = angular.module('emAdmin', [])
 			return;
 		}
 		
+		user.disabled = true;
+		user.askedConfirm = false;
+		
 		var users = $scope.allUsers;
 		for (var i = 0; i < users.length; i++) {
 			if (users[i]._id == user._id) {

@@ -17,7 +17,8 @@ function searchPeople (req, res) {
 	
 	var split = q.split(' ');
 	var query = {
-		isFeedbackProfile: false
+		isFeedbackProfile: false,
+		disabled: false
 	};
 	
 	if (split.length > 0 && split[0].length > 0) {
