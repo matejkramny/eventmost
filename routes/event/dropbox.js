@@ -65,7 +65,7 @@ function doRemove (req, res, next) {
 		
 		if (f._id && f._id.equals(id)) {
 			// Remove this file
-			ev.files.splice(f, 1);
+			ev.files.splice(i, 1);
 			
 			try {
 				fs.unlink(config.path+"/public"+f.file)
@@ -244,7 +244,7 @@ function doUpload (req, res) {
 			if (ev.files == null) {
 				ev.files = []
 			}
-			ev.files.push(file);
+			ev.files.splice(0,0, file);
 			ev.save(function(err) {
 				if (err) throw err;
 			});
