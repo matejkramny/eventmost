@@ -2,8 +2,7 @@ var models = require('../../models'),
 	fs = require('fs'),
 	attending = require('./event').attending,
 	config = require('../../config'),
-	gm = require('gm'),
-	imageMagick = gm.subClass({ imageMagick: true });
+	gm = require('gm')
 
 exports.router = function (app) {
 	app.get('/event/:id/dropbox', view)
@@ -247,11 +246,11 @@ function doUpload (req, res) {
 			
 			//Create thumbnail
 			if (ext == 'jpg' || ext == 'jpeg' || ext == 'png' || ext == 'gif') {
-				imageMagick(config.path+"/public"+file.file).resize(205, 154).write(config.path+"/public"+file.fileThumb, function(err) {
+				gm(config.path+"/public"+file.file).gravity('Center').thumb(205, 154, config.path+"/public"+file.fileThumb, 100, function(err) {
 					if (err) throw err;
 				})
 			} else if (ext == 'pdf') {
-				imageMagick(config.path+"/public"+file.file+"[0]").adjoin().resize(205, 154).write(config.path+"/public"+file.fileThumb, function(err) {
+				gm(config.path+"/public"+file.file+"[0]").adjoin().gravity('Center').thumb(205, 154, config.path+"/public"+file.fileThumb, 100, function(err) {
 					if (err) throw err;
 				})
 			}

@@ -1,6 +1,6 @@
 {
 	"name": "eventmost",
-	"version": "0.2.1",
+	"version": "0.2.2",
 	"private": true,
 	"scripts": {
 		"start": "node app.js"
@@ -37,7 +37,8 @@
 		"sanitizer": "latest",
 		"moment": "latest",
 		"passport.socketio": "latest",
-		"gm": "latest"
+		"gm": "latest",
+		"request": "latest"
 	},
 	"devDependencies": {
 		"should": "latest"

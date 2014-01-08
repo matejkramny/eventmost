@@ -162,8 +162,6 @@ exports.doEditProfile = doEditProfile = function (req, res) {
 		})
 	}
 	
-	console.log(req.body);
-	
 	try {
 		if (typeof req.body.email !== 'undefined') {
 			check(req.body.email, 'Please Enter an Email Address').notNull().isEmail()
@@ -284,9 +282,21 @@ exports.doEditProfile = doEditProfile = function (req, res) {
 		var ext = ext[ext.length-1];
 		u.avatar = "/profileavatars/"+u._id+"."+ext;
 		
+		var createThumbnails = function() {
+			u.createThumbnails(function(){});
+		}
+		if (!blocking) {
+			blocking = true;
+			createThumbnails = function() {
+				u.createThumbnails(cb);
+			}
+		}
+		
 		fs.readFile(req.files.avatar.path, function(err, avatar) {
 			fs.writeFile(__dirname + "/../public"+u.avatar, avatar, function(err) {
 				if (err) throw err;
+				
+				createThumbnails()
 			});
 		});
 	}

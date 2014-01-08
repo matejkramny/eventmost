@@ -2,6 +2,10 @@ var mongoose = require('mongoose')
 	, crypto = require('crypto')
 	, https = require('https')
 	, SocialMetadata = require('./SocialMetadata').SocialMetadata
+	, gm = require('gm')
+	, config = require('../config')
+	, request = require('request')
+	, fs = require('fs')
 
 var schema = mongoose.Schema;
 var ObjectId = schema.ObjectId;
@@ -141,6 +145,40 @@ scheme.methods.updateLinkedIn = function(meta, accessToken, accessTokenSecret, c
 	this.save(function(err) {
 		cb(this)
 	})
+}
+
+scheme.methods.createThumbnails = function(callback) {
+	var u = this;
+	if (!u.avatar) {
+		callback();
+		return;
+	}
+
+	var pub = config.path+"/public";
+	
+	var cb = function() {
+		// Circle-size images first
+		gm(pub+u.avatar).gravity('Center').thumb(116, 116, pub+u.avatar+"-116x116.png", 100, function(err) {
+			if (err) throw err;
+		});
+		// Homepage-size
+		gm(pub+u.avatar).gravity('Center').thumb(111, 148, pub+u.avatar+"-111x148.png", 100, function(err) {
+			if (err) throw err;
+		});
+		
+		callback();
+	}
+	
+	// if is url, download it (in other words, if it !begins with /profileavatars/_id.ext then DL and replace)
+	if (u.avatar.substring(0, 1) != "/") {
+		request(u.avatar, function(err) {
+			u.avatar = "/profileavatars/"+u._id;
+			
+			cb();
+		}).pipe(fs.createWriteStream(pub+"/profileavatars/"+u._id));
+	} else {
+		cb();
+	}
 }
 
 scheme.methods.setPassword = function(password) {

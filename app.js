@@ -19,7 +19,7 @@ var bugsnag = require("bugsnag");
 bugsnag.register(config.bugsnagKey, {
 	releaseStage: config.production ? "production" : "development",
 	notifyReleaseStages: ['production'],
-	appVersion: '0.2.0'
+	appVersion: '0.2.2'
 })
 
 var app = exports.app = express();
@@ -56,7 +56,7 @@ app.set('port', process.env.PORT || 3000); // Port
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade'); // Templating engine
 app.set('view cache', true); // Cache views
-app.set('app version', '0.2.1'); // App version
+app.set('app version', '0.2.2'); // App version
 app.locals.pretty = process.env.NODE_ENV != 'production' // Pretty HTML outside production mode
 
 //app.use(bugsnag.requestHandler);
