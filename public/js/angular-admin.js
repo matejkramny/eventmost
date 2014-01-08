@@ -178,7 +178,7 @@ var eventMost = angular.module('emAdmin', [])
 		chart.addSeries({
             name: 'Users',
 			color: '#18bc9c',
-			type: $scope.showLine ? 'line' : 'bar',
+			type: $scope.showLine ? 'spline' : 'bar',
             data: months
         })
 	}
@@ -215,7 +215,7 @@ var eventMost = angular.module('emAdmin', [])
 		chart.addSeries({
             name: month,
 			color: '#18bc9c',
-			type: $scope.showLine ? 'line' : 'bar',
+			type: $scope.showLine ? 'spline' : 'bar',
             data: days
         });
 	}
