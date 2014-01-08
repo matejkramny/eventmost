@@ -3,7 +3,7 @@ require('../app');
 var models = require('../models'),
 	async = require('async');
 
-models.User.find({ disabled: true }, function(err, users) {
+models.User.find({ disabled: false }, function(err, users) {
 	if (err) throw err;
 	
 	console.log("Converting... "+users.length+" people affected");
