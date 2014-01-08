@@ -36,7 +36,8 @@
 		"grunt-contrib-watch": "latest",
 		"sanitizer": "latest",
 		"moment": "latest",
-		"passport.socketio": "latest"
+		"passport.socketio": "latest",
+		"gm": "latest"
 	},
 	"devDependencies": {
 		"should": "latest"

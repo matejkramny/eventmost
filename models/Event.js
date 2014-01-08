@@ -53,6 +53,7 @@ var scheme = schema({
 		},
 		extension: String,
 		file: String,
+		fileThumb: String,
 		size: String,
 		name: String,
 		permissions: {

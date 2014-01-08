@@ -55,7 +55,7 @@ block content
 				.col-lg-12.col-md-12.col-xs-12
 					.width18.pad-right-zero.pull-left(style="max-height:100px; overflow:hidden;")
 						if (file.extension=="png" || file.extension=="svg" || file.extension=="gif" || file.extension=="jpg" || file.extension=="jpeg")
-							img.img-responsive(src=file.file )
+							img.img-responsive(src=file.fileThumb )
 						else
 							img.img-responsive(src="/images/dropbox/"+file.extension+".svg" )
 			
