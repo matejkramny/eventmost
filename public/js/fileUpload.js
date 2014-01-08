@@ -23,9 +23,9 @@ angular.module('eventMost')
 						$rootScope.progress = 100;
 						
 						if (result.status != 200) {
-						//	alert("Could not upload file :(\n"+result.err);
+							alert("Could not upload file :(\n"+result.err);
 						} else {
-						//	window.location.reload();
+							window.location.reload();
 						}
 					} else {
 						// Not ok
