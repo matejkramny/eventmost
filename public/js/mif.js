@@ -153,6 +153,15 @@ angular.module('eventMost')
 				break;
 			}
 		}
+		
+		if (comment.attendee.user.avatarSorted !== true) {
+			comment.attendee.user.avatarSorted = true;
+			if (comment.attendee.user.avatar.length == 0) {
+				comment.attendee.user.avatar = '/images/default_speaker-purple.svg';
+			} else {
+				comment.attendee.user.avatar += '-116x116.png';
+			}
+		}
 	}
 	
 	$scope.processCommentTime = function () {

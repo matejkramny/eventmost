@@ -172,7 +172,7 @@ scheme.methods.createThumbnails = function(callback) {
 				}
 			});
 			// Homepage-size
-			gm(pub+u.avatar).gravity('Center').thumb(111, 148, pub+u.avatar+"-111x148.png", 100, function(err) {
+			gm(pub+u.avatar).gravity('Center').thumb(285, 148, pub+u.avatar+"-285x148.png", 100, function(err) {
 				if (err) {
 					console.log("[ERR]\t".red, "Error Creating Circle with ", pub+u.avatar);
 					throw err;
@@ -366,7 +366,9 @@ scheme.statics.createWithTwitter = function(meta, accessToken, accessTokenSecret
 		})
 		smeta.save();
 		
-		cb(err, user);
+		user.createThumbnails(function() {
+			cb(err, user);
+		})
 	});
 }
 scheme.statics.createWithFacebook = function (meta, accessToken, accessTokenSecret, cb) {
@@ -407,7 +409,9 @@ scheme.statics.createWithFacebook = function (meta, accessToken, accessTokenSecr
 		})
 		smeta.save();
 		
-		cb(err, user);
+		user.createThumbnails(function() {
+			cb(err, user);
+		})
 	})
 }
 scheme.statics.createWithLinkedIn = function (meta, accessToken, accessTokenSecret, cb) {
@@ -439,7 +443,9 @@ scheme.statics.createWithLinkedIn = function (meta, accessToken, accessTokenSecr
 		})
 		smeta.save();
 		
-		cb(err, user);
+		user.createThumbnails(function() {
+			cb(err, user);
+		})
 	})
 }
 
