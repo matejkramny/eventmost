@@ -8,7 +8,7 @@ block content
 	for p in search.results
 		.row
 			a.col-md-2.col-sm-2.col-lg-2(href="/user/"+p._id)
-				img(src=p.avatar > 0 ? p.avatar : "/images/default_speaker.svg", alt="", class="circularespond")
+				img.circularespond(src= p.avatar.length > 0 ? p.avatar+"-116x116.png" : "/images/default_speaker.svg")
 			.col-md-10.col-sm-10.col-lg-10
 				.row
 					h4.col-md-12.col-sm-12.col-lg-12
