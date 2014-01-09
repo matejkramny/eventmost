@@ -99,7 +99,8 @@ block content
 	
 		if (ev.files.length == 0)
 			h3.text-center No Files have been uploaded yet
-			p.text-center.lead Use form above to add some
+			if (eventadmin || ev.allowDropboxUpload)
+				p.text-center.lead Use the Upload Button Above
 	
 		include ../modals/dropboxPermissions
 
