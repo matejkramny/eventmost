@@ -370,17 +370,17 @@ scheme.statics.createWithTwitter = function(meta, accessToken, accessTokenSecret
 	});
 	user.setName(_meta.name);
 	
-	user.save(function(err) {
-		var smeta = new SocialMetadata({
-			type: "twitter",
-			meta: meta,
-			accessToken: accessToken,
-			accessSecret: accessTokenSecret,
-			user: user._id
-		})
-		smeta.save();
-		
-		user.createThumbnails(function() {
+	user.createThumbnails(function() {
+		user.save(function(err) {
+			var smeta = new SocialMetadata({
+				type: "twitter",
+				meta: meta,
+				accessToken: accessToken,
+				accessSecret: accessTokenSecret,
+				user: user._id
+			})
+			smeta.save();
+			
 			cb(err, user);
 		})
 	});
@@ -413,17 +413,17 @@ scheme.statics.createWithFacebook = function (meta, accessToken, accessTokenSecr
 		user.education = _meta.education[0].school.name;
 	}
 	
-	user.save(function(err) {
-		var smeta = new SocialMetadata({
-			type: "facebook",
-			meta: meta,
-			accessToken: accessToken,
-			accessSecret: accessTokenSecret,
-			user: user._id
-		})
-		smeta.save();
-		
-		user.createThumbnails(function() {
+	user.createThumbnails(function() {
+		user.save(function(err) {
+			var smeta = new SocialMetadata({
+				type: "facebook",
+				meta: meta,
+				accessToken: accessToken,
+				accessSecret: accessTokenSecret,
+				user: user._id
+			})
+			smeta.save();
+			
 			cb(err, user);
 		})
 	})
@@ -447,17 +447,17 @@ scheme.statics.createWithLinkedIn = function (meta, accessToken, accessTokenSecr
 		desc: _meta.summary
 	})
 	
-	user.save(function(err) {
-		var smeta = new SocialMetadata({
-			type: "linkedin",
-			meta: meta,
-			accessToken: accessToken,
-			accessSecret: accessTokenSecret,
-			user: user._id
-		})
-		smeta.save();
+	user.createThumbnails(function() {
+		user.save(function(err) {
+			var smeta = new SocialMetadata({
+				type: "linkedin",
+				meta: meta,
+				accessToken: accessToken,
+				accessSecret: accessTokenSecret,
+				user: user._id
+			})
+			smeta.save();
 		
-		user.createThumbnails(function() {
 			cb(err, user);
 		})
 	})
