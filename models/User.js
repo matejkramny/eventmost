@@ -7,6 +7,7 @@ var mongoose = require('mongoose')
 	, request = require('request')
 	, fs = require('fs')
 	, colors = require('colors')
+	, async = require('async')
 
 var schema = mongoose.Schema;
 var ObjectId = schema.ObjectId;
@@ -163,27 +164,40 @@ scheme.methods.createThumbnails = function(callback) {
 	var cb = function() {
 		console.log("[OK]\t".green, "Converting "+u.avatar);
 		
-		try {
-			// Circle-size images first
-			gm(pub+u.avatar).gravity('Center').thumb(116, 116, pub+u.avatar+"-116x116.png", 100, function(err) {
-				if (err) {
-					console.log("[ERR]\t".red, "Error Thumbnail with ", pub+u.avatar);
-					throw err;
-				}
-			});
-			// Homepage-size
-			gm(pub+u.avatar).gravity('Center').thumb(285, 148, pub+u.avatar+"-285x148.png", 100, function(err) {
-				if (err) {
-					console.log("[ERR]\t".red, "Error Creating Circle with ", pub+u.avatar);
-					throw err;
-				}
-			});
-		} catch (e) {
-			console.log("[ERR]\t".red, "Thumbnail Creation Failed!", pub+u.avatar);
-			console.log(e);
-		} finally {
-			callback();
-		}
+		async.parallel([
+			function(cb) {
+				// Circle-size images first
+				gm(pub+u.avatar).gravity('Center').thumb(116, 116, pub+u.avatar+"-116x116.png", 100, function(err) {
+					if (err) {
+						console.log("[ERR]\t".red, "Error Thumbnail with ", pub+u.avatar);
+						cb(err);
+					} else {
+						console.log("[DONE]\t".green, "Converted 116x116")
+						cb(null);
+					}
+				});
+			},
+			function(cb) {
+				// Homepage-size
+				gm(pub+u.avatar).gravity('Center').thumb(285, 148, pub+u.avatar+"-285x148.png", 100, function(err) {
+					if (err) {
+						console.log("[ERR]\t".red, "Error Creating Circle with ", pub+u.avatar);
+						cb(err);
+					} else {
+						console.log("[DONE]\t".green, "Converted 285x148")
+						cb(null);
+					}
+				});
+			}
+		], function(err) {
+			if (err) {
+				console.log("[ERR]\t".red, "Thumbnail Creation Failed!", pub+u.avatar);
+			} else {
+				console.log("[DONE]\t".green, "Converted "+u._id);
+			}
+			
+			callback()
+		})
 	}
 	
 	// if is url, download it (in other words, if it !begins with /profileavatars/_id.ext then DL and replace)
