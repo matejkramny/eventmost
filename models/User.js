@@ -6,6 +6,7 @@ var mongoose = require('mongoose')
 	, config = require('../config')
 	, request = require('request')
 	, fs = require('fs')
+	, colors = require('colors')
 
 var schema = mongoose.Schema;
 var ObjectId = schema.ObjectId;
@@ -149,8 +150,10 @@ scheme.methods.updateLinkedIn = function(meta, accessToken, accessTokenSecret, c
 
 scheme.methods.createThumbnails = function(callback) {
 	var u = this;
-	console.log("Ext: ", u.avatar.substr(u.avatar.length-3, u.avatar.length-1))
+	
 	if (!u.avatar || u.avatar.substr(u.avatar.length-3, u.avatar.length-1) == 'svg') {
+		console.log("[ERR]\t".red, "Blank/Invalid avatar!")
+		
 		callback();
 		return;
 	}
@@ -158,32 +161,47 @@ scheme.methods.createThumbnails = function(callback) {
 	var pub = config.path+"/public";
 	
 	var cb = function() {
-		console.log("Converting "+u.avatar);
+		console.log("[OK]\t".green, "Converting "+u.avatar);
+		
 		try {
-		// Circle-size images first
-		gm(pub+u.avatar).gravity('Center').thumb(116, 116, pub+u.avatar+"-116x116.png", 100, function(err) {
-			if (err) { console.log(pub+u.avatar); throw err; }
-		});
-		// Homepage-size
-		gm(pub+u.avatar).gravity('Center').thumb(111, 148, pub+u.avatar+"-111x148.png", 100, function(err) {
-			if (err) { console.log(pub+u.avatar); throw err; }
-		});
+			// Circle-size images first
+			gm(pub+u.avatar).gravity('Center').thumb(116, 116, pub+u.avatar+"-116x116.png", 100, function(err) {
+				if (err) {
+					console.log("[ERR]\t".red, "Error Thumbnail with ", pub+u.avatar);
+					throw err;
+				}
+			});
+			// Homepage-size
+			gm(pub+u.avatar).gravity('Center').thumb(111, 148, pub+u.avatar+"-111x148.png", 100, function(err) {
+				if (err) {
+					console.log("[ERR]\t".red, "Error Creating Circle with ", pub+u.avatar);
+					throw err;
+				}
+			});
 		} catch (e) {
-			console.log("Failed!"+pub+u.avatar);
-			throw err;
+			console.log("[ERR]\t".red, "Thumbnail Creation Failed!", pub+u.avatar);
+			console.log(e);
+		} finally {
+			callback();
 		}
-		callback();
 	}
 	
 	// if is url, download it (in other words, if it !begins with /profileavatars/_id.ext then DL and replace)
 	if (u.avatar.substring(0, 1) != "/") {
+		console.log("[OK]\t".green, "Downloading "+u.avatar);
 		request(u.avatar, function(err, incoming, response) {
 			if (err) throw err;
+			
+			//404 protection..
 			if (incoming.statusCode != 200) {
+				//Code later assumes default avatar
+				console.log("[ERR]\t".red, incoming.statusCode.bold, " Download failed!");
+				u.avatar = "";
+				
 				callback();
 				return;
 			}
-			console.log(u.avatar);
+			
 			u.avatar = "/profileavatars/"+u._id;
 			
 			cb();

@@ -6,17 +6,18 @@ var models = require('../models'),
 models.User.find({}, function(err, users) {
 	if (err) throw err;
 	
-	console.log("Converting... "+users.length+" people affected");
+	console.log("Converting...", (" "+users.length+" ").inverse.bold, "people affected");
 	
-	async.each(users, function(user, cb) {
+	async.eachSeries(users, function(user, cb) {
 		user.createThumbnails(function() {
 			user.save();
+			
 			cb();
-		})
+		});
 	}, function(err) {
 		if (err) throw err;
 		
-		console.log("Finished")
+		console.log("Finished".underline.green);
 		process.exit(0);
 	});
 });
