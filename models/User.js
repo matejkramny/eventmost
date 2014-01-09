@@ -149,7 +149,8 @@ scheme.methods.updateLinkedIn = function(meta, accessToken, accessTokenSecret, c
 
 scheme.methods.createThumbnails = function(callback) {
 	var u = this;
-	if (!u.avatar) {
+	console.log("Ext: ", u.avatar.substr(u.avatar.length-3, u.avatar.length-1))
+	if (!u.avatar || u.avatar.substr(u.avatar.length-3, u.avatar.length-1) == 'svg') {
 		callback();
 		return;
 	}
@@ -157,21 +158,32 @@ scheme.methods.createThumbnails = function(callback) {
 	var pub = config.path+"/public";
 	
 	var cb = function() {
+		console.log("Converting "+u.avatar);
+		try {
 		// Circle-size images first
 		gm(pub+u.avatar).gravity('Center').thumb(116, 116, pub+u.avatar+"-116x116.png", 100, function(err) {
-			if (err) throw err;
+			if (err) { console.log(pub+u.avatar); throw err; }
 		});
 		// Homepage-size
 		gm(pub+u.avatar).gravity('Center').thumb(111, 148, pub+u.avatar+"-111x148.png", 100, function(err) {
-			if (err) throw err;
+			if (err) { console.log(pub+u.avatar); throw err; }
 		});
-		
+		} catch (e) {
+			console.log("Failed!"+pub+u.avatar);
+			throw err;
+		}
 		callback();
 	}
 	
 	// if is url, download it (in other words, if it !begins with /profileavatars/_id.ext then DL and replace)
 	if (u.avatar.substring(0, 1) != "/") {
-		request(u.avatar, function(err) {
+		request(u.avatar, function(err, incoming, response) {
+			if (err) throw err;
+			if (incoming.statusCode != 200) {
+				callback();
+				return;
+			}
+			console.log(u.avatar);
 			u.avatar = "/profileavatars/"+u._id;
 			
 			cb();
