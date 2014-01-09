@@ -8,6 +8,7 @@ var scheme = schema({
 		type: ObjectId,
 		ref: 'User'
 	},
+	registered: { type: Date, default: Date.now },
 	category: String,
 	admin: { type: Boolean, default: false },
 	isAttending: { type: Boolean, default: true }, // gets set to false when the user exits the event..

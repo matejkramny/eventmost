@@ -13,19 +13,7 @@ append addonjs
 block content
 	+navbar
 	
-	case ev.sponsorLayout.layout
-		when 0
-			include layouts/5
-		when 1
-			include layouts/5
-		when 2
-			include layouts/5
-		when 3
-			include layouts/5
-		when 4
-			include layouts/5
-		when 5
-			include layouts/5
+	include layouts/5
 	
 	//- comment post
 	.nspacer
@@ -146,7 +134,14 @@ block content
 		.col-sm-12.col-xs-12.col-md-12
 			.center.font
 				| Attendees 
-				img(src="/images/purple-arrow-down.svg" alt="")
+				span.dropdown
+					a(href data-toggle="dropdown" data-target="#")
+						img(src="/images/purple-arrow-down.svg" alt="")
+					ul.dropdown-menu(style="margin-left:20px; margin-top:10px;")
+						li: a(href="?arrange=default") Default
+						li: a(href="?arrange=category") By Category
+						li: a(href="?arrange=alphabetical") Alphabetical
+						li: a(href="?arrange=recent") Most Recent
 
 	.clearfix
 	.nspacer-bigger
