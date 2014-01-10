@@ -113,9 +113,14 @@ function saveUser (req, res) {
 	}, function(err, user) {
 		if (err) throw err;
 		
-		for (var i = 0; req.user.savedProfiles.length; i++) {
-			if (req.user.savedProfiles[i]._id.equals(user._id)) {
-				res.redirect('inbox')
+		if (!user) {
+			res.redirect('/');
+			return;
+		}
+		
+		for (var i = 0; i < req.user.savedProfiles.length; i++) {
+			if (req.user.savedProfiles[i] && req.user.savedProfiles[i]._id.equals(user._id)) {
+				res.redirect('/inbox')
 				return;
 			}
 		}
@@ -129,9 +134,8 @@ function saveUser (req, res) {
 		req.user.savedProfiles.push({
 			_id: user._id
 		})
-		req.user.save(function() {
-			res.redirect('inbox')
-		})
+		req.user.save()
+		res.redirect('inbox')
 	});
 }
 

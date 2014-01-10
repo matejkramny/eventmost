@@ -161,7 +161,27 @@ block content
 				.clearfix
 		.nspacer-big
 		//- end business
+		
+		.row
+			.col-md-12.col-xs-12.col-sm-12
+				.font-tw
+					b Your Saved Profiles
+				.line-purple
+		.nspacer
 	
+		//- saved
+		if (locals.user.savedProfiles.length == 0)
+			p.text-center You haven't saved any profiles yet
+			.clearfix
+			.nspacer
+		.row
+			.col-md-12.col-xs-12.col-sm-12
+				.center
+					for saver in locals.user.savedProfiles
+						+savedProfile(saver)
+				.clearfix
+				.nspacer
+		
 		.row
 			.col-md-12.col-xs-12.col-sm-12
 				.font-tw
