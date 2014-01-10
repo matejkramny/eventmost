@@ -20,7 +20,7 @@ exports.sessionSecret = 'K3hsadkasdoijqwpoie'
 
 exports.bugsnagKey = "6c73b59b8d37503c8e8a70d67613d067";
 exports.production = process.env.NODE_ENV == 'production' ? true : false;
-exports.db = (exports.production ? "mongodb://eventmost:OwaP0daelaek2aephi1phai9mopocah3Dakie9fi@127.0.0.1/eventmost" : "mongodb://127.0.0.1/eventmost") + "-" + mode;
+exports.db = (exports.production ? "mongodb://eventmost:OwaP0daelaek2aephi1phai9mopocah3Dakie9fi@127.0.0.1/eventmost" : "mongodb://127.0.0.1/eventmost") + (mode.length > 0 ? "-" + mode : "");
 console.log(exports.db)
 exports.path = __dirname;
 
