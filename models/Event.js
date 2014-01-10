@@ -366,13 +366,13 @@ scheme.methods.edit = function (body, user, files, cb) {
 	// dates
 	if (typeof body.start == "string") {
 		var date = parseInt(body.start);
-		if (date != NaN) {
+		if (!isNaN(date)) {
 			this.start = date;
 		}
 	}
 	if (typeof body.end == "string") {
 		var date = parseInt(body.end);
-		if (date != NaN) {
+		if (!isNaN(date)) {
 			this.end = date;
 		}
 	}
