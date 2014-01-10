@@ -1,9 +1,8 @@
+require('./prepare')
+
 var should = require('should')
-
-var mongoose = require('mongoose')
+	, mongoose = require('mongoose')
 	, models = require('../models')
-
-require('./mongo')
 
 describe('User', function() {
 	var user = new models.User()

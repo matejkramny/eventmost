@@ -3,7 +3,8 @@
 	"version": "0.2.2",
 	"private": true,
 	"scripts": {
-		"start": "node app.js"
+		"start": "node app.js",
+		"test": "mocha --reporter spec"
 	},
 	"start": "app.js",
 	"subdomain": "eventmost",
@@ -42,6 +43,7 @@
 		"colors": "latest"
 	},
 	"devDependencies": {
-		"should": "latest"
+		"should": "latest",
+		"supertest": "latest"
 	}
 }
