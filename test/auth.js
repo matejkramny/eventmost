@@ -7,18 +7,22 @@ var should = require('should')
 	, models = require('../models')
 
 describe('Authentication', function() {
-	var password = "password";
+	var password, user, user2;
 	
-	var user = new models.User()
-	user.name = "Name";
-	user.surname = "Surname";
-	user.email = "test@eventmost.com";
+	before(function () {
+		password = "password";
 	
-	// This user is never registered
-	var user2 = new models.User()
-	user2.name = "Name2";
-	user2.surname = "Surname2";
-	user2.email = "test2@eventmost.com"
+		user = new models.User()
+		user.name = "Name";
+		user.surname = "Surname";
+		user.email = "auth_test@eventmost.com";
+		
+		// This user is never registered
+		user2 = new models.User()
+		user2.name = "Name2";
+		user2.surname = "Surname2";
+		user2.email = "auth_test2@eventmost.com"
+	});
 	
 	describe('Register', function() {
 		it('should register', function(done) {
