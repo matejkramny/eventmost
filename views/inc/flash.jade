@@ -3,8 +3,7 @@ if flash.length > 0
 		.col-md-12.col-sm-12.col-lg-12.col-xs-12
 			.alert.bg-yellow.alert-dismissable(style="margin-top:20px;")
 				button.close(data-dismiss="alert") &times;
-				h3.center Alerts:
 				ul.pad-left-zero(style="list-style: none;")
 					for aFlash in flash
-						li.center - #{aFlash}
+						li.center: h3: i #{aFlash}
 	- emptyFlash()
