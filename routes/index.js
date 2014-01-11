@@ -113,7 +113,11 @@ function emailAvailable(req, res) {
 }
 
 function testRoute (req, res) {
-	res.render('testroute'+req.url);
+	try {
+		res.render('testroute'+req.url);
+	} catch (e) {
+		res.redirect('/500');
+	}
 }
 
 function render404 (req, res) {
