@@ -13,7 +13,21 @@ append addonjs
 block content
 	+navbar
 	
-	include layouts/5
+	case ev.sponsorLayout.layout
+		when 0
+			include layouts/0
+		when 1
+			include layouts/1
+		when 2
+			include layouts/2
+		when 3
+			include layouts/3
+		when 4
+			include layouts/4
+		when 5
+			include layouts/5
+		default
+			include layouts/0
 	
 	//- comment post
 	.nspacer
