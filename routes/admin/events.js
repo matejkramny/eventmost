@@ -12,7 +12,7 @@ function show (req, res) {
 	models.Event.find({}, function(err, events) {
 		if (err) throw err;
 
-			var eventsNow = 0
+		var eventsNow = 0
 		for (var i = 0; i < events.length; i++) {
 			var eventss = events[i];
 			var cDate = Date.now();

@@ -17,13 +17,14 @@ function show (req, res) {
 		last48hours = 0,
 		lastWeek = 0,
 		lastMonth = 0,
-		lastYear = 0
+		lastYear = 0,
+		passwordUsers = 0
 	
 		var now = Date.now()
 		for (var i = 0; i < users.length; i++) {
 			var user = users[i];
 			var created = user.created.getTime()
-		
+			
 			if (user.twitter.userid != null) twitterUsers++;
 			if (user.facebook.userid != null) fbUsers++;
 			if (user.linkedin.userid != null) linkedInUsers++;
@@ -45,6 +46,9 @@ function show (req, res) {
 				lastYear++;
 			}
 		}
+		
+		passwordUsers = users.length - (fbUsers + twitterUsers + linkedInUsers);
+		
 		res.locals.activePage = 1
 		res.render('admin/dashboard', {
 			layout: 'admin/layout',
@@ -52,6 +56,7 @@ function show (req, res) {
 			twitterUsers: twitterUsers,
 			facebookUsers: fbUsers,
 			linkedinUsers: linkedInUsers,
+			passwordUsers: passwordUsers,
 			admins: admins,
 			last24hours: last24hours,
 			last48hours: last48hours,

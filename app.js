@@ -15,12 +15,14 @@ var express = require('express')
 	, config = require('./config')
 	, socketPassport = require('passport.socketio')
 
-var bugsnag = require("bugsnag");
-bugsnag.register(config.bugsnagKey, {
-	releaseStage: config.production ? "production" : "development",
-	notifyReleaseStages: ['production'],
-	appVersion: '0.2.0'
-})
+if (config.mode != "test") {
+	var bugsnag = require("bugsnag");
+	bugsnag.register(config.bugsnagKey, {
+		releaseStage: config.production ? "production" : "development",
+		notifyReleaseStages: ['production'],
+		appVersion: '0.2.2'
+	})
+}
 
 var app = exports.app = express();
 
@@ -56,11 +58,13 @@ app.set('port', process.env.PORT || 3000); // Port
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade'); // Templating engine
 app.set('view cache', true); // Cache views
-app.set('app version', '0.2.1'); // App version
+app.set('app version', '0.2.2'); // App version
 app.locals.pretty = process.env.NODE_ENV != 'production' // Pretty HTML outside production mode
 
 //app.use(bugsnag.requestHandler);
-app.use(express.logger('dev')); // Pretty log
+if (config.mode != 'test') {
+	app.use(express.logger('dev')); // Pretty log
+}
 app.use(express.limit('25mb')); // File upload limit
 //TODO SERVE STATIC FILES ONLY FOR DEVELOPMENT.. PRODUCTION STUFF GETS SERVED BY NGINX. make a switch in process.env
 app.use("/", express.static(path.join(__dirname, 'public'))); // serve static files
@@ -75,7 +79,9 @@ app.use(express.session({ // Session store
 		maxAge: 604800000 // 7 days in s * 10^3
 	}
 }));
-app.use(express.csrf()); // csrf protection
+if (config.mode != 'test') {
+	app.use(express.csrf()); // csrf protection
+}
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -83,7 +89,9 @@ app.use(passport.session());
 // Custom middleware
 app.use(function(req, res, next) {
 	// request middleware
-	res.locals.token = req.csrfToken();
+	if (config.mode != 'test') {
+		res.locals.token = req.csrfToken();
+	}
 	
 	res.header("X-Powered-By", "EventMost")
 	
@@ -168,7 +176,9 @@ if (!config.production) {
 	app.set('view cache', false); // Tell Jade not to cache views
 }
 
-app.use(bugsnag.errorHandler);
+if (config.mode != "test") {
+	app.use(bugsnag.errorHandler);
+}
 app.use(function(err, req, res, next) {
 	res.format({
 		json: function() {

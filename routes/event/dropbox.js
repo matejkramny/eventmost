@@ -1,7 +1,8 @@
 var models = require('../../models'),
 	fs = require('fs'),
 	attending = require('./event').attending,
-	config = require('../../config')
+	config = require('../../config'),
+	gm = require('gm')
 
 exports.router = function (app) {
 	app.get('/event/:id/dropbox', view)
@@ -65,7 +66,7 @@ function doRemove (req, res, next) {
 		
 		if (f._id && f._id.equals(id)) {
 			// Remove this file
-			ev.files.splice(f, 1);
+			ev.files.splice(i, 1);
 			
 			try {
 				fs.unlink(config.path+"/public"+f.file)
@@ -220,8 +221,10 @@ function doUpload (req, res) {
 		return;
 	}
 	
+	var timestamp = Date.now();
 	var file = {
-		file: "/dropbox/"+ev._id+""+Date.now()+"."+ext,
+		file: "/dropbox/"+ev._id+""+timestamp+"."+ext,
+		fileThumb: "/dropbox/"+ev._id+""+timestamp+"-thumb.png",
 		extension: ext,
 		user: req.user._id,
 		created: Date.now(),
@@ -229,7 +232,7 @@ function doUpload (req, res) {
 	}
 	
 	fs.readFile(req.files.upload.path, function(err, upload) {
-		fs.writeFile(__dirname + "/../../public/"+file.file, upload, function(err) {
+		fs.writeFile(config.path+"/public"+file.file, upload, function(err) {
 			if (err) throw err;
 			
 			// Calculate the size of the file
@@ -241,10 +244,23 @@ function doUpload (req, res) {
 				file.size = Math.floor(file.size) + "kb"
 			}
 			
+			//Create thumbnail
+			if (ext == 'jpg' || ext == 'jpeg' || ext == 'png' || ext == 'gif') {
+				gm(config.path+"/public"+file.file).gravity('Center').thumb(205, 154, config.path+"/public"+file.fileThumb, 100, function(err) {
+					if (err) throw err;
+				})
+			} else if (ext == 'pdf') {
+				gm(config.path+"/public"+file.file+"[0]").adjoin().gravity('Center').thumb(205, 154, config.path+"/public"+file.fileThumb, 100, function(err) {
+					if (err) throw err;
+				})
+			}
+			
 			if (ev.files == null) {
 				ev.files = []
 			}
-			ev.files.push(file);
+			
+			ev.files.splice(0,0, file);
+			
 			ev.save(function(err) {
 				if (err) throw err;
 			});

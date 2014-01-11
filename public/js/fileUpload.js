@@ -9,6 +9,9 @@ angular.module('eventMost')
 				if (ev.lengthComputable) {
 					var percent = Math.round(ev.loaded * 100 / ev.total);
 					$rootScope.progress = percent;
+					if (!$rootScope.$$phase) {
+						$rootScope.$digest();
+					}
 				}
 			}
 			

@@ -2,6 +2,12 @@ var mongoose = require('mongoose')
 	, crypto = require('crypto')
 	, https = require('https')
 	, SocialMetadata = require('./SocialMetadata').SocialMetadata
+	, gm = require('gm')
+	, config = require('../config')
+	, request = require('request')
+	, fs = require('fs')
+	, colors = require('colors')
+	, async = require('async')
 
 var schema = mongoose.Schema;
 var ObjectId = schema.ObjectId;
@@ -141,6 +147,82 @@ scheme.methods.updateLinkedIn = function(meta, accessToken, accessTokenSecret, c
 	this.save(function(err) {
 		cb(this)
 	})
+}
+
+scheme.methods.createThumbnails = function(callback) {
+	var u = this;
+	
+	if (!u.avatar || u.avatar.substr(u.avatar.length-3, u.avatar.length-1) == 'svg') {
+		console.log("[ERR]\t".red, "Blank/Invalid avatar!")
+		
+		callback();
+		return;
+	}
+
+	var pub = config.path+"/public";
+	
+	var cb = function() {
+		console.log("[OK]\t".green, "Converting "+u.avatar);
+		
+		async.parallel([
+			function(cb) {
+				// Circle-size images first
+				gm(pub+u.avatar).gravity('Center').thumb(116, 116, pub+u.avatar+"-116x116.png", 100, function(err) {
+					if (err) {
+						console.log("[ERR]\t".red, "Error Thumbnail with ", pub+u.avatar);
+						cb(err);
+					} else {
+						console.log("[DONE]\t".green, "Converted 116x116")
+						cb(null);
+					}
+				});
+			},
+			function(cb) {
+				// Homepage-size
+				gm(pub+u.avatar).gravity('Center').thumb(285, 148, pub+u.avatar+"-285x148.png", 100, function(err) {
+					if (err) {
+						console.log("[ERR]\t".red, "Error Creating Circle with ", pub+u.avatar);
+						cb(err);
+					} else {
+						console.log("[DONE]\t".green, "Converted 285x148")
+						cb(null);
+					}
+				});
+			}
+		], function(err) {
+			if (err) {
+				console.log("[ERR]\t".red, "Thumbnail Creation Failed!", pub+u.avatar);
+			} else {
+				console.log("[DONE]\t".green, "Converted "+u._id);
+			}
+			
+			callback()
+		})
+	}
+	
+	// if is url, download it (in other words, if it !begins with /profileavatars/_id.ext then DL and replace)
+	if (u.avatar.substring(0, 1) != "/") {
+		console.log("[OK]\t".green, "Downloading "+u.avatar);
+		request(u.avatar, function(err, incoming, response) {
+			if (err) throw err;
+			
+			//404 protection..
+			if (incoming.statusCode != 200) {
+				//Code later assumes default avatar
+				console.log("[ERR]\t".red, incoming.statusCode.bold, " Download failed!");
+				u.avatar = "";
+				
+				callback();
+				return;
+			}
+			
+			u.avatar = "/profileavatars/"+u._id;
+			
+			cb();
+		}).pipe(fs.createWriteStream(pub+"/profileavatars/"+u._id));
+	} else {
+		cb();
+	}
 }
 
 scheme.methods.setPassword = function(password) {
@@ -288,17 +370,19 @@ scheme.statics.createWithTwitter = function(meta, accessToken, accessTokenSecret
 	});
 	user.setName(_meta.name);
 	
-	user.save(function(err) {
-		var smeta = new SocialMetadata({
-			type: "twitter",
-			meta: meta,
-			accessToken: accessToken,
-			accessSecret: accessTokenSecret,
-			user: user._id
+	user.createThumbnails(function() {
+		user.save(function(err) {
+			var smeta = new SocialMetadata({
+				type: "twitter",
+				meta: meta,
+				accessToken: accessToken,
+				accessSecret: accessTokenSecret,
+				user: user._id
+			})
+			smeta.save();
+			
+			cb(err, user);
 		})
-		smeta.save();
-		
-		cb(err, user);
 	});
 }
 scheme.statics.createWithFacebook = function (meta, accessToken, accessTokenSecret, cb) {
@@ -311,8 +395,8 @@ scheme.statics.createWithFacebook = function (meta, accessToken, accessTokenSecr
 		created: Date.now(),
 		avatar: 'http://graph.facebook.com/'+_meta.id+'/picture?type=large'
 	})
-	if (_meta.location) {
-		user.location = _meta.location;
+	if (_meta.location && _meta.location.name) {
+		user.location = _meta.location.name;
 	} if (_meta.first_name) {
 		user.name = _meta.first_name;
 	} if (_meta.last_name) {
@@ -329,17 +413,19 @@ scheme.statics.createWithFacebook = function (meta, accessToken, accessTokenSecr
 		user.education = _meta.education[0].school.name;
 	}
 	
-	user.save(function(err) {
-		var smeta = new SocialMetadata({
-			type: "facebook",
-			meta: meta,
-			accessToken: accessToken,
-			accessSecret: accessTokenSecret,
-			user: user._id
+	user.createThumbnails(function() {
+		user.save(function(err) {
+			var smeta = new SocialMetadata({
+				type: "facebook",
+				meta: meta,
+				accessToken: accessToken,
+				accessSecret: accessTokenSecret,
+				user: user._id
+			})
+			smeta.save();
+			
+			cb(err, user);
 		})
-		smeta.save();
-		
-		cb(err, user);
 	})
 }
 scheme.statics.createWithLinkedIn = function (meta, accessToken, accessTokenSecret, cb) {
@@ -361,17 +447,19 @@ scheme.statics.createWithLinkedIn = function (meta, accessToken, accessTokenSecr
 		desc: _meta.summary
 	})
 	
-	user.save(function(err) {
-		var smeta = new SocialMetadata({
-			type: "linkedin",
-			meta: meta,
-			accessToken: accessToken,
-			accessSecret: accessTokenSecret,
-			user: user._id
-		})
-		smeta.save();
+	user.createThumbnails(function() {
+		user.save(function(err) {
+			var smeta = new SocialMetadata({
+				type: "linkedin",
+				meta: meta,
+				accessToken: accessToken,
+				accessSecret: accessTokenSecret,
+				user: user._id
+			})
+			smeta.save();
 		
-		cb(err, user);
+			cb(err, user);
+		})
 	})
 }
 

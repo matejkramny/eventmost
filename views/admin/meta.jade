@@ -1,0 +1,23 @@
+extends layout
+
+block content
+	div(ng-controller="metaController" ng-init="setCsrf('#{token}')")
+		h2.pull-left {{ meta.length }} Meta Objects
+		
+		table.table
+			thead
+				tr
+					th: abbr(title="Twitter") Tw
+					th: abbr(title="Facebook") Fb
+					th: abbr(title="LinkedIn") in
+					th Details
+			tbody
+				tr(ng-repeat="meta in metas")
+					td
+						span.glyphicon.glyphicon-ok(ng-show="meta.type == 'twitter'")
+					td
+						span.glyphicon.glyphicon-ok(ng-show="meta.type == 'facebook'")
+					td
+						span.glyphicon.glyphicon-ok(ng-show="meta.type == 'linkedin'")
+					td
+						a.btn.btn-info.btn-xs(ng-click="showMeta(meta)") Access Details

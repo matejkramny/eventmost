@@ -113,9 +113,14 @@ function saveUser (req, res) {
 	}, function(err, user) {
 		if (err) throw err;
 		
-		for (var i = 0; req.user.savedProfiles.length; i++) {
-			if (req.user.savedProfiles[i]._id.equals(user._id)) {
-				res.redirect('inbox')
+		if (!user) {
+			res.redirect('/');
+			return;
+		}
+		
+		for (var i = 0; i < req.user.savedProfiles.length; i++) {
+			if (req.user.savedProfiles[i] && req.user.savedProfiles[i]._id.equals(user._id)) {
+				res.redirect('/inbox')
 				return;
 			}
 		}
@@ -129,9 +134,8 @@ function saveUser (req, res) {
 		req.user.savedProfiles.push({
 			_id: user._id
 		})
-		req.user.save(function() {
-			res.redirect('inbox')
-		})
+		req.user.save()
+		res.redirect('inbox')
 	});
 }
 
@@ -146,7 +150,7 @@ exports.doEditProfile = doEditProfile = function (req, res) {
 		u.save(function(err) {
 			if (err) throw err;
 		})
-		
+		console.log(errors)
 		res.format({
 			json: function() {
 				res.send({
@@ -161,8 +165,6 @@ exports.doEditProfile = doEditProfile = function (req, res) {
 			}
 		})
 	}
-	
-	console.log(req.body);
 	
 	try {
 		if (typeof req.body.email !== 'undefined') {
@@ -194,6 +196,8 @@ exports.doEditProfile = doEditProfile = function (req, res) {
 			u.surname = req.body.surname;
 		}
 	} catch (e) {
+		console.log(e.message)
+		throw e;
 		errors.push(e.message)
 	}
 	
@@ -284,9 +288,28 @@ exports.doEditProfile = doEditProfile = function (req, res) {
 		var ext = ext[ext.length-1];
 		u.avatar = "/profileavatars/"+u._id+"."+ext;
 		
+		var createThumbnails = function() {
+			u.createThumbnails(function(){
+				console.log("4")
+			});
+		}
+		if (!blocking) {
+			blocking = true;
+			createThumbnails = function() {
+				console.log("2")
+				u.createThumbnails(function() {
+					console.log("1")
+					cb()
+				});
+			}
+		}
+		
 		fs.readFile(req.files.avatar.path, function(err, avatar) {
 			fs.writeFile(__dirname + "/../public"+u.avatar, avatar, function(err) {
 				if (err) throw err;
+				
+				console.log("3")
+				createThumbnails()
 			});
 		});
 	}

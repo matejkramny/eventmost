@@ -18,52 +18,54 @@ block content
 				| - #{theUser.position}
 			if (theUser.company)
 				| , #{theUser.company}
-			br
-			img(src="/images/message-icon-small.svg", alt="", class="pad-right-ten")
-			a(href="mailto:#{theUser.email}", class="link-purple")
-				| #{theUser.email}
 		.nspacer
 		.text-right.font-s.pull-left(style="width:30%;")
 			| Name: 
 		.pull-left.font-s.text-left.pad-left-ten.pull-left.break(style="width:70%;")
-			| <b>#{theUser.getName()}</b> 
+			b #{theUser.getName()}
 		.clearfix
 		.text-right.font-s.pull-left.nspacer-small-m(style="width:30%;")
-			| Position: <br />
+			| Position: 
+			br
 		.pull-left.font-s.text-left.pad-left-ten.pull-left.break.nspacer-small-m(style="width:70%;")
-			| <b>#{theUser.position}</b> 
+			b #{theUser.position}
 		.clearfix
 		.text-right.font-s.pull-left.nspacer-small-m(style="width:30%;")
-			| Company: <br />
+			| Company: 
+			br
 		.pull-left.font-s.text-left.pad-left-ten.pull-left.break.nspacer-small-m(style="width:70%;")
-			| <b>#{theUser.company}</b>
+			b #{theUser.company}
 		.clearfix
 		.pull-left.font-s.text-right.nspacer-small-m(style="width:30%;")
-			| Website: <br />
+			| Website: 
+			br
 		.pull-right.font-s.pad-left-ten.break.nspacer-small-m(style="width:70%;")
-			| <b><a href="#{theUser.website}" class="link-purple">#{theUser.website}</a></b> 
+			b #{theUser.website}
 		.clearfix
 		.pull-left.font-s.text-right.nspacer-small-m(style="width:30%;")
-			| Location: <br />
+			| Location: 
+			br
 		.pull-right.font-s.pad-left-ten.break.nspacer-small-m(style="width:70%;")
-			| <b>#{theUser.location}</b>
+			b #{theUser.location}
 		.clearfix
 		.pull-left.font-s.text-right.nspacer-small-m(style="width:30%;")
-			| Interests: <br />
+			| Interests: 
+			br
 		.pull-right.font-s.pad-left-ten.break.nspacer-small-m(style="width:70%;")
-			| <b>#{theUser.interests}</b>
+			b #{theUser.interests}
 		.clearfix
 		.pull-left.font-s.text-right.nspacer-small-m(style="width:30%;")
-			| Education: <br />
+			| Education: 
+			br
 		.pull-right.font-s.pad-left-ten.break.nspacer-small-m(style="width:70%;")
-			| <b>#{theUser.education}</b>
+			b #{theUser.education}
 		.clearfix
 	
 	if (!theUser._id.equals(user._id))
 		.col-md-6.col-xs-6.col-sm-6.lower.hide-mini3-except-smart
 			.right.iconsbox.spacerbig
-				a(href="/inbox/messages/new?to="+theUser._id, class="link1")
-					img(src="/images/send-prv.svg", alt="", class="img-responsive inline pad-right-ten res-butt")
+				a.link1(href="/inbox/messages/new?to="+theUser._id)
+					img.img-responsive.inline.pad-right-ten.res-butt(src="/images/send-prv.svg")
 				a(href="/cards/send?to="+theUser._id, class="link1")
 					img(src="/images/send-business.svg", alt="", class="img-responsive inline pad-right-ten res-butt")
 				a(href="/user/"+theUser._id+"/save", class="link1")

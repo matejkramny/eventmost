@@ -211,7 +211,7 @@ block content
 
 		//- Attendees
 				
-	.nspacer-big	
+	.nspacer-big
 	.col-md-12.col-lg-12.col-xs-12
 		.font-evente.center.font-exception
 			| #{ev.attendees.length} Attendees:
@@ -243,7 +243,7 @@ block content
 
 		//- page visits
 				
-	.nspacer-big	
+	.nspacer-big
 	.col-md-12.col-lg-12.col-xs-12
 		.font-evente.center.font-exception
 			| Page visits
@@ -253,8 +253,9 @@ block content
 		.nspacere.font-exception.font-evente.overfonts(style="padding-top:250px;")
 			| Page visits today: 
 			- var total = 0
-			for(counter = 0, counter < ev.views.length, counter++)
-				<b>105</b><br />
+			//- for(counter = 0; counter < ev.views.length; counter++)
+			b 105
+			br
 			| Visits from promotional tools: <b>105</b>
 
 	.col-md-6.col-lg-6.col-xs-6
@@ -267,7 +268,7 @@ block content
 	.clearfix
 
 
-	.nspacer-big	
+	.nspacer-big
 	.col-md-12.col-lg-12.col-xs-12
 		.font-evente.center.font-exception
 			| Tickets sold

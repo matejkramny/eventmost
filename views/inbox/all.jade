@@ -152,16 +152,40 @@ block content
 			if (locals.user.receivedCards.length == 0)
 				p.text-center No cards received
 			.pull-left
+				- var i = 0;
 				for card in locals.user.receivedCards
 					+card(card)
-	
-		.nspacer-medium
+					if (i % 2 == 1)
+						.clearfix
+					- i++;
+				.clearfix
+		.nspacer-big
 		//- end business
-	
+		
 		.row
 			.col-md-12.col-xs-12.col-sm-12
 				.font-tw
-					b Those who saved your profile
+					b Your Saved Profiles
+				.line-purple
+		.nspacer
+	
+		//- saved
+		if (locals.user.savedProfiles.length == 0)
+			p.text-center You haven't saved any profiles yet
+			.clearfix
+			.nspacer
+		.row
+			.col-md-12.col-xs-12.col-sm-12
+				.center
+					for saver in locals.user.savedProfiles
+						+savedProfile(saver)
+				.clearfix
+				.nspacer
+		
+		.row
+			.col-md-12.col-xs-12.col-sm-12
+				.font-tw
+					b People that Saved Your Profile
 				.line-purple
 		.nspacer
 	

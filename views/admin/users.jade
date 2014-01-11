@@ -38,7 +38,6 @@ block content
 				tr
 				tr
 					th Name
-					th Surname
 					th Email
 					th Created
 					th: abbr(title="Twitter") Tw
@@ -47,9 +46,8 @@ block content
 					th Admin
 					th &nbsp;
 			tbody
-				tr(ng-repeat="user in users | orderBy:'-created'")
-					td {{ user.name }}
-					td {{ user.surname }}
+				tr(ng-repeat="user in users | orderBy:'-created'" ng-class="{ warning: user.disabled }")
+					td {{ user.name }} {{ user.surname }}
 					td {{ user.email }}
 					td {{ user.created.getDate() }}/{{ user.created.getMonth()+1 }}/{{ user.created.getFullYear() }} {{ user.created.getHours() }}:{{ user.created.getMinutes() }}:{{ user.created.getSeconds() }}
 					td

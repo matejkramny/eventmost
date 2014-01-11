@@ -74,8 +74,13 @@ angular.module('eventMost')
 			for (var x = 0; x < m.topic.users.length; x++) {
 				if (m.topic.users[x] && m.topic.users[x]._id != $scope.user) {
 					m.otherUser = m.topic.users[x];
-					if (!m.otherUser.avatar || m.otherUser.avatar.length == 0) {
-						m.otherUser.avatar = "/images/default_speaker.svg";
+					if (m.otherUser.avatarSorted !== true) {
+						m.otherUser.avatarSorted = true;
+						if (!m.otherUser.avatar || m.otherUser.avatar.length == 0) {
+							m.otherUser.avatar = "/images/default_speaker.svg";
+						} else {
+							m.otherUser.avatar += '-116x116.png';
+						}
 					}
 					
 					break;

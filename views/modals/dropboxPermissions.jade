@@ -41,7 +41,7 @@
 			.row
 				.col-lg-10.col-md-10.col-xs-10.no-float
 					.text-center.font-evente.color-green
-						| <b>Who can view:</b> 
+						b Who can view:
 						span.break(style="color:#542437;") {{ file.name }}
 			
 			.clearfix
@@ -63,7 +63,7 @@
 				.col-md-6.col-lg-6.col-sm-6.col-xs-6
 					ul.nav.navbar-nav.nav-last
 						li.dropdown.dropdown-menu-last1
-							a.dropdown-toggle.dropdown-toggle-last(href='#', data-toggle='dropdown')
+							a.dropdown-toggle.dropdown-toggle-last(href='#' data-toggle='dropdown')
 								| Select Categories
 								b.caret
 							ul.dropdown-menu.dropdown-menu-last.pull-right
@@ -72,7 +72,7 @@
 										.col-md-9.col-lg-9.col-sm-9.col-xs-9.nspacer(for="dropboxCategory{{$index}}")
 											| {{ category.name }}
 										.col-md-2.col-lg-2.col-sm-2.col-xs-2
-											p.check5-purple-solid
+											p.check5-purple-solid(style="margin:0;")
 												input(type="checkbox" id="dropboxCategory{{$index}}" ng-model="category.checked" ng-change="updateCategories()" style="margin-left:-10px;")
 												label(for="dropboxCategory{{$index}}" ng-click="toggle" style="padding-top:10px;")
 			

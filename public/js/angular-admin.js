@@ -75,6 +75,9 @@ var eventMost = angular.module('emAdmin', [])
 			return;
 		}
 		
+		user.disabled = true;
+		user.askedConfirm = false;
+		
 		var users = $scope.allUsers;
 		for (var i = 0; i < users.length; i++) {
 			if (users[i]._id == user._id) {
@@ -175,7 +178,7 @@ var eventMost = angular.module('emAdmin', [])
 		chart.addSeries({
             name: 'Users',
 			color: '#18bc9c',
-			type: $scope.showLine ? 'line' : 'bar',
+			type: $scope.showLine ? 'spline' : 'bar',
             data: months
         })
 	}
@@ -212,9 +215,27 @@ var eventMost = angular.module('emAdmin', [])
 		chart.addSeries({
             name: month,
 			color: '#18bc9c',
-			type: $scope.showLine ? 'line' : 'bar',
+			type: $scope.showLine ? 'spline' : 'bar',
             data: days
         });
 	}
 	
+})
+
+.controller('metaController', function($scope, $http) {
+	$scope.meta = null;
+	$scope.partialUrl = null;
+	
+	$http.get('/admin/meta')
+	.success(function(data, status) {
+		$scope.metas = data.meta;
+		
+		if (!$scope.$$phase) {
+			$scope.$digest();
+		}
+	})
+	
+	$scope.showMeta = function (meta) {
+		window.location = '/admin/meta/'+meta._id
+	}
 })

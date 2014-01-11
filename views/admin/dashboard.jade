@@ -2,23 +2,51 @@ extends layout
 
 block content
 	h1 Dashboard
-	h3= users.length
-		|  users total
-	h3= twitterUsers
-		|  users with <code>Twitter</code>
-	h3= facebookUsers
-		|  users with <code>Facebook</code>
-	h3= linkedinUsers
-		|  users with <code>LinkedIn</code>
-	h3= admins
-		|  users are <code>admins</code>
-	h3= last24hours
-		|  users created in last <code>24 hours</code>
-	h3= last48hours
-		|  users created in last <code>48 hours</code>
-	h3= lastWeek
-		|  users created this <code>week</code>
-	h3= lastMonth
-		|  users created this <code>month</code>
-	h3= lastYear
-		|  users created this <code>year</code>
+	.row
+		.col-md-6.col-lg-6.col-xs-12.col-sm-6
+			h3= users.length
+				|  users total
+			h3= twitterUsers
+				|  users with <code>Twitter</code>
+			h3= facebookUsers
+				|  users with <code>Facebook</code>
+			h3= linkedinUsers
+				|  users with <code>LinkedIn</code>
+			h3= admins
+				|  users are <code>admins</code>
+			h3= last24hours
+				|  users created in last <code>24 hours</code>
+			h3= last48hours
+				|  users created in last <code>48 hours</code>
+			h3= lastWeek
+				|  users created this <code>week</code>
+			h3= lastMonth
+				|  users created this <code>month</code>
+			h3= lastYear
+				|  users created this <code>year</code>
+		.col-md-6.col-lg-6.col-xs-12.col-sm-6
+			.highchart
+
+append js
+	script(defer).
+		
+		window.onload = function() {
+			$('.highchart').highcharts({
+				title: {
+					text: 'Login Types'
+				},
+				credits: {
+					enabled: false
+				},
+				series: [{
+					type: 'pie',
+					name: 'Social Network Share',
+					data: [
+						['Twitter', #{twitterUsers / users.length}],
+						['Facebook', #{facebookUsers / users.length}],
+						['LinkedIn', #{linkedinUsers / users.length}],
+						['Password', #{passwordUsers / users.length}]
+					]
+				}]
+			})
+		}

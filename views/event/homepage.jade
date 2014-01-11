@@ -15,17 +15,19 @@ block content
 	
 	case ev.sponsorLayout.layout
 		when 0
-			include layouts/5
+			include layouts/0
 		when 1
-			include layouts/5
+			include layouts/1
 		when 2
-			include layouts/5
+			include layouts/2
 		when 3
-			include layouts/5
+			include layouts/3
 		when 4
-			include layouts/5
+			include layouts/4
 		when 5
 			include layouts/5
+		default
+			include layouts/0
 	
 	//- comment post
 	.nspacer
@@ -46,10 +48,10 @@ block content
 				.nspacer
 				.underpost.pull-right.break
 					.pull-left(style="overflow:hidden; border-radius:30px; -webkit-border-radius: 30px; -moz-border-radius:30px;width:60px;height:60px;border:0px solid #542437;")
-						img(ng-init="comment.attendee.user.avatar = comment.attendee.user.avatar || '/images/default_speaker-purple.svg'" ng-src="{{comment.attendee.user.avatar}}" style="width:60px;margin:0px auto auto 0px;")
+						img(ng-src="{{comment.attendee.user.avatar}}" style="width:60px;margin:0px auto auto 0px;")
 					.pull-left.pad-left-ten.width85.width85posts
 						.font16.bold
-							| {{ comment.attendee.user.name }} {{ comment.attendee.user.surname }}
+							a.link-green(href="/user/{{comment.attendee.user._id}}" target="_blank") {{ comment.attendee.user.name }} {{ comment.attendee.user.surname }}
 						.font14.font14sm.break.small-post.font-exception
 							| {{ comment.message }}
 						.pull-left.font14.font14md.font-exception
@@ -65,7 +67,7 @@ block content
 									b(ng-show="!$first && $last")  and 
 									b(ng-show="comment.likes.length > 3 && $last") {{ comment.likes.length - 3 }} others
 									span(ng-hide="comment.likes.length > 3 && $last")
-										b(ng-hide="user == like.user._id") {{ like.user.name }} {{ like.user.surname }}
+										a.link-green(href="/user/{{like.user._id}}" target="_blank"): b(ng-hide="user == like.user._id") {{ like.user.name }} {{ like.user.surname }}
 										b(ng-show="user == like.user._id") You
 								span(ng-show="comment.likes.length > 0")
 									|  like this.
@@ -89,10 +91,10 @@ block content
 				div(ng-repeat="subcomment in comment.comments")
 					.underpost-smaller.pull-right.break.nspacer(ng-hide="comment.comments.length - 1 - $index > 1 && !comment.showComments")
 						.pull-left(style="overflow:hidden; border-radius:22px; -webkit-border-radius: 22px; -moz-border-radius:22px;width:44px;height:44px;border:0px solid #542437;")
-							img(ng-init="subcomment.attendee.user.avatar = subcomment.attendee.user.avatar || '/images/default_speaker-purple.svg'" ng-src="{{subcomment.attendee.user.avatar}}", style="width:44px;margin:0px auto auto 0px;")
+							img(ng-src="{{subcomment.attendee.user.avatar}}", style="width:44px;margin:0px auto auto 0px;")
 						.pull-left.pad-left-ten.width85.width85posts
 							.font14.font14sm.break.small-post.font-exception
-								span.font16.bold {{ subcomment.attendee.user.name }} {{ subcomment.attendee.user.surname }}
+								a.link-green(href="/user/{{subcomment.attendee.user._id}}" target="_blank"): span.font16.bold {{ subcomment.attendee.user.name }} {{ subcomment.attendee.user.surname }}
 								|  {{ subcomment.message }}
 							.pull-left.font14.font14md.color-green.pad-left-five.font-exception(title="{{subcomment.postedFormatted}}")
 								| posted {{subcomment.postedAgo}}	|
@@ -104,7 +106,7 @@ block content
 										b(ng-show="!$first && $last")  and 
 										b(ng-show="subcomment.likes.length > 3 && $last") {{ subcomment.likes.length - 3 }} others
 										span(ng-hide="subcomment.likes.length > 3 && $last")
-											b(ng-hide="user == like.user._id") {{ like.user.name }} {{ like.user.surname }}
+											a.link-green(href="/user/{{like.user._id}}" target="_blank"): b(ng-hide="user == like.user._id") {{ like.user.name }} {{ like.user.surname }}
 											b(ng-show="user == like.user._id") You
 									span(ng-show="subcomment.likes.length > 0")
 										|  like this.
@@ -122,7 +124,7 @@ block content
 				
 				.underpost-smaller.pull-right.break.nspacer
 					.pull-left(style="overflow:hidden; border-radius:22px; -webkit-border-radius: 22px; -moz-border-radius:22px;width:44px;height:44px;border:0px solid #542437;")
-						img(src= attendee.user.avatar.length == 0 ? "/images/default_speaker-purple.svg" : attendee.user.avatar, style="width:44px;margin:0px auto auto 0px;")
+						img(src= attendee.user.avatar.length == 0 ? "/images/default_speaker-purple.svg" : attendee.user.avatar+"-116x116.png", style="width:44px;margin:0px auto auto 0px;")
 					.pull-left.pad-left-ten.width85.width85posts
 						.font14.font14sm.break.nspacer-small
 							input.search-input.width100.psev(type"text" placeholder="Write a comment..." ng-model="text" comment-form comment="comment")
@@ -146,7 +148,14 @@ block content
 		.col-sm-12.col-xs-12.col-md-12
 			.center.font
 				| Attendees 
-				img(src="/images/purple-arrow-down.svg" alt="")
+				span.dropdown
+					a(href data-toggle="dropdown" data-target="#")
+						img(src="/images/purple-arrow-down.svg" alt="")
+					ul.dropdown-menu(style="margin-left:20px; margin-top:10px;")
+						li: a(href="?arrange=default") Default
+						li: a(href="?arrange=category") By Category
+						li: a(href="?arrange=alphabetical") Alphabetical
+						li: a(href="?arrange=recent") Most Recent
 
 	.clearfix
 	.nspacer-bigger

@@ -53,6 +53,7 @@ var scheme = schema({
 		},
 		extension: String,
 		file: String,
+		fileThumb: String,
 		size: String,
 		name: String,
 		permissions: {
@@ -82,6 +83,26 @@ var scheme = schema({
 	},
 })
 
+scheme.methods.arrangeFunctionCategory = function (a, b) {
+	if (a.category > b.category)
+		return 1;
+	if (a.category < b.category)
+		return -1;
+	
+	return 0;
+}
+
+scheme.methods.arrangeFunctionAlphabetical = function (a, b) {
+	var aName = a.user.getName();
+	var bName = b.user.getName();
+	if (aName > bName)
+		return 1;
+	if (aName < bName)
+		return -1;
+	
+	return 0;
+}
+
 scheme.statics.getEvent = function (id, cb, simple) {
 	if (typeof simple === 'undefined') {
 		simple = false;
@@ -92,6 +113,7 @@ scheme.statics.getEvent = function (id, cb, simple) {
 		populate = 'attendees';
 	}
 	
+	// a dismal solution, but works.. TODO replace when have time
 	try {
 		exports.Event
 			.findOne({ deleted: false, _id: mongoose.Types.ObjectId(id) })
@@ -344,13 +366,13 @@ scheme.methods.edit = function (body, user, files, cb) {
 	// dates
 	if (typeof body.start == "string") {
 		var date = parseInt(body.start);
-		if (date != NaN) {
+		if (!isNaN(date)) {
 			this.start = date;
 		}
 	}
 	if (typeof body.end == "string") {
 		var date = parseInt(body.end);
-		if (date != NaN) {
+		if (!isNaN(date)) {
 			this.end = date;
 		}
 	}

@@ -1,9 +1,10 @@
 {
 	"name": "eventmost",
-	"version": "0.2.1",
+	"version": "0.2.2",
 	"private": true,
 	"scripts": {
-		"start": "node app.js"
+		"start": "node app.js",
+		"test": "mocha --reporter spec"
 	},
 	"start": "app.js",
 	"subdomain": "eventmost",
@@ -15,10 +16,8 @@
 		"express": "latest",
 		"jade": "latest",
 		"mongoose": "latest",
-		"csv": "latest",
-		"crypto": "latest",
 		"async": "latest",
-		"validator": "latest",
+		"validator": "2.1.0",
 		"session-mongoose": "latest",
 		"nodemailer": "latest",
 		"passport": "latest",
@@ -36,9 +35,13 @@
 		"grunt-contrib-watch": "latest",
 		"sanitizer": "latest",
 		"moment": "latest",
-		"passport.socketio": "latest"
+		"passport.socketio": "latest",
+		"gm": "latest",
+		"request": "latest",
+		"colors": "latest"
 	},
 	"devDependencies": {
-		"should": "latest"
+		"should": "latest",
+		"supertest": "latest"
 	}
 }

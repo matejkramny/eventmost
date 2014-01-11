@@ -80,6 +80,11 @@ function getEvent (req, res, next) {
 		return;
 	}
 	
+	var arrange = req.query.arrange;
+	if (!arrange || !(arrange == 'default' || arrange == 'category' || arrange == 'alphabetical' || arrange == 'recent')) {
+		arrange = 'default';
+	}
+	
 	models.Event.getEvent(id, function(ev) {
 		if (!ev) {
 			res.format({
@@ -95,6 +100,19 @@ function getEvent (req, res, next) {
 				}
 			})
 			return;
+		}
+		
+		// sort the attendees
+		switch(arrange) {
+			case 'category':
+				ev.attendees.sort(ev.arrangeFunctionCategory)
+				break;
+			case 'alphabetical':
+				ev.attendees.sort(ev.arrangeFunctionAlphabetical);
+				break;
+			case 'recent':
+				ev.attendees.reverse()
+				break;
 		}
 		
 		req.session.recentEvent = ev._id;

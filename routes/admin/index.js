@@ -2,7 +2,8 @@ var users = require('./users'),
 	models = require('../../models'),
 	emails = require('./emails'),
 	events = require('./events'),
-	dashboard = require('./dashboard')
+	dashboard = require('./dashboard'),
+	meta = require('./meta')
 
 function authorize (req, res, next) {
 	if (req.user && req.user.admin === true) {
@@ -16,8 +17,9 @@ exports.router = function (app) {
 	app.all('/admin', authorize)
 		.all('/admin/*', authorize)
 		
-	dashboard.router(app)
-	events.router(app)
-	emails.router(app)
-	users.router(app)
+	dashboard.router(app);
+	events.router(app);
+	emails.router(app);
+	users.router(app);
+	meta.router(app);
 }
