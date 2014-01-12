@@ -69,8 +69,6 @@ angular.module('eventMost')
 			}
 		}
 	}
-	
-	
 })
 .directive('dropboxSave', function() {
 	return {

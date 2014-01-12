@@ -48,34 +48,35 @@ function doRemove (req, res, next) {
 		return;
 	}
 	
-	if (!isPlanner) {
-		req.session.flash.push("Unauthorized")
-		res.redirect('/event/'+ev._id);
-		return;
-	}
-	
-	// no files check
-	if (!ev.files || ev.files.length == 0) {
-		res.redirect('/event/'+ev._id+'/dropbox')
-		return;
-	}
-	
 	// check which file to remove (id'd by filepath.. they are essentially unique)
+	var found = -1;
 	for (var i = 0; i < ev.files.length; i++) {
 		var f = ev.files[i];
 		
 		if (f._id && f._id.equals(id)) {
-			// Remove this file
-			ev.files.splice(i, 1);
-			
-			try {
-				fs.unlink(config.path+"/public"+f.file)
-			} catch (e) {
-				console.log("Failed to delete dropbox file..");
-			}
-			
+			found = i;
 			break;
 		}
+	}
+	
+	if (found == -1) {
+		res.redirect('/event/'+ev._id+'/dropbox')
+		return;
+	}
+	
+	if (isPlanner || (ev.files[found].user && ev.files[found].user._id && ev.files[found].user._id.equals(req.user._id))) {
+		// Remove this file
+		ev.files.splice(found, 1);
+		
+		try {
+			fs.unlink(config.path+"/public"+ev.files[found].file)
+		} catch (e) {
+			console.log("Failed to delete dropbox file..");
+		}
+	} else {
+		req.session.flash.push("Unauthorized")
+		res.redirect('/event/'+ev._id);
+		return;
 	}
 	
 	ev.save(function(err) {
@@ -96,29 +97,14 @@ function doRemove (req, res, next) {
 }
 
 function saveDropbox (req, res) {
-	if (!res.locals.eventadmin) {
-		res.format({
-			html: function() {
-				res.redirect('back');
-			},
-			json: function() {
-				res.send({
-					status: 403,
-					message: "Not Admin"
-				})
-			}
-		})
-		
-		return;
-	}
-	
 	var ev = res.locals.ev;
+	
+	var found = false;
+	var file;
 	
 	try {
 		var pid = mongoose.Types.ObjectId(req.body.file);
 		
-		var found = false;
-		var file;
 		for (var i = 0; i < ev.files.length; i++) {
 			if (ev.files[i]._id.equals(pid)) {
 				found = true;
@@ -126,7 +112,38 @@ function saveDropbox (req, res) {
 				break;
 			}
 		}
+	} catch (e) {
+		throw e;
+		res.format({
+			json: function() {
+				res.send({
+					status: 404
+				})
+			},
+			html: function() {
+				res.redirect('back')
+			}
+		});
 		
+		return;
+	}
+	
+	if (!(res.locals.eventadmin || (file.user && file.user._id && file.user._id.equals(req.user._id)))) {
+		res.format({
+			html: function() {
+				res.redirect('back');
+			},
+			json: function() {
+				res.send({
+					status: 404
+				})
+			}
+		})
+		
+		return;
+	}
+	
+	try {
 		if (found) {
 			var perms = JSON.parse(req.body.permissions);
 			

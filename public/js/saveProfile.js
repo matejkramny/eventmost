@@ -43,7 +43,6 @@ $(document).ready(function() {
 					$("#profileSaveStatus").html("Could not save profile :(<br/>"+result.err.join('<br/>'));
 				} else {
 					$("#profileSaveStatus").html("<b>Saved!</b>")
-					window.location = "/";
 				}
 			} else {
 				// Not ok
