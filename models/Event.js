@@ -93,8 +93,8 @@ scheme.methods.arrangeFunctionCategory = function (a, b) {
 }
 
 scheme.methods.arrangeFunctionAlphabetical = function (a, b) {
-	var aName = a.user.getName();
-	var bName = b.user.getName();
+	var aName = a.user.getName().toLowerCase();
+	var bName = b.user.getName().toLowerCase();
 	if (aName > bName)
 		return 1;
 	if (aName < bName)

@@ -150,7 +150,7 @@ exports.doEditProfile = doEditProfile = function (req, res) {
 		u.save(function(err) {
 			if (err) throw err;
 		})
-		console.log(errors)
+		
 		res.format({
 			json: function() {
 				res.send({
@@ -196,8 +196,6 @@ exports.doEditProfile = doEditProfile = function (req, res) {
 			u.surname = req.body.surname;
 		}
 	} catch (e) {
-		console.log(e.message)
-		throw e;
 		errors.push(e.message)
 	}
 	
@@ -296,9 +294,7 @@ exports.doEditProfile = doEditProfile = function (req, res) {
 		if (!blocking) {
 			blocking = true;
 			createThumbnails = function() {
-				console.log("2")
 				u.createThumbnails(function() {
-					console.log("1")
 					cb()
 				});
 			}
@@ -308,7 +304,6 @@ exports.doEditProfile = doEditProfile = function (req, res) {
 			fs.writeFile(__dirname + "/../public"+u.avatar, avatar, function(err) {
 				if (err) throw err;
 				
-				console.log("3")
 				createThumbnails()
 			});
 		});
