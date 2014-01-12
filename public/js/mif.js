@@ -144,7 +144,7 @@ angular.module('eventMost')
 		}
 		
 		$http.delete($scope.url+'comment/'+cid+"?_csrf="+$scope.csrf).success(function(data, status) {
-			alert("Comment has been deleted x");
+			console.log("Comment deleted..")
 		})
 		
 		if (!$scope.$$phase) {
