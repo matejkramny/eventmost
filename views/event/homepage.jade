@@ -53,7 +53,7 @@ block content
 						.font16.bold
 							a.link-green(href="/user/{{comment.attendee.user._id}}" target="_blank") {{ comment.attendee.user.name }} {{ comment.attendee.user.surname }}
 						//-.small-post
-						.font14.font14sm.break.font-exception
+						pre.font14.font14sm.break.font-exception(style="padding:0; border:0; background:none;")
 							| {{ comment.message }}
 						.pull-left.font14.font14md.font-exception
 							a.link-green.bold(href="" ng-click="likeComment(comment)" ng-show="comment.showLike")
@@ -94,7 +94,7 @@ block content
 						.pull-left(style="overflow:hidden; border-radius:22px; -webkit-border-radius: 22px; -moz-border-radius:22px;width:44px;height:44px;border:0px solid #542437;")
 							img(ng-src="{{subcomment.attendee.user.avatar}}", style="width:44px;margin:0px auto auto 0px;")
 						.pull-left.pad-left-ten.width85.width85posts
-							.font14.font14sm.break.font-exception
+							.font14.font14sm.break.font-exception.small-post
 								a.link-green(href="/user/{{subcomment.attendee.user._id}}" target="_blank"): span.font16.bold {{ subcomment.attendee.user.name }} {{ subcomment.attendee.user.surname }}
 								|  {{ subcomment.message }}
 							.pull-left.font14.font14md.color-green.pad-left-five.font-exception(title="{{subcomment.postedFormatted}}")
