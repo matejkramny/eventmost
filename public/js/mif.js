@@ -124,6 +124,34 @@ angular.module('eventMost')
 		})
 	}
 	
+	$scope.deleteComment = function (comment, parent) {
+		var cid = comment._id;
+		
+		if (typeof parent != 'undefined') {
+			for (var i = 0; i < parent.comments.length; i++) {
+				if (parent.comments[i]._id == cid) {
+					parent.comments.splice(i, 1);
+					break;
+				}
+			}
+		} else {
+			for (var i = 0; i < $scope.comments.length; i++) {
+				if ($scope.comments[i]._id == cid) {
+					$scope.comments.splice(i, 1);
+					break;
+				}
+			}
+		}
+		
+		$http.delete($scope.url+'comment/'+cid+"?_csrf="+$scope.csrf).success(function(data, status) {
+			alert("Comment has been deleted x");
+		})
+		
+		if (!$scope.$$phase) {
+			$scope.$digest();
+		}
+	}
+	
 	$scope.likeComment = function (comment) {
 		for (var i = 0; i < comment.likes.length; i++) {
 			if (comment.likes[i]._id == $scope.attendee._id) {

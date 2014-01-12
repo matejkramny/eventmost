@@ -6,6 +6,7 @@ exports.router = function (app) {
 	app.get('/event/:id/messages', display)
 		.get('/event/:id/comments', getComments)
 		.post('/event/:id/comment', postComment)
+		.delete('/event/:id/comment/:cid', deleteComment)
 		.post('/event/:id/like', likeComment)
 }
 
@@ -216,4 +217,105 @@ function postComment (req, res) {
 			}
 		})
 	}
+}
+
+function deleteComment (req, res) {
+	var cid;
+	try {
+		cid = req.params.cid;
+	} catch (e) {
+		res.format({
+			html: function() {
+				res.redirect('/event/'+res.locals.ev._id);
+			},
+			json: function() {
+				res.send({
+					status: 404
+				})
+			}
+		})
+		
+		return;
+	}
+	
+	models.EventMessage.findById(cid, function(err, msg) {
+		if (err || !msg) {
+			res.format({
+				html: function() {
+					res.redirect('/event/'+res.locals.ev._id);
+				},
+				json: function() {
+					res.send({
+						status: 404,
+						message: "No Such Message"
+					})
+				}
+			})
+			return;
+		}
+		
+		if (res.locals.eventadmin || msg.attendee.equals(res.locals.attendee._id)) {
+			// Can delete comment
+			if (msg.isResponse) {
+				// Delete from parent
+				models.EventMessage.findOne({
+					comments: {
+						$in: [msg._id]
+					}
+				}, function(err, parent) {
+					if (err) {
+						throw err;
+					}
+					
+					if (parent) {
+						for (var i = 0; i < parent.comments.length; i++) {
+							if (parent.comments[i].equals(msg._id)) {
+								parent.comments.splice(i, 1);
+								parent.save();
+								break;
+							}
+						}
+					} else {
+						console.log("Message does not belong?");
+					}
+				})
+			}
+			
+			for (var i = 0; i < msg.comments; i++) {
+				// Delete sub-comments
+				msg.comments[i].remove(function(err) {
+					if (err) throw err;
+				});
+			}
+			
+			msg.remove(function(err) {
+				if (err) throw err;
+			});
+			
+			res.format({
+				html: function() {
+					res.redirect('/event/'+res.locals.ev._id);
+				},
+				json: function() {
+					res.send({
+						status: 200,
+						message: "Comment Deleted"
+					})
+				}
+			})
+		} else {
+			res.format({
+				html: function() {
+					res.redirect('/event/'+res.locals.ev._id);
+				},
+				json: function() {
+					res.send({
+						status: 404,
+						message: "Not Owned by this user"
+					})
+				}
+			})
+			return;
+		}
+	})
 }

@@ -86,7 +86,7 @@ block content
 					.pull-right(ng-show="user == comment.attendee.user._id")
 						//- button only visible for creator and planner
 						button.btn.btn-primary.font14.pull-right.nspacer(type='submit', style="border-radius: 10px; padding:7px; padding-left:12px; padding-right:12px;")
-							a.link-white(href="#") delete
+							a.link-white(href ng-click="deleteComment(comment)") delete
 				.clearfix
 
 				div(ng-repeat="subcomment in comment.comments")
@@ -120,7 +120,7 @@ block content
 						.pull-right
 							//- button only visible for creator and planner
 							button.btn.btn-primary.font14.pull-right.nspacer(type='submit', style="border-radius: 10px; padding:7px; padding-left:12px; padding-right:12px;")
-								a.link-white(href="#") delete
+								a.link-white(href ng-click="deleteComment(subcomment, comment)") delete
 					.clearfix
 				
 				.underpost-smaller.pull-right.break.nspacer
