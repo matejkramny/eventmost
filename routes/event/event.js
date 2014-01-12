@@ -105,7 +105,26 @@ function getEvent (req, res, next) {
 		// sort the attendees
 		switch(arrange) {
 			case 'category':
-				ev.attendees.sort(ev.arrangeFunctionCategory)
+				ev.attendees.sort(function (a, b) {
+					var aIndex = -1;
+					var bIndex = -1;
+	
+					for (var i = 0; i < ev.categories.length; i++) {
+						if (ev.categories[i] == a.category) {
+							aIndex = i;
+						}
+						if (ev.categories[i] == b.category) {
+							bIndex = i;
+						}
+					}
+	
+					if (aIndex > bIndex)
+						return 1;
+					if (aIndex < bIndex)
+						return -1;
+	
+					return 0;
+				})
 				break;
 			case 'alphabetical':
 				ev.attendees.sort(ev.arrangeFunctionAlphabetical);

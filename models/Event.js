@@ -83,15 +83,6 @@ var scheme = schema({
 	},
 })
 
-scheme.methods.arrangeFunctionCategory = function (a, b) {
-	if (a.category > b.category)
-		return 1;
-	if (a.category < b.category)
-		return -1;
-	
-	return 0;
-}
-
 scheme.methods.arrangeFunctionAlphabetical = function (a, b) {
 	var aName = a.user.getName().toLowerCase();
 	var bName = b.user.getName().toLowerCase();
