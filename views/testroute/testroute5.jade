@@ -1,481 +1,439 @@
-extends ../responsive
+extends ../esct-ver3
+
+append addonjs
 
 block content
+		.container-inner 
+			//- A. Top Layer
+			.white-box.drop-shadow.curved.curved-hz-1
+				.top-banner.drop-shadow.curved.curved-hz-1
+					.reg-padding
+						.white.font.pull-left.shadow.left-marg-s
+							| A. Top Layer
+						.pull-right
+							//- navigation
+							.navbar.navbar-layer(role="navigation")
+									ul.nav.navbar-nav.n-layer
+										li.dropdown.dropdown-layer-out
+											a(href="#" class="dropdown-toggle " data-toggle="dropdown") 
+												img.spacer-small(src="/images-esct/dropdown-white.svg" alt="")
+											ul.dropdown-menu.dropdown-layer
+												li
+													a(href='#') + Add new layer
+												li
+													a(href='#') + Copy this layer
+												li
+													a(href='#') + Delete this layer
+						.clearfix
+				.clearfix
+				.center.spacer.grey
+					.spacer
+					a.drop-shadow2.curved.curved-hz-1(href="#" class="link-blu-bg round-left") link 1
+					a.drop-shadow2.curved.curved-hz-1(href="#" class="link-blu-bg") link 2
+					a.drop-shadow2.curved.curved-hz-1(href="#" class="link-blu-bg") link 3
+					a.drop-shadow2.curved.curved-hz-1(href="#" class="link-blu-bg") link 4
+					a.drop-shadow2.curved.curved-hz-1(href="#" class="link-blu-bg") link 5
+					a.drop-shadow2.curved.curved-hz-1(href="#" class="link-blu-bg round-right") link 6		
+				.spacer2
+				.bigs-padding
+					.left.font-medium
+						| Company Name / Logo
+					.spacer
+					.font-big
+						| Event Title / Logo
+					.spacer2
+						.font-button.dark.pull-left
+							| Venue Name Venue Name Venue Name
+						.font.dark.pull-right
+							| Feb 14.2014
+						.clearfix
+						.font-button.dark.pull-left
+							| Venue Name Venue Name Venue Name
+						.font.dark.pull-right
+							| 4:00 a.m.
+						.clearfix
+					.spacer2
+						button.btn.btn-lg.btn-danger.font.drop-shadow2.curved.curved-hz-1(type="button")
+							| Register
+					.clearfix
+			.spacer
 
-	.col-xs-12.hide-all2
-		form(method="POST", accept-charset="utf-8")
-			input.gonew2.pull-right.header-links(type="button", value="GO", style="width:10%;")
-			input(type="hidden", name="_csrf", value=token)
-			input.pull-right.font-s.search-input.pad-left-ten.header-links(type="search", placeholder="search events or people", style="width:87%;")
-	.clearfix.hide-all2
+			//- B. Thin Layer
+			.white-box.drop-shadow.curved.curved-hz-1
+				.top-banner.drop-shadow.curved.curved-hz-1
+					.reg-padding
+						.white.font.pull-left.shadow.left-marg-s
+							| B. Thin Layer
+						.pull-right
+							//- navigation
+							.navbar.navbar-layer(role="navigation")
+									ul.nav.navbar-nav.n-layer
+										li.dropdown.dropdown-layer-out
+											a(href="#" class="dropdown-toggle " data-toggle="dropdown") 
+												img.spacer-small(src="/images-esct/dropdown-white.svg" alt="")
+											ul.dropdown-menu.dropdown-layer
+												li
+													a(href='#') + Add new layer
+												li
+													a(href='#') + Copy this layer
+												li
+													a(href='#') + Delete this layer
+						.clearfix
+				.clearfix
+				.bigs-padding
+					.center.dark.font-big
+						| The punch line or tag line for this event!
+			.spacer
 
+			//- C. Main Content Layer
+			.white-box.drop-shadow.curved.curved-hz-1
+				.top-banner.drop-shadow.curved.curved-hz-1
+					.reg-padding
+						.white.font.pull-left.shadow.left-marg-s
+							| C. Main Content Layer
+						.pull-right
+							//- navigation
+							.navbar.navbar-layer(role="navigation")
+									ul.nav.navbar-nav.n-layer
+										li.dropdown.dropdown-layer-out
+											a(href="#" class="dropdown-toggle " data-toggle="dropdown") 
+												img.spacer-small(src="/images-esct/dropdown-white.svg" alt="")
+											ul.dropdown-menu.dropdown-layer
+												li
+													a(href='#') + Add new layer
+												li
+													a(href='#') + Copy this layer
+												li
+													a(href='#') + Delete this layer
+						.clearfix
+				.clearfix
+				.bigs-padding
+					.font
+						| The Event
+				.pull-left.width30
+					.spacer2
+					.center.bg-white.bigs-padding
+						.spacer4
+						img(src="/images-esct/logo-avatar2.svg" alt="")
+						.font.dark.center
+							| Picture or Logo
+						.spacer4
+				.pull-left.width70.bigs-pad
+						.spacer3
+						span.purple.font-medium Here is where you put all of your content.
+						.purple.font16
+							| It is the pitch to potential attendees concerning why exactly they 
+							| should go to your event. Though you can get into a discussion here 
+							| about the different guest speaker you will be having, or the venue, 
+							| or location, or the time table, you will have othher layers below 
+							| for which to do this.
+							.spacer
+							| Also here you might want to put the information about your company, 
+							| society, or organisation. Whether you want to 
+							| put that in the paragraph above this one is just a matter of taste.
 
-		//- inbox title plus buttons
-	.nspacer
+				.clearfix
+				.spacer
+			.spacer
 
-	.col-md-1.col-xs-1.col-sm-1.nspacer-medium.hide-mini3-except-smart
-		.font-tw
-			| <b>Inbox:</b>
-	.col-md-5.col-xs-5.col-sm-5.nspacer-medium.hide-mini3-except-smart
-		.font-tw
-			b= user.getName()
-			|  - #{user.position}, #{user.company}
-	.col-md-6.col-xs-6.col-sm-6.hide-mini3-except-smart
-		.font-x1.bg-purple.center.pull-right.psev2.prof-wall
-			| <a href="#Public" class="link-white">Public <br />Messages</a>
-		.font-x1.bg-green.center.pull-right.psev2.prof-wall
-			| <a href="#Profile" class="link-white">Those Who Saved<br />Your Profile</a>
-		.font-x1.bg-yellow.center.pull-right.psev2.prof-wall
-			| <a href="#Business" class="link-purple">Business <br />Cards</a>
-		.font-x1.bg-purple.center.pull-right.psev2.prof-wall
-			| <a href="#Private" class="link-white">Private<br />Messages</a>
-		.font-x1.bg-green.center.pull-right.psev2.prof-wall(style="padding-top:15px;")
-			| All
-	.clearfix.hide-mini3-except-smart
-	.col-md-7.col-xs-7.col-sm-7.hide-mini3-except-smart
-		.line-green(style="height:3px; margin-top:-3px;")
-
-	.col-md-12.col-xs-12.col-sm-12.nspacer-medium.hide-all2
-		.center
-			.font-tw.inline
-				| <b>Inbox:</b>
-			.font-tw.inline
-				| <b>Lucy Cook</b> - Director of Finance, Delloite
-	.clearfix.hide-all2
-	.col-md-12.col-xs-12.col-sm-12.hide-all2
-		.center
-			.inline.nspacer-small
-				.font-x1.bg-green.center.psev2.prof-wall
-					| All<br /><span class="color-green">Messages</span>
-			.inline.nspacer-small
-				.font-x1.bg-purple.center.psev2.prof-wall
-					| <a href="#Private" class="link-white">Private<br />Messages</a>
-			.inline.nspacer-small
-				.font-x1.bg-yellow.center.psev2.prof-wall
-					| <a href="#Private" class="link-purple">Business <br />Cards</a>
-			.inline.nspacer-small
-				.font-x1.bg-green.center.psev2.prof-wall
-					| <a href="#Private" class="link-white">Those Who Saved<br />Your Profile</a>
-			.inline.nspacer-small
-				.font-x1.bg-purple.center.psev2.prof-wall
-					| <a href="#Private" class="link-white">Public <br />Messages</a>
-
-
-	.clearfix
-
-		//- end inbox title plus buttons
-
-	.nspacer
-
-	.col-md-12.col-xs-12.col-sm-12
-		.font-tw
-			| <b>Private messages</b>
-		.line-purple
-
-		//- guest speakers
-	.col-md-12.col-xs-12.col-sm-12.hide-mini3-except-smart
-		.col-md-2.col-xs-2.col-sm-2
-			.font-e1
-				| Guest speaker
-			img(src="/images/default_speaker.svg", alt="", class="circularespond img-responsive")
-		.col-md-10.col-xs-10.col-sm-10.nspacer-bigger
-			.font-e1.bigger-pad-left
-				| <b>Lucy Cook</b> - Director of Finance, Delloite	<br />
-			.nspacer
-			.pull-left
-				img.pull-left(src="/images/bubble-left-grey.svg", alt="", style="vertical-align:top;")
-			.pull-left.bg-grey.psev.post-width.font-x 
-				| At vero eos et accusamus et iusto odio dignissimos <b>ducimus qui blanditiis</b> praesentium voluptatum deleniti atque corrupti quos dolores 
-				| et quas molestias excepturi sint occaecati cupiditate non provident,similique sunt.
-		.clearfix
-		.nspacer
-		.col-md-2.col-xs-2.col-sm-2
-			.font-e1
-				| Guest speaker
-			img(src="/images/default_speaker.svg", alt="", class="circularespond img-responsive")
-		.col-md-10.col-xs-10.col-sm-10.nspacer-bigger
-			.font-e1.bigger-pad-left
-				| <b>Lucy Cook</b> - Director of Finance, Delloite	<br />
-			.nspacer
-			.pull-left
-				img.pull-left(src="/images/bubble-left-grey.svg", alt="", style="vertical-align:top;")
-			.pull-left.bg-grey.psev.post-width.font-x 
-				| At vero eos et accusamus et iusto odio dignissimos <b>ducimus qui blanditiis</b> praesentium voluptatum deleniti atque corrupti quos dolores 
-				| et quas molestias excepturi sint occaecati cupiditate non provident,similique sunt.
-				| At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis <b>praesentium voluptatum deleniti</b> atque corrupti quos dolores 
-		.clearfix
-		.nspacer
-
-	.col-md-12.col-xs-12.col-sm-12.hide-except-smart
-		.clearfix
-			.font-e1.pull-left
-				| Guest speaker
-			.clearfix
-			.col-md-5.col-xs-5.col-sm-5
-				img(src="/images/default_speaker.svg", alt="", class="circularespond", style="width:100%;")
-			.col-md-7.col-xs-7.col-sm-7
-				.font-e1(style="margin-top:30px;")
-					| <b>Lucy Cook</b> - Director of Finance, Delloite	<br />
-		.clearfix
-		.col-md-12.col-xs-12.col-sm-12
-			.pull-left
-				img.pull-left.bubble-responsive(src="/images/bubble-left-grey.svg", alt="", style="vertical-align:top;")
-			.pull-left.bg-grey.psev.post-width.font-x 
-				| At vero eos et accusamus et iusto odio dignissimos <b>ducimus qui blanditiis</b> praesentium voluptatum deleniti atque corrupti quos dolores 
-		.clearfix
-		.nspacer
-			.font-e1.pull-left
-				| Guest speaker
-			.clearfix
-			.col-md-5.col-xs-5.col-sm-5
-				img(src="/images/default_speaker.svg", alt="", class="circularespond", style="width:100%;")
-			.col-md-7.col-xs-7.col-sm-7
-				.font-e1(style="margin-top:30px;")
-					| <b>Lucy Cook</b> - Director of Finance, Delloite	<br />
-		.clearfix
-		.col-md-12.col-xs-12.col-sm-12
-			.pull-left
-				img.pull-left.bubble-responsive(src="/images/bubble-left-grey.svg", alt="", style="vertical-align:top;")
-			.pull-left.bg-grey.psev.post-width.font-x 
-				| At vero eos et accusamus et iusto odio dignissimos <b>ducimus qui blanditiis</b> praesentium voluptatum deleniti atque corrupti quos dolores 
-		.clearfix
-
-		//- end guest speakers
-
-	.center(style='height:35px;')
-		ul.pagination
-			li
-				a(href='#') «
-			li.active
-				a(href='#') 1
-			li
-				a(href='#') 2
-			li
-				a(href='#') 3
-			li.disabled
-				a(href='#') ...
-			li
-				a(href='#') 5
-			li
-				a(href='#') »
-
-	.col-md-12.col-xs-12.col-sm-12
-		.font-tw
-			| <b>Business card recived</b>
-		.line-purple
-
-	.clearfix
-	.nspacer
-
-		//- business
-
-	.col-md-3.col-xs-3.col-sm-3.inv-till-1
-		.right
-			img(src="/images/default_speaker.svg", alt="", class="circularespond",)
-	.col-md-2.col-xs-2.col-sm-2.inv-till-1
-		.center.nspacer-medium
-			img(src="/images/card-avatar.svg", alt="", class="pad-left-ten",)
-	.col-md-3.col-xs-3.col-sm-3.inv-till-1
-		.right
-			img(src="/images/default_speaker.svg", alt="", class="circularespond",)
-	.col-md-2.col-xs-2.col-sm-2.inv-till-1
-		.center.nspacer-medium
-			img(src="/images/card-avatar.svg", alt="", class="pad-left-ten ",)
-
-
-	.col-md-6.col-xs-6.col-sm-6.vis-till-1
-		.inline
-			.center
-				img(src="/images/default_speaker.svg", alt="", class="circularespond img-responsive",)
-		.inline
-			.center.nspacer-medium
-				img(src="/images/card-avatar.svg", alt="", class="pad-left-ten img-responsive",)
-
-	.col-md-6.col-xs-6.col-sm-6.vis-till-1
-		.inline
-			.center
-				img(src="/images/default_speaker.svg", alt="", class="circularespond img-responsive",)
-		.inline
-			.center.nspacer-medium
-				img(src="/images/card-avatar.svg", alt="", class="pad-left-ten img-responsive",)
-
-	.col-md-6.col-xs-6.col-sm-6.hide-all2
-			.center
-				img(src="/images/default_speaker.svg", alt="", class="circularespond-small img-responsive",)
-	.col-md-6.col-xs-6.col-sm-6.hide-all2
-			.center.nspacer-medium
-				img(src="/images/card-avatar.svg", alt="", class="img-responsive",)
-	.clearfix.hide-all2
-	.col-md-6.col-xs-6.col-sm-6.hide-all2.nspacer
-			.center
-				img(src="/images/default_speaker.svg", alt="", class="circularespond-small img-responsive",)
-	.col-md-6.col-xs-6.col-sm-6.hide-all2.nspacer
-			.center.nspacer-medium
-				img(src="/images/card-avatar.svg", alt="", class="img-responsive",)
-
-		//- end business
-
-	.clearfix
-	.nspacer-medium
-
-	.center(style='height:35px;')
-		ul.pagination
-			li
-				a(href='#') «
-			li.active
-				a(href='#') 1
-			li
-				a(href='#') 2
-			li
-				a(href='#') 3
-			li.disabled
-				a(href='#') ...
-			li
-				a(href='#') 5
-			li
-				a(href='#') »
-	.clearfix
-
-	.col-md-12.col-xs-12.col-sm-12
-		.font-tw
-			| <b>Those who saved your profile</b>
-		.line-purple
-	.clearfix
-	.nspacer
-
-		//- saved
-
-	.col-md-12.col-xs-12.col-sm-12
-		.center
-			.inline
-				.div
-					img(src="/images/default_speaker.svg", alt="", class="circularespond",)
-				.font-s
-					| <b>Dart</b><br />
-					| Director of Finance, Delloite
-			.inline.big-pad-right.big-pad-left.pad-smart
-				.div
-					img(src="/images/default_speaker.svg", alt="", class="circularespond",)
-				.font-s
-					| <b>Hulk</b><br />
-					| Director of Finance, Delloite
-			.inline
-				.div
-					img(src="/images/default_speaker.svg", alt="", class="circularespond",)
-				.font-s
-					| <b>Chubaka</b><br />
-					| Director of Finance, Delloite
-
-	.clearfix
-	.nspacer
-
-	.center(style='height:35px;')
-		ul.pagination
-			li
-				a(href='#') «
-			li.active
-				a(href='#') 1
-			li
-				a(href='#') 2
-			li
-				a(href='#') 3
-			li.disabled
-				a(href='#') ...
-			li
-				a(href='#') 5
-			li
-				a(href='#') »
-	.clearfix
-
-	.col-md-12.col-xs-12.col-sm-12
-		.font-tw
-			| <b>Public messages</b>
-		.line-purple
-	.clearfix
-	.nspacer
-
-		//- guest speakers2
-	.col-md-12.col-xs-12.col-sm-12.hide-mini3-except-smart
-		.col-md-2.col-xs-2.col-sm-2
-			.font-e1
-				| Guest speaker
-			img(src="/images/default_speaker.svg", alt="", class="circularespond img-responsive")
-		.col-md-10.col-xs-10.col-sm-10.nspacer-bigger
-			.font-e1.bigger-pad-left
-				| <b>Lucy Cook</b> - Director of Finance, Delloite	<br />
-			.nspacer
-			.pull-left
-				img.pull-left(src="/images/bubble-left-grey.svg", alt="", style="vertical-align:top;")
-			.pull-left.bg-grey.psev.post-width.font-x 
-				| At vero eos et accusamus et iusto odio dignissimos <b>ducimus qui blanditiis</b> praesentium voluptatum deleniti atque corrupti quos dolores 
-				| et quas molestias excepturi sint occaecati cupiditate non provident,similique sunt.
-		.clearfix
-		.nspacer
-		.col-md-2.col-xs-2.col-sm-2
-			.font-e1
-				| Guest speaker
-			img(src="/images/default_speaker.svg", alt="", class="circularespond img-responsive")
-		.col-md-10.col-xs-10.col-sm-10.nspacer-bigger
-			.font-e1.bigger-pad-left
-				| <b>Lucy Cook</b> - Director of Finance, Delloite	<br />
-			.nspacer
-			.pull-left
-				img.pull-left(src="/images/bubble-left-grey.svg", alt="", style="vertical-align:top;")
-			.pull-left.bg-grey.psev.post-width.font-x 
-				| At vero eos et accusamus et iusto odio dignissimos <b>ducimus qui blanditiis</b> praesentium voluptatum deleniti atque corrupti quos dolores 
-				| et quas molestias excepturi sint occaecati cupiditate non provident,similique sunt.
-				| At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis <b>praesentium voluptatum deleniti</b> atque corrupti quos dolores 
-		.clearfix
-		.nspacer
-
-	.col-md-12.col-xs-12.col-sm-12.hide-except-smart
-		.clearfix
-			.font-e1.pull-left
-				| Guest speaker
-			.clearfix
-			.col-md-5.col-xs-5.col-sm-5
-				img(src="/images/default_speaker.svg", alt="", class="circularespond", style="width:100%;")
-			.col-md-7.col-xs-7.col-sm-7
-				.font-e1(style="margin-top:30px;")
-					| <b>Lucy Cook</b> - Director of Finance, Delloite	<br />
-		.clearfix
-		.col-md-12.col-xs-12.col-sm-12
-			.pull-left
-				img.pull-left.bubble-responsive(src="/images/bubble-left-grey.svg", alt="", style="vertical-align:top;")
-			.pull-left.bg-grey.psev.post-width.font-x 
-				| At vero eos et accusamus et iusto odio dignissimos <b>ducimus qui blanditiis</b> praesentium voluptatum deleniti atque corrupti quos dolores 
-		.clearfix
-		.nspacer
-			.font-e1.pull-left
-				| Guest speaker
-			.clearfix
-			.col-md-5.col-xs-5.col-sm-5
-				img(src="/images/default_speaker.svg", alt="", class="circularespond", style="width:100%;")
-			.col-md-7.col-xs-7.col-sm-7
-				.font-e1(style="margin-top:30px;")
-					| <b>Lucy Cook</b> - Director of Finance, Delloite	<br />
-		.clearfix
-		.col-md-12.col-xs-12.col-sm-12
-			.pull-left
-				img.pull-left.bubble-responsive(src="/images/bubble-left-grey.svg", alt="", style="vertical-align:top;")
-			.pull-left.bg-grey.psev.post-width.font-x 
-				| At vero eos et accusamus et iusto odio dignissimos <b>ducimus qui blanditiis</b> praesentium voluptatum deleniti atque corrupti quos dolores 
-		.clearfix
-
-		//- end guest speakers2
-
-	.center(style='height:35px;')
-		ul.pagination
-			li
-				a(href='#') «
-			li.active
-				a(href='#') 1
-			li
-				a(href='#') 2
-			li
-				a(href='#') 3
-			li.disabled
-				a(href='#') ...
-			li
-				a(href='#') 5
-			li
-				a(href='#') »
-
-	.clearfix
-
-		//- buttons
-
-	.nspacer-big
-
-	.col-sm-12.col-xs-12.col-md-12
-		.center
-			.inline.nspacer-small
-				button.btn.btn-primary.font-e2.hide-prof-butt(type='submit', style="height:95px; width:100%; border-radius: 10px; color:#fff; padding:20px;")
-					| Invite someone via email <br />to take over this profile
-			.inline.nspacer-small.pad-on-smart
-				button.btn.btn-default.font-e2.hide-prof-butt(type='submit', style="height:95px; width:100%; border-radius: 10px; color:#fff; padding:20px;")
-					| Send this profile’s inbox <br /> to an email address
-			.inline.nspacer-small
-				button.btn.btn-info.font-e2.hide-prof-butt(type='submit', style="height:95px; width:100%; border-radius: 10px; padding:20px;")
-					| Send this profile’s inbox <br />to another EventMost user
-
-	.clearfix
-
-	.nspacer-awsome
-
-
-		//- search
-
-
-	.col-sm-5.col-xs-5.col-md-5.hide-mini3-except-smart
-		.font-e.right.nspacer
-			| Search EventMost:
-	.col-sm-4.col-xs-4.col-md-4.hide-mini3-except-smart
-		form(method="POST", accept-charset="utf-8")
-			input.gonew2.pull-right.header-links(type="button", value="GO", style="width:20%;")
-			input(type="hidden", name="_csrf", value=token)
-			input.pull-right.font-s.search-input.pad-left-ten.header-links(type="search", placeholder="search events or people", style="width:77%;")
-
-	.col-sm-12.col-xs-12.col-md-12.hide-all2
-		.font-e1.center.nspacer-small
-			| Search EventMost:
-	.clearfix.hide-all2
-	.col-sm-12.col-xs-12.col-md-12.hide-all2
-		.center
-			form(method="POST", accept-charset="utf-8")
-				input.gonew2.pull-right.header-links(type="button", value="GO", style="width:20%;")
-				input(type="hidden", name="_csrf", value=token)
-				input.pull-right.font-s.search-input.pad-left-ten.header-links(type="search", placeholder="search events or people", style="width:77%;")
-		//- end search
-	.clearfix
-
-	.nspacer-awsome
-	.col-md-12.col-xs-12.col-sm-12
-		.center
-			.inline
-				.div
-					img(src="/images/default_speaker.svg", alt="", class="circularespond-small",)
-				.font-xs2
-					| <b>Dart</b><br />
-					| Director of Finance, Delloite
-				p.check5-purple-small
-					input(name="", placeholder="", type="checkbox", id="creditcardsmaller", value="small")
-					label(for='creditcardsmaller',)
-			.inline.big-pad-right.big-pad-left.pad-smart
-				.div
-					img(src="/images/default_speaker.svg", alt="", class="circularespond-small",)
-				.font-xs2
-					| <b>Hulk</b><br />
-					| Director of Finance, Delloite
-				p.check5-purple-small
-					input(name="", placeholder="", type="checkbox", id="creditcardsmaller2", value="small")
-					label(for='creditcardsmaller2',)
-			.inline.big-pad-right.pad-smart
-				.div
-					img(src="/images/default_speaker.svg", alt="", class="circularespond-small",)
-				.font-xs2
-					| <b>Chubaka</b><br />
-					| Director of Finance, Delloite
-				p.check5-purple-small
-					input(name="", placeholder="", type="checkbox", id="creditcardsmaller3", value="small")
-					label(for='creditcardsmaller3',)
-			.inline.pad-smart
-				.div
-					img(src="/images/default_speaker.svg", alt="", class="circularespond-small",)
-				.font-xs2
-					| <b>Gizmo</b><br />
-					| Director of Finance, Delloite
-				p.check5-purple-small
-					input(name="", placeholder="", type="checkbox", id="creditcardsmaller4", value="small")
-					label(for='creditcardsmaller4',)
-
-			.psev.col-lg-10.col-md-10.col-xs-10.hide-mini3-except-smart
-				button.btn.btn-info.font-xs.font-ah.pull-right(type='submit', href="", style="font-size:20px; padding:5px; padding-left:15px; padding-right:15px; margin-right:0px;")
-					| <b>SEND</b>
-
-			.psev.col-lg-12.col-md-12.col-xs-12.hide-all2
-				.center
-					button.btn.btn-info.font-xs.font-ah(type='submit', href="", style="font-size:20px; padding:5px; padding-left:15px; padding-right:15px; margin-right:0px; margin-left:-10px;")
-						| <b>SEND</b>	
-
-			.clearfix
+			//- D. Guest Speaker Layer 
+			.white-box.drop-shadow.curved.curved-hz-1
+				.top-banner.drop-shadow.curved.curved-hz-1
+					.reg-padding
+						.white.font.pull-left.shadow.left-marg-s
+							| D. Guest Speaker Layer 
+						.pull-right
+							//- navigation
+							.navbar.navbar-layer(role="navigation")
+									ul.nav.navbar-nav.n-layer
+										li.dropdown.dropdown-layer-out
+											a(href="#" class="dropdown-toggle " data-toggle="dropdown") 
+												img.spacer-small(src="/images-esct/dropdown-white.svg" alt="")
+											ul.dropdown-menu.dropdown-layer
+												li
+													a(href='#') + Add new layer
+												li
+													a(href='#') + Copy this layer
+												li
+													a(href='#') + Delete this layer
+						.clearfix
+				.clearfix
+				.bigs-padding
+					.font
+						| The Speakers
+				.pull-left.bg-white.grey-border.bigs-padding.padding-bottom-zero.width20.spheight
+					img(src="/images-esct/speaker-avatar2.svg" alt="")
+				.pull-left.bg-white.grey-border.bigs-padding.padding-bottom-zero.width80.spheight.border-left-no
+					.dark.font.font-change
+						| Anna Noname
+					p Large Paragraph about the person
+				.clearfix
+				.spacer
+				.pull-left.bg-white.grey-border.bigs-padding.padding-bottom-zero.width20.spheight
+					img(src="/images-esct/speaker-avatar2.svg" alt="")
+				.pull-left.bg-white.grey-border.bigs-padding.padding-bottom-zero.width80.spheight.border-left-no
+					.dark.font.font-change
+						| Anna Noname
+					p Large Paragraph about the person
+				.clearfix
+				.spacer
+				.pull-left.bg-white.grey-border.bigs-padding.padding-bottom-zero.width20.spheight
+					img(src="/images-esct/speaker-avatar2.svg" alt="")
+				.pull-left.bg-white.grey-border.bigs-padding.padding-bottom-zero.width80.spheight.border-left-no
+					.dark.font.font-change
+						| Anna Noname
+					p Large Paragraph about the person
+				.clearfix
+				.spacer2
+			.spacer
+			//- E. Venue Layer 
+			.white-box.drop-shadow.curved.curved-hz-1
+				.top-banner.drop-shadow.curved.curved-hz-1
+					.reg-padding
+						.white.font.pull-left.shadow.left-marg-s
+							| E. Venue Layer 
+						.pull-right
+							//- navigation
+							.navbar.navbar-layer(role="navigation")
+									ul.nav.navbar-nav.n-layer
+										li.dropdown.dropdown-layer-out
+											a(href="#" class="dropdown-toggle " data-toggle="dropdown") 
+												img.spacer-small(src="/images-esct/dropdown-white.svg" alt="")
+											ul.dropdown-menu.dropdown-layer
+												li
+													a(href='#') + Add new layer
+												li
+													a(href='#') + Copy this layer
+												li
+													a(href='#') + Delete this layer
+						.clearfix
+				.clearfix
+				.pull-left.width30
+					.font.bigs-padding
+						| The Venue
+					.center.bg-white.bigs-padding
+						.spacer4
+						img(src="/images-esct/logo-avatar2.svg" alt="")
+						.font.dark.center
+							| Picture or Logo
+						.spacer4
+				.pull-left.width30.bigs-pad
+						.spacer-circles2
+						.dark.font14.right
+							| Text about the venue
+							| or help in getting to
+							| the location
+							| or a pitch about
+							| how great the venue is
+				.pull-left.width40
+					.spacer-small
+					.google-maps.drop-shadow2.curved.curved-hz-1
+						iframe(width='350', height='19', frameborder='0', scrolling='no', marginheight='0', marginwidth='0', src='https://maps.google.pl/maps?f=q&source=s_q&hl=en&geocode=&q=Gdynia,+Poland&aq=0&oq=gdynia+poland&sll=52.025459,19.204102&sspn=11.244804,28.54248&ie=UTF8&hq=&hnear=Gdynia,+Pomeranian+Voivodeship&t=m&z=11&ll=54.51889,18.530541&output=embed')
+				.clearfix
+				.spacer
+			.spacer
+			//- F. Schedule Layer 
+			.white-box.drop-shadow.curved.curved-hz-1
+				.top-banner.drop-shadow.curved.curved-hz-1
+					.reg-padding
+						.white.font.pull-left.shadow.left-marg-s
+							| F. Schedule Layer 
+						.pull-right
+							//- navigation
+							.navbar.navbar-layer(role="navigation")
+									ul.nav.navbar-nav.n-layer
+										li.dropdown.dropdown-layer-out
+											a(href="#" class="dropdown-toggle " data-toggle="dropdown") 
+												img.spacer-small(src="/images-esct/dropdown-white.svg" alt="")
+											ul.dropdown-menu.dropdown-layer
+												li
+													a(href='#') + Add new layer
+												li
+													a(href='#') + Copy this layer
+												li
+													a(href='#') + Delete this layer
+						.clearfix
+				.clearfix
+				.bigs-padding
+					.font
+						| Time Table
+				.spacer
+				.pull-left.width20.right
+					.pull-left.left25
+						button.btn.btn-lg.btn-danger.drop-shadow2.curved.curved-hz-1.font-small(type="button")
+							| Day 1
+					.spacer-small
+					.pull-left.left25
+						button.btn.btn-lg.btn-danger.drop-shadow2.curved.curved-hz-1.font-small(type="button")
+							| Day 2
+					.spacer-small
+					.pull-left.left25
+						button.btn.btn-lg.btn-danger.drop-shadow2.curved.curved-hz-1.font-small(type="button")
+							| Day 3
+				.pull-left.left-marg.width80
+					.rounded-box-purple
+						.col-md-3.col-xs-3
+							input.red.font-button.input-white.spacer-mini-min(type="text", value="time", placeholder="time")
+						.col-md-9.col-xs-9				
+							input.input-white.spacer-mini(type="text", value="Registration time", placeholder="Registration time")
+					.spacer-small
+					.rounded-box-purple
+						.col-md-3.col-xs-3
+							input.red.font-button.input-white.spacer-mini-min(type="text", value="time", placeholder="time")
+						.col-md-9.col-xs-9				
+							input.input-white.spacer-mini(type="text", value="Lorem Ipsum Dolor", placeholder="Lorem Ipsum Dolor")
+					.spacer-small
+					.rounded-box-purple
+						.col-md-3.col-xs-3
+							input.red.font-button.input-white.spacer-mini-min(type="text", value="time", placeholder="time")
+						.col-md-9.col-xs-9				
+							input.input-white.spacer-mini(type="text", value="Lorem Ipsum Dolor", placeholder="Lorem Ipsum Dolor")
+					.spacer-small
+					.rounded-box-purple
+						.col-md-3.col-xs-3
+							input.red.font-button.input-white.spacer-mini-min(type="text", value="time", placeholder="time")
+						.col-md-9.col-xs-9				
+							input.input-white.spacer-mini(type="text", value="Lorem Ipsum Dolor", placeholder="Lorem Ipsum Dolor")
+				.clearfix
+				.spacer2
+			.spacer
+			//- G. Path to Register Layer 
+			.white-box.drop-shadow.curved.curved-hz-1
+				.top-banner.drop-shadow.curved.curved-hz-1
+					.reg-padding
+						.white.font.pull-left.shadow.left-marg-s
+							| G. Path to Register Layer 
+						.pull-right
+							//- navigation
+							.navbar.navbar-layer(role="navigation")
+									ul.nav.navbar-nav.n-layer
+										li.dropdown.dropdown-layer-out
+											a(href="#" class="dropdown-toggle " data-toggle="dropdown") 
+												img.spacer-small(src="/images-esct/dropdown-white.svg" alt="")
+											ul.dropdown-menu.dropdown-layer
+												li
+													a(href='#') + Add new layer
+												li
+													a(href='#') + Copy this layer
+												li
+													a(href='#') + Delete this layer
+						.clearfix
+				.clearfix
+				.bigs-padding
+					.row
+						.col-md-7.col-xs-7
+							.dark.font-medium.center.spacer-small
+								| Want to attend The Big Event ?
+						.col-md-5.col-xs-5
+							button.btn.btn-lg.btn-danger.font.drop-shadow2.curved.curved-hz-1(type="button")
+								| Sign Up Now
+								i.left-marg-s.fa.fa-arrow-circle-o-right 
+			.spacer
+			//- H. Promotion/Contact Layer 
+			.white-box.drop-shadow.curved.curved-hz-1
+				.top-banner.drop-shadow.curved.curved-hz-1
+					.reg-padding
+						.white.font.pull-left.shadow.left-marg-s
+							| H. Promotion/Contact Layer 
+						.pull-right
+							//- navigation
+							.navbar.navbar-layer(role="navigation")
+									ul.nav.navbar-nav.n-layer
+										li.dropdown.dropdown-layer-out
+											a(href="#" class="dropdown-toggle " data-toggle="dropdown") 
+												img.spacer-small(src="/images-esct/dropdown-white.svg" alt="")
+											ul.dropdown-menu.dropdown-layer
+												li
+													a(href='#') + Add new layer
+												li
+													a(href='#') + Copy this layer
+												li
+													a(href='#') + Delete this layer
+						.clearfix
+				.clearfix
+				.bigs-padding
+					.font
+						| Connect
+				.pull-left.left-marg-big
+						a(href="#") 
+								.dark.fa-facebook-size.bigs-padding(style="padding-bottom:0px !important;")
+									i.fa.fa-facebook
+								.font-button.dark
+									| Facebook
+								.dark.font-tiny
+									| Lorem ipsum dolor
+				.pull-left.left-marg-big
+						a(href="#") 
+								.dark.fa-twitter-size.bigs-padding(style="padding-bottom:0px !important;")
+									i.fa.fa-twitter
+								.font-button.dark
+									| Twitter
+								.dark.font-tiny
+									| Lorem ipsum dolor
+				.pull-left.left-marg-big
+						a(href="#") 
+								.dark.fa-linkedin-size.bigs-padding(style="padding-bottom:0px !important;")
+									i.fa.fa-linkedin
+								.font-button.dark
+									| Linkedin
+								.dark.font-tiny
+									| Lorem ipsum dolor
+				.pull-left.left-marg-big
+						a(href="#") 
+								.dark.fa-envelope-size.bigs-padding(style="padding-bottom:0px !important;")
+									i.fa.fa-envelope
+								.font-button.dark
+									| Mail
+								.dark.font-tiny
+									| Lorem ipsum dolor
+				.clearfix
+				.spacer2
+			.spacer
+			//- I. Sponsors and Partnerships Layer 
+			.white-box.drop-shadow.curved.curved-hz-1
+				.top-banner.drop-shadow.curved.curved-hz-1
+					.reg-padding
+						.white.font.pull-left.shadow.left-marg-s
+							| I. Sponsors and Partnerships Layer 
+						.pull-right
+							//- navigation
+							.navbar.navbar-layer(role="navigation")
+									ul.nav.navbar-nav.n-layer
+										li.dropdown.dropdown-layer-out
+											a(href="#" class="dropdown-toggle " data-toggle="dropdown") 
+												img.spacer-small(src="/images-esct/dropdown-white.svg" alt="")
+											ul.dropdown-menu.dropdown-layer
+												li
+													a(href='#') + Add new layer
+												li
+													a(href='#') + Copy this layer
+												li
+													a(href='#') + Delete this layer
+						.clearfix
+				.clearfix
+				.bigs-padding
+					.row
+						.col-md-8.col-xs-8
+							.font
+								| Sponsors
+							.spacer2
+							.pull-left
+								img(src="/images-esct/logo-avatar2.svg" alt="" style="width:103px; height:65px;")
+							.pull-left.left-marg
+								img(src="/images-esct/logo-avatar2.svg" alt="" style="width:103px; height:65px;")
+							.pull-left.left-marg
+								img(src="/images-esct/logo-avatar2.svg" alt="" style="width:103px; height:65px;")
+							.pull-left.left-marg
+								img(src="/images-esct/logo-avatar2.svg" alt="" style="width:103px; height:65px;")
+						.col-md-4.col-xs-4
+							.font
+								| Partners
+							.spacer2
+							.pull-left
+								img(src="/images-esct/logo-avatar2.svg" alt="" style="width:103px; height:65px;")
+							.pull-left.left-marg
+								img(src="/images-esct/logo-avatar2.svg" alt="" style="width:103px; height:65px;")
+						.clearfix
+					.clearfix
+					.spacer
+			.spacer
