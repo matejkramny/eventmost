@@ -351,7 +351,13 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d6d6d6', end
   background-position: 0 0;
 }
 /*inputs*/
-
+.input-white{
+  border:0;
+  background-color: #fff;
+  color: #404041;
+  max-width: 100%;
+  min-width: 100%;
+}
 .input-grey{
   border:0;
   background-color: #bbbdc0;
