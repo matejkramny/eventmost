@@ -5,6 +5,7 @@ exports.router = function (app) {
 	
 	app.get('/event/:id/attendees', listAttendees)
 		.get('/event/:id/attendee/:attendee', showAttendee)
+		.get('/event/:id/attendee/:attendee/remove', removeAttendee)
 		.post('/event/:id/join', joinEvent)
 }
 
@@ -70,6 +71,48 @@ function showAttendee (req, res) {
 	res.locals.theAttendee = theAttendee;
 	res.locals.saved = false;
 	res.render('user', { title: theAttendee.user.getName() });
+}
+
+function removeAttendee (req, res) {
+	if (res.locals.eventadmin !== true) {
+		res.format({
+			html: function() {
+				res.redirect('/event/'+res.locals.ev._id);
+			},
+			json: function() {
+				res.send({
+					status: 404
+				})
+			}
+		});
+		return;
+	}
+	
+	var attID = req.params.attendee;
+	var ev = res.locals.ev;
+	
+	try {
+		attID = mongoose.Types.ObjectId(attID)
+	} catch (e) {
+		res.redirect('/event/'+ev._id)
+		return;
+	}
+	
+	for (var i = 0; i < ev.attendees.length; i++) {
+		var attendee = ev.attendees[i];
+		
+		if (typeof attendee.user === "object" && attendee._id.equals(attID)) {
+			if (attendee.admin) {
+				break;
+			}
+			
+			attendee.isAttending = false;
+			attendee.save();
+			break;
+		}
+	}
+	
+	res.redirect('/event/'+ev._id);
 }
 
 function joinEvent (req, res) {
