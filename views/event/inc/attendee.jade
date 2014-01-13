@@ -12,6 +12,8 @@ mixin attendee(attendee, feedbackEditLink)
 				//- font-change script added when to long name font size changes like in example
 				a.bold.break.color-green.font-change.font-attendee.font-exception(href="/event/"+ev._id+"/attendee/"+attendee._id)
 					| #{ attendee.user.getName() }
+				if (eventadmin && attendee.admin == false)
+					a.pull-right.bold.break.color-green.font-change.font-attendee.font-exception(href="/event/"+ev._id+"/attendee/"+attendee._id+"/remove" style="color:#000;" title="Remove Attendee from Event"): i.fa.fa-fw.fa-trash-o
 				.bold.break.font-change.font-attendee.font-exception
 					if(attendee.user.position.length > 0 && attendee.user.company.length > 0)
 						| - #{attendee.user.position}, #{attendee.user.company}

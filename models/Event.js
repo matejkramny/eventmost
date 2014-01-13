@@ -99,63 +99,64 @@ scheme.statics.getEvent = function (id, cb, simple) {
 		simple = false;
 	}
 	
-	var populate = 'files.user avatar attendees tickets messages';
-	if (simple) {
-		populate = 'attendees';
-	}
-	
 	// a dismal solution, but works.. TODO replace when have time
 	try {
-		exports.Event
+		var q = exports.Event
 			.findOne({ deleted: false, _id: mongoose.Types.ObjectId(id) })
-			.populate(populate)
-			.exec(function(err, ev) {
-				if (err) throw err;
-				
-				if (!ev) {
-					cb(ev);
-					return;
-				}
-				
-				var stack = [
-					//populate attendees
-					function(callback) {
-						async.each(ev.attendees, function(attendee, cb) {
-							attendee.populate('user', function(err) {
-								cb(null)
-							})
-						}, function(err) {
-							callback(null)
+			.populate({
+				path: 'attendees',
+				match: { isAttending: true }
+			})
+		if (!simple) {
+			q.populate('files.user avatar tickets messages')
+		}
+		
+		q.exec(function(err, ev) {
+			if (err) throw err;
+			
+			if (!ev) {
+				cb(ev);
+				return;
+			}
+			
+			var stack = [
+				//populate attendees
+				function(callback) {
+					async.each(ev.attendees, function(attendee, cb) {
+						attendee.populate('user', function(err) {
+							cb(null)
 						})
-					}
-				];
-				
-				if (!simple) {
-					//avatar etc
-					stack.push(function(callback) {
-						if (ev.avatar == null || ev.avatar.url == null || ev.avatar.url.length == 0) {
-							var avatar = new Avatar({
-								url: "/images/event-avatar-new2.svg"
-							})
-							avatar.save();
-							ev.avatar = avatar._id;
-							ev.save();
-						}
-						
-						ev.getGeo(function(geo) {
-							callback(null)
-						})
-					});
-					stack.push(function (callback) {
-						ev.populate('sponsorLayout.sponsor1 sponsorLayout.sponsor2 sponsorLayout.sponsor3', callback)
+					}, function(err) {
+						callback(null)
 					})
 				}
-				
-				async.parallel(stack, function() {
-					cb(ev)
+			];
+			
+			if (!simple) {
+				//avatar etc
+				stack.push(function(callback) {
+					if (ev.avatar == null || ev.avatar.url == null || ev.avatar.url.length == 0) {
+						var avatar = new Avatar({
+							url: "/images/event-avatar-new2.svg"
+						})
+						avatar.save();
+						ev.avatar = avatar._id;
+						ev.save();
+					}
+					
+					ev.getGeo(function(geo) {
+						callback(null)
+					})
 				});
+				stack.push(function (callback) {
+					ev.populate('sponsorLayout.sponsor1 sponsorLayout.sponsor2 sponsorLayout.sponsor3', callback)
+				})
 			}
-		)
+			
+			async.parallel(stack, function() {
+				cb(ev)
+			});
+		})
 	} catch (ex) {
 		if (!config.production) {
 			throw ex;
