@@ -95,6 +95,8 @@ app.use(function(req, res, next) {
 	
 	res.header("X-Powered-By", "EventMost")
 	
+	res.locals.is_https = req.protocol == "https" ? true : false;
+	
 	// flash
 	if (req.session.flash) {
 		res.locals.flash = req.session.flash;

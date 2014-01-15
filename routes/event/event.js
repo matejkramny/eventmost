@@ -9,6 +9,7 @@ var dropbox = require('./dropbox')
 	, admin = require('./admin/admin')
 	, moment = require('moment')
 	, socket = require('./socket')
+	, config = require('../../config')
 
 exports.router = function (app) {
 	add.router(app)
@@ -18,11 +19,12 @@ exports.router = function (app) {
 		.get('/event/:id/*', redirectToRegistrationPage)
 	
 		.all('/event/*', util.authorized)
-	
+		
 		.all('/event/:id/*', getEvent, attending)
 		.get('/event/:id/*', logImpression)
 		.get('/event/:id', getEvent, attending, logImpression, viewEvent)
 		
+		.get('/event/:id/tickets', getEvent, viewTickets)
 		.post('/event/:id/post', postMessage)
 		
 		.get('/event/:id/registrationpage', viewRegistrationPage)
@@ -192,6 +194,9 @@ function viewEvent (req, res) {
 			if (res.locals.eventattending) {
 				res.render('event/homepage', { title: res.locals.ev.name });
 			} else {
+				if (config.production && res.locals.ev.tickets.length > 0 && res.locals.is_https != true) {
+					res.redirect('https://'+req.host+'/event/'+res.locals.ev._id);
+				}
 				res.render('event/landingpage', { title: res.locals.ev.name });
 			}
 		}
@@ -211,6 +216,12 @@ function viewRegistrationPage (req, res) {
 			res.render('event/landingpage', { title: res.locals.ev.name });
 		}
 	});
+}
+
+function viewTickets (req, res) {
+	res.send({
+		tickets: res.locals.ev.tickets
+	})
 }
 
 function postMessage (req, res) {

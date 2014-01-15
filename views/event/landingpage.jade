@@ -3,9 +3,11 @@ extends ../responsive
 include inc/navbar
 
 append addonjs
-	script(src="/js/eventLandingPage#{minified}.js", defer)
-	script(src="/js/drops#{minified}.js", defer)
+	script(src="/js/eventLandingPage#{minified}.js" defer)
+	script(src="/js/drops#{minified}.js" defer)
 	include inc/mapjs
+	script(src="/js/moment.min.js" defer)
+	script(src="/js/event_landingpage#{minified}.js" defer)
 
 block content
 	if (eventattending)
@@ -65,15 +67,15 @@ block content
 		.description-text-medium.break!= ev.description	
 
 	if (!eventattending)
-		if ev.pricedTickets
+		if (ev.pricedTickets && loggedIn)
 			.col-md-12.col-lg-12.col-sm-12
 				// tickets required
 				include inc/payment
 		else
 			.col-md-12.col-lg-12.col-sm-12
 				.nspacer.center
-					if loggedIn
-						if ev.categories.length > 0 || ev.allowAttendeesToCreateCategories
+					if (loggedIn)
+						if (ev.categories.length > 0 || ev.allowAttendeesToCreateCategories)
 							button.btn.btn-primary.hide-prof-butt(type='button' data-toggle="modal" href="#attendModal" style="border-radius: 10px; padding:10px; padding-right:25px; padding-left:25px;")
 								| Attend event
 						else

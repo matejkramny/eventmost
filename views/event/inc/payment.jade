@@ -1,55 +1,31 @@
-.eighty-five
+- var event_date = "" + ev.start.getDate() + "/" + (ev.start.getMonth()+1) + "/" + ev.start.getFullYear()
+.eighty-five(ng-controller="PaymentController" ng-init="init({ id: '#{ev._id}', csrf: '#{token}', event_date: '#{event_date}' })")
 	.center2
 		.half-round2
 			.half-round-purple
-				| <b>Registration Information</b>
+				b Registration Information
 	table.gridtable-payment-yellow
 		tr
-			th
-				| REGISTRATION TYPE
-			th
-				| SALES END
-			th
-				| PRICE
-			th
-				| FEE
-			th
-				| QUANTITY
-		for ticket in ev.tickets
-			tr
-				td
-					= ticket.type == 'custom' ? ticket.customType : ticket.type
-				td
-					= ev.start.getDate()
-					| /
-					= ev.start.getMonth()
-					|  
-					= ev.start.getFullYear()
-				td
-					| £#{ticket.price}
-				td
-					| £#{(ticket.price * 0.035).toFixed(2))
-				td
-					dl.dropdown6
-						dt
-							a.dropx6(href="#")
-								| 
-						dd
-							ul
-								- for (var i = 0; i < ticket.quantity; i++)
-									li
-										a(href="#") #{i}
+			th REGISTRATION TYPE
+			th SALES END
+			th PRICE
+			th FEE
+			th QUANTITY
+		tr(ng-repeat="ticket in tickets")
+			td
+				span(ng-show="ticket.type == 'custom'") {{ticket.customType}}
+				span(ng-show="ticket.type != 'custom'") {{ticket.type}}
+			td {{ event_date }}
+			td £{{ ticket.priceFormatted }}
+			td £{{ ticket.priceWithFeeFormatted }}
+			td.col-sm-2.col-lg-2.col-md-2.col-xs-4: input.form-control(type="number" step="1" min="0" ng-model="ticket.wantedQuantity" ng-init="ticket.wantedQuantity = 0" max="{{ticket.quantity}}" ng-change="updateTotal()")
 		tr
+			td Total
 			td
-				| Total
+			td: b £{{totalPriceFormatted}}
 			td
-				| 
-			td
-				| <b>£0.00</b>
-			td
-				| 
-			td
-				| <b>0</b>
+			td: b {{totalQuantity}}
+
 .eighty-five
 	.bg-yellowish
 		//-.nspacer.d-s-s-s1
@@ -65,9 +41,9 @@
 		.clearfix
 		.line2
 		.pull-left
-			img.d-s-s(src="/images/credit-cards2.svg", alt="" style="padding:10px;")
-			img.d-s-s1(src="/images/credit-cards2.svg", alt="" style="padding:10px; width:70%;")
+			img.d-s-s(src="/images/credit-cards2.svg" style="padding:10px;")
+			img.d-s-s1(src="/images/credit-cards2.svg" style="padding:10px; width:70%;")
 		.pull-right
-			button.btn.btn-default.hide-prof-butt(type='submit', style="border-radius: 10px; padding:10px; margin-top:10px;")
+			button.btn.btn-default.hide-prof-butt(type='submit' style="border-radius: 10px; padding:10px; margin-top:10px;")
 				| REGISTER
 		.clearfix
