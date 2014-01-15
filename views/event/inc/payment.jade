@@ -47,3 +47,75 @@
 			button.btn.btn-default.hide-prof-butt(type='submit' style="border-radius: 10px; padding:10px; margin-top:10px;")
 				| REGISTER
 		.clearfix
+
+.center2
+	.half-round
+		| <b>Choose payment method</b>
+	.nspacer
+	
+	.row
+		.col-lg-6.col-md-6.col-sm-6
+			.center
+				.pull-left
+					p.check5
+						input(name="", placeholder="", type="checkbox", id="creditcard", value="css3")
+						label(for='creditcard',)
+				.font2.color-green.pull-left.nspacer
+					| Credit Card
+			.clearfix
+			img.img-responsive(src="/images/credit-cards.svg")
+			
+			.nspacer-big
+			form
+				.pad-left-zero.col-lg-4.col-md-4.col-sm-4.font-x.nspacer.right
+					| Cardholder Name:
+				.psev.col-lg-8.col-md-8.col-sm-8.payment-input
+					input.input-yellow-rounded.font-x(type="text" required="required")
+				.nspacer-big
+				.clearfix
+				.pad-left-zero.col-lg-4.col-md-4.col-sm-4.font-x.nspacer.right
+					| Card number:
+				.psev.col-lg-8.col-md-8.col-sm-8.payment-input
+					input.input-yellow-rounded.font-x(type="text" required="required")
+				.nspacer-big
+				.pad-left-zero.col-lg-4.col-md-4.col-sm-4.font-x.nspacer.right
+					| Expiration date:
+				.psev.col-lg-8.col-md-8.col-sm-8.payment-input
+					input.input-yellow-rounded.font-x(type="date" required="required")
+				.nspacer-big
+				.pad-left-zero.col-lg-4.col-md-4.col-sm-4.font-x.nspacer.right
+					| CVV:
+				.psev.col-lg-8.col-md-8.col-sm-8.payment-input
+					input.input-yellow-rounded.font-x(type="text" required="required")
+				.nspacer-big
+				.clearfix
+				.psev.col-lg-12.col-md-12.col-xs-12.payment-button
+					button.btn.btn-info.font-xs.font-ah.pull-right(type='submit', href="", style="padding:5px; padding-left:15px; padding-right:15px; margin-right:20px;")
+						| <b>PAY NOW</b>
+		.col-lg-6.col-md-6.col-sm-6
+			.center
+				.pull-left
+					p.check5
+						input(name="", placeholder="", type="checkbox", id="paypal", value="css3")
+						label(for='paypal',)
+				.font2.color-green.pull-left.nspacer
+					| Paypal
+			.clearfix
+			img.img-responsive(src="/images/paypal.svg")
+	.clearfix
+	.nspacer-big
+	.center2
+		.font2
+			<b>Success</b>, you payment has been processed
+	.center2
+		img(src="/images/bubble-blue.svg", alt="",)
+	.center2
+		.font2
+			<b>Thank you!</b>
+	.center.font-e
+				| Now you may access the event.
+			.col-lg-12.col-md-12.col-xs-12.center2
+				button.btn.btn-primary.font-e.font-ah(type='submit', href="", style="height:70px; padding:10px; padding-left:35px; padding-right:35px; margin-right:20px;")
+					| Access event
+				button.btn.btn-primary.font-e.font-ah(type='submit', href="", style="height:70px; padding:10px; padding-left:35px; padding-right:35px; margin-left:20px;")
+					| Go back <br />to homepage
