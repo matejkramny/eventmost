@@ -38,7 +38,8 @@
 		"passport.socketio": "latest",
 		"gm": "latest",
 		"request": "latest",
-		"colors": "latest"
+		"colors": "latest",
+		"stripe": "latest"
 	},
 	"devDependencies": {
 		"should": "latest",
