@@ -1,10 +1,29 @@
-var mailer = require('nodemailer')
+var mailer = require('nodemailer');
+var fs = require('fs');
+var colors = require('colors');
+var paypal_sdk = require('paypal-rest-sdk');
+
+var credentials;
+try {
+	// Not on git, saves passwords from prying eyes of developers and unauthorised views..
+	exports.credentials = credentials = require('./config-credentials.js')
+} catch (e) {
+	console.log("\n\n", "Required File Missing:".underline.red, "config-credentials.js".bold.green, "\n\n")
+	process.exit(1);
+}
+
+paypal_sdk.configure({
+	host: "api.sandbox.paypal.com",
+	port: '',
+	client_id: credentials.paypal.id,
+	client_secret: credentials.paypal.secret
+});
 
 // Create SMTP transport method
 exports.transport = mailer.createTransport("Mandrill", {
 	auth: {
-		user: "matej@matej.me",
-		pass: "r8Zcz13BZIcJuiGXo2Kteg"
+		user: credentials.smtp.user,
+		pass: credentials.smtp.pass
 	}
 })
 
@@ -16,12 +35,15 @@ if (!(mode == "dev" || mode == "staging" || mode == "test")) {
 
 exports.mode = mode;
 exports.sessionKey = 'em_sess';
-exports.sessionSecret = 'K3hsadkasdoijqwpoie'
+exports.sessionSecret = credentials.session_secret
 
-exports.bugsnagKey = "6c73b59b8d37503c8e8a70d67613d067";
+exports.bugsnagKey = credentials.bugsnag_key;
 exports.production = process.env.NODE_ENV == 'production' ? true : false;
-exports.db = (exports.production ? "mongodb://eventmost:OwaP0daelaek2aephi1phai9mopocah3Dakie9fi@127.0.0.1/eventmost" : "mongodb://127.0.0.1/eventmost") + (mode.length > 0 ? "-" + mode : "");
+exports.db = (exports.production ? "mongodb://"+credentials.db.production+"@127.0.0.1/eventmost" : "mongodb://127.0.0.1/eventmost") + (mode.length > 0 ? "-" + mode : "");
+exports.port = process.env.PORT || 3000;
+
 console.log(exports.db)
+
 exports.path = __dirname;
 
 exports.db_settings = {
@@ -45,6 +67,6 @@ exports.configureConnection = function (db) {
 		console.log("Disconnected from MongoDB");
 	})
 	db.on('reconnected', function() {
-		console.log("REConnected to MongoDB")
+		console.log("Reconnected to MongoDB")
 	})
 }

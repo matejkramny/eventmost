@@ -7,7 +7,9 @@ angular.module('eventMost')
 	$scope.tickets = [];
 	$scope.totalQuantity = 0;
 	$scope.totalPrice = 0;
-	$scope.totalPriceFormatted = "0.00"
+	$scope.totalPriceFormatted = "0.00";
+	$scope.showPaymentMethods = false;
+	$scope.status = '';
 	
 	$scope.init = function (opts) {
 		$scope.url = "/event/"+opts.id+"/";
@@ -50,5 +52,16 @@ angular.module('eventMost')
 		$scope.totalPrice = total * 1.0025 + 0.2;
 		$scope.totalQuantity = quantity;
 		$scope.totalPriceFormatted = $scope.totalPrice.toFixed(2);
+	}
+	
+	$scope.payWithPaypal = function () {
+		$scope.status = 'Preparing to pay with Paypal...';
+		$scope.showPaymentMethods = false;
+		
+		$http.post($scope.url + 'buy/tickets/paypal', {
+			_csrf: $scope.csrf
+		}).success(function(data, status) {
+			window.location = data.redirect;
+		})
 	}
 })

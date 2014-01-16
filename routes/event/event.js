@@ -67,7 +67,9 @@ function logImpression (req, res, next) {
 function getEvent (req, res, next) {
 	var id = req.params.id;
 	
-	if (!id) {
+	try {
+		id = mongoose.Types.ObjectId(id);
+	} catch (e) {
 		res.format({
 			html: function() {
 				res.redirect('/events');

@@ -1,121 +1,115 @@
 - var event_date = "" + ev.start.getDate() + "/" + (ev.start.getMonth()+1) + "/" + ev.start.getFullYear()
-.eighty-five(ng-controller="PaymentController" ng-init="init({ id: '#{ev._id}', csrf: '#{token}', event_date: '#{event_date}' })")
-	.center2
-		.half-round2
-			.half-round-purple
-				b Registration Information
-	table.gridtable-payment-yellow
-		tr
-			th REGISTRATION TYPE
-			th SALES END
-			th PRICE
-			th FEE
-			th QUANTITY
-		tr(ng-repeat="ticket in tickets")
-			td
-				span(ng-show="ticket.type == 'custom'") {{ticket.customType}}
-				span(ng-show="ticket.type != 'custom'") {{ticket.type}}
-			td {{ event_date }}
-			td £{{ ticket.priceFormatted }}
-			td £{{ ticket.priceWithFeeFormatted }}
-			td.col-sm-2.col-lg-2.col-md-2.col-xs-4: input.form-control(type="number" step="1" min="0" ng-model="ticket.wantedQuantity" ng-init="ticket.wantedQuantity = 0" max="{{ticket.quantity}}" ng-change="updateTotal()")
-		tr
-			td Total
-			td
-			td: b £{{totalPriceFormatted}}
-			td
-			td: b {{totalQuantity}}
+div(ng-controller="PaymentController" ng-init="init({ id: '#{ev._id}', csrf: '#{token}', event_date: '#{event_date}' })")
+	.eighty-five
+		.center2
+			.half-round2
+				.half-round-purple
+					b Registration Information
+		table.gridtable-payment-yellow
+			tr
+				th REGISTRATION TYPE
+				th SALES END
+				th PRICE
+				th FEE
+				th QUANTITY
+			tr(ng-repeat="ticket in tickets")
+				td
+					span(ng-show="ticket.type == 'custom'") {{ticket.customType}}
+					span(ng-show="ticket.type != 'custom'") {{ticket.type}}
+				td {{ event_date }}
+				td £{{ ticket.priceFormatted }}
+				td £{{ ticket.priceWithFeeFormatted }}
+				td.col-sm-2.col-lg-2.col-md-2.col-xs-4: input.form-control(type="number" step="1" min="0" ng-model="ticket.wantedQuantity" ng-init="ticket.wantedQuantity = 0" max="{{ticket.quantity}}" ng-change="updateTotal()")
+			tr
+				td Total
+				td
+				td: b £{{totalPriceFormatted}}
+				td
+				td: b {{totalQuantity}} tickets
 
-.eighty-five
-	.bg-yellowish
-		//-.nspacer.d-s-s-s1
-		//-	.pull-left.pad-left-five
-		//-		|Enter promotional code :
-		//-	.pull-left
-		//-		input.input-yellow-rounded(name="" , type="text", id="", required="required", style="", placeholder="9864")
-		//-.nspacer.d-s-s-s
-		//-	.pull-right
-		//-		input.input-yellow-rounded(name="" , type="text", id="", required="required", style="", placeholder="9864")
-		//-	.pull-right
-		//-		|Enter promotional code :
-		.clearfix
-		.line2
-		.pull-left
-			img.d-s-s(src="/images/credit-cards2.svg" style="padding:10px;")
-			img.d-s-s1(src="/images/credit-cards2.svg" style="padding:10px; width:70%;")
-		.pull-right
-			button.btn.btn-default.hide-prof-butt(type='submit' style="border-radius: 10px; padding:10px; margin-top:10px;")
-				| REGISTER
-		.clearfix
+	.eighty-five(ng-hide="hideRegister")
+		.bg-yellowish
+			//-.nspacer.d-s-s-s1
+			//-	.pull-left.pad-left-five
+			//-		|Enter promotional code :
+			//-	.pull-left
+			//-		input.input-yellow-rounded(name="" , type="text", id="", required="required", style="", placeholder="9864")
+			//-.nspacer.d-s-s-s
+			//-	.pull-right
+			//-		input.input-yellow-rounded(name="" , type="text", id="", required="required", style="", placeholder="9864")
+			//-	.pull-right
+			//-		|Enter promotional code :
+			.clearfix
+			.line2
+			.pull-left
+				img.d-s-s(src="/images/credit-cards2.svg" style="padding:10px;")
+				img.d-s-s1(src="/images/credit-cards2.svg" style="padding:10px; width:70%;")
+			.pull-right
+				button.btn.btn-default.hide-prof-butt(type='submit' ng-click="showPaymentMethods = true; hideRegister = true" style="border-radius: 10px; padding:10px; margin-top:10px;")
+					| REGISTER
+			.clearfix
 
-.center2
-	.half-round
-		| <b>Choose payment method</b>
-	.nspacer
+	.center2(ng-show="showPaymentMethods")
+		.half-round
+			b Choose payment method
+		.nspacer
 	
-	.row
-		.col-lg-6.col-md-6.col-sm-6
-			.center
-				.pull-left
-					p.check5
-						input(name="", placeholder="", type="checkbox", id="creditcard", value="css3")
-						label(for='creditcard',)
-				.font2.color-green.pull-left.nspacer
-					| Credit Card
-			.clearfix
-			img.img-responsive(src="/images/credit-cards.svg")
+		.row
+			.col-lg-6.col-md-6.col-sm-6
+				img.img-responsive(src="/images/credit-cards.svg")
 			
-			.nspacer-big
-			form
-				.pad-left-zero.col-lg-4.col-md-4.col-sm-4.font-x.nspacer.right
-					| Cardholder Name:
-				.psev.col-lg-8.col-md-8.col-sm-8.payment-input
-					input.input-yellow-rounded.font-x(type="text" required="required")
 				.nspacer-big
-				.clearfix
-				.pad-left-zero.col-lg-4.col-md-4.col-sm-4.font-x.nspacer.right
-					| Card number:
-				.psev.col-lg-8.col-md-8.col-sm-8.payment-input
-					input.input-yellow-rounded.font-x(type="text" required="required")
-				.nspacer-big
-				.pad-left-zero.col-lg-4.col-md-4.col-sm-4.font-x.nspacer.right
-					| Expiration date:
-				.psev.col-lg-8.col-md-8.col-sm-8.payment-input
-					input.input-yellow-rounded.font-x(type="date" required="required")
-				.nspacer-big
-				.pad-left-zero.col-lg-4.col-md-4.col-sm-4.font-x.nspacer.right
-					| CVV:
-				.psev.col-lg-8.col-md-8.col-sm-8.payment-input
-					input.input-yellow-rounded.font-x(type="text" required="required")
-				.nspacer-big
-				.clearfix
-				.psev.col-lg-12.col-md-12.col-xs-12.payment-button
-					button.btn.btn-info.font-xs.font-ah.pull-right(type='submit', href="", style="padding:5px; padding-left:15px; padding-right:15px; margin-right:20px;")
-						| <b>PAY NOW</b>
-		.col-lg-6.col-md-6.col-sm-6
-			.center
-				.pull-left
-					p.check5
-						input(name="", placeholder="", type="checkbox", id="paypal", value="css3")
-						label(for='paypal',)
-				.font2.color-green.pull-left.nspacer
-					| Paypal
-			.clearfix
-			img.img-responsive(src="/images/paypal.svg")
-	.clearfix
+				form
+					.pad-left-zero.col-lg-4.col-md-4.col-sm-4.font-x.nspacer.right
+						| Cardholder Name:
+					.psev.col-lg-8.col-md-8.col-sm-8.payment-input
+						input.input-yellow-rounded.font-x(type="text" required="required")
+					.nspacer-big
+					.clearfix
+					.pad-left-zero.col-lg-4.col-md-4.col-sm-4.font-x.nspacer.right
+						| Card number:
+					.psev.col-lg-8.col-md-8.col-sm-8.payment-input
+						input.input-yellow-rounded.font-x(type="text" required="required")
+					.nspacer-big
+					.pad-left-zero.col-lg-4.col-md-4.col-sm-4.font-x.nspacer.right
+						| Expiration date:
+					.psev.col-lg-8.col-md-8.col-sm-8.payment-input
+						input.input-yellow-rounded.font-x(type="date" required="required")
+					.nspacer-big
+					.pad-left-zero.col-lg-4.col-md-4.col-sm-4.font-x.nspacer.right
+						| CVV:
+					.psev.col-lg-8.col-md-8.col-sm-8.payment-input
+						input.input-yellow-rounded.font-x(type="text" required="required")
+					.nspacer-big
+					.clearfix
+					.psev.col-lg-12.col-md-12.col-xs-12.payment-button
+						button.btn.btn-info.font-xs.font-ah.pull-right(ng-click="payWithCard()" style="padding:5px; padding-left:15px; padding-right:15px; margin-right:20px;")
+							b PAY NOW
+			.col-lg-6.col-md-6.col-sm-6
+				a(href ng-click="payWithPaypal()")
+					img.img-responsive(src="/images/paypal.svg")
+		.clearfix
 	.nspacer-big
 	.center2
-		.font2
-			<b>Success</b>, you payment has been processed
-	.center2
-		img(src="/images/bubble-blue.svg", alt="",)
-	.center2
-		.font2
-			<b>Thank you!</b>
-	.center.font-e
-				| Now you may access the event.
-			.col-lg-12.col-md-12.col-xs-12.center2
-				button.btn.btn-primary.font-e.font-ah(type='submit', href="", style="height:70px; padding:10px; padding-left:35px; padding-right:35px; margin-right:20px;")
-					| Access event
-				button.btn.btn-primary.font-e.font-ah(type='submit', href="", style="height:70px; padding:10px; padding-left:35px; padding-right:35px; margin-left:20px;")
-					| Go back <br />to homepage
+		.font2(ng-show="status == 'success'")
+			b Success
+			| , you payment has been processed
+		.font2(ng-show="status != 'status' && status.length > 0")
+			{{ status }}
+	div(ng-show="status == 'success'")
+		.center2
+			img(src="/images/bubble-blue.svg")
+		.center2
+			.font2
+				b Thank you!
+		.center.font-e
+					| Now you may access the event.
+				.col-lg-12.col-md-12.col-xs-12.center2
+					button.btn.btn-primary.font-e.font-ah(type='submit' href="" style="height:70px; padding:10px; padding-left:35px; padding-right:35px; margin-right:20px;")
+						| Access event
+					button.btn.btn-primary.font-e.font-ah(type='submit' href="" style="height:70px; padding:10px; padding-left:35px; padding-right:35px; margin-left:20px;")
+						| Go back 
+						br
+						| to homepage
+	.nspacer-big
+	.clearfix

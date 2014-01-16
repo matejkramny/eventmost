@@ -102,7 +102,7 @@ scheme.statics.getEvent = function (id, cb, simple) {
 	// a dismal solution, but works.. TODO replace when have time
 	try {
 		var q = exports.Event
-			.findOne({ deleted: false, _id: mongoose.Types.ObjectId(id) })
+			.findOne({ deleted: false, _id: id })
 			.populate({
 				path: 'attendees',
 				match: { isAttending: true }

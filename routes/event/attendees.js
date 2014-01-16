@@ -1,4 +1,6 @@
 var models = require('../../models')
+var paypal_sdk = require('paypal-rest-sdk')
+var config = require('../../config')
 
 exports.router = function (app) {
 	attending = require('./event').attending
@@ -7,6 +9,9 @@ exports.router = function (app) {
 		.get('/event/:id/attendee/:attendee', showAttendee)
 		.get('/event/:id/attendee/:attendee/remove', removeAttendee)
 		.post('/event/:id/join', joinEvent)
+		.post('/event/:id/buy/tickets/paypal', payWithPaypal)
+		.get('/event/:id/buy/tickets/paypal/cancel', cancelPaypalTransaction)
+		.get('/event/:id/buy/tickets/paypal/return', completePaypalTransaction)
 }
 
 function listAttendees (req, res) {
@@ -254,4 +259,69 @@ function joinEvent (req, res) {
 			}
 		})
 	})
+}
+
+function payWithPaypal (req, res) {
+	var port = "";
+	if (!config.production && config.mode == "") {
+		port = ":"+config.port;
+	}
+	var url = req.protocol + port + "://" + req.host + "/event/"+res.locals.ev._id+"/buy/tickets/paypal/";
+	
+	var payment = {
+		intent: "sale",
+		payer: { payment_method: "paypal" },
+		redirect_urls: {
+			return_url: url+"return",
+			cancel_url: url+"cancel"
+		},
+		transactions: [{
+			amount: {
+				total: "4.99",
+				currency: "GBP"
+			},
+			description: "Ticket Premium"
+		}]
+	};
+	
+	paypal_sdk.payment.create(payment, function (err, payment) {
+		if (err) {
+			console.log(err);
+			throw err;
+		}
+		
+		console.log(payment);
+		
+		req.session.ticketPayment = {
+			paymentId: payment.id,
+			created: Date.now(),
+			event: res.locals.ev._id,
+			tickets: []
+		};
+		
+		var redirectUrl;
+		for (var i = 0; i < payment.links.length; i++) {
+			var link = payment.links[i];
+			if (link.method === 'REDIRECT') {
+				redirectUrl = link.href;
+			}
+		}
+		
+		if (!redirectUrl) {
+			// Error
+			
+		}
+		
+		res.send({
+			redirect: redirectUrl
+		});
+	})
+}
+
+function cancelPaypalTransaction (req, res) {
+	
+}
+
+function completePaypalTransaction (req, res) {
+	
 }

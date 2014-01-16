@@ -54,12 +54,12 @@ if (process.platform.match(/^win/) == null) {
 
 // all environments
 app.enable('trust proxy');
-app.set('port', process.env.PORT || 3000); // Port
+app.set('port', config.port); // Port
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade'); // Templating engine
 app.set('view cache', true); // Cache views
 app.set('app version', '0.2.2'); // App version
-app.locals.pretty = process.env.NODE_ENV != 'production' // Pretty HTML outside production mode
+app.locals.pretty = !config.production // Pretty HTML outside production mode
 
 //app.use(bugsnag.requestHandler);
 if (config.mode != 'test') {

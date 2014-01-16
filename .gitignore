@@ -13,3 +13,4 @@ data/*/!empty
 data/!empty
 newrelic_agent.log
 scripts/*.pyc
+config-credentials.js
