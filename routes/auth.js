@@ -21,19 +21,19 @@ passport.deserializeUser(function(id, done) {
 passport.use(new FacebookStrategy({
 	clientID: config.credentials.social.fb.key,
 	clientSecret: config.credentials.social.fb.secret,
-	callbackURL: 'http://eventmost.com/auth/facebook/callback'
+	callbackURL: 'http://'+config.host+'/auth/facebook/callback'
 }, models.User.authenticateFacebook ));
 
 passport.use(new TwitterStrategy({
 	consumerKey: config.credentials.social.tw.key,
 	consumerSecret: config.credentials.social.tw.secret,
-	callbackURL: 'http://eventmost.com/auth/twitter/callback'
+	callbackURL: 'http://'+config.host+'/auth/twitter/callback'
 }, models.User.authenticateTwitter))
 
 passport.use(new LinkedinStrategy({
 	consumerKey: config.credentials.social.linkedin.key,
 	consumerSecret: config.credentials.social.linkedin.secret,
-	callbackURL: 'http://eventmost.com/auth/linkedin/callback',
+	callbackURL: 'http://'+config.host+'/auth/linkedin/callback',
 	profileFields: ['id', 'first-name', 'picture-url', 'last-name', 'email-address', 'location', 'publicProfileUrl', 'industry', 'headline', 'summary']
 }, models.User.authenticateLinkedIn));
 

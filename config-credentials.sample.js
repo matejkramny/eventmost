@@ -2,6 +2,8 @@
 
 exports.db = "";
 
+exports.host = ""; //e.g. 'eventmost.com' or 'dev.eventmost.com'
+
 exports.bugsnag_key = "";
 
 exports.smtp = {

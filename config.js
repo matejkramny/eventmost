@@ -34,6 +34,7 @@ if (!(mode == "dev" || mode == "staging" || mode == "test")) {
 	mode = "";
 }
 
+exports.host = credentials.host ? credentials.host : "eventmost.com";
 exports.mode = mode;
 exports.sessionKey = 'em_sess';
 exports.sessionSecret = credentials.session_secret
