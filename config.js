@@ -14,8 +14,7 @@ try {
 }
 
 paypal_sdk.configure({
-	host: "api.sandbox.paypal.com",
-	port: '',
+	host: credentials.paypal.host,
 	client_id: credentials.paypal.id,
 	client_secret: credentials.paypal.secret
 });
@@ -41,7 +40,7 @@ exports.sessionSecret = credentials.session_secret
 
 exports.bugsnagKey = credentials.bugsnag_key;
 exports.production = process.env.NODE_ENV == 'production' ? true : false;
-exports.db = (exports.production ? "mongodb://"+credentials.db.production+"@127.0.0.1/eventmost" : "mongodb://127.0.0.1/eventmost") + (mode.length > 0 ? "-" + mode : "");
+exports.db = (exports.production ? "mongodb://"+credentials.db : "mongodb://127.0.0.1/eventmost") + (mode.length > 0 ? "-" + mode : "");
 exports.port = process.env.PORT || 3000;
 
 console.log(exports.db)

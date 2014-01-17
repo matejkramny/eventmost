@@ -6,6 +6,7 @@ var mongoose = require('mongoose')
 	, TwitterStrategy = require('passport-twitter').Strategy
 	, LinkedinStrategy = require('passport-linkedin').Strategy
 	, util = require('../util')
+	, config = require('../config')
 
 passport.serializeUser(function(user, done) {
 	done(null, user._id);
@@ -18,20 +19,20 @@ passport.deserializeUser(function(id, done) {
 })
 
 passport.use(new FacebookStrategy({
-	clientID: '532240236843933',
-	clientSecret: '61e367fbe3aae28d49c788229aaa4464',
+	clientID: config.credentials.social.fb.key,
+	clientSecret: config.credentials.social.fb.secret,
 	callbackURL: 'http://eventmost.com/auth/facebook/callback'
 }, models.User.authenticateFacebook ));
 
 passport.use(new TwitterStrategy({
-	consumerKey: 'nlvyUeSPdTPJZGvQzyeLg',
-	consumerSecret: 'mGAdYwq6NjUMInJk6EdhP5Gv5mGchuATkiMktxOGmI',
+	consumerKey: config.credentials.social.tw.key,
+	consumerSecret: config.credentials.social.tw.secret,
 	callbackURL: 'http://eventmost.com/auth/twitter/callback'
 }, models.User.authenticateTwitter))
 
 passport.use(new LinkedinStrategy({
-	consumerKey: 'rklpzzr92ztv',
-	consumerSecret: 'H0y6fL9dAa4WEhzd',
+	consumerKey: config.credentials.social.linkedin.key,
+	consumerSecret: config.credentials.social.linkedin.secret,
 	callbackURL: 'http://eventmost.com/auth/linkedin/callback',
 	profileFields: ['id', 'first-name', 'picture-url', 'last-name', 'email-address', 'location', 'publicProfileUrl', 'industry', 'headline', 'summary']
 }, models.User.authenticateLinkedIn));
