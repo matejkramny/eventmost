@@ -309,7 +309,7 @@ function getTransactions (req, res) {
 		}
 	}
 	
-	return total * 1.0025 + 0.2;
+	return (total+0.2) / (1 - 0.025);
 }
 
 function payWithPaypal (req, res) {

@@ -72,7 +72,7 @@ angular.module('eventMost')
 			return;
 		}
 		
-		$scope.totalPrice = total * 1.0025 + 0.2;
+		$scope.totalPrice = (total+0.2) / (1 - 0.025);
 		$scope.totalQuantity = quantity;
 		$scope.totalPriceFormatted = $scope.totalPrice.toFixed(2);
 	}
