@@ -124,6 +124,8 @@ angular.module('eventMost')
 	}
 	
 	$scope.payWithCard = function () {
+		if ($scope.cardFormDisabled) return;
+		
 		if (typeof Stripe === 'undefined') {
 			// Shit, Stripe not loaded :/
 			$scope.status = "Libraries failed to load. Please reload the page and try again."
@@ -193,6 +195,8 @@ angular.module('eventMost')
 	}
 	
 	$scope.payWithPaypal = function () {
+		if ($scope.cardFormDisabled) return;
+		
 		$scope.status = 'Preparing to pay with Paypal...';
 		$scope.showPaymentMethods = false;
 		
