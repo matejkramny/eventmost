@@ -264,9 +264,43 @@ function joinEvent (req, res) {
 function payWithPaypal (req, res) {
 	var port = "";
 	if (!config.production && config.mode == "") {
-		port = ":"+config.port;
+		//port = ":"+config.port;
+		//TODO email paypal that using this causes HTTP 500 on their end.
 	}
 	var url = req.protocol + port + "://" + req.host + "/event/"+res.locals.ev._id+"/buy/tickets/paypal/";
+	
+	var __tickets = req.body.tickets;
+	var transactions = [];
+	
+	var total = 0;
+	for (var i = 0; i < res.locals.ev.tickets.length; i++) {
+		var ticket = res.locals.ev.tickets[i];
+		for (var t = 0; t < __tickets.length; t++) {
+			_id = __tickets[t].id;
+			try {
+				_id = mongoose.Types.ObjectId(_id);
+			} catch (e) {
+				continue;
+			}
+			
+			if (ticket._id.equals(_id) && __tickets[t].quantity > 0) {
+				if (__tickets[t].quantity > ticket.quantity) {
+					__tickets[t].quantity = ticket.quantity;
+				}
+				
+				var ticketTotal = ticket.price * __tickets[t].quantity;
+				total += ticketTotal;
+			}
+		}
+	}
+	
+	transactions.push({
+		amount: {
+			total: (total * 1.0025 + 0.2).toFixed(2),
+			currency: "GBP"
+		},
+		description: "EventMost Tickets"
+	})
 	
 	var payment = {
 		intent: "sale",
@@ -275,19 +309,32 @@ function payWithPaypal (req, res) {
 			return_url: url+"return",
 			cancel_url: url+"cancel"
 		},
-		transactions: [{
-			amount: {
-				total: "4.99",
-				currency: "GBP"
-			},
-			description: "Ticket Premium"
-		}]
+		transactions: transactions
 	};
 	
 	paypal_sdk.payment.create(payment, function (err, payment) {
 		if (err) {
 			console.log(err);
-			throw err;
+			
+			console.log(err.response)
+			console.log(err.response.details)
+			
+			if (err.httpStatusCode = 500) {
+				// Tell User Paypal screwed up
+				res.send({
+					status: 500,
+					message: "Sorry, PayPal is unresponsive at the moment. Please try again later."
+				})
+			} else {
+				// Tell user we screwed up
+				res.send({
+					status: 500,
+					message: "Sorry, PayPal Payments are unavailable at this moment. Please try again later."
+				})
+			}
+			
+			// TODO Log this exception.
+			return;
 		}
 		
 		console.log(payment);
@@ -309,19 +356,38 @@ function payWithPaypal (req, res) {
 		
 		if (!redirectUrl) {
 			// Error
-			
+			res.send({
+				status: 500,
+				message: "Sorry, PayPal Payments are unavailable at this moment. Please try again later."
+			})
+			return;
 		}
 		
 		res.send({
+			status: 200,
 			redirect: redirectUrl
 		});
 	})
 }
 
 function cancelPaypalTransaction (req, res) {
-	
+	res.redirect('/event/'+res.locals.ev._id);
 }
 
 function completePaypalTransaction (req, res) {
+	var ticketPayment = req.session.ticketPayment;
+	var payerId = req.query.PayerID;
+	var details = { "payer_id": payerId };
 	
+	console.log(ticketPayment);
+	
+	console.log(req.query)
+	
+	paypal_sdk.payment.execute(ticketPayment.paymentId, details, function (err, payment) {
+		if (err) throw err;
+		
+		console.log(payment)
+		
+		res.redirect('/event/'+ticketPayment.event);
+	})
 }
