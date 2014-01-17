@@ -154,7 +154,8 @@ angular.module('eventMost')
 				number: $scope.card.number,
 				cvc: $scope.card.cvc,
 				exp_month: split[0],
-				exp_year: split[1]
+				exp_year: split[1],
+				name: $scope.card.name
 			}, $scope.cardResponse);
 		}
 	}
@@ -170,6 +171,11 @@ angular.module('eventMost')
 			var tickets = $scope.getTickets()
 			
 			$scope.status = "Performing Payment...";
+			$scope.card.number = "XXXX XXXX XXXX "+response.card.last4
+			if ($scope.card.cvc.length > 0) {
+				$scope.card.cvc = "XXX"
+			}
+			$scope.card.expiry = "XX/XXXX";
 			
 			$http.post($scope.url+'buy/tickets/card', {
 				_csrf: $scope.csrf,
@@ -177,6 +183,7 @@ angular.module('eventMost')
 				payment_id: response.id
 			}).success(function(data, status) {
 				console.log(data);
+				$scope.status = "success"
 			})
 		}
 		

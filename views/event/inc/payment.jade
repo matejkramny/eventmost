@@ -94,7 +94,7 @@ div(ng-controller="PaymentController" ng-init="init({ id: '#{ev._id}', csrf: '#{
 		.font2(ng-show="status == 'success'")
 			b Success
 			| , you payment has been processed
-		.font2(ng-show="status != 'status' && status.length > 0")
+		.font2(ng-show="status != 'success' && status.length > 0")
 			{{ status }}
 	div(ng-show="status == 'success'")
 		.center2
