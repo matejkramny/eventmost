@@ -1,6 +1,7 @@
 var models = require('../../models')
-var paypal_sdk = require('paypal-rest-sdk')
 var config = require('../../config')
+var paypal_sdk = require('paypal-rest-sdk')
+	, stripe = config.stripe
 
 exports.router = function (app) {
 	attending = require('./event').attending
@@ -10,6 +11,7 @@ exports.router = function (app) {
 		.get('/event/:id/attendee/:attendee/remove', removeAttendee)
 		.post('/event/:id/join', joinEvent)
 		.post('/event/:id/buy/tickets/paypal', payWithPaypal)
+		.post('/event/:id/buy/tickets/card', payWithCard)
 		.get('/event/:id/buy/tickets/paypal/cancel', cancelPaypalTransaction)
 		.get('/event/:id/buy/tickets/paypal/return', completePaypalTransaction)
 }
@@ -261,14 +263,27 @@ function joinEvent (req, res) {
 	})
 }
 
-function payWithPaypal (req, res) {
-	var port = "";
-	if (!config.production && config.mode == "") {
-		//port = ":"+config.port;
-		//TODO email paypal that using this causes HTTP 500 on their end.
-	}
-	var url = req.protocol + port + "://" + req.host + "/event/"+res.locals.ev._id+"/buy/tickets/paypal/";
+function payWithCard (req, res) {
+	var token = req.body.payment_id;
 	
+	var total = getTransactions(req, res);
+	
+	var charge = stripe.charges.create({
+		amount: Math.round(total * 100), //must be in pennies
+		currency: "gbp",
+		card: token,
+		description: "payinguser@example.com"
+	}, function(err, charge) {
+		console.log(err);
+		console.log(charge);
+		
+		res.send({
+			status: 200
+		})
+	})
+}
+
+function getTransactions (req, res) {
 	var __tickets = req.body.tickets;
 	var transactions = [];
 	
@@ -294,13 +309,26 @@ function payWithPaypal (req, res) {
 		}
 	}
 	
-	transactions.push({
-		amount: {
-			total: (total * 1.0025 + 0.2).toFixed(2),
-			currency: "GBP"
-		},
-		description: "EventMost Tickets"
-	})
+	return total * 1.0025 + 0.2;
+}
+
+function payWithPaypal (req, res) {
+	var port = "";
+	if (!config.production && config.mode == "") {
+		//port = ":"+config.port;
+		//TODO email paypal that using this causes HTTP 500 on their end.
+	}
+	var url = req.protocol + port + "://" + req.host + "/event/"+res.locals.ev._id+"/buy/tickets/paypal/";
+	
+	var transactions = [
+		{
+			amount: {
+				total: getTransactions(req, res).toFixed(2),
+				currency: "GBP"
+			},
+			description: "EventMost Tickets"
+		}
+	];
 	
 	var payment = {
 		intent: "sale",

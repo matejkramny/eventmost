@@ -2,6 +2,7 @@ var mailer = require('nodemailer');
 var fs = require('fs');
 var colors = require('colors');
 var paypal_sdk = require('paypal-rest-sdk');
+var stripe = require('stripe')
 
 var credentials;
 try {
@@ -18,6 +19,7 @@ paypal_sdk.configure({
 	client_id: credentials.paypal.id,
 	client_secret: credentials.paypal.secret
 });
+exports.stripe = stripe(credentials.stripe.secret);
 
 // Create SMTP transport method
 exports.transport = mailer.createTransport("Mandrill", {

@@ -10,12 +10,28 @@ angular.module('eventMost')
 	$scope.totalPriceFormatted = "0.00";
 	$scope.showPaymentMethods = false;
 	$scope.status = '';
+	$scope.card = {
+		name: '',
+		number: '',
+		expiry: '',
+		cvc: '',
+		errors: {
+			name: 'inherit',
+			number: 'inherit',
+			cvc: 'inherit',
+			expiry: 'inherit'
+		}
+	};
+	$scope.stripe_key = '';
+	$scope.init_stripe = false;
+	$scope.cardFormDisabled = false;
 	
 	$scope.init = function (opts) {
 		$scope.url = "/event/"+opts.id+"/";
 		$scope.eventid = opts.id;
 		$scope.csrf = opts.csrf;
 		$scope.event_date = opts.event_date;
+		$scope.stripe_key = opts.stripe_key;
 		
 		$scope.reload()
 	}
@@ -61,23 +77,119 @@ angular.module('eventMost')
 		$scope.totalPriceFormatted = $scope.totalPrice.toFixed(2);
 	}
 	
+	$scope.validateCard = function () {
+		var valid = true;
+		
+		if ($scope.card.name.length == 0) {
+			$scope.card.errors.name = 'red';
+			valid = false;
+		} else {
+			$scope.card.errors.name = 'inherit'
+		}
+		
+		if (Stripe.card.validateCardNumber($scope.card.number)) {
+			$scope.card.errors.number = 'inherit';
+		} else {
+			$scope.card.errors.number = 'red';
+			valid = false;
+		}
+		
+		var expiry = $scope.card.expiry;
+		if (expiry.length == 0) {
+			valid = false;
+			$scope.card.errors.expiry = 'red';
+		} else {
+			var split = expiry.split('/');
+			if (split.length != 2) {
+				valid = false
+				$scope.card.errors.expiry = 'red';
+			} else {
+				if (Stripe.card.validateExpiry(split[0], split[1])) {
+					$scope.card.errors.expiry = 'inherit';
+				} else {
+					valid = false
+					$scope.card.errors.expiry = 'red';
+				}
+			}
+		}
+		
+		if ($scope.card.cvc.length != 0 && !Stripe.card.validateCVC($scope.card.cvc)) {
+			$scope.card.errors.cvc = 'red';
+			valid = false;
+		} else {
+			$scope.card.errors.cvc = 'inherit'
+		}
+		
+		return valid;
+	}
+	
+	$scope.payWithCard = function () {
+		if (typeof Stripe === 'undefined') {
+			// Shit, Stripe not loaded :/
+			$scope.status = "Libraries failed to load. Please reload the page and try again."
+			return;
+		}
+		
+		if ($scope.init_stripe == false) {
+			$scope.init_stripe = true;
+			Stripe.setPublishableKey($scope.stripe_key);
+		}
+		
+		var tickets = $scope.getTickets()
+		
+		if (tickets.length == 0) {
+			$scope.status = "No Tickets Selected";
+			$scope.hideRegister = false;
+			return;
+		}
+		
+		if ($scope.validateCard()) {
+			$scope.status = "Preparing to pay with Card..."
+			$scope.cardFormDisabled = true;
+			
+			var expiry = $scope.card.expiry;
+			var split = expiry.split('/');
+			
+			Stripe.card.createToken({
+				number: $scope.card.number,
+				cvc: $scope.card.cvc,
+				exp_month: split[0],
+				exp_year: split[1]
+			}, $scope.cardResponse);
+		}
+	}
+	
+	$scope.cardResponse = function (status, response) {
+		console.log(status);
+		console.log(response);
+		
+		if (response.error) {
+			$scope.status = response.error.message;
+			$scope.cardFormDisabled = false;
+		} else {
+			var tickets = $scope.getTickets()
+			
+			$scope.status = "Performing Payment...";
+			
+			$http.post($scope.url+'buy/tickets/card', {
+				_csrf: $scope.csrf,
+				tickets: tickets,
+				payment_id: response.id
+			}).success(function(data, status) {
+				console.log(data);
+			})
+		}
+		
+		if (!$scope.$$phase) {
+			$scope.$digest();
+		}
+	}
+	
 	$scope.payWithPaypal = function () {
 		$scope.status = 'Preparing to pay with Paypal...';
 		$scope.showPaymentMethods = false;
 		
-		var tickets = [];
-		
-		// Aggregate tickets
-		for (var i = 0; i < $scope.tickets.length; i++) {
-			var t = $scope.tickets[i];
-			
-			if (t.wantedQuantity > 0) {
-				tickets.push({
-					id: t._id,
-					quantity: t.wantedQuantity
-				})
-			}
-		}
+		var tickets = $scope.getTickets()
 		
 		if (tickets.length == 0) {
 			$scope.status = "No Tickets Selected";
@@ -98,4 +210,23 @@ angular.module('eventMost')
 			}
 		})
 	}
+	
+	$scope.getTickets = function () {
+		var tickets = [];
+		
+		// Aggregate tickets
+		for (var i = 0; i < $scope.tickets.length; i++) {
+			var t = $scope.tickets[i];
+			
+			if (t.wantedQuantity > 0) {
+				tickets.push({
+					id: t._id,
+					quantity: t.wantedQuantity
+				})
+			}
+		}
+		
+		return tickets;
+	}
+	
 })

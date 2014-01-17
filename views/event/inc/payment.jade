@@ -1,5 +1,5 @@
 - var event_date = "" + ev.start.getDate() + "/" + (ev.start.getMonth()+1) + "/" + ev.start.getFullYear()
-div(ng-controller="PaymentController" ng-init="init({ id: '#{ev._id}', csrf: '#{token}', event_date: '#{event_date}' })")
+div(ng-controller="PaymentController" ng-init="init({ id: '#{ev._id}', csrf: '#{token}', event_date: '#{event_date}', stripe_key: '#{stripe_key}' })")
 	.eighty-five
 		.center2
 			.half-round2
@@ -19,7 +19,7 @@ div(ng-controller="PaymentController" ng-init="init({ id: '#{ev._id}', csrf: '#{
 				td {{ event_date }}
 				td £{{ ticket.priceFormatted }}
 				td £{{ ticket.priceWithFeeFormatted }}
-				td.col-sm-2.col-lg-2.col-md-2.col-xs-4: input.form-control(type="number" step="1" min="0" ng-model="ticket.wantedQuantity" ng-init="ticket.wantedQuantity = 0" max="{{ticket.quantity}}" ng-change="updateTotal()")
+				td.col-sm-2.col-lg-2.col-md-2.col-xs-4: input.form-control(type="number" step="1" min="0" ng-disabled="hideRegister" ng-model="ticket.wantedQuantity" ng-init="ticket.wantedQuantity = 0" max="{{ticket.quantity}}" ng-change="updateTotal()")
 			tr
 				td Total
 				td
@@ -60,26 +60,26 @@ div(ng-controller="PaymentController" ng-init="init({ id: '#{ev._id}', csrf: '#{
 			
 				.nspacer-big
 				form
-					.pad-left-zero.col-lg-4.col-md-4.col-sm-4.font-x.nspacer.right
+					.pad-left-zero.col-lg-4.col-md-4.col-sm-4.font-x.nspacer.right(ng-style="{ color: card.errors.name }")
 						| Cardholder Name:
 					.psev.col-lg-8.col-md-8.col-sm-8.payment-input
-						input.input-yellow-rounded.font-x(type="text" required="required")
+						input.input-yellow-rounded.font-x(type="text" required="required" ng-model="card.name" ng-disabled="cardFormDisabled")
 					.nspacer-big
 					.clearfix
-					.pad-left-zero.col-lg-4.col-md-4.col-sm-4.font-x.nspacer.right
+					.pad-left-zero.col-lg-4.col-md-4.col-sm-4.font-x.nspacer.right(ng-style="{ color: card.errors.number }")
 						| Card number:
 					.psev.col-lg-8.col-md-8.col-sm-8.payment-input
-						input.input-yellow-rounded.font-x(type="text" required="required")
+						input.input-yellow-rounded.font-x(type="text" required="required" ng-model="card.number" ng-disabled="cardFormDisabled")
 					.nspacer-big
-					.pad-left-zero.col-lg-4.col-md-4.col-sm-4.font-x.nspacer.right
+					.pad-left-zero.col-lg-4.col-md-4.col-sm-4.font-x.nspacer.right(ng-style="{ color: card.errors.expiry }")
 						| Expiration date:
 					.psev.col-lg-8.col-md-8.col-sm-8.payment-input
-						input.input-yellow-rounded.font-x(type="date" required="required")
+						input.input-yellow-rounded.font-x(type="text" placeholder="mm/yyyy" required="required" ng-model="card.expiry" ng-disabled="cardFormDisabled")
 					.nspacer-big
-					.pad-left-zero.col-lg-4.col-md-4.col-sm-4.font-x.nspacer.right
-						| CVV:
+					.pad-left-zero.col-lg-4.col-md-4.col-sm-4.font-x.nspacer.right(ng-style="{ color: card.errors.cvc }")
+						| CVC:
 					.psev.col-lg-8.col-md-8.col-sm-8.payment-input
-						input.input-yellow-rounded.font-x(type="text" required="required")
+						input.input-yellow-rounded.font-x(type="text" placeholder="XXX (optional)" ng-model="card.cvc" ng-disabled="cardFormDisabled")
 					.nspacer-big
 					.clearfix
 					.psev.col-lg-12.col-md-12.col-xs-12.payment-button
