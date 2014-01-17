@@ -83,10 +83,10 @@ div(ng-controller="PaymentController" ng-init="init({ id: '#{ev._id}', csrf: '#{
 					.nspacer-big
 					.clearfix
 					.psev.col-lg-12.col-md-12.col-xs-12.payment-button
-						button.btn.btn-info.font-xs.font-ah.pull-right(ng-click="payWithCard()" ng-disabled="cardFormDisabled" style="padding:5px; padding-left:15px; padding-right:15px; margin-right:20px;")
+						button.btn.btn-info.font-xs.font-ah.pull-right(ng-click="payWithCard()" ng-hide="cardFormDisabled" style="padding:5px; padding-left:15px; padding-right:15px; margin-right:20px;")
 							b PAY NOW
 			.col-lg-6.col-md-6.col-sm-6
-				a(href ng-hide="cardFormDisabled" ng-click="payWithPaypal()")
+				a(href ng-disabled="cardFormDisabled" ng-click="payWithPaypal()")
 					img.img-responsive(src="/images/paypal.svg")
 		.clearfix
 	.nspacer-big

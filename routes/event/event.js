@@ -200,6 +200,7 @@ function viewEvent (req, res) {
 			} else {
 				if (config.production && res.locals.ev.tickets.length > 0 && res.locals.is_https != true) {
 					res.redirect('https://'+req.host+'/event/'+res.locals.ev._id);
+					return;
 				}
 				
 				res.render('event/landingpage', { title: res.locals.ev.name });
@@ -217,6 +218,11 @@ function viewRegistrationPage (req, res) {
 		html: function() {
 			res.locals.moment = moment;
 			res.locals.stripe_key = config.credentials.stripe.pub;
+			
+			if (config.production && res.locals.ev.tickets.length > 0 && res.locals.is_https != true) {
+				res.redirect('https://'+req.host+'/event/'+res.locals.ev._id+'/registrationpage');
+				return;
+			}
 			
 			if (!res.locals.eventattending)
 				res.locals.hideArrow = true;
