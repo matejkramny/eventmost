@@ -12,27 +12,27 @@ exports.smtp = {
 exports.newrelic = "";
 
 exports.paypal = {
-	host: "",
-	id: "",
-	secret: ""
+	host: "fakehost",
+	id: "fakeid",
+	secret: "fakesecret"
 }
 exports.stripe = {
-	secret: "",
-	pub: ""
+	secret: "fakesecret",
+	pub: "fakepub"
 }
 
 exports.social = {
 	fb: {
-		key: '',
-		secret: ''
+		key: 'fakekey',
+		secret: 'fakesecret'
 	},
 	tw: {
-		key: '',
-		secret: ''
+		key: 'fakekey',
+		secret: 'fakesecret'
 	},
 	linkedin: {
-		key: '',
-		secret: ''
+		key: 'fakekey',
+		secret: 'fakesecret'
 	}
 }
 
