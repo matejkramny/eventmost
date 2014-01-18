@@ -67,6 +67,16 @@ if (config.mode != 'test') {
 }
 app.use(express.limit('25mb')); // File upload limit
 //TODO SERVE STATIC FILES ONLY FOR DEVELOPMENT.. PRODUCTION STUFF GETS SERVED BY NGINX. make a switch in process.env
+app.use(function(req, res, next) {
+	var source = req.headers['user-agent'];
+	if (!source || source.match(/webdav/i) == null) {
+		next();
+		return;
+	}
+	
+	// Tell WebDAV to fuck off
+	res.send(400, "");
+})
 app.use("/", express.static(path.join(__dirname, 'public'))); // serve static files
 app.use(express.bodyParser()); // Parse the request body
 app.use(express.cookieParser()); // Parse cookies from header

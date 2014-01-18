@@ -1,7 +1,7 @@
 require('./prepare');
 
 var app = require('../app');
-var request = require('supertest').agent(app.app)
+var request = require('supertest').agent(app.app).defaults({ jar: true });
 
 var should = require('should')
 	, models = require('../models')
