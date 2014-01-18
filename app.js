@@ -136,6 +136,7 @@ app.use(function(req, res, next) {
 	}
 	
 	res.locals.minified = "";//config.production ? ".min" : "";
+	res.locals.bugsnag_key = config.bugsnagKey;
 	
 	// navigation bar
 	next();

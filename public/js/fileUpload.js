@@ -44,7 +44,7 @@ angular.module('eventMost')
 				ev.preventDefault();
 				
 				$(attrs.file).trigger('click');
-				
+				throw Error("Woooooooot");
 				return false;
 			})
 			
