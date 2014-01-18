@@ -4,6 +4,7 @@ angular.module('eventMost')
 		restrict: 'A',
 		link: function($rootScope, element, attrs) {
 			var uploadRequest;
+			var parseToJson = false;
 			
 			function progressHandler (ev) {
 				if (ev.lengthComputable) {
@@ -16,21 +17,26 @@ angular.module('eventMost')
 			}
 			
 			function responseHandler () {
-				if (uploadRequest.readyState == 4) {
-					if (uploadRequest.status == 200) {
-						result = uploadRequest.response;
-						
-						$rootScope.progress = 100;
-						
-						if (result.status != 200) {
-							alert("Could not upload file :(\n"+result.err);
-						} else {
-							window.location.reload();
-						}
-					} else {
-						// Not ok
-						alert(uploadRequest.statusText);
+				if (uploadRequest.readyState != 4) {
+					return;
+				}
+				
+				if (uploadRequest.status == 200) {
+					result = uploadRequest.response;
+					
+					if (parseToJson) {
+						result = JSON.parse(uploadRequest.responseText);
 					}
+					$rootScope.progress = 100;
+					
+					if (result.status != 200) {
+						alert("Could not upload file :(\n"+result.err);
+					} else {
+						window.location.reload();
+					}
+				} else {
+					// Not ok
+					alert("Upload Failed:\n"+uploadRequest.statusText);
 				}
 			}
 			
@@ -61,8 +67,12 @@ angular.module('eventMost')
 				form.append("upload", file);
 				
 				uploadRequest = new XMLHttpRequest();
+				try {
+					uploadRequest.responseType = "json";
+				} catch (e) {
+					parseToJson = true;
+				}
 				uploadRequest.open("POST", attrs['url'], true);
-				uploadRequest.responseType = "json";
 				uploadRequest.setRequestHeader('Accept', 'application/json');
 				uploadRequest.onreadystatechange = responseHandler;
 				uploadRequest.upload.addEventListener('progress', progressHandler, false)

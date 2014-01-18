@@ -46,6 +46,8 @@ block content
 					if (category == attendee.category)
 						- isInCategory = true;
 						- break;
+				if (file.user._id.equals(locals.user._id))
+					- isInCategory = true;
 				if (!isInCategory)
 					- continue;
 			

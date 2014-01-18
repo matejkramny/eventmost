@@ -154,7 +154,9 @@ function saveDropbox (req, res) {
 		throw e;
 	}
 	
-	ev.allowDropboxUpload = req.body.allowDropboxUpload == 'yes' ? true : false;
+	if (res.locals.eventadmin && typeof req.body.allowDropboxUpload !== 'undefined' && req.body.allowDropboxUpload.length > 0) {
+		ev.allowDropboxUpload = req.body.allowDropboxUpload == 'yes' ? true : false;
+	}
 	ev.save()
 	
 	req.session.flash = ["Dropbox Settings Updated"]
