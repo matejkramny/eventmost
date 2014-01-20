@@ -39,20 +39,24 @@ $(document).ready(function() {
 		});
 	});
 	
-	$("#openRegisterModal").click(function() {
+	$(".openRegisterModal").click(function() {
 		$("#loginModal").modal('hide');
 		$("#signModal").modal('show');
 	})
-	$("#openLoginModal").click(function() {
+	$(".openLoginModal").click(function() {
 		$("#signModal").modal('hide');
 		$("#loginModal").modal('show');
+	})
+	$(".openForgotModal").click(function() {
+		$("#loginModal").modal('hide');
+		$("#forgotModal").modal('show')
 	})
 	
 	function Form($form, $elements, options) {
 		this.form = $form;
 		this.elements = $elements;
 		this.options = options;
-		this.url = "/auth/password"
+		this.url = options.url ? options.url : "/auth/password"
 		
 		var self = this;
 		
@@ -124,6 +128,11 @@ $(document).ready(function() {
 		"login": $registerUserEmail,
 		"password": $registerUserPassword
 	}, {});
+	var forgotForm = new Form($("#ForgotForm"), {
+		"email": $("#ForgotEmail")
+	}, {
+		url: "/auth/password_reset"
+	})
 	
 	if (window.location.hash) {
 		var hash = window.location.hash.substring(1);

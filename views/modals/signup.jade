@@ -31,9 +31,10 @@
 							| ENTER
 					.clearfix
 				.clearfix
+				.pop-input.center: a.link-purple.openForgotModal(href="#") Forgot Your Password?
 				.pop-input.center
 					| Want to 
-					a.link-purple#openRegisterModal(href="#") create an account? 
+					a.link-purple.openRegisterModal(href="#") create an account? 
 				a(href="#" class="close-reveal-modal" data-dismiss="modal")
 					img(src="/images/x.svg")
 			
@@ -67,6 +68,24 @@
 							| REGISTER
 					.clearfix
 					.pop-input.center
-						a.link-purple#openLoginModal(href="#") Already Registered?
+						a.link-purple.openLoginModal(href="#") Already Registered?
 					a(href="#", class="close-reveal-modal", data-dismiss="modal")
+						img(src="/images/x.svg")
+
+#forgotModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="", aria-hidden="true")
+	.modal-dialog
+		.modal-content
+			.modal-body.reveal-modal
+				h1 Forgotten Password
+				form#ForgotForm(action="/auth/password_reset", method="POST")
+					input(type="hidden", name="_csrf", value=token)
+					br
+					.formStatus.center
+					.pop-input.center
+						input.login#ForgotEmail(name="email", ng-model="email", placeholder="email", maxlength="128", type="email", required="required")
+					.pop-input.center
+						button.btn.btn-primary.font.font-ah(type='submit' href="")
+							| RESET
+					.clearfix
+					a(href="#" class="close-reveal-modal" data-dismiss="modal")
 						img(src="/images/x.svg")

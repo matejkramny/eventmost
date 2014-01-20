@@ -7,6 +7,8 @@ var mongoose = require('mongoose')
 	, LinkedinStrategy = require('passport-linkedin').Strategy
 	, util = require('../util')
 	, config = require('../config')
+	, transport = config.transport
+	, moment = require('moment')
 
 passport.serializeUser(function(user, done) {
 	done(null, user._id);
@@ -46,6 +48,9 @@ exports.router = function (app) {
 	}
 	
 	app.post('/auth/password', doPasswordLogin)
+		.post('/auth/password_reset', doPasswordReset)
+		.get('/auth/password_reset/:id', findPasswordReset)
+		.post('/auth/password_reset/:id', performPasswordReset)
 		.get('/auth/facebook', passport.authenticate('facebook', { scope: 'email' }))
 		.get('/auth/facebook/callback', passport.authenticate('facebook', socialRoute('Facebook')))
 		.get('/auth/twitter', passport.authenticate('twitter'))
@@ -108,6 +113,174 @@ function doPasswordLogin (req, res) {
 		}
 	}, {
 		name: name
+	})
+}
+
+function doPasswordReset (req, res) {
+	var email = req.body.email;
+	if (!email) {
+		res.send({
+			status: 400,
+			err: []
+		})
+		
+		return;
+	}
+	
+	models.User.findOne({
+		disabled: false,
+		email: email
+	}, function(err, user) {
+		if (err || !user) {
+			res.send({
+				status: 404,
+				err: ["You will receive an email shortly."]
+			});
+			
+			return;
+		}
+		
+		// Create new pwd reset request
+		var pwdReset = new models.PasswordReset({
+			user: user._id
+		})
+		pwdReset.generateHash();
+		pwdReset.save();
+		
+		var link = "/auth/password_reset/"+pwdReset.hash;
+		
+		// TODO move this to the User model
+		var options = {
+			from: "EventMost <notifications@eventmost.com>",
+			to: user.getName()+" <"+user.email+">",
+			subject: "Password Reset Notification",
+			html: "<img src=\"http://eventmost.com/images/logo.svg\">\
+	<br/><br/><p><strong>Hi "+user.getName()+",</strong><br/><br/>You have asked us to reset your password. To do that, click on the link below.<br/>\
+	<a href='https://"+req.host+link+"'>Reset Your Password</a>\
+	<br /><br />Note: If this wasn't you, discard this email. Link is valid for 2 hours.\
+	</p><br/>\
+	Please do not reply to this email, because we are super popular and probably won't have time to read it..."
+		}
+		transport.sendMail(options, function(err, response) {
+			if (err) throw err;
+		
+			console.log("Email sent.."+response.message)
+		})
+	
+		// Record that an email was sent
+		var emailNotification = new models.EmailNotification({
+			to: user._id,
+			email: user.email,
+			type: "PasswordReset"
+		})
+		emailNotification.save(function(err) {
+			if (err) throw err;
+		});
+		
+		res.send({
+			status: 404,
+			err: ["You will receive an email shortly."]
+		});
+	})
+}
+
+function findPasswordReset (req, res) {
+	var id = req.params.id;
+	if (!id || id.length == 0) {
+		res.format({
+			html: function() {
+				res.redirect('/');
+			},
+			json: function() {
+				send(404);
+			}
+		})
+		return;
+	}
+	
+	models.PasswordReset.findOne({
+		hash: id,
+		created: {
+			$gt: new Date(Date.now() - 60 * 60 * 2 * 1000)
+		},
+		used: false
+	}, function(err, reset) {
+		if (err || !reset) {
+			res.format({
+				html: function() {
+					res.redirect('/');
+				},
+				json: function() {
+					send(404);
+				}
+			})
+			return;
+		}
+		
+		res.locals.pid = id;
+		res.locals.message = "";
+		res.render('passwordReset');
+	})
+}
+
+function performPasswordReset (req, res) {
+	var id = req.params.id;
+	if (!id || id.length == 0) {
+		res.send(404);
+		return;
+	}
+	
+	models.PasswordReset.findOne({
+		hash: id,
+		created: {
+			$gt: new Date(Date.now() - 60 * 60 * 2 * 1000)
+		},
+		used: false
+	}).populate('user').exec(function(err, reset) {
+		if (err || !reset) {
+			res.send(404);
+			return;
+		}
+		
+		var password = req.body.password;
+		if (password && password.length > 5) {
+			reset.user.setPassword(password);
+			reset.user.save();
+			reset.used = true;
+			
+			reset.save();
+			res.redirect('/?fail-reason=Password Reset Successful#login-failed')
+			
+			// TODO move this to the User model
+			var options = {
+				from: "EventMost <notifications@eventmost.com>",
+				to: reset.user.getName()+" <"+reset.user.email+">",
+				subject: "Password Reset Notification",
+				html: "<img src=\"http://eventmost.com/images/logo.svg\">\
+		<br/><br/><p><strong>Hi "+reset.user.getName()+",</strong><br/><br/>Your password was reset at "+moment().format('DD/MM/YYYY HH:mm:ss')+".<br/>If you have not authorised this, please contact us <strong>IMMEDIATELY</strong> at <a href='mailto:support@eventmost.com'>support@eventmost.com</a>"
+			}
+			transport.sendMail(options, function(err, response) {
+				if (err) throw err;
+		
+				console.log("Email sent.."+response.message)
+			})
+	
+			// Record that an email was sent
+			var emailNotification = new models.EmailNotification({
+				to: reset.user._id,
+				email: reset.user.email,
+				type: "PasswordResetPerformed"
+			})
+			emailNotification.save(function(err) {
+				if (err) throw err;
+			});
+			
+			return;
+		}
+		
+		res.locals.message = "Please choose a longer password.";
+		res.locals.pid = id;
+		res.render('passwordReset');
 	})
 }
 
