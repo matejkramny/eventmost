@@ -1,7 +1,6 @@
 var mailer = require('nodemailer');
 var fs = require('fs');
 var colors = require('colors');
-var paypal_sdk = require('paypal-rest-sdk');
 var stripe = require('stripe')
 
 var credentials;
@@ -13,11 +12,6 @@ try {
 	process.exit(1);
 }
 
-paypal_sdk.configure({
-	host: credentials.paypal.host,
-	client_id: credentials.paypal.id,
-	client_secret: credentials.paypal.secret
-});
 exports.stripe = stripe(credentials.stripe.secret);
 
 // Create SMTP transport method
