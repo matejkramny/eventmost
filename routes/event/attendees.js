@@ -243,6 +243,23 @@ function joinEvent (req, res) {
 			}
 		}
 		
+		if (ev.pricedTickets && attendee.hasPaid == false) {
+			// reject
+			res.format({
+				html: function() {
+					req.session.flash.push("This is a paid event, we have no record of you purchasing a ticket.")
+					res.redirect('/event/'+ev._id);
+				},
+				json: function() {
+					res.send({
+						status: 400,
+						mesage: "This is a paid event, we have no record of you purchasing a ticket."
+					})
+				}
+			})
+			return;
+		}
+		
 		attendee.save()
 		ev.attendees.push(attendee._id);
 		ev.save(function(err) {
