@@ -1,6 +1,5 @@
 var models = require('../../models')
 var config = require('../../config')
-var paypal_sdk = require('paypal-rest-sdk')
 	, stripe = config.stripe
 
 exports.router = function (app) {
@@ -10,10 +9,7 @@ exports.router = function (app) {
 		.get('/event/:id/attendee/:attendee', showAttendee)
 		.get('/event/:id/attendee/:attendee/remove', removeAttendee)
 		.post('/event/:id/join', joinEvent)
-		.post('/event/:id/buy/tickets/paypal', payWithPaypal)
-		.post('/event/:id/buy/tickets/card', payWithCard)
-		.get('/event/:id/buy/tickets/paypal/cancel', cancelPaypalTransaction)
-		.get('/event/:id/buy/tickets/paypal/return', completePaypalTransaction)
+		.post('/event/:id/buy/tickets', payWithCard)
 }
 
 function listAttendees (req, res) {
@@ -185,24 +181,6 @@ function joinEvent (req, res) {
 			return;
 		}
 		
-		for (var i = 0; i < event.attendees.length; i++) {
-			if (event.attendees[i].user.equals(req.user._id)) {
-				event.attendees[i].isAttending = true;
-				event.attendees[i].save();
-				res.format({
-					html: function() {
-						res.redirect('/event/'+ev._id);
-					},
-					json: function() {
-						res.send({
-							status: 200
-						})
-					}
-				})
-				return;
-			}
-		}
-		
 		var attendee = new models.Attendee({
 			user: req.user._id
 		});
@@ -237,11 +215,34 @@ function joinEvent (req, res) {
 				return;
 			}
 		}
-	
+		
 		if (!attendee.category) {
 			attendee.category = "Attendee";
 		}
-	
+		
+		for (var i = 0; i < event.attendees.length; i++) {
+			var _attendee = event.attendees[i];
+			if (_attendee.user.equals(req.user._id)) {
+				_attendee.isAttending = true;
+				_attendee.category = attendee.category;
+				
+				_attendee.save();
+				
+				res.format({
+					html: function() {
+						res.redirect('/event/'+ev._id);
+					},
+					json: function() {
+						res.send({
+							status: 200
+						})
+					}
+				})
+				
+				return;
+			}
+		}
+		
 		attendee.save()
 		ev.attendees.push(attendee._id);
 		ev.save(function(err) {
@@ -265,6 +266,14 @@ function joinEvent (req, res) {
 
 function payWithCard (req, res) {
 	var token = req.body.payment_id;
+	var ev = res.locals.ev;
+	
+	if (!token) {
+		res.send({
+			status: 400
+		});
+		return;
+	}
 	
 	var transaction = getTransactions(req, res);
 	var total = transaction.total;
@@ -272,13 +281,15 @@ function payWithCard (req, res) {
 	total = (total + 0.2) / (1 - 0.025);
 	transaction.third_party = total - transaction.total;
 	transaction.total = total;
-	transaction.method = 'stripe';
 	
 	var charge = stripe.charges.create({
 		amount: Math.round(total * 100), //must be in pennies
 		currency: "gbp",
 		card: token,
-		description: "payinguser@example.com"
+		description: "EventMost Tickets",
+		metadata: {
+			transaction: transaction._id
+		}
 	}, function(err, charge) {
 		if (err) {
 			console.log(err);
@@ -300,6 +311,17 @@ function payWithCard (req, res) {
 		transaction.status = 'complete';
 		transaction.save();
 		
+		var attendee = new models.Attendee({
+			category: "",
+			hasPaid: true,
+			isAttending: false,
+			user: req.user._id
+		})
+		ev.attendees.push(attendee._id)
+		
+		attendee.save();
+		ev.save();
+		
 		res.send({
 			status: 200
 		})
@@ -312,7 +334,11 @@ function getTransactions (req, res) {
 	
 	var transaction = new models.Transaction({
 		event: res.locals.ev._id,
-		user: req.user._id
+		user: req.user._id,
+		total: 0,
+		profit: 0,
+		planner: 0,
+		third_party: 0
 	})
 	
 	for (var i = 0; i < res.locals.ev.tickets.length; i++) {
@@ -354,138 +380,4 @@ function getTransactions (req, res) {
 	}
 	
 	return transaction;
-}
-
-function payWithPaypal (req, res) {
-	var port = "";
-	if (!config.production && config.mode == "") {
-		//port = ":"+config.port;
-		//TODO email paypal that using this causes HTTP 500 on their end.
-	}
-	var url = req.protocol + port + "://" + req.host + "/event/"+res.locals.ev._id+"/buy/tickets/paypal/";
-	
-	var transaction = getTransactions(req, res);;
-	
-	total = transaction.total;
-	//'Reverse the transaction fees'
-	total = (total + 0.2) / (1 - 0.035);
-	// Round it up
-	total = Math.round(total * 100) / 100;
-	
-	transaction.third_party = total - transaction.total;
-	transaction.total = total;
-	transaction.method = 'paypal';
-	
-	var transactions = [
-		{
-			amount: {
-				total: total.toFixed(2),
-				currency: "GBP"
-			},
-			description: "EventMost Tickets"
-		}
-	];
-	
-	var payment = {
-		intent: "sale",
-		payer: { payment_method: "paypal" },
-		redirect_urls: {
-			return_url: url+"return",
-			cancel_url: url+"cancel"
-		},
-		transactions: transactions
-	};
-	
-	transaction.save();
-	req.session.ticketPayment = transaction._id;
-	
-	paypal_sdk.payment.create(payment, function (err, payment) {
-		if (err) {
-			if (err.httpStatusCode = 500) {
-				// Tell User Paypal screwed up
-				res.send({
-					status: 500,
-					message: "Sorry, PayPal is unresponsive at the moment. Please try again later."
-				})
-			} else {
-				// Tell user we screwed up
-				res.send({
-					status: 500,
-					message: "Sorry, PayPal Payments are unavailable at this moment. Please try again later."
-				})
-			}
-			
-			transaction.status = 'failed';
-			transaction.message = err.toString();
-			transaction.save();
-			
-			// TODO Log this exception.
-			return;
-		}
-		
-		console.log(payment);
-		transaction.payment_id = payment.id;
-		transaction.save();
-		
-		var redirectUrl;
-		for (var i = 0; i < payment.links.length; i++) {
-			var link = payment.links[i];
-			if (link.method === 'REDIRECT') {
-				redirectUrl = link.href;
-			}
-		}
-		
-		if (!redirectUrl) {
-			// Error
-			res.send({
-				status: 500,
-				message: "Sorry, PayPal Payments are unavailable at this moment. Please try again later."
-			})
-			return;
-		}
-		
-		res.send({
-			status: 200,
-			redirect: redirectUrl
-		});
-	})
-}
-
-function cancelPaypalTransaction (req, res) {
-	var ticketPayment = req.session.ticketPayment;
-	req.session.ticketPayment = null;
-	
-	models.Transaction.findById(ticketPayment, function(err, transaction) {
-		if (err) throw err;
-		
-		transaction.status = 'cancelled';
-		transaction.save();
-	});
-	
-	res.redirect('/event/'+res.locals.ev._id);
-}
-
-function completePaypalTransaction (req, res) {
-	var ticketPayment = req.session.ticketPayment;
-	req.session.ticketPayment = null;
-	
-	models.Transaction.findById(ticketPayment, function(err, transaction) {
-		var payerId = req.query.PayerID;
-		var details = { "payer_id": payerId };
-		
-		console.log(ticketPayment);
-		console.log(transaction);
-		
-		console.log(req.query)
-		
-		paypal_sdk.payment.execute(transaction.payment_id, details, function (err, payment) {
-			if (err) throw err;
-			
-			console.log(payment)
-			transaction.status = 'complete';
-			transaction.save();
-			
-			res.redirect('/event/'+ticketPayment.event);
-		})
-	})
 }

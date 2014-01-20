@@ -11,7 +11,6 @@ var scheme = schema({
 		name: { type: String, required: true },
 		ticket: { type: ObjectId, ref: 'Ticket' }
 	}],
-	method: String, //paypal | stripe
 	total: Number, //what user got charged
 	profit: Number, //what EM get
 	planner: Number, //what planner gets

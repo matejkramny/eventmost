@@ -68,7 +68,7 @@ block content
 		.description-text-medium.break!= ev.description	
 
 	if (!eventattending)
-		if (ev.pricedTickets && loggedIn)
+		if (ev.pricedTickets && loggedIn && !(attendee && attendee.hasPaid == true))
 			.col-md-12.col-lg-12.col-sm-12
 				// tickets required
 				include inc/payment

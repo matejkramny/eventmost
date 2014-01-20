@@ -55,7 +55,7 @@ div(ng-controller="PaymentController" ng-init="init({ id: '#{ev._id}', csrf: '#{
 		.nspacer
 	
 		.row
-			.col-lg-6.col-md-6.col-sm-6
+			.col-lg-offset-3.col-lg-6.col-md-offset-3.col-md-6.col-sm-offset-3.col-sm-6
 				img.img-responsive(src="/images/credit-cards.svg")
 			
 				.nspacer-big
@@ -85,9 +85,6 @@ div(ng-controller="PaymentController" ng-init="init({ id: '#{ev._id}', csrf: '#{
 					.psev.col-lg-12.col-md-12.col-xs-12.payment-button
 						button.btn.btn-info.font-xs.font-ah.pull-right(ng-click="payWithCard()" ng-hide="cardFormDisabled" style="padding:5px; padding-left:15px; padding-right:15px; margin-right:20px;")
 							b PAY NOW
-			.col-lg-6.col-md-6.col-sm-6
-				a(href ng-disabled="cardFormDisabled" ng-click="payWithPaypal()")
-					img.img-responsive(src="/images/paypal.svg")
 		.clearfix
 	.nspacer-big
 	.center2
@@ -105,11 +102,12 @@ div(ng-controller="PaymentController" ng-init="init({ id: '#{ev._id}', csrf: '#{
 		.center.font-e
 					| Now you may access the event.
 				.col-lg-12.col-md-12.col-xs-12.center2
-					button.btn.btn-primary.font-e.font-ah(type='submit' href="" style="height:70px; padding:10px; padding-left:35px; padding-right:35px; margin-right:20px;")
-						| Access event
-					button.btn.btn-primary.font-e.font-ah(type='submit' href="" style="height:70px; padding:10px; padding-left:35px; padding-right:35px; margin-left:20px;")
-						| Go back 
-						br
-						| to homepage
+					if (ev.categories.length > 0 || ev.allowAttendeesToCreateCategories)
+						button.btn.btn-primary.hide-prof-butt(type='button' data-toggle="modal" href="#attendModal" style="height:70px; padding:10px; padding-left:35px; padding-right:35px; margin-right:20px;")
+							| Attend event
+					else
+						p.accessEventWarningMessage.hide(style="font-size: 16px;")
+						a.btn.btn-primary.hide-prof-butt#accessEventDirect(href="#")
+							| Attend event
 	.nspacer-big
 	.clearfix

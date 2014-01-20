@@ -12,7 +12,8 @@ var scheme = schema({
 	category: String,
 	admin: { type: Boolean, default: false },
 	isAttending: { type: Boolean, default: true }, // gets set to false when the user exits the event..
-	ticket: { type: ObjectId, ref: 'Ticket' }
+	ticket: { type: ObjectId, ref: 'Ticket' },
+	hasPaid: { type: Boolean, default: false }
 })
 
 exports.Attendee = mongoose.model("Attendee", scheme);

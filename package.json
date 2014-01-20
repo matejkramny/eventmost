@@ -39,8 +39,7 @@
 		"gm": "latest",
 		"request": "latest",
 		"colors": "latest",
-		"stripe": "latest",
-		"paypal-rest-sdk": "latest"
+		"stripe": "latest"
 	},
 	"devDependencies": {
 		"should": "latest",

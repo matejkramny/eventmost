@@ -176,7 +176,27 @@ exports.attending = attending = function (req, res, next) {
 	res.locals.eventadmin = isAdmin;
 	res.locals.attendee = theAttendee;
 	
-	next()
+	if (res.locals.loggedIn && req.user) {
+		models.Event.findById(ev._id).select('attendees').populate({
+			path: 'attendees',
+			match: { isAttending: false, user: req.user._id }
+		}).exec(function(err, event) {
+			if (err || !event) {
+				next()
+				return;
+			}
+			
+			console.log(event);
+			if (event.attendees.length > 0) {
+				res.locals.attendeeRegistered = true;
+				res.locals.attendee = event.attendees[0];
+			}
+			
+			next()
+		})
+	} else {
+		next()
+	}
 }
 
 function redirectToRegistrationPage (req, res, next) {
