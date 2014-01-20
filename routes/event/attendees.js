@@ -266,7 +266,13 @@ function joinEvent (req, res) {
 function payWithCard (req, res) {
 	var token = req.body.payment_id;
 	
-	var total = getTransactions(req, res);
+	var transaction = getTransactions(req, res);
+	var total = transaction.total;
+	//'Reverse the fees'
+	total = (total + 0.2) / (1 - 0.025);
+	transaction.third_party = total - transaction.total;
+	transaction.total = total;
+	transaction.method = 'stripe';
 	
 	var charge = stripe.charges.create({
 		amount: Math.round(total * 100), //must be in pennies
@@ -274,8 +280,25 @@ function payWithCard (req, res) {
 		card: token,
 		description: "payinguser@example.com"
 	}, function(err, charge) {
-		console.log(err);
+		if (err) {
+			console.log(err);
+			
+			transaction.status = 'failed';
+			transaction.message = err.toString();
+			transaction.save();
+			
+			res.send({
+				status: 400,
+				message: ""
+			});
+			
+			return;
+		}
+		
 		console.log(charge);
+		
+		transaction.status = 'complete';
+		transaction.save();
 		
 		res.send({
 			status: 200
@@ -287,7 +310,11 @@ function getTransactions (req, res) {
 	var __tickets = req.body.tickets;
 	var transactions = [];
 	
-	var total = 0;
+	var transaction = new models.Transaction({
+		event: res.locals.ev._id,
+		user: req.user._id
+	})
+	
 	for (var i = 0; i < res.locals.ev.tickets.length; i++) {
 		var ticket = res.locals.ev.tickets[i];
 		for (var t = 0; t < __tickets.length; t++) {
@@ -303,13 +330,30 @@ function getTransactions (req, res) {
 					__tickets[t].quantity = ticket.quantity;
 				}
 				
-				var ticketTotal = ticket.price * __tickets[t].quantity;
-				total += ticketTotal;
+				var name = ticket.type;
+				if (name == 'custom') name = ticket.customType;
+				
+				var em_fee = ticket.price * 0.024 + 0.2;
+				
+				transaction.tickets.push({
+					price: ticket.price,
+					fees: em_fee,
+					quantity: __tickets[t].quantity,
+					ticket: ticket._id,
+					name: name
+				})
+				
+				transaction.profit += em_fee;
+				transaction.planner += ticket.price;
+				
+				var ticketPrice = ticket.price + em_fee;
+				var ticketTotal = ticketPrice * __tickets[t].quantity;
+				transaction.total += ticketTotal;
 			}
 		}
 	}
 	
-	return (total+0.2) / (1 - 0.025);
+	return transaction;
 }
 
 function payWithPaypal (req, res) {
@@ -320,10 +364,22 @@ function payWithPaypal (req, res) {
 	}
 	var url = req.protocol + port + "://" + req.host + "/event/"+res.locals.ev._id+"/buy/tickets/paypal/";
 	
+	var transaction = getTransactions(req, res);;
+	
+	total = transaction.total;
+	//'Reverse the transaction fees'
+	total = (total + 0.2) / (1 - 0.035);
+	// Round it up
+	total = Math.round(total * 100) / 100;
+	
+	transaction.third_party = total - transaction.total;
+	transaction.total = total;
+	transaction.method = 'paypal';
+	
 	var transactions = [
 		{
 			amount: {
-				total: getTransactions(req, res).toFixed(2),
+				total: total.toFixed(2),
 				currency: "GBP"
 			},
 			description: "EventMost Tickets"
@@ -340,13 +396,11 @@ function payWithPaypal (req, res) {
 		transactions: transactions
 	};
 	
+	transaction.save();
+	req.session.ticketPayment = transaction._id;
+	
 	paypal_sdk.payment.create(payment, function (err, payment) {
 		if (err) {
-			console.log(err);
-			
-			console.log(err.response)
-			console.log(err.response.details)
-			
 			if (err.httpStatusCode = 500) {
 				// Tell User Paypal screwed up
 				res.send({
@@ -361,18 +415,17 @@ function payWithPaypal (req, res) {
 				})
 			}
 			
+			transaction.status = 'failed';
+			transaction.message = err.toString();
+			transaction.save();
+			
 			// TODO Log this exception.
 			return;
 		}
 		
 		console.log(payment);
-		
-		req.session.ticketPayment = {
-			paymentId: payment.id,
-			created: Date.now(),
-			event: res.locals.ev._id,
-			tickets: []
-		};
+		transaction.payment_id = payment.id;
+		transaction.save();
 		
 		var redirectUrl;
 		for (var i = 0; i < payment.links.length; i++) {
@@ -399,23 +452,40 @@ function payWithPaypal (req, res) {
 }
 
 function cancelPaypalTransaction (req, res) {
+	var ticketPayment = req.session.ticketPayment;
+	req.session.ticketPayment = null;
+	
+	models.Transaction.findById(ticketPayment, function(err, transaction) {
+		if (err) throw err;
+		
+		transaction.status = 'cancelled';
+		transaction.save();
+	});
+	
 	res.redirect('/event/'+res.locals.ev._id);
 }
 
 function completePaypalTransaction (req, res) {
 	var ticketPayment = req.session.ticketPayment;
-	var payerId = req.query.PayerID;
-	var details = { "payer_id": payerId };
+	req.session.ticketPayment = null;
 	
-	console.log(ticketPayment);
-	
-	console.log(req.query)
-	
-	paypal_sdk.payment.execute(ticketPayment.paymentId, details, function (err, payment) {
-		if (err) throw err;
+	models.Transaction.findById(ticketPayment, function(err, transaction) {
+		var payerId = req.query.PayerID;
+		var details = { "payer_id": payerId };
 		
-		console.log(payment)
+		console.log(ticketPayment);
+		console.log(transaction);
 		
-		res.redirect('/event/'+ticketPayment.event);
+		console.log(req.query)
+		
+		paypal_sdk.payment.execute(transaction.payment_id, details, function (err, payment) {
+			if (err) throw err;
+			
+			console.log(payment)
+			transaction.status = 'complete';
+			transaction.save();
+			
+			res.redirect('/event/'+ticketPayment.event);
+		})
 	})
 }

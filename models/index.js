@@ -19,5 +19,6 @@ module.exports = {
 	EventMessage: require('./EventMessage').EventMessage,
 	Ticket: require('./Ticket').Ticket,
 	EventStat: require('./EventStat').EventStat,
-	UserTakeoverRequest: require('./UserTakeoverRequest').UserTakeoverRequest
+	UserTakeoverRequest: require('./UserTakeoverRequest').UserTakeoverRequest,
+	Transaction: require('./Transaction').Transaction
 }

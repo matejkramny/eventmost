@@ -382,6 +382,8 @@ scheme.methods.edit = function (body, user, files, cb) {
 		}
 	}
 	
+	console.log(body.tickets)
+	
 	// do tickets - remove old tickets & create new objectids
 	if (body.tickets != null) {
 		this.tickets = [];
@@ -391,7 +393,7 @@ scheme.methods.edit = function (body, user, files, cb) {
 			var t = new Ticket({
 				whopays: 'me',
 				type: 'standard',
-				cutomType: '',
+				customType: '',
 				quantity: 1,
 				price: 0.0
 			});
@@ -399,10 +401,10 @@ scheme.methods.edit = function (body, user, files, cb) {
 			if (typeof ticket.whopays === "string" && ticket.whopays == 'attendee') {
 				t.whopays = 'attendee';
 			}
-			if (typeof ticket.type === 'string' && (ticket.type == 'premium' || ticket.type == 'custom')) {
+			if (typeof ticket.type === 'string' && (ticket.type.toLowerCase() == 'premium' || ticket.type.toLowerCase() == 'custom')) {
 				t.type = ticket.type;
 			}
-			if (typeof ticket.typeCustom === 'string' && ticket.type == 'custom') {
+			if (typeof ticket.customType === 'string' && ticket.type.toLowerCase() == 'custom') {
 				t.customType = ticket.customType;
 			}
 			if (typeof ticket.price === "string") {
