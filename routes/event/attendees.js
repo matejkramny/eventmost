@@ -1,6 +1,7 @@
 var models = require('../../models')
 var config = require('../../config')
 	, stripe = config.stripe
+	, bugsnag = require('bugsnag')
 
 exports.router = function (app) {
 	attending = require('./event').attending
@@ -253,7 +254,7 @@ function joinEvent (req, res) {
 				json: function() {
 					res.send({
 						status: 400,
-						mesage: "This is a paid event, we have no record of you purchasing a ticket."
+						message: "This is a paid event, we have no record of you purchasing a ticket."
 					})
 				}
 			})
@@ -315,9 +316,28 @@ function payWithCard (req, res) {
 			transaction.message = err.toString();
 			transaction.save();
 			
+			var message = "";
+			switch (err.type) {
+				case 'StripeCardError':
+					// A declined card error
+					message = err.message; // => e.g. "Your card's expiration year is invalid."
+					break;
+				case 'StripeInvalidRequestError':
+				case 'StripeAPIError':
+				case 'StripeConnectionError':
+				case 'StripeAuthenticationError':
+				default:
+					message = "Server Error. We have been notified, and are working on it. Please try again later.";
+					bugsnag.notify(new Error("Card Processing Error: "+err.type), {
+						error: err,
+						transaction: transaction._id,
+						user: req.user._id
+					})
+			}
+			
 			res.send({
 				status: 400,
-				message: ""
+				message: message
 			});
 			
 			return;

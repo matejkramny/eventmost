@@ -69,6 +69,8 @@ block content
 
 	if (!eventattending)
 		if (ev.pricedTickets && loggedIn && !(attendee && attendee.hasPaid == true))
+			script.
+				window.location.hash = "";
 			.col-md-12.col-lg-12.col-sm-12
 				// tickets required
 				include inc/payment

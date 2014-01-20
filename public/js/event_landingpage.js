@@ -184,8 +184,15 @@ angular.module('eventMost')
 				tickets: tickets,
 				payment_id: response.id
 			}).success(function(data, status) {
-				console.log(data);
-				$scope.status = "success"
+				if (data.status == 200) {
+					$scope.status = "success";
+				} else {
+					$scope.status = data.message;
+					$scope.cardFormDisabled = false;
+				}
+			}).error(function(data, status) {
+				$scope.cardFormDisabled = false;
+				$scope.status = "The Request has Failed. Please try again later."
 			})
 		}
 		

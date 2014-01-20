@@ -5,10 +5,10 @@ var ObjectId = schema.ObjectId;
 
 var scheme = schema({
 	tickets: [{
-		price: { type: Number, required: true },
+		price: Number,
 		fees: Number,
-		quantity: { type: Number, required: true },
-		name: { type: String, required: true },
+		quantity: Number,
+		name: String,
 		ticket: { type: ObjectId, ref: 'Ticket' }
 	}],
 	total: Number, //what user got charged
