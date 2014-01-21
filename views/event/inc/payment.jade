@@ -93,9 +93,6 @@ div(ng-controller="PaymentController" ng-init="init({ id: '#{ev._id}', csrf: '#{
 		.clearfix
 	.nspacer-big
 	.center2
-		.font2(ng-show="status == 'success'")
-			b Success
-			| , you payment has been processed
 		.font2(ng-show="status != 'success' && status.length > 0")
 			{{ status }}
 	div(ng-show="status == 'success'")
@@ -105,7 +102,9 @@ div(ng-controller="PaymentController" ng-init="init({ id: '#{ev._id}', csrf: '#{
 			.font2
 				b Thank you!
 		.center.font-e
-					| Now you may access the event.
+				| Your card will be billed for £{{totalPriceFormatted}}. No ticket is required for this event; simply be prepared to show your ID upon entry.
+				span(ng-show="totalQuantity > 1")  Your guests must be accompanied by you.
+				|  A confirmation email has been sent to you.
 				.col-lg-12.col-md-12.col-xs-12.center2
 					if (ev.categories.length > 0 || ev.allowAttendeesToCreateCategories)
 						button.btn.btn-primary.hide-prof-butt(type='button' data-toggle="modal" href="#attendModal" style="height:70px; padding:10px; padding-left:35px; padding-right:35px; margin-right:20px;")

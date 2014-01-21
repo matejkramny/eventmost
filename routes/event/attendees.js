@@ -2,6 +2,7 @@ var models = require('../../models')
 var config = require('../../config')
 	, stripe = config.stripe
 	, bugsnag = require('bugsnag')
+	, transport = config.transport
 
 exports.router = function (app) {
 	attending = require('./event').attending
@@ -375,10 +376,92 @@ function payWithCard (req, res) {
 		attendee.save();
 		ev.save();
 		
+		emailConfirmation(req, res, transaction);
+		
 		res.send({
 			status: 200
 		})
 	})
+}
+
+function emailConfirmation (req, res, transaction) {
+	var link = "/event/"+res.locals.ev._id;
+	var user = req.user;
+	
+	var rows = "";
+	for (var i = 0; i < transaction.tickets.length; i++) {
+		var ticket = transaction.tickets[i];
+		rows += "<tr>";
+		rows += "<td>"+ticket.name+"</td>";
+		rows += "<td style='text-align:right;'><strong>"+ticket.quantity+"</strong></td>";
+		rows += "<td style='text-align:right;'>£"+(ticket.price + ticket.fees)+"</td>";
+		rows += "</tr>";
+	}
+	
+	rows += "<tr>";
+	rows += "<td>&nbsp;</td>";
+	rows += "<td>&nbsp;</td>";
+	rows += "<td>&nbsp;</td>";
+	rows += "</tr>";
+	
+	rows += "<tr>";
+	rows += "<td>Subtotal</td>";
+	rows += "<td></td>";
+	rows += "<td style='text-align:right;'>£"+(transaction.total - transaction.third_party).toFixed(2)+"</td>";
+	rows += "</tr>";
+	
+	rows += "<tr>";
+	rows += "<td>Transaction Fee</td>";
+	rows += "<td></td>";
+	rows += "<td style='text-align:right;'>£"+transaction.third_party.toFixed(2)+"</td>";
+	rows += "</tr>";
+	
+	rows += "<tr>";
+	rows += "<td>Total Paid</td>";
+	rows += "<td></td>";
+	rows += "<td style='text-align:right;'>£"+transaction.total.toFixed(2)+"</td>";
+	rows += "</tr>";
+	rows += "<tr>";
+	rows += "</tr>";
+	
+	// TODO move this to the User model
+	var options = {
+		from: "EventMost <notifications@eventmost.com>",
+		to: user.getName()+" <"+user.email+">",
+		subject: "Ticket Payment Confirmation",
+		html: "<img src=\"http://eventmost.com/images/logo.svg\">\
+<br/><br/><p><strong>Hi "+user.getName()+",</strong><br/><br/>This is an email confirmation of tickets you purchased through EventMost for Event <a href='https://"+req.host+link+"'>"+res.locals.ev.name+"</a>.<br/><br/>\
+<table>\
+<thead>\
+<tr>\
+	<th style='min-width: 100px;'>Ticket Name</th>\
+	<th style='min-width: 50px;'>Quantity</th>\
+	<th style=''>Price</th>\
+</tr>\
+</thead>\
+<tbody>\
+"+rows+"\
+</tbody>\
+</table>\
+<br />\
+<br/>\
+Please do not reply to this email, because we are super popular and probably won't have time to read it..."
+	}
+	transport.sendMail(options, function(err, response) {
+		if (err) throw err;
+	
+		console.log("Email sent.."+response.message)
+	})
+
+	// Record that an email was sent
+	var emailNotification = new models.EmailNotification({
+		to: user._id,
+		email: user.email,
+		type: "PaymentConfirmation"
+	})
+	emailNotification.save(function(err) {
+		if (err) throw err;
+	});
 }
 
 function getTransactions (req, res) {
