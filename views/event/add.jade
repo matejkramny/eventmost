@@ -726,10 +726,10 @@ append content
 										input.input-green(type="number", value="1", min="1", ng-model="ticket.quantity")
 									td
 										input.input-green(type="date" placeholder="Start Date" ng-model="ticket.start_date")
-										input.input-green(type="time" placeholder="Start Time" ng-model="ticket.start_time")
+										input.input-green(type="time" placeholder="Start Time" ng-model="ticket.start_time" ng-init="ticket.start_time = '00:00'")
 									td
 										input.input-green(type="date" placeholder="End Date" ng-model="ticket.end_date")
-										input.input-green(type="time" placeholder="End Time" ng-model="ticket.end_time")
+										input.input-green(type="time" placeholder="End Time" ng-model="ticket.end_time" ng-init="ticket.end_time = '23:59'")
 							div.tickets-lock(style="width:100%;height:100%;position:absolute;left:0;top:0;background:#333;opacity:0.3;z-index:999;")
 						.clearfix
 					.nspacer
