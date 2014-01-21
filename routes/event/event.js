@@ -15,6 +15,7 @@ exports.router = function (app) {
 	add.router(app)
 	
 	app.get('/event/:id/registrationpage', getEvent, attending, viewRegistrationPage)
+		.get('/event/:id/tickets', getEvent, attending, viewTickets)
 		.get('/event/:id', redirectToRegistrationPage)
 		.get('/event/:id/*', redirectToRegistrationPage)
 	

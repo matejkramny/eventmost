@@ -28,6 +28,7 @@ if (!(mode == "dev" || mode == "staging" || mode == "test")) {
 	mode = "";
 }
 
+exports.version = '0.2.4';
 exports.host = credentials.host ? credentials.host : "eventmost.com";
 exports.mode = mode;
 exports.sessionKey = 'em_sess';

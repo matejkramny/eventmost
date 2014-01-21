@@ -20,7 +20,7 @@ if (config.mode != "test") {
 	bugsnag.register(config.bugsnagKey, {
 		releaseStage: config.production ? "production" : "development",
 		notifyReleaseStages: ['production'],
-		appVersion: '0.2.2'
+		appVersion: config.version
 	})
 }
 
@@ -58,7 +58,7 @@ app.set('port', config.port); // Port
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade'); // Templating engine
 app.set('view cache', true); // Cache views
-app.set('app version', '0.2.2'); // App version
+app.set('app version', config.version); // App version
 app.locals.pretty = !config.production // Pretty HTML outside production mode
 
 //app.use(bugsnag.requestHandler);

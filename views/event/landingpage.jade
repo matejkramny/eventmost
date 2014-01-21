@@ -68,7 +68,7 @@ block content
 		.description-text-medium.break!= ev.description	
 
 	if (!eventattending)
-		if (ev.pricedTickets && loggedIn && !(attendee && attendee.hasPaid == true))
+		if (ev.pricedTickets && !(attendee && attendee.hasPaid == true))
 			script.
 				window.location.hash = "";
 			.col-md-12.col-lg-12.col-sm-12
@@ -83,10 +83,10 @@ block content
 								| Attend event
 						else
 							p.accessEventWarningMessage.hide(style="font-size: 16px;")
-							a.btn.btn-primary.hide-prof-butt#accessEventDirect(href="#")
+							button.btn.btn-primary.hide-prof-butt#accessEventDirect(href="#")
 								| Attend event
 					else
-						button.btn.btn-primary.hide-prof-butt(style="font-size: 16px;" data-toggle="modal" href="#signModal")
+						button.btn.btn-primary.hide-prof-butt(data-toggle="modal" href="#signModal" style="border-radius: 10px; padding:10px; padding-right:25px; padding-left:25px;")
 							| Attend event
 	
 	if (!eventattending && loggedIn)
