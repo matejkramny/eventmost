@@ -8,7 +8,9 @@ var scheme = schema({
 	quantity: { type: Number, required: true },
 	type: { type: String, required: true },
 	customType: { type: String, required: false },
-	whopays: { type: String, required: true }
+	whopays: { type: String, required: true },
+	start: { type: Date },
+	end: { type: Date }
 })
 
 exports.Ticket = mongoose.model("Ticket", scheme);

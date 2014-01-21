@@ -8,6 +8,8 @@ angular.module('eventMost')
 	$scope.totalQuantity = 0;
 	$scope.totalPrice = 0;
 	$scope.totalPriceFormatted = "0.00";
+	$scope.ticketPriceFormatted = "0.00";
+	$scope.feePriceFormatted = "0.00";
 	$scope.showPaymentMethods = false;
 	$scope.status = '';
 	$scope.card = {
@@ -46,9 +48,21 @@ angular.module('eventMost')
 			
 			for (var i = 0; i < tickets.length; i++) {
 				var t = tickets[i];
-				t.priceWithFee = (t.price * 0.0025) + 0.2;
+				var em_fee = t.price * 0.024 + 0.2
+				t.priceWithFee = em_fee;
 				t.priceWithFeeFormatted = t.priceWithFee.toFixed(2);
 				t.priceFormatted = t.price.toFixed(2);
+				
+				t.expired = true;
+				var start = new Date(t.start);
+				var end = new Date(t.end);
+				var now = new Date();
+				
+				if (now.getTime() > start.getTime() && now.getTime() < end.getTime() && t.quantity > 0) {
+					t.expired = false;
+				}
+				t.start_formatted = moment(t.start).format('DD/MM/YYYY HH:mm:ss')
+				t.end_formatted = moment(t.end).format('DD/MM/YYYY HH:mm:ss')
 			}
 			
 			$scope.tickets = data.tickets;
@@ -57,11 +71,22 @@ angular.module('eventMost')
 	
 	$scope.updateTotal = function () {
 		var total = 0;
+		var total_nofees = 0;
+		var total_fees = 0;
 		var quantity = 0;
 		for (var i = 0; i < $scope.tickets.length; i++) {
 			var t = $scope.tickets[i];
+			if (t.wantedQuantity == 0 || isNaN(t.wantedQuantity)) continue;
 			
-			total += t.wantedQuantity * t.price;
+			if (t.wantedQuantity > t.quantity) {
+				t.wantedQuantity = t.quantity;
+			}
+			
+			var em_fee = t.price * 0.024 + 0.2;
+			var price = t.price + em_fee;
+			total += t.wantedQuantity * price;
+			total_nofees += t.wantedQuantity * t.price;
+			total_fees += em_fee * t.wantedQuantity;
 			quantity += t.wantedQuantity;
 		}
 		
@@ -69,9 +94,14 @@ angular.module('eventMost')
 			$scope.totalPrice = 0;
 			$scope.totalQuantity = 0;
 			$scope.totalPriceFormatted = "0.00";
+			$scope.ticketPriceFormatted = "0.00";
+			$scope.feePriceFormatted = "0.00";
 			return;
 		}
 		
+		var total = (total+0.2) / (1 - 0.025);
+		$scope.ticketPriceFormatted = total_nofees.toFixed(2);
+		$scope.feePriceFormatted = total_fees.toFixed(2)
 		$scope.totalPrice = (total+0.2) / (1 - 0.025);
 		$scope.totalQuantity = quantity;
 		$scope.totalPriceFormatted = $scope.totalPrice.toFixed(2);

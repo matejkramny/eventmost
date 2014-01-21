@@ -293,7 +293,16 @@ function payWithCard (req, res) {
 		return;
 	}
 	
-	var transaction = getTransactions(req, res);
+	var meta = getTransactions(req, res);
+	var transaction = meta.transaction;
+	if (transaction.status == 'failed') {
+		res.send({
+			status: 400,
+			message: transaction.message
+		});
+		return;
+	}
+	
 	var total = transaction.total;
 	//'Reverse the fees'
 	total = (total + 0.2) / (1 - 0.025);
@@ -348,6 +357,13 @@ function payWithCard (req, res) {
 		transaction.status = 'complete';
 		transaction.save();
 		
+		var ts = meta.tickets;
+		for (var i = 0; i < ts.length; i++) {
+			ts[i].ticket.quantity -= ts[i].quantity;
+			if (ts[i].ticket.quantity < 0) ts[i].ticket.quantity = 0;
+			ts[i].ticket.save();
+		}
+		
 		var attendee = new models.Attendee({
 			category: "",
 			hasPaid: true,
@@ -378,6 +394,8 @@ function getTransactions (req, res) {
 		third_party: 0
 	})
 	
+	var ts = [];
+	
 	for (var i = 0; i < res.locals.ev.tickets.length; i++) {
 		var ticket = res.locals.ev.tickets[i];
 		for (var t = 0; t < __tickets.length; t++) {
@@ -389,9 +407,22 @@ function getTransactions (req, res) {
 			}
 			
 			if (ticket._id.equals(_id) && __tickets[t].quantity > 0) {
-				if (__tickets[t].quantity > ticket.quantity) {
-					__tickets[t].quantity = ticket.quantity;
+				var now = new Date();
+				if (!(now.getTime() > ticket.start.getTime() && now.getTime() < ticket.end.getTime() && ticket.quantity > 0) || __tickets[t].quantity > ticket.quantity) {
+					// valid date range..
+					transaction.status = 'failed';
+					transaction.message = "You tried to purchase tickets which are either sold out or are expired. Please reload the page and try again.";
+					
+					return {
+						tickets: ts,
+						transaction: transaction
+					};
 				}
+				
+				ts.push({
+					ticket: ticket,
+					quantity: __tickets[t].quantity
+				})
 				
 				var name = ticket.type;
 				if (name == 'custom') name = ticket.customType;
@@ -416,5 +447,8 @@ function getTransactions (req, res) {
 		}
 	}
 	
-	return transaction;
+	return {
+		tickets: ts,
+		transaction: transaction
+	};
 }

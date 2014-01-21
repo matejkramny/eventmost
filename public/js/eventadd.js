@@ -485,6 +485,10 @@ $(document).ready(function() {
 		
 		var scope = angular.element($("#tickets")).scope();
 		var tickets = scope.tickets;
+		for (var i = 0; i < tickets.length; i++) {
+			tickets[i].start = new Date(tickets[i].start_date + " " + tickets[i].start_time)
+			tickets[i].end = new Date(tickets[i].end_date + " " + tickets[i].end_time);
+		}
 		
 		var ed = $form.find('#tinyeditor').length > 0 ? editor : editor1;
 		var d = {
@@ -662,6 +666,21 @@ $(document).ready(function() {
 		$('.allowAttendeesToCreateTheirOwnCategories').attr('checked', ev.allowAttendeesToCreateCategories || false);
 		$('.allowAttendeesToCommentOnTheEvent').attr('checked', ev.allowAttendeesToComment || false);
 		$('.includePricedTickets').attr('checked', ev.pricedTickets || false)
+		
+		$scope = angular.element($("#tickets")).scope();
+		$scope.tickets = ev.tickets;
+		for (var i = 0; i < $scope.tickets; i++) {
+			var s = new Date($scope.tickets[i].start);
+			var e = new Date($scope.tickets[i].end);
+			
+			$scope.tickets[i].start_date = s.getDate() + "/" + (s.getMonth()+1) + "/" + s.getFullYear();
+			$scope.tickets[i].start_time = s.getHours() + ":" + s.getMinutes();
+			$scope.tickets[i].end_date = e.getDate() + "/" + (e.getMonth()+1) + "/" + e.getFullYear();
+			$scope.tickets[i].end_time = e.getHours() + ":" + e.getMinutes();
+		}
+		if (!$scope.$$phase) {
+			$scope.$digest();
+		}
 		
 		$('.eventSubmitBtn').html('Save Event')
 	}

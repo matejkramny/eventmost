@@ -23,7 +23,7 @@ $(document).ready(function() {
 		
 		$.ajax({
 			url: "/emailavailable",
-			data: new Form(null, {"email": $registerUserEmail}).buildData(),
+			data: new Form(null, {"email": $registerUserEmail}, {}).buildData(),
 			dataType: 'json',
 			type: "POST",
 			success: function(data) {

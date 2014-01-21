@@ -413,6 +413,12 @@ scheme.methods.edit = function (body, user, files, cb) {
 			if (typeof ticket.quantity === "string") {
 				t.quantity = parseInt(ticket.quantity);
 			}
+			if (typeof ticket.start === "string") {
+				t.start = new Date(ticket.start);
+			}
+			if (typeof ticket.end === "string") {
+				t.end = new Date(ticket.end);
+			}
 			
 			t.save()
 			
