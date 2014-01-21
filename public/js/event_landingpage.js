@@ -102,7 +102,7 @@ angular.module('eventMost')
 		var total = (total+0.2) / (1 - 0.025);
 		$scope.ticketPriceFormatted = total_nofees.toFixed(2);
 		$scope.feePriceFormatted = total_fees.toFixed(2)
-		$scope.totalPrice = (total+0.2) / (1 - 0.025);
+		$scope.totalPrice = total;
 		$scope.totalQuantity = quantity;
 		$scope.totalPriceFormatted = $scope.totalPrice.toFixed(2);
 	}
