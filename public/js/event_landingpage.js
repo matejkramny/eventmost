@@ -69,6 +69,13 @@ angular.module('eventMost')
 		})
 	}
 	
+	$scope.showPayment = function () {
+		if ($scope.totalQuantity == 0) return;
+		
+		$scope.showPaymentMethods = true;
+		$scope.hideRegister = true;
+	}
+	
 	$scope.updateTotal = function () {
 		var total = 0;
 		var total_nofees = 0;
