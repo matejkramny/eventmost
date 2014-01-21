@@ -32,17 +32,17 @@ block content
 			| When
 			.line-purple
 			.font-s.inline.semi-bold(title= locals.moment(ev.start).fromNow())
-				= moment(ev.start).format('dddd Do MMMM YYYY [at] h:mm:ss a')
+				= moment(ev.start).format('dddd, Do, MMMM YYYY [at] h:mm:ss a')
 		.col-md-4.col-lg-4.col-sm-4.pad-left-zero.font-e.semi-bold
 			| Where
 			.line-purple
 			.font-s.inline.semi-bold
 				- if (ev.address || ev.venue_name)
 					img.inline.pad-right-five(src="/images/mapster.svg" alt="")
+				strong.inline
+					= ev.venue_name
 				.inline
 					= ev.address
-				.inline
-					= ev.venue_name
 				- if (!ev.address && !ev.venue_name)
 					| Event does not have a location
 		.col-md-4.col-lg-4.col-sm-4.pad-left-zero.font-e.semi-bold

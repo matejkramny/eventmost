@@ -704,6 +704,7 @@ append content
 										| Sales Start
 									th
 										| Sales End
+									th(style="background:none;")
 							tbody#tickets
 								tr(ng-repeat="ticket in tickets")
 									td.ticket-dropdown
@@ -730,6 +731,13 @@ append content
 									td
 										input.input-green(type="date" placeholder="End Date" ng-model="ticket.end_date")
 										input.input-green(type="time" placeholder="End Time" ng-model="ticket.end_time" ng-init="ticket.end_time = '23:59'")
+									td(style="background:none;")
+										a.btn.btn-link(href ng-click="removeTicket($index)" style="color: red;" title="Remove Ticket")
+											i.fa.fa-minus.fa-fw
+										a.btn.btn-link(href ng-click="addTicket()" title="Add Ticket" ng-show="$last")
+											i.fa.fa-plus.fa-fw
+							.nspacer-big
+							.clearfix
 							div.tickets-lock(style="width:100%;height:100%;position:absolute;left:0;top:0;background:#333;opacity:0.3;z-index:999;")
 						.clearfix
 					.nspacer

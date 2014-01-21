@@ -317,7 +317,6 @@ $(document).ready(function() {
 		
 		var text = $(this).attr("val");
 		removeCategory($(this), text);
-		removeTicket(text)
 		
 		return false;
 	})
@@ -362,33 +361,6 @@ $(document).ready(function() {
 		return true;
 	})
 	
-	function addTicket (ticket) {
-		var scope = angular.element($("#tickets")).scope();
-		scope.$apply(function() {
-			scope.tickets.push({
-				price: 0.0,
-				quantity: 1,
-				type: 'custom',
-				customType: ticket,
-				whopays: 'me'
-			})
-		})
-	}
-	
-	function removeTicket(ticket) {
-		var scope = angular.element($("#tickets")).scope();
-		scope.$apply(function() {
-			for (var i = 0; i < scope.tickets.length; i++) {
-				var t = scope.tickets[i];
-				
-				if (t.customType == ticket) {
-					scope.tickets.splice(i, 1);
-					break;
-				}
-			}
-		});
-	}
-	
 	function addCategory (category) {
 		for (var i = 0; i < categories.length; i++) {
 			var cat = categories[i];
@@ -430,7 +402,6 @@ $(document).ready(function() {
 	$(".predefinedCategories span").click(function() {
 		var text = $(this).attr("val");
 		addCategory(text);
-		addTicket(text);
 	})
 	$(".createCategory a.add-category-manual").click(function(ev) {
 		ev.preventDefault();
@@ -440,7 +411,6 @@ $(document).ready(function() {
 		var val = field.val();
 		if (val.length > 0) {
 			addCategory(val);
-			addTicket(val);
 			field.val("");
 		}
 		
@@ -689,12 +659,26 @@ $(document).ready(function() {
 eventMost.controller('eventAdd', function($scope) {
 	var s = $scope;
 	
+	s.addTicket = function () {
+		$scope.tickets.push({
+			price: 0.0,
+			quantity: 1,
+			type: 'standard',
+			customType: '',
+			whopays: 'me'
+		})
+	}
+	
+	s.removeTicket = function (index) {
+		$scope.tickets.splice(index, 1)
+	}
+	
 	s.tickets = [{
 		price: 0.0,
 		quantity: 1,
 		price: 0,
-		type: 'custom',
-		customType: "Guest Speaker",
+		type: 'standard',
+		customType: "",
 		whopays: 'me'
 	}];
 	s.$watch('tickets', function(ticks) {
