@@ -6,6 +6,8 @@ $(document).ready(function() {
 	var avatarUploadRequest;
 	var file;
 	
+	var parseJson = false;
+	
 	$("#profileSaveButton").click(function(ev) {
 		ev.preventDefault()
 		
@@ -26,7 +28,11 @@ $(document).ready(function() {
 		form.append("avatar", file);
 		avatarUploadRequest = new XMLHttpRequest();
 		avatarUploadRequest.open("POST", "/profile/edit", true);
-		avatarUploadRequest.responseType = "json";
+		try {
+			avatarUploadRequest.responseType = "json";
+		} catch (e) {
+			parseJson = true;
+		}
 		avatarUploadRequest.setRequestHeader("accept", "application/json");
 		avatarUploadRequest.onreadystatechange = xmlhttprequestResponse;
 		avatarUploadRequest.send(form);
@@ -38,6 +44,10 @@ $(document).ready(function() {
 		if (avatarUploadRequest.readyState == 4) {
 			if (avatarUploadRequest.status == 200) {
 				result = avatarUploadRequest.response;
+				
+				if (parseJson) {
+					result = JSON.parse(avatarUploadRequest.responseText);
+				}
 				
 				if (result.status != 200) {
 					$("#profileSaveStatus").html("Could not save profile :(<br/>"+result.err.join('<br/>'));
@@ -67,7 +77,7 @@ $(document).ready(function() {
 		var extensionValid = false;
 		
 		if (ext.length > 0) {
-			ext = ext[ext.length-1];
+			ext = ext[ext.length-1].toLowerCase();
 			
 			// Check against valid extensions
 			if (ext == 'jpg' || ext == 'jpeg' || ext == 'png' || ext == 'gif') {

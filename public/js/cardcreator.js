@@ -238,7 +238,7 @@ eventMost.controller('businessCards', BusinessCards)
 				var extensionValid = false;
 				
 				if (ext.length > 0) {
-					ext = ext[ext.length-1];
+					ext = ext[ext.length-1].toLowerCase();
 					
 					// Check against valid extensions
 					if (ext == 'jpg' || ext == 'jpeg' || ext == 'png' || ext == 'gif') {
