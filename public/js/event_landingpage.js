@@ -61,8 +61,8 @@ angular.module('eventMost')
 				if (now.getTime() > start.getTime() && now.getTime() < end.getTime() && t.quantity > 0) {
 					t.expired = false;
 				}
-				t.start_formatted = moment(t.start).format('DD/MM/YYYY HH:mm:ss')
-				t.end_formatted = moment(t.end).format('DD/MM/YYYY HH:mm:ss')
+				t.start_formatted = moment(t.start).format('DD MMM YYYY')
+				t.end_formatted = moment(t.end).format('DD MMM YYYY')
 			}
 			
 			$scope.tickets = data.tickets;
