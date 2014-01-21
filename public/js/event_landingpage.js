@@ -27,6 +27,7 @@ angular.module('eventMost')
 	$scope.stripe_key = '';
 	$scope.init_stripe = false;
 	$scope.cardFormDisabled = false;
+	$scope.paymentRequired = false;
 	
 	$scope.init = function (opts) {
 		$scope.url = "/event/"+opts.id+"/";
@@ -53,6 +54,12 @@ angular.module('eventMost')
 				t.priceWithFeeFormatted = t.priceWithFee.toFixed(2);
 				t.priceFormatted = t.price.toFixed(2);
 				
+				if (t.price == 0) {
+					t.priceFormatted = "0.00";
+					t.priceWithFeeFormatted = "0.00";
+					t.priceWithFee = 0;
+				}
+				
 				t.expired = true;
 				var start = new Date(t.start);
 				var end = new Date(t.end);
@@ -71,6 +78,32 @@ angular.module('eventMost')
 	
 	$scope.showPayment = function () {
 		if ($scope.totalQuantity == 0) return;
+		
+		if ($scope.totalPrice == 0) {
+			$scope.status = "Processing Request..."
+			// Free tickets..
+			$scope.showPaymentMethods = false;
+			$scope.hideRegister = true;
+			
+			var tickets = $scope.getTickets();
+			
+			$http.post($scope.url+'buy/tickets', {
+				_csrf: $scope.csrf,
+				tickets: tickets
+			}).success(function(data, status) {
+				if (data.status == 200) {
+					$scope.status = "success";
+				} else {
+					$scope.hideRegister = false;
+					$scope.status = data.message;
+				}
+			}).error(function(data, status) {
+				$scope.hideRegister = false;
+				$scope.status = "The Request has Failed. Please try again later."
+			})
+			
+			return;
+		}
 		
 		$scope.showPaymentMethods = true;
 		$scope.hideRegister = true;
@@ -91,6 +124,11 @@ angular.module('eventMost')
 			
 			var em_fee = t.price * 0.024 + 0.2;
 			var price = t.price + em_fee;
+			if (t.price == 0) {
+				price = 0;
+				em_fee = 0;
+			}
+			
 			total += t.wantedQuantity * price;
 			total_nofees += t.wantedQuantity * t.price;
 			total_fees += em_fee * t.wantedQuantity;
@@ -106,7 +144,11 @@ angular.module('eventMost')
 			return;
 		}
 		
-		var total = (total+0.2) / (1 - 0.025);
+		var total = 0;
+		if (total != 0) {
+			total = (total+0.2) / (1 - 0.025);
+		}
+		
 		$scope.ticketPriceFormatted = total_nofees.toFixed(2);
 		$scope.feePriceFormatted = total_fees.toFixed(2)
 		$scope.totalPrice = total;

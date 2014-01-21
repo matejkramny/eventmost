@@ -287,13 +287,6 @@ function payWithCard (req, res) {
 	var token = req.body.payment_id;
 	var ev = res.locals.ev;
 	
-	if (!token) {
-		res.send({
-			status: 400
-		});
-		return;
-	}
-	
 	var meta = getTransactions(req, res);
 	var transaction = meta.transaction;
 	if (transaction.status == 'failed') {
@@ -305,12 +298,54 @@ function payWithCard (req, res) {
 	}
 	
 	var total = transaction.total;
+	if (total == 0) {
+		// Free tickets
+		transaction.third_party = 0;
+		
+		transaction.status = 'complete';
+		transaction.save();
+		
+		var ts = meta.tickets;
+		for (var i = 0; i < ts.length; i++) {
+			ts[i].ticket.quantity -= ts[i].quantity;
+			if (ts[i].ticket.quantity < 0) ts[i].ticket.quantity = 0;
+			ts[i].ticket.save();
+		}
+		
+		var attendee = new models.Attendee({
+			category: "",
+			hasPaid: true,
+			isAttending: false,
+			user: req.user._id
+		})
+		ev.attendees.push(attendee._id)
+		
+		attendee.save();
+		ev.save();
+		
+		emailConfirmation(req, res, transaction);
+		
+		res.send({
+			status: 200
+		})
+		
+		return;
+	}
+	
+	if (!token) {
+		res.send({
+			status: 400
+		});
+		return;
+	}
+	
 	//'Reverse the fees'
 	total = (total + 0.2) / (1 - 0.025);
+	
 	transaction.third_party = total - transaction.total;
 	transaction.total = total;
 	
-	var charge = stripe.charges.create({
+	stripe.charges.create({
 		amount: Math.round(total * 100), //must be in pennies
 		currency: "gbp",
 		card: token,
@@ -511,6 +546,9 @@ function getTransactions (req, res) {
 				if (name == 'custom') name = ticket.customType;
 				
 				var em_fee = ticket.price * 0.024 + 0.2;
+				if (ticket.price == 0) {
+					em_fee = 0;
+				}
 				
 				transaction.tickets.push({
 					price: ticket.price,
