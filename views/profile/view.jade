@@ -3,13 +3,13 @@ extends ../responsive
 append addonjs
 	script(src="/js/saveProfile#{minified}.js", defer)
 
-mixin mobileText(text, id, name, required, value)
+mixin mobileText(text, id, name, required, value, type, placeholder)
 	.col-xs-12.hide-all3(style="float:none; margin:4px auto; height:30px;")
 		.col-lg-12.col-md-12.col-xs-12.bg-purple.pad-right-zero(style="min-height:30px;")
 			.pad-left-zero.col-lg-3.col-md-3.col-xs-3.font-e1.psev.right(style="padding-top:9px; height:30px;")
 				= text
 			.psev.col-lg-9.col-md-9.col-xs-9(style="height:30px; margin-top:-3px;")
-				input.input-grey(id="LoginUserMobile#{id}", ng-model=name, name=name, type="text", required= required ? "required" : null, value=value)
+				input.input-grey(id="LoginUserMobile#{id}", ng-model=name, name=name, placeholder=placeholder ? placeholder : null, type= type ? type : "text", required= required ? "required" : null, value=value)
 mixin mobileTextarea(text, id, name, required, value)
 	.col-xs-12.hide-all3(style="float:none; margin:4px auto; height:120px;")
 		.col-lg-12.col-md-12.col-xs-12.bg-purple.pad-right-zero(style="min-height:120px;")
@@ -18,19 +18,19 @@ mixin mobileTextarea(text, id, name, required, value)
 			.psev.col-lg-9.col-md-9.col-xs-9(style="height:30px; margin-top:3px;")
 				textarea.input-grey.textarea-grey(id="LoginUserMobile#{id}", ng-model=name, name=name, value=value, type="textarea", required= required ? "required" : null, rows="4", cols="50" style="padding-top:5px; min-height:102px;")
 
-mixin text(text, id, name, required, value, first)
+mixin text(text, id, name, required, value, first, type, placeholder)
 	.col-lg-8.col-md-8.col-xs-8.pad-left-zero.bg-purple.pad-right-zero(class= first ? null : "nspacer")
 		.pad-left-zero.col-lg-4.col-md-4.col-xs-4.font-e.psev.right
 			= text
 		.psev.col-lg-8.col-md-8.col-xs-8
-			input.input-grey(id="LoginUser#{id}", ng-model=name, ng-init="#{name}='#{value}'", name=name, type="text", required= required ? "required" : null, value=value)
+			input.input-grey(id="LoginUser#{id}", ng-model=name, ng-init="#{name}='#{value}'" placeholder= placeholder ? placeholder : null name=name, type= type ? type : "text", required= required ? "required" : null, value=value)
 
-mixin textBig(text, id, name, required, value, first)
+mixin textBig(text, id, name, required, value, first, type, placeholder)
 	.col-lg-12.col-md-12.col-xs-12.bg-purple.pad-right-zero(class= first ? null : "nspacer", style="min-height:40px;")
 		.pad-left-zero.col-lg-3.col-md-3.col-xs-3.font-e.psev.right
 			= text
 		.psev.col-lg-9.col-md-9.col-xs-9
-			input.input-grey(id="LoginUser#{id}", ng-model=name, ng-init="#{name}='#{value}'", name=name, type="text", required= required ? "required" : null, value=value)
+			input.input-grey(id="LoginUser#{id}", ng-model=name, ng-init="#{name}='#{value}'" placeholder= placeholder ? placeholder : null name=name, type= type ? type : "text", required= required ? "required" : null, value=value)
 
 mixin textarea(text, id, name, required, value)
 	.col-lg-12.col-md-12.col-xs-12.bg-purple.nspacer.pad-right-zero.hide-mini3(style="min-height:118px;")
@@ -86,6 +86,8 @@ block content
 		mixin mobileText("Website", "Website", "website", false, user.website)
 		mixin mobileText("Education", "Education", "education", false, user.education)
 		mixin mobileTextarea("Description", "Description", "description", false, user.desc)
+		mixin mobileText("Password", "Password", "password_old", false, "", "text", "Enter Only If You Want to Change Your Password")
+		mixin mobileText("New Password", "NewPassword", "password", false, "")
 		//- end mobile only	
 	
 		.col-lg-9.col-md-9.col-xs-9.hide-mini3(style="float:none; margin:4px auto;")
@@ -96,6 +98,9 @@ block content
 			mixin textBig("Website:", "Website", "website", false, user.website)
 			mixin textBig("Education:", "Education", "education", false, user.education)
 			mixin textarea("Description:", "Description", "description", false, user.desc)
+			if (user.password)
+				mixin textBig("Current Password:", "Password", "password_old", false, "", false, "password", "Enter Only If You Want to Change Your Password")
+			mixin textBig("New Password:", "NewPassword", "password", false, "", false, "password")
 		.clearfix
 		.row
 			.nspacer

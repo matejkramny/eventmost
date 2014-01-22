@@ -155,7 +155,7 @@ function doPasswordReset (req, res) {
 		if (err || !user) {
 			res.send({
 				status: 404,
-				err: ["You will receive an email shortly."]
+				err: ["If the email is registered, you will receive it shortly."]
 			});
 			
 			return;
@@ -200,7 +200,7 @@ function doPasswordReset (req, res) {
 		
 		res.send({
 			status: 404,
-			err: ["You will receive an email shortly."]
+			err: ["If the email is registered, you will receive it shortly."]
 		});
 	})
 }

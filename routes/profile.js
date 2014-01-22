@@ -270,7 +270,6 @@ exports.doEditProfile = doEditProfile = function (req, res) {
 		if (req.body.password == req.body.password_old) {
 			errors.push("New password and old password must not be the same")
 		} else if (!u.password || u.password == models.User.getHash(req.body.password_old)) {
-			errors.push("Password updated!")
 			if (!u.password && !u.email) {
 				errors.push("You will need to add an email address before you can log in with a password.")
 			}
