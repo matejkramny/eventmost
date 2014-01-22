@@ -14,3 +14,4 @@ data/!empty
 newrelic_agent.log
 scripts/*.pyc
 config-credentials.js
+public/js/vendor/all_required.min.js

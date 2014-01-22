@@ -42,6 +42,14 @@ module.exports = function (grunt) {
 			options: {
 				livereload: true,
 			}
+		},
+		
+		concat: {
+			options: {},
+			dist: {
+				src: ['public/js/bugsnag.js', 'public/js/gan.js', 'public/js/vendor/jquery.min.js', 'public/js/vendor/bootstrap.min.js', 'public/js/vendor/angular.min.js', 'public/js/geo.js', 'public/js/angular-eventmost.js'],
+				dest: 'public/js/vendor/all_required.min.js'
+			}
 		}
 	})
 	
@@ -49,6 +57,7 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-cssmin')
 	grunt.loadNpmTasks('grunt-contrib-jshint')
 	grunt.loadNpmTasks('grunt-contrib-watch')
+	grunt.loadNpmTasks('grunt-contrib-concat')
 	
 	grunt.registerTask('default', ['uglify', 'cssmin']);
 }

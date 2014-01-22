@@ -33,6 +33,7 @@
 		"grunt-contrib-cssmin": "latest",
 		"grunt-contrib-jshint": "latest",
 		"grunt-contrib-watch": "latest",
+		"grunt-contrib-concat": "latest",
 		"sanitizer": "latest",
 		"moment": "latest",
 		"passport.socketio": "latest",

@@ -102,10 +102,7 @@ html
 			
 		//- usually globally persistent
 		block js
-			script(src="/js/bugsnag.js" data-apikey="#{bugsnag_key}")
-			script(src="/js/gan#{minified}.js" async)
 			script(src="/js/vendor/all_required.min.js" defer)
-			script(src="/js/angular-eventmost#{minified}.js" defer)
 			
 			if !loggedIn
 				script(src="/js/signin#{minified}.js" defer)
