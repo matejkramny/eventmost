@@ -19,7 +19,7 @@ var eventMost = angular.module('emAdmin', [])
 	$scope.showLine = true;
 	if (isLocalStorageCapable) {
 		if (typeof localStorage['admin-saved'] !== 'undefined') {
-			$scope.month = localStorage['admin-month'];
+			$scope.month = localStorage['admin-month'] == "null" ? null : localStorage['admin-month'];
 			$scope.year = parseInt(localStorage['admin-year']);
 			$scope.showLine = (parseInt(localStorage['admin-showLine']) == 0 ? false : true);
 		}
@@ -199,10 +199,11 @@ var eventMost = angular.module('emAdmin', [])
 			var m = moment(new Date(user.created));
 			var _month = $scope.months[m.month()];
 			if (_month != month) continue;
+			if (m.year() != $scope.year) continue;
 			
 			$scope.users.push(user);
 			
-			days[m.day()]++;
+			days[m.date()]++;
 		}
 		
 		var chart = $('.highchart').highcharts();
