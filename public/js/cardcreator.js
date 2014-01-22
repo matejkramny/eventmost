@@ -200,7 +200,7 @@ function BusinessCards ($scope) {
 	}
 }
 
-var eventMost = angular.module('eventMost', []);
+var eventMost = angular.module('eventMost');
 eventMost.controller('businessCards', BusinessCards)
 .directive('cardDirective', function() {
 	return function(scope, element, attrs) {
