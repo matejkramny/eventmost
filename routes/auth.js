@@ -9,6 +9,7 @@ var mongoose = require('mongoose')
 	, config = require('../config')
 	, transport = config.transport
 	, moment = require('moment')
+	, check = require('validator').check
 
 passport.serializeUser(function(user, done) {
 	done(null, user._id);
@@ -72,6 +73,24 @@ function doPasswordLogin (req, res) {
 		password = req.body.password,
 		name = req.body.name;
 	
+	try {
+		if (!email || !password) {
+			throw Error();
+		}
+		
+		check(email).isEmail();
+	} catch (e) {
+		res.send({
+			status: 404,
+			message: "Bad Login",
+			err: ["Invalid Credentials"]
+		})
+		
+		return;
+	}
+	
+	email = email.toLowerCase();
+	
 	models.User.authenticatePassword(email, password, function(err, user) {
 		if (err == null && user) {
 			// auth success
@@ -126,6 +145,8 @@ function doPasswordReset (req, res) {
 		
 		return;
 	}
+	
+	email = email.toLowerCase();
 	
 	models.User.findOne({
 		disabled: false,

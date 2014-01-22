@@ -99,7 +99,10 @@ $(document).ready(function() {
 		
 			this.form.submit(function(event) {
 				event.preventDefault();
-			
+				
+				self.status.removeClass("hide");
+				self.status.html("Sending Request..")
+				
 				// Perform AJAX whatever
 				$.ajax({
 					url: self.url,

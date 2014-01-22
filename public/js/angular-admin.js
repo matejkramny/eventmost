@@ -214,11 +214,11 @@ var eventMost = angular.module('emAdmin', [])
 		
 		chart.xAxis[0].categories = dayNames
 		chart.addSeries({
-            name: month,
+			name: month,
 			color: '#18bc9c',
 			type: $scope.showLine ? 'spline' : 'bar',
-            data: days
-        });
+			data: days
+		});
 	}
 	
 })
