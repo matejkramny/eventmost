@@ -1,5 +1,9 @@
 extends responsive
 
+append addonjs
+	if (theUser._id.equals(user._id) && typeof ev !== "undefined")
+		script(src="/js/eventLandingPage.js" defer)
+
 block content
 	if (typeof ev !== "undefined")
 		include event/inc/navbar
@@ -132,18 +136,40 @@ block content
 								| Edit feedback<br/>profile
 							.nspacer-small
 	else
-		.col-md-offset-4.col-xs-offset-4.col-sm-offset-4.col-md-2.col-xs-2.col-sm-2.lower.hide-mini3-except-smart
-			.right.iconsbox.spacerbig
-				a(href="/profile", class="link1")
-					img(src="/images/edit-my-prof.svg", alt="", class="img-responsive inline pad-right-ten res-butt")
-		.col-md-offset-4.col-xs-offset-4.col-sm-offset-4.col-md-2.col-xs-2.col-sm-2.lower-hide.hide-except-smart
-			.right.iconsbox.spacerbig
-				a(href="/profile", class="link1")
-					img(src="/images/edit-my-prof.svg", alt="", class="img-responsive inline res-butt")
-		.hide-except-smart
-			.center
-				a(href="/profile", class="link1")
-					img(src="/images/edit-my-prof.svg", alt="", class="img-responsive inline res-butt pad-left-five")
+		.row
+			- var offset = "col-md-offset-4 col-xs-offset-4 col-sm-offset-4";
+			if (typeof ev !== "undefined")
+				- offset = "";
+				.col-md-offset-2.col-sm-offset-2.col-xs-offset-2.col-md-2.col-xs-2.col-sm-2.lower.hide-mini3-except-smart
+					.right.iconsbox.spacerbig
+						a(class="link1" data-toggle="modal" href="#attendModal")
+							button.btn.btn-primary.font-x(style="width:100%; padding:10px; padding-left:25px; padding-right:35px; margin-right:20px; text-align:center;")
+								| Change My<br/>Category
+							.nspacer-small
+				.col-md-offset-2.col-sm-offset-2.col-xs-offset-2.col-md-2.col-xs-2.col-sm-2.lower-hide.hide-except-smart
+					.right.iconsbox.spacerbig
+						a(class="link1" data-toggle="modal" href="#attendModal")
+							button.btn.btn-primary.font-x(style="width:100%; padding:10px; padding-left:25px; padding-right:35px; margin-right:20px; text-align: center;")
+								| Change My<br/>Category
+							.nspacer-small
+				.hide-except-smart
+					.center
+						a(class="link1" data-toggle="modal" href="#attendModal")
+							button.btn.btn-primary.font-x(style="width:125px; padding:10px; padding-left:25px; padding-right:35px; margin-right:20px;")
+								| Change My<br/>Category
+							.nspacer-small
+			.col-md-2.col-xs-2.col-sm-2.lower.hide-mini3-except-smart(class=offset)
+				.right.iconsbox.spacerbig
+					a(href="/profile", class="link1")
+						img(src="/images/edit-my-prof.svg", alt="", class="img-responsive inline pad-right-ten res-butt")
+			.col-md-2.col-xs-2.col-sm-2.lower-hide.hide-except-smart(class=offset)
+				.right.iconsbox.spacerbig
+					a(href="/profile", class="link1")
+						img(src="/images/edit-my-prof.svg", alt="", class="img-responsive inline res-butt")
+			.hide-except-smart
+				.center
+					a(href="/profile", class="link1")
+						img(src="/images/edit-my-prof.svg", alt="", class="img-responsive inline res-butt pad-left-five")
 	
 	.nspacer.hide-except-smart
 	.col-md-4.col-xs-4.col-sm-4.hide-except-smart
@@ -216,3 +242,6 @@ block content
 					!= theUser.desc
 
 	.clearfix
+	
+	if (theUser._id.equals(user._id) && typeof ev !== "undefined")
+		include modals/registration

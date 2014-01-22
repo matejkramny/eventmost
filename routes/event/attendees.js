@@ -126,6 +126,8 @@ function joinEvent (req, res) {
 	
 	var ev = res.locals.ev;
 	
+	// Allow people to change their category..
+	/*
 	if (res.locals.eventattending) {
 		res.format({
 			html: function() {
@@ -139,7 +141,7 @@ function joinEvent (req, res) {
 			}
 		})
 		return;
-	}
+	}*/
 	
 	if (ev.accessRequirements.password) {
 		if (ev.accessRequirements.passwordString != password) {
@@ -183,9 +185,14 @@ function joinEvent (req, res) {
 			return;
 		}
 		
-		var attendee = new models.Attendee({
-			user: req.user._id
-		});
+		var attendee;
+		if (res.locals.eventattending) {
+			attendee = res.locals.attendee;
+		} else {
+  			attendee = new models.Attendee({
+  				user: req.user._id
+			});
+		}
 	
 		if (category && category.length > 0) {
 			// Check if category exists & is valid
@@ -245,7 +252,7 @@ function joinEvent (req, res) {
 			}
 		}
 		
-		if (ev.pricedTickets && attendee.hasPaid == false) {
+		if (ev.pricedTickets && attendee.hasPaid == false && !res.locals.eventattending) {
 			// reject
 			res.format({
 				html: function() {
@@ -263,13 +270,18 @@ function joinEvent (req, res) {
 		}
 		
 		attendee.save()
-		ev.attendees.push(attendee._id);
+		
+		if (res.locals.eventattending) {
+			req.session.flash = ["Your Category has been updated to "+attendee.category];
+		} else {
+			ev.attendees.push(attendee._id);
+			req.session.flash = ["Yay! You're now attending "+ev.name+"!"]
+		}
+		
 		ev.save(function(err) {
 			if (err) throw err;
 		});
-	
-		req.session.flash = ["Yay! You're now attending "+ev.name+"!"]
-	
+		
 		res.format({
 			html: function() {
 				res.redirect('/event/'+ev._id);
