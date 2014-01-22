@@ -13,10 +13,8 @@ html
 		
 		//- all css goes here
 		block css
-			link(rel="stylesheet", href="/css/bootstrap.min.css")
+			link(rel="stylesheet", href="/css/all_combined.min.css")
 			link(rel="stylesheet", href="/css/bootstrap-eventmost#{minified}.css")
-			link(rel="stylesheet", href="/css/toggle-switch#{minified}.css")
-			link(href="/css/font-awesome.min.css", rel="stylesheet")
 			
 			//- Temporary hack until we use BS > 3.0.0.. 
 			style.
@@ -106,9 +104,7 @@ html
 		block js
 			script(src="/js/bugsnag.js" data-apikey="#{bugsnag_key}")
 			script(src="/js/gan#{minified}.js" async)
-			script(src="/js/vendor/jquery.min.js" defer)
-			script(src="/js/vendor/bootstrap.min.js" defer)
-			script(src="/js/vendor/angular.min.js" defer)
+			script(src="/js/vendor/all_required.min.js" defer)
 			script(src="/js/angular-eventmost#{minified}.js" defer)
 			
 			if !loggedIn
