@@ -5,10 +5,11 @@ append css
 	link(rel="stylesheet", href="/css/cardcreator.css")
 
 append addonjs
-	script(src="/js/jquery.ui.draggable.min.js", defer)
-	script(src="/js/jquery.ui.droppable.min.js", defer)
-	script(src="/js/jquery.ui.resizable.min.js", defer)
-	script(src="/js/cardcreator#{minified}.js", defer)
+	script(src="/js/vendor/jquery-ui-1.10.3.custom.min.js" defer)
+	script(src="/js/vendor/jquery.ui.draggable.min.js" defer)
+	script(src="/js/vendor/jquery.ui.droppable.min.js" defer)
+	script(src="/js/vendor/jquery.ui.resizable.min.js" defer)
+	script(src="/js/cardcreator#{minified}.js" defer)
 
 block content
 	//- card tool

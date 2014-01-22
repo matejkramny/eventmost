@@ -106,18 +106,11 @@ html
 		block js
 			script(src="/js/bugsnag.js" data-apikey="#{bugsnag_key}")
 			script(src="/js/gan#{minified}.js" async)
-			script(src="/js/jquery.min.js" defer)
-			script(src="/js/bootstrap.min.js" defer)
-			script(src="/js/angular.min.js" defer)
+			script(src="/js/vendor/jquery.min.js" defer)
+			script(src="/js/vendor/bootstrap.min.js" defer)
+			script(src="/js/vendor/angular.min.js" defer)
 			script(src="/js/angular-eventmost#{minified}.js" defer)
-			script(src="/js/jquery-ui-1.10.3.custom.min.js" defer)
-			script(src="/js/jquery.ui.touch-punch.min.js" defer)
-			script(src="/js/jquery.tinycarousel.min.js" defer)
-			script(src="/js/over-box#{minified}.js" defer)
-			script(src="/js/font-change#{minified}.js" defer)
-			script(src="/js/jquery.easing.1.3.js" defer)
-			script(src="/js/jquery.contentcarousel.js" defer)
-			script(src="/js/car.js" defer)
+			
 			if !loggedIn
 				script(src="/js/signin#{minified}.js" defer)
 				

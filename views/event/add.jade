@@ -3,8 +3,8 @@ extends ../responsive
 append addonjs
 	script(src="/js/geo#{minified}.js", defer)
 	script(src="/js/datepicker#{minified}.js", defer)
-	script(src="/js/tiny.editor.packed.js", defer)
-	script(src="/js/jquery.jcarousel.min.js", defer)
+	script(src="/js/vendor/tiny.editor.packed.js", defer)
+	script(src="/js/vendor/jquery.jcarousel.min.js", defer)
 	if (typeof ev !== "undefined")
 		script.
 			window.emEvent = !{JSON.stringify(ev)}
