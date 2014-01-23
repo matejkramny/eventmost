@@ -299,7 +299,7 @@ exports.doEditProfile = doEditProfile = function (req, res) {
 		}
 		
 		fs.readFile(req.files.avatar.path, function(err, avatar) {
-			fs.writeFile(conifg.path + "/public"+u.avatar, avatar, function(err) {
+			fs.writeFile(config.path + "/public"+u.avatar, avatar, function(err) {
 				if (err) throw err;
 				
 				createThumbnails()
