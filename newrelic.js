@@ -22,7 +22,7 @@ exports.config = {
      * production applications.
      */
     level : 'info',
-	 path: 'STDOUT'
+	 filepath: 'STDOUT'
   },
   rules: {
 	  ignore: [
