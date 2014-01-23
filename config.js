@@ -24,7 +24,7 @@ exports.transport = mailer.createTransport("Mandrill", {
 
 // In short, this will ensure a unique database for each environment
 var mode = process.env.NODE_MODE;
-if (!(mode == "dev" || mode == "staging" || mode == "test")) {
+if (!(mode == "test")) {
 	mode = "";
 }
 
@@ -36,10 +36,14 @@ exports.sessionSecret = credentials.session_secret
 
 exports.bugsnagKey = credentials.bugsnag_key;
 exports.production = process.env.NODE_ENV == 'production' ? true : false;
-exports.db = (exports.production ? "mongodb://"+credentials.db : "mongodb://127.0.0.1/eventmost") + (mode.length > 0 ? "-" + mode : "");
-exports.port = process.env.PORT || 3000;
+exports.db = credentials.db;
+if (mode == "test") {
+	// Just for security, so it doesn't accidentally the whole DB
+	exports.db += "_test";
+}
 
-console.log(exports.db)
+exports.db_config = credentials.db_config;
+exports.port = process.env.PORT || 3000;
 
 exports.path = __dirname;
 

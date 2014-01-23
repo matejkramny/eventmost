@@ -26,13 +26,7 @@ if (config.mode != "test") {
 
 var app = exports.app = express();
 
-mongoose.connect(config.db, {
-	auto_reconnect: true,
-	native_parser: true,
-	server: {
-		auto_reconnect: true
-	}
-});
+mongoose.connect(config.db, config.db_config);
 var sessionStore = new MongoStore({
 	connection: mongoose.connection,
 	interval: 120000
