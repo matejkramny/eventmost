@@ -4,6 +4,7 @@ var fs = require('fs'),
 	, util = require('../util')
 	, inbox = require('./inbox/index')
 	, check = require('validator').check
+	, config = require('../config')
 
 exports.router = function (app) {
 	app.get('/profile', util.authorized, profile)
@@ -286,9 +287,7 @@ exports.doEditProfile = doEditProfile = function (req, res) {
 		u.avatar = "/profileavatars/"+u._id+"."+ext;
 		
 		var createThumbnails = function() {
-			u.createThumbnails(function(){
-				console.log("4")
-			});
+			u.createThumbnails(function(){});
 		}
 		if (!blocking) {
 			blocking = true;
@@ -300,7 +299,7 @@ exports.doEditProfile = doEditProfile = function (req, res) {
 		}
 		
 		fs.readFile(req.files.avatar.path, function(err, avatar) {
-			fs.writeFile(__dirname + "/../public"+u.avatar, avatar, function(err) {
+			fs.writeFile(conifg.path + "/public"+u.avatar, avatar, function(err) {
 				if (err) throw err;
 				
 				createThumbnails()

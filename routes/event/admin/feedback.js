@@ -4,6 +4,7 @@ var fs = require('fs'),
 	, util = require('../../../util')
 	, event = require('../event')
 	, feedbackinbox = require('./feedbackInbox/feedbackinbox')
+	, config = require('../../../config')
 
 exports.router = function (app) {
 	app.get('/event/:id/admin/feedback', eventFeedbackProfile)
@@ -81,8 +82,11 @@ function doEditFeedbackProfile (req, res) {
 		profile.avatar = "/profileavatars/"+profile._id+"."+ext;
 		
 		fs.readFile(req.files.avatar.path, function(err, avatar) {
-			fs.writeFile(__dirname + "/../../../public"+profile.avatar, avatar, function(err) {
+			fs.writeFile(config.path + "/public" + profile.avatar, avatar, function(err) {
 				if (err) throw err;
+				
+				profile.createThumbnails(function() {
+				})
 			});
 		});
 	}
