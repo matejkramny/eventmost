@@ -76,7 +76,7 @@ angular.module('eventMost')
 		$http.get($scope.url+'comments').success(function(data, status) {
 			$scope.comments = $filter('orderBy')(data.comments, 'posted', 'true');
 			for (var i = 0; i < $scope.comments.length; i++) {
-				$scope.comments[i].comments = $filter('orderBy')($scope.comments[i].comments, 'posted', 'true');
+				$scope.comments[i].comments = $filter('orderBy')($scope.comments[i].comments, 'posted', 'false');
 			}
 			$scope.processCommentTime();
 		})
@@ -187,7 +187,7 @@ angular.module('eventMost')
 		
 		if (comment.attendee.user.avatarSorted !== true) {
 			comment.attendee.user.avatarSorted = true;
-			if (comment.attendee.user.avatar.length == 0) {
+			if (!comment.attendee.user.avatar || comment.attendee.user.avatar.length == 0) {
 				comment.attendee.user.avatar = '/images/default_speaker-purple.svg';
 			} else {
 				comment.attendee.user.avatar += '-116x116.png';
