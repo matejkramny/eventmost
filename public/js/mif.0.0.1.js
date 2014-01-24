@@ -27,10 +27,9 @@ angular.module('eventMost')
 			}
 		} else {
 			$scope.comments.splice(0, 0, message);
-			$scope.comments = $filter('orderBy')($scope.comments, 'posted', 'true')
+			$scope.processCommentTime();
+			$scope.comments = $filter('orderBy')($scope.comments, 'moment', 'true')
 		}
-		
-		$scope.processCommentTime();
 		
 		if (!$scope.$$phase) {
 			$scope.$digest()
@@ -74,11 +73,14 @@ angular.module('eventMost')
 	
 	$scope.reload = function () {
 		$http.get($scope.url+'comments').success(function(data, status) {
-			$scope.comments = $filter('orderBy')(data.comments, 'posted', 'true');
-			for (var i = 0; i < $scope.comments.length; i++) {
-				$scope.comments[i].comments = $filter('orderBy')($scope.comments[i].comments, 'posted', 'false');
-			}
+			$scope.comments = data.comments;
+			
 			$scope.processCommentTime();
+			
+			$scope.comments = $filter('orderBy')($scope.comments, 'moment', 'true');
+			for (var i = 0; i < $scope.comments.length; i++) {
+				$scope.comments[i].comments = $filter('orderBy')($scope.comments[i].comments, 'moment', 'false');
+			}
 		})
 	}
 	
@@ -174,6 +176,7 @@ angular.module('eventMost')
 	
 	$scope.processComment = function (comment) {
 		var mom = moment(comment.posted);
+		comment.moment = mom;
 		comment.postedAgo = mom.fromNow()
 		comment.postedFormatted = mom.format('dddd Do MMMM YYYY [at] h:mm:ss a')
 		
