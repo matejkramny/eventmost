@@ -2,7 +2,8 @@ var models = require('../../models'),
 	fs = require('fs'),
 	attending = require('./event').attending,
 	config = require('../../config'),
-	gm = require('gm')
+	gm = require('gm'),
+	moment = require('moment')
 
 exports.router = function (app) {
 	app.get('/event/:id/dropbox', view)
@@ -30,6 +31,7 @@ function view (req, res) {
 	
 	res.format({
 		html: function() {
+			res.locals.moment = moment;
 			res.render('event/dropbox', { title: "Dropbox" })
 		}
 	})

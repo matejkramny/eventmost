@@ -72,14 +72,11 @@ block content
 										| &hellip;
 								else
 									= file.name
+								.pull-right
+									= file.size
 							.nspacer
-							= file.size
-							| , uploaded 
-							= file.created.getDate()
-							| /
-							= file.created.getMonth()+1
-							| /
-							= file.created.getFullYear()
+							| Uploaded on 
+							= moment(file.created).format('dddd, Do, MMMM YYYY [at] h:mm:ss a')
 			
 					.width14.pull-right.pad-left-five
 						a(href=file.file target="_blank")
