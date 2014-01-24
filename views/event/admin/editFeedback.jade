@@ -10,7 +10,7 @@ block content
 	
 	.clearfix
 	
-	div(ng-controller="feedbackProfileController", ng-init= typeof feedbackProfile !== 'undefined' ? 'init(#{JSON.stringify(feedbackProfile)}, #{JSON.stringify(ev.categories)})' : null)
+	div(ng-controller="feedbackProfileController", ng-init= typeof feedbackProfile !== 'undefined' ? 'init(#{JSON.stringify(feedbackProfile)}, #{JSON.stringify(ev.categories)})' : 'categories = #{JSON.stringify(ev.categories)}')
 		.col-lg-12.col-md-12.col-xs-12.center.nspacer.font.semi-bold
 			| Create Guest Speaker, Team, Company, or Other profile
 		.col-lg-12.col-md-12.col-xs-12.font-e.center.nspacer

@@ -75,10 +75,7 @@ function doEditFeedbackProfile (req, res) {
 	profile.website = req.body.website;
 	profile.desc = req.body.desc;
 	profile.setName(req.body.name);
-	attendee.category = req.body.category;
-	if (attendee.category.length == 0) {
-		attendee.category = "Attendee";
-	}
+	
 	
 	if (req.files && req.files.avatar != null && req.files.avatar.name.length != 0) {
 		var ext = req.files.avatar.type.split('/');
