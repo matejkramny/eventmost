@@ -26,6 +26,7 @@ exports.config = {
   rules: {
 	  ignore: [
 	    '^/socket.io/.*/*-polling',
+		 '^/ping$'
 	  ]
   }
 };
