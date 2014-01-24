@@ -7,13 +7,16 @@ angular.module('eventMost')
 		position: "",
 		company: "",
 		website: "",
-		desc: ""
+		desc: "",
+		category: ""
 	}
+	$scope.categories = [];
 	$scope.progress = 0;
 	
-	$scope.init = function (profile) {
+	$scope.init = function (profile, categories) {
 		$scope.profile = profile.user;
 		$scope.profile._id = profile._id;
+		$scope.categories = categories;
 		
 		$('.avatar-upload-image').attr('src', $scope.profile.avatar || "/images/big-avatar-blue.svg");
 	}

@@ -10,7 +10,7 @@ block content
 	
 	.clearfix
 	
-	div(ng-controller="feedbackProfileController", ng-init= typeof feedbackProfile !== 'undefined' ? 'init(#{JSON.stringify(feedbackProfile)})' : null)
+	div(ng-controller="feedbackProfileController", ng-init= typeof feedbackProfile !== 'undefined' ? 'init(#{JSON.stringify(feedbackProfile)}, #{JSON.stringify(ev.categories)})' : null)
 		.col-lg-12.col-md-12.col-xs-12.center.nspacer.font.semi-bold
 			| Create Guest Speaker, Team, Company, or Other profile
 		.col-lg-12.col-md-12.col-xs-12.font-e.center.nspacer
@@ -48,7 +48,8 @@ block content
 					.pad-left-zero.col-lg-3.col-md-3.col-xs-3.font-e.pad-top.right
 						| Website:
 					.psev.col-lg-8.col-md-8.col-xs-8
-						input.input-yellow-rounded(type="url", ng-model="profile.website")
+						input.input-yellow-rounded(type="url" ng-model="profile.website")
+						
 		.clearfix
 		//- mobile only
 		.col-lg-12.hide-all3(style="float:none; margin:auto;")
@@ -83,10 +84,23 @@ block content
 					input.input-yellow-rounded(type="url", ng-model="profile.website")
 		//- end mobile only
 		
+		.row
+			.col-lg-7.col-md-7.col-sm-7.col-xs-12.col-lg-offset-4.col-md-offset-4.col-sm-offset-4.pad-left-zero.pad-right-zero
+				.pad-left-zero.col-lg-3.col-md-3.col-xs-3.font-e.pad-top.right
+					| Event Category:
+				.psev.col-lg-8.col-md-8.col-xs-8
+					select.input-yellow-rounded(ng-options="category for category in categories" ng-model="profile.category")
+						option(value) (Default) Attendee
+		.row
+			.col-lg-7.col-md-7.col-sm-7.col-xs-12.col-lg-offset-4.col-md-offset-4.col-sm-offset-4.pad-left-zero.pad-right-zero
+				.pad-left-zero.col-lg-3.col-md-3.col-xs-3.font-e.pad-top.right
+					| Custom Category:
+				.psev.col-lg-8.col-md-8.col-xs-8
+					input.input-yellow-rounded(type="text" ng-model="profile.category")
 		.clearfix
 		.nspacer
 		.col-lg-12.col-md-12.col-xs-12(style="float:none; margin:4px auto;")
-			textarea.input-grey.textarea-grey-border(type="textarea", ng-model="profile.desc", placeholder="Input description, helpful information, links, etc.", rows="4", cols="50", style="padding-top:5px; min-height:152px;")
+			textarea.input-grey.textarea-grey-border(type="textarea", ng-model="profile.desc", placeholder="Profile description, helpful information, links, etc.", rows="4", cols="50", style="padding-top:5px; min-height:152px;")
 		.nspacer
 		.col-lg-12.col-md-12.col-xs-12
 			.pull-right
