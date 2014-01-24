@@ -75,6 +75,9 @@ angular.module('eventMost')
 	$scope.reload = function () {
 		$http.get($scope.url+'comments').success(function(data, status) {
 			$scope.comments = $filter('orderBy')(data.comments, 'posted', 'true');
+			for (var i = 0; i < $scope.comments.length; i++) {
+				$scope.comments[i].comments = $filter('orderBy')($scope.comments[i].comments, 'posted', 'true');
+			}
 			$scope.processCommentTime();
 		})
 	}
