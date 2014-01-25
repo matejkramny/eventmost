@@ -44,12 +44,12 @@ angular.module('eventMost', [])
 				enabled: true
 			},
 			data: [{
-				name: 'Attending',
+				name: '50% Attending',
 				y: 50,
 				selected: true,
 				sliced: true
 			}, {
-				name: 'Not Attending',
+				name: '50% Not Attending',
 				y: 50,
 				selected: false,
 				sliced: false
@@ -98,12 +98,12 @@ angular.module('eventMost', [])
 		
 		var chart = $('#attendance-graph').highcharts();
 		chart.series[0].setData([{
-			name: 'Attending',
+			name: ((attending / $scope.attendees.length) * 100).toFixed(1)+'% Attending',
 			y: attending / $scope.attendees.length,
 			selected: true,
 			sliced: true
 		}, {
-			name: 'Not Attending',
+			name: ((($scope.attendees.length - attending) / $scope.attendees.length) * 100).toFixed(1)+'% Not Attending',
 			y: ($scope.attendees.length - attending) / $scope.attendees.length,
 			selected: false,
 			sliced: false
