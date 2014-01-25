@@ -47,3 +47,5 @@ exports.social = {
 }
 
 exports.session_secret = "KeyboardCat";
+
+exports.testroutes = true;

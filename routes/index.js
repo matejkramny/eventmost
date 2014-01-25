@@ -9,7 +9,8 @@ var auth = require('./auth'),
 	search = require('./search'),
 	admin = require('./admin'),
 	util = require('../util'),
-	models = require('../models')
+	models = require('../models'),
+	config = require('../config')
 
 // HTTP router
 exports.router = function(app) {
@@ -26,7 +27,10 @@ exports.router = function(app) {
 		.get('/logout.json', logoutJSON)
 		.get('/loggedin', isloggedin)
 		.post('/emailavailable', emailAvailable)
-		.get('/testroute*', testRoute)
+	
+	if (config.testroutes) {
+		app.get('/testroute*', testRoute)
+	}
 	
 	// Used for JSON/XML auth responses
 	auth.router(app)

@@ -34,6 +34,7 @@ exports.mode = mode;
 exports.sessionKey = 'em_sess';
 exports.sessionSecret = credentials.session_secret
 
+exports.testroutes = credentials.testroutes;
 exports.bugsnagKey = credentials.bugsnag_key;
 exports.production = process.env.NODE_ENV == 'production' ? true : false;
 exports.db = credentials.db;
