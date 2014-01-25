@@ -3,15 +3,10 @@ var models = require('../../models')
 	, socket = require('./socket')
 
 exports.router = function (app) {
-	app.get('/event/:id/messages', display)
-		.get('/event/:id/comments', getComments)
+	app.get('/event/:id/comments', getComments)
 		.post('/event/:id/comment', postComment)
 		.delete('/event/:id/comment/:cid', deleteComment)
 		.post('/event/:id/like', likeComment)
-}
-
-function display (req, res) {
-	res.render('event/messages', { title: "Event Messages" })
 }
 
 function getComments (req, res) {

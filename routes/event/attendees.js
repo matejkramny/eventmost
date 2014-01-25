@@ -9,6 +9,8 @@ exports.router = function (app) {
 	
 	app.get('/event/:id/attendees', listAttendees)
 		.get('/event/:id/attendee/:attendee', showAttendee)
+		.put('/event/:id/attendee/:attendee/register', getAttendee, registerAttendee)
+		.put('/event/:id/attendee/:attendee/unregister', getAttendee, unregisterAttendee)
 		.get('/event/:id/attendee/:attendee/remove', removeAttendee)
 		.post('/event/:id/join', joinEvent)
 		.post('/event/:id/buy/tickets', payWithCard)
@@ -33,14 +35,131 @@ function listAttendees (req, res) {
 	
 	res.format({
 		html: function() {
-			res.render('event/attendees', { title: "Attendees at "+res.locals.ev.name })
-		}/*,
+			res.redirect('/event/'+res.locals.ev._id)
+		},
+		json: function() {
+			var _attendees = res.locals.ev.attendees;
+			var attendees = [];
+			for (var i = 0; i < _attendees.length; i++) {
+				var _attendee = _attendees[i];
+				
+				var name = _attendee.user.getName();
+				var attendee = _attendee.toObject();
+				
+				attendee = {
+					user: {
+						_id: attendee.user._id,
+						avatar: attendee.user.avatar,
+						company: attendee.user.company,
+						position: attendee.user.position,
+						name: name
+					},
+					category: attendee.category,
+					admin: attendee.admin,
+					_id: attendee._id,
+					checkedOff: attendee.checkedOff
+				}
+				if (attendee.user.avatar.length == 0) {
+					attendee.user.avatar = "/images/default_speaker-purple.svg";
+				} else {
+					attendee.user.avatar += "-116x116.png";
+				}
+				
+				attendees.push(attendee);
+			}
+			
+			res.send({
+				attendees: attendees
+			})
+		}
+	});
+}
+
+function getAttendee (req, res, next) {
+	if (res.locals.eventadmin !== true) {
+		res.format({
+			html: function() {
+				res.redirect('/event/'+res.locals.ev._id);
+			},
+			json: function() {
+				res.send({
+					status: 404
+				})
+			}
+		});
+		return;
+	}
+	
+	var attID = req.params.attendee;
+	var ev = res.locals.ev;
+	
+	try {
+		attID = mongoose.Types.ObjectId(attID)
+	} catch (e) {
+		res.format({
+			html: function() {
+				res.redirect('/event/'+res.locals.ev._id);
+			},
+			json: function() {
+				res.send({
+					status: 404
+				})
+			}
+		});
+		return;
+	}
+	
+	for (var i = 0; i < ev.attendees.length; i++) {
+		var attendee = ev.attendees[i];
+		
+		if (typeof attendee.user === "object" && attendee._id.equals(attID)) {
+			res.locals.requestedAttendee = attendee;
+			next()
+			return;
+		}
+	}
+	
+	res.format({
+		html: function() {
+			res.redirect('/event/'+res.locals.ev._id);
+		},
 		json: function() {
 			res.send({
-				event: res.locals.ev,
-				attending: res.locals.eventattending
+				status: 404
 			})
-		}*/
+		}
+	});
+}
+
+function registerAttendee (req, res) {
+	res.locals.requestedAttendee.checkedOff = true;
+	res.locals.requestedAttendee.save();
+	
+	res.format({
+		html: function() {
+			res.redirect('/event/'+res.locals.ev._id+'/admin/register');
+		},
+		json: function() {
+			res.send({
+				status: 200
+			})
+		}
+	});
+}
+
+function unregisterAttendee (req, res) {
+	res.locals.requestedAttendee.checkedOff = false;
+	res.locals.requestedAttendee.save();
+	
+	res.format({
+		html: function() {
+			res.redirect('/event/'+res.locals.ev._id+'/admin/register');
+		},
+		json: function() {
+			res.send({
+				status: 200
+			})
+		}
 	});
 }
 

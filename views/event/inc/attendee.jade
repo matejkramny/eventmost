@@ -21,3 +21,23 @@ mixin attendee(attendee, feedbackEditLink)
 						| - #{attendee.user.position}
 					else if(attendee.user.company.length > 0)
 						| - #{attendee.user.company}
+
+mixin attendeeTemplate()
+	div(ng-class="{ 'grey-rounded-box': attendee.admin }")
+		.pull-left.circle-avatar-new
+			img.image-circle-avatar-new(ng-src="{{attendee.user.avatar}}")
+		.pull-left.center.font-exception-thin.width-attendees.pad-left-ten
+			.font20a.nspacer.font-exception
+				| {{ attendee.category }}
+			//- font-change script added when to long name font size changes like in example
+			a.bold.break.color-green.font-change.font-attendee.font-exception(href="{{url}}/attendee/{{attendee._id}}")
+				| {{ attendee.user.name }}
+			//-if (eventadmin && attendee.admin == false)
+			//-	a.pull-right.bold.break.color-green.font-change.font-attendee.font-exception(href="/event/"+ev._id+"/attendee/"+attendee._id+"/remove" style="color:#000;" title="Remove Attendee from Event"): i.fa.fa-fw.fa-trash-o
+			if (block)
+				block
+			.bold.break.font-change.font-attendee.font-exception
+				span(ng-show="attendee.user.position || attendee.user.company") - 
+				| {{ attendee.user.position }}
+				span(ng-show="attendee.user.position && attendee.user.company") , 
+				| {{ attendee.user.company }}

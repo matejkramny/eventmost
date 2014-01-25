@@ -1,0 +1,39 @@
+extends ../../responsive
+
+include ../inc/navbar
+include ../inc/attendee
+
+append addonjs
+	script(src="/js/eventAttendees.0.0.1.js" defer)
+	script(src="/js/vendor/moment.min.js" defer)
+
+block content
+	+navbar
+	
+	div(ng-controller="eventAttendees" ng-init="init({ url: '/event/#{ev._id}', admin: #{eventadmin}, csrf: '#{token}' })")
+		.row
+			.col-sm-8.col-md-8.col-lg-8
+				h1.page-header Attendee Register
+		
+		.row
+			.col-sm-8.col-md-8.col-lg-8
+				h2 Missing Attendees
+			.col-sm-4.col-md-4.col-lg-4
+				.input-group(style="margin: 20px 0 0;")
+					span.input-group-addon
+						i.fa.fa-search.fa-fw
+					input.form-control(type="search" placeholder="Search Attendees by Name" ng-model="search")
+		div(ng-repeat="attendee in attendees | filter:{ checkedOff: false } | filter:searchName" ng-class="$first || $index % 3 == 1")
+			.col-sm-4.col-xs-4.col-md-4.nspacer(style="position:relative;")
+				+attendeeTemplate
+					a.pull-right(href ng-click="checkOff(attendee)" title="Click to Add/Remove Attendee from the Register" style="position:absolute; right: 30px; top: 50px; font-size:20px; color:black;")
+						i.fa.fa-fw(ng-class="{ 'fa-circle-o': !attendee.checkedOff, 'fa-check-circle-o': attendee.checkedOff }")
+		.clearfix
+		
+		h2 Present Attendees
+		div(ng-repeat="attendee in attendees | filter:{ checkedOff: true }" ng-class="$first || $index % 3 == 1")
+			.col-sm-4.col-xs-4.col-md-4.nspacer(style="position:relative;")
+				+attendeeTemplate
+					a.pull-right(href ng-click="checkOff(attendee)" title="Click to Add/Remove Attendee from the Register" style="position:absolute; right: 30px; top: 50px; font-size:20px; color:black;")
+						i.fa.fa-fw(ng-class="{ 'fa-circle-o': !attendee.checkedOff, 'fa-check-circle-o': attendee.checkedOff }")
+		.clearfix

@@ -6,6 +6,7 @@ var fs = require('fs'),
 	, feedback = require('./feedback')
 	, summary = require('./summary')
 	, email = require('./email')
+	, register = require('./register')
 
 exports.router = function (app) {
 	app.get('/event/:id/admin', util.authorized, event.attending, mustBeAdmin, eventAdmin)
@@ -21,6 +22,7 @@ exports.router = function (app) {
 	email.router(app)
 	summary.router(app)
 	feedback.router(app)
+	register.router(app)
 }
 
 function mustBeAdmin (req, res, next) {
@@ -32,7 +34,7 @@ function mustBeAdmin (req, res, next) {
 }
 
 function eventPanel (req, res){
-	res.render('event/admin/panel', {title: "Event Admin Panel"})
+	res.render('event/admin/panel', { title: "Event Admin Panel" })
 }
 
 function eventAdmin (req, res) {
