@@ -109,12 +109,12 @@ function sendCard (req, res) {
 			req.session.flash = ["Business Card Sent"]
 			res.redirect('/user/'+to);
 		});
+	} else {
+		models.Card.find({ user: req.user._id }, { _id: 1 }).sort('-created').exec(function(err, cards) {
+			if (err) throw err;
+			res.render('profile/sendCard', { cards: cards, title: "Send business card", sendTo: to });
+		})
 	}
-	
-	models.Card.find({ user: req.user._id }, { _id: 1 }).sort('-created').exec(function(err, cards) {
-		if (err) throw err;
-		res.render('profile/sendCard', { cards: cards, title: "Send business card", sendTo: to });
-	})
 }
 
 function doEditCard (req, res) {

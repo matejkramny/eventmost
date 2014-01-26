@@ -65,7 +65,7 @@ block content
 				.row
 					.nspacer-big
 					p.col-sm-12.col-lg-12.col-md-12.col-xs-12.lead.text-center(ng-show="progress.length > 0")
-						{{ progress }}
+						| {{ progress }}
 				div(ng-show="showPeopleSearch")
 					.nspacer-big
 					div(ng-repeat="person in peopleSearch")
@@ -80,11 +80,11 @@ block content
 								.row
 									strong.col-md-12.col-sm-12.col-lg-12
 										span(ng-show="person.position.length > 0")
-											{{person.position}}, 
+											| {{person.position}}, 
 										span(ng-show="person.company.length > 0")
-											{{person.company}}, 
+											| {{person.company}}, 
 										span(ng-show="person.location.length > 0")
-											{{person.location}}
+											| {{person.location}}
 							.col-md-2.col-sm-2.col-lg-2
 								a.btn.btn-default.btn-md(ng-click="selectProfile(person)") Select
 						br
