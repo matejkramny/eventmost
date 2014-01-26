@@ -187,7 +187,6 @@ exports.attending = attending = function (req, res, next) {
 				return;
 			}
 			
-			console.log(event);
 			if (event.attendees.length > 0) {
 				res.locals.attendeeRegistered = true;
 				res.locals.attendee = event.attendees[0];
