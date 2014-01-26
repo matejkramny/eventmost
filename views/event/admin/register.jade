@@ -5,7 +5,7 @@ include ../inc/attendee
 
 append addonjs
 	script(src="/js/vendor/highcharts.js" defer)
-	script(src="/js/eventAttendees.0.0.3.js" defer)
+	script(src="/js/eventAttendees.0.0.4.js" defer)
 	script(src="/js/vendor/moment.min.js" defer)
 
 block content
@@ -15,9 +15,19 @@ block content
 		.row
 			.col-sm-5.col-md-5.col-lg-5
 				h1.page-header Attendee Register
-			.col-sm-7.col-md-7.col-lg-7
-				#attendance-graph
 		.row
+			.col-sm-3.col-md-3.col-lg-3.col-sm-offset-1.col-md-offset-1.col-lg-offset-1
+				h3 Attending: 
+					span(ng-bind="attendeesCheckedOff")
+				h3	Registered: 
+					span(ng-bind="attendees.length")
+				h3
+					span(ng-bind="((attendeesCheckedOff / attendees.length) * 100).toFixed(0)") 100
+					| % Attendance
+			.col-sm-5.col-md-5.col-lg-5
+				#attendance-graph
+		hr
+		.row(ng-hide="attendeesCheckedOff == attendees.length")
 			.col-sm-8.col-md-8.col-lg-8
 				h2 Missing Attendees
 			.col-sm-4.col-md-4.col-lg-4
@@ -25,17 +35,20 @@ block content
 					span.input-group-addon
 						i.fa.fa-search.fa-fw
 					input.form-control(type="search" placeholder="Search Attendees by Name" ng-model="search")
-		div(ng-repeat="attendee in attendees | filter:{ checkedOff: false } | filter:searchName" ng-class="$first || $index % 3 == 1")
-			.col-sm-4.col-xs-4.col-md-4.nspacer(style="position:relative;")
+		div(ng-cloak ng-repeat="attendee in attendees | filter:{ checkedOff: false } | filter:searchName" ng-class="$first || $index % 3 == 1")
+			.col-sm-6.col-lg-4.col-xs-12.col-md-6.nspacer
 				+attendeeTemplate
 					a.pull-right(href ng-click="checkOff(attendee)" title="Click to Add/Remove Attendee from the Register" style="position:absolute; right: 30px; top: 50px; font-size:20px; color:black;")
 						i.fa.fa-fw(ng-class="{ 'fa-circle-o': !attendee.checkedOff, 'fa-check-circle-o': attendee.checkedOff }")
 		.clearfix
 		
 		h2 Present Attendees
-		div(ng-repeat="attendee in attendees | filter:{ checkedOff: true }" ng-class="$first || $index % 3 == 1")
-			.col-sm-4.col-xs-4.col-md-4.nspacer(style="position:relative;")
+		div(ng-cloak ng-repeat="attendee in attendees | filter:{ checkedOff: true }" ng-class="$first || $index % 3 == 1")
+			.col-sm-6.col-lg-4.col-xs-12.col-md-6.nspacer
 				+attendeeTemplate
 					a.pull-right(href ng-click="checkOff(attendee)" title="Click to Add/Remove Attendee from the Register" style="position:absolute; right: 30px; top: 50px; font-size:20px; color:black;")
 						i.fa.fa-fw(ng-class="{ 'fa-circle-o': !attendee.checkedOff, 'fa-check-circle-o': attendee.checkedOff }")
+		.row
+			.col-sm-5.col-md-5.col-lg-5.col-sm-offset-1.col-md-offset-1.col-lg-offset-1
+				h3(ng-show="attendeesCheckedOff == 0") Seems like nobody is present..
 		.clearfix

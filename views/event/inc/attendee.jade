@@ -26,7 +26,7 @@ mixin attendeeTemplate()
 	div(ng-class="{ 'grey-rounded-box': attendee.admin }")
 		.pull-left.circle-avatar-new
 			img.image-circle-avatar-new(ng-src="{{attendee.user.avatar}}")
-		.pull-left.center.font-exception-thin.width-attendees.pad-left-ten
+		.pull-left.center.font-exception-thin.pad-left-ten
 			.font20a.nspacer.font-exception
 				| {{ attendee.category }}
 			//- font-change script added when to long name font size changes like in example

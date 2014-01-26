@@ -96,17 +96,17 @@ angular.module('eventMost', [])
 			}
 		}
 		
+		$scope.attendeesCheckedOff = attending;
+		var attendees = $scope.attendees.length;
+		var notAttending = attendees - attending;
+		
 		var chart = $('#attendance-graph').highcharts();
 		chart.series[0].setData([{
-			name: ((attending / $scope.attendees.length) * 100).toFixed(1)+'% Attending',
-			y: attending / $scope.attendees.length,
-			selected: true,
-			sliced: true
+			name: (($scope.attendeesCheckedOff / attendees) * 100).toFixed(1)+'% Attending',
+			y: attending / attendees
 		}, {
-			name: ((($scope.attendees.length - attending) / $scope.attendees.length) * 100).toFixed(1)+'% Not Attending',
-			y: ($scope.attendees.length - attending) / $scope.attendees.length,
-			selected: false,
-			sliced: false
+			name: ((notAttending / attendees) * 100).toFixed(1)+'% Not Attending',
+			y: notAttending / attendees
 		}])
 	}
 	
