@@ -6,7 +6,7 @@ angular.module('eventMost')
 	$scope.eventid = "";
 	$scope.csrf = "";
 	$scope.temp_comment = "";
-	$scope.commentLimit = 2;
+	$scope.commentLimit = 10;
 	
 	var sock = io.connect();
 	sock.on('connect', function() {
