@@ -151,7 +151,6 @@ block content
 					a(href data-toggle="dropdown" data-target="#")
 						img(src="/images/purple-arrow-down.svg" alt="")
 					ul.dropdown-menu(style="margin-left:20px; margin-top:10px;")
-						li: a(href="?arrange=default") Default
 						li: a(href="?arrange=category") By Category
 						li: a(href="?arrange=alphabetical") Alphabetical
 						li: a(href="?arrange=recent") Most Recent
@@ -159,7 +158,7 @@ block content
 	.clearfix
 	.nspacer-bigger
 
-	- var attendees = locals.ev.attendees.length
+	- var attendees = locals.attendees.length
 	- for (var i = 0; i < attendees; i++)
 		.row
 			+attendee(locals.ev.attendees[i], false)
@@ -173,16 +172,11 @@ block content
 	.row
 		.col-md-12.col-xs-12.col-sm-12
 			.line-dark-grey
-		//- end guest speakers
-
-		.pull-right(style='height:35px;')
-			ul.pagination
-				li
-					a(href='#') «
-				li.active
-					a(href='#') 1
-				li
-					a(href='#') »
+			if (!eventadmin)
+				p if you would not like to be seen in this event, 
+					a(href="/event/"+ev._id+"/attendee/"+attendee._id+"/remove") click here
+					br
+					| though you will still be registered with the event organiser, you will not be able to see other attendees or access event information and documents other than the event description and location!
 	
 	.clearfix
 	.nspacer

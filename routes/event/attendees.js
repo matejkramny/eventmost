@@ -198,7 +198,17 @@ function showAttendee (req, res) {
 }
 
 function removeAttendee (req, res) {
-	if (res.locals.eventadmin !== true) {
+	var attID = req.params.attendee;
+	var ev = res.locals.ev;
+	
+	try {
+		attID = mongoose.Types.ObjectId(attID)
+	} catch (e) {
+		res.redirect('/event/'+ev._id)
+		return;
+	}
+	
+	if (!(res.locals.attendee._id.equals(attID) || res.locals.eventadmin === true)) {
 		res.format({
 			html: function() {
 				res.redirect('/event/'+res.locals.ev._id);
@@ -209,16 +219,6 @@ function removeAttendee (req, res) {
 				})
 			}
 		});
-		return;
-	}
-	
-	var attID = req.params.attendee;
-	var ev = res.locals.ev;
-	
-	try {
-		attID = mongoose.Types.ObjectId(attID)
-	} catch (e) {
-		res.redirect('/event/'+ev._id)
 		return;
 	}
 	

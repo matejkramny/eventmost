@@ -109,6 +109,7 @@ function getEvent (req, res, next) {
 		
 		// sort the attendees
 		switch(arrange) {
+			default:
 			case 'category':
 				ev.attendees.sort(function (a, b) {
 					var aIndex = -1;
@@ -216,7 +217,14 @@ function viewEvent (req, res) {
 			res.locals.stripe_key = config.credentials.stripe.pub;
 			
 			if (res.locals.eventattending) {
-				res.render('event/homepage', { title: res.locals.ev.name });
+				res.locals.attendees = [];
+				async.reject(res.locals.ev.attendees, function(attendee, cb) {
+					cb(!res.locals.eventadmin && attendee.hidden);
+				}, function(attendees) {
+					res.locals.attendees = attendees;
+					
+					res.render('event/homepage', { title: res.locals.ev.name });
+				})
 			} else {
 				if (config.production && res.locals.ev.tickets.length > 0 && res.locals.is_https != true) {
 					res.redirect('https://'+req.host+'/event/'+res.locals.ev._id);

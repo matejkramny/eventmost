@@ -176,6 +176,8 @@ function postComment (req, res) {
 					//People are posting comments for your event: ___.  To view conversation, click here.
 					for (var i = 0; i < attendees.length; i++) {
 						var u = attendees[i].user;
+						if (attendees[i].hidden == true) continue;
+						
 						var split = message.message.split(" ");
 						var messagePartial = message.message;
 						if (split.length > 4) {
@@ -236,6 +238,8 @@ function postComment (req, res) {
 			}, function(attendees) {
 				for (var i = 0; i < attendees.length; i++) {
 					var u = attendees[i].user;
+					if (attendees[i].hidden == true) continue;
+					
 					var split = message.split(" ");
 					var messagePartial = message;
 					if (split.length > 4) {
