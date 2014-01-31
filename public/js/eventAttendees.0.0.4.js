@@ -1,4 +1,4 @@
-angular.module('eventMost', [])
+angular.module('eventMost')
 .controller('eventAttendees', function($scope, $http) {
 	$scope.url = "";
 	$scope.admin = false;

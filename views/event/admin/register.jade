@@ -39,8 +39,9 @@ block content
 			div(ng-cloak ng-repeat="attendee in attendees | filter:{ checkedOff: false } | filter:searchName")
 				.col-sm-6.col-lg-4.col-md-6.nspacer
 					+attendeeTemplate
-						a.pull-right(href ng-click="checkOff(attendee)" title="Click to Add/Remove Attendee from the Register" style="position:absolute; right: 30px; font-size:20px; color:black;")
-							i.fa.fa-fw(ng-class="{ 'fa-circle-o': !attendee.checkedOff, 'fa-check-circle-o': attendee.checkedOff }")
+						div(style="width:150px;height:30px; background:#999;")
+							a.text-center(href ng-click="checkOff(attendee)" title="Click to Add/Remove Attendee from the Register" style="display:block; width:100%;height:100%;font-size:20px; color:black;")
+								| Attending
 				.clearfix.visible-xs
 				.visible-lg(ng-class="{ clearfix: ($index-1 % 3) == 1 }")
 		.clearfix
@@ -50,8 +51,9 @@ block content
 			div(ng-cloak ng-repeat="attendee in attendees | filter:{ checkedOff: true }")
 				.col-sm-6.col-lg-4.col-md-6.nspacer
 					+attendeeTemplate
-						a.pull-right(href ng-click="checkOff(attendee)" title="Click to Add/Remove Attendee from the Register" style="position:absolute; right: 30px; font-size:20px; color:black;")
-							i.fa.fa-fw(ng-class="{ 'fa-circle-o': !attendee.checkedOff, 'fa-check-circle-o': attendee.checkedOff }")
+						div(style="width:150px;height:30px; background:#999;")
+							a.text-center(href ng-click="checkOff(attendee)" title="Click to Add/Remove Attendee from the Register" style="display:block; width:100%;height:100%;font-size:20px; color:black;")
+								| Attending
 				.clearfix.visible-xs
 				.visible-lg(ng-class="{ clearfix: ($index-1 % 3) == 1 }")
 		.clearfix

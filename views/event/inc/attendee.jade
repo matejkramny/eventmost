@@ -2,7 +2,7 @@ mixin attendee(attendee, feedbackEditLink)
 	if (typeof feedbackEditLink === 'undefind')
 		- feedbackEditLink = false;
 	
-	.col-sm-4.col-xs-4.col-md-4.nspacer
+	.col-sm-4.col-xs-4.col-md-4.nspacer.attendee-hover
 		div(class= attendee.admin ? "grey-rounded-box" : null)
 			.pull-left.circle-avatar-new
 				img.image-circle-avatar-new(src= attendee.user.avatar.length == 0 ? "/images/default_speaker-purple.svg" : attendee.user.avatar+"-116x116.png")
@@ -23,21 +23,22 @@ mixin attendee(attendee, feedbackEditLink)
 						| - #{attendee.user.company}
 
 mixin attendeeTemplate()
-	div(ng-class="{ 'grey-rounded-box': attendee.admin }")
-		.pull-left.circle-avatar-new
-			img.image-circle-avatar-new(ng-src="{{attendee.user.avatar}}")
-		.pull-left.center.font-exception-thin.pad-left-ten
-			.font20a.nspacer.font-exception
-				| {{ attendee.category }}
-			//- font-change script added when to long name font size changes like in example
-			a.bold.break.color-green.font-change.font-attendee.font-exception(href="{{url}}/attendee/{{attendee._id}}")
-				| {{ attendee.user.name }}
-			//-if (eventadmin && attendee.admin == false)
-			//-	a.pull-right.bold.break.color-green.font-change.font-attendee.font-exception(href="/event/"+ev._id+"/attendee/"+attendee._id+"/remove" style="color:#000;" title="Remove Attendee from Event"): i.fa.fa-fw.fa-trash-o
-			if (block)
-				block
-			.bold.break.font-change.font-attendee.font-exception
-				span(ng-show="attendee.user.position || attendee.user.company") - 
-				| {{ attendee.user.position }}
-				span(ng-show="attendee.user.position && attendee.user.company") , 
-				| {{ attendee.user.company }}
+	.attendee-hover
+		div(ng-class="{ 'grey-rounded-box': attendee.admin }")
+			.pull-left.circle-avatar-new
+				img.image-circle-avatar-new(ng-src="{{attendee.user.avatar}}")
+			.pull-left.center.font-exception-thin.pad-left-ten
+				.font20a.nspacer.font-exception
+					| {{ attendee.category }}
+				//- font-change script added when to long name font size changes like in example
+				a.bold.break.color-green.font-change.font-attendee.font-exception(href="{{url}}/attendee/{{attendee._id}}")
+					| {{ attendee.user.name }}
+				//-if (eventadmin && attendee.admin == false)
+				//-	a.pull-right.bold.break.color-green.font-change.font-attendee.font-exception(href="/event/"+ev._id+"/attendee/"+attendee._id+"/remove" style="color:#000;" title="Remove Attendee from Event"): i.fa.fa-fw.fa-trash-o
+				.bold.break.font-change.font-attendee.font-exception
+					span(ng-show="attendee.user.position || attendee.user.company") - 
+					| {{ attendee.user.position }}
+					span(ng-show="attendee.user.position && attendee.user.company") , 
+					| {{ attendee.user.company }}
+				if (block)
+					block

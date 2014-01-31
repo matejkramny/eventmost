@@ -3086,3 +3086,11 @@ table.gridtable-payment-yellow {font-size: 10px;}
 .eventCategorySelected {
 	border: #333 1px solid;
 }
+
+/* Attendee hover thing */
+.attendee-hover {
+	background: none;
+}
+.attendee-hover:hover {
+	background: #FDD093;
+}
