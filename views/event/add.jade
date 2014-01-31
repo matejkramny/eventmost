@@ -691,51 +691,33 @@ append content
 
 				.hide-mini
 					.col-lg-11.col-md-11.col-xs-11.no-float.hide-mini.ticketsWrapper
-						table.gridtable(style="position:relative;")
+						table.table
 							thead
 								tr
-									th
-										| Ticket Type
-									th
-										| Ticket Price
-									th
-										| Number <br /> of tickets
-									th
-										| Sales Start
-									th
-										| Sales End
-									th(style="background:none;")
+									th.col-sm-4.col-lg-4.col-md-4
+										| Ticket Name
+									th.col-sm-2.col-lg-2.col-md-2
+										| Price (0 for free)
+									th.col-sm-2.col-lg-2.col-md-2
+										| Quantity
+									th.col-sm-4.col-lg-4.col-md-4
 							tbody#tickets
 								tr(ng-repeat="ticket in tickets")
-									td.ticket-dropdown
-										ul.nav.navbar-nav(style="margin-top:-5px;")
-											li.dropdown
-												input.input-green(type="text", ng-model="ticket.customType", ng-show="ticket.isCustomType", placeholder="Custom ticket")
-												a.dropdown-toggle(href='#', data-toggle='dropdown')
-													span(ng-hide="ticket.isCustomType", style="text-transform: capitalize;") {{ ticket.type }}
-													b.caret
-												ul.dropdown-menu.next-drop
-													li
-														a(href='', ng-click="ticket.type='premium'") Premium
-													li
-														a(href='', ng-click="ticket.type='standard'") Standard
-													li
-														a(href='', ng-click="ticket.type='custom'") Custom
 									td
-										input.input-green(type="number", value="0.00", min="0", ng-model="ticket.price")
+										input.form-control(type="text" ng-model="ticket.name" placeholder="Ticket Name (Required)" required)
 									td
-										input.input-green(type="number", value="1", min="1", ng-model="ticket.quantity")
+										input.form-control(type="number", value="0.00", min="0", ng-model="ticket.price")
 									td
-										input.input-green(type="date" placeholder="Start Date" ng-model="ticket.start_date")
-										input.input-green(type="time" placeholder="Start Time" ng-model="ticket.start_time" ng-init="ticket.start_time = '00:00'")
-									td
-										input.input-green(type="date" placeholder="End Date" ng-model="ticket.end_date")
-										input.input-green(type="time" placeholder="End Time" ng-model="ticket.end_time" ng-init="ticket.end_time = '23:59'")
+										input.form-control(type="number", value="1", min="1", ng-model="ticket.quantity")
 									td(style="background:none;")
-										a.btn.btn-link(href ng-click="removeTicket($index)" style="color: red;" title="Remove Ticket")
-											i.fa.fa-minus.fa-fw
-										a.btn.btn-link(href ng-click="addTicket()" title="Add Ticket" ng-show="$last")
-											i.fa.fa-plus.fa-fw
+										a.btn.btn-link(href ng-click="show" data-toggle="modal" data-target="#ticketModal")
+											i.fa.fa-gear.fa-fw
+											|  More Ticket Options
+										.btn-group.pull-right
+											a.btn.btn-link(href ng-click="addTicket()" title="Add Ticket" ng-show="$last")
+												i.fa.fa-plus.fa-fw
+											a.btn.btn-link(href ng-click="removeTicket($index)" style="color: red;" title="Remove Ticket" ng-disabled="tickets.length == 1")
+												i.fa.fa-minus.fa-fw
 							.nspacer-big
 							.clearfix
 							div.tickets-lock(style="width:100%;height:100%;position:absolute;left:0;top:0;background:#333;opacity:0.3;z-index:999;")
@@ -858,4 +840,65 @@ append content
 						| Go to home page
 					a.btn.btn-default.font-e.font-ah.gotoeventbutton(href="", style="border-radius: 10px; padding:10px; padding-left:35px; padding-right:35px;color:#fff;")
 						| View the event
-			//- //------Desktop-------//
+		//- //------Desktop-------//
+		#ticketModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="", aria-hidden="true")
+			.modal-dialog
+				.modal-content
+					.modal-body.reveal-modal(style="background-color:#fdd093;")
+						.font-e.center
+							strong Ticket Options
+						.clearfix
+						.nspacer
+						form.form-horizontal
+							.form-group
+								label.control-label.col-sm-4.col-md-4.col-lg-4(style="font-weight:normal;") Description
+								.col-sm-7.col-md-7.col-lg-7
+									textarea.form-control(placeholder="Additional Ticket Description")
+							.form-group
+								label.control-label.col-sm-4.col-md-4.col-lg-4(style="font-weight:normal;") Sales Start
+								.col-sm-4.col-md-4.col-lg-4
+									input.form-control(type="date")
+								.col-sm-3.col-md-3.col-lg-3
+									input.form-control(type="time")
+							.form-group
+								label.control-label.col-sm-4.col-md-4.col-lg-4(style="font-weight:normal;") Sales End
+								.col-sm-4.col-md-4.col-lg-4
+									input.form-control(type="date")
+								.col-sm-3.col-md-3.col-lg-3
+									input.form-control(type="time")
+							.form-group
+								label.control-label.col-sm-4.col-md-4.col-lg-4(style="font-weight:normal;")
+								.col-sm-7.col-md-7.col-lg-7
+									select.form-control
+										option(value="") Show Tickets Remaining
+										option(value="") Hide Remaining Tickets
+							.form-group
+								label.control-label.col-sm-4.col-md-4.col-lg-4(style="font-weight:normal;") Tickets Per Order
+								.col-sm-4.col-md-4.col-lg-4
+									input.form-control(type="number" placeholder="Minimum")
+								.col-sm-3.col-md-3.col-lg-3
+									input.form-control(type="number" placeholder="Maximum")
+							.form-group
+								label.control-label.col-sm-4.col-md-4.col-lg-4(style="font-weight:normal;") Discount Codes
+								.col-sm-4.col-md-4.col-lg-4
+									input.form-control(type="text" placeholder="Code")
+								.col-sm-3.col-md-3.col-lg-3
+									input.form-control(type="text" placeholder="% Off")
+							.form-group
+								.col-sm-4.col-md-4.col-lg-4.col-sm-offset-4.col-md-offset-4.col-lg-offset-4
+									select.form-control
+										option(value="") Only This Ticket
+										option(value="") Apply to All Tickets
+								.col-sm-3.col-md-3.col-lg-3
+									a.pull-right(href)
+										i.fa.fa-plus.fa-fw
+										|  Code
+						br
+						.center
+							button.btn.btn-primary.hide-prof-butt(type='submit', style="border-radius: 10px; padding:10px; padding-right:25px; padding-left:25px;")
+								| Good to Go!
+						
+						.clearfix
+						a.close-reveal-modal(href="#", data-dismiss="modal")
+							img(src="/images/x.svg")
+		

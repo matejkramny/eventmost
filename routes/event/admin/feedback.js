@@ -3,7 +3,7 @@ var fs = require('fs'),
 	, mongoose = require('mongoose')
 	, util = require('../../../util')
 	, event = require('../event')
-	, feedbackinbox = require('./feedbackInbox/feedbackinbox')
+	, feedbackinbox = require('./feedbackInbox')
 	, config = require('../../../config')
 
 exports.router = function (app) {

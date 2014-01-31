@@ -1,0 +1,16 @@
+#ticketModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="", aria-hidden="true")
+	.modal-dialog
+		.modal-content
+			.modal-body.reveal-modal(style="background-color:#fdd093;")
+				.font-e.center
+					| Ticket Options
+				.clearfix
+				.nspacer
+				form.form-horizontal
+					.control-group
+						label.control-label.col-sm-3.col-md-3.col-lg-3
+						.col-sm-9.col-md-9.col-lg-9
+							input.form-control(type="datetime")
+				.clearfix
+				a.close-reveal-modal(href="#", data-dismiss="modal")
+					img(src="/images/x.svg")
