@@ -102,6 +102,11 @@ textarea:focus, input:focus{
 	display: none !important;
 }
 
+/* Bootstrap fix */
+.modal-open, .modal-open .navbar-fixed-top {
+	margin-right: auto !important;
+}
+
 .font-header-icon{font-size:12px; padding-left: 7px; margin-top: 67px; position: absolute;}
 .font-header-icon2{font-size:12px; padding-left: 14px; margin-top: 67px; position: absolute;}
 

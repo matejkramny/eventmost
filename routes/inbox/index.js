@@ -201,18 +201,89 @@ function doMerge (req, res) {
 exports.pushMessageToSockets = function (data) {
 	var sockets = io.sockets.clients();
 	
+	var notAlertedUsers = data.topic.users.slice();
 	for (var i = 0; i < sockets.length; i++) {
 		var s = sockets[i];
 		var user = s.handshake.user;
 		
-		for (var x = 0; x < data.topic.users.length; x++) {
-			if (data.topic.users[x]._id.equals(user._id)) {
+		for (var x = notAlertedUsers.length-1; x >= 0; x--) {
+			if (notAlertedUsers[x]._id.equals(user._id)) {
+				data.mailboxUnread = notAlertedUsers[x].mailboxUnread;
 				s.emit('inbox notification', data)
 				
-				break;
+				notAlertedUsers.splice(x, 1);
 			}
 		}
 	}
+	
+	return notAlertedUsers;
+}
+
+exports.emailMessageNotification = function (person, from, link, body) {
+	if (!person.email || person.email.length == 0) {
+		console.log("No email")
+		return;
+	}
+	
+	var options = {
+		from: "EventMost <notifications@eventmost.com>",
+		to: person.getName()+" <"+person.email+">",
+		subject: from.getName()+" via EventMost",
+		html: "<img src=\"http://eventmost.com/images/logo.svg\">\
+<br/><br/><p><strong>Hi "+person.getName()+",</strong><br/><br/>We're sorry to interrupt you, but "+from.getName()+" sent you a message on EventMost.<br/>\
+<br />Click <a href='http://eventmost.com/"+link+"'>here</a> to view the message.\
+<br />"+body+"<br />\
+</p><br/>You can turn off email notifications in your settings.<br/>\
+Please do not reply to this email, because we are super popular and probably won't have time to read it..."
+	}
+	transport.sendMail(options, function(err, response) {
+		if (err) throw err;
+		
+		console.log("Email sent.."+response.message)
+	})
+	
+	// Record that an email was sent
+	var emailNotification = new models.EmailNotification({
+		to: person,
+		email: person.email,
+		type: "pmNotification"
+	})
+	emailNotification.save(function(err) {
+		if (err) throw err;
+	});
+}
+
+exports.emailEventNotification = function (person, event, link, body) {
+	if (!person.email || person.email.length == 0) {
+		console.log("No email")
+		return;
+	}
+	
+	var options = {
+		from: "EventMost <notifications@eventmost.com>",
+		to: person.getName()+" <"+person.email+">",
+		subject: event.name+" Event via EventMost",
+		html: "<img src=\"http://eventmost.com/images/logo.svg\">\
+<br/><br/><p><strong>Hi "+person.getName()+",</strong><br/><br/>We're sorry to interrupt you, but \
+people are posting comments for your event, "+event.name+": <a href='http://eventmost.com/"+link+"'>"+body+"</a>\
+</p><br/>You can turn off email notifications in your settings.<br/>\
+Please do not reply to this email, because we are super popular and probably won't have time to read it..."
+	}
+	transport.sendMail(options, function(err, response) {
+		if (err) throw err;
+		
+		console.log("Email sent.."+response.message)
+	})
+	
+	// Record that an email was sent
+	var emailNotification = new models.EmailNotification({
+		to: person,
+		email: person.email,
+		type: "eventNotification"
+	})
+	emailNotification.save(function(err) {
+		if (err) throw err;
+	});
 }
 
 exports.emailNotification = function (person, link) {

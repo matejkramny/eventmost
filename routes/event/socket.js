@@ -59,36 +59,42 @@ function registerEventComments (data) {
 function getSocket (ev, cb) {
 	var sockets = io.sockets.clients();
 	
-	for (var i = 0; i < sockets.length; i++) {
-		var s = sockets[i];
-		
-		s.get('event', function(err, value) {
+	async.filter(sockets, function(socket, cb) {
+		socket.get('event', function(err, value) {
 			if (err || !value) return;
 			
-			if (ev._id.equals(value)) {
-				cb(s)
-			}
+			cb(ev._id.equals(value))
 		})
-	}
-}
-
-exports.notifyComment = function (ev, msg, responseTo) {
-	getSocket(ev, function(socket) {
-		socket.emit('comment', msg)
+	}, function (socks) {
+		cb(socks);
 	})
 }
 
-exports.notifyLike = function (ev, comment, attendee) {
-	getSocket(ev, function(socket) {
-		socket.emit('like', {
-			comment: comment._id,
-			attendee: {
-				user: {
-					_id: attendee.user._id,
-					name: attendee.user.name,
-					surname: attendee.user.surname
-				}
-			},
-		})
+exports.notifyComment = function (ev, msg, cb) {
+	getSocket(ev, function(sockets) {
+		async.each(sockets, function(socket, cb) {
+			socket.emit('comment', msg);
+		});
+		
+		cb(sockets)
+	})
+}
+
+exports.notifyLike = function (ev, comment, attendee, cb) {
+	getSocket(ev, function(sockets) {
+		async.each(sockets, function(socket, cb) {
+			socket.emit('like', {
+				comment: comment._id,
+				attendee: {
+					user: {
+						_id: attendee.user._id,
+						name: attendee.user.name,
+						surname: attendee.user.surname
+					}
+				},
+			})
+		});
+		
+		cb(sockets)
 	})
 }

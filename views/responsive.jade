@@ -8,19 +8,13 @@ html
 		meta(name="viewport" content="width=device-width, initial-scale=1.0")
 		block meta
 		title EventMost - #{title}
-		link(href="/favicon.ico", type="image/x-icon", rel="icon")
-		link(href="/favicon.ico", type="image/x-icon", rel="shortcut icon")
+		link(href="/favicon.ico" type="image/x-icon" rel="icon")
+		link(href="/favicon.ico" type="image/x-icon" rel="shortcut icon")
 		
 		//- all css goes here
 		block css
-			link(rel="stylesheet", href="/css/all_combined.min.css")
-			link(rel="stylesheet", href="/css/bootstrap-eventmost#{minified}.css")
-			
-			//- Temporary hack until we use BS > 3.0.0.. 
-			style.
-				.modal-open, .modal-open .navbar-fixed-top {
-					margin-right: auto !important;
-				}
+			link(rel="stylesheet" href="/css/all_combined.min.css")
+			link(rel="stylesheet" href="/css/bootstrap-eventmost.css")
 
 	body(ng-app="eventMost")
 		//- main container
@@ -35,35 +29,30 @@ html
 					if loggedIn == false
 						.pull-right.logo-right
 								//- Only displayed when users are guests
-								button.btn.btn-warning.pb.pull-right(type='button', data-toggle="modal", href="#signModal")
+								button.btn.btn-warning.pb.pull-right(type='button' data-toggle="modal" href="#signModal")
 									b SIGN UP
-								button.btn.btn-default.pb.pull-right(type='button', data-toggle="modal", href="#loginModal", style="margin-right:-4px;")
+								button.btn.btn-default.pb.pull-right(type='button' data-toggle="modal" href="#loginModal" style="margin-right:-4px;")
 									b LOGIN
 					else
 						//- Only displayed when user is logged in
 						.pull-right.width7
 							a.image(href="/inbox")
-								img.mail.pull-right.img-mess-smart(src="/images/notes-icon.svg", alt="", style="width:100%;")
+								img.mail.pull-right.img-mess-smart(src="/images/notes-icon.svg" alt="" style="width:100%;")
 								.row-fluid.minus2
 									.message-nr
 										h20 0
 							.font-header-icon2
 								| Notes
-
-
-						.pull-right.width7
+						
+						.pull-right.width7(ng-controller="inboxNotifications")
 							a.image(href="/inbox")
-								if user.mailboxUnread == 0
-									img.mail.pull-right.img-mess-smart(src="/images/message-icon.svg", alt="", style="width:100%;")
-								else
-									img.mail.pull-right.img-mess-smart(src="/images/message-icon.svg", alt="", style="width:100%;")
+								img.mail.pull-right.img-mess-smart(src="/images/message-icon.svg" alt="" style="width:100%;")
 								.row-fluid.minus2
 									.message-nr
-										h20= user.mailboxUnread
+										h20(ng-bind="notifications" ng-init="notifications = #{user.mailboxUnread}")= user.mailboxUnread
 							.font-header-icon
 								| Inbox
-
-
+						
 						.col-md-6.col-xs-6.pull-right
 							.pull-right.nspacer-small
 								a.font-e.link-purple.header-links(href="/") Home
@@ -105,7 +94,10 @@ html
 			script(src="/js/vendor/all_required.min.js" defer)
 			
 			if !loggedIn
-				script(src="/js/signin#{minified}.js" defer)
+				script(src="/js/signin.js" defer)
+			else
+				script(src="/socket.io/socket.io.js" defer)
+				script(src="/js/inbox_notifications.js" defer)
 				
 		//- page-specific
 		block addonjs

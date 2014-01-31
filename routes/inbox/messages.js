@@ -118,10 +118,6 @@ function postMessage (req, res) {
 			// dont update this user
 			if (u._id.equals(req.user._id)) continue;
 			
-			if (u.notification.email.privateMessages) {
-				console.log("Sending to email")
-				inbox.emailNotification(u, "inbox")
-			}
 			u.mailboxUnread++;
 			
 			u.save();
@@ -140,7 +136,7 @@ function postMessage (req, res) {
 			sentBy: req.user._id
 		})
 		
-		inbox.pushMessageToSockets({
+		var notAlertedUsers = inbox.pushMessageToSockets({
 			message: {
 				_id: msg._id,
 				topic: msg.topic,
@@ -151,6 +147,14 @@ function postMessage (req, res) {
 			},
 			topic: message
 		});
+		
+		for (var i = 0; i < notAlertedUsers.length; i++) {
+			var u = notAlertedUsers[i];
+			// These people are not connected by WS, so they're offline..
+			if (u.notification.email.privateMessages) {
+				inbox.emailMessageNotification(u, req.user, "inbox", "Message from <strong>"+req.user.getName()+"</strong>: "+msg.message);
+			}
+		}
 		
 		msg.save(function(err) {
 			res.format({

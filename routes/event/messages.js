@@ -1,6 +1,7 @@
 var models = require('../../models')
 	, attending = require('./event').attending
 	, socket = require('./socket')
+	, inbox = require('../inbox/index')
 
 exports.router = function (app) {
 	app.get('/event/:id/comments', getComments)
@@ -160,7 +161,31 @@ function postComment (req, res) {
 				posted: new Date(),
 				likes: [],
 				comments: []
-			}, msg)
+			}, function (sockets) {
+				async.reject(res.locals.ev.attendees, function(attendee, cb) {
+					async.detect(sockets, function(socket, cb) {
+						cb(socket.handshake.user._id.equals(attendee.user._id));
+					}, function(socket) {
+						if (socket) {
+							cb(true)
+						} else {
+							cb(false)
+						}
+					})
+				}, function(attendees) {
+					//People are posting comments for your event: ___.  To view conversation, click here.
+					for (var i = 0; i < attendees.length; i++) {
+						var u = attendees[i].user;
+						var split = message.message.split(" ");
+						var messagePartial = message.message;
+						if (split.length > 4) {
+							split.splice(4);
+							messagePartial = split.join(" ")+"...";
+						}
+						inbox.emailEventNotification(u, res.locals.ev, "event/"+res.locals.ev._id, messagePartial);
+					}
+				})
+			})
 			
 			res.format({
 				html: function() {
@@ -197,6 +222,29 @@ function postComment (req, res) {
 			posted: new Date(),
 			likes: [],
 			comments: []
+		}, function (sockets) {
+			async.reject(res.locals.ev.attendees, function(attendee, cb) {
+				async.detect(sockets, function(socket, cb) {
+					cb(socket.handshake.user._id.equals(attendee.user._id));
+				}, function(socket) {
+					if (socket) {
+						cb(true)
+					} else {
+						cb(false)
+					}
+				})
+			}, function(attendees) {
+				for (var i = 0; i < attendees.length; i++) {
+					var u = attendees[i].user;
+					var split = message.split(" ");
+					var messagePartial = message;
+					if (split.length > 4) {
+						split.splice(4);
+						messagePartial = split.join(" ")+"...";
+					}
+					inbox.emailEventNotification(u, res.locals.ev, "event/"+res.locals.ev._id, messagePartial);
+				}
+			})
 		})
 		
 		res.format({
