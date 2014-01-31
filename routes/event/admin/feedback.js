@@ -58,6 +58,8 @@ function editFeedbackProfile (req, res) {
 }
 
 function doEditFeedbackProfile (req, res) {
+	var ev = res.locals.ev;
+	
 	var attendee = res.locals.feedbackProfile;
 	var profile;
 	
@@ -76,7 +78,6 @@ function doEditFeedbackProfile (req, res) {
 	profile.desc = req.body.desc;
 	profile.setName(req.body.name);
 	
-	
 	if (req.files && req.files.avatar != null && req.files.avatar.name.length != 0) {
 		var ext = req.files.avatar.type.split('/');
 		var ext = ext[ext.length-1];
@@ -92,22 +93,28 @@ function doEditFeedbackProfile (req, res) {
 		});
 	}
 	
-	profile.save();
+	profile.save(function(err) {
+		if (err) throw err;
+	});
 	
 	if (!res.locals.feedbackProfile) {
 		attendee = new models.Attendee({
 			user: profile._id,
 			category: req.body.category || "Attendee"
 		})
-		attendee.save()
+		attendee.save(function (err) {
+			if (err) throw err;
+		})
+		console.log(attendee._id)
 		
-		res.locals.ev.attendees.push(attendee._id)
+		models.Event.findById(ev._id, function(err, event) {
+			event.attendees.push(attendee._id)
+			event.save()
+		})
 	} else {
 		attendee.category = req.body.category || "Attendee";
 		attendee.save()
 	}
-	
-	res.locals.ev.save()
 	
 	res.format({
 		html: function() {

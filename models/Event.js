@@ -113,7 +113,7 @@ scheme.statics.getEvent = function (id, cb, simple) {
 		
 		q.exec(function(err, ev) {
 			if (err) throw err;
-			
+			console.log(ev)
 			if (!ev) {
 				cb(ev);
 				return;
