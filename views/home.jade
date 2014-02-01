@@ -131,15 +131,17 @@ append content
 			.pull-left.pad-left-ten.nspacer-small
 				img(src="/images/i.svg", alt="", height="16px" width="16px;")
 			.pull-left.pad-left-ten.font-s.nspacer-small.font-thin2
-				a.link-purple(data-toggle="modal", href="#notificationModal")
-					| Notification settings
+				.dropdown(style="padding:0;")
+					a.link-purple(data-toggle="dropdown" href)
+						| Account Settings
+					ul.dropdown-menu
+						li: a.link-purple(data-toggle="modal" href="#loginSettingsModal") Log In Settings
+						li.divider
+						li: a.link-purple(data-toggle="modal" href="#notificationModal") Notification settings
+						li.divider
+						li: a.link-purple(data-toggle="modal" href="#privacyModal") Privacy Settings
 			.clearfix
-			.pull-left.pad-left-ten.nspacer-small
-				img(src="/images/i.svg", alt="", height="16px" width="16px;")
-			.pull-left.pad-left-ten.font-s.nspacer-small.font-thin2
-				a.link-purple(data-toggle="modal", href="#privacyModal")
-						| Privacy settings
-			.clearfix
+			br
 			.center.nspacer
 				a(href="/logout", class="logout link-yellow")
 					button.btn.btn-default.font-e.difffont(type='submit', data-reveal-id="loginModal" style="border-radius: 8px; margin-bottom:10px;")
@@ -255,17 +257,6 @@ append content
 			button#tryAgainNearbyEvents.btn.btn-warning.font.big-pad-left.big-pad-right(type='submit', href="#", style="font-weight:300;")
 				| Allow EventMost to GeoLocate my current position
 	
-	.nspacer
-		.pull-right(style='height:35px;')
-			ul.pagination
-				li
-					a(href='/events/near') «
-				li.active
-					a(href='/events/near') 1
-				li.disabled
-					a(href='#') ...
-				li
-					a(href='/events/near') »
 	.clearfix
 	
 	include modals/homemodals

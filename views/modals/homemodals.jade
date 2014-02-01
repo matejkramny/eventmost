@@ -166,3 +166,34 @@
 					a(href="#", class="close-reveal-modal", data-dismiss="modal")
 						img(src="/images/x.svg")
 
+#loginSettingsModal.modal.fade(tabindex="-1" role="dialog" aria-hidden="true")
+	.modal-dialog
+		.modal-content
+			.modal-body.reveal-modal(style="background-color:#fdd093;")
+				h1 Login Settings
+				.row
+					.col-sm-12.col-lg-12.col-md-12.col-xs-12
+						form.form-horizontal(action="/profile/edit", method="POST")
+							input(type="hidden", name="_csrf", value=token)
+							.center: small Change your login information here
+							br
+							p.lead.text-center.statusText.hide Saving..
+							.form-group
+								label.control-label.col-sm-4.col-md-4.col-lg-4 Email
+								.col-sm-7.col-md-7.col-lg-7
+									input.form-control(type="email" name="email" value="#{user.email}" required="required")
+							.form-group
+								label.control-label.col-sm-4.col-md-4.col-lg-4 Password
+								.col-sm-7.col-md-7.col-lg-7
+									input.form-control(type="password" name="password_old" value="" placeholder="Enter only if you wish to change your password")
+							.form-group
+								label.control-label.col-sm-4.col-md-4.col-lg-4 New Password
+								.col-sm-7.col-md-7.col-lg-7
+									input.form-control(type="password" name="password" value="" placeholder="Enter only if you wish to change your password")
+							.form-group
+								.col-sm-7.col-md-7.col-lg-7.col-sm-offset-4.col-md-offset-4.col-lg-offset-4
+									button.btn.btn-primary.font.font-ah(type='submit', href="")
+										| Save
+				.clearfix
+				a(href="#", class="close-reveal-modal", data-dismiss="modal")
+					img(src="/images/x.svg")

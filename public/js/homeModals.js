@@ -54,4 +54,31 @@ $(document).ready(function() {
 			}
 		})
 	})
+	
+	$("#loginSettingsModal button[type=submit]").click(function(ev) {
+		ev.preventDefault();
+		
+		$("#loginSettingsModal .statusText").removeClass('hide').html("Saving..")
+		
+		var data = {};
+		$("#loginSettingsModal input[type=email], #loginSettingsModal input[type=hidden], #loginSettingsModal input[type=password]").each(function() {
+			data[$(this).attr("name")] = $(this).val()
+		})
+		
+		$.ajax({
+			data: data,
+			url: '/profile/edit',
+			dataType: "json",
+			type: "POST",
+			success: function (data) {
+				if (data.status != 200) {
+					$("#loginSettingsModal .statusText").html("Could not save your profile..<br/>\n"+data.err);
+				} else {
+					$("#loginSettingsModal .statusText").html("Saved!");
+				}
+			}
+		})
+		
+		return false;
+	})
 })

@@ -8,7 +8,7 @@ var should = require('should'),
 should(config.mode).equal('test')
 
 it('clean the database', function(done) {
-	async.parallel([
+	require('async').parallel([
 		function(cb) {
 			models.Card.remove(cb)
 		},
