@@ -14,6 +14,7 @@ exports.router = function (app) {
 		.get('/event/:id/attendee/:attendee/remove', removeAttendee)
 		.post('/event/:id/join', joinEvent)
 		.post('/event/:id/buy/tickets', payWithCard)
+		.get('/event/:id/buy/tickets/getPromotionalCode/:code', getPromotionalCode)
 }
 
 function listAttendees (req, res) {
@@ -708,4 +709,55 @@ function getTransactions (req, res) {
 		tickets: ts,
 		transaction: transaction
 	};
+}
+
+function getPromotionalCode (req, res) {
+	var ev = res.locals.ev;
+	var code = req.params.code;
+	
+	if (!code || code.length == 0) {
+		res.send({
+			status: 404
+		});
+		return;
+	}
+	
+	code = code.toLowerCase();
+	
+	var found = false;
+	var tickets = [];// tickets promo applies to
+	
+	for (var i = 0; i < ev.tickets.length; i++) {
+		var promCodes = ev.tickets[i].discountCodes;
+		if (promCodes && promCodes.length > 0) {
+			for (var x = 0; x < promCodes.length; x++) {
+				if (code == promCodes[x].code.toLowerCase()) {
+					if (found == false || promCodes[x].discount >= found.discount) {
+						found = promCodes[x];
+						tickets.push(ev.tickets[i]);
+						break;
+					}
+				}
+			}
+		}
+	}
+	
+	var ticket = null;
+	for (var i = 0; i < tickets.length; i++) {
+		if (ticket == null || tickets[i].price > ticket.price) {
+			ticket = tickets[i];
+		}
+	}
+	
+	if (found) {
+		res.send({
+			status: 200,
+			discount: found.discount,
+			ticket: ticket._id
+		})
+	} else {
+		res.send({
+			status: 404
+		})
+	}
 }

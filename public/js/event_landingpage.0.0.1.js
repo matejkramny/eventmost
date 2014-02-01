@@ -28,6 +28,8 @@ angular.module('eventMost')
 	$scope.init_stripe = false;
 	$scope.cardFormDisabled = false;
 	$scope.paymentRequired = false;
+	$scope.promotionalCode = "";
+	$scope.promotionalCodeResult = ""
 	
 	$scope.init = function (opts) {
 		$scope.url = "/event/"+opts.id+"/";
@@ -302,5 +304,14 @@ angular.module('eventMost')
 		
 		return tickets;
 	}
+	
+	$scope.applyCode = function (code) {
+		$http.get($scope.url+'buy/tickets/getPromotionalCode/'+code).success(function(data, status) {
+			if (data.status == 200) {
+				
+			}
+		})
+	}
+	
 	
 })

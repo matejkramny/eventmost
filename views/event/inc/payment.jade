@@ -34,17 +34,19 @@ div(ng-controller="PaymentController" ng-init="init({ id: '#{ev._id}', csrf: '#{
 				td: b £{{ticketPriceFormatted}}
 				td: b £{{feePriceFormatted}}
 				td: b {{totalQuantity}} tickets
-			tr(ng-cloak)
-				td
-					span.pull-right Enter promotional code:
-				td
-					input.form-control(name="" type="text" placeholder="Promotional Code" ng-model="promotionalCode")
-				td
-					button.btn.btn-default.btn-xs.hide-prof-butt(ng-click="applyPromotionalCode()" style="border-radius: 10px; padding:5px 10px;")
-						| Apply
-				td: b 2%
-				td: b -£0.312
-				td
+			if (loggedIn)
+				tr(ng-cloak)
+					td
+						span.pull-right Enter promotional code:
+					td.col-lg-3.col-sm-3.col-md-3
+						.input-group
+							input.input-medium.form-control(name="" type="text" placeholder="Promotional Code" ng-model="promotionalCode")
+							.input-group-btn
+								button.btn.btn-default.btn-xs.hide-prof-butt(ng-click="applyCode(promotionalCode)" ng-disabled="promotionalCode.length == 0" style="border-radius: 0 10px 10px 0; padding:5px 10px;")
+									| Apply
+					td: b 2%
+					td: b -£0.312
+					td
 			tr
 	.eighty-five(ng-hide="hideRegister")
 		.bg-yellowish
