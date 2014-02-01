@@ -8,7 +8,7 @@ append addonjs
 	if (typeof ev !== "undefined")
 		script.
 			window.emEvent = !{JSON.stringify(ev)}
-	script(src="/js/eventadd.js", defer="true")
+	script(src="/js/eventadd.0.0.1.js" defer="true")
 
 append content
 	include ../modals/add-modal
@@ -708,7 +708,7 @@ append content
 									td
 										input.form-control(type="number", value="0.00", min="0", ng-model="ticket.price")
 									td
-										input.form-control(type="number", value="1", min="1", ng-model="ticket.quantity")
+										input.form-control(type="number", value="1", min="0", ng-model="ticket.quantity")
 									td(style="background:none;")
 										a.btn.btn-link(href ng-click="showTicket(ticket)" data-toggle="modal" data-target="#ticketModal")
 											i.fa.fa-gear.fa-fw

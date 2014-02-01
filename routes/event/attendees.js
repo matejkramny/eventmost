@@ -3,6 +3,8 @@ var config = require('../../config')
 	, stripe = config.stripe
 	, bugsnag = require('bugsnag')
 	, transport = config.transport
+	, mongoose = require('mongoose')
+	, async = require('async')
 
 exports.router = function (app) {
 	attending = require('./event').attending
@@ -561,12 +563,21 @@ function emailConfirmation (req, res, transaction) {
 	var user = req.user;
 	
 	var rows = "";
+	
+	var promo = null;
 	for (var i = 0; i < transaction.tickets.length; i++) {
 		var ticket = transaction.tickets[i];
+		if (typeof ticket.promo !== "undefined" && ticket.promo && ticket.promo.code && ticket.promo.code.length > 0) {
+			promo = {
+				promo: ticket.promo,
+				ticket: ticket
+			};
+		}
+		
 		rows += "<tr>";
 		rows += "<td>"+ticket.name+"</td>";
 		rows += "<td style='text-align:right;'><strong>"+ticket.quantity+"</strong></td>";
-		rows += "<td style='text-align:right;'>£"+(ticket.price + ticket.fees)+"</td>";
+		rows += "<td style='text-align:right;'>£"+(ticket.price + ticket.fees).toFixed(2)+"</td>";
 		rows += "</tr>";
 	}
 	
@@ -576,11 +587,26 @@ function emailConfirmation (req, res, transaction) {
 	rows += "<td>&nbsp;</td>";
 	rows += "</tr>";
 	
+	var subtotal = transaction.total - transaction.third_party;
+	if (promo) {
+		var discount = promo.ticket.price * (promo.promo.discount / 100);
+		subtotal += discount;
+	}
+	
 	rows += "<tr>";
 	rows += "<td>Subtotal</td>";
 	rows += "<td></td>";
-	rows += "<td style='text-align:right;'>£"+(transaction.total - transaction.third_party).toFixed(2)+"</td>";
+	rows += "<td style='text-align:right;'>£"+subtotal.toFixed(2)+"</td>";
 	rows += "</tr>";
+	
+	if (promo) {
+		rows += "<tr>";
+		rows += "<td>Discount Code ("+promo.promo.code+")</td>";
+		rows += "<td></td>";
+		var discount = promo.ticket.price * (promo.promo.discount / 100);
+		rows += "<td style='text-align:right;'>-£"+discount.toFixed(2)+"</td>";
+		rows += "</tr>";
+	}
 	
 	rows += "<tr>";
 	rows += "<td>Transaction Fee</td>";
@@ -650,6 +676,7 @@ function getTransactions (req, res) {
 	})
 	
 	var ts = [];
+	var promo = lookupPromoCode(res.locals.ev, req.body.promotionalCode);
 	
 	for (var i = 0; i < res.locals.ev.tickets.length; i++) {
 		var ticket = res.locals.ev.tickets[i];
@@ -662,8 +689,30 @@ function getTransactions (req, res) {
 			}
 			
 			if (ticket._id.equals(_id) && __tickets[t].quantity > 0) {
+				var sold_or_expired = false;
 				var now = new Date();
-				if (!(now.getTime() > ticket.start.getTime() && now.getTime() < ticket.end.getTime() && ticket.quantity > 0) || __tickets[t].quantity > ticket.quantity) {
+				if (ticket.hasSaleDates && !(now.getTime() > ticket.start.getTime() && now.getTime() < ticket.end.getTime())) {
+					sold_or_expired = true;
+				}
+				if (ticket.quantity <= 0) {
+					sold_or_expired = true;
+				}
+				if (__tickets[t].quantity > ticket.quantity) {
+					sold_or_expired = true;
+				}
+				var min = ticket.min_per_order;
+				if (min < 0) min = 0;
+				var max = ticket.max_per_order;
+				if (max < 0) max = 0;
+				
+				if (min != 0 && min > __tickets[t].quantity) {
+					sold_or_expired = true;
+				}
+				if (max != 0 && __tickets[t].quantity > max) {
+					sold_or_expired = true;
+				}
+				
+				if (sold_or_expired) {
 					// valid date range..
 					transaction.status = 'failed';
 					transaction.message = "You tried to purchase tickets which are either sold out or are expired. Please reload the page and try again.";
@@ -679,27 +728,51 @@ function getTransactions (req, res) {
 					quantity: __tickets[t].quantity
 				})
 				
-				var name = ticket.type;
-				if (name == 'custom') name = ticket.customType;
+				var name = ticket.name;
 				
 				var em_fee = ticket.price * 0.024 + 0.2;
 				if (ticket.price == 0) {
 					em_fee = 0;
 				}
 				
+				var promoForThisTicket = null;
+				if (promo && promo.ticket._id.equals(ticket._id)) {
+					promoForThisTicket = {
+						code: promo.discount.code,
+						discount: promo.discount.discount
+					}
+				}
+				
+				var quantity = __tickets[t].quantity;
 				transaction.tickets.push({
 					price: ticket.price,
 					fees: em_fee,
-					quantity: __tickets[t].quantity,
+					quantity: quantity,
 					ticket: ticket._id,
-					name: name
+					name: name,
+					promo: promoForThisTicket
 				})
 				
-				transaction.profit += em_fee;
-				transaction.planner += ticket.price;
+				if (promoForThisTicket) {
+					var discount = ticket.price * (promoForThisTicket.discount / 100);
+					var newPrice = ticket.price - discount;
+					var __em_fee = newPrice * 0.024 + 0.2;
+					if (newPrice == 0) {
+						__em_fee = 0;
+					}
+					
+					quantity -= 1;
+					
+					transaction.profit += __em_fee;
+					transaction.planner += newPrice;
+					transaction.total += newPrice + __em_fee;
+				}
+				
+				transaction.profit += em_fee * quantity;
+				transaction.planner += ticket.price * quantity;
 				
 				var ticketPrice = ticket.price + em_fee;
-				var ticketTotal = ticketPrice * __tickets[t].quantity;
+				var ticketTotal = ticketPrice * quantity;
 				transaction.total += ticketTotal;
 			}
 		}
@@ -711,15 +784,9 @@ function getTransactions (req, res) {
 	};
 }
 
-function getPromotionalCode (req, res) {
-	var ev = res.locals.ev;
-	var code = req.params.code;
-	
-	if (!code || code.length == 0) {
-		res.send({
-			status: 404
-		});
-		return;
+function lookupPromoCode (ev, code) {
+	if (typeof code !== "string" || code.length == 0) {
+		return null;
 	}
 	
 	code = code.toLowerCase();
@@ -732,7 +799,7 @@ function getPromotionalCode (req, res) {
 		if (promCodes && promCodes.length > 0) {
 			for (var x = 0; x < promCodes.length; x++) {
 				if (code == promCodes[x].code.toLowerCase()) {
-					if (found == false || promCodes[x].discount >= found.discount) {
+					if ((found == false || promCodes[x].discount >= found.discount) && ev.tickets[i].quantity > 0) {
 						found = promCodes[x];
 						tickets.push(ev.tickets[i]);
 						break;
@@ -750,14 +817,30 @@ function getPromotionalCode (req, res) {
 	}
 	
 	if (found) {
+		return {
+			discount: found,
+			ticket: ticket
+		}
+	}
+	
+	return null;
+}
+
+function getPromotionalCode (req, res) {
+	var ev = res.locals.ev;
+	var code = req.params.code;
+	
+	var result = lookupPromoCode(ev, code);
+	
+	if (result == null) {
 		res.send({
-			status: 200,
-			discount: found.discount,
-			ticket: ticket._id
+			status: 404
 		})
 	} else {
 		res.send({
-			status: 404
+			status: 200,
+			discount: result.discount.discount,
+			ticket: result.ticket._id
 		})
 	}
 }

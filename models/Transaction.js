@@ -9,7 +9,11 @@ var scheme = schema({
 		fees: Number,
 		quantity: Number,
 		name: String,
-		ticket: { type: ObjectId, ref: 'Ticket' }
+		ticket: { type: ObjectId, ref: 'Ticket' },
+		promo: {
+			code: String,
+			discount: Number
+		}
 	}],
 	total: Number, //what user got charged
 	profit: Number, //what EM get

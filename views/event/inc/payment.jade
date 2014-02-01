@@ -14,7 +14,8 @@ div(ng-controller="PaymentController" ng-init="init({ id: '#{ev._id}', csrf: '#{
 				th FEE
 				th BUY
 			tr(ng-repeat="ticket in tickets" ng-cloak)
-				td {{ ticket.name }}
+				td
+					b {{ ticket.name }}
 					br
 					small {{ticket.description}}
 				td {{ ticket.start_formatted }}
@@ -23,7 +24,7 @@ div(ng-controller="PaymentController" ng-init="init({ id: '#{ev._id}', csrf: '#{
 				td £{{ ticket.priceWithFeeFormatted }}
 				td.col-sm-2.col-lg-2.col-md-2.col-xs-4
 					if (loggedIn)
-						input.form-control(type="number" step="1" min="0" ng-disabled="hideRegister || ticket.expired" ng-model="ticket.wantedQuantity" ng-init="ticket.wantedQuantity = 0" max="{{ticket.quantity}}" ng-change="updateTotal()")
+						input.form-control(type="number" step="1" min="0" ng-disabled="hideRegister || ticket.expired" ng-model="ticket.wantedQuantity" max="{{ticket.quantity}}" ng-change="updateTotal()")
 					else
 						button.btn.btn-default.btn-xs.hide-prof-butt(data-toggle="modal" href="#signModal" style="border-radius: 10px; padding:5px 10px;")
 							| Sign In
@@ -36,17 +37,21 @@ div(ng-controller="PaymentController" ng-init="init({ id: '#{ev._id}', csrf: '#{
 				td: b {{totalQuantity}} tickets
 			if (loggedIn)
 				tr(ng-cloak)
-					td
+					td.col-lg-4.col-sm-4.col-md-4
 						span.pull-right Enter promotional code:
-					td.col-lg-3.col-sm-3.col-md-3
+					td.col-lg-2.col-sm-2.col-md-2
 						.input-group
-							input.input-medium.form-control(name="" type="text" placeholder="Promotional Code" ng-model="promotionalCode")
+							input.input-medium.form-control(name="" type="text" placeholder="Promo Code" ng-disabled="hideRegister" ng-model="promotionalCode")
 							.input-group-btn
-								button.btn.btn-default.btn-xs.hide-prof-butt(ng-click="applyCode(promotionalCode)" ng-disabled="promotionalCode.length == 0" style="border-radius: 0 10px 10px 0; padding:5px 10px;")
+								button.btn.btn-default(ng-click="applyCode(promotionalCode)" ng-disabled="promotionalCode.length == 0 || hideRegister" style="border-radius: 0 10px 10px 0; padding:5px 10px;")
 									| Apply
-					td: b 2%
-					td: b -£0.312
-					td
+					td.col-lg-2.col-sm-2.col-md-2
+						b {{ promo.percentageFormatted }}
+						br
+						b {{ promo.priceFormatted }}
+					td.col-lg-1.col-sm-1.col-md-1
+					td.col-lg-1.col-sm-1.col-md-1
+					td.col-lg-2.col-sm-2.col-md-2
 			tr
 	.eighty-five(ng-hide="hideRegister")
 		.bg-yellowish

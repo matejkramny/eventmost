@@ -641,14 +641,31 @@ $(document).ready(function() {
 		
 		$scope = angular.element($("#tickets")).scope();
 		$scope.tickets = ev.tickets;
-		for (var i = 0; i < $scope.tickets; i++) {
+		for (var i = 0; i < $scope.tickets.length; i++) {
 			var s = new Date($scope.tickets[i].start);
 			var e = new Date($scope.tickets[i].end);
 			
-			$scope.tickets[i].start_date = s.getDate() + "/" + (s.getMonth()+1) + "/" + s.getFullYear();
-			$scope.tickets[i].start_time = s.getHours() + ":" + s.getMinutes();
-			$scope.tickets[i].end_date = e.getDate() + "/" + (e.getMonth()+1) + "/" + e.getFullYear();
-			$scope.tickets[i].end_time = e.getHours() + ":" + e.getMinutes();
+			var month = s.getMonth() + 1;
+			var day = s.getDate();
+			var hrs = s.getHours();
+			var min = s.getMinutes();
+			if (month < 10) month = "0"+month;
+			if (day < 10) day = "0"+day;
+			if (hrs < 10) hrs = "0"+hrs;
+			if (min < 10) min = "0"+min;
+			$scope.tickets[i].start_date = s.getFullYear() + "-" + month + "-" + day;
+			$scope.tickets[i].start_time = hrs + ":" + min;
+			
+			var month = e.getMonth() + 1;
+			var day = e.getDate();
+			var hrs = e.getHours();
+			var min = e.getMinutes();
+			if (month < 10) month = "0"+month;
+			if (day < 10) day = "0"+day;
+			if (hrs < 10) hrs = "0"+hrs;
+			if (min < 10) min = "0"+min;
+			$scope.tickets[i].end_date = e.getFullYear() + "-" + month + "-" + day;
+			$scope.tickets[i].end_time = hrs + ":" + min;
 		}
 		if ($scope.tickets.length == 0) {
 			$scope.tickets.push($scope.defaultTicket)
@@ -690,7 +707,7 @@ eventMost.controller('eventAdd', function($scope) {
 		end_date: "",
 		end_time: "00:00",
 		showRemainingTickets: true,
-		min_per_order: 1,
+		min_per_order: 0,
 		max_per_order: '',
 		discountCodes: []
 	};

@@ -12,7 +12,7 @@ var scheme = schema({
 	start: Date,
 	end: Date,
 	showRemainingTickets: Boolean,
-	min_per_order: { type: Number, min: 1 },
+	min_per_order: { type: Number, min: 0 },
 	max_per_order: Number,
 	discountCodes: [{
 		code: String,
@@ -29,7 +29,7 @@ scheme.methods.update = function (body) {
 	}
 	if (typeof body.quantity !== "undefined") {
 		var quantity = parseInt(body.quantity);
-		if (!isNaN(quantity) && quantity > 0) {
+		if (!isNaN(quantity) && quantity >= 0) {
 			this.quantity = quantity;
 		}
 	}
@@ -49,7 +49,7 @@ scheme.methods.update = function (body) {
 			this.start = d;
 		}
 	}
-	if (typeof body.end !== "string") {
+	if (typeof body.end !== "undefined") {
 		var d = new Date(body.end);
 		if (!isNaN(d.getTime())) {
 			this.end = d;
@@ -61,14 +61,16 @@ scheme.methods.update = function (body) {
 	}
 	if (typeof body.min_per_order !== "undefined") {
 		var min_per_order = parseInt(body.min_per_order);
-		if (min_per_order && !isNaN(min_per_order) && min_per_order >= 1) {
+		if (!isNaN(min_per_order) && min_per_order >= 0) {
 			this.min_per_order = min_per_order;
 		}
 	}
 	if (typeof body.max_per_order !== "undefined") {
 		var max_per_order = parseInt(body.max_per_order);
-		if (max_per_order && !isNaN(max_per_order) && max_per_order > 1) {
+		if (!isNaN(max_per_order) && max_per_order >= 0) {
 			this.max_per_order = max_per_order;
+		} else {
+			this.max_per_order = 0;
 		}
 	}
 	
@@ -86,7 +88,7 @@ scheme.methods.update = function (body) {
 				percentOff = parseFloat(discount.discount);
 			}
 		
-			if (code.length > 0 && !isNaN(percentOff) && percentOff > 0 && percentOff < 100) {
+			if (code.length > 0 && !isNaN(percentOff) && percentOff > 0 && percentOff <= 100) {
 				this.discountCodes.push({
 					code: code,
 					discount: percentOff

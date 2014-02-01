@@ -29,7 +29,8 @@ angular.module('eventMost')
 	$scope.cardFormDisabled = false;
 	$scope.paymentRequired = false;
 	$scope.promotionalCode = "";
-	$scope.promotionalCodeResult = ""
+	$scope.promotionalCodeDiscountPercentage = "";
+	$scope.promotionalCodeDiscountPrice = "";
 	
 	$scope.init = function (opts) {
 		$scope.url = "/event/"+opts.id+"/";
@@ -51,6 +52,18 @@ angular.module('eventMost')
 			
 			for (var i = 0; i < tickets.length; i++) {
 				var t = tickets[i];
+				
+				var min = t.min_per_order;
+				var max = t.max_per_order;
+				if (isNaN(min) || min < 0) {
+					min = 0;
+				}
+				if (isNaN(max) || max < min) {
+					max = 0;
+				}
+				
+				t.wantedQuantity = min;
+				
 				var em_fee = t.price * 0.024 + 0.2
 				t.priceWithFee = em_fee;
 				t.priceWithFeeFormatted = t.priceWithFee.toFixed(2);
@@ -62,13 +75,12 @@ angular.module('eventMost')
 					t.priceWithFee = 0;
 				}
 				
+				t.expired = true;
 				if (t.hasSaleDates) {
-					t.expired = true;
-					
 					var start = new Date(t.start);
 					var end = new Date(t.end);
 					var now = new Date();
-				
+					
 					if (now.getTime() > start.getTime() && now.getTime() < end.getTime() && t.quantity > 0) {
 						t.expired = false;
 					}
@@ -77,10 +89,20 @@ angular.module('eventMost')
 				} else {
 					t.start_formatted = 'n/a';
 					t.end_formatted = 'n/a';
+					
+					if (t.quantity > 0) {
+						t.expired = false;
+					}
+				}
+				
+				if (t.expired) {
+					t.wantedQuantity = 0;
 				}
 			}
 			
 			$scope.tickets = data.tickets;
+			
+			$scope.updateTotal()
 		})
 	}
 	
@@ -95,10 +117,16 @@ angular.module('eventMost')
 			
 			var tickets = $scope.getTickets();
 			
-			$http.post($scope.url+'buy/tickets', {
+			var data = {
 				_csrf: $scope.csrf,
-				tickets: tickets
-			}).success(function(data, status) {
+				tickets: tickets,
+				promotionalCode: ''
+			};
+			if ($scope.promo && $scope.promo.applicable) {
+				data.promotionalCode = $scope.promo.code;
+			}
+			
+			$http.post($scope.url+'buy/tickets', data).success(function(data, status) {
 				if (data.status == 200) {
 					$scope.status = "success";
 				} else {
@@ -124,12 +152,28 @@ angular.module('eventMost')
 		var quantity = 0;
 		for (var i = 0; i < $scope.tickets.length; i++) {
 			var t = $scope.tickets[i];
-			if (t.wantedQuantity == 0 || isNaN(t.wantedQuantity)) continue;
+			
+			var min = t.min_per_order;
+			var max = t.max_per_order;
+			if (isNaN(min) || min < 0) {
+				min = 0;
+			}
+			if (isNaN(max) || max < min) {
+				max = 0;
+			}
 			
 			if (t.wantedQuantity > t.quantity) {
 				t.wantedQuantity = t.quantity;
 			}
+			if (t.wantedQuantity < min) {
+				t.wantedQuantity = min;
+			} else if (max != 0 && t.wantedQuantity > max) {
+				t.wantedQuantity = max;
+			}
 			
+			if (t.wantedQuantity <= 0 || isNaN(t.wantedQuantity)) continue;
+			
+			var wantedQuantity = t.wantedQuantity;
 			var em_fee = t.price * 0.024 + 0.2;
 			var price = t.price + em_fee;
 			if (t.price == 0) {
@@ -137,10 +181,26 @@ angular.module('eventMost')
 				em_fee = 0;
 			}
 			
-			total += t.wantedQuantity * price;
-			total_nofees += t.wantedQuantity * t.price;
-			total_fees += em_fee * t.wantedQuantity;
-			quantity += t.wantedQuantity;
+			if ($scope.promo && $scope.promo.applicable && $scope.promo.ticket._id == t._id && wantedQuantity > 0) {
+				// There's a discount for this ticket.
+				wantedQuantity -= 1;
+				
+				var newPrice = t.price - $scope.promo.price;
+				var __em_fee = newPrice * 0.024 + 0.2;
+				if (newPrice == 0) {
+					__em_fee = 0;
+				}
+				
+				total += newPrice + __em_fee;
+				total_nofees += newPrice;
+				total_fees += __em_fee;
+				quantity += 1;
+			}
+			
+			total += wantedQuantity * price;
+			total_nofees += wantedQuantity * t.price;
+			total_fees += wantedQuantity * em_fee;
+			quantity += wantedQuantity;
 		}
 		
 		if (quantity == 0) {
@@ -249,9 +309,6 @@ angular.module('eventMost')
 	}
 	
 	$scope.cardResponse = function (status, response) {
-		console.log(status);
-		console.log(response);
-		
 		if (response.error) {
 			$scope.status = response.error.message;
 			$scope.cardFormDisabled = false;
@@ -265,11 +322,17 @@ angular.module('eventMost')
 			}
 			$scope.card.expiry = "XX/XXXX";
 			
-			$http.post($scope.url+'buy/tickets', {
+			var data = {
 				_csrf: $scope.csrf,
 				tickets: tickets,
-				payment_id: response.id
-			}).success(function(data, status) {
+				payment_id: response.id,
+				promotionalCode: ""
+			};
+			if ($scope.promo && $scope.promo.applicable) {
+				data.promotionalCode = $scope.promo.code;
+			}
+			
+			$http.post($scope.url+'buy/tickets', data).success(function(data, status) {
 				if (data.status == 200) {
 					$scope.status = "success";
 				} else {
@@ -306,12 +369,59 @@ angular.module('eventMost')
 	}
 	
 	$scope.applyCode = function (code) {
+		$scope.promo = {
+			applicable: false,
+			src: {},
+			code: "",
+			percentage: 0,
+			percentageFormatted: "Looking up...",
+			ticket: null,
+			price: 0,
+			priceFormatted: ""
+		}
+		
 		$http.get($scope.url+'buy/tickets/getPromotionalCode/'+code).success(function(data, status) {
 			if (data.status == 200) {
+				var tid = data.ticket;
+				var ticket = null;
 				
+				for (var i = 0; i < $scope.tickets.length; i++) {
+					if ($scope.tickets[i]._id == tid) {
+						ticket = $scope.tickets[i];
+						break;
+					}
+				}
+				
+				var price = ticket.price * (data.discount / 100);
+				
+				$scope.promo = {
+					applicable: true,
+					code: code,
+					src: data,
+					percentage: data.discount,
+					percentageFormatted: data.discount+"% Discount",
+					ticket: ticket,
+					price: price,
+					priceFormatted: "£"+price.toFixed(2)
+				};
+			} else {
+				$scope.promo = {
+					applicable: false,
+					code: "",
+					src: data,
+					percentage: 0,
+					percentageFormatted: "Code Not Found",
+					ticket: null,
+					price: 0,
+					priceFormatted: ""
+				}
+			}
+			
+			$scope.updateTotal()
+			
+			if (!$scope.$$phase) {
+				$scope.$digest();
 			}
 		})
 	}
-	
-	
 })
