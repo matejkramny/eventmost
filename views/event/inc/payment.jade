@@ -14,9 +14,9 @@ div(ng-controller="PaymentController" ng-init="init({ id: '#{ev._id}', csrf: '#{
 				th FEE
 				th BUY
 			tr(ng-repeat="ticket in tickets" ng-cloak)
-				td
-					span(ng-show="ticket.type == 'custom'") {{ticket.customType}}
-					span(ng-show="ticket.type != 'custom'") {{ticket.type}}
+				td {{ ticket.name }}
+					br
+					small {{ticket.description}}
 				td {{ ticket.start_formatted }}
 				td {{ ticket.end_formatted }}
 				td £{{ ticket.priceFormatted }}
@@ -34,19 +34,20 @@ div(ng-controller="PaymentController" ng-init="init({ id: '#{ev._id}', csrf: '#{
 				td: b £{{ticketPriceFormatted}}
 				td: b £{{feePriceFormatted}}
 				td: b {{totalQuantity}} tickets
-
+			tr(ng-cloak)
+				td
+					span.pull-right Enter promotional code:
+				td
+					input.form-control(name="" type="text" placeholder="Promotional Code" ng-model="promotionalCode")
+				td
+					button.btn.btn-default.btn-xs.hide-prof-butt(ng-click="applyPromotionalCode()" style="border-radius: 10px; padding:5px 10px;")
+						| Apply
+				td: b 2%
+				td: b -£0.312
+				td
+			tr
 	.eighty-five(ng-hide="hideRegister")
 		.bg-yellowish
-			//-.nspacer.d-s-s-s1
-			//-	.pull-left.pad-left-five
-			//-		|Enter promotional code :
-			//-	.pull-left
-			//-		input.input-yellow-rounded(name="" , type="text", id="", required="required", style="", placeholder="9864")
-			//-.nspacer.d-s-s-s
-			//-	.pull-right
-			//-		input.input-yellow-rounded(name="" , type="text", id="", required="required", style="", placeholder="9864")
-			//-	.pull-right
-			//-		|Enter promotional code :
 			.clearfix
 			.line2
 			.pull-left

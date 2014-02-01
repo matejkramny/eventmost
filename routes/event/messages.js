@@ -208,8 +208,10 @@ function postComment (req, res) {
 			message: message
 		})
 		msg.save()
-		res.locals.ev.messages.push(msg._id);
-		res.locals.ev.save()
+		models.Event.findById(ev._id, function(err, ev) {
+			ev.messages.push(msg._id);
+			ev.save()
+		});
 		
 		socket.notifyComment(res.locals.ev, {
 			_id: msg._id,

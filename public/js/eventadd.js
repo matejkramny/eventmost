@@ -635,7 +635,9 @@ $(document).ready(function() {
 		// TODO tickets
 		$('.allowAttendeesToCreateTheirOwnCategories').attr('checked', ev.allowAttendeesToCreateCategories || false);
 		$('.allowAttendeesToCommentOnTheEvent').attr('checked', ev.allowAttendeesToComment || false);
-		$('.includePricedTickets').attr('checked', ev.pricedTickets || false)
+		if (ev.pricedTickets) {
+			$('.includePricedTickets').trigger('click')
+		}
 		
 		$scope = angular.element($("#tickets")).scope();
 		$scope.tickets = ev.tickets;
@@ -648,6 +650,10 @@ $(document).ready(function() {
 			$scope.tickets[i].end_date = e.getDate() + "/" + (e.getMonth()+1) + "/" + e.getFullYear();
 			$scope.tickets[i].end_time = e.getHours() + ":" + e.getMinutes();
 		}
+		if ($scope.tickets.length == 0) {
+			$scope.tickets.push($scope.defaultTicket)
+		}
+		
 		if (!$scope.$$phase) {
 			$scope.$digest();
 		}
@@ -663,8 +669,7 @@ eventMost.controller('eventAdd', function($scope) {
 		$scope.tickets.push({
 			price: 0.0,
 			quantity: 1,
-			type: 'standard',
-			customType: '',
+			name: "",
 			whopays: 'me'
 		})
 	}
@@ -673,19 +678,31 @@ eventMost.controller('eventAdd', function($scope) {
 		$scope.tickets.splice(index, 1)
 	}
 	
-	s.tickets = [{
+	s.ticket = null;
+	s.defaultTicket = {
 		price: 0.0,
 		quantity: 1,
-		price: 0,
-		type: 'standard',
-		customType: "",
-		whopays: 'me'
-	}];
-	s.$watch('tickets', function(ticks) {
-		for (var i = 0; i < ticks.length; i++) {
-			var t = ticks[i];
-			
-			t.isCustomType = t.type == 'custom' ? true : false;
-		}
-	}, true)
+		name: "",
+		description: "",
+		hasSaleDates: false,
+		start_date: "",
+		start_time: "00:00",
+		end_date: "",
+		end_time: "00:00",
+		showRemainingTickets: true,
+		min_per_order: 1,
+		max_per_order: '',
+		discountCodes: []
+	};
+	s.tickets = [$scope.defaultTicket];
+	
+	s.showTicket = function (ticket) {
+		$scope.ticket = ticket;
+	}
+	s.addDiscountCode = function (ticket) {
+		ticket.discountCodes.push({
+			code: "",
+			discount: null
+		})
+	}
 })

@@ -10,6 +10,8 @@ var dropbox = require('./dropbox')
 	, moment = require('moment')
 	, socket = require('./socket')
 	, config = require('../../config')
+	, mongoose = require('mongoose')
+	, async = require('async')
 
 exports.router = function (app) {
 	add.router(app)
@@ -269,41 +271,43 @@ function postMessage (req, res) {
 	var message = req.body.message;
 	var ev = res.locals.event;
 	
-	if (res.locals.eventattending) {
-		ev.messages.unshift({
-			posted: Date.now(),
-			user: req.user._id,
-			upVote: 0,
-			downVote: 0,
-			message: message
-		});
-		ev.save(function(err) {
-			if (err) throw err;
+	models.Event.findById(ev._id, function(err, ev) {
+		if (res.locals.eventattending) {
+			ev.messages.unshift({
+				posted: Date.now(),
+				user: req.user._id,
+				upVote: 0,
+				downVote: 0,
+				message: message
+			});
+			ev.save(function(err) {
+				if (err) throw err;
 			
+				res.format({
+					html: function() {
+						res.redirect('/event/'+ev._id);
+					},
+					json: function() {
+						res.send({
+							status: 200,
+							message: "Sent"
+						})
+					}
+				})
+			})
+		} else {
 			res.format({
 				html: function() {
+					req.session.flash.push("Cannot post because you are not attending")
 					res.redirect('/event/'+ev._id);
 				},
 				json: function() {
 					res.send({
-						status: 200,
-						message: "Sent"
+						status: 403,
+						message: "Cannot post"
 					})
 				}
 			})
-		})
-	} else {
-		res.format({
-			html: function() {
-				req.session.flash.push("Cannot post because you are not attending")
-				res.redirect('/event/'+ev._id);
-			},
-			json: function() {
-				res.send({
-					status: 403,
-					message: "Cannot post"
-				})
-			}
-		})
-	}
+		}
+	})
 }

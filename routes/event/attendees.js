@@ -393,13 +393,12 @@ function joinEvent (req, res) {
 		if (res.locals.eventattending) {
 			req.session.flash = ["Your Category has been updated to "+attendee.category];
 		} else {
-			ev.attendees.push(attendee._id);
+			models.Event.findById(ev._id, function(err, event) {
+				event.attendees.push(attendee._id);
+				event.save();
+			});
 			req.session.flash = ["Yay! You're now attending "+ev.name+"!"]
 		}
-		
-		ev.save(function(err) {
-			if (err) throw err;
-		});
 		
 		res.format({
 			html: function() {
@@ -449,10 +448,13 @@ function payWithCard (req, res) {
 			isAttending: false,
 			user: req.user._id
 		})
-		ev.attendees.push(attendee._id)
+		
+		models.Event.findById(ev._id, function(err, event) {
+			event.attendees.push(attendee._id);
+			event.save();
+		});
 		
 		attendee.save();
-		ev.save();
 		
 		emailConfirmation(req, res, transaction);
 		
@@ -537,10 +539,13 @@ function payWithCard (req, res) {
 			isAttending: false,
 			user: req.user._id
 		})
-		ev.attendees.push(attendee._id)
+		
+		models.Event.findById(ev._id, function(err, event) {
+			event.attendees.push(attendee._id);
+			event.save();
+		});
 		
 		attendee.save();
-		ev.save();
 		
 		emailConfirmation(req, res, transaction);
 		

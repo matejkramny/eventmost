@@ -710,7 +710,7 @@ append content
 									td
 										input.form-control(type="number", value="1", min="1", ng-model="ticket.quantity")
 									td(style="background:none;")
-										a.btn.btn-link(href ng-click="show" data-toggle="modal" data-target="#ticketModal")
+										a.btn.btn-link(href ng-click="showTicket(ticket)" data-toggle="modal" data-target="#ticketModal")
 											i.fa.fa-gear.fa-fw
 											|  More Ticket Options
 										.btn-group.pull-right
@@ -853,49 +853,55 @@ append content
 							.form-group
 								label.control-label.col-sm-4.col-md-4.col-lg-4(style="font-weight:normal;") Description
 								.col-sm-7.col-md-7.col-lg-7
-									textarea.form-control(placeholder="Additional Ticket Description")
+									textarea.form-control(placeholder="Additional Ticket Description" ng-model="ticket.description")
 							.form-group
+								.col-sm-8.col-md-8.col-lg-8.col-sm-offset-4.col-md-offset-4.col-lg-offset-4
+									.checkbox
+										label
+											input(type="checkbox" ng-model="ticket.hasSaleDates")
+											| Ticket has Start and End Sale Date
+							.form-group(ng-show="ticket.hasSaleDates")
 								label.control-label.col-sm-4.col-md-4.col-lg-4(style="font-weight:normal;") Sales Start
 								.col-sm-4.col-md-4.col-lg-4
-									input.form-control(type="date")
+									input.form-control(type="date" ng-model="ticket.start_date")
 								.col-sm-3.col-md-3.col-lg-3
-									input.form-control(type="time")
-							.form-group
+									input.form-control(type="time" ng-model="ticket.start_time")
+							.form-group(ng-show="ticket.hasSaleDates")
 								label.control-label.col-sm-4.col-md-4.col-lg-4(style="font-weight:normal;") Sales End
 								.col-sm-4.col-md-4.col-lg-4
-									input.form-control(type="date")
+									input.form-control(type="date" ng-model="ticket.end_date")
 								.col-sm-3.col-md-3.col-lg-3
-									input.form-control(type="time")
+									input.form-control(type="time" ng-model="ticket.end_time")
 							.form-group
 								label.control-label.col-sm-4.col-md-4.col-lg-4(style="font-weight:normal;")
 								.col-sm-7.col-md-7.col-lg-7
-									select.form-control
-										option(value="") Show Tickets Remaining
-										option(value="") Hide Remaining Tickets
+									.checkbox
+										label
+											input(type="checkbox" ng-model="ticket.showRemainingTickets")
+											|  Show Remaining Tickets
 							.form-group
 								label.control-label.col-sm-4.col-md-4.col-lg-4(style="font-weight:normal;") Tickets Per Order
 								.col-sm-4.col-md-4.col-lg-4
-									input.form-control(type="number" placeholder="Minimum")
+									input.form-control(type="number" placeholder="Minimum" ng-model="ticket.min_per_order")
 								.col-sm-3.col-md-3.col-lg-3
-									input.form-control(type="number" placeholder="Maximum")
+									input.form-control(type="number" placeholder="Maximum" ng-model="ticket.max_per_order")
 							.form-group
 								label.control-label.col-sm-4.col-md-4.col-lg-4(style="font-weight:normal;") Discount Codes
-								.col-sm-4.col-md-4.col-lg-4
-									input.form-control(type="text" placeholder="Code")
-								.col-sm-3.col-md-3.col-lg-3
-									input.form-control(type="text" placeholder="% Off")
-							.form-group
-								.col-sm-4.col-md-4.col-lg-4.col-sm-offset-4.col-md-offset-4.col-lg-offset-4
-									select.form-control
-										option(value="") Only This Ticket
-										option(value="") Apply to All Tickets
-								.col-sm-3.col-md-3.col-lg-3
-									a.pull-right(href)
+								.col-sm-8.col-md-8.col-lg-8
+									a.btn.btn-link(href ng-click="addDiscountCode(ticket)")
 										i.fa.fa-plus.fa-fw
-										|  Code
+										|  Discount Code
+							div(ng-repeat="code in ticket.discountCodes").form-group
+								label.control-label.col-sm-4.col-md-4.col-lg-4(style="font-weight:normal;")
+									a.btn.btn-link.btn-danger(href ng-click="ticket.discountCodes.splice($index, 1)" style="color: red;")
+										i.fa.fa-minus.fa-fw
+								.col-sm-4.col-md-4.col-lg-4
+									input.form-control(type="text" placeholder="Code" ng-model="code.code")
+								.col-sm-3.col-md-3.col-lg-3
+									input.form-control(type="number" placeholder="% Discount" ng-model="code.discount")
 						br
 						.center
-							button.btn.btn-primary.hide-prof-butt(type='submit', style="border-radius: 10px; padding:10px; padding-right:25px; padding-left:25px;")
+							button.btn.btn-primary.hide-prof-butt(type='submit' data-dismiss="modal" style="border-radius: 10px; padding:10px; padding-right:25px; padding-left:25px;")
 								| Good to Go!
 						
 						.clearfix

@@ -60,16 +60,22 @@ angular.module('eventMost')
 					t.priceWithFee = 0;
 				}
 				
-				t.expired = true;
-				var start = new Date(t.start);
-				var end = new Date(t.end);
-				var now = new Date();
+				if (t.hasSaleDates) {
+					t.expired = true;
+					
+					var start = new Date(t.start);
+					var end = new Date(t.end);
+					var now = new Date();
 				
-				if (now.getTime() > start.getTime() && now.getTime() < end.getTime() && t.quantity > 0) {
-					t.expired = false;
+					if (now.getTime() > start.getTime() && now.getTime() < end.getTime() && t.quantity > 0) {
+						t.expired = false;
+					}
+					t.start_formatted = moment(t.start).format('DD MMM YYYY')
+					t.end_formatted = moment(t.end).format('DD MMM YYYY')
+				} else {
+					t.start_formatted = 'n/a';
+					t.end_formatted = 'n/a';
 				}
-				t.start_formatted = moment(t.start).format('DD MMM YYYY')
-				t.end_formatted = moment(t.end).format('DD MMM YYYY')
 			}
 			
 			$scope.tickets = data.tickets;

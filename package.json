@@ -15,7 +15,7 @@
 	"dependencies": {
 		"express": "3.4.8",
 		"jade": "1.1.5",
-		"mongoose": "3.8.4",
+		"mongoose": "latest",
 		"async": "latest",
 		"validator": "2.1.0",
 		"session-mongoose": "latest",

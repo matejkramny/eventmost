@@ -66,36 +66,38 @@ function doRemove (req, res, next) {
 		return;
 	}
 	
-	if (isPlanner || (ev.files[found].user && ev.files[found].user._id && ev.files[found].user._id.equals(req.user._id))) {
-		// Remove this file
-		ev.files.splice(found, 1);
+	models.Event.findById(ev._id, function(err, ev) {
+		if (isPlanner || (ev.files[found].user && ev.files[found].user._id && ev.files[found].user._id.equals(req.user._id))) {
+			// Remove this file
+			ev.files.splice(found, 1);
 		
-		try {
-			fs.unlink(config.path+"/public"+ev.files[found].file)
-		} catch (e) {
-			console.log("Failed to delete dropbox file..");
+			try {
+				fs.unlink(config.path+"/public"+ev.files[found].file)
+			} catch (e) {
+				console.log("Failed to delete dropbox file..");
+			}
+		} else {
+			req.session.flash.push("Unauthorized")
+			res.redirect('/event/'+ev._id);
+			return;
 		}
-	} else {
-		req.session.flash.push("Unauthorized")
-		res.redirect('/event/'+ev._id);
-		return;
-	}
 	
-	ev.save(function(err) {
-		if (err) throw err;
-	})
-	res.format({
-		html: function() {
-			req.session.flash.push("Dropbox File Removed");
-			res.redirect('/event/'+ev._id+'/dropbox')
-		},
-		json: function() {
-			res.send({
-				status: 200,
-				message: "Removed"
-			})
-		}
-	})
+		ev.save(function(err) {
+			if (err) throw err;
+		})
+		res.format({
+			html: function() {
+				req.session.flash.push("Dropbox File Removed");
+				res.redirect('/event/'+ev._id+'/dropbox')
+			},
+			json: function() {
+				res.send({
+					status: 200,
+					message: "Removed"
+				})
+			}
+		})
+	});
 }
 
 function saveDropbox (req, res) {
@@ -104,75 +106,77 @@ function saveDropbox (req, res) {
 	var found = false;
 	var file;
 	
-	try {
-		var pid = mongoose.Types.ObjectId(req.body.file);
+	models.Event.findById(ev._id, function(err, ev) {
+		try {
+			var pid = mongoose.Types.ObjectId(req.body.file);
 		
-		for (var i = 0; i < ev.files.length; i++) {
-			if (ev.files[i]._id.equals(pid)) {
-				found = true;
-				file = ev.files[i]
-				break;
+			for (var i = 0; i < ev.files.length; i++) {
+				if (ev.files[i]._id.equals(pid)) {
+					found = true;
+					file = ev.files[i]
+					break;
+				}
 			}
+		} catch (e) {
+			throw e;
+			res.format({
+				json: function() {
+					res.send({
+						status: 404
+					})
+				},
+				html: function() {
+					res.redirect('back')
+				}
+			});
+		
+			return;
 		}
-	} catch (e) {
-		throw e;
+	
+		if (!(res.locals.eventadmin || (file.user && file.user._id && file.user._id.equals(req.user._id)))) {
+			res.format({
+				html: function() {
+					res.redirect('back');
+				},
+				json: function() {
+					res.send({
+						status: 404
+					})
+				}
+			})
+		
+			return;
+		}
+	
+		try {
+			if (found) {
+				var perms = JSON.parse(req.body.permissions);
+			
+				file.permissions.all = perms.all;
+				file.permissions.categories = perms.categories;
+			}
+		} catch (e) {
+			throw e;
+		}
+	
+		if (res.locals.eventadmin && typeof req.body.allowDropboxUpload !== 'undefined' && req.body.allowDropboxUpload.length > 0) {
+			ev.allowDropboxUpload = req.body.allowDropboxUpload == 'yes' ? true : false;
+		}
+		ev.save()
+	
+		req.session.flash = ["Dropbox Settings Updated"]
 		res.format({
-			json: function() {
-				res.send({
-					status: 404
-				})
-			},
 			html: function() {
 				res.redirect('back')
-			}
-		});
-		
-		return;
-	}
-	
-	if (!(res.locals.eventadmin || (file.user && file.user._id && file.user._id.equals(req.user._id)))) {
-		res.format({
-			html: function() {
-				res.redirect('back');
 			},
 			json: function() {
 				res.send({
-					status: 404
+					status: 200,
+					message: "Saved"
 				})
 			}
 		})
-		
-		return;
-	}
-	
-	try {
-		if (found) {
-			var perms = JSON.parse(req.body.permissions);
-			
-			file.permissions.all = perms.all;
-			file.permissions.categories = perms.categories;
-		}
-	} catch (e) {
-		throw e;
-	}
-	
-	if (res.locals.eventadmin && typeof req.body.allowDropboxUpload !== 'undefined' && req.body.allowDropboxUpload.length > 0) {
-		ev.allowDropboxUpload = req.body.allowDropboxUpload == 'yes' ? true : false;
-	}
-	ev.save()
-	
-	req.session.flash = ["Dropbox Settings Updated"]
-	res.format({
-		html: function() {
-			res.redirect('back')
-		},
-		json: function() {
-			res.send({
-				status: 200,
-				message: "Saved"
-			})
-		}
-	})
+	});
 }
 
 function doUpload (req, res) {
@@ -280,10 +284,12 @@ function doUpload (req, res) {
 				ev.files = []
 			}
 			
-			ev.files.splice(0,0, file);
+			models.Event.findById(ev._id, function(err, ev) {
+				ev.files.splice(0,0, file);
 			
-			ev.save(function(err) {
-				if (err) throw err;
+				ev.save(function(err) {
+					if (err) throw err;
+				});
 			});
 			
 			res.format({

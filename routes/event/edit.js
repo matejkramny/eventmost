@@ -71,19 +71,21 @@ function doEditEvent (req, res) {
 		return;
 	}
 	
-	ev.edit(req.body, req.user, req.files, function(err) {
-		res.format({
-			html: function() {
-				//req.session.flash = err || ["Event settings updated"];
-				res.redirect('/event/'+ev._id)
-			},
-			json: function() {
-				res.send({
-					status: err ? 403 : 200,
-					message: err || ["Event settings updated"]
-				})
-			}
-		});
+	models.Event.findOne({ deleted: false, _id: ev._id }).populate('files.user avatar attendees tickets messages').exec(function(err, ev) {
+		ev.edit(req.body, req.user, req.files, function(err) {
+			res.format({
+				html: function() {
+					//req.session.flash = err || ["Event settings updated"];
+					res.redirect('/event/'+ev._id)
+				},
+				json: function() {
+					res.send({
+						status: err ? 403 : 200,
+						message: err || ["Event settings updated"]
+					})
+				}
+			});
+		})
 	})
 }
 
@@ -116,23 +118,25 @@ function deleteEvent (req, res) {
 		return;
 	}
 	
-	// mark as deleted, don't *actually* delete
-	ev.deleted = true;
+	models.Event.findById(ev._id, function(err, ev) {
+		// mark as deleted, don't *actually* delete
+		ev.deleted = true;
 	
-	ev.save(function(err) {
-		if (err) throw err;
+		ev.save(function(err) {
+			if (err) throw err;
 		
-		res.format({
-			html: function() {
-				req.session.flash.push("Event deleted");
-				res.redirect('/events/my')
-			},
-			json: function() {
-				res.send({
-					status: 200,
-					message: "Event deleted"
-				})
-			}
-		})
+			res.format({
+				html: function() {
+					req.session.flash.push("Event deleted");
+					res.redirect('/events/my')
+				},
+				json: function() {
+					res.send({
+						status: 200,
+						message: "Event deleted"
+					})
+				}
+			})
+		});
 	});
 }

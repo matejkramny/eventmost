@@ -99,6 +99,7 @@ scheme.statics.getEvent = function (id, cb, simple) {
 		simple = false;
 	}
 	
+	// Need to pull the model again due to a bug in mongoose https://github.com/LearnBoost/mongoose/issues/1912
 	// a dismal solution, but works.. TODO replace when have time
 	try {
 		var q = exports.Event
@@ -113,7 +114,7 @@ scheme.statics.getEvent = function (id, cb, simple) {
 		
 		q.exec(function(err, ev) {
 			if (err) throw err;
-			console.log(ev)
+			
 			if (!ev) {
 				cb(ev);
 				return;
@@ -227,13 +228,14 @@ scheme.methods.edit = function (body, user, files, cb) {
 		var planner = new Attendee ({
 			user: user._id,
 			category: 'Planner',
-			admin: true
+			admin: true,
+			isAttending: true
 		})
 		this.attendees.push(planner._id)
 		planner.save();
 	}
 	
-	if (body.name) {
+	if (body.name && body.name.length > 0) {
 		this.name = body.name
 	}
 	
@@ -386,44 +388,39 @@ scheme.methods.edit = function (body, user, files, cb) {
 	
 	// do tickets - remove old tickets & create new objectids
 	if (body.tickets != null) {
+		var existing = [];
+		var sentTickets = body.tickets;
+		
+		var tickets = this.tickets.slice();
 		this.tickets = [];
-		var tickets = body.tickets || [];
-		for (var i = 0; i < tickets.length; i++) {
-			var ticket = tickets[i];
-			var t = new Ticket({
-				whopays: 'me',
-				type: 'standard',
-				customType: '',
-				quantity: 1,
-				price: 0.0
+		for (var t = 0; t < tickets.length; t++) {
+			for (var x = 0; x < sentTickets.length; x++) {
+				try {
+					if (sentTickets[x]._id && mongoose.Types.ObjectId(sentTickets[x]._id).equals(tickets[t]._id)) {
+						tickets[t].update(sentTickets[x]);
+						tickets[t].save()
+						this.tickets.push(tickets[t])
+						
+						sentTickets.splice(x, 1);
+						break;
+					}
+				} catch (e) {}
+			}
+		}
+		
+		for (var x = 0; x < sentTickets.length; x++) {
+			var t = new Ticket();
+			t.update(sentTickets[x]);
+			t.save(function (err) {
+				if (err) throw err;
 			});
 			
-			if (typeof ticket.whopays === "string" && ticket.whopays == 'attendee') {
-				t.whopays = 'attendee';
-			}
-			if (typeof ticket.type === 'string' && (ticket.type.toLowerCase() == 'premium' || ticket.type.toLowerCase() == 'custom')) {
-				t.type = ticket.type;
-			}
-			if (typeof ticket.customType === 'string' && ticket.type.toLowerCase() == 'custom') {
-				t.customType = ticket.customType;
-			}
-			if (typeof ticket.price === "string") {
-				t.price = parseFloat(ticket.price);
-			}
-			if (typeof ticket.quantity === "string") {
-				t.quantity = parseInt(ticket.quantity);
-			}
-			if (typeof ticket.start === "string") {
-				t.start = new Date(ticket.start);
-			}
-			if (typeof ticket.end === "string") {
-				t.end = new Date(ticket.end);
-			}
-			
-			t.save()
-			
-			this.tickets.push(t._id);
+			this.tickets.push(t);
 		}
+		
+		this.markModified('tickets')
+		
+		console.log(this.tickets);
 	}
 	
 	if (body.lat != null && body.lng != null) {
