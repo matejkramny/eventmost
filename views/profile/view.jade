@@ -45,7 +45,7 @@ block content
 		input.hide#avatar(type="file", name="avatar")
 		.col-lg-12.col-md-12.col-xs-12.center.nspacer.font
 			img.pad-right-ten(src="/images/man.svg", alt="",  class="img-responsive inline", style="margin:7px auto; vertical-align:bottom;")
-			| Edit your profile
+			| Edit your public profile
 		.col-lg-12.col-md-12.col-xs-12.font-e.center.nspacer
 			| All fields are
 			img.pad-left-ten(src="/images/optional.svg", alt="",  class="img-responsive inline", style="margin:-2px auto; vertical-align:bottom;")
@@ -59,9 +59,9 @@ block content
 						| upload avatar
 
 			.ei.hide-mini3
-				mixin text("Email:", "Email", "email", true, user.email, true)
 				mixin text("First Name:", "Name", "name", false, user.name)
 				mixin text("Last Name:", "Surname", "surname", false, user.surname)
+				mixin text("Company:", "Company", "company", false, user.company)
 			.clearfix
 	
 		//- mobile only
@@ -86,21 +86,15 @@ block content
 		mixin mobileText("Website", "Website", "website", false, user.website)
 		mixin mobileText("Education", "Education", "education", false, user.education)
 		mixin mobileTextarea("Description", "Description", "description", false, user.desc)
-		mixin mobileText("Password", "Password", "password_old", false, "", "text", "Enter Only If You Want to Change Your Password")
-		mixin mobileText("New Password", "NewPassword", "password", false, "")
 		//- end mobile only	
 	
 		.col-lg-9.col-md-9.col-xs-9.hide-mini3(style="float:none; margin:4px auto;")
-			mixin textBig("Company:", "Company", "company", false, user.company, true)
-			mixin textBig("Position:", "Position", "position", false, user.position)
+			mixin textBig("Position:", "Position", "position", false, user.position, true)
 			mixin textBig("Location:", "Location", "location", false, user.location)
 			mixin textBig("Interests:", "Interests", "interests", false, user.interests)
 			mixin textBig("Website:", "Website", "website", false, user.website)
 			mixin textBig("Education:", "Education", "education", false, user.education)
 			mixin textarea("Description:", "Description", "description", false, user.desc)
-			if (user.password)
-				mixin textBig("Current Password:", "Password", "password_old", false, "", false, "password", "Enter Only If You Want to Change Your Password")
-			mixin textBig("New Password:", "NewPassword", "password", false, "", false, "password")
 		.clearfix
 		.row
 			.nspacer
