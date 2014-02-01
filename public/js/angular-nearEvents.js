@@ -90,6 +90,7 @@ $(document).ready(function() {
 					//HTML5 storage...
 					localStorage["didSaveCoords"] = true;
 					localStorage["coords"] = JSON.stringify(coords);
+					localStorage["coordsSaved"] = Date.now();
 				}
 				
 				getNear(coords);
@@ -101,7 +102,12 @@ $(document).ready(function() {
 			$placeholderText.html("Geolocalization not supported by your browser");
 		}
 	}
-	if (isLocalStorageCapable && localStorage["didSaveCoords"]) {
+	var coordsSaved = parseInt(localStorage["coordsSaved"]);
+	
+	if (isNaN(coordsSaved) || Date.now() - (60 * 60 * 6 * 1000) > coordsSaved) {
+		loadNear()
+		$("#tryAgainNearbyEvents").parent().addClass('hide');
+	} else if (isLocalStorageCapable && localStorage["didSaveCoords"]) {
 		getNear(JSON.parse(localStorage["coords"]));
 		$("#tryAgainNearbyEvents").parent().addClass('hide');
 	} else if ($("#tryAgainNearbyEvents").length == 0) {

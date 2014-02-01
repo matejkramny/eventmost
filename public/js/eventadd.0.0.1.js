@@ -68,6 +68,7 @@ $(document).ready(function() {
 					//HTML5 storage...
 					localStorage["didSaveCoords"] = true;
 					localStorage["coords"] = JSON.stringify(coords);
+					localStorage["coordsSaved"] = Date.now();
 				}
 				
 				getNear(coords);
@@ -84,7 +85,12 @@ $(document).ready(function() {
 	$("#creditcardsmaller3, #creditcardsmaller223").change(function() {
 		if ($(this).is(':checked')) {
 			if (isLocalStorageCapable && localStorage["didSaveCoords"]) {
-				getNear(JSON.parse(localStorage["coords"]));
+				var coordsSaved = parseInt(localStorage["coordsSaved"]);
+				if (isNaN(coordsSaved) || Date.now() - (60 * 60 * 6 * 1000) > coordsSaved) {
+					loadNear()
+				} else {
+					getNear(JSON.parse(localStorage["coords"]));
+				}
 			} else {
 				loadNear()
 			}
