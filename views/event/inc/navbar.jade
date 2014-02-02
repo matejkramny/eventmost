@@ -11,6 +11,27 @@ mixin navbar
 						| &#8592 
 					| #{ev.name}
 			.pull-right
+				if eventadmin
+					.inline.nspacer-small.pad-right-five
+						.font-x1.bg-purple.center.psev2.prof-wall
+							.dropdown(style="padding:0;")
+								a.link-white(href data-toggle="dropdown")
+									| Planner
+									br
+									| Options
+									img.pad-left-ten(src="/images/menu-profile.svg")
+								ul.dropdown-menu.mif-dropdown(style="background-color:rgb(118,239,139); padding:0; margin-top:15px; margin-left:-15px;")
+									li.inverted: a(href=base+"admin/panel") Edit Event/Ticket Details
+									li.inverted: a(href=base+"admin/panel") Admin Powers/Controls
+									li.inverted: a(href=base+"admin/logos") Edit Event Appearance
+									li.inverted: a(href=base+"admin/summary") Event Analytics/Ticket Sales
+									li(style="text-align:center;"): a(href=base+"admin/feedback")
+										i.fa.fa-star.fa-fw
+										|  Feedback Profiles 
+										i.fa.fa-star.fa-fw
+									li: a(href=base+"admin/register") Check People In
+									li: a(href=base+"admin/email") Send Mass Private Messages
+				
 				.inline.nspacer-small.pad-right-five
 					.font-x1.bg-purple.center.psev2.prof-wall
 						a.link-white(href= (eventattending == true ? base+"attendee/"+attendee._id : base+"attendees")) My profile <br />
@@ -28,65 +49,3 @@ mixin navbar
 			.clearfix
 
 	.clearfix
-
-	//- end inbox title plus buttons
-	
-	if eventadmin
-		//- second inbox title plus buttons
-		.nspacer
-		.row
-
-			.col-md-2.col-xs-2.col-sm-2.nspacer-medium.hide-mini3-except-smart
-				.font-s
-					b Planner options
-			.col-md-10.col-xs-10.col-sm-10.hide-mini3-except-smart
-				.font-x1.bg-purple.center.pull-right.psev2.prof-wall(style="padding-top:15px;")
-					a.link-white(href=base+"admin/logos") Event Layout
-				.font-x1.bg-purple.center.pull-right.psev2.prof-wall(style="padding-top:15px; margin-right:5px;")
-					a.link-white(href=base+"admin/email") Email Attendees
-				//-.font-x1.bg-green.center.pull-right.psev2.prof-wall(style="padding-top:15px;")
-				//-	a.link-white(href=base+"admin/notifications") Push Notifications
-				.font-x1.bg-purple.center.pull-right.psev2.prof-wall(style="margin-right:5px;")
-					a.link-white(href=base+"admin/feedback") Feedback<br/>Profiles
-				.font-x1.bg-purple.center.pull-right.psev2.prof-wall(style="padding-top:15px; margin-right:5px;")
-					a.link-white(href=base+"admin/summary") Event Summary
-				.font-x1.bg-purple.center.pull-right.psev2.prof-wall(style="padding-top:15px; margin-right:5px;")
-					a.link-white(href=base+"admin/panel") Admin Panel
-				.font-x1.bg-purple.center.pull-right.psev2.prof-wall(style="margin-right:5px;")
-					a.link-white(href=base+"admin/register") Attendee<br/>Registration
-			.clearfix.hide-mini3-except-smart
-
-		.row.hide-all2
-		
-			.col-md-12.col-xs-12.col-sm-12.nspacer-medium.hide-all2
-				.center
-					.font-tw.inline
-						b Planner options
-			.clearfix.hide-all2
-
-		.row.hide-all2
-			.col-md-12.col-xs-12.col-sm-12.hide-all2
-				.center(style="margin-top:-45px !important;")
-					.inline.nspacer-small
-						.font-x1.bg-purple.center.psev2.prof-wall
-							a.link-white(href=base+"admin/register") Attendee<br/>Registration
-					.inline.nspacer-small
-						.font-x1.bg-purple.center.psev2.prof-wall
-							a.link-white(href=base+"admin/panel") Admin <br/>Panel
-					.inline.nspacer-small
-						.font-x1.bg-purple.center.psev2.prof-wall
-							a.link-white(href=base+"admin/summary") Event <br/>Summary
-					.inline.nspacer-small
-						.font-x1.bg-purple.center.psev2.prof-wall
-							a.link-white(href=base+"admin/feedback") Feedback<br/>Profiles
-					//-.inline.nspacer-small
-					//-	.font-x1.bg-green.center.psev2.prof-wall
-					//-		a.link-white(href=base+"admin/notifications") Push <br/>Notifications
-					.inline.nspacer-small
-						.font-x1.bg-purple.center.psev2.prof-wall
-							a.link-white(href=base+"admin/email") Email <br/>Attendees
-					.inline.nspacer-small
-						.font-x1.bg-purple.center.psev2.prof-wall
-							a.link-white(href=base+"admin/logos") Event <br/>Layout
-
-			//- second end inbox title plus buttons

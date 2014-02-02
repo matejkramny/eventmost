@@ -62,6 +62,7 @@ exports.listMyEvents = function (req, res) {
 }
 
 exports.listNearEvents = function (req, res) {
+	//TODO mongo doesn't like the geospacial index
 	res.format({
 		html: function() {
 			res.render('event/list', { events: [], pagename: "Events near you", title: "Events nearby" })

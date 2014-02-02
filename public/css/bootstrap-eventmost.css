@@ -282,7 +282,7 @@ border-radius: 10px;}
 .width7{width: 6%;}
 
 
-.linknamewidth{width: 65%;}
+.linknamewidth{width: 50%;}
 .post-width-text{width:95%;}
 .post-width-text-new{width:96.3%;}
 
@@ -3109,4 +3109,18 @@ table.gridtable-payment-yellow {font-size: 10px;}
 }
 .attendee-hover:hover {
 	background: #FDD093;
+}
+
+.mif-dropdown li {
+	text-align: left;
+}
+.mif-dropdown li.inverted {
+	background-color: #FDD093;
+}
+.mif-dropdown li a {
+	color: #000 !important;
+}
+.mif-dropdown li a:hover {
+	background-color: #542437 !important;
+	color: #FFF !important;
 }
