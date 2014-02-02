@@ -238,38 +238,7 @@ append content
 								span Yes
 							a.slide-button
 					.clearfix
-
-					//- allow them to comment in public checkbox
-					.nspacer
-					.font2.pull-left.font-exception
-						| Allow attendees to publicly comment on the event?
-					.clearfix
-					.pull-left
-						label.checkbox.toggle.candy(style='width: 100px; margin-left:0px; margin-top:4px;', onclick='')
-							input.allowAttendeesToCommentOnTheEvent(type='checkbox', class="invisible")
-							span
-								span No
-								span Yes
-							a.slide-button
-					.clearfix
-	
-					//- give admins to another user
-					//-
-						.nspacer
-						.line-purple
-						.font2.pull-left.font-exception
-							| Give admin rights to another user?
-						.clearfix
-						.pull-left
-							label.checkbox.toggle.candy(style='width: 100px; margin-left:0px; margin-top:4px;', onclick='')
-								input(type='checkbox', class="invisible")
-								span
-									span No
-									a(data-toggle="modal", href="#addModal")
-										span Yes
-								a.slide-button
-						.clearfix
-
+					
 					.nspacer-medium
 	
 					//-tickets
@@ -569,54 +538,52 @@ append content
 					.col-lg-4.col-md-4.col-xs-4
 						.center.font2.font-exception
 							| Create your own
-						.createCategory.font-evente.font-thin2.nspacer.gestlist
+						.createCategory.font-evente.font-thin2.nspacer.gestlist(style="padding-left:20px;")
 							.col-lg-9.col-md-9.col-xs-9
-								input#add-category-manual-1.input-ashen-rounded.font-exception-thin(add-category-manual, type="text", style="height:35px;")
+								input#add-category-manual-1.input-ashen-rounded.font-exception-thin(add-category-manual, type="text", style="height:35px;background-color:#D5D6D7;")
 							.col-lg-3.col-md-3.col-xs-3.pad-left-zero
 								a.add-category-manual(href="#add-category-manual-1").addCategory
 									img(src="/images/ashen-arrow.svg" style="")
 							.clearfix
 							.nspacer-small
 							.col-lg-9.col-md-9.col-xs-9
-								input#add-category-manual-2.input-ashen-rounded.font-exception-thin(add-category-manual, type="text", style="height:35px;")
+								input#add-category-manual-2.input-ashen-rounded.font-exception-thin(add-category-manual, type="text", style="height:35px;background-color:#D5D6D7;")
 							.col-lg-3.col-md-3.col-xs-3.pad-left-zero
 								a.add-category-manual(href="#add-category-manual-2").addCategory
 									img(src="/images/ashen-arrow.svg" style="")
 							.clearfix
 							.nspacer-small
 							.col-lg-9.col-md-9.col-xs-9
-								input#add-category-manual-3.input-ashen-rounded.font-exception-thin(add-category-manual, type="text", style="height:35px;")
+								input#add-category-manual-3.input-ashen-rounded.font-exception-thin(add-category-manual, type="text", style="height:35px;background-color:#D5D6D7;")
 							.col-lg-3.col-md-3.col-xs-3.pad-left-zero
 								a.add-category-manual(href="#add-category-manual-3").addCategory
 									img(src="/images/ashen-arrow.svg" style="")
 							.clearfix
 							.nspacer-small
 							.col-lg-9.col-md-9.col-xs-9
-								input#add-category-manual-4.input-ashen-rounded.font-exception-thin(add-category-manual, type="text", style="height:35px;")
+								input#add-category-manual-4.input-ashen-rounded.font-exception-thin(add-category-manual, type="text", style="height:35px;background-color:#D5D6D7;")
 							.col-lg-3.col-md-3.col-xs-3.pad-left-zero
 								a.add-category-manual(href="#add-category-manual-4").addCategory
 									img(src="/images/ashen-arrow.svg" style="")
 							.clearfix
 							.nspacer-small
 							.col-lg-9.col-md-9.col-xs-9
-								input#add-category-manual-5.input-ashen-rounded.font-exception-thin(add-category-manual, type="text", style="height:35px;")
+								input#add-category-manual-5.input-ashen-rounded.font-exception-thin(add-category-manual, type="text", style="height:35px;background-color:#D5D6D7;")
 							.col-lg-3.col-md-3.col-xs-3.pad-left-zero
 								a.add-category-manual(href="#add-category-manual-5").addCategory
 									img(src="/images/ashen-arrow.svg" style="")
 							.clearfix
 							.nspacer-small
 							.col-lg-9.col-md-9.col-xs-9
-								input.input-ashen-rounded.font-exception-thin(add-category-manual, type="text", style="height:35px;")
+								input.input-ashen-rounded.font-exception-thin(add-category-manual, type="text", style="height:35px;background-color:#D5D6D7;")
 							.col-lg-3.col-md-3.col-xs-3.pad-left-zero
 								a.add-category-manual(href="#add-category-manual-6").addCategory
 									img(src="/images/ashen-arrow.svg" style="")
 					.col-lg-4.col-md-4.col-xs-4
 						.center.font2.font-exception
 							| Selected categories
-						.selectedCategoriesList.font-evente.font-thin2.nspacer.gestlist.font-exception-thin
-							span(val="Guest Speaker") Guest Speaker
-								br
-							p.noneSelected.hide No categories :(
+						.selectedCategoriesList.font-evente.font-thin2.nspacer.gestlist(style="padding-left:20px;")
+							p.noneSelected.hide No categories Selected
 					.clearfix
 
 					.nspacer
@@ -630,34 +597,7 @@ append content
 								span Yes
 							a.slide-button
 					.clearfix
-
-
-					.nspacer
-					.font2.pull-left.font-exception
-						| Allow attendees to publicly comment on the event?
-					.pull-left
-						label.checkbox.toggle.candy(style='width: 100px; margin-left:20px; margin-top:4px;', onclick='')
-							input.allowAttendeesToCommentOnTheEvent(type='checkbox', class="invisible")
-							span
-								span No
-								span Yes
-							a.slide-button
-					.clearfix
-					//-
-						.nspacer
-						.line-purple
-						.font2.pull-left.font-exception
-							| Give admin rights to another user?
-						.pull-left
-							label.checkbox.toggle.candy(style='width: 100px; margin-left:20px; margin-top:4px;', onclick='')
-								input(type='checkbox', class="invisible")
-								span
-									span No
-									a(data-toggle="modal", href="#addModal")
-										span Yes
-								a.slide-button
-						.clearfix
-
+					
 					.nspacer-medium
 
 					.bg-purple.psev.font-lebig.pull-left.semi-bold

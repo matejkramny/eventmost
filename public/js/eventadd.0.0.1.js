@@ -318,7 +318,7 @@ $(document).ready(function() {
 	}
 	
 	// Categories & tickets
-	$(".selectedCategoriesList").on('click', 'span', function(e) {
+	$(".selectedCategoriesList").on('click', 'a.remove-category', function(e) {
 		e.preventDefault()
 		
 		var text = $(this).attr("val");
@@ -380,7 +380,18 @@ $(document).ready(function() {
 		//template.find(".guest").html(category);
 		//template.find("input[type=hidden]").val(category);
 		//var html = template.html();
-		$(".selectedCategoriesList").append("<span val=\""+category+"\">"+category+"<br/></span>");
+		var template = "";
+		template += "<div><div class='col-lg-9 col-md-9 col-xs-9'>\
+							<input value='"+category+"' disabled='disabled' class='input-ashen-rounded font-exception-thin' type='text' style='height:35px;background-color:#D5D6D7;'>\
+						</div>\
+						<div class='col-lg-3 col-md-3 col-xs-3 pad-left-zero'>\
+							<a href class='remove-category' style='color:#0992A3;' val='"+category+"'>\
+								Delete\
+							</a>\
+						</div>\
+						<div class='clearfix'></div><div class='nspacer-small'></div></div>";
+		
+		$(".selectedCategoriesList").append(template);
 		
 		categories.push(category);
 		
@@ -398,7 +409,7 @@ $(document).ready(function() {
 			}
 		}
 		
-		$category.remove();
+		$category.parent().parent().remove();
 		
 		if (categories.length == 0) {
 			$(".selectedCategoriesList .noneSelected").removeClass("hide");
@@ -450,10 +461,6 @@ $(document).ready(function() {
 		if ($form.find(".allowAttendeesToCreateTheirOwnCategories").is(':checked')) {
 			allowCreateCategories = true;
 		}
-		var allowCommentOnEvent = false;
-		if ($form.find(".allowAttendeesToCommentOnTheEvent").is(':checked')) {
-			allowCommentOnEvent = true;
-		}
 		var pricedTickets = false;
 		if ($form.find(".includePricedTickets").is(':checked')) {
 			pricedTickets = true;
@@ -480,7 +487,6 @@ $(document).ready(function() {
 			description: $(ed.i.contentWindow.document.body)[0].innerHTML,
 			categories: categories,
 			allowAttendeesToCreateCategories: allowCreateCategories,
-			allowCommentsOnEvent: allowCommentOnEvent,
 			pricedTickets: pricedTickets,
 			tickets: pricedTickets ? tickets : [],
 		};
@@ -640,7 +646,6 @@ $(document).ready(function() {
 		
 		// TODO tickets
 		$('.allowAttendeesToCreateTheirOwnCategories').attr('checked', ev.allowAttendeesToCreateCategories || false);
-		$('.allowAttendeesToCommentOnTheEvent').attr('checked', ev.allowAttendeesToComment || false);
 		if (ev.pricedTickets) {
 			$('.includePricedTickets').trigger('click')
 		}
