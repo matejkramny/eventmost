@@ -436,6 +436,14 @@ $(document).ready(function() {
 		return false;
 	});
 	
+	$('.privateEvent').on('click', function() {
+		if ($('.privateEvent').is(':checked')) {
+			$('.privateEventMessage').removeClass('hide')
+		} else {
+			$('.privateEventMessage').addClass('hide')
+		}
+	})
+	
 	function getValue(selector) {
 		return $(selector).val();
 	}
@@ -465,6 +473,10 @@ $(document).ready(function() {
 		if ($form.find(".includePricedTickets").is(':checked')) {
 			pricedTickets = true;
 		}
+		var privateEvent = false;
+		if ($form.find(".privateEvent").is(':checked')) {
+			privateEvent = true;
+		}
 		
 		var scope = angular.element($("#tickets")).scope();
 		var tickets = scope.tickets;
@@ -488,6 +500,7 @@ $(document).ready(function() {
 			categories: categories,
 			allowAttendeesToCreateCategories: allowCreateCategories,
 			pricedTickets: pricedTickets,
+			privateEvent: privateEvent,
 			tickets: pricedTickets ? tickets : [],
 		};
 		console.log(d);
@@ -644,10 +657,13 @@ $(document).ready(function() {
 			addCategory(ev.categories[i])
 		}
 		
-		// TODO tickets
 		$('.allowAttendeesToCreateTheirOwnCategories').attr('checked', ev.allowAttendeesToCreateCategories || false);
 		if (ev.pricedTickets) {
 			$('.includePricedTickets').trigger('click')
+		}
+		// Private event
+		if (ev.privateEvent) {
+			$('.privateEvent').trigger('click')
 		}
 		
 		$scope = angular.element($("#tickets")).scope();

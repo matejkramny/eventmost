@@ -662,7 +662,25 @@ append content
 							.clearfix
 							div.tickets-lock(style="width:100%;height:100%;position:absolute;left:0;top:0;background:#333;opacity:0.3;z-index:999;")
 						.clearfix
-					.nspacer
+					
+					.col-lg-11.col-md-11.col-xs-11.no-float.hide-mini.ticketsWrapper
+						.nspacer
+					
+						.nspacer
+					
+						.font2.pull-left.font-exception
+							| This is a <strong>Private</strong> event
+						.pull-left
+							label.checkbox.toggle.candy(style='width: 100px; margin-left:20px; margin-top:4px;')
+								input.privateEvent.invisible(type='checkbox')
+								span
+									span No
+									span Yes
+								a.slide-button
+						.clearfix
+						p.lead.privateEventMessage.hide Public Events have Greater Attendance. When you make an event private, users will not be able to find it without a link.
+						.nspacer
+					
 					.center
 						button.btn.btn-info.font-bigs2.font-exception.eventSubmitBtn(type='submit', href="desktop", style="line-height:45px; padding:30px; padding-left:55px; padding-right:55px;")
 							| Publish<br /><b>my</b> event

@@ -10,7 +10,7 @@ exports.router = function (app) {
 }
 
 exports.listEvents = function (req, res) {
-	models.Event.find({ deleted: false })
+	models.Event.find({ deleted: false, privateEvent: { $ne: true } })
 		.populate('avatar attendees.user')
 		.select('name start end address venue_name avatar')
 		.sort('-created')
@@ -62,6 +62,20 @@ exports.listMyEvents = function (req, res) {
 }
 
 exports.listNearEvents = function (req, res) {
+	res.format({
+		html: function() {
+			res.render('event/list', { events: [], pagename: "Events near you", title: "Events nearby" })
+		},
+		json: function() {
+			// TODO security issue. Sharing too much
+			res.send({
+				events: [],
+				pagename: "Events near you"
+			})
+		}
+	})
+	return;
+	
 	var lat = parseFloat(req.query.lat)
 		,lng = parseFloat(req.query.lng)
 		,limit = parseInt(req.query.limit)
@@ -89,6 +103,7 @@ exports.listNearEvents = function (req, res) {
 		limit = 10;
 	}
 	
+	console.log([lng, lat]);
 	models.Geolocation.find(
 		{ 'geo': {
 				$near: {
@@ -96,7 +111,7 @@ exports.listNearEvents = function (req, res) {
 						type: "Point",
 						coordinates: [lng, lat]
 					},
-					$maxDistance: 0.09009009009
+					$maxDistance: 0.9
 				}
 			}
 		}).populate('event')
@@ -130,6 +145,7 @@ exports.listNearEvents = function (req, res) {
 							res.render('event/list', { events: events, pagename: "Events near you", title: "Events nearby" })
 						},
 						json: function() {
+							// TODO security issue. Sharing too much
 							res.send({
 								events: events,
 								pagename: "Events near you"

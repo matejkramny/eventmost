@@ -31,6 +31,7 @@ var scheme = schema({
 	address: String,
 	allowDropboxUpload: { type: Boolean, default: false },
 	allowAttendeesToCreateCategories: { type: Boolean, default: false },
+	privateEvent: { type: Boolean, default: false }, // Makes event private.. No access without a link!
 	pricedTickets: { type: Boolean, default: false },
 	categories: [],
 	tickets: [{
@@ -345,6 +346,9 @@ scheme.methods.edit = function (body, user, files, cb) {
 	}
 	if (body.pricedTickets != null) {
 		this.pricedTickets = body.pricedTickets
+	}
+	if (body.privateEvent != null) {
+		this.privateEvent = !!body.privateEvent;
 	}
 	
 	// restriction settings
