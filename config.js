@@ -4,7 +4,7 @@ var colors = require('colors');
 var stripe = require('stripe')
 
 var credentials = exports.credentials = {
-	replSet: process.env.DB_REPL_SET || null,
+	replSet: process.env.DB_REPLSET || null,
 	db: process.env.DB_AUTH || "mongodb://127.0.0.1/eventmost",
 	host: process.env.HOST || "",
 	bugsnag: process.env.BUGSNAG_KEY || "",
