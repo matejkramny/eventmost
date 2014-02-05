@@ -59,6 +59,9 @@ app.locals.pretty = !config.production // Pretty HTML outside production mode
 if (config.mode != 'test') {
 	app.use(express.logger('dev')); // Pretty log
 }
+
+app.use("/", express.static(path.join(__dirname, 'public'))); // serve static files
+
 app.use(express.limit('25mb')); // File upload limit
 app.use(function(req, res, next) {
 	var source = req.headers['user-agent'];
@@ -174,8 +177,6 @@ routes.router(app);
 io.sockets.on('connection', function(socket) {
 	routes.socket(socket)
 });
-
-app.use("/", express.static(path.join(__dirname, 'public'))); // serve static files
 
 app.get('*', function(req, res, next) {
 	if (!config.production) {
