@@ -175,6 +175,8 @@ io.sockets.on('connection', function(socket) {
 	routes.socket(socket)
 });
 
+app.use("/", express.static(path.join(__dirname, 'public'))); // serve static files
+
 app.get('*', function(req, res, next) {
 	if (!config.production) {
 		next()
@@ -192,8 +194,6 @@ app.get('*', function(req, res, next) {
 		}
 	})
 })
-
-app.use("/", express.static(path.join(__dirname, 'public'))); // serve static files
 
 // development only
 if (!config.production) {
