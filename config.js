@@ -3,13 +3,49 @@ var fs = require('fs');
 var colors = require('colors');
 var stripe = require('stripe')
 
-var credentials;
-try {
-	// Not on git, saves passwords from prying eyes of developers and unauthorised views..
-	exports.credentials = credentials = require('./config-credentials.js')
-} catch (e) {
-	console.log("\n\n", "Required File Missing:".underline.red, "config-credentials.js".bold.green, "\n\n")
-	process.exit(1);
+var credentials = exports.credentials = {
+	replSet: process.env.DB_REPLSET || null,
+	db: process.env.DB_AUTH || "mongodb://127.0.0.1/eventmost",
+	host: process.env.HOST || "",
+	bugsnag: process.env.BUGSNAG_KEY || "",
+	smtp: {
+		user: process.env.SMTP_USER || "",
+		pass: process.env.SMTP_PASS || ""
+	},
+	newrelic: process.env.NEWRELIC || "",
+	stripe: {
+		secret: process.env.STRIPE_SECRET || "",
+		pub: process.env.STRIPE_PUB || ""
+	},
+	social: {
+		fb: {
+			key: process.env.SOCIAL_FB_KEY || "fakekey",
+			secret: process.env.SOCIAL_FB_SECRET || "fakesecret"
+		},
+		tw: {
+			key: process.env.SOCIAL_TW_KEY || "fakekey",
+			secret: process.env.SOCIAL_TW_SECRET || "fakesecret"
+		},
+		linkedin: {
+			key: process.env.SOCIAL_LINKEDIN_KEY || "fakekey",
+			secret: process.env.SOCIAL_LINKEDIN_SECRET || "fakesecret"
+		}
+	},
+	session_secret: process.env.SESSION_SECRET || "KeyboardCat",
+	testroutes: process.env.TESTROUTES || true
+};
+
+exports.db_config = {
+	auto_reconnect: true,
+	native_parser: true,
+	server: {
+		auto_reconnect: true
+	}
+};
+if (credentials.replSet) {
+	exports.db_config.replset = {
+		rs_name: credentials.replSet
+	};
 }
 
 exports.stripe = stripe(credentials.stripe.secret);
