@@ -6,7 +6,7 @@ mixin navbar
 	.row
 		.col-md-12.col-xs-12.col-sm-12
 			a(href=base, class="link-purple", style="font-size: 25px; padding: 0 0 0 10px;")
-				.pull-left.linknamewidth.pad-left-zero.left.inline.nspacer-small(type='submit', style="")
+				.pull-left.linknamewidth.pad-left-zero.left.inline.nspacer-small.font-exception(type='submit', style="")
 					if (typeof hideArrow === "undefined" || hideArrow == false)
 						| &#8592 
 					| #{ev.name}
@@ -47,5 +47,4 @@ mixin navbar
 						a.link-white(href=base+"dropbox") Event dropbox <br />
 							img(src="/images/menu-drop.svg", alt="", style="")
 			.clearfix
-
 	.clearfix

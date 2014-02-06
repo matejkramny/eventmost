@@ -11,35 +11,26 @@ block content
 		.clearfix.hide-all2
 		br
 
+
+	.nspacer
+	.row
+		.col-md-12.col-xs-12.col-sm-12
+			.pull-left
+				.font-s.big-pad-left
+					b #{theUser.getName()}
+					if (theUser.position)
+						| - #{theUser.position}
+					if (theUser.company)
+						| , #{theUser.company}
+		.clearfix
+
+
 	.nspacer
 	.col-md-2.col-xs-2.col-sm-2.hide-mini3-except-smart
 		.pull-right
-			img.img-responsive(src= theUser.avatar.length == 0 ? "/images/default_speaker.svg" : theUser.avatar)
+			img.img-responsive.prof-width(src= theUser.avatar.length == 0 ? "/images/default_speaker.svg" : theUser.avatar)
 	.col-md-4.col-xs-4.col-sm-4.hide-mini3-except-smart
-		.font-s.nspacer-bigger.big-pad-left
-			b #{theUser.getName()}
-			if (theUser.position)
-				| - #{theUser.position}
-			if (theUser.company)
-				| , #{theUser.company}
 		.nspacer
-		.text-right.font-s.pull-left(style="width:30%;")
-			| Name: 
-		.pull-left.font-s.text-left.pad-left-ten.pull-left.break(style="width:70%;")
-			b #{theUser.getName()}
-		.clearfix
-		.text-right.font-s.pull-left.nspacer-small-m(style="width:30%;")
-			| Position: 
-			br
-		.pull-left.font-s.text-left.pad-left-ten.pull-left.break.nspacer-small-m(style="width:70%;")
-			b #{theUser.position}
-		.clearfix
-		.text-right.font-s.pull-left.nspacer-small-m(style="width:30%;")
-			| Company: 
-			br
-		.pull-left.font-s.text-left.pad-left-ten.pull-left.break.nspacer-small-m(style="width:70%;")
-			b #{theUser.company}
-		.clearfix
 		.pull-left.font-s.text-right.nspacer-small-m(style="width:30%;")
 			| Website: 
 			br
@@ -64,7 +55,13 @@ block content
 		.pull-right.font-s.pad-left-ten.break.nspacer-small-m(style="width:70%;")
 			b #{theUser.education}
 		.clearfix
-	
+		.nspacer
+			a(class="link1" href="/profile")
+				button.btn.btn-primary.font-x.sp-margin(style=" padding:10px; padding-left:25px; padding-right:25px; text-align:center;")
+					.pull-left
+						| Edit<br/>My Profile
+					.pull-right
+						img(src="/images/edit-my-prof2.svg", alt="", class="inline pad-left-ten res-butt edito" style="max-width:50px;")
 	if (!theUser._id.equals(user._id))
 		.col-md-6.col-xs-6.col-sm-6.lower.hide-mini3-except-smart
 			.right.iconsbox.spacerbig
@@ -140,36 +137,42 @@ block content
 			- var offset = "col-md-offset-4 col-xs-offset-4 col-sm-offset-4";
 			if (typeof ev !== "undefined")
 				- offset = "";
-				.col-md-offset-2.col-sm-offset-2.col-xs-offset-2.col-md-2.col-xs-2.col-sm-2.lower.hide-mini3-except-smart
-					.right.iconsbox.spacerbig
+				.col-md-6.col-xs-6.col-sm-6.lower.hide-mini3-except-smart
+					.font-event.font-exception
+						| In this event you are showing up as a:
+					.color-grey2.italic.font-event.font-exception
+						| "Guest Speaker"
+					.pull-left.font-event.nspacer-medium.font-exception
+						| Would you like to:
+					.pull-left.iconsbox.spacerbig.big-pad-left
 						a(class="link1" data-toggle="modal" href="#attendModal")
-							button.btn.btn-primary.font-x(style="width:100%; padding:10px; padding-left:25px; padding-right:35px; margin-right:20px; text-align:center;")
+							button.btn.btn-primary.font-x(style=" padding:10px; padding-left:25px; padding-right:35px; margin-right:20px; text-align:center;")
 								| Change My<br/>Category
 							.nspacer-small
-				.col-md-offset-2.col-sm-offset-2.col-xs-offset-2.col-md-2.col-xs-2.col-sm-2.lower-hide.hide-except-smart
-					.right.iconsbox.spacerbig
+				.col-md-6.col-xs-6.col-sm-6.lower-hide.hide-except-smart
+					.font-e2.font-exception
+						| In this event you are showing up as a:
+					.color-grey2.italic.font-e2.font-exception
+						| "Guest Speaker"
+					.pull-left.font-e2.nspacer-medium.font-exception
+						| Would you like to:
+					.pull-left.iconsbox.spacerbig.big-pad-left
 						a(class="link1" data-toggle="modal" href="#attendModal")
-							button.btn.btn-primary.font-x(style="width:100%; padding:10px; padding-left:25px; padding-right:35px; margin-right:20px; text-align: center;")
+							button.btn.btn-primary.font-x(style=" padding:10px; padding-left:25px; padding-right:35px; margin-right:20px; text-align:center;")
 								| Change My<br/>Category
 							.nspacer-small
-				.hide-except-smart
-					.center
+				.hide-except-smart.col-md-12.col-xs-12.col-sm-12
+					.font-e2.font-exception
+						| In this event you are showing up as a:
+					.color-grey2.italic.font-e2.font-exception
+						| "Guest Speaker"
+					.pull-left.font-e2.nspacer-medium.font-exception
+						| Would you like to:
+					.pull-left.iconsbox.spacerbig.big-pad-left
 						a(class="link1" data-toggle="modal" href="#attendModal")
-							button.btn.btn-primary.font-x(style="width:125px; padding:10px; padding-left:25px; padding-right:35px; margin-right:20px;")
+							button.btn.btn-primary.font-x(style=" padding:10px; padding-left:25px; padding-right:35px; margin-right:20px; text-align:center;")
 								| Change My<br/>Category
-							.nspacer-small
-			.col-md-2.col-xs-2.col-sm-2.lower.hide-mini3-except-smart(class=offset)
-				.right.iconsbox.spacerbig
-					a(href="/profile", class="link1")
-						img(src="/images/edit-my-prof.svg", alt="", class="img-responsive inline pad-right-ten res-butt")
-			.col-md-2.col-xs-2.col-sm-2.lower-hide.hide-except-smart(class=offset)
-				.right.iconsbox.spacerbig
-					a(href="/profile", class="link1")
-						img(src="/images/edit-my-prof.svg", alt="", class="img-responsive inline res-butt")
-			.hide-except-smart
-				.center
-					a(href="/profile", class="link1")
-						img(src="/images/edit-my-prof.svg", alt="", class="img-responsive inline res-butt pad-left-five")
+
 	
 	.nspacer.hide-except-smart
 	.col-md-4.col-xs-4.col-sm-4.hide-except-smart
@@ -186,22 +189,7 @@ block content
 	.nspacer-big
 
 	.col-md-12.col-xs-12.col-sm-12.font-s.center.hide-except-smart
-			.pull-left.text-right(style="width:20%;")
-				| Name: <br />
-			.pull-right.pad-left-ten.break.left(style="width:80%;")
-				| <b>#{theUser.getName()}</b> 
-			.clearfix
-			.pull-left.text-right(style="width:20%;")
-				| Position: <br />
-			.pull-right.pad-left-ten.break(style="width:80%;")
-				| <b>#{theUser.position}</b>
-			.clearfix
-			.pull-left.text-right(style="width:20%;")
-				| Company: <br />
-			.pull-right.pad-left-ten.break.left(style="width:80%;")
-				| <b>#{theUser.company}</b> 
-	.clearfix.center.hide-all3
-	.nspacer.hide-all3
+	.hide-all3
 	.col-md-12.col-xs-12.col-sm-12.font-s.hide-except-smart
 			.pull-left.text-right(style="width:20%;")
 				| Website: <br />
@@ -226,8 +214,14 @@ block content
 
 	
 	.clearfix
+	.nspacer
+	.col-md-4.col-xs-4.col-sm-4
+		button.btn.btn-primary2.font2.color-grey2.font-exception(style="margin-left:7px; padding:10px; padding-left:25px; padding-right:25px; text-align:center;")
+					.pull-left
+						| upload Business<br/>card?
+	.clearfix
 	.nspacer-big
-	.col-md-7.col-xs-7.col-sm-7.hide-mini3-except-smart
+	.col-md-7.col-xs-7.col-sm-7.hide-mini3-except-smart(style="margin-left:7px;")
 		.font-e1
 			| Description: 
 		.font-x
