@@ -420,11 +420,11 @@ append content
 								.input-grey-rounded.psev
 									a.link-purple.nowButton(href="#")
 										| NOW
-							.pull-right
+							.pull-right.nspacer-small
 								.pull-left.font-e
 									| Time of event:
 								.pull-left.pad-left-ten
-									input.input-grey-rounded(name="start_date", type="time")
+									input.input-grey-rounded(name="start_date", type="time"  style="max-width:150px;")
 					.col-lg-5.col-md-5.col-xs-5.pad-left-five.pad-right-zero.res-dis-non
 						.container.bg-purple.date-height.datepickerWrapper
 							.center
@@ -437,11 +437,11 @@ append content
 								.input-grey-rounded.psev
 									a.link-purple.nowButton(href="#")
 										| NOW
-							.pull-right
+							.pull-right.nspacer-small
 								.pull-left.font-e
 									| Time of event:
 								.pull-left.pad-left-ten
-									input.input-grey-rounded(name="start_date", type="time")
+									input.input-grey-rounded(name="start_date", type="time"  style="max-width:150px;")
 					//- small calendars
 					.col-lg-12.col-md-12.col-xs-12.pad-left-zero.pad-right-zero.res-dis-non-vis
 						.container.bg-purple.pad-top-zero.pad-right-zero(style="height:32px;")
@@ -517,6 +517,14 @@ append content
 					.col-lg-4.col-md-4.col-xs-4
 						.center.font2.font-exception
 							| Predefined categories
+					.col-lg-4.col-md-4.col-xs-4
+						.center.font2.font-exception
+							| Create your own
+					.col-lg-4.col-md-4.col-xs-4
+						.center.font2.font-exception
+							| Selected categories
+					.clearfix
+					.col-lg-3.col-md-3.col-xs-3
 						.predefinedCategories.font-evente.font-thin2.nspacer.gestlist.font-exception-thin
 							span(val="Guest Speaker") 1. Guest Speaker
 							br
@@ -535,58 +543,60 @@ append content
 							span(val="Mentor") 8. Mentor
 							br
 							span(val="Educator") 9. Educator
-					.col-lg-4.col-md-4.col-xs-4
-						.center.font2.font-exception
-							| Create your own
-						.createCategory.font-evente.font-thin2.nspacer.gestlist(style="padding-left:20px;")
+					.col-lg-5.col-md-5.col-xs-5
+						.createCategory.font-evente.font-thin2.nspacer.gestlist(style="margin-top:20px; padding-left:20px; margin-left:50px;")
 							.col-lg-9.col-md-9.col-xs-9
-								input#add-category-manual-1.input-ashen-rounded.font-exception-thin(add-category-manual, type="text", style="height:35px;background-color:#D5D6D7;")
+								input#add-category-manual-1.input-ashen-rounded2.font-exception-thin(add-category-manual, type="text", style="height:35px;")
 							.col-lg-3.col-md-3.col-xs-3.pad-left-zero
 								a.add-category-manual(href="#add-category-manual-1").addCategory
 									img(src="/images/ashen-arrow.svg" style="")
 							.clearfix
 							.nspacer-small
 							.col-lg-9.col-md-9.col-xs-9
-								input#add-category-manual-2.input-ashen-rounded.font-exception-thin(add-category-manual, type="text", style="height:35px;background-color:#D5D6D7;")
+								input#add-category-manual-2.input-ashen-rounded2.font-exception-thin(add-category-manual, type="text", style="height:35px;")
 							.col-lg-3.col-md-3.col-xs-3.pad-left-zero
 								a.add-category-manual(href="#add-category-manual-2").addCategory
 									img(src="/images/ashen-arrow.svg" style="")
 							.clearfix
 							.nspacer-small
 							.col-lg-9.col-md-9.col-xs-9
-								input#add-category-manual-3.input-ashen-rounded.font-exception-thin(add-category-manual, type="text", style="height:35px;background-color:#D5D6D7;")
+								input#add-category-manual-3.input-ashen-rounded2.font-exception-thin(add-category-manual, type="text", style="height:35px;")
 							.col-lg-3.col-md-3.col-xs-3.pad-left-zero
 								a.add-category-manual(href="#add-category-manual-3").addCategory
 									img(src="/images/ashen-arrow.svg" style="")
 							.clearfix
 							.nspacer-small
 							.col-lg-9.col-md-9.col-xs-9
-								input#add-category-manual-4.input-ashen-rounded.font-exception-thin(add-category-manual, type="text", style="height:35px;background-color:#D5D6D7;")
+								input#add-category-manual-4.input-ashen-rounded2.font-exception-thin(add-category-manual, type="text", style="height:35px;")
 							.col-lg-3.col-md-3.col-xs-3.pad-left-zero
 								a.add-category-manual(href="#add-category-manual-4").addCategory
 									img(src="/images/ashen-arrow.svg" style="")
 							.clearfix
 							.nspacer-small
 							.col-lg-9.col-md-9.col-xs-9
-								input#add-category-manual-5.input-ashen-rounded.font-exception-thin(add-category-manual, type="text", style="height:35px;background-color:#D5D6D7;")
+								input#add-category-manual-5.input-ashen-rounded2.font-exception-thin(add-category-manual, type="text", style="height:35px;")
 							.col-lg-3.col-md-3.col-xs-3.pad-left-zero
 								a.add-category-manual(href="#add-category-manual-5").addCategory
 									img(src="/images/ashen-arrow.svg" style="")
 							.clearfix
 							.nspacer-small
 							.col-lg-9.col-md-9.col-xs-9
-								input.input-ashen-rounded.font-exception-thin(add-category-manual, type="text", style="height:35px;background-color:#D5D6D7;")
+								input.input-ashen-rounded2.font-exception-thin(add-category-manual, type="text", style="height:35px;")
 							.col-lg-3.col-md-3.col-xs-3.pad-left-zero
 								a.add-category-manual(href="#add-category-manual-6").addCategory
 									img(src="/images/ashen-arrow.svg" style="")
 					.col-lg-4.col-md-4.col-xs-4
-						.center.font2.font-exception
-							| Selected categories
-						.selectedCategoriesList.font-evente.font-thin2.nspacer.gestlist(style="padding-left:20px;")
-							p.noneSelected.hide No categories Selected
+						.selectedCategoriesList.font-evente.font-thin2.nspacer.gestlist(style="padding-left:20px; margin-top:20px;")
+							.col-lg-9.col-md-9.col-xs-9
+								input#add-category-manual-1.input-white-rounded.font-exception-thin(add-category-manual, type="text", style="height:35px;")
+							.col-lg-3.col-md-3.col-xs-3.pad-left-zero
+								button.btn.btn-primary.font-exception(style=" padding:7px; padding-left:15px; padding-right:15px; text-align:center;")
+									.pull-left
+										| delete
+							.clearfix
 					.clearfix
 
-					.nspacer
+					.nspacer-bigger
 					.font2.pull-left.font-exception
 						| Allow attendees to create their own categories?
 					.pull-left
@@ -683,7 +693,7 @@ append content
 					
 					.center
 						button.btn.btn-info.font-bigs2.font-exception.eventSubmitBtn(type='submit', href="desktop", style="line-height:45px; padding:30px; padding-left:55px; padding-right:55px;")
-							| Publish<br /><b>my</b> event
+							| <b>Publish<br />my</b> event
 				//- end desktop------------------------------------------
 
 		.clearfix
