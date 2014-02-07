@@ -60,6 +60,7 @@ block content
 						span.glyphicon.glyphicon-ok(ng-show="user.admin == true")
 					td
 						.btn-group
+							a.btn.btn-success.btn-xs(href="/auth/login/{{user._id}}") Access
 							a.btn.btn-info.btn-xs(ng-click="editUser(user)")
 								i.fa.fa-edit.fa-fw
 							a.btn.btn-danger.btn-xs(ng-click="deopUser(user)", ng-show="user.admin == true")

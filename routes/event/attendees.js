@@ -645,6 +645,12 @@ function emailConfirmation (req, res, transaction) {
 <br/>\
 Please do not reply to this email, because we are super popular and probably won't have time to read it..."
 	}
+	if (!config.transport_enabled) {
+		console.log("Transport not enabled!")
+		console.log(options);
+		return;
+	}
+	
 	transport.sendMail(options, function(err, response) {
 		if (err) throw err;
 	

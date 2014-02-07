@@ -49,6 +49,8 @@ angular.module('eventMost')
 	}
 	
 	$scope.calculateTime = function () {
+		if ($scope.message == null || $scope.message.messages == null) return;
+		
 		$scope.message.messages = $filter('orderBy')($scope.message.messages, 'timeSent')
 		for (var i = 0; i < $scope.message.messages.length; i++) {
 			$scope.message.messages[i].time = moment($scope.message.messages[i].timeSent).fromNow()

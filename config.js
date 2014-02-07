@@ -51,6 +51,7 @@ if (credentials.replSet) {
 exports.stripe = stripe(credentials.stripe.secret);
 
 // Create SMTP transport method
+exports.transport_enabled = credentials.smtp.user.length > 0;
 exports.transport = mailer.createTransport("Mandrill", {
 	auth: {
 		user: credentials.smtp.user,
@@ -64,7 +65,7 @@ if (!(mode == "test")) {
 	mode = "";
 }
 
-exports.version = '0.2.5';
+exports.version = '0.2.6';
 exports.host = credentials.host ? credentials.host : "eventmost.com";
 exports.mode = mode;
 exports.sessionKey = 'em_sess';

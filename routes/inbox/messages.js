@@ -106,7 +106,7 @@ function postMessage (req, res) {
 		}
 		
 		if (!isUser) {
-			//req.session.flash.push("Unauthorized")//- TODO Wrong flash
+			req.session.flash.push("Unauthorized");
 			res.redirect('/')
 			return;
 		}

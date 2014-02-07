@@ -41,6 +41,12 @@ exports.doContact = function (req, res) {
 			console.log("Getting transport")
 			transport = require('../app').getTransport()
 		}
+		if (!config.transport_enabled) {
+			console.log("Transport not enabled!")
+			console.log(options);
+			return;
+		}
+		
 		transport.sendMail(options, function(err, response) {
 			if (err) throw err;
 			
