@@ -62,6 +62,7 @@ angular.module('eventMost')
 			
 			if (status == 200) {
 				$scope.progress = "Inbox Sent!"
+				$scope.email = "";
 			} else {
 				$scope.progress = "Inbox failed to send because: "+data.message
 			}

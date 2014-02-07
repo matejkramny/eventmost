@@ -81,6 +81,10 @@ var scheme = schema({
 			ref: 'Avatar'
 		}
 	},
+	source: {
+		facebook: { type: Boolean, default: false },
+		id: Number
+	}
 })
 
 scheme.methods.arrangeFunctionAlphabetical = function (a, b) {
@@ -348,7 +352,11 @@ scheme.methods.edit = function (body, user, files, cb) {
 		this.pricedTickets = body.pricedTickets
 	}
 	if (body.privateEvent != null) {
-		this.privateEvent = !!body.privateEvent;
+		this.privateEvent = false;
+		
+		if (body.privateEvent == true) {
+			this.privateEvent = true;
+		}
 	}
 	
 	// restriction settings

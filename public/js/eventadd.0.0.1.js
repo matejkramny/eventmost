@@ -327,7 +327,7 @@ $(document).ready(function() {
 		return false;
 	})
 	
-	var categories = ["Guest Speaker"];
+	var categories = [];
 	var $ticketsWrapper = $(".ticketsWrapper")
 	var $tickets = $("#tickets");
 	var $ticketsLock = $(".tickets-lock");
@@ -703,6 +703,8 @@ $(document).ready(function() {
 		}
 		
 		$('.eventSubmitBtn').html('Save Event')
+	} else {
+		addCategory("Guest Speaker")
 	}
 });
 
@@ -714,7 +716,16 @@ eventMost.controller('eventAdd', function($scope) {
 			price: 0.0,
 			quantity: 1,
 			name: "",
-			whopays: 'me'
+			description: "",
+			hasSaleDates: false,
+			start_date: "",
+			start_time: "00:00",
+			end_date: "",
+			end_time: "00:00",
+			showRemainingTickets: true,
+			min_per_order: 0,
+			max_per_order: '',
+			discountCodes: []
 		})
 	}
 	
