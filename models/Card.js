@@ -12,7 +12,8 @@ var scheme = schema({
 		ref: 'User'
 	},
 	location: String,
-	created: { type: Date, default: Date.now() }
+	created: { type: Date, default: Date.now() },
+	primary: { type: Boolean, default: false }
 });
 
 scheme.methods.edit = function (html, cb) {

@@ -23,25 +23,31 @@ exports.display = function (req, res) {
 			models.Event.find(query).count(function(err, total) {
 				if (err) throw err;
 			
-				res.format({
-					html: function() {
-						res.render('home', {
-							title: "Home",
-							myevents: evs || [],
-							myeventsTotal: total,
-							myeventsSkip: skip,
-							moment: moment
-						});
-					},
-					json: function() {
-						res.send({
-							myeventsTotal: total,
-							myevents: evs || [],
-							title: "Home",
-							myeventsSkip: skip
-						})
-					}
-				});
+				models.Card.findOne({ user: req.user._id, primary: true }, function(err, primaryCard) {
+					if (err) throw err;
+					
+					res.locals.primaryCard = primaryCard;
+					
+					res.format({
+						html: function() {
+							res.render('home', {
+								title: "Home",
+								myevents: evs || [],
+								myeventsTotal: total,
+								myeventsSkip: skip,
+								moment: moment
+							});
+						},
+						json: function() {
+							res.send({
+								myeventsTotal: total,
+								myevents: evs || [],
+								title: "Home",
+								myeventsSkip: skip
+							})
+						}
+					});
+				})
 			})
 		});
 		

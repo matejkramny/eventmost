@@ -10,8 +10,7 @@ block content
 		+navbar
 		.clearfix.hide-all2
 		br
-
-
+	
 	.nspacer
 	.row
 		.col-md-12.col-xs-12.col-sm-12
@@ -23,8 +22,7 @@ block content
 					if (theUser.company)
 						| , #{theUser.company}
 		.clearfix
-
-
+	
 	.nspacer
 	.col-md-2.col-xs-2.col-sm-2.hide-mini3-except-smart
 		.pull-right
@@ -56,12 +54,13 @@ block content
 			b #{theUser.education}
 		.clearfix
 		.nspacer
-			a(class="link1" href="/profile")
-				button.btn.btn-primary.font-x.sp-margin(style=" padding:10px; padding-left:25px; padding-right:25px; text-align:center;")
-					.pull-left
-						| Edit<br/>My Profile
-					.pull-right
-						img(src="/images/edit-my-prof2.svg", alt="", class="inline pad-left-ten res-butt edito" style="max-width:50px;")
+			if (theUser._id.equals(user._id))
+				a(class="link1" href="/profile")
+					button.btn.btn-primary.font-x.sp-margin(style=" padding:10px; padding-left:25px; padding-right:25px; text-align:center;")
+						.pull-left
+							| Edit<br/>My Profile
+						.pull-right
+							img(src="/images/edit-my-prof2.svg", alt="", class="inline pad-left-ten res-butt edito" style="max-width:50px;")
 	if (!theUser._id.equals(user._id))
 		.col-md-6.col-xs-6.col-sm-6.lower.hide-mini3-except-smart
 			.right.iconsbox.spacerbig
@@ -215,10 +214,18 @@ block content
 	
 	.clearfix
 	.nspacer
-	.col-md-4.col-xs-4.col-sm-4
-		button.btn.btn-primary2.font2.color-grey2.font-exception(style="margin-left:7px; padding:10px; padding-left:25px; padding-right:25px; text-align:center;")
-					.pull-left
-						| upload Business<br/>card?
+	if (primaryCard != null)
+		.col-md-4.col-xs-4.col-sm-4
+			img.img-responsive(src="/businesscards/"+primaryCard._id+".png")
+	if (theUser._id.equals(user._id))
+		.col-md-4.col-xs-4.col-sm-4
+			a.btn.btn-primary2.font2.color-grey2.font-exception(href="/cards/choosePrimary" style="margin-left:7px; padding:10px; padding-left:25px; padding-right:25px; text-align:center;")
+				.pull-left
+					if (primaryCard != null)
+						| change your 
+					else
+						| choose a 
+					| primary<br/>Business card
 	.clearfix
 	.nspacer-big
 	.col-md-7.col-xs-7.col-sm-7.hide-mini3-except-smart(style="margin-left:7px;")
