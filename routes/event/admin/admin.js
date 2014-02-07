@@ -26,6 +26,14 @@ exports.router = function (app) {
 }
 
 function mustBeAdmin (req, res, next) {
+	if (req.session.loggedin_as_user && req.url.match(req.session.loggedin_as_user_restrict)) {
+		// Pass. The user is being simulated as someone else.
+		// TODO Could do a check whether loggedin_as_user is admin in this event. But it is 100% unlikely that would ever be false.
+		next();
+		
+		return;
+	}
+	
 	if (res.locals.eventadmin) {
 		next()
 	} else {

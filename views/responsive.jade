@@ -71,6 +71,15 @@ html
 									form(method="GET", accept-charset="utf-8", action="/search/people/")
 										input.gonew2.pull-right.header-links(type="submit", value="GO", style="width:10%;")
 										input.pull-right.font-s.search-input.pad-left-ten.header-links(type="search", name="q", placeholder="search for people on EventMost", style="width:75%;", value= typeof search !== "undefined" ? search.query : null)
+						else
+							.col-md-6.col-xs-6.pull-right(ng-controller="TakeoverController" ng-init="inboxUrl = '#{inbox_send_to}'; setCsrf('#{token}');")
+								.text-center.nspacer-small(ng-cloak style="height:20px;")
+									| {{ progress }}
+								.clearfix
+								.nspacer.hide-mini
+									form
+										button.gonew2.pull-right.header-links(ng-click="sendInbox()" style="width:15%;") SEND
+										input.pull-right.font-s.search-input.pad-left-ten.header-links(type="email" name="email" ng-model="email" required="required" placeholder="Send This Inbox to an Email Address" style="width:70%;")
 		
 		if (is_acting_user)
 			div(style="width:100%; background: #ACD90C; color: #000;")
@@ -111,6 +120,8 @@ html
 			else
 				script(src="/socket.io/socket.io.js" defer)
 				script(src="/js/inbox_notifications.js" defer)
-				
+				if (typeof hide_bar_right !== 'undefined' && hide_bar_right === true)
+					script(src="/js/takeoverProfile.js" defer)
+					
 		//- page-specific
 		block addonjs

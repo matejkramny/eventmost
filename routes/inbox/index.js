@@ -25,6 +25,7 @@ exports.router = function (app) {
 exports.socket = function (socket) {
 }
 
+exports.populateInbox = populateInbox;
 function populateInbox (req, res, next) {
 	var u = req.user;
 	

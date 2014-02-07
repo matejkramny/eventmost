@@ -80,6 +80,23 @@ function showMessage (req, res) {
 function postMessage (req, res) {
 	var id = req.params.id;
 	var text = req.body.message;
+	
+	// check if can make messages
+	if (req.session.loggedin_as_user_locals != null && req.session.loggedin_as_user_locals.inbox_send_disabled === true) {
+		res.format({
+			html: function() {
+				res.redirect('/inbox');
+			},
+			json: function() {
+				res.send({
+					status: 404,
+					message: "Disabled"
+				})
+			}
+		})
+		return;
+	}
+	
 	if (text.length == 0) {
 		res.format({
 			html: function() {
@@ -190,7 +207,25 @@ function doNewMessage (req, res) {
 	if (req.query.to != null) {
 		try {
 			to = mongoose.Types.ObjectId(req.query.to);
-		} catch (e) {}
+		} catch (e) {
+			to = null;
+		}
+	}
+	
+	// check if can make messages
+	if (req.session.loggedin_as_user_locals != null && req.session.loggedin_as_user_locals.inbox_send_disabled === true) {
+		res.format({
+			html: function() {
+				res.redirect('/inbox');
+			},
+			json: function() {
+				res.send({
+					status: 404,
+					message: "Disabled"
+				})
+			}
+		})
+		return;
 	}
 	
 	models.User.findOne({ _id: to }, function(err, user) {
