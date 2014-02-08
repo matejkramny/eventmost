@@ -20,7 +20,7 @@ block content
 	for attendee in ev.attendees
 		if (attendee.user.isFeedbackProfile && attendee.user.feedbackProfileEvent.equals(ev._id))
 			- fps++;
-			+attendee(attendee, false)
+			+attendee(attendee, true)
 			.pull-right.text-left.pad-left-ten
 				a(href="/event/#{ev._id}/admin/feedback/#{attendee._id}/accessInbox")
 					.right.iconsbox.spacerbig

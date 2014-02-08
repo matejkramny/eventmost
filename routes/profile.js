@@ -40,7 +40,7 @@ function removeProfile (req, res) {
 exports.profile = profile = function (req, res) {
 	res.format({
 		html: function() {
-			res.render('profile/view', { title: "Your profile" })
+			res.render('profile/view', { title: "My Profile" })
 		},
 		json: function() {
 			res.json({
@@ -312,13 +312,20 @@ exports.doEditProfile = doEditProfile = function (req, res) {
 			}
 		}
 		
-		fs.readFile(req.files.avatar.path, function(err, avatar) {
-			fs.writeFile(config.path + "/public"+u.avatar, avatar, function(err) {
-				if (err) throw err;
-				
-				createThumbnails()
-			});
-		});
+		fs.rename(req.files.avatar.path, config.path + "/public"+u.avatar, function(err) {
+			if (err) throw err;
+			
+			if (config.knox) {
+				config.knox.putFile(config.path + "/public"+u.avatar, "/public"+u.avatar, function(err, res) {
+					if (err) throw err;
+					
+					console.log("Profile File Uploaded");
+					res.resume();
+				})
+			}
+			
+			createThumbnails()
+		})
 	}
 	
 	if (!blocking) {

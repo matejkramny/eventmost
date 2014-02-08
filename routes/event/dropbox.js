@@ -3,7 +3,9 @@ var models = require('../../models'),
 	attending = require('./event').attending,
 	config = require('../../config'),
 	gm = require('gm'),
-	moment = require('moment')
+	moment = require('moment'),
+	mongoose = require('mongoose'),
+	async = require('async')
 
 exports.router = function (app) {
 	app.get('/event/:id/dropbox', view)
@@ -32,7 +34,7 @@ function view (req, res) {
 	res.format({
 		html: function() {
 			res.locals.moment = moment;
-			res.render('event/dropbox', { title: "Dropbox" })
+			res.render('event/dropbox', { title: res.locals.ev.name+" Dropbox" })
 		}
 	})
 }
@@ -68,14 +70,33 @@ function doRemove (req, res, next) {
 	
 	models.Event.findById(ev._id, function(err, ev) {
 		if (isPlanner || (ev.files[found].user && ev.files[found].user._id && ev.files[found].user._id.equals(req.user._id))) {
-			// Remove this file
-			ev.files.splice(found, 1);
-		
+			console.log(ev);
+			console.log(found);
+			console.log(ev.files[found].file);
 			try {
 				fs.unlink(config.path+"/public"+ev.files[found].file)
+				
+				if (config.knox) {
+					config.knox.deleteFile("/public"+ev.files[found].file, function(err, res) {
+						if (err) throw err;
+						
+						console.log("Unlinked Dropbox file from S3")
+						res.resume();
+					});
+					config.knox.deleteFile("/public"+ev.files[found].fileThumb, function(err, res) {
+						if (err) throw err;
+						
+						console.log("Unlinked Dropbox Thumbnail file from S3")
+						res.resume();
+					});
+				}
 			} catch (e) {
-				console.log("Failed to delete dropbox file..");
+				console.log("Failed to delete dropbox file.."+e.message);
+				console.log(e.stack);
 			}
+			
+			// Remove this file
+			ev.files.splice(found, 1);
 		} else {
 			req.session.flash.push("Unauthorized")
 			res.redirect('/event/'+ev._id);
@@ -246,6 +267,8 @@ function doUpload (req, res) {
 		return;
 	}
 	
+	ext = ext.toLowerCase();
+	
 	var timestamp = Date.now();
 	var file = {
 		file: "/dropbox/"+ev._id+""+timestamp+"."+ext,
@@ -256,42 +279,71 @@ function doUpload (req, res) {
 		name: req.files.upload.name
 	}
 	
-	fs.readFile(req.files.upload.path, function(err, upload) {
-		fs.writeFile(config.path+"/public"+file.file, upload, function(err) {
+	fs.rename(req.files.upload.path, config.path+"/public"+file.file, function(err) {
+		if (err) throw err;
+		
+		if (config.knox) {
+			config.knox.putFile(config.path+"/public"+file.file, "/public"+file.file, function(err, res) {
+				if (err) throw err;
+				
+				console.log("Dropbox File Uploaded");
+				res.resume();
+			});
+		}
+		
+		fs.stat(config.path+"/public"+file.file, function(err, stat) {
 			if (err) throw err;
 			
 			// Calculate the size of the file
-			file.size = upload.length / 1024
+			file.size = stat.size / 1024
 			if (file.size > 1024) {
 				file.size /= 1024;
 				file.size = Math.floor(file.size) + "mb"
 			} else {
 				file.size = Math.floor(file.size) + "kb"
 			}
-			
+		
 			//Create thumbnail
 			if (ext == 'jpg' || ext == 'jpeg' || ext == 'png' || ext == 'gif') {
 				gm(config.path+"/public"+file.file).gravity('Center').thumb(205, 154, config.path+"/public"+file.fileThumb, 100, function(err) {
 					if (err) throw err;
+					
+					if (config.knox) {
+						config.knox.putFile(config.path+"/public"+file.fileThumb, "/public"+file.fileThumb, function(err, res) {
+							if (err) throw err;
+							
+							console.log("Dropbox File Thumbnail Uploaded");
+							res.resume();
+						});
+					}
 				})
 			} else if (ext == 'pdf') {
 				gm(config.path+"/public"+file.file+"[0]").adjoin().gravity('Center').thumb(205, 154, config.path+"/public"+file.fileThumb, 100, function(err) {
 					if (err) throw err;
+					
+					if (config.knox) {
+						config.knox.putFile(config.path+"/public"+file.fileThumb, "/public"+file.fileThumb, function(err, res) {
+							if (err) throw err;
+							
+							console.log("Dropbox File Thumbnail Uploaded");
+							res.resume();
+						});
+					}
 				})
 			}
-			
+		
 			if (ev.files == null) {
 				ev.files = []
 			}
-			
+		
 			models.Event.findById(ev._id, function(err, ev) {
 				ev.files.splice(0,0, file);
-			
+		
 				ev.save(function(err) {
 					if (err) throw err;
 				});
 			});
-			
+		
 			res.format({
 				html: function() {
 					req.session.flash.push("File Uploaded")
@@ -305,6 +357,6 @@ function doUpload (req, res) {
 					})
 				}
 			})
-		});
-	});
+		})
+	})
 }

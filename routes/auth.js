@@ -66,7 +66,7 @@ exports.router = function (app) {
 }
 
 exports.display = function(req, res) {
-	res.render('login', { title: "Login" });
+	res.render('login', { title: "EventMost" });
 }
 
 function doPasswordLogin (req, res) {

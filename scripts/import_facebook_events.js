@@ -86,10 +86,10 @@ function farm(ev) {
 		if (res.end_time) {
 			e.end = new Date(res.end_time)
 		} else if (res.start_time) {
-			e.end = new Date(e.start.getTime() + 60 * 60 * 24);
+			e.end = new Date(e.start.getTime() + 60 * 60 * 24 * 1000);
 			//new Date(e.start.getFullYear(), e.start.getMonth(), e.start.getDate(), e.start.getHours(), e.start.getMinutes(), e.start.getSeconds());
 		} else {
-			e.end = new Date(Date.now()+60 * 60 * 24);
+			e.end = new Date(Date.now() + 60 * 60 * 24 * 1000);
 		}
 		
 		if (res.location) {

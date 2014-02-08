@@ -31,7 +31,7 @@ exports.display = function (req, res) {
 					res.format({
 						html: function() {
 							res.render('home', {
-								title: "Home",
+								title: "EventMost",
 								myevents: evs || [],
 								myeventsTotal: total,
 								myeventsSkip: skip,
@@ -42,7 +42,7 @@ exports.display = function (req, res) {
 							res.send({
 								myeventsTotal: total,
 								myevents: evs || [],
-								title: "Home",
+								title: "EventMost",
 								myeventsSkip: skip
 							})
 						}

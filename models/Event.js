@@ -223,8 +223,6 @@ scheme.methods.getComments = function (cb) {
 }
 
 scheme.methods.edit = function (body, user, files, cb) {
-	console.log(body);
-	
 	var self = this;
 	
 	if (this.attendees == null || this.attendees.length == 0) {
@@ -395,8 +393,6 @@ scheme.methods.edit = function (body, user, files, cb) {
 		}
 	}
 	
-	console.log(body.tickets)
-	
 	// do tickets - remove old tickets & create new objectids
 	if (body.tickets != null) {
 		var existing = [];
@@ -430,8 +426,6 @@ scheme.methods.edit = function (body, user, files, cb) {
 		}
 		
 		this.markModified('tickets')
-		
-		console.log(this.tickets);
 	}
 	
 	if (body.lat != null && body.lng != null) {

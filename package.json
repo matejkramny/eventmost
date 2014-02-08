@@ -40,7 +40,8 @@
 		"gm": "1.14.2",
 		"request": "latest",
 		"colors": "latest",
-		"stripe": "2.3.4"
+		"stripe": "2.3.4",
+		"knox": "latest"
 	},
 	"devDependencies": {
 		"should": "latest",
