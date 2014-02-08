@@ -1,114 +1,60 @@
 extends responsive
 
-block addonjs
-	script(src="/js/vendor/jquery.easing.1.3.js" defer)
-	script(src="/js/vendor/jquery.contentcarousel.js" defer)
-	script(src="/js/car.js" defer)
-	
-	script(src="/js/angular-nearEvents.js" defer)
+include event/inc/item
 
 append content
-	.nspacer-big.center
-		.font-big
-			img.starr.ex-st(src="/images/big-purple-star.svg" style="margin-top:-10px;")
-			|  Why use us 
-			img.starr.ex-st2(src="/images/big-purple-star.svg" style="margin-top:-10px;")
-		h4 Not only can you register your event here, you can also:
-		.clearfix
-
-	.nspacer
-		.row
-			.hide-all.col-xs-12
-				.bg-yellow.center.psev(style="width:100%; height:45px; font-size:14px; padding-top:12px;")
-					a(href="" class="link-purple")
-						| Create event
-	
-	#ca-container.ca-container.hide2
-			.ca-wrapper
-				.ca-item.ca-item-1
-					.ca-item-main
-						a.pink-border.pink1
-						.slider-text9
-							| Create a social network like Facebook or Linkedin surrounding your event.
-						a.ca-more.link-purple.more1(href="#")
-							| more...
-					.ca-content-wrapper.wrapheight1
-						.ca-content
-							| Just by agreeing to be a part of your event, attendees place their EventMost profile in the virtual event where they can send other attendees private messages, saved business cards, or comment out in the open (which the planner can control).
-							| Speaking of control, as a planner you can control everything from the main event page: delete comments, remove attendees, add admin, etc.
-							a.ca-close(href="#")
-								| close
-				.ca-item.ca-item-2
-					.ca-item-main
-						a.pink-border2.pink2
-						.slider-text9
-							| Create a feedback platform for your guests speakers teams,vendors or other.
-						a.ca-more.link-purple.more2(href="#")
-							| more...
-					.ca-content-wrapper.wrapheight2
-						.ca-content
-							| Prominent guest speakers, though nice people they are, often times don’t want to be inundated with numerous emails post-event. But check this out: In a survey of 85 VIPs (pardon the pretentiousness), 79 responded they would definitely be interested in receiving an aggregate of feedback/contact info from everyone if it was all in one shot. (The other 6 never answered us :/).
-							| You can set up non-active profiles in a manner we’ve made very simple and efficient, that serve as inboxes which can later be forwarded on. This is also perfect for teams! Say you have a business pitch competition, or soap-box presentations.
-							| This is a great way to quickly set up profiles (can be no more than their team name if you’d like or as full as a normal profile w/pic and website, etc.) It receives the feedback which you have the power to forward on, or not…up to you. Also great for events that have numerous company exhibitions.
-							a.ca-close(href="#")
-								| close
-				.ca-item.ca-item-3
-					.ca-item-main
-						a.pink-border3.pink3
-						.slider-text9
-							| Store files here for free that your attendees might use: power point presentations, schedules, pictures, etc.
-						a.ca-more.link-purple.more3(href="#")
-							| more...
-					.ca-content-wrapper.wrapheight3
-						.ca-content
-							| If you haven’t heard attendees ask “Can I get this presentation?” you haven’t been to a lot of events. This happens all the time! Even when the person presenting says “yeah, I’ll make it available”, they never do!...or it’s a pain to find! Why not put it in the event dropbox for easy access, along with your event schedule, event brochure, pics, etc. It’s not cool having everyone's event materials all over the place…our dropbox can be a one-stop-shop for your attendees.
-							a.ca-close(href="#")
-								| close
-				.ca-item.ca-item-4
-					.ca-item-main
-						a.pink-border4.pink4
-						.slider-text9
-							| We will send you and after-event analytics report full of tons of interesting stats (also free... well everything is free).
-						a.ca-more.link-purple.more4(href="#")
-							| more...
-					.ca-content-wrapper.wrapheight4
-						.ca-content
-							| Other sites charge AT LEAST $1.00 per ticket and 6% in fees. We charge 0 per ticket and only 3.5% in fees (which is the credit card company, not us). 
-							a.ca-close(href="#")
-								| close
-				.ca-item.ca-item-5
-					.ca-item-main
-						a.pink-border5.pink5
-						.slider-text9
-							| You can upload logos for your sponsors too (also free), that will be seen during the entire event and after this significantly increasing sponsor revenue!.
-						a.ca-more.link-purple.more5(href="#")
-							| more...
-					.ca-content-wrapper.wrapheight5
-						.ca-content
-							| Want a summary of everyone's email, how many people attended, what type attended, how many emails they sent to each other, how long they were on the social networking platform, or how many times they clicked on a sponsor’s logo? You can access the event summary report at any time. 
-							a.ca-close(href="#")
-								| close
-				.ca-item.ca-item-6
-					.ca-item-main
-						a.pink-border6.pink6
-						.slider-text9
-							| No ticketing Fee! Eventbrite charges £.65 per ticket + 2.5% + 3.5% transaction fee. We only charge the 3.5% transaction fee so we don’t lose money!
-						a.ca-more.link-purple.more6(href="#")
-							| more...
-					.ca-content-wrapper.wrapheight6
-						.ca-content
-							| Other sites charge AT LEAST $1.00 per ticket and 6% in fees. We charge 0 per ticket and only 3.5% in fees (which is the credit card company, not us). 
-							a.ca-close(href="#")
-								| close
-
-		.clearfix
-		.center.nspacer-big.hide2
-				button.btn.btn-warning.font.big-pad.big-pad-left.big-pad-right.font-exception(type='button' data-toggle="modal" href="#loginModal" style="font-weight:500;")
-					| Create event
+	br
 	.row
-		.col-md-12.col-xs-12
-			.nspacer-big
-				h2 Events near you
-		.clearfix
-		#nearbyEventsPlaceholder
-			p.text-center.lead.font-exception
+		.col-sm-5.col-md-5.col-lg-5.col-sm-offset-4.col-md-offset-4.col-lg-offset-4
+			form(method="GET", accept-charset="utf-8", action="/search/")
+				input.gonew2.pull-right.header-links(type="submit", value="GO", style="width:10%;")
+				input.pull-right.font-s.search-input.pad-left-ten.header-links(type="search", name="q", placeholder="Search for Events or People on EventMost", style="width:75%;", value= typeof search !== "undefined" ? search.query : null)
+		.col-sm-3.col-md-3.col-lg-3
+			button.pull-right.btn.btn-default Create an Event
+	.nspacer
+	.row
+		.col-md-3.col-sm-3.col-lg-3
+			p.lead Search Options
+			form(action="/search/" method="GET")
+				input.form-control.font-s.search-input.header-links(type="search", name="q", placeholder="Search Key words" value= typeof search !== "undefined" ? search.query : null)
+				.clearfix
+				.radio
+					label
+						input(type="radio" name="type" value="events" checked = search.type == 'events' ? 'checked' : null)
+						|  Events
+				.radio
+					label
+						input(type="radio" name="type" value="people" checked = search.type == 'people' ? 'checked' : null)
+						|  People
+				br
+				.center
+					button.btn.btn-default Search!
+				.clearfix
+		.col-md-9.col-sm-9.col-lg-9
+			p.lead #{search.results.length} Search Results
+			if search.results.length == 0
+				p.lead There are no #{search.type} for your search criteria
+			if (search.type == 'people')
+				for p in search.results
+					.row
+						a.col-md-2.col-sm-2.col-lg-2(href="/user/"+p._id)
+							img.circularespond(src= p.avatar.length > 0 ? p.avatar+"-116x116.png" : "/images/default_speaker.svg")
+						.col-md-10.col-sm-10.col-lg-10
+							.row
+								h4.col-md-12.col-sm-12.col-lg-12
+									a(href="/user/"+p._id): strong= p.getName()
+							.row
+								strong.col-md-12.col-sm-12.col-lg-12
+									if(p.position)
+										= p.position
+										| , 
+									if(p.company)
+										= p.company
+										| , 
+									if(p.location)
+										= p.location
+					br
+					.line-purple
+			else
+				for e in search.results
+					mixin eventItem(e)

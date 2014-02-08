@@ -10,6 +10,7 @@ var mongoose = require('mongoose')
 	, transport = config.transport
 	, moment = require('moment')
 	, check = require('validator').check
+	, search = require('./search')
 
 passport.serializeUser(function(user, done) {
 	done(null, user._id);
@@ -66,7 +67,7 @@ exports.router = function (app) {
 }
 
 exports.display = function(req, res) {
-	res.render('login', { title: "EventMost" });
+	search.search(req, res)
 }
 
 function doPasswordLogin (req, res) {

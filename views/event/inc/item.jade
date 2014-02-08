@@ -3,11 +3,6 @@ mixin eventItem(event)
 		.pull-left.event(style='width:101.4%;')
 			a.slid-box(href="/event/"+event._id)
 				article.c-two(style="background: url(#{event.avatar.url}) top left; background-size: 100% 100%; ")
-					.slid-box-background
-						h4
-							.eye.hide2
-							br
-							| VIEW
 				.col-lg-4.col-md-4.col-sm-4.col-xs-4.psev.pad-left-ten.rbox.eh.exwidth66.no-pads1(style="max-height:144px;")
 					.pad-left-ten
 						h4= event.name

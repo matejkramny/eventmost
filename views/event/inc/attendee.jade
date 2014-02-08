@@ -13,7 +13,7 @@ mixin attendee(attendee, feedbackProfile)
 				a.bold.break.color-green.font-change.font-attendee.font-exception(href="/event/"+ev._id+"/attendee/"+attendee._id)
 					| #{ attendee.user.getName() }
 				if (eventadmin && attendee.admin == false)
-					a.pull-right.bold.break.color-green.font-change.font-attendee.font-exception(href="/event/"+ev._id+"/attendee/"+attendee._id+"/remove" style="color:#000;" title="Remove Attendee from Event"): span.glyphicon.glyphicon-trash
+					a.pull-right.bold.break.color-green.font-change.font-attendee.font-exception(href="/event/"+ev._id+"/attendee/"+attendee._id+"/remove" style="color:#542437;" title="Remove Attendee from Event"): span.glyphicon.glyphicon-trash
 				.bold.break.font-change.font-attendee.font-exception
 					if(attendee.user.position.length > 0 && attendee.user.company.length > 0)
 						| - #{attendee.user.position}, #{attendee.user.company}
