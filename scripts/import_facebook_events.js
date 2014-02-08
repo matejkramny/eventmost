@@ -4,7 +4,7 @@ var models = require('../models'),
 	async = require('async'),
 	graph = require('fbgraph')
 
-graph.setAccessToken('CAACEdEose0cBAHB7a78rYPnXcEsdwpEicnZARFg0XJfXTSrBJyKeW9DlI2e5We2F0GYcGiwkuR1ooaE2pU3PrkbXsOA6xT9XcktpjZB6ClFZBa3I1FH7hDy2gYd3n6Cqfk8aZC8AsROtwvbk32aZBZBjYAfyyYDYl9zPlZCEZBwPlLxTBkOvYgNur0VZBy3dBkS4ZD');
+graph.setAccessToken('CAACEdEose0cBAJ4HhSfUJo2IuoQvQ4ZAsFttxNiMLZAEuLyEZBjhyFi3ouDLDFRRZARa2V6QZBJP8LT2La2cCeqjxDOQtuBEVLLUl2BwIJsJ62CsMNtdjs1Apx7Io6l51W1MMEfSEqUxeKt389qsDLsWxZC9PXpMw2DMA2PPHELZCL5AbwQXFmOrNEdhwITU98ZD');
 
 graph.search({
 	type: 'event',
