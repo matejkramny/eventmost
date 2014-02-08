@@ -3,7 +3,7 @@ mixin attendee(attendee, feedbackProfile)
 		- feedbackProfile = false;
 	
 	.col-sm-4.col-xs-4.col-md-4.nspacer.attendee-hover
-		div(class= attendee.admin ? "grey-rounded-box" : null)
+		div(class= attendee.admin ? "grey-rounded-box" : null data-toggle= feedbackProfile ? "tooltip" : null data-placement="top" title= feedbackProfile ? "This is a Feedback Profile: All comments, questions, and contact info is collected in this profile and automatically forwarded on to this person or group." : null)
 			.pull-left.circle-avatar-new(style= feedbackProfile == false ? null : "border-radius:0;-webkit-border-radius:0;-moz-border-radius:0;")
 				img(class="image-circle-avatar-new", src= attendee.user.avatar.length == 0 ? "/images/default_speaker-purple.svg" : attendee.user.avatar+"-116x116.png")
 			.pull-left.center.font-exception-thin.width-attendees.pad-left-ten
@@ -13,7 +13,7 @@ mixin attendee(attendee, feedbackProfile)
 				a.bold.break.color-green.font-change.font-attendee.font-exception(href="/event/"+ev._id+"/attendee/"+attendee._id)
 					| #{ attendee.user.getName() }
 				if (eventadmin && attendee.admin == false)
-					a.pull-right.bold.break.color-green.font-change.font-attendee.font-exception(href="/event/"+ev._id+"/attendee/"+attendee._id+"/remove" style="color:#000;" title="Remove Attendee from Event"): i.fa.fa-fw.fa-trash-o
+					a.pull-right.bold.break.color-green.font-change.font-attendee.font-exception(href="/event/"+ev._id+"/attendee/"+attendee._id+"/remove" style="color:#000;" title="Remove Attendee from Event"): span.glyphicon.glyphicon-trash
 				.bold.break.font-change.font-attendee.font-exception
 					if(attendee.user.position.length > 0 && attendee.user.company.length > 0)
 						| - #{attendee.user.position}, #{attendee.user.company}
