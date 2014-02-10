@@ -58,7 +58,7 @@ async.eachSeries(
 }, function(err) {
 	if (err) throw err;
 	
-	toUpload('/data/cardhtml/', /^empty/, function(err) {
+	toUpload('/data/cardhtml', /^((?!empty).)*$/, function(err) {
 		if (err) throw err;
 		
 		console.log("Finished")
