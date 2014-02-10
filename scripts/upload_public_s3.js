@@ -32,8 +32,6 @@ function toUpload (dir, match, callback) {
 		}, function(files) {
 			
 			async.each(files, function(file, cb) {
-				return cb(null);
-				
 				config.knox.putFile(config.path+dir+'/'+file, dir+'/'+file, function(err, res) {
 					if (err) return cb(err);
 					
