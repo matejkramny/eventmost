@@ -587,12 +587,6 @@ append content
 									img(src="/images/ashen-arrow.svg" style="")
 					.col-lg-4.col-md-4.col-xs-4
 						.selectedCategoriesList.font-evente.font-thin2.nspacer.gestlist(style="padding-left:20px; margin-top:20px;")
-							.col-lg-9.col-md-9.col-xs-9
-								input#add-category-manual-1.input-white-rounded.font-exception-thin(add-category-manual, type="text", style="height:35px;")
-							.col-lg-3.col-md-3.col-xs-3.pad-left-zero
-								button.btn.btn-primary.font-exception(style=" padding:7px; padding-left:15px; padding-right:15px; text-align:center;")
-									.pull-left
-										| delete
 							.clearfix
 					.clearfix
 
@@ -654,7 +648,7 @@ append content
 							tbody#tickets
 								tr(ng-repeat="ticket in tickets")
 									td
-										input.form-control(type="text" ng-model="ticket.name" placeholder="Ticket Name (Required)" required)
+										input.form-control(type="text" ng-model="ticket.name" placeholder="Ticket Name (Required)")
 									td
 										input.form-control(type="number", value="0.00", min="0", ng-model="ticket.price")
 									td

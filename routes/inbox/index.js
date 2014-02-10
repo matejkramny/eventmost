@@ -25,6 +25,7 @@ exports.router = function (app) {
 exports.socket = function (socket) {
 }
 
+exports.populateInbox = populateInbox;
 function populateInbox (req, res, next) {
 	var u = req.user;
 	
@@ -236,6 +237,12 @@ exports.emailMessageNotification = function (person, from, link, body) {
 </p><br/>You can turn off email notifications in your settings.<br/>\
 Please do not reply to this email, because we are super popular and probably won't have time to read it..."
 	}
+	if (!config.transport_enabled) {
+		console.log("Transport not enabled!")
+		console.log(options);
+		return;
+	}
+	
 	transport.sendMail(options, function(err, response) {
 		if (err) throw err;
 		
@@ -269,6 +276,12 @@ people are posting comments for your event, "+event.name+": <a href='http://even
 </p><br/>You can turn off email notifications in your settings.<br/>\
 Please do not reply to this email, because we are super popular and probably won't have time to read it..."
 	}
+	if (!config.transport_enabled) {
+		console.log("Transport not enabled!")
+		console.log(options);
+		return;
+	}
+	
 	transport.sendMail(options, function(err, response) {
 		if (err) throw err;
 		
@@ -306,6 +319,12 @@ exports.emailNotification = function (person, link) {
 </p><br/>You can turn off email notifications in your settings.<br/>\
 Please do not reply to this email, because we are super popular and probably won't have time to read it..."
 	}
+	if (!config.transport_enabled) {
+		console.log("Transport not enabled!")
+		console.log(options);
+		return;
+	}
+	
 	transport.sendMail(options, function(err, response) {
 		if (err) throw err;
 		

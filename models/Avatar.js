@@ -3,6 +3,7 @@ var mongoose = require('mongoose');
 var schema = mongoose.Schema;
 var ObjectId = schema.ObjectId;
 var fs = require('fs')
+var config = require('../config')
 
 var scheme = schema({
 	url: String,
@@ -42,13 +43,20 @@ scheme.methods.doUpload = function(avatar, cb) {
 		
 		self.url = "/avatars/"+this._id+"."+ext;
 		
-		fs.readFile(avatar.path, function(err, avatar) {
-			fs.writeFile(__dirname + "/../public"+self.url, avatar, function(err) {
-				if (err) throw err;
-				
-				cb(null);
-			});
-		});
+		fs.rename(avatar.path, config.path + "/public" + self.url, function(err) {
+			if (err) throw err;
+			
+			if (config.knox) {
+				config.knox.putFile(config.path + "/public" + self.url, "/public"+self.url, function(err, res) {
+					if (err) throw err;
+					
+					console.log("Uploaded Avatar to S3");
+					res.resume();
+				})
+			}
+			
+			cb(null);
+		})
 		
 		return;
 	} else {

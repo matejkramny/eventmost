@@ -7,7 +7,7 @@ html
 			meta(name="event_id", content="#{ev._id}")
 		meta(name="viewport" content="width=device-width, initial-scale=1.0")
 		block meta
-		title EventMost - #{title}
+		title #{title}
 		link(href="/favicon.ico" type="image/x-icon" rel="icon")
 		link(href="/favicon.ico" type="image/x-icon" rel="shortcut icon")
 		
@@ -34,43 +34,65 @@ html
 								button.btn.btn-default.pb.pull-right(type='button' data-toggle="modal" href="#loginModal" style="margin-right:-4px;")
 									b LOGIN
 					else
-						//- Only displayed when user is logged in
-						.pull-right.width7
-							a.image(href="/inbox")
-								img.mail.pull-right.img-mess-smart(src="/images/notes-icon.svg" alt="" style="width:100%;")
-								.row-fluid.minus2
-									.message-nr
-										h20 0
-							.font-header-icon2
-								| Notes
+						if (typeof hide_bar_right === 'undefined' && hide_bar_right !== true)
+							//- Only displayed when user is logged in
+							.pull-right.width7
+								a.image(href="/inbox")
+									img.mail.pull-right.img-mess-smart(src="/images/notes-icon.svg" alt="" style="width:100%;")
+									.row-fluid.minus2
+										.message-nr
+											h20 0
+								.font-header-icon2
+									| Notes
 						
-						.pull-right.width7(ng-controller="inboxNotifications")
-							a.image(href="/inbox")
-								img.mail.pull-right.img-mess-smart(src="/images/message-icon.svg" alt="" style="width:100%;")
-								.row-fluid.minus2
-									.message-nr
-										h20(ng-bind="notifications" ng-init="notifications = #{user.mailboxUnread}")= user.mailboxUnread
-							.font-header-icon
-								| Inbox
+							.pull-right.width7(ng-controller="inboxNotifications")
+								a.image(href="/inbox")
+									img.mail.pull-right.img-mess-smart(src="/images/message-icon.svg" alt="" style="width:100%;")
+									.row-fluid.minus2
+										.message-nr
+											h20(ng-bind="notifications" ng-init="notifications = #{user.mailboxUnread}")= user.mailboxUnread
+								.font-header-icon
+									| Inbox
 						
-						.col-md-6.col-xs-6.pull-right
-							.pull-right.nspacer-small
-								a.font-e.link-purple.header-links(href="/") Home
-								if !recentEvent
-									|  | 
-									a.font-e.link-purple.header-links(href="/event/add") Create event
-								if user.admin
-									|  | 
-									a.font-e.link-purple.header-links(href="/admin") Administration
-								if recentEvent
-									|  | 
-									a.font-e.link-purple.header-links(href="/event/"+recentEvent) Return to Event: #{recentEventName}
-							.clearfix
-							.nspacer.hide-mini
-								form(method="GET", accept-charset="utf-8", action="/search/people/")
-									input.gonew2.pull-right.header-links(type="submit", value="GO", style="width:10%;")
-									input.pull-right.font-s.search-input.pad-left-ten.header-links(type="search", name="q", placeholder="search for people on EventMost", style="width:75%;", value= typeof search !== "undefined" ? search.query : null)
-			
+							.col-md-6.col-xs-6.pull-right
+								.pull-right.nspacer-small
+									a.font-e.link-purple.header-links(href="/") Home
+									if !recentEvent
+										|  | 
+										a.font-e.link-purple.header-links(href="/event/add") Create event
+									if user.admin
+										|  | 
+										a.font-e.link-purple.header-links(href="/admin") Administration
+									if recentEvent
+										|  | 
+										a.font-e.link-purple.header-links(href="/event/"+recentEvent) Return to Event: #{recentEventName}
+								.clearfix
+								.nspacer.hide-mini
+									form(method="GET", accept-charset="utf-8", action="/search/")
+										input.gonew2.pull-right.header-links(type="submit", value="GO", style="width:10%;")
+										input.pull-right.font-s.search-input.pad-left-ten.header-links(type="search", name="q", placeholder="Search for Events or People on EventMost", style="width:75%;", value= typeof search !== "undefined" ? search.query : null)
+						else
+							.col-md-6.col-xs-6.pull-right(ng-controller="TakeoverController" ng-init="inboxUrl = '#{inbox_send_to}'; setCsrf('#{token}');")
+								.text-center.nspacer-small(ng-cloak style="height:20px;")
+									| {{ progress }}
+								.clearfix
+								.nspacer.hide-mini
+									form
+										button.gonew2.pull-right.header-links(ng-click="sendInbox()" style="width:15%;") SEND
+										input.pull-right.font-s.search-input.pad-left-ten.header-links(type="email" name="email" ng-model="email" required="required" placeholder="Send This Inbox to an Email Address" style="width:70%;")
+		
+		if (is_acting_user)
+			div(style="width:100%; background: #ACD90C; color: #000;")
+				.container
+					.nspacer
+					.col-sm-8.col-md-8.col-lg-8
+						p.lead(style="font-weight: 500; margin-bottom:15px;")!= loggedin_as_user_message
+					.col-sm-4.col-md-4.col-lg-4
+						a.pull-right.btn.btn-info(href="/auth/login/return")
+							i.fa.fa-sign-out.fa-fw
+							|  !{loggedin_as_user_return_message}
+			.clearfix
+		
 		.container
 			.col-xs-12.hide-all2
 				form(method="POST", accept-charset="utf-8")
@@ -98,6 +120,8 @@ html
 			else
 				script(src="/socket.io/socket.io.js" defer)
 				script(src="/js/inbox_notifications.js" defer)
-				
+				if (typeof hide_bar_right !== 'undefined' && hide_bar_right === true)
+					script(src="/js/takeoverProfile.js" defer)
+					
 		//- page-specific
 		block addonjs

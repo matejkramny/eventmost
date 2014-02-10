@@ -2,19 +2,54 @@ var fs = require('fs'),
 	models = require('../models')
 	, mongoose = require('mongoose')
 	, util = require('../util')
+	, moment = require('moment')
 
 exports.router = function (app) {
-	app.get('/search/people/', util.authorized, searchPeople)
+	app.get('/search/', search)
 }
 
-//TODO remove sensitive fields (password?) from the results
-function searchPeople (req, res) {
+exports.search = search;
+function search (req, res) {
 	var q = req.query.q;
+	var type = req.query.type;
 	
 	if (!q) {
 		q = "";
 	}
+	if (!type || type != 'people') {
+		type = 'events';
+	}
 	
+	if (type == 'people') {
+		searchPeople(req, res, q);
+	} else {
+		searchEvents(req, res, q);
+	}
+}
+
+function searchEvents(req, res, q) {
+	var query = {
+		name: new RegExp(q, 'i'),
+		deleted: false
+	};
+	
+	models.Event.find(query).limit(10).populate('avatar').exec(function(err, evs) {
+		res.locals.search = {
+			query: q,
+			results: evs,
+			type: 'events'
+		}
+		res.locals.moment = moment;
+		
+		if (req.user) {
+			res.render('search/results')
+		} else {
+			res.render('login')
+		}
+	})
+}
+
+function searchPeople(req, res, q) {
 	var split = q.split(' ');
 	var query = {
 		isFeedbackProfile: false,
@@ -31,60 +66,17 @@ function searchPeople (req, res) {
 	models.User.find(query).sort("-name-surname").exec(function(err, people) {
 		if (err) throw err;
 		
-		res.format({
-			json: function() {
-				var ppl = [];
-				for (var i = 0; i < people.length; i++) {
-					var person = people[i];
-					
-					ppl.push({
-						_id: person._id,
-						fullName: person.getName(),
-						name: person.name,
-						surname: person.surname,
-						avatar: person.avatar.length > 0 ? person.avatar : "/images/default_speaker.svg",
-						desc: person.desc,
-						education: person.education,
-						website: person.website,
-						position: person.position,
-						company: person.company,
-						location: person.location
-					})
-				}
-				
-				res.send({
-					query: q,
-					results: ppl
-				})
-			},
-			html: function() {
-				res.locals.search = {
-					query: q,
-					results: people
-				}
-				
-				res.render('search/results')
-			}
-		})
-	});
-}
 
-function searchPerson (req, res) {
-	var name = req.params.name;
-	
-	var split = name.split(' ');
-	
-	console.log(split)
-	
-	models.User.find({
-		name: new RegExp(split[0], 'i'),
-		surname: new RegExp(split[1], 'i')
-	}).sort("-name-surname").exec(function(err, users) {
-		if (err) throw err;
-		console.log(users)
-		res.send({
-			users: users,
-			user: req.user
-		})
-	})
+		res.locals.search = {
+			query: q,
+			results: people,
+			type: 'people'
+		}
+		
+		if (req.user) {
+			res.render('search/results')
+		} else {
+			res.render('login')
+		}
+	});
 }

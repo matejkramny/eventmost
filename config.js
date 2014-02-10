@@ -2,6 +2,7 @@ var mailer = require('nodemailer');
 var fs = require('fs');
 var colors = require('colors');
 var stripe = require('stripe')
+	, knox = require('knox')
 
 var credentials = exports.credentials = {
 	replSet: process.env.DB_REPLSET || null,
@@ -32,8 +33,23 @@ var credentials = exports.credentials = {
 		}
 	},
 	session_secret: process.env.SESSION_SECRET || "KeyboardCat",
-	testroutes: process.env.TESTROUTES || true
+	testroutes: process.env.TESTROUTES || true,
+	
+	S3_enabled: process.env.S3_ENABLED || false,
+	S3_key: process.env.S3_KEY || '',
+	S3_secret: process.env.S3_SECRET || '',
+	S3_bucket: process.env.S3_BUCKET || ''
 };
+
+if (credentials.S3_enabled) {
+	exports.knox = knox.createClient({
+		key: credentials.S3_key,
+		secret: credentials.S3_secret,
+		bucket: credentials.S3_bucket
+	});
+} else {
+	exports.knox = null;
+}
 
 exports.db_config = {
 	auto_reconnect: true,
@@ -51,6 +67,7 @@ if (credentials.replSet) {
 exports.stripe = stripe(credentials.stripe.secret);
 
 // Create SMTP transport method
+exports.transport_enabled = credentials.smtp.user.length > 0;
 exports.transport = mailer.createTransport("Mandrill", {
 	auth: {
 		user: credentials.smtp.user,
@@ -64,7 +81,7 @@ if (!(mode == "test")) {
 	mode = "";
 }
 
-exports.version = '0.2.5';
+exports.version = '0.2.6';
 exports.host = credentials.host ? credentials.host : "eventmost.com";
 exports.mode = mode;
 exports.sessionKey = 'em_sess';

@@ -9,6 +9,10 @@ append addonjs
 	script(src="/js/inbox.js" defer)
 
 block content
+	- var inbox_disabled = false;
+	if (typeof inbox_send_disabled !== 'undefined' && inbox_send_disabled === true)
+		- inbox_disabled = true;
+	
 	div(ng-controller="inboxController")
 		.row
 			.col-md-4.col-sm-4.col-xs-12.col-lg-4
@@ -47,18 +51,21 @@ block content
 				hr
 				.row
 					.col-md-10.col-lg-10.col-sm-10.col-xs-10
-						input#inputMessage.form-control(ng-model="msg" required placeholder="Enter Message")
+						input#inputMessage.form-control(ng-model="msg" required placeholder="Enter Message" disabled= inbox_disabled ? "disabled" : null)
 					.col-md-2.col-lg-2.col-sm-2.col-xs-2
-						button.form-control.btn.btn-info(ng-click="sendMessage()") Send
+						button.form-control.btn.btn-info(ng-click="sendMessage()" disabled= inbox_disabled ? "disabled" : null) Send
 			.col-md-8.col-sm-8.col-xs-12.col-lg-8(ng-show="message == null")
 				h3.text-center New Message to:
-			
+				
 				.nspacer
 				.row
 					.col-sm-8.col-xs-8.col-md-8.col-lg-8.col-lg-offset-2.col-md-offset-2.col-sm-offset-2.col-xs-offset-2
-						form(method="POST", accept-charset="utf-8")
-							input.gonew2.pull-right.header-links(type="button", ng-click="searchUser()", value="SEARCH", style="width:20%;")
-							input.pull-right.font-s.search-input.pad-left-ten.header-links(ng-model="search", type="search", required="required", placeholder="Search for People on EventMost", style="width:77%;")
+						if (inbox_disabled)
+							h4.text-center Posting New Messages has been Disabled
+						else
+							form(method="POST", accept-charset="utf-8")
+								input.gonew2.pull-right.header-links(type="button", ng-click="searchUser()", value="SEARCH", style="width:20%;")
+								input.pull-right.font-s.search-input.pad-left-ten.header-links(ng-model="search", type="search", required="required", placeholder="Search for People on EventMost", style="width:77%;")
 				.nspacer
 			
 				.row

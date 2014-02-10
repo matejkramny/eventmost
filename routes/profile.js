@@ -40,7 +40,7 @@ function removeProfile (req, res) {
 exports.profile = profile = function (req, res) {
 	res.format({
 		html: function() {
-			res.render('profile/view', { title: "Your profile" })
+			res.render('profile/view', { title: "My Profile" })
 		},
 		json: function() {
 			res.json({
@@ -79,29 +79,43 @@ function viewUser (req, res) {
 			}
 		}
 		
-		res.format({
-			html: function() {
-				if (user != null) {
-					res.locals.theUser = user; //locals.user is the logged in user..
-					res.locals.saved = saved;
-					res.render('user', { title: user.getName() });
-				} else {
-					res.status(404);
-					res.redirect('/')
-				}
-			},
-			json: function() {
-				if (user != null) {
-					res.send({
-						user: user
-					})
-				} else {
+		models.Card.findOne({ user: id, primary: true }, function(err, primaryCard) {
+			if (err) throw err;
+			
+			res.locals.primaryCard = primaryCard;
+			
+			res.format({
+				html: function() {
+					if (user != null) {
+						res.locals.theUser = user; //locals.user is the logged in user..
+						res.locals.saved = saved;
+						res.render('user', { title: user.getName() });
+					} else {
+						res.status(404);
+						res.redirect('/')
+					}
+				},
+				json: function() {
+					//TODO Disabled until the API is 'secure'
+				
 					res.status(404);
 					res.send({
 						message: "not found"
 					})
+					return;
+				
+					if (user != null) {
+						res.send({
+							user: user
+						})
+					} else {
+						res.status(404);
+						res.send({
+							message: "not found"
+						})
+					}
 				}
-			}
+			})
 		})
 	})
 }
@@ -298,13 +312,20 @@ exports.doEditProfile = doEditProfile = function (req, res) {
 			}
 		}
 		
-		fs.readFile(req.files.avatar.path, function(err, avatar) {
-			fs.writeFile(config.path + "/public"+u.avatar, avatar, function(err) {
-				if (err) throw err;
-				
-				createThumbnails()
-			});
-		});
+		fs.rename(req.files.avatar.path, config.path + "/public"+u.avatar, function(err) {
+			if (err) throw err;
+			
+			if (config.knox) {
+				config.knox.putFile(config.path + "/public"+u.avatar, "/public"+u.avatar, function(err, res) {
+					if (err) throw err;
+					
+					console.log("Profile File Uploaded");
+					res.resume();
+				})
+			}
+			
+			createThumbnails()
+		})
 	}
 	
 	if (!blocking) {

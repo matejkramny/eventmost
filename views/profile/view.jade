@@ -71,12 +71,6 @@ block content
 				.font-ah.center
 					| upload avatar
 		.nspacer
-		.col-xs-12.hide-all3(style="float:none; margin:0px auto; height:30px;")
-			.col-lg-12.col-md-12.col-xs-12.bg-purple.pad-right-zero(style="min-height:30px;")
-				.pad-left-zero.col-lg-3.col-md-3.col-xs-3.font-e1.psev.right(style="padding-top:9px; height:30px;")
-					| Email
-				.psev.col-lg-9.col-md-9.col-xs-9(style="height:30px; margin-top:-3px;")
-					input.input-grey#LoginUserMobileEmail(name="email", ng-model="email", type="email", required="required", value=user.email)
 		mixin mobileText("First Name", "Name", "name", false, user.name)
 		mixin mobileText("Last Name", "Surname", "surname", false, user.surname)
 		mixin mobileText("Company", "Company", "company", false, user.company)

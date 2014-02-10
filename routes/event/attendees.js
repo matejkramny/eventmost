@@ -197,7 +197,7 @@ function showAttendee (req, res) {
 	res.locals.theUser = theAttendee.user;
 	res.locals.theAttendee = theAttendee;
 	res.locals.saved = false;
-	res.render('user', { title: theAttendee.user.getName() });
+	res.render('user', { title: theAttendee.user.getName() + " In " + res.locals.ev.name });
 }
 
 function removeAttendee (req, res) {
@@ -645,6 +645,12 @@ function emailConfirmation (req, res, transaction) {
 <br/>\
 Please do not reply to this email, because we are super popular and probably won't have time to read it..."
 	}
+	if (!config.transport_enabled) {
+		console.log("Transport not enabled!")
+		console.log(options);
+		return;
+	}
+	
 	transport.sendMail(options, function(err, response) {
 		if (err) throw err;
 	

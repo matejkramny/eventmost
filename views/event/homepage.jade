@@ -161,9 +161,11 @@ block content
 	- var attendees = locals.attendees.length
 	- for (var i = 0; i < attendees; i++)
 		.row
-			+attendee(locals.ev.attendees[i], false)
+			+attendee(locals.ev.attendees[i], locals.ev.attendees[i].user.feedbackProfileEvent != null)
+			- console.log(locals.ev.attendees[i]);
 			if (++i < attendees)
-				+attendee(locals.ev.attendees[i], false)
+				+attendee(locals.ev.attendees[i], locals.ev.attendees[i].user.feedbackProfileEvent != null)
+			- console.log(locals.ev.attendees[i]);
 			if (++i < attendees)
 				+attendee(locals.ev.attendees[i], false)
 		.clearfix
@@ -180,6 +182,4 @@ block content
 	
 	.clearfix
 	.nspacer
-
 	
-

@@ -14,6 +14,7 @@ var express = require('express')
 	, passport = require('passport')
 	, config = require('./config')
 	, socketPassport = require('passport.socketio')
+	, models = require('./models')
 
 if (config.mode != "test") {
 	var bugsnag = require("bugsnag");
@@ -59,6 +60,9 @@ app.locals.pretty = !config.production // Pretty HTML outside production mode
 if (config.mode != 'test') {
 	app.use(express.logger('dev')); // Pretty log
 }
+
+app.use("/", express.static(path.join(__dirname, 'public'))); // serve static files
+
 app.use(express.limit('25mb')); // File upload limit
 app.use(function(req, res, next) {
 	var source = req.headers['user-agent'];
@@ -145,9 +149,52 @@ app.use(function(req, res, next) {
 	res.locals.minified = "";//config.production ? ".min" : "";
 	res.locals.bugsnag_key = config.bugsnagKey;
 	
-	// navigation bar
 	next();
 });
+// Overriding session middleware
+app.use(function (req, res, next) {
+	res.locals.is_acting_user = false;
+	if (req.session.loggedin_as_user) {
+		res.locals.is_acting_user = true;
+		
+		models.User.findById(req.session.loggedin_as_user).populate('savedProfiles').exec(function(err, user) {
+			if (err) throw err;
+			
+			res.locals.acting_user = user;
+			res.locals.loggedin_as_user_message = user.getName() + ", You Are Acting as <strong>"+req.user.getName()+"</strong>";
+			res.locals.loggedin_as_user_return_message = "Return to my Profile";
+			
+			// Overrides res.locals
+			if (req.session.loggedin_as_user_locals != null) {
+				for (var locale in req.session.loggedin_as_user_locals) {
+					if (!req.session.loggedin_as_user_locals.hasOwnProperty(locale)) continue;
+					
+					res.locals[locale] = req.session.loggedin_as_user_locals[locale];
+				}
+			}
+			
+			if (req.session.loggedin_as_user_restrict != null) {
+				if (req.url.match(/^\/(auth\/login\/return|socket.io\/*)/) || req.url.match(req.session.loggedin_as_user_restrict)) {
+					next();
+				} else {
+					res.format({
+						html: function() {
+							res.redirect(req.session.loggedin_as_user_redirect_restricted);
+						},
+						json: function() {
+							res.send(404, {});
+						}
+					})
+				}
+			} else {
+				next();
+			}
+		});
+		
+		return;
+	}
+	next();
+})
 
 var server = http.createServer(app)
 server.listen(app.get('port'), function(){
@@ -162,7 +209,8 @@ io.set('authorization', socketPassport.authorize({
 	secret: config.sessionSecret,
 	store: sessionStore,
 	fail: function(data, message, error, accept) {
-		throw new Error(message)
+		//throw new Error(message)
+		accept(false);
 	}
 }))
 io.set('log level', 1);
@@ -174,8 +222,6 @@ routes.router(app);
 io.sockets.on('connection', function(socket) {
 	routes.socket(socket)
 });
-
-app.use("/", express.static(path.join(__dirname, 'public'))); // serve static files
 
 app.get('*', function(req, res, next) {
 	if (!config.production) {

@@ -1,6 +1,7 @@
 var models = require('../../models'),
-	fs = require('fs')
-	util = require('../../util')
+	fs = require('fs'),
+	util = require('../../util'),
+	config = require('../../config')
 
 exports.router = function (app) {
 	app.get('/event/add', util.authorized, addEvent)
@@ -73,7 +74,7 @@ function uploadAvatarAsync (req, res) {
 	if (!avatarid) {
 		avatar = new models.Avatar({
 			createdBy: req.user._id
-	   	});
+   	});
 		avatar.doUpload(req.files.avatar, doCallback)
 	} else {
 		models.Avatar.findOne(avatarid, function(av) {
@@ -105,7 +106,15 @@ function removeAvatar (req, res) {
 			
 			if (avatar) {
 				if (avatar.url && avatar.url.indexOf("http") == -1) {
-					fs.unlink(__dirname + "/../../public" + avatar.url)
+					fs.unlink(config.path + "/public" + avatar.url)
+					if (config.knox) {
+						config.knox.deleteFile('/public'+avatar.url, function(err, res) {
+							if (err) throw err;
+							
+							console.log("Unlinked Event Avatar from S3");
+							res.resume();
+						})
+					}
 				}
 				
 				avatar.remove();

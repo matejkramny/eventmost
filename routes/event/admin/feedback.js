@@ -83,14 +83,20 @@ function doEditFeedbackProfile (req, res) {
 		var ext = ext[ext.length-1];
 		profile.avatar = "/profileavatars/"+profile._id+"."+ext;
 		
-		fs.readFile(req.files.avatar.path, function(err, avatar) {
-			fs.writeFile(config.path + "/public" + profile.avatar, avatar, function(err) {
-				if (err) throw err;
-				
-				profile.createThumbnails(function() {
+		fs.rename(req.files.avatar.path, config.path + "/public" + profile.avatar, function(err) {
+			if (err) throw err;
+			
+			if (config.knox) {
+				config.knox.putFile(config.path + "/public" + profile.avatar, "/public" + profile.avatar, function (err, res) {
+					if (err) throw err;
+					
+					console.log("Uploaded FP Avatar to S3");
+					res.resume()
 				})
-			});
-		});
+			}
+			
+			profile.createThumbnails(function() { })
+		})
 	}
 	
 	profile.save(function(err) {

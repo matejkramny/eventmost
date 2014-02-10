@@ -13,4 +13,6 @@ var eventMost = angular.module('eventMost', [])
 			
          if (charLength >= 20) $(this).css("font-size", "16px");
      });
+	  
+	  $('[data-toggle=tooltip]').tooltip()
  });

@@ -12,10 +12,12 @@ exports.router = function (app) {
 		.get('/card/:id', getCard)
 		.post('/card/new', doNewCard)
 		.get('/cards/send', util.authorized, sendCard)
+		.get('/cards/choosePrimary', choosePrimary)
+		.get('/cards/choosePrimary/:id', doChoosePrimary)
 }
 
 function showCards (req, res) {
-	models.Card.find({ user: req.user._id }, { _id: 1 }).sort('-created').exec(function(err, cards) {
+	models.Card.find({ user: req.user._id }, { _id: 1, primary: 1 }).sort('-created').exec(function(err, cards) {
 		res.locals.cards = cards;
 		
 		res.render('profile/cards', { title: "Business cards" });
@@ -29,7 +31,14 @@ function newCard (req, res) {
 function getCard (req, res) {
 	var id = req.params.id;
 	
-	models.Card.findOne({ _id: mongoose.Types.ObjectId(id) }, function(err, card) {
+	try {
+		id = mongoose.Types.ObjectId(id);
+	} catch (e) {
+		res.redirect('back');
+		return;
+	}
+	
+	models.Card.findOne({ _id: id }, function(err, card) {
 		if (err) throw err;
 		
 		if (card) {
@@ -119,4 +128,42 @@ function sendCard (req, res) {
 
 function doEditCard (req, res) {
 	
+}
+
+function choosePrimary (req, res) {
+	models.Card.find({ user: req.user._id }, { _id: 1, primary: 1 }).sort('-created').exec(function(err, cards) {
+		res.locals.cards = cards;
+		
+		res.render('profile/choosePrimaryCard', { title: "Business cards" });
+	});
+}
+
+function doChoosePrimary (req, res) {
+	var id = req.params.id;
+	
+	try {
+		id = mongoose.Types.ObjectId(id);
+	} catch (e) {
+		res.redirect('back');
+		return;
+	}
+	
+	models.Card.findOne({ _id: id, user: req.user._id }, function(err, card) {
+		if (err) throw err;
+		
+		if (card) {
+			models.Card.update({ user: req.user._id }, { $set: { primary: false }}, { multi: true }, function(err) {
+				if (err) throw err;
+				
+				models.Card.update({ _id: id }, { $set: { primary: true }}, function(err) {
+					req.session.flash.push("Primary Card Changed");
+					res.redirect('/cards');
+					return;
+				});
+			});
+		} else {
+			res.redirect('back');
+			return;
+		}
+	})
 }

@@ -9,6 +9,7 @@ angular.module('eventMost')
 	$scope.progress = "";
 	$scope.csrf = "";
 	$scope.selectedProfile = null;
+	$scope.inboxUrl = "inbox/sendInbox"
 	
 	$scope.setCsrf = function (csrf) {
 		$scope.csrf = csrf;
@@ -53,14 +54,15 @@ angular.module('eventMost')
 		$scope.showAction = false;
 		
 		$scope.progress = "Sending Inbox.."
-		$http.post('inbox/sendInbox', {
+		$http.post($scope.inboxUrl, {
 			_csrf: $scope.csrf,
-			field: $scope.selectedProfile != null ? $scope.selectedProfile._id : $scope.email
+			email: $scope.email
 		}).success(function(data, status) {
 			var status = data.status;
 			
 			if (status == 200) {
 				$scope.progress = "Inbox Sent!"
+				$scope.email = "";
 			} else {
 				$scope.progress = "Inbox failed to send because: "+data.message
 			}

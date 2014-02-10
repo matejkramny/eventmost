@@ -1,6 +1,6 @@
 {
 	"name": "eventmost",
-	"version": "0.2.5",
+	"version": "0.2.6",
 	"private": true,
 	"scripts": {
 		"start": "node app.js",
@@ -40,7 +40,8 @@
 		"gm": "1.14.2",
 		"request": "latest",
 		"colors": "latest",
-		"stripe": "2.3.4"
+		"stripe": "2.3.4",
+		"knox": "latest"
 	},
 	"devDependencies": {
 		"should": "latest",

@@ -4,7 +4,7 @@ var schema = mongoose.Schema;
 var ObjectId = schema.ObjectId;
 var fs = require('fs')
 	, exec = require('child_process').exec
-	config = require('../config')
+	, config = require('../config')
 
 var scheme = schema({
 	user: {
@@ -12,7 +12,8 @@ var scheme = schema({
 		ref: 'User'
 	},
 	location: String,
-	created: { type: Date, default: Date.now() }
+	created: { type: Date, default: Date.now() },
+	primary: { type: Boolean, default: false }
 });
 
 scheme.methods.edit = function (html, cb) {
@@ -37,6 +38,15 @@ scheme.methods.edit = function (html, cb) {
 			
 			var url = "file://"+config.path+"/data/cardhtml/"+self._id+".html"
 			
+			if (config.knox) {
+				config.knox.putFile(config.path+"/data/cardhtml/"+self._id+".html", "/data/cardhtml/"+self._id+".html", function(err, res) {
+					if (err) throw err;
+					
+					console.log("Uploaded Card .html File to S3");
+					res.resume();
+				});
+			}
+			
 			self.save(function(err) {
 				if (err) throw err;
 		
@@ -53,10 +63,24 @@ scheme.methods.edit = function (html, cb) {
 					proc.on('close', function(code) {
 						console.log("Done, code "+code);
 						
+						if (code != 0) {
+							cb("Server Error");
+							return;
+						}
+						
+						if (config.knox) {
+							config.knox.putFile(config.path+'/public/businesscards/'+self._id+'.png', '/public/businesscards/'+self._id+'.png', function(err, res) {
+								if (err) throw err;
+								
+								console.log("Uploaded Business Card Picture to S3");
+								res.resume();
+							})
+						}
+						
 						cb(null)
 					})
 				} catch (e) {
-					console.log("Is webkit2png installed? http://snippets.aktagon.com/snippets/504-how-to-generate-screenshots-on-debian-linux-with-python-webkit2png")
+					console.log("Is fabric/webkit2png installed? http://snippets.aktagon.com/snippets/504-how-to-generate-screenshots-on-debian-linux-with-python-webkit2png")
 					cb("Internal Server Error");
 				}
 			})

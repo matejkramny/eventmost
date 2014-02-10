@@ -125,7 +125,7 @@ append content
 				a.link-purple(href="/profile", alt="", title="") Edit profile
 			.clearfix
 			.center
-				img.small-avatar(src="/images/default-card.svg", class="nspacer-small img-responsive", style="margin:5px auto;")
+				img.small-avatar(src= primaryCard == null ? "/images/default-card.svg" : "/businesscards/"+primaryCard._id+".png", class="nspacer-small img-responsive", style="margin:5px auto; max-height:100px;")
 				a.link-purple.font-thin2.resfont(href="/cards")
 					| Business Card Library
 			.pull-left.pad-left-ten.nspacer-small

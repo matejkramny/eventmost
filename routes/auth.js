@@ -10,6 +10,7 @@ var mongoose = require('mongoose')
 	, transport = config.transport
 	, moment = require('moment')
 	, check = require('validator').check
+	, search = require('./search')
 
 passport.serializeUser(function(user, done) {
 	done(null, user._id);
@@ -60,12 +61,13 @@ exports.router = function (app) {
 		.get('/auth/linkedin/callback', passport.authenticate('linkedin', socialRoute('LinkedIn')))
 		
 		.get('/auth/success', util.authorized, authSuccess)
+		.get('/auth/login/:uid', util.authorized, doLogin)
 		
 		.get('/logout', logout)
 }
 
 exports.display = function(req, res) {
-	res.render('login', { title: "Login" });
+	search.search(req, res)
 }
 
 function doPasswordLogin (req, res) {
@@ -182,6 +184,18 @@ function doPasswordReset (req, res) {
 	</p><br/>\
 	Please do not reply to this email, because we are super popular and probably won't have time to read it..."
 		}
+		if (!config.transport_enabled) {
+			console.log("Transport not enabled!")
+			console.log(options);
+			
+			res.send({
+				status: 404,
+				err: ["If the email is registered, you will receive it shortly."]
+			});
+			
+			return;
+		}
+		
 		transport.sendMail(options, function(err, response) {
 			if (err) throw err;
 		
@@ -280,6 +294,12 @@ function performPasswordReset (req, res) {
 				html: "<img src=\"http://eventmost.com/images/logo.svg\">\
 		<br/><br/><p><strong>Hi "+reset.user.getName()+",</strong><br/><br/>Your password was reset at "+moment().format('DD/MM/YYYY HH:mm:ss')+".<br/>If you have not authorised this, please contact us <strong>IMMEDIATELY</strong> at <a href='mailto:support@eventmost.com'>support@eventmost.com</a>"
 			}
+			if (!config.transport_enabled) {
+				console.log("Transport not enabled!")
+				console.log(options);
+				return;
+			}
+			
 			transport.sendMail(options, function(err, response) {
 				if (err) throw err;
 		
@@ -321,5 +341,64 @@ function authSuccess (req, res) {
 
 function logout (req, res) {
 	req.logout();
+	req.session.destroy();
 	res.redirect('/')
+}
+
+function completeLogin (req, res, uid) {
+	models.User.findById(uid, function(err, user) {
+		if (err || !user) {
+			res.redirect('/');
+			return;
+		}
+		
+		req.session.loggedin_as_user = req.user._id;
+		req.session.loggedin_as_user_referrer = req.get('referrer');
+		req.session.loggedin_as_user_restrict = null;
+		
+		req.login(user, function(err) {
+			res.redirect('/');
+		})
+	})
+}
+
+function doLogin (req, res) {
+	if (req.params.uid == 'return' && typeof req.session.loggedin_as_user !== 'undefined') {
+		// Return to my original profile.
+		models.User.findById(req.session.loggedin_as_user, function(err, user) {
+			if (err || !user) {
+				res.redirect('back');
+				return;
+			}
+			
+			req.login(user, function(err) {
+				var referrer = req.session.loggedin_as_user_referrer;
+				delete req.session.loggedin_as_user;
+				delete req.session.loggedin_as_user_referrer;
+				delete req.session.loggedin_as_user_restrict;
+				delete req.session.loggedin_as_user_redirect_restricted;
+				delete req.session.loggedin_as_user_locals;
+				
+				res.redirect(referrer);
+			});
+		});
+		
+		return;
+	}
+	
+	// admins can do loads of stuff..
+	if (!req.user.admin) {
+		res.redirect('back');
+		return;
+	}
+	
+	var uid = req.params.uid;
+	try {
+		uid = mongoose.Types.ObjectId(uid)
+	} catch (e) {
+		res.redirect('back');
+		return;
+	}
+	
+	return completeLogin(req, res, uid);
 }

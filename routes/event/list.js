@@ -26,7 +26,7 @@ exports.listEvents = function (req, res) {
 				json: function() {
 					res.send({
 						events: evs,
-						pagename: "Events"
+						pagename: "EventMost Events"
 					})
 				}
 			});
@@ -47,12 +47,12 @@ exports.listMyEvents = function (req, res) {
 				res.format({
 					html: function() {
 						res.locals.moment = moment;
-						res.render('event/list', { events: evs, pagename: "My events", title: "My Events" });
+						res.render('event/list', { events: evs, pagename: "My Events", title: "My Events" });
 					},
 					json: function() {
 						res.send({
 							events: evs,
-							pagename: "My events"
+							pagename: "My Events"
 						})
 					}
 				})

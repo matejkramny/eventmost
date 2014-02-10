@@ -172,6 +172,15 @@ scheme.methods.createThumbnails = function(callback) {
 						console.log("[ERR]\t".red, "Error Thumbnail with ", pub+u.avatar);
 						cb(err);
 					} else {
+						if (config.knox) {
+							config.knox.putFile(pub+u.avatar+"-116x116.png", "/public"+u.avatar+"-116x116.png", function(err, res) {
+								if (err) throw err;
+								
+								console.log("-116x116.png uploaded");
+								res.resume();
+							})
+						}
+						
 						console.log("[DONE]\t".green, "Converted 116x116")
 						cb(null);
 					}
@@ -184,6 +193,15 @@ scheme.methods.createThumbnails = function(callback) {
 						console.log("[ERR]\t".red, "Error Creating Circle with ", pub+u.avatar);
 						cb(err);
 					} else {
+						if (config.knox) {
+							config.knox.putFile(pub+u.avatar+"-285x148.png", "/public"+u.avatar+"-285x148.png", function(err, res) {
+								if (err) throw err;
+								
+								console.log("-285x148.png uploaded to S3");
+								res.resume();
+							})
+						}
+						
 						console.log("[DONE]\t".green, "Converted 285x148")
 						cb(null);
 					}
@@ -217,6 +235,15 @@ scheme.methods.createThumbnails = function(callback) {
 			}
 			
 			u.avatar = "/profileavatars/"+u._id;
+			
+			if (config.knox) {
+				config.knox.putFile(pub+"/profileavatars/"+u._id, "/profileavatars/"+u._id, function(err, res) {
+					if (err) throw err;
+					
+					console.log("Uploading a downloaded img");
+					res.resume();
+				})
+			}
 			
 			cb();
 		}).pipe(fs.createWriteStream(pub+"/profileavatars/"+u._id));

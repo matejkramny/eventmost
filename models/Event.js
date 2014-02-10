@@ -81,6 +81,11 @@ var scheme = schema({
 			ref: 'Avatar'
 		}
 	},
+	source: {
+		facebook: { type: Boolean, default: false },
+		eventbrite: { type: Boolean, default: false },
+		id: Number
+	}
 })
 
 scheme.methods.arrangeFunctionAlphabetical = function (a, b) {
@@ -219,8 +224,6 @@ scheme.methods.getComments = function (cb) {
 }
 
 scheme.methods.edit = function (body, user, files, cb) {
-	console.log(body);
-	
 	var self = this;
 	
 	if (this.attendees == null || this.attendees.length == 0) {
@@ -348,7 +351,11 @@ scheme.methods.edit = function (body, user, files, cb) {
 		this.pricedTickets = body.pricedTickets
 	}
 	if (body.privateEvent != null) {
-		this.privateEvent = !!body.privateEvent;
+		this.privateEvent = false;
+		
+		if (body.privateEvent == true) {
+			this.privateEvent = true;
+		}
 	}
 	
 	// restriction settings
@@ -387,8 +394,6 @@ scheme.methods.edit = function (body, user, files, cb) {
 		}
 	}
 	
-	console.log(body.tickets)
-	
 	// do tickets - remove old tickets & create new objectids
 	if (body.tickets != null) {
 		var existing = [];
@@ -422,8 +427,6 @@ scheme.methods.edit = function (body, user, files, cb) {
 		}
 		
 		this.markModified('tickets')
-		
-		console.log(this.tickets);
 	}
 	
 	if (body.lat != null && body.lng != null) {
