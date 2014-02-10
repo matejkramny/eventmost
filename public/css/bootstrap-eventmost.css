@@ -3170,17 +3170,34 @@ table.gridtable-payment-yellow {font-size: 10px;}
 .attendee-hover:hover {
 	background: #FDD093;
 }
-
+.mif-dropdown {
+  border-radius:0px;
+}
+.mif-dropdown > li > a {
+  margin-top: 5px; 
+  background-color:#17a086;
+    padding: 5px;
+}
+.mif-dropdown > li.inverted > a {
+  margin-top: 5px; 
+  background-color: #FDD093;
+  padding: 5px;
+  color: #542437  !important;
+}
 .mif-dropdown li {
 	text-align: left;
+
+
 }
 .mif-dropdown li.inverted {
 	background-color: #FDD093;
 }
 .mif-dropdown li a {
-	color: #000 !important;
+	color: #fff !important;
+  font-size: 14px;
 }
 .mif-dropdown li a:hover {
 	background-color: #542437 !important;
 	color: #FFF !important;
+}
 }
