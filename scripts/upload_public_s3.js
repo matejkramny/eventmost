@@ -54,7 +54,7 @@ function toUpload (dir, match, callback) {
 async.eachSeries(
 	['avatars', 'businesscards', 'dropbox', 'profileavatars'],
 	function(dir, cb) {
-	toUpload('/public/'+dir, /^empty/, cb);
+	toUpload('/public/'+dir, /^((?!empty).)*$/, cb);
 }, function(err) {
 	if (err) throw err;
 	
