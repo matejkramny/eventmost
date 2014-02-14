@@ -111,7 +111,7 @@ div(ng-controller="PaymentController" ng-init="init({ id: '#{ev._id}', csrf: '#{
 	.nspacer-big
 	.center2(ng-cloak)
 		.font2(ng-show="status != 'success' && status.length > 0")
-			{{ status }}
+			| {{ status }}
 	div(ng-show="status == 'success'" ng-cloak)
 		.center2
 			img(src="/images/bubble-blue.svg")
