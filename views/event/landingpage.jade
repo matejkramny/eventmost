@@ -22,42 +22,51 @@ block content
 	.clearfix.hide-all2
 
 	.nspacer
-	.col-md-4.col-lg-4.col-sm-4
+	.col-md-3.col-lg-3.col-sm-3
 		.center
 			img.img-responsive(src=ev.avatar.url)
-	.col-md-8.col-lg-8.col-sm-8
-		h3= ev.name
+	.col-md-9.col-lg-9.col-sm-9
 		.nspacer
-		.col-md-4.col-lg-4.col-sm-4.pad-left-zero.font-e.semi-bold
+		.col-md-3.col-lg-3.col-sm-3.font-e.semi-bold
 			| When
 			.line-purple
 			.font-s.inline.semi-bold(title= locals.moment(ev.start).fromNow())
 				= moment(ev.start).format('dddd, Do, MMMM YYYY [at] h:mm:ss a')
-		.col-md-4.col-lg-4.col-sm-4.pad-left-zero.font-e.semi-bold
+		.col-md-3.col-lg-3.col-sm-3.font-e.semi-bold
 			| Where
 			.line-purple
-			.font-s.inline.semi-bold
+			.font-s.inline.semi-bold(style="word-break:break-all; ")
 				- if (ev.address || ev.venue_name)
-					img.inline.pad-right-five(src="/images/mapster.svg" alt="")
-				strong.inline
-					= ev.venue_name
-				.inline
-					= ev.address
-				- if (!ev.address && !ev.venue_name)
-					| Event does not have a location
-		.col-md-4.col-lg-4.col-sm-4.pad-left-zero.font-e.semi-bold
+					strong.pull-left.break(style="word-wrap:break-all; white-space: -moz-pre-wrap; white-space: pre-wrap;")
+					span
+						img.pull-left.pad-right-five(src="/images/mapster.svg" alt="")
+						= ev.venue_name
+					.pull-left
+						= ev.address
+					- if (!ev.address && !ev.venue_name)
+						| Event does not have a location
+		.col-md-3.col-lg-3.col-sm-3.font-e.semi-bold
 			| Event Organizers
 			.line-purple
-			.font-s.inline.semi-bold
+			.font-s.inline.semi-bold(style="word-break:break-all")
 				for attendee in locals.ev.attendees
 					if (attendee.admin && attendee.isAttending)
 						a(href="/user/"+attendee.user._id)= attendee.user.getName()
 						br
-			// event organiser name here?
-		.clearfix
 		.nspacer
-		// google map here
-		#eventMap(style="height:197px;")
+		.col-md-9.col-lg-9.col-sm-9.pad-right-zero
+			// google map here
+			#eventMap(style="height:197px;")
+		.col-md-3.col-lg-3.col-sm-3.font-e.semi-bold(style="margin-top:-127px;")
+			.center
+				| Sponsors
+			.line-purple
+			img.img-responsive(src="/images/ox.jpg" alt="")
+			.nspacer-small
+			img.img-responsive(src="/images/ox.jpg" alt="")
+			.nspacer-small
+			img.img-responsive(src="/images/ox.jpg" alt="")
+		.clearfix
 	.clearfix
 
 
