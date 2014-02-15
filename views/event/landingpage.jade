@@ -30,8 +30,8 @@ block content
 		.col-md-3.col-lg-3.col-sm-3.font-e.semi-bold
 			| When
 			.line-purple
-			.font-s.inline.semi-bold(title= locals.moment(ev.start).fromNow())
-				= locals.moment(ev.start).format('dddd, Do, MMMM YYYY [at] h:mm:ss a')
+			.font-s.inline.semi-bold(title= eventStartFormatted)
+				= eventStartFormatted
 		.col-md-3.col-lg-3.col-sm-3.font-e.semi-bold
 			| Where
 			.line-purple

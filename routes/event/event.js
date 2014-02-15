@@ -246,8 +246,8 @@ function viewRegistrationPage (req, res) {
 	
 	res.format({
 		html: function() {
-			res.locals.moment = moment;
 			res.locals.stripe_key = config.credentials.stripe.pub;
+			res.locals.eventStartFormatted = moment(res.locals.ev.start).zone(0).format('dddd, Do, MMMM YYYY [at] h:mm:ss a');
 			
 			if (config.production && res.locals.ev.tickets.length > 0 && res.locals.is_https != true) {
 				res.redirect('https://'+req.host+'/event/'+res.locals.ev._id+'/registrationpage');
