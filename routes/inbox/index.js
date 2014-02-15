@@ -3,11 +3,11 @@ var fs = require('fs')
 	, mongoose = require('mongoose')
 	, util = require('../../util')
 	, async = require('async')
-	, transport = require('../../app').transport
 	, messages = require('./messages')
 	, cards = require('./cards')
 	, profiles = require('./profiles')
-	, transport = require('../../config').transport
+	, config = require('../../config')
+	, transport = config.transport
 	, check = require('validator').check
 
 exports.router = function (app) {

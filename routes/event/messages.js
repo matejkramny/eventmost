@@ -2,6 +2,7 @@ var models = require('../../models')
 	, attending = require('./event').attending
 	, socket = require('./socket')
 	, inbox = require('../inbox/index')
+	, async = require('async')
 
 exports.router = function (app) {
 	app.get('/event/:id/comments', getComments)
@@ -208,7 +209,7 @@ function postComment (req, res) {
 			message: message
 		})
 		msg.save()
-		models.Event.findById(ev._id, function(err, ev) {
+		models.Event.findById(res.locals.ev._id, function(err, ev) {
 			ev.messages.push(msg._id);
 			ev.save()
 		});
