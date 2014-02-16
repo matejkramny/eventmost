@@ -86,17 +86,17 @@ append content
 			.font-bigs.font-thin.center.home-big
 				| Events nearby
 				img.home-big3(src="/images/location-icon.svg", class="img-responsive", style="width:80%; margin:auto;")
-		//- All Events
+	//- My Events
 	.col-xs-4.bg-yellow.pad-right-zero.pad-left-zero.hide-all2.nspacer(style='height:242px;')
-		a.link-purple2(href="/events", alt="Events")
+		a.link-purple2(href="/events/my", alt="My Events")
 			.font-bigs.font-thin.center.home-big
-				| All events<br />
+				| My Events <br />
 				img.home-big2(src="/images/purple-arrow.svg", class="img-responsive", style="width:70%; margin:auto;")
 	.clearfix.hide-all2
-		//- My Events
+	//- All Events
 	.col-xs-12.hide-all2
 		.bg-green.font-ah.pad-left-ten(style="min-height:27px;")
-			| My Events
+			| All events
 			.pull-right
 				ul.nav.navbar-nav(style="margin-right:-7px; margin-top:-5px;")
 					li.dropdown
@@ -153,16 +153,16 @@ append content
 				.font-bigs.font-thin.center.home-big(style="font-weight:100;")
 					| Events nearby
 					img.home-big3(src="/images/location-icon.svg", alt="",)
-		//- Events
+		//- My Events
 		.col-md-6.col-xs-6.bg-yellow.pad-right-zero.pad-left-zero
-			a.link-purple2(href="/events", alt="Events")
+			a.link-purple2(href="/events/my", alt="My Events")
 				.font-bigs.font-thin.center.home-big
-					| All events<br />
+					| My events<br />
 					img.home-big2(src="/images/purple-arrow.svg", alt="",)
 		.clearfix
 		.col-md-12.col-xs-12.bg-green.nspacer
 			.font-bigs.font-thin.e(style='padding-top:5px;')
-				| My Events
+				| All Events
 				.pull-right.mfresponsive
 					ul.nav.navbar-nav
 						li.dropdown
@@ -176,8 +176,8 @@ append content
 									a(href='#') Latest to most recent
 								li
 									a(href='#') Events name A-Z
-								li
-									a(href='#') My planned events
+								//- li
+								//-	a(href='#') My planned events
 	.clearfix.hide-mini
 	
 	.exc-spac
