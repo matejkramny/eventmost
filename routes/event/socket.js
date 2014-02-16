@@ -2,6 +2,7 @@ var mongoose = require('mongoose')
 	, messages = require('./messages')
 	, models = require('../../models')
 	, io = require('../../app').io // has to fetch it
+	, async = require('async')
 
 // the app doesn't immediately have the socket property available.. perhaps it would after 500ms
 setTimeout(function() {

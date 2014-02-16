@@ -30,8 +30,8 @@ block content
 		.col-md-3.col-lg-3.col-sm-3.font-e.semi-bold
 			| When
 			.line-purple
-			.font-s.inline.semi-bold(title= locals.moment(ev.start).fromNow())
-				= moment(ev.start).format('dddd, Do, MMMM YYYY [at] h:mm:ss a')
+			.font-s.inline.semi-bold(title= eventStartFormatted)
+				= eventStartFormatted
 		.col-md-3.col-lg-3.col-sm-3.font-e.semi-bold
 			| Where
 			.line-purple
@@ -61,11 +61,14 @@ block content
 			.center
 				| Sponsors
 			.line-purple
-			img.img-responsive(src="/images/ox.jpg" alt="")
+			if (ev.sponsorLayout.sponsor1)
+				img.img-responsive(src=ev.sponsorLayout.sponsor1.url)
 			.nspacer-small
-			img.img-responsive(src="/images/ox.jpg" alt="")
+			if (ev.sponsorLayout.sponsor2 && ev.sponsorLayout.layout > 0 && ev.sponsorLayout.layout != 3)
+				img.img-responsive(src=ev.sponsorLayout.sponsor2.url)
 			.nspacer-small
-			img.img-responsive(src="/images/ox.jpg" alt="")
+			if (ev.sponsorLayout.sponsor3 && ev.sponsorLayout.layout == 2)
+				img.img-responsive(src=ev.sponsorLayout.sponsor3.url)
 		.clearfix
 	.clearfix
 
