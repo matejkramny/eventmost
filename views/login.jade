@@ -5,12 +5,7 @@ include event/inc/item
 append content
 	br
 	.row
-		.col-sm-5.col-md-5.col-lg-5.col-sm-offset-4.col-md-offset-4.col-lg-offset-4
-			form(method="GET", accept-charset="utf-8", action="/search/")
-				input.gonew2.pull-right.header-links(type="submit", value="GO", style="width:10%;")
-				input.pull-right.font-s.search-input.pad-left-ten.header-links(type="search", name="q", placeholder="Search for Events or People on EventMost", style="width:75%;", value= typeof search !== "undefined" ? search.query : null)
-		.col-sm-3.col-md-3.col-lg-3
-			button.pull-right.btn.btn-default Create an Event
+		button.pull-right.btn.btn-default Create an Event
 	.nspacer
 	.row
 		.col-md-3.col-sm-3.col-lg-3
