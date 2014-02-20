@@ -15,12 +15,14 @@ html
 		block css
 			link(rel="stylesheet" href="/css/all_combined.min.css")
 			link(rel="stylesheet" href="/css/bootstrap-eventmost.css")
+			link(rel="stylesheet" href="/css/fullcalendar.css")
+			link(rel="stylesheet" href="/css/fullcalendar.print.css")
 
 	body(ng-app="eventMost")
 		//- main container
 		block container
 		header
-			.container
+			.containers
 				.row
 					.pull-left.col-md-4.col-xs-4
 						a(href="/")
@@ -29,10 +31,15 @@ html
 					if loggedIn == false
 						.pull-right.logo-right
 								//- Only displayed when users are guests
-								button.btn.btn-warning.pb.pull-right(type='button' data-toggle="modal" href="#signModal")
+								button.btn.btn-warning.pb.pull-right(type='button' data-toggle="modal" href="#signModal" )
 									b SIGN UP
 								button.btn.btn-default.pb.pull-right(type='button' data-toggle="modal" href="#loginModal" style="margin-right:-4px;")
 									b LOGIN
+								br
+								button.btn.btn-primary.pb2.pull-right(type='button' data-toggle="modal" href="#signModal" )
+									i.fa.fa-star.fa-fw
+									|  Create Event 
+									i.fa.fa-star.fa-fw
 					else
 						if (typeof hide_bar_right === 'undefined' && hide_bar_right !== true)
 							//- Only displayed when user is logged in
@@ -125,3 +132,7 @@ html
 					
 		//- page-specific
 		block addonjs
+				script(src="/js/fullcalendar.js" defer)
+				script(src="/js/jquery-ui.custom.min.js" defer)
+				script(src="/js/calendar.js" defer)
+				script(src="/js/slidenav.js" defer)

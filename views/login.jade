@@ -2,8 +2,9 @@ extends responsive
 
 include event/inc/item
 
+
+
 append content
-	br
 	.row
 		.col-sm-12.col-lg-12.col-md-12.col-xs-12
 			.alert.alert-warning
@@ -11,7 +12,17 @@ append content
 				p EventMost is currently under construction, for such reasons using the site may be unstable and unsuitable for hosting production events. Please check back soon!
 	br
 	.row
-		button.pull-right.btn.btn-default Create an Event
+		.col-sm-8.col-md-8.col-lg-8.pad-left-zero
+			form(method="GET", accept-charset="utf-8", action="/search/")
+				input.pull-left.font-s.search-input.pad-left-ten.header-links(type="search", name="q", placeholder="search event by location, organizers, or key words", style="width:75%; height:50px; border-radius:0px;", value= typeof search !== "undefined" ? search.query : null)
+				input.gonew2.pull-left.header-links(type="submit", value="GO", style="width:10%;")
+	.nspacer
+	.row
+		#slidenav
+		.otherabsolute
+			#open
+				a.fc-button(href="", style="background-color:#d1d2d4; color: #542437; text-decoration: none; text-align:left; padding-right:85px;") calendar<br> settings
+		#calendar
 	.nspacer
 	.row
 		.col-md-3.col-sm-3.col-lg-3
