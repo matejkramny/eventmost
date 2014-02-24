@@ -553,7 +553,7 @@ $(document).ready(function() {
 					window.location = '/event/'+eventid;
 				}
 				
-				$("#invitationLink").attr("href", "http://eventmost.com/event/"+eventid).html("eventmost.com/event/"+eventid);
+				$("#invitationLink").html("<input size='' style='width:100%' value='" +"eventmost.com/event/"+eventid+"'></input>");
 				$(".gotoeventbutton").attr("href", "/event/"+eventid);
 			},
 			error: function(xhr, status, error) {
