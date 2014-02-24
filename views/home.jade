@@ -181,7 +181,34 @@ append content
 	.clearfix.hide-mini
 	
 	.exc-spac
+	for event in myevents
+		mixin eventItem(event)
+	if myevents.length == 0
+		.nspacer.col-md-12.col-xs-12.col-lg-12.col-sm-12
+			p.lead.text-center No events found :(.
+				br
+				a(href="/event/add") Create an event
+	else
+		- var pages = Math.ceil(myeventsTotal / 5)
+		- var curpage = Math.ceil(myeventsSkip / 5)
+		.nspacer
+			.pull-right(style='height:35px;')
+				ul.pagination
+					li
+						a(href='/') «
+					- for (var i = 0; i < pages; i++)
+						li(class= curpage == i ? "active" : null)
+							a(href='/?skip='+i*5)= i+1
+					
+					li
+						a(href='/?skip='+((pages*5)-5)) »
+		.clearfix
+
 	//- My Events
+	.nspacer.col-md-12.col-xs-12.font-bigs.font-thin.hide-mini
+		.bg-ashen(style='width:101.4%;')
+			.color-green.pad-left-ten
+				| My Events
 	for event in myevents
 		mixin eventItem(event)
 	if myevents.length == 0
@@ -210,7 +237,7 @@ append content
 	.nspacer.col-md-12.col-xs-12.font-bigs.font-thin.hide-mini
 		.bg-ashen(style='width:101.4%;')
 			.color-green.pad-left-ten
-				| Events nearby
+				| Events Nearby
 				.pull-right.mfresponsive2
 					ul.nav.navbar-nav.nav-grey
 						li.dropdown
@@ -231,7 +258,7 @@ append content
 
 	.col-xs-12.hide-all2
 		.bg-ashen.color-green.font-ah.pad-left-ten(style="min-height:27px;")
-			| Events nearby
+			| Events Nearby
 			.pull-right
 				ul.nav.navbar-nav.nav-grey(style="margin-right:-7px; margin-top:-5px;")
 					li.dropdown

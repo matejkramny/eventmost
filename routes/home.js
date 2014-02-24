@@ -19,7 +19,7 @@ exports.display = function (req, res) {
 			.select('name start end address venue_name avatar')
 			.exec(function(err, evs) {
 			if (err) throw err;
-		
+			
 			models.Event.find(query).count(function(err, total) {
 				if (err) throw err;
 			
