@@ -217,6 +217,8 @@ block content
 	if (primaryCard != null)
 		.col-md-4.col-xs-4.col-sm-4
 			img.img-responsive(src="/businesscards/"+primaryCard._id+".png")
+		.clearfix
+		.nspacer-big
 	if (theUser._id.equals(user._id))
 		.col-md-4.col-xs-4.col-sm-4
 			a.btn.btn-primary2.font2.color-grey2.font-exception(href="/cards/choosePrimary" style="margin-left:7px; padding:10px; padding-left:25px; padding-right:25px; text-align:center;")
@@ -226,8 +228,9 @@ block content
 					else
 						| choose a 
 					| primary<br/>Business card
-	.clearfix
-	.nspacer-big
+		.clearfix
+		.nspacer-big
+
 	.col-md-7.col-xs-7.col-sm-7.hide-mini3-except-smart(style="margin-left:7px;")
 		.font-e1
 			| Description: 
