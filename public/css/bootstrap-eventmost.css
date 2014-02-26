@@ -115,7 +115,7 @@ input[type=number]::-webkit-outer-spin-button {
     margin: 0;
 }
   #calendar {
-    width: 1200px;
+    width: 1160px;
     margin: 0 auto;
     }
 /* Event Add */
@@ -227,7 +227,7 @@ input[type=number]::-webkit-outer-spin-button {
 .color-yellow{color: #fdd093;}
 .color-grey2{color: #7f7f7f;}
 
-
+.bg-white {background-color: #fff; color: #58585b; }
 .bg-purple {background-color: #542437; color: #e6e7e8;}
 .bg-ashen {background-color: #e6e7e8; color: #542437;}
 .bg-grey {background-color: #d1d2d4; color: #542437;}
@@ -269,7 +269,8 @@ border-radius: 10px;}
 .prof-wall{padding-left: 20px; padding-right: 20px; height: 50px;}
 .icon-min{margin-top:-4px;}
 
-
+.code{margin-left: 14px;}
+.inmar{margin-top: 32px;}
 .abs{position: absolute;}
 .rel-bottom{position: relative; bottom: 0px;}
 
@@ -422,7 +423,17 @@ min-height: 116px;
 }
 .font-change{font-size: 16px;}
 
-
+.orcircle
+    {
+    width:50px;
+    height:50px;
+    border-radius:25px;
+    font-size:14px;
+    color:#f1f1f2;
+    line-height:50px;
+    text-align:center;
+    background:#0892a3;
+    }
 
 .speaker_titlerespond2 h5 {font-size: 25px; font-weight: 500;}
 .speaker_titlerespond2 {
@@ -464,8 +475,8 @@ min-height: 116px;
 
 #slidenav {
   margin:0 auto;
-  width:1200px;
-  min-height: 865px;
+  width:1165px;
+  min-height: 605px;
   padding:20px;
   position:absolute;
   background: rgba(209, 210, 212, .9);
@@ -651,6 +662,7 @@ input.name {
   padding-left: 55px;
   box-shadow: none;
 }
+
 .input-grey {
   color:#542437 !important;
   font-size: 20px;
@@ -1136,6 +1148,13 @@ a.pink-border6 {width:121px; height:97px; background: transparent url('../../../
 .caret-new { margin-top: 10px; border-bottom-color:#f1f1f2 !important; border-top-color:#f1f1f2 !important;}
 .nav .caret{ border-bottom-color:#f1f1f2; border-top-color:#f1f1f2; }
 
+
+
+.new-drop > li {background-color: :#fff; border:1px solid #e6e7e8;}
+.new-drop > li > a { background-color: #fff; color:#58585b ! important; font-size: 14px; padding:10px; min-width: 200px;}
+.new-drop > li > a:hover,
+.new-drop > li > a:focus { background-color: #fff; color:#58585b ! important; font-weight: bold;}
+
 /**** grey****/
 
 .dropdown-toggle-grey {color: #542437;  height: 55px;  font-size: 20px; font-weight: 300;}
@@ -1405,6 +1424,57 @@ table.gridtable-payment-yellow td {
         .dropx12 {cursor:pointer; display:block; padding:0px; color: #53777a; padding-top: 0px; margin-left: -20px;}
 
 /**** checkboxes ****/
+
+label.mini-check2 {
+    display: inline-block;
+    cursor: pointer;
+    position: relative;
+    padding-left: 25px;
+    margin-right: 15px;
+    font-size: 13px;
+
+}
+
+input.mini-check[type=checkbox] {
+  display: none;
+}
+label.mini-check2:before {
+  content: "";
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+  position: absolute;
+  padding-top: 0px;
+
+  left: 0;
+  bottom: 1px;
+  background-color: #fff;
+  border:3px solid #0992a3;
+}
+
+
+.checkboxs label.mini-check2 {
+  margin-bottom: 0px;
+
+}
+.checkboxs label.mini-check2:before {
+    border-radius: 3px;
+
+}
+
+input.mini-check[type=checkbox]:checked + label:before {
+  content: "\2713";
+  font-size: 15px;
+    font-weight: bold;
+  color: #58585b;
+  text-align: center;
+    line-height: 15px;
+
+}
+
+
+
 
 p.check5 > input
 {
@@ -2014,6 +2084,12 @@ left:48%; top: 47%; z-index: 950; width: 63px; height: 72px; position:absolute; 
 
 
 @media only screen and (max-width: 480px) {
+
+  #calendar {
+    width: 400px;
+    margin: 0 auto;
+    }
+
 .ca-nav span.ca-nav-next{display: none;
 }
 .d-s-s-s{display: none;}
@@ -2330,6 +2406,11 @@ p.check5:not(#foo) > input[type=checkbox] + label:hover               { backgrou
 
 
 @media only screen and (max-width: 1000px) {
+
+    #calendar {
+    width: 980px;
+    margin: 0 auto;
+    }
 .sp-margin{margin-left: 5px;}
 .edito{margin-top: 0px !important;}
 .linknamewidth{width: 60%;}

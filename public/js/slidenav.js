@@ -2,7 +2,7 @@ $(document).ready(function(){
         $("#open").click(function(){
             if ($("#slidenav").is(':hidden'))
                 $("#slidenav").show().animate({
-                top: '270'
+                top: '250'
             }, 500);
         
             else{

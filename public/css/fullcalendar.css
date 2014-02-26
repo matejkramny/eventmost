@@ -66,7 +66,7 @@ html .fc,
 	color: #542437;
 	font-size: 18px;
 	margin-top: -50px;
-	margin-left: -150px;
+	margin-left: -110px;
 	position: absolute;
 	}
 	
@@ -502,7 +502,6 @@ table.fc-border-separate {
 	}
 	
 /* all-day area */
-	
 .fc-agenda-allday th {
 	border-width: 0 1px;
 	}
@@ -613,9 +612,10 @@ table.fc-border-separate {
 	text-align: center;
 	cursor: s-resize;
 	}
-	
+.f {min-height: 100px!important;}
 .fc-agenda .ui-resizable-resizing { /* TODO: better selector */
 	_overflow: hidden;
 	}
 	
+
 	
