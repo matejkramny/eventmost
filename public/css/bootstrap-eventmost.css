@@ -483,6 +483,18 @@ min-height: 116px;
   display: none;
   z-index: 999;
 }
+#slidenav2 {
+  margin:0 auto;
+  width:1165px;
+  min-height: 605px;
+  padding:20px;
+  position:absolute;
+  background: rgba(209, 210, 212, .9);
+  display: none;
+  z-index: 999;
+}
+
+.addfil{min-width:350px;}
 .otherabsolute{position:absolute; width:1200px;}
 
 #open {

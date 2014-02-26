@@ -612,7 +612,11 @@ table.fc-border-separate {
 	text-align: center;
 	cursor: s-resize;
 	}
-.f {min-height: 100px!important;}
+.fort {min-height: 100px!important;}
+.forty {height: 602px!important;}
+
+.dif{height: 602px !important;}
+	
 .fc-agenda .ui-resizable-resizing { /* TODO: better selector */
 	_overflow: hidden;
 	}

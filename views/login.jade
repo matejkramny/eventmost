@@ -153,6 +153,119 @@ append content
 
 	.nspacer
 	.row
+		#slidenav2
+			.row
+				.col-sm-5.col-lg-5.col-md-5.col-xs-5.no-float
+					.bg-green.nor-pad.nspacer-medium(style="color:#f1f1f2;")
+						| Filter Events
+					.bg-white.nor-pad
+						.pull-left
+							| show events by organizers I’m following
+						.pull-right
+							.checkboxs.nspacer-small
+								input.mini-check( id="check12" type="checkbox" name="check" value="check1")
+								label.mini-check2(for="check12")
+						.clearfix
+					.bg-white.nor-pad(style="margin-top:1px;")
+						.pull-left
+							| show events by my Facebook friends
+						.pull-right
+							.checkboxs.nspacer-small
+								input.mini-check( id="check22" type="checkbox" name="check" value="check1")
+								label.mini-check2(for="check22")
+						.clearfix
+					.bg-white.nor-pad(style="margin-top:1px;")
+						.pull-left
+							| show events in a certain postal code/s
+						.pull-right
+							.checkboxs.nspacer-small
+								input.mini-check( id="check33" type="checkbox" name="check" value="check1")
+								label.mini-check2(for="check33")
+						.clearfix
+					.bg-white.nor-pad(style="margin-top:1px;")
+						.pull-left
+							| show events with certain key words
+						.pull-right
+							.checkboxs.nspacer-small
+								input.mini-check( id="check44" type="checkbox" name="check" value="check1")
+								label.mini-check2(for="check44")
+						.clearfix
+			.clearfix
+			.nspacer-awsome
+			.row
+				.col-sm-10.col-lg-10.col-md-10.col-xs-10.no-float
+					.pull-right.ex-st2(style="margin-left:20px;")
+						a(href="/logout", class="logout")
+							button.btn.btn-default.font-e.inmar(type='submit', style="border-radius: 8px; margin-bottom:10px; font-size:15px; color:#e6e7e8; width:100%;")
+								| DELETE
+					.pull-right.ex-st2
+							.bold.code
+								| Codes saved:
+							input.input-grey.psev(type="text" style="background-color:#e6e7e8; color:#58585b; font-size:14px; margin-left:10px; border-radius:10px; margin-top:14px;")
+					.pull-right.ex-st2(style="margin-left:20px;")
+						a(href="/logout", class="logout")
+							button.btn.btn-default.font-e.inmar(type='submit', style="border-radius: 8px; margin-bottom:10px; font-size:15px; color:#e6e7e8; width:100%;")
+								| DELETE
+					.pull-right.ex-st2
+							.bold.code
+								| Codes saved:
+							input.input-grey.psev(type="text" style="background-color:#e6e7e8; color:#58585b; font-size:14px; margin-left:10px; border-radius:10px; margin-top:14px;")
+					.pull-right.ex-st2(style="margin-left:20px;")
+						a(href="/logout", class="logout")
+							button.btn.btn-default.font-e.inmar(type='submit', style="border-radius: 8px; margin-bottom:10px; font-size:15px; color:#e6e7e8; width:100%;")
+								| SAVE	
+					.pull-right.ex-st2.inmar
+							input.input-grey.psev.inmar(type="text" style="background-color:#e6e7e8; color:#58585b; font-size:14px; margin-left:10px; border-radius:10px;")						
+					.pull-right
+						.right.font-x1.purple(style="margin-top:35px;")
+							| Enter postal code
+
+				.clearfix
+				.nspacer-small
+				.col-sm-10.col-lg-10.col-md-10.col-xs-10.no-float
+					.pull-right.ex-st2(style="margin-left:20px;")
+						a(href="/logout", class="logout")
+							button.btn.btn-default.font-e(type='submit', style="border-radius: 8px; margin-bottom:10px; font-size:15px; color:#e6e7e8; width:100%;")
+								| DELETE
+					.pull-right.ex-st2
+							input.input-grey.psev(type="text" style="background-color:#e6e7e8; color:#58585b; font-size:14px; margin-left:10px; border-radius:10px;")		
+					.pull-right.ex-st2(style="margin-left:20px;")
+						a(href="/logout", class="logout")
+							button.btn.btn-default.font-e(type='submit', style="border-radius: 8px; margin-bottom:10px; font-size:15px; color:#e6e7e8; width:100%;")
+								| DELETE	
+					.pull-right.ex-st2
+							input.input-grey.psev(type="text" style="background-color:#e6e7e8; color:#58585b; font-size:14px; margin-left:10px; border-radius:10px;")
+					.pull-right.ex-st2(style="margin-left:20px;")
+						a(href="/logout", class="logout")
+							button.btn.btn-default.font-e(type='submit', style="border-radius: 8px; margin-bottom:10px; font-size:15px; color:#e6e7e8; width:100%;")
+								| SAVE
+					.pull-right.ex-st2
+							input.input-grey.psev(type="text" style="background-color:#e6e7e8; color:#58585b; font-size:14px; margin-left:10px; border-radius:10px;")
+					.pull-right
+						.right.font-x1.purple(style="margin-top:5px;")
+							| Enter word
+				.clearfix
+				.nspacer-small
+				.col-sm-10.col-lg-10.col-md-10.col-xs-10.no-float
+					.pull-right.ex-st2(style="margin-left:20px;")
+						a(href="/logout", class="logout")
+							button.btn.btn-default.font-e(type='submit', style="border-radius: 8px; margin-bottom:10px; font-size:15px; color:#e6e7e8; width:100%;")
+								| DELETE
+					.pull-right.ex-st2
+							input.input-grey.psev(type="text" style="background-color:#e6e7e8; color:#58585b; font-size:14px; margin-left:10px; border-radius:10px;")		
+					.pull-right.ex-st2(style="margin-left:20px;")
+						a(href="/logout", class="logout")
+							button.btn.btn-default.font-e(type='submit', style="border-radius: 8px; margin-bottom:10px; font-size:15px; color:#e6e7e8; width:100%;")
+								| DELETE	
+					.pull-right.ex-st2
+							input.input-grey.psev(type="text" style="background-color:#e6e7e8; color:#58585b; font-size:14px; margin-left:10px; border-radius:10px;")
+				.clearfix
+				.nspacer-small
+				.col-sm-10.col-lg-10.col-md-10.col-xs-10.no-float
+					.pull-right.ex-st2(style="margin-left:20px;")
+						a(href="/logout", class="logout")
+							button.btn.btn-primary.font-e(type='submit', style="background-color:#0892a3; border-radius: 8px; margin-bottom:10px; font-size:15px; color:#e6e7e8; width:100%; min-width:150px;")
+								| ENTER
 		.col-md-12.col-sm-12.col-lg-12(style="padding-right:5px; padding-left:5px;")
 			.pull-right.bg-green
 				ul.nav.navbar-nav(style="padding:0px;")
@@ -164,6 +277,12 @@ append content
 								a(href='#') Events closest to me
 							li
 								a(href='#') My following organizers
+			.col-md-3.col-sm-3.col-lg-3.pull-right
+				| &nbsp;
+			.pull-right.bg-green.center.addfil(style="height:38px; padding-top:8px;")
+				a.link-ashen#open2(href='#')
+					| Add filters
+					
 			.clearfix
 			.bg-green.font-ah.pad-left-ten(style="min-height:1px;")
 
