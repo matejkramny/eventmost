@@ -1,25 +1,30 @@
 mixin eventItem(event)
-	.nspacer.col-md-12.col-xs-12.col-lg-12.col-sm-12.no-pads
-		.pull-left.event(style='width:101.4%;')
-			a.slid-box(href="/event/"+event._id)
-				article.c-two(style="background: url(#{event.avatar.url}) top left; background-size: 100% 100%; ")
-				.col-lg-4.col-md-4.col-sm-4.col-xs-4.psev.pad-left-ten.rbox.eh.exwidth66.no-pads1(style="max-height:144px;")
-					.pad-left-ten
-						h4= event.name
-						.smart-minus!= event.description
-				.col-lg-2.col-md-2.col-sm-2.col-xs-2.psev.pad-left-ten.rbox.eh.no-pads1(style="max-height:144px;")
-					.pad-left-ten
-						h4 When
+	.nspacer
+	.row
+		.col-lg-3.col-md-3.col-sm-3.col-xs-3.pad-right-zero
+			img.img-responsive(src="/images/event-avatar-new.svg")
+		.col-lg-9.col-md-9.col-sm-9.col-xs-9.psev.pad-left-ten.eh.no-pads1(style="max-height:144px;")
+			.nspacer-medium3
+				.font18.font16s.color-green.bold= event.name
+				.div.font16s.odf(style="max-height:40px; overflow:hidden;")
+					.smart-minus!= event.description
+			.nspacer-small.od
+				.pull-left.color-green.font16.bold.font16s
+					| WHEN
+				.pull-left.pad-left-ten.font16s
+					span.bold.break
 						= locals.moment(event.start).fromNow()
-						br
-						br
-						= locals.moment(event.start).format('dddd Do MMMM YYYY [at] h:mm:ss a')
-				.col-lg-3.col-md-3.col-sm-3.col-xs-3.psev.pad-left-ten.rbox.eh.exwidth65.no-pads1(style="max-height:144px;")
-					.pad-left-ten
-						h4 Where
+					span.pad-left-ten.break
+					= locals.moment(event.start).format('dddd Do MMMM YYYY [at] h:mm:ss a')
+				.clearfix
+			.nspacer-small.od
+				.pull-left.color-green.font16.bold.font16s 
+					| WHERE
+				.pull-left.pad-left-ten.font16s
+					span
 						if (event.venue_name)
-							= event.venue_name
-						br
-						if (event.address)
+						= event.venue_name
+						span.pad-left-ten
+							if (event.address)
 							= event.address
 	.clearfix
