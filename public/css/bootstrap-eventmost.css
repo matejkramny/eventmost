@@ -83,7 +83,7 @@
 }
 
 body {
-	background-color: #f1f1f2;
+	background-color: #fff;
   color: #542437;
 	font-family: 'Raleway', Lato, Arial, sans-serif;
   font-size: 14px;
@@ -168,6 +168,7 @@ input[type=number]::-webkit-outer-spin-button {
 .nspacer{margin-top: 10px;}
 .nspacer-medium2{margin-top: 12px;}
 .nspacer-medium{margin-top: 15px;}
+.nspacer-medium3{margin-top: 15px;}
 .nspacer-big{margin-top: 20px;}
 .nspacer-bigger{margin-top: 25px;}
 .nspacer-awsome{margin-top: 55px;}
@@ -2418,7 +2419,7 @@ p.check5:not(#foo) > input[type=checkbox] + label:hover               { backgrou
 
 
 @media only screen and (max-width: 1000px) {
-
+.nspacer-medium3{margin-top: 0px;}
     #calendar {
     width: 980px;
     margin: 0 auto;
@@ -2954,8 +2955,10 @@ min-height: 100px;
 
 @media only screen and (max-width: 600px) {
   .width-attendees{width: 100%; text-align: left!important;}
+  .od{margin-top: 0px !important;}
 }
 @media only screen and (min-width: 481px) and (max-width: 685px) {
+
     .linknamewidth{font-size: 20px!important; width: 100%; text-align: center!important; font-weight: bold;}
   .no-pads{padding-left: 0px; padding-right: 0px;}
   .exwidth65{width: 20%!important;}
@@ -3103,6 +3106,8 @@ min-height: 100px;
 .no-pads{padding-left: 0px; padding-right: 0px;}
 }
 @media only screen and (max-width: 500px) {
+   .font16s{font-size: 10px !important;}
+   .odf{padding-top: 10px; height: 35px !important;}
 .event {font-size: 11px;}
   .event {height: 100px;}
   .event:hover {height: 100px;}
