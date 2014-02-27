@@ -2180,7 +2180,7 @@ footer {font-size: 10px;}
 }
 /**** green****/
 .dropdown-toggle { height: auto; font-size: 12px; font-weight: 300;}
-.dropdown-menu > li > a { font-size: 12px; padding-left: -4px; padding-right: 5px;  background-color: #0992a3 !important;}
+.dropdown-menu > li > a { text-align:right; font-size: 12px; padding-left: -4px; padding-right: 5px;  background-color: #fff !important;}
 .dropdown-menu {padding: 2px; background-color: #0992a3 !important;}
 .dropdown-menu > li > a:hover,
 .navbar-nav .open .dropdown-menu > li > a, .navbar-nav .open .dropdown-menu .dropdown-header { padding-left: 12px;}
@@ -3027,7 +3027,7 @@ min-height: 100px;
     padding-top: 0px; }
 /**** green****/
 .dropdown-toggle { height: auto; font-size: 14px; font-weight: 300;}
-.dropdown-menu > li > a { font-size: 12px; padding-left: -4px; padding-right: 5px;  background-color: #0992a3 !important;}
+.dropdown-menu > li > a { font-size: 12px; padding-left: -4px; padding-right: 5px;  background-color: #fff !important;}
 .dropdown-menu {padding: 2px; background-color: #0992a3 !important;}
 .dropdown-menu > li > a:hover,
 .navbar-nav .open .dropdown-menu > li > a, .navbar-nav .open .dropdown-menu .dropdown-header { padding-left: 12px;}
@@ -3102,12 +3102,19 @@ min-height: 100px;
 }
 
 @media only screen and (max-width: 600px) {
+  .addfil{min-width:100px; float: left !important;}
+  .oi{height: 25px !important;}
+  .oi2{height: 15px !important; width: 120px;}
 .summary-yellow-height{height: auto; padding-bottom: 10px;}
 .no-pads{padding-left: 0px; padding-right: 0px;}
+  .other-dis{margin-left: 10px; width: 100% !important;}
+  .don-dis{display: none;}
+   .font16s{font-size: 10px !important; }
+.odf {padding-top: 10px; height: 35px; padding-right: 20px;}
+
 }
 @media only screen and (max-width: 500px) {
-   .font16s{font-size: 10px !important;}
-   .odf{padding-top: 10px; height: 35px !important;}
+
 .event {font-size: 11px;}
   .event {height: 100px;}
   .event:hover {height: 100px;}
@@ -3124,6 +3131,9 @@ min-height: 100px;
 }
 
 @media only screen and (max-width: 480px) {
+
+
+
       .linknamewidth{font-size: 16px!important; width: 100%; text-align: center!important; font-weight: bold;}
     .width85posts {width: 70% !important;}
 .font14md{font-size: 12px;}
@@ -3234,6 +3244,7 @@ table.gridtable-payment-yellow {font-size: 10px;}
 
 
 @media only screen and (max-width: 360px) {
+
   .event {font-size: 11px;}
   .no-pads1{padding-right: 0px; padding-left: 0px;}
   .event {height: 80px;}
@@ -3310,4 +3321,6 @@ table.gridtable-payment-yellow {font-size: 10px;}
 	background-color: #542437 !important;
 	color: #FFF !important;
 }
+
+
 }

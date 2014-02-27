@@ -1,21 +1,20 @@
 mixin eventItem(event)
 	.nspacer
 	.row
-		.col-lg-3.col-md-3.col-sm-3.col-xs-3.pad-right-zero
+		.col-lg-3.col-md-3.col-sm-3.col-xs-3.pad-right-zero.don-dis
 			img.img-responsive(src="/images/event-avatar-new.svg")
-		.col-lg-9.col-md-9.col-sm-9.col-xs-9.psev.pad-left-ten.eh.no-pads1(style="max-height:144px;")
+		.col-lg-9.col-md-9.col-sm-9.col-xs-9.psev.pad-left-ten.no-pads1.other-dis
 			.nspacer-medium3
 				.font18.font16s.color-green.bold= event.name
 				.div.font16s.odf(style="max-height:40px; overflow:hidden;")
 					.smart-minus!= event.description
-			.nspacer-small.od
+			.nspacer-small.od.break(style="white-space: nowrap;")
 				.pull-left.color-green.font16.bold.font16s
 					| WHEN
-				.pull-left.pad-left-ten.font16s
-					span.bold.break
+				.pull-left.pad-left-ten.font16s.bold.break
 						= locals.moment(event.start).fromNow()
-					span.pad-left-ten.break
-					= locals.moment(event.start).format('dddd Do MMMM YYYY [at] h:mm:ss a')
+				.pull-left.pad-left-ten.font16s.break
+						= locals.moment(event.start).format('dddd Do MMMM YYYY [at] h:mm:ss a')
 				.clearfix
 			.nspacer-small.od
 				.pull-left.color-green.font16.bold.font16s 
