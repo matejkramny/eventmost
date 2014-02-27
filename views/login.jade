@@ -8,8 +8,9 @@ append content
 
 	.row
 		.col-sm-8.col-md-8.col-lg-8.pad-left-zero
+			.nspacer
 			form(method="GET", accept-charset="utf-8", action="/search/")
-				input.pull-left.font-s.search-input.pad-left-ten.header-links(type="search", name="q", placeholder="search event by location, organizers, or key words", style="width:75%; height:50px; border-radius:0px;", value= typeof search !== "undefined" ? search.query : null)
+				input.pull-left.font-s.search-input.pad-left-ten.header-links(type="search", name="q", placeholder="search event by location, organizers, or key words", style="width:75%; height:50px; border-radius:0px; background-color:#f1f1f2;", value= typeof search !== "undefined" ? search.query : null)
 				input.gonew2.pull-left.header-links(type="submit", value="GO", style="width:10%;")
 	.nspacer
 	.row
@@ -269,15 +270,15 @@ append content
 		.col-md-12.col-sm-12.col-lg-12(style="padding-right:5px; padding-left:5px;")
 			.pull-right.bg-green
 				ul.nav.navbar-nav(style="padding:0px;")
-					li.dropdown(style="height:38px;")
-						a.dropdown-toggle(href='#', data-toggle='dropdown' style="height:30px; padding-top:0px; font-size:14px; text-align:left;")
+					li.dropdown.oi(style="height:38px;")
+						a.dropdown-toggle.oi2(href='#', data-toggle='dropdown' style="height:30px; padding-top:0px; font-size:14px; text-align:left;")
 							| Arrange by
-						ul.dropdown-menu.pull-right.new-drop(style="background-color:#f1f1f2; color:#58585b; top:40px; padding:0px;")
+						ul.dropdown-menu.pull-right.new-drop(style="background-color:#f1f1f2 !important; color:#58585b; top:40px; padding:0px;")
 							li
 								a(href='#') Events closest to me
 							li
 								a(href='#') My following organizers
-			.col-md-3.col-sm-3.col-lg-3.pull-right
+			.col-md-3.col-sm-3.col-lg-3.pull-right.don-dis
 				| &nbsp;
 			.pull-right.bg-green.center.addfil(style="height:38px; padding-top:8px;")
 				a.link-ashen#open2(href='#')
