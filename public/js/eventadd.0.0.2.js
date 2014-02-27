@@ -704,7 +704,10 @@ $(document).ready(function() {
 		
 		$('.eventSubmitBtn').html('Save Event')
 	} else {
-		addCategory("Guest Speaker")
+		addCategory("Guest Speaker");
+		
+		$('#fromDateMobile, #fromDateDesktop').parent().find('input[type=time]').val('00:00');
+		$('#toDateMobile, #toDateDesktop').parent().find('input[type=time]').val('23:59');
 	}
 });
 
