@@ -12,7 +12,7 @@ exports.router = function (app) {
 exports.listEvents = function (req, res) {
 	models.Event.find({ deleted: false, privateEvent: { $ne: true } })
 		.populate('avatar attendees.user')
-		.select('name start end address venue_name avatar')
+		.select('name start end address venue_name avatar source')
 		.sort('-created')
 		.exec(function(err, evs) {
 		// TODO limit mount of events received
@@ -39,7 +39,7 @@ exports.listMyEvents = function (req, res) {
 	models.Attendee.find({ 'user': req.user._id }, '_id', function(err, attendees) {
 		models.Event.find({ 'attendees': { $in: attendees }})
 			.populate('avatar attendees.user')
-			.select('name start end address venue_name avatar')
+			.select('name start end address venue_name avatar source')
 			.sort('-created')
 			.exec(function(err, evs) {
 			if (err) throw err;
@@ -117,7 +117,7 @@ exports.listNearEvents = function (req, res) {
 			}
 		}).populate('event')
 		.limit(limit)
-		.select('name start end address venue_name avatar')
+		.select('name start end address venue_name avatar source')
 		.exec(function(err, geos) {
 			if (err) throw err;
 		

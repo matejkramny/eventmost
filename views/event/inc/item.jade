@@ -1,6 +1,11 @@
 mixin eventItem(event)
 	.nspacer
-	a(href='/event/'+event.id)
+	- var link = '/event/'+event.id;
+	if (event.source.eventbrite == true)
+		- link = 'https://eventbrite.com/e/'+event.source.id
+	if (event.source.facebook == true)
+		- link = 'https://facebook.com/events/'+event.source.id
+	a(href=link)
 		.row
 			.col-lg-3.col-md-3.col-sm-3.col-xs-3.pad-right-zero.don-dis
 				img.img-responsive(src="/images/event-avatar-new.svg")

@@ -16,7 +16,7 @@ exports.display = function (req, res) {
 			.limit(5)
 			.skip(skip)
 			.populate('avatar')
-			.select('name start end address venue_name avatar')
+			.select('name start end address venue_name avatar source')
 			.exec(function(err, evs) {
 			if (err) throw err;
 			
