@@ -76,7 +76,7 @@ html
 								.clearfix
 								.nspacer.hide-mini
 									form(method="GET", accept-charset="utf-8", action="/search/")
-										input.gonew2.pull-right.header-links(type="submit", value="GO", style="width:10%;")
+										input.gonew2.pull-right.header-links(type="submit", value="GO", style="width:10%; height:36px;")
 										input.pull-right.font-s.search-input.pad-left-ten.header-links(type="search", name="q", placeholder="Search for Events or People on EventMost", style="width:75%;", value= typeof search !== "undefined" ? search.query : null)
 						else
 							.col-md-6.col-xs-6.pull-right(ng-controller="TakeoverController" ng-init="inboxUrl = '#{inbox_send_to}'; setCsrf('#{token}');")

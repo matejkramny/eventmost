@@ -1253,7 +1253,7 @@ a.pink-border6 {width:121px; height:97px; background: transparent url('../../../
 .pagination{margin-top: 0px;}
 .pagination > li > a, .pagination > li > span {
   border: none;
-  background-color: #f1f1f2;
+  background-color: #fff;
   color: #542437;
   padding-left: 0px;
   padding-right: 10px;
@@ -1262,7 +1262,7 @@ a.pink-border6 {width:121px; height:97px; background: transparent url('../../../
 .pagination > li > span:hover,
 .pagination > li > a:focus,
 .pagination > li > span:focus {
-  background-color: #f1f1f2;
+  background-color: #fff;
   color: #0992a3;
 }
 .pagination > .disabled > span,
@@ -1271,8 +1271,8 @@ a.pink-border6 {width:121px; height:97px; background: transparent url('../../../
 .pagination > .disabled > a:focus {
   color: #999999;
   cursor: not-allowed;
-  background-color: #f1f1f2;
-  border-color: #f1f1f2;
+  background-color: #fff;
+  border-color: #fff;
 }
 .pagination > .active > a,
 .pagination > .active > span,
@@ -1282,7 +1282,7 @@ a.pink-border6 {width:121px; height:97px; background: transparent url('../../../
 .pagination > .active > span:focus {
   z-index: 2;
   cursor: default;
-  background-color: #f1f1f2;
+  background-color: #fff;
   font-weight: 700;
   color: #542437;
   border-color: #f1f1f2;
