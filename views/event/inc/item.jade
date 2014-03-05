@@ -1,12 +1,15 @@
 mixin eventItem(event)
 	.nspacer
 	- var link = '/event/'+event.id;
+	- var foreign = false;
 	if (event.source.eventbrite == true)
 		- link = 'https://eventbrite.com/e/'+event.source.id
+		- foreign = true;
 	if (event.source.facebook == true)
 		- link = 'https://facebook.com/events/'+event.source.id
+		- foreign = true;
 	.row
-	a(href=link)
+	a(href=link target= foreign ? "_blank" : null)
 		.col-lg-3.col-md-3.col-sm-3.col-xs-3.pad-right-zero.don-dis
 			img.img-responsive(src=event.avatar.url)
 		.col-lg-9.col-md-9.col-sm-9.col-xs-9.psev.pad-left-ten.no-pads1.other-dis
