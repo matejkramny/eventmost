@@ -2,7 +2,16 @@ extends responsive
 
 include event/inc/item
 
+append css
+	link(rel="stylesheet" href="/css/fullcalendar.css")
+	link(rel="stylesheet" href="/css/fullcalendar.print.css")
 
+append addonjs
+	script(src="/js/vendor/fullcalendar.js" defer)
+	script(src="/js/jquery-ui.custom.min.js" defer)
+	script(src="/js/calendar.js" defer)
+	script(src="/js/slidenav.js" defer)
+	script(src="/js/slidenav2.js" defer)
 
 append content
 

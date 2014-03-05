@@ -1,10 +1,10 @@
 doctype
 html
 	head
-		meta(http-equiv="Content-Type", content="text/html; charset=utf-8;")
-		meta(name="_csrf", content="#{token}")
+		meta(http-equiv="Content-Type" content="text/html; charset=utf-8;")
+		meta(name="_csrf" content="#{token}")
 		if (typeof ev !== "undefined")
-			meta(name="event_id", content="#{ev._id}")
+			meta(name="event_id" content="#{ev._id}")
 		meta(name="viewport" content="width=device-width, initial-scale=1.0")
 		block meta
 		title #{title}
@@ -15,8 +15,6 @@ html
 		block css
 			link(rel="stylesheet" href="/css/all_combined.min.css")
 			link(rel="stylesheet" href="/css/bootstrap-eventmost.css")
-			link(rel="stylesheet" href="/css/fullcalendar.css")
-			link(rel="stylesheet" href="/css/fullcalendar.print.css")
 
 	body(ng-app="eventMost")
 		//- main container
@@ -132,8 +130,3 @@ html
 					
 		//- page-specific
 		block addonjs
-				script(src="/js/vendor/fullcalendar.js" defer)
-				script(src="/js/jquery-ui.custom.min.js" defer)
-				script(src="/js/calendar.js" defer)
-				script(src="/js/slidenav.js" defer)
-				script(src="/js/slidenav2.js" defer)

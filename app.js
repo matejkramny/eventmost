@@ -207,6 +207,7 @@ io.set('authorization', socketPassport.authorize({
 	cookieParser: express.cookieParser,
 	key: config.sessionKey,
 	secret: config.sessionSecret,
+	passport: passport,
 	store: sessionStore,
 	fail: function(data, message, error, accept) {
 		//throw new Error(message)
