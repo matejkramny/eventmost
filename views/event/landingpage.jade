@@ -12,15 +12,8 @@ append addonjs
 
 block content
 	if (eventattending)
-		mixin navbar(4)
+		+navbar
 	
-	.col-xs-12.hide-all2
-		form(method="POST", accept-charset="utf-8")
-			input.gonew2.pull-right.header-links(type="button", value="GO", style="width:10%;")
-			input(type="hidden", name="_csrf", value=token)
-			input.pull-right.font-s.search-input.pad-left-ten.header-links(type="search", placeholder="search events or people", style="width:87%;")
-	.clearfix.hide-all2
-
 	.nspacer
 	.col-md-3.col-lg-3.col-sm-3
 		.center
@@ -30,25 +23,26 @@ block content
 		.col-md-3.col-lg-3.col-sm-3.font-e.semi-bold
 			| When
 			.line-purple
-			.font-s.inline.semi-bold(title= eventStartFormatted)
+			.font-s.inline.semi-bold(title= eventStartFormatted style="word-wrap: break-word; word-break: break-word;")
 				= eventStartFormatted
+				= eventEndFormatted
 		.col-md-3.col-lg-3.col-sm-3.font-e.semi-bold
 			| Where
 			.line-purple
 			.font-s.inline.semi-bold(style="word-break:break-all; ")
 				- if (ev.address || ev.venue_name)
-					strong.pull-left.break(style="word-wrap:break-all; white-space: -moz-pre-wrap; white-space: pre-wrap;")
-					span
+					strong.pull-left.break(style="word-wrap:break-word; word-break: break-word; white-space: -moz-pre-wrap; white-space: pre-wrap;")
+					span(style="word-wrap:break-word; word-break: break-word;")
 						img.pull-left.pad-right-five(src="/images/mapster.svg" alt="")
 						= ev.venue_name
-					.pull-left
+					.pull-left(style="word-wrap:break-word; word-break: break-word;")
 						= ev.address
 					- if (!ev.address && !ev.venue_name)
 						| Event does not have a location
 		.col-md-3.col-lg-3.col-sm-3.font-e.semi-bold
 			| Event Organizers
 			.line-purple
-			.font-s.inline.semi-bold(style="word-break:break-all")
+			.font-s.inline.semi-bold(style="word-wrap:break-word; word-break: break-word;")
 				for attendee in locals.ev.attendees
 					if (attendee.admin && attendee.isAttending)
 						a(href="/user/"+attendee.user._id)= attendee.user.getName()
@@ -58,17 +52,18 @@ block content
 			// google map here
 			#eventMap(style="height:197px;")
 		.col-md-3.col-lg-3.col-sm-3.font-e.semi-bold(style="margin-top:-127px;")
-			.center
-				| Sponsors
-			.line-purple
 			if (ev.sponsorLayout.sponsor1)
-				img.img-responsive(src=ev.sponsorLayout.sponsor1.url)
-			.nspacer-small
-			if (ev.sponsorLayout.sponsor2 && ev.sponsorLayout.layout > 0 && ev.sponsorLayout.layout != 3)
-				img.img-responsive(src=ev.sponsorLayout.sponsor2.url)
-			.nspacer-small
-			if (ev.sponsorLayout.sponsor3 && ev.sponsorLayout.layout == 2)
-				img.img-responsive(src=ev.sponsorLayout.sponsor3.url)
+				.center
+					| Sponsors
+				.line-purple
+				if (ev.sponsorLayout.sponsor1)
+					img.img-responsive(src=ev.sponsorLayout.sponsor1.url)
+				.nspacer-small
+				if (ev.sponsorLayout.sponsor2 && ev.sponsorLayout.layout > 0 && ev.sponsorLayout.layout != 3)
+					img.img-responsive(src=ev.sponsorLayout.sponsor2.url)
+				.nspacer-small
+				if (ev.sponsorLayout.sponsor3 && ev.sponsorLayout.layout == 2)
+					img.img-responsive(src=ev.sponsorLayout.sponsor3.url)
 		.clearfix
 	.clearfix
 

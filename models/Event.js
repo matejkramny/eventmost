@@ -143,7 +143,7 @@ scheme.statics.getEvent = function (id, cb, simple) {
 				stack.push(function(callback) {
 					if (ev.avatar == null || ev.avatar.url == null || ev.avatar.url.length == 0) {
 						var avatar = new Avatar({
-							url: "/images/event-avatar-new2.svg"
+							url: "/images/event-avatar-new.svg"
 						})
 						avatar.save();
 						ev.avatar = avatar._id;

@@ -247,7 +247,16 @@ function viewRegistrationPage (req, res) {
 	res.format({
 		html: function() {
 			res.locals.stripe_key = config.credentials.stripe.pub;
-			res.locals.eventStartFormatted = moment(res.locals.ev.start).zone(0).format('dddd, Do, MMMM YYYY [at] h:mm:ss a');
+			
+			var start = res.locals.ev.start;
+			var end = res.locals.ev.end;
+			res.locals.eventStartFormatted = moment(start).zone(0).format('dddd, Do, MMMM YYYY [at] h:mm:ss a');
+			if (start.getFullYear() == end.getFullYear() && start.getMonth() == end.getMonth() && start.getDate() == end.getDate()) {
+				// The event ends on the same day.
+				res.locals.eventEndFormatted = " to "+moment(end).zone(0).format('h:mm:ss a');
+			} else {
+				res.locals.eventEndFormatted = " to "+moment(end).zone(0).format('dddd, Do, MMMM YYYY [at] h:mm:ss a');
+			}
 			
 			if (config.production && res.locals.ev.tickets.length > 0 && res.locals.is_https != true) {
 				res.redirect('https://'+req.host+'/event/'+res.locals.ev._id+'/registrationpage');
