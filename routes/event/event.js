@@ -212,31 +212,65 @@ function redirectToRegistrationPage (req, res, next) {
 }
 
 function viewEvent (req, res) {
-	res.format({
-		html: function() {
-			res.locals.hideArrow = true;
-			res.locals.moment = moment;
-			res.locals.stripe_key = config.credentials.stripe.pub;
+	res.locals.hideArrow = true;
+	res.locals.moment = moment;
+	res.locals.stripe_key = config.credentials.stripe.pub;
+	
+	if (redirectToForeignEvent(req, res, '')) {
+		return;
+	}
+	
+	if (res.locals.eventattending) {
+		res.locals.attendees = [];
+		async.reject(res.locals.ev.attendees, function(attendee, cb) {
+			cb(!res.locals.eventadmin && attendee.hidden);
+		}, function(attendees) {
+			res.locals.attendees = attendees;
 			
-			if (res.locals.eventattending) {
-				res.locals.attendees = [];
-				async.reject(res.locals.ev.attendees, function(attendee, cb) {
-					cb(!res.locals.eventadmin && attendee.hidden);
-				}, function(attendees) {
-					res.locals.attendees = attendees;
-					
-					res.render('event/homepage', { title: res.locals.ev.name });
-				})
-			} else {
-				if (config.production && res.locals.ev.tickets.length > 0 && res.locals.is_https != true) {
-					res.redirect('https://'+req.host+'/event/'+res.locals.ev._id);
-					return;
-				}
-				
-				res.render('event/landingpage', { title: res.locals.ev.name });
-			}
+			res.render('event/homepage', { title: res.locals.ev.name });
+		})
+	} else {
+		if (config.production && res.locals.ev.tickets.length > 0 && res.locals.is_https != true) {
+			res.redirect('https://'+req.host+'/event/'+res.locals.ev._id);
+			return;
 		}
-	});
+		
+		res.locals.eventStartFormatted = res.locals.ev.getStartDateFormatted();
+		res.locals.eventEndFormatted = res.locals.ev.getEndDateCombinedFormatted();
+		
+		res.render('event/landingpage', { title: res.locals.ev.name });
+	}
+}
+
+function redirectToForeignEvent (req, res, page) {
+	if (typeof page === 'undefined') { page = 'registrationpage' };
+	
+	var ev = res.locals.ev;
+	if (res.locals.loggedIn && req.query.redirect == '1' && ev.isForeign()) {
+		attendees.isReallyAttending(ev, req.user, function(err, attendee) {
+			if (attendee == null) {
+				// Automatically attend this event, and redirect to a social page..
+				attendees.addAttendee(ev, req.user);
+			
+				var url = 'https://';
+				if (ev.source.eventbrite) {
+					url += 'eventbrite.com/e/';
+				} else if (ev.source.facebook) {
+					url += 'facebook.com/events/';
+				}
+				url += ev.source.id;
+			
+				res.redirect(url);
+			} else {
+				// Redirect without the ?redirect=1
+				res.redirect('/event/'+res.locals.ev._id+'/'+page)
+			}
+		});
+		
+		return true;
+	}
+	
+	return false;
 }
 
 function viewRegistrationPage (req, res) {
@@ -244,24 +278,22 @@ function viewRegistrationPage (req, res) {
 		req.session.redirectAfterLogin = "/event/"+req.params.id+"/registrationpage";
 	}
 	
+	var ev = res.locals.ev;
+	if (redirectToForeignEvent(req, res, 'registrationpage')) {
+		return;
+	}
+	
 	res.format({
 		html: function() {
 			res.locals.stripe_key = config.credentials.stripe.pub;
-			
-			var start = res.locals.ev.start;
-			var end = res.locals.ev.end;
-			res.locals.eventStartFormatted = moment(start).zone(0).format('dddd, Do, MMMM YYYY [at] h:mm:ss a');
-			if (start.getFullYear() == end.getFullYear() && start.getMonth() == end.getMonth() && start.getDate() == end.getDate()) {
-				// The event ends on the same day.
-				res.locals.eventEndFormatted = " to "+moment(end).zone(0).format('h:mm:ss a');
-			} else {
-				res.locals.eventEndFormatted = " to "+moment(end).zone(0).format('dddd, Do, MMMM YYYY [at] h:mm:ss a');
-			}
 			
 			if (config.production && res.locals.ev.tickets.length > 0 && res.locals.is_https != true) {
 				res.redirect('https://'+req.host+'/event/'+res.locals.ev._id+'/registrationpage');
 				return;
 			}
+			
+			res.locals.eventStartFormatted = res.locals.ev.getStartDateFormatted();
+			res.locals.eventEndFormatted = res.locals.ev.getEndDateCombinedFormatted();
 			
 			if (!res.locals.eventattending)
 				res.locals.hideArrow = true;

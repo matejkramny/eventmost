@@ -9,11 +9,11 @@ append addonjs
 block content
 	include inc/listnavbar
 	
-	if typeof findNear !== "undefined" && findNear
+	if(typeof findNear !== "undefined" && findNear)
 		//- Events nearby
 		#nearbyEventsPlaceholder
 			p.text-center.lead Locating events around you..
-	else if events.length == 0
+	else if (events.length == 0)
 		.row
 			.col-md-12.col-sm-12.col-lg-12
 				h4.text-center There are no events :(
@@ -22,3 +22,25 @@ block content
 	
 	for event in events
 		mixin eventItem(event)
+	
+	if (events.length > 0)
+		- var pages = Math.ceil(eventsTotal / 10)
+		- var curpage = Math.ceil(eventsSkip / 10)
+		- var start = curpage - 2;
+		- var end = curpage + 3;
+		if (start < 0)
+			- start = 0;
+		if (end > pages)
+			- end = pages;
+		.nspacer
+			.pull-right(style='height:35px;')
+				ul.pagination
+					li
+						a(href=pageURL) «
+					- for (var i = start; i < end; i++)
+						li(class= curpage == i ? "active" : null)
+							a(href=pageURL+'?skip='+i*10)= i+1
+				
+					li
+						a(href=pageURL+'?skip='+((pages*10)-10)) »
+		.clearfix

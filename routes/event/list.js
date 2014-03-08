@@ -10,25 +10,36 @@ exports.router = function (app) {
 }
 
 exports.listEvents = function (req, res) {
+	var skip = req.query.skip || 0;
+	
 	models.Event.find({ deleted: false, privateEvent: { $ne: true } })
 		.populate('avatar attendees.user')
 		.select('name start end address venue_name avatar source')
 		.sort('-created')
+		.limit(10)
+		.skip(skip)
 		.exec(function(err, evs) {
-		// TODO limit mount of events received
 		if (err) throw err;
 		if (evs) {
-			res.format({
-				html: function() {
-					res.locals.moment = moment;
-					res.render('event/list', { events: evs, pagename: "Events", title: "Events" });
-				},
-				json: function() {
-					res.send({
-						events: evs,
-						pagename: "EventMost Events"
-					})
-				}
+			models.Event.find({ deleted: false, privateEvent: { $ne: true } }).count(function(err, total) {
+				res.format({
+					html: function() {
+						res.locals.eventsTotal = total;
+						res.locals.eventsSkip = skip;
+						res.locals.pageURL = '/events';
+						
+						res.locals.moment = moment;
+						res.render('event/list', { events: evs, pagename: "Events", title: "Events" });
+					},
+					json: function() {
+						res.send({
+							events: evs,
+							total: total,
+							skip: skip,
+							pagename: "EventMost Events"
+						})
+					}
+				});
 			});
 		}
 	})
@@ -36,26 +47,37 @@ exports.listEvents = function (req, res) {
 
 // TODO fix this
 exports.listMyEvents = function (req, res) {
+	var skip = req.query.skip || 0;
+	
 	models.Attendee.find({ 'user': req.user._id }, '_id', function(err, attendees) {
 		models.Event.find({ 'attendees': { $in: attendees }})
 			.populate('avatar attendees.user')
 			.select('name start end address venue_name avatar source')
 			.sort('-created')
+			.skip(skip)
 			.exec(function(err, evs) {
 			if (err) throw err;
 			if (evs) {
-				res.format({
-					html: function() {
-						res.locals.moment = moment;
-						res.render('event/list', { events: evs, pagename: "My Events", title: "My Events" });
-					},
-					json: function() {
-						res.send({
-							events: evs,
-							pagename: "My Events"
-						})
-					}
-				})
+				models.Event.find({ 'attendees': { $in: attendees } }).count(function(err, total) {
+					res.format({
+						html: function() {
+							res.locals.eventsTotal = total;
+							res.locals.eventsSkip = skip;
+							res.locals.pageURL = '/events/my';
+						
+							res.locals.moment = moment;
+							res.render('event/list', { events: evs, pagename: "My Events", title: "My Events" });
+						},
+						json: function() {
+							res.send({
+								events: evs,
+								total: total,
+								skip: skip,
+								pagename: "My Events"
+							})
+						}
+					})
+				});
 			}
 		})
 	})
