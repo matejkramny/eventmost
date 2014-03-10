@@ -3,8 +3,8 @@ extends ../responsive
 include inc/navbar
 
 append addonjs
-	script(src="/js/fileUpload#{minified}.js", defer)
-	script(src="/js/dropbox#{minified}.js", defer)
+	script(src="/js/fileUpload.js?v=#{versionHash}", defer)
+	script(src="/js/dropbox.js?v=#{versionHash}", defer)
 
 block content
 	+navbar

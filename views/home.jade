@@ -1,8 +1,8 @@
 extends responsive
 
 append addonjs
-	script(src="/js/angular-nearEvents#{minified}.js" defer)
-	script(src="/js/homeModals.js" defer)
+	script(src="/js/angular-nearEvents.js?v=#{versionHash}" defer)
+	script(src="/js/homeModals.js?v=#{versionHash}" defer)
 
 append content
 	include event/inc/item

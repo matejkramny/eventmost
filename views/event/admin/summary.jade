@@ -3,8 +3,8 @@ extends ../../responsive
 include ../inc/navbar
 
 append addonjs
-	script(src="/js/vendor/jquery.flot.min.js", defer)
-	sciprt(src="/js/eventSummary#{minified}.js", defer)
+	script(src="/js/vendor/jquery.flot.min.js?v=#{versionHash}", defer)
+	sciprt(src="/js/eventSummary.js?v=#{versionHash}", defer)
 
 block content
 	+navbar

@@ -3,7 +3,7 @@ extends ../../responsive
 include ../inc/navbar
 
 append addonjs
-	script(src="/js/adminPanel#{minified}.js", defer)
+	script(src="/js/adminPanel.js?v=#{versionHash}", defer)
 
 block content
 	+navbar

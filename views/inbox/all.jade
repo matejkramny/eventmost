@@ -5,8 +5,8 @@ include inc/card
 include inc/savedProfile
 
 append addonjs
-	script(src="/js/vendor/moment.min.js" defer)
-	script(src="/js/inbox.js" defer)
+	script(src="/js/vendor/moment.min.js?v=#{versionHash}" defer)
+	script(src="/js/inbox.js?v=#{versionHash}" defer)
 
 block content
 	- var inbox_disabled = false;

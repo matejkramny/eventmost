@@ -6,7 +6,7 @@ include inc/message
 
 append addonjs
 	script(src="/js/vendor/moment.min.js" defer)
-	script(src="/js/mif.0.0.2.js" defer)
+	script(src="/js/mif.js?v=#{versionHash}" defer)
 
 block content
 	+navbar

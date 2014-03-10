@@ -3,11 +3,11 @@ extends ../responsive
 include inc/navbar
 
 append addonjs
-	script(src="/js/eventLandingPage#{minified}.js" defer)
-	script(src="/js/drops#{minified}.js" defer)
+	script(src="/js/eventLandingPage.js?v=#{versionHash}" defer)
+	script(src="/js/drops.js?v=#{versionHash}" defer)
 	include inc/mapjs
 	script(src="/js/vendor/moment.min.js" defer)
-	script(src="/js/event_landingpage.0.0.2.js" defer)
+	script(src="/js/event_landingpage.js?v=#{versionHash}" defer)
 	script(src="https://js.stripe.com/v2/" async)
 
 block content

@@ -2,13 +2,14 @@ extends ../responsive
 
 append addonjs
 	script(src="/js/vendor/jquery-ui-1.10.3.custom.min.js" defer)
-	script(src="/js/datepicker#{minified}.js", defer)
+	script(src="/js/datepicker.js?v=#{versionHash}", defer)
 	script(src="/js/vendor/tiny.editor.packed.js", defer)
 	script(src="/js/vendor/jquery.jcarousel.min.js", defer)
 	if (typeof ev !== "undefined")
 		script.
 			window.emEvent = !{JSON.stringify(ev)}
-	script(src="/js/eventadd.0.0.2.js" defer="true")
+		
+	script(src="/js/eventadd.js?v=#{versionHash}" defer)
 
 append content
 	include ../modals/add-modal
