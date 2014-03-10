@@ -55,7 +55,15 @@ $(document).ready(function() {
 	})
 	
 	$('.openEvent').click(function() {
+		var $link = $(this)
+		if (redirect == '/auth/success') {
+			$('.social-login-link').each(function() {
+				$(this).attr('href', $(this).attr('href') + '?redirect=' + $link.attr('data-event'));
+			})
+		}
+		
 		redirect = '/event/'+$(this).attr('data-event')+"/registrationpage?redirect=1";
+		
 		$('#signModal').modal('show');
 	})
 	
