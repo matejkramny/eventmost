@@ -44,7 +44,10 @@ if (process.platform.match(/^win/) == null) {
 		})
 	} catch (e) {
 		console.log("\n~= Unable to obtain git commit hash =~\n")
+		app.set('app version hash', 'dev')
 	}
+} else {
+	app.set('app version hash', 'dev')
 }
 
 // all environments
@@ -65,6 +68,7 @@ app.use("/", express.static(path.join(__dirname, 'public'))); // serve static fi
 
 app.use(express.limit('25mb')); // File upload limit
 app.use(function(req, res, next) {
+	// Some users like to use webdav.. We don't want them to, so this middleware is all about blocking unwanted user agents
 	var source = req.headers['user-agent'];
 	if (!source || source.match(/webdav/i) == null) {
 		next();
@@ -73,7 +77,7 @@ app.use(function(req, res, next) {
 	
 	// Tell WebDAV to fuck off
 	res.send(400, "");
-})
+});
 // Health check..
 app.use(function(req, res, next) {
 	if (req.url.match(/^\/ping$/)) {
@@ -173,6 +177,7 @@ app.use(function (req, res, next) {
 				}
 			}
 			
+			// This restricts authenticated users controlling someone else's profile from accessing parts of site which they shouldn't be allowed to access (e.g. changing password of a guest profile)
 			if (req.session.loggedin_as_user_restrict != null) {
 				if (req.url.match(/^\/(auth\/login\/return|socket.io\/*)/) || req.url.match(req.session.loggedin_as_user_restrict)) {
 					next();
@@ -244,7 +249,7 @@ app.get('*', function(req, res, next) {
 
 // development only
 if (!config.production) {
-	app.use(express.errorHandler()); // Let xpress handle errors
+	app.use(express.errorHandler()); // Let express handle errors
 	app.set('view cache', false); // Tell Jade not to cache views
 }
 
