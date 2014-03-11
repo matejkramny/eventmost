@@ -260,21 +260,16 @@ $(document).ready(function() {
 		file = null;
 		avatarUploadRequest = null;
 		
-		$("#avatar_preview").attr('src', '/images/default_logo.svg');
-		
-		var avId = $("#avatar_id").val();
-		$("#avatar_id").val('');
-		
+		$(".avatar_preview").attr('src', '/images/logo-avatar.svg');
 		$("#file_browse").attr("name", "avatar");
+		$(".avatarStatus").html("");
 		
-		$("#avatarStatus").html("");
-		
-		if (avId.length == 0) {
+		if (avatar_id.length == 0) {
 			return;
 		}
 		
 		$.ajax({
-			url: "/event/"+avId+"/avatar/remove",
+			url: "/event/"+avatar_id+"/avatar/remove",
 			type: "GET"
 		})
 	});

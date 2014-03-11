@@ -349,21 +349,21 @@ append content
 						.font.font-thin.nspacer.logo-text.dif2
 							| L<br />o<br />g<br />o
 					.col-lg-3-5
-						img.avatar_preview(src="/images/logo-avatar.svg",  class="img-responsive")
+						img.avatar_preview.img-responsive(src="/images/logo-avatar.svg")
 					.pull-left.button-event
 						.bg-yellow-rounded
 							#file_browse_wrapper
 								input#file_browse(name="avatar", type="file")
-					a.pad-left-five.pull-left.button-event.file_upload_wrapper(href="#", style="text-decoration:none !important;")
+					a.pad-left-five.pull-left.button-event.file_upload_wrapper(href="#" style="text-decoration:none !important;")
 						.bg-yellow-rounded.center.create-height
-							img.uploads(src="/images/upload-pin.svg",)
-							img.uploads2(src="/images/upload-pin-s.svg",)
+							img.uploads(src="/images/upload-pin.svg")
+							img.uploads2(src="/images/upload-pin-s.svg")
 							.center.font-tw.uploads-text
 								| Upload
-					.pad-left-five.pull-left.button-event.file_delete_wrapper
+					a.pad-left-five.pull-left.button-event.file_delete_wrapper(href="#" style="text-decoration:none !important;")
 						.bg-yellow-rounded.center.create-height
-							img.uploads(src="/images/delete-bin.svg",)
-							img.uploads2(src="/images/delete-bin-s.svg",)
+							img.uploads(src="/images/delete-bin.svg")
+							img.uploads2(src="/images/delete-bin-s.svg")
 							.center.font-tw.uploads-text
 								| Delete
 					.clearfix
