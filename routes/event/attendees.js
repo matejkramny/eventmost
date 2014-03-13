@@ -529,13 +529,17 @@ function payWithCard (req, res) {
 	})
 }
 
-exports.addAttendee = addAttendee = function (ev, user) {
+exports.addAttendee = addAttendee = function (ev, user, force) {
+	if (typeof force === 'undefined') {
+		force = false;
+	}
+
 	var attendee = new models.Attendee({
 		category: "",
 		hasPaid: true,
-		isAttending: true,
+		isAttending: force,
 		user: user._id
-	})
+	});
 	
 	models.Event.findById(ev._id, function(err, event) {
 		event.attendees.push(attendee._id);

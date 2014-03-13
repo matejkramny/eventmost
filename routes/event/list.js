@@ -66,7 +66,9 @@ exports.listMyEvents = function (req, res) {
 	var skip = req.query.skip || 0;
 	
 	models.Attendee.find({ 'user': req.user._id }, '_id', function(err, attendees) {
-		models.Event.find({ 'attendees': { $in: attendees }})
+		var query = { 'attendees': { $in: attendees } };
+		
+		models.Event.find(query)
 			.populate('avatar attendees.user')
 			.select('name start end address venue_name avatar source')
 			.sort('-created')
@@ -74,7 +76,7 @@ exports.listMyEvents = function (req, res) {
 			.exec(function(err, evs) {
 			if (err) throw err;
 			if (evs) {
-				models.Event.find({ 'attendees': { $in: attendees } }).count(function(err, total) {
+				models.Event.find(query).count(function(err, total) {
 					res.format({
 						html: function() {
 							res.locals.eventsTotal = total;
