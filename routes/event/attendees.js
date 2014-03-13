@@ -533,7 +533,7 @@ exports.addAttendee = addAttendee = function (ev, user) {
 	var attendee = new models.Attendee({
 		category: "",
 		hasPaid: true,
-		isAttending: false,
+		isAttending: true,
 		user: user._id
 	})
 	
@@ -546,10 +546,7 @@ exports.addAttendee = addAttendee = function (ev, user) {
 }
 
 exports.isReallyAttending = isReallyAttending = function (ev, user, cb) {
-	models.Event.findById(ev._id).select('attendees').populate({
-		path: 'attendees',
-		match: { isAttending: false }
-	}).exec(function(err, event) {
+	models.Event.findById(ev._id).select('attendees').populate('attendees').exec(function(err, event) {
 		if (err || !event) {
 			return cb(err);
 		}

@@ -251,7 +251,7 @@ function redirectToForeignEvent (req, res, page) {
 			if (attendee == null) {
 				// Automatically attend this event, and redirect to a social page..
 				attendees.addAttendee(ev, req.user);
-			
+				
 				var url = 'https://';
 				if (ev.source.eventbrite) {
 					url += 'eventbrite.com/e/';

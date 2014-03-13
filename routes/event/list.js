@@ -11,8 +11,24 @@ exports.router = function (app) {
 
 exports.listEvents = function (req, res) {
 	var skip = req.query.skip || 0;
+	var showPastEvents = req.query.pastEvents;
+	if (!showPastEvents || typeof showPastEvents === 'undefined') {
+		showPastEvents = false;
+	} else {
+		showPastEvents = Boolean(showPastEvents);
+	}
 	
-	models.Event.find({ deleted: false, privateEvent: { $ne: true } })
+	var query = {
+		deleted: false,
+		privateEvent: {
+			$ne: true
+		}
+	};
+	if (!showPastEvents) {
+		query.start = { $gte: Date.now() };
+	}
+	
+	models.Event.find(query)
 		.populate('avatar attendees.user')
 		.select('name start end address venue_name avatar source')
 		.sort('-created')
@@ -21,7 +37,7 @@ exports.listEvents = function (req, res) {
 		.exec(function(err, evs) {
 		if (err) throw err;
 		if (evs) {
-			models.Event.find({ deleted: false, privateEvent: { $ne: true } }).count(function(err, total) {
+			models.Event.find(query).count(function(err, total) {
 				res.format({
 					html: function() {
 						res.locals.eventsTotal = total;
