@@ -35,6 +35,8 @@ html
 									b SIGN UP
 								button.btn.btn-default.pb.pull-right(type='button' data-toggle="modal" href="#loginModal" style="margin-right:-4px;")
 									b LOGIN
+								button.btn.btn-primary.pb3.pull-right(type='button' data-toggle="modal" href="#signModal" )
+									|  Create <br />Event 
 								br
 								button.btn.btn-primary.pb2.pull-right(type='button' data-toggle="modal" href="#signModal" )
 									i.fa.fa-star.fa-fw
@@ -101,16 +103,14 @@ html
 			.clearfix
 		
 		.container
-			.col-xs-12.hide-all2
-				form(method="POST", accept-charset="utf-8")
-					input.gonew2.pull-right.header-links(type="button", value="GO", style="width:10%;")
-					input(type="hidden", name="_csrf", value=token)
-					input.pull-right.font-s.search-input.pad-left-ten.header-links(type="search", placeholder="search events or people", style="width:87%;")
-			.clearfix.hide-all2
+
 			
 			include inc/flash
 			block content
+		block contentemp
 			.row
+
+		.container
 				footer.col-xs-12.col-md-12.col-sm-12.col-lg-12
 					.text-center Copyright © 2013 <b>EventMost</b> | 
 						a.link-white(href="/contact") Contact us

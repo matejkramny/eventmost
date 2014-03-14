@@ -1,13 +1,16 @@
 $(document).ready(function(){
         $("#open2").click(function(){
             if ($("#slidenav2").is(':hidden'))
+
                 $("#slidenav2").show().animate({
-                top: '912'
+                //top: '912'
+
             }, 500);
         
             else{
                 $("#slidenav2").hide().animate({
-                top: '860'
+                //top: '860'
+                
             }, 500);
             }
             return false;
@@ -18,7 +21,8 @@ $(document).ready(function(){
         });
         $(document).click(function() {
             $('#slidenav2').hide().animate({
-                top: '860'
+                //top: '860'
+              
             }, 500);
         });
     });
