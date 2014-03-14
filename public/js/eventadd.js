@@ -444,7 +444,7 @@ $(document).ready(function() {
 	}
 	function getTime (datepicker) {
 		var dpicker = $(datepicker);
-		var time = dpicker.parent().find("input[type=time]").val();
+		var time = dpicker.parent().find("input[type=text]").val();
 		var split = time.split(':')
 		
 		var hours = 0;
@@ -632,12 +632,12 @@ $(document).ready(function() {
 		// Dates
 		var date = new Date(ev.start);
 		var time = ('0' + date.getHours()).slice(-2) + ":" + ('0' + date.getMinutes()).slice(-2);
-		$('#fromDateMobile, #fromDateDesktop').parent().find('input[type=time]').val(time);
+		$('#fromDateMobile, #fromDateDesktop').parent().find('input[type=text]').val(time);
 		$('#fromDateMobile, #fromDateDesktop').datepicker("setDate", date);
 		
 		date = new Date(ev.end)
 		time = ('0' + date.getHours()).slice(-2) + ":" + ('0' + date.getMinutes()).slice(-2);
-		$('#toDateMobile, #toDateDesktop').parent().find('input[type=time]').val(time)
+		$('#toDateMobile, #toDateDesktop').parent().find('input[type=text]').val(time)
 		$('#toDateMobile, #toDateDesktop').datepicker("setDate", date);
 		
 		// Description
