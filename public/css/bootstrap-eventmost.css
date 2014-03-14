@@ -103,6 +103,13 @@ textarea:focus, input:focus{
 	display: none !important;
 }
 
+/* Popover styling stuff */
+.popover-content {
+  font-size: 15px;
+  font-family: "Helvetica", "Times New Roman", Georgia, Verdana, Raleway;
+  color: #000;
+}
+
 /* Bootstrap fix */
 .modal-open, .modal-open .navbar-fixed-top {
 	margin-right: auto !important;

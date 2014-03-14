@@ -16,3 +16,5 @@ var eventMost = angular.module('eventMost', [])
 	  
 	  $('[data-toggle=tooltip]').tooltip()
  });
+
+ $('.toggle_popover').popover()
