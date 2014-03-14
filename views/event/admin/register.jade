@@ -4,9 +4,9 @@ include ../inc/navbar
 include ../inc/attendee
 
 append addonjs
-	script(src="/js/vendor/highcharts.js" defer)
-	script(src="/js/eventAttendees.0.0.4.js" defer)
-	script(src="/js/vendor/moment.min.js" defer)
+	script(src="/js/vendor/highcharts.js?v=#{versionHash}" defer)
+	script(src="/js/eventAttendees.js?v=#{versionHash}" defer)
+	script(src="/js/vendor/moment.min.js?v=#{versionHash}" defer)
 
 block content
 	+navbar

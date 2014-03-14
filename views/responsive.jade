@@ -1,10 +1,10 @@
 doctype
 html
 	head
-		meta(http-equiv="Content-Type", content="text/html; charset=utf-8;")
-		meta(name="_csrf", content="#{token}")
+		meta(http-equiv="Content-Type" content="text/html; charset=utf-8;")
+		meta(name="_csrf" content="#{token}")
 		if (typeof ev !== "undefined")
-			meta(name="event_id", content="#{ev._id}")
+			meta(name="event_id" content="#{ev._id}")
 		meta(name="viewport" content="width=device-width, initial-scale=1.0")
 		block meta
 		title #{title}
@@ -13,10 +13,8 @@ html
 		
 		//- all css goes here
 		block css
-			link(rel="stylesheet" href="/css/all_combined.min.css")
-			link(rel="stylesheet" href="/css/bootstrap-eventmost.css")
-			link(rel="stylesheet" href="/css/fullcalendar.css")
-			link(rel="stylesheet" href="/css/fullcalendar.print.css")
+			link(rel="stylesheet" href="/css/all_combined.min.css?v=#{versionHash}")
+			link(rel="stylesheet" href="/css/bootstrap-eventmost.css?v=#{versionHash}")
 
 	body(ng-app="eventMost")
 		//- main container
@@ -120,20 +118,15 @@ html
 			
 		//- usually globally persistent
 		block js
-			script(src="/js/vendor/all_required.min.js" defer)
+			script(src="/js/vendor/all_required.min.js?v=#{versionHash}" defer)
 			
 			if !loggedIn
-				script(src="/js/signin.js" defer)
+				script(src="/js/signin.js?v=#{versionHash}" defer)
 			else
-				script(src="/socket.io/socket.io.js" defer)
-				script(src="/js/inbox_notifications.js" defer)
+				script(src="/socket.io/socket.io.js?v=#{versionHash}" defer)
+				script(src="/js/inbox_notifications.js?v=#{versionHash}" defer)
 				if (typeof hide_bar_right !== 'undefined' && hide_bar_right === true)
-					script(src="/js/takeoverProfile.js" defer)
+					script(src="/js/takeoverProfile.js?v=#{versionHash}" defer)
 					
 		//- page-specific
 		block addonjs
-				script(src="/js/vendor/fullcalendar.js" defer)
-				script(src="/js/jquery-ui.custom.min.js" defer)
-				script(src="/js/calendar.js" defer)
-				script(src="/js/slidenav.js" defer)
-				script(src="/js/slidenav2.js" defer)

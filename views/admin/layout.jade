@@ -7,9 +7,9 @@ html
 		link(href="/favicon.ico", type="image/x-icon" rel="icon")
 		link(href="/favicon.ico", type="image/x-icon" rel="shortcut icon")
 		block css
-			link(href="/css/bootstrap.flatly.min.css" rel="stylesheet")
-			link(href="/css/font-awesome.min.css" rel="stylesheet")
-			link(href="/css/admin.css" rel="stylesheet")
+			link(href="/css/bootstrap.flatly.min.css?v=#{versionHash}" rel="stylesheet")
+			link(href="/css/font-awesome.min.css?v=#{versionHash}" rel="stylesheet")
+			link(href="/css/admin.css?v=#{versionHash}" rel="stylesheet")
 	body(ng-app="emAdmin")
 		block container
 			.container-full
@@ -39,12 +39,12 @@ html
 					.col-md-10.col-lg-10.col-sm-10(style="width: 83.5%")
 						block content
 		block js
-			script(src="/js/gan.js", async)
-			script(src="/js/vendor/jquery.min.js", defer)
-			script(src="/js/vendor/bootstrap.min.js", defer)
-			script(src="/js/vendor/highcharts.js", defer)
-			script(src="/js/vendor/angular.min.js", defer)
-			script(src="/js/angular-admin.js", defer)
-			script(src="/js/vendor/moment.min.js", defer)
-			script(src="/js/vendor/jquery-ui-1.10.3.custom.min.js", defer)
-			script(src="/js/vendor/jquery.ui.touch-punch.min.js", defer)
+			script(src="/js/gan.js?v=#{versionHash}", async)
+			script(src="/js/vendor/jquery.min.js?v=#{versionHash}", defer)
+			script(src="/js/vendor/bootstrap.min.js?v=#{versionHash}", defer)
+			script(src="/js/vendor/highcharts.js?v=#{versionHash}", defer)
+			script(src="/js/vendor/angular.min.js?v=#{versionHash}", defer)
+			script(src="/js/angular-admin.js?v=#{versionHash}", defer)
+			script(src="/js/vendor/moment.min.js?v=#{versionHash}", defer)
+			script(src="/js/vendor/jquery-ui-1.10.3.custom.min.js?v=#{versionHash}", defer)
+			script(src="/js/vendor/jquery.ui.touch-punch.min.js?v=#{versionHash}", defer)

@@ -2,7 +2,7 @@ extends responsive
 
 append addonjs
 	if (theUser._id.equals(user._id) && typeof ev !== "undefined")
-		script(src="/js/eventLandingPage.js" defer)
+		script(src="/js/eventLandingPage.js?v=#{versionHash}" defer)
 
 block content
 	if (typeof ev !== "undefined")

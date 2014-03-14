@@ -1,8 +1,8 @@
 extends responsive
 
 append addonjs
-	script(src="/js/angular-nearEvents#{minified}.js" defer)
-	script(src="/js/homeModals.js" defer)
+	script(src="/js/angular-nearEvents.js?v=#{versionHash}" defer)
+	script(src="/js/homeModals.js?v=#{versionHash}" defer)
 
 append content
 	include event/inc/item
@@ -162,7 +162,7 @@ append content
 		.clearfix
 		.col-md-12.col-xs-12.bg-green.nspacer
 			.font-bigs.font-thin.e(style='padding-top:5px;')
-				| All Events
+				span.pull-left All Events
 				.pull-right.mfresponsive
 					ul.nav.navbar-nav
 						li.dropdown
@@ -176,8 +176,6 @@ append content
 									a(href='#') Latest to most recent
 								li
 									a(href='#') Events name A-Z
-								//- li
-								//-	a(href='#') My planned events
 	.clearfix.hide-mini
 	
 	.exc-spac
@@ -237,7 +235,7 @@ append content
 	.nspacer.col-md-12.col-xs-12.font-bigs.font-thin.hide-mini
 		.bg-ashen(style='width:101.4%;')
 			.color-green.pad-left-ten
-				| Events Nearby
+				span.pull-left Events Nearby
 				.pull-right.mfresponsive2
 					ul.nav.navbar-nav.nav-grey
 						li.dropdown

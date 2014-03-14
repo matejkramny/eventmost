@@ -4,13 +4,13 @@ $(document).ready(function(){
 
                 $("#slidenav2").show().animate({
                 //top: '912'
-
+ 
             }, 500);
         
             else{
                 $("#slidenav2").hide().animate({
                 //top: '860'
-                
+
             }, 500);
             }
             return false;
@@ -22,7 +22,7 @@ $(document).ready(function(){
         $(document).click(function() {
             $('#slidenav2').hide().animate({
                 //top: '860'
-              
+         
             }, 500);
         });
     });

@@ -33,7 +33,7 @@ function searchEvents(req, res, q) {
 		deleted: false
 	};
 	
-	models.Event.find(query).limit(10).populate('avatar').exec(function(err, evs) {
+	models.Event.find(query).limit(10).populate('avatar').sort('-start').exec(function(err, evs) {
 		res.locals.search = {
 			query: q,
 			results: evs,
@@ -63,10 +63,9 @@ function searchPeople(req, res, q) {
 		query.surname = new RegExp(split[1], 'i');
 	}
 	
-	models.User.find(query).sort("-name-surname").exec(function(err, people) {
+	models.User.find(query).select('name surname desc avatar company position').sort("-name-surname").exec(function(err, people) {
 		if (err) throw err;
 		
-
 		res.locals.search = {
 			query: q,
 			results: people,
@@ -74,7 +73,16 @@ function searchPeople(req, res, q) {
 		}
 		
 		if (req.user) {
-			res.render('search/results')
+			res.format({
+				html: function() {
+					res.render('search/results')
+				},
+				json: function() {
+					res.send({
+						results: people
+					})
+				}
+			})
 		} else {
 			res.render('login')
 		}

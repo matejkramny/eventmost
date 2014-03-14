@@ -112,7 +112,7 @@ angular.module('eventMost')
 	
 	$scope.searchUser = function () {
 		$scope.progress = "Searching for "+$scope.search;
-		$http.get("/search/people/?q="+$scope.search).success(function(data, status) {
+		$http.get("/search/?type=people&q="+$scope.search).success(function(data, status) {
 			$scope.showPeopleSearch = true;
 			$scope.peopleSearch = data.results;
 			$scope.progress = "";

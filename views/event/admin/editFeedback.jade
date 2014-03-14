@@ -3,127 +3,101 @@ extends ../../responsive
 include ../inc/navbar
 
 append addonjs
-	script(src="/js/addFeedbackProfile#{minified}.js", defer)
+	script(src="/js/addFeedbackProfile.js?v=#{versionHash}", defer)
 
 block content
 	+navbar
 	
 	.clearfix
 	
-	div(ng-controller="feedbackProfileController", ng-init= typeof feedbackProfile !== 'undefined' ? 'init(#{JSON.stringify(feedbackProfile)}, #{JSON.stringify(ev.categories)})' : 'categories = #{JSON.stringify(ev.categories)}')
-		.col-lg-12.col-md-12.col-xs-12.center.nspacer.font.semi-bold
-			| Create Guest Speaker, Team, Company, or Other profile
-		.col-lg-12.col-md-12.col-xs-12.font-e.center.nspacer
-			| All fields are optional
-			img.pad-left-ten.img-responsive.inline(src="/images/optional.svg", style="margin:-2px auto; vertical-align:bottom;")
-		.clearfix
-		.nspacer-big
-		.col-lg-offset-2.col-md-offset-2.col-sm-offset-2.col-lg-8.col-md-8.col-sm-8
-			.progress(ng-hide="progress == 0 || progress == 100")
-				.progress-bar(aria-valuenow="{{ progress }}", aria-valuemin="0", aria-valuemax="100", ng-class="{ 'progress-bar-success': progress >= 99 }" ng-style="{ width: progress+'%' }")
-		input.hide#avatar(type="file")
-		.col-lg-9.col-md-9.col-xs-9.hide-mini3(style="float:none; margin:auto;")
-			.col-lg-5.col-md-5.col-xs-5.ei.hide-mini3
-				img.pad-right-ten.avatar-upload-image.img-responsive(src="/images/big-avatar-blue.svg", style="max-height: 125px; margin: 0 auto;")
-				a.avatar-upload-btn.link-green(href="#")
-					.font-e.center
-						| upload logo/picture
-			.ei.hide-mini3
-				.col-lg-7.col-md-7.col-xs-7.pad-left-zero.pad-right-zero
-					.pad-left-zero.col-lg-3.col-md-3.col-xs-3.font-e.pad-top.right
-						| Name:
-					.psev.col-lg-8.col-md-8.col-xs-8
-						input.input-yellow-rounded(type="text", required="required", ng-model="profile.name")
-				.col-lg-7.col-md-7.col-xs-7.pad-left-zero.pad-right-zero
-					.pad-left-zero.col-lg-3.col-md-3.col-xs-3.font-e.pad-top.right
-						| Position:
-					.psev.col-lg-8.col-md-8.col-xs-8
-						input.input-yellow-rounded(type="text", ng-model="profile.position")
-				.col-lg-7.col-md-7.col-xs-7.pad-left-zero.pad-right-zero
-					.pad-left-zero.col-lg-3.col-md-3.col-xs-3.font-e.pad-top.right
-						| Company:
-					.psev.col-lg-8.col-md-8.col-xs-8
-						input.input-yellow-rounded(type="text", ng-model="profile.company")
-				.col-lg-7.col-md-7.col-xs-7.pad-left-zero.pad-right-zero
-					.pad-left-zero.col-lg-3.col-md-3.col-xs-3.font-e.pad-top.right
-						| Website:
-					.psev.col-lg-8.col-md-8.col-xs-8
-						input.input-yellow-rounded(type="url" ng-model="profile.website")
-						
-		.clearfix
-		//- mobile only
-		.col-lg-12.hide-all3(style="float:none; margin:auto;")
-			img.img-responsive.avatar-upload-image(src="/images/big-avatar-blue.svg", style="float:none; margin:auto; max-height: 125px;")
-			a.avatar-upload-btn.link-green(href="#")
-				.font-ah.center
-					| upload logo/picture
-		.nspacer
-		.col-xs-12.hide-all3(style="float:none; margin:0px auto; height:30px;")
-			.col-lg-12.col-md-12.col-xs-12.pad-right-zero(style="min-height:30px;")
-				.pad-left-zero.col-lg-3.col-md-3.col-xs-3.font-e1.pad-top.psev.right(style="padding-top:9px; height:30px;")
-					| Name:
-				.psev.col-lg-9.col-md-9.col-xs-9(style="height:30px; margin-top:-3px;")
-					input.input-yellow-rounded(type="text", ng-model="profile.name")
-		.col-xs-12.hide-all3(style="float:none; margin:0px auto; height:30px;")
-			.col-lg-12.col-md-12.col-xs-12.pad-right-zero.nspacer-small(style="min-height:30px;")
-				.pad-left-zero.col-lg-3.col-md-3.col-xs-3.font-e1.pad-top.psev.right(style="padding-top:9px; height:30px;")
-					| Position:
-				.psev.col-lg-9.col-md-9.col-xs-9(style="height:30px; margin-top:-3px;")
-					input.input-yellow-rounded(type="text", ng-model="profile.position")
-		.col-xs-12.hide-all3(style="float:none; margin:0px auto; height:30px;")
-			.col-lg-12.col-md-12.col-xs-12.pad-right-zero.nspacer-small(style="min-height:30px;")
-				.pad-left-zero.col-lg-3.col-md-3.col-xs-3.font-e1.pad-top.psev.right(style="padding-top:9px; height:30px;")
-					| Company:
-				.psev.col-lg-9.col-md-9.col-xs-9(style="height:30px; margin-top:-3px;")
-					input.input-yellow-rounded(type="text", ng-model="profile.company")
-		.col-xs-12.hide-all3(style="float:none; margin:0px auto; height:30px;")
-			.col-lg-12.col-md-12.col-xs-12.pad-right-zero.nspacer-small(style="min-height:30px;")
-				.pad-left-zero.col-lg-3.col-md-3.col-xs-3.font-e1.pad-top.psev.right(style="padding-top:9px; height:30px;")
-					| Website:
-				.psev.col-lg-9.col-md-9.col-xs-9(style="height:30px; margin-top:-3px;")
-					input.input-yellow-rounded(type="url", ng-model="profile.website")
-		//- end mobile only
-		
-		.row
-			.col-lg-7.col-md-7.col-sm-7.col-xs-12.col-lg-offset-4.col-md-offset-4.col-sm-offset-4.pad-left-zero.pad-right-zero
-				.pad-left-zero.col-lg-3.col-md-3.col-xs-3.font-e.pad-top.right
-					| Event Category:
-				.psev.col-lg-8.col-md-8.col-xs-8
-					select.input-yellow-rounded(ng-options="category for category in categories" ng-model="profile.category")
-						option(value) (Default) Attendee
-		.row
-			.col-lg-7.col-md-7.col-sm-7.col-xs-12.col-lg-offset-4.col-md-offset-4.col-sm-offset-4.pad-left-zero.pad-right-zero
-				.pad-left-zero.col-lg-3.col-md-3.col-xs-3.font-e.pad-top.right
-					| Custom Category:
-				.psev.col-lg-8.col-md-8.col-xs-8
-					input.input-yellow-rounded(type="text" ng-model="profile.category")
-		.clearfix
-		.nspacer
-		.col-lg-12.col-md-12.col-xs-12(style="float:none; margin:4px auto;")
-			textarea.input-grey.textarea-grey-border(type="textarea", ng-model="profile.desc", placeholder="Profile description, helpful information, links, etc.", rows="4", cols="50", style="padding-top:5px; min-height:152px;")
-		.nspacer
-		.col-lg-12.col-md-12.col-xs-12
-			.pull-right
-				a(href="")
-				button.btn.btn-default.font-e(ng-click="save()", style="border-radius: 10px; color:#fff; padding-left:30px; padding-right:30px;")
-					if (typeof feedbackProfile !== 'undefined')
-						| UPDATE
-					else
-						| CREATE
-		.clearfix
-		
-		.hide
-			//- this comes aafter filling the form
-			.col-lg-12.col-md-12.col-xs-12.center
-				.font2
-					b SUCCESS!
-				.font-e1
-					| You will be able to view all correspondence to this profile until you turn it over to someone else. <br /> To do all this, click on the profile within the event to see all your options.
+	.row
+		div.col-lg-offset-2.col-md-offset-2.col-sm-offset-2.col-lg-8.col-md-8.col-sm-8.col-xs-12(ng-controller="feedbackProfileController", ng-init= typeof feedbackProfile !== 'undefined' ? 'init(#{JSON.stringify(feedbackProfile)}, #{JSON.stringify(ev.categories)})' : 'categories = #{JSON.stringify(ev.categories)}')
+			.col-lg-12.col-md-12.col-xs-12.center.nspacer.font.semi-bold
+				| Create Guest Speaker, Team, Company, or Other profile
 			.clearfix
 			.nspacer-big
-			.col-lg-12.col-md-12.col-xs-12.center
-				a.btn.btn-primary.font-e.font-ah(href="/event/#{ev._id}/admin/feedback", style="padding:10px; padding-left:35px; padding-right:35px; margin-right:20px;")
-					| Review this profile
-				a.btn.btn-primary.font-e.font-ah(href="/event/#{ev._id}/admin/feedback", style="padding:10px; padding-left:35px; padding-right:35px; margin-left:20px;")
-					| Create next profile
+			.col-lg-12.col-md-12.col-sm-12
+				.progress(ng-hide="progress == 0 || progress == 100")
+					.progress-bar(aria-valuenow="{{ progress }}", aria-valuemin="0", aria-valuemax="100", ng-class="{ 'progress-bar-success': progress >= 99 }" ng-style="{ width: progress+'%' }")
+			input.hide#avatar(type="file")
+			.col-lg-12.col-md-12.col-xs-12
+				.col-lg-6.col-md-6.col-xs-6.col-sm-6
+					.row
+						.col-lg-12.col-md-12.col-sm-12.col-xs-12pad-left-zero.pad-right-zero
+							.pad-left-zero.col-lg-4.col-md-4.col-xs-4.font-e.pad-top.right
+								| Event Category:
+							.psev.col-lg-8.col-md-8.col-xs-8
+								select.input-yellow-rounded(ng-options="category for category in categories" ng-model="profile.category")
+									option(value) (Default) Attendee
+					.row
+						.col-lg-12.col-md-12.col-sm-12.col-xs-12.pad-left-zero.pad-right-zero
+							.pad-left-zero.col-lg-4.col-md-4.col-xs-4.font-e.pad-top.right
+								| Custom Category:
+							.psev.col-lg-8.col-md-8.col-xs-8
+								input.input-yellow-rounded(type="text" ng-model="profile.category")
+					.clearfix
+					img.pad-right-ten.avatar-upload-image.img-responsive(src="/images/big-avatar-blue.svg", style="max-height: 125px; margin: 0 auto;")
+					a.avatar-upload-btn.link-green(href="#")
+						.font-e.center
+							| upload logo/picture
+				.col-lg-6.col-md-6.col-xs-6.col-sm-6
+					.col-lg-12.col-md-7.col-xs-7.pad-left-zero.pad-right-zero
+						.pad-left-zero.col-lg-4.col-md-4.col-xs-4.font-e.pad-top.right
+							| Name:
+						.psev.col-lg-8.col-md-8.col-xs-8
+							input.input-yellow-rounded(type="text", required="required", ng-model="profile.name")
+					.cleafix
+					br
+					.nspacer-big
+					.col-lg-12.col-sm-12.col-md-12.col-xs-12.font-e
+						| Fields below are
+						img.pad-left-ten.img-responsive.inline(src="/images/optional.svg", style="margin:-2px auto; vertical-align:bottom;")
+						.clearfix
+					.clearfix
+					.col-lg-12.col-md-12.col-xs-12.pad-left-zero.pad-right-zero
+						.pad-left-zero.col-lg-4.col-md-4.col-xs-4.font-e.pad-top.right
+							| Position:
+						.psev.col-lg-8.col-md-8.col-xs-8
+							input.input-yellow-rounded(type="text", ng-model="profile.position")
+					.col-lg-12.col-md-12.col-xs-12.pad-left-zero.pad-right-zero
+						.pad-left-zero.col-lg-4.col-md-4.col-xs-4.font-e.pad-top.right
+							| Company:
+						.psev.col-lg-8.col-md-8.col-xs-8
+							input.input-yellow-rounded(type="text", ng-model="profile.company")
+					.col-lg-12.col-md-12.col-xs-12.pad-left-zero.pad-right-zero
+						.pad-left-zero.col-lg-4.col-md-4.col-xs-4.font-e.pad-top.right
+							| Website:
+						.psev.col-lg-8.col-md-8.col-xs-8
+							input.input-yellow-rounded(type="url" ng-model="profile.website")
+							
 			.clearfix
+			
+			.nspacer
+			.col-lg-12.col-md-12.col-xs-12(style="float:none; margin:4px auto;")
+				textarea.input-grey.textarea-grey-border(type="textarea", ng-model="profile.desc", placeholder="Profile description, helpful information, links, etc.", rows="4", cols="50", style="padding-top:5px; min-height:152px;")
+			.nspacer
+			.col-lg-12.col-md-12.col-xs-12
+				.pull-right
+					a(href="")
+					button.btn.btn-default.font-e(ng-click="save()", style="border-radius: 10px; color:#fff; padding-left:30px; padding-right:30px;")
+						if (typeof feedbackProfile !== 'undefined')
+							| UPDATE
+						else
+							| CREATE
+			.clearfix
+			
+			.hide
+				//- this comes aafter filling the form
+				.col-lg-12.col-md-12.col-xs-12.center
+					.font2
+						b SUCCESS!
+					.font-e1
+						| You will be able to view all correspondence to this profile until you turn it over to someone else. <br /> To do all this, click on the profile within the event to see all your options.
+				.clearfix
+				.nspacer-big
+				.col-lg-12.col-md-12.col-xs-12.center
+					a.btn.btn-primary.font-e.font-ah(href="/event/#{ev._id}/admin/feedback", style="padding:10px; padding-left:35px; padding-right:35px; margin-right:20px;")
+						| Review this profile
+					a.btn.btn-primary.font-e.font-ah(href="/event/#{ev._id}/admin/feedback", style="padding:10px; padding-left:35px; padding-right:35px; margin-left:20px;")
+						| Create next profile
+				.clearfix

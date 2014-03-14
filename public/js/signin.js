@@ -9,6 +9,8 @@ $(document).ready(function() {
 	$registerUserEmail = $("#RegisterUserEmail")
 	$registerUserPassword = $("#RegisterUserPassword")
 	
+	var redirect = "/auth/success";
+	
 	$('.enable_popover').popover()
 	
 	$registerUserEmail.blur(function() {
@@ -52,6 +54,19 @@ $(document).ready(function() {
 		$("#forgotModal").modal('show')
 	})
 	
+	$('.openEvent').click(function() {
+		var $link = $(this)
+		if (redirect == '/auth/success') {
+			$('.social-login-link').each(function() {
+				$(this).attr('href', $(this).attr('href') + '?redirect=' + $link.attr('data-event'));
+			})
+		}
+		
+		redirect = '/event/'+$(this).attr('data-event')+"/registrationpage?redirect=1";
+		
+		$('#signModal').modal('show');
+	})
+	
 	function Form($form, $elements, options) {
 		this.form = $form;
 		this.elements = $elements;
@@ -72,7 +87,7 @@ $(document).ready(function() {
 			if (data.status == 200 && data.user != null) {
 				// Logged in
 				self.status.html("Logged in, reloading page!");
-				window.location = "/auth/success";
+				window.location = redirect;
 			} else {
 				// Error
 				self.status.html(data.err.join("<br/>"))

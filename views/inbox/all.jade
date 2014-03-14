@@ -5,8 +5,8 @@ include inc/card
 include inc/savedProfile
 
 append addonjs
-	script(src="/js/vendor/moment.min.js" defer)
-	script(src="/js/inbox.js" defer)
+	script(src="/js/vendor/moment.min.js?v=#{versionHash}" defer)
+	script(src="/js/inbox.js?v=#{versionHash}" defer)
 
 block content
 	- var inbox_disabled = false;
@@ -77,20 +77,18 @@ block content
 					div(ng-repeat="person in peopleSearch")
 						.nspacer
 						.row
-							a.col-md-2.col-sm-2.col-lg-2(target="_blank", href="/user/{{person._id}}")
+							a.col-md-2.col-sm-2.col-lg-2(target="_blank" href="/user/{{person._id}}")
 								img.img-responsive(ng-src="{{person.avatar}}")
 							.col-md-8.col-sm-8.col-lg-8
 								.row
 									h4.col-md-12.col-sm-12.col-lg-12
-										a(target="_blank", href="/user/{{person._id}}"): strong {{person.fullName}}
+										a(target="_blank" href="/user/{{person._id}}"): strong {{person.name}} {{person.surname}}
 								.row
 									strong.col-md-12.col-sm-12.col-lg-12
 										span(ng-show="person.position.length > 0")
 											| {{person.position}}, 
 										span(ng-show="person.company.length > 0")
-											| {{person.company}}, 
-										span(ng-show="person.location.length > 0")
-											| {{person.location}}
+											| {{person.company}}
 							.col-md-2.col-sm-2.col-lg-2
 								a.btn.btn-default.btn-md(ng-click="selectProfile(person)") Select
 						br

@@ -10,25 +10,52 @@ exports.router = function (app) {
 }
 
 exports.listEvents = function (req, res) {
-	models.Event.find({ deleted: false, privateEvent: { $ne: true } })
+	var skip = req.query.skip || 0;
+	var showPastEvents = req.query.pastEvents;
+	if (!showPastEvents || typeof showPastEvents === 'undefined') {
+		showPastEvents = false;
+	} else {
+		showPastEvents = Boolean(showPastEvents);
+	}
+	
+	var query = {
+		deleted: false,
+		privateEvent: {
+			$ne: true
+		}
+	};
+	if (!showPastEvents) {
+		query.start = { $gte: Date.now() };
+	}
+	
+	models.Event.find(query)
 		.populate('avatar attendees.user')
 		.select('name start end address venue_name avatar source')
 		.sort('-created')
+		.limit(10)
+		.skip(skip)
 		.exec(function(err, evs) {
-		// TODO limit mount of events received
 		if (err) throw err;
 		if (evs) {
-			res.format({
-				html: function() {
-					res.locals.moment = moment;
-					res.render('event/list', { events: evs, pagename: "Events", title: "Events" });
-				},
-				json: function() {
-					res.send({
-						events: evs,
-						pagename: "EventMost Events"
-					})
-				}
+			models.Event.find(query).count(function(err, total) {
+				res.format({
+					html: function() {
+						res.locals.eventsTotal = total;
+						res.locals.eventsSkip = skip;
+						res.locals.pageURL = '/events';
+						
+						res.locals.moment = moment;
+						res.render('event/list', { events: evs, pagename: "Events", title: "Events" });
+					},
+					json: function() {
+						res.send({
+							events: evs,
+							total: total,
+							skip: skip,
+							pagename: "EventMost Events"
+						})
+					}
+				});
 			});
 		}
 	})
@@ -36,26 +63,39 @@ exports.listEvents = function (req, res) {
 
 // TODO fix this
 exports.listMyEvents = function (req, res) {
+	var skip = req.query.skip || 0;
+	
 	models.Attendee.find({ 'user': req.user._id }, '_id', function(err, attendees) {
-		models.Event.find({ 'attendees': { $in: attendees }})
+		var query = { 'attendees': { $in: attendees } };
+		
+		models.Event.find(query)
 			.populate('avatar attendees.user')
 			.select('name start end address venue_name avatar source')
 			.sort('-created')
+			.skip(skip)
 			.exec(function(err, evs) {
 			if (err) throw err;
 			if (evs) {
-				res.format({
-					html: function() {
-						res.locals.moment = moment;
-						res.render('event/list', { events: evs, pagename: "My Events", title: "My Events" });
-					},
-					json: function() {
-						res.send({
-							events: evs,
-							pagename: "My Events"
-						})
-					}
-				})
+				models.Event.find(query).count(function(err, total) {
+					res.format({
+						html: function() {
+							res.locals.eventsTotal = total;
+							res.locals.eventsSkip = skip;
+							res.locals.pageURL = '/events/my';
+						
+							res.locals.moment = moment;
+							res.render('event/list', { events: evs, pagename: "My Events", title: "My Events" });
+						},
+						json: function() {
+							res.send({
+								events: evs,
+								total: total,
+								skip: skip,
+								pagename: "My Events"
+							})
+						}
+					})
+				});
 			}
 		})
 	})

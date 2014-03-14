@@ -2,13 +2,14 @@ extends ../responsive
 
 append addonjs
 	script(src="/js/vendor/jquery-ui-1.10.3.custom.min.js" defer)
-	script(src="/js/datepicker#{minified}.js", defer)
+	script(src="/js/datepicker.js?v=#{versionHash}", defer)
 	script(src="/js/vendor/tiny.editor.packed.js", defer)
 	script(src="/js/vendor/jquery.jcarousel.min.js", defer)
 	if (typeof ev !== "undefined")
 		script.
 			window.emEvent = !{JSON.stringify(ev)}
-	script(src="/js/eventadd.0.0.2.js" defer="true")
+		
+	script(src="/js/eventadd.js?v=#{versionHash}" defer)
 
 append content
 	include ../modals/add-modal
@@ -348,21 +349,21 @@ append content
 						.font.font-thin.nspacer.logo-text.dif2
 							| L<br />o<br />g<br />o
 					.col-lg-3-5
-						img.avatar_preview(src="/images/logo-avatar.svg",  class="img-responsive")
+						img.avatar_preview.img-responsive(src="/images/logo-avatar.svg")
 					.pull-left.button-event
 						.bg-yellow-rounded
 							#file_browse_wrapper
 								input#file_browse(name="avatar", type="file")
-					a.pad-left-five.pull-left.button-event.file_upload_wrapper(href="#", style="text-decoration:none !important;")
+					a.pad-left-five.pull-left.button-event.file_upload_wrapper(href="#" style="text-decoration:none !important;")
 						.bg-yellow-rounded.center.create-height
-							img.uploads(src="/images/upload-pin.svg",)
-							img.uploads2(src="/images/upload-pin-s.svg",)
+							img.uploads(src="/images/upload-pin.svg")
+							img.uploads2(src="/images/upload-pin-s.svg")
 							.center.font-tw.uploads-text
 								| Upload
-					.pad-left-five.pull-left.button-event.file_delete_wrapper
+					a.pad-left-five.pull-left.button-event.file_delete_wrapper(href="#" style="text-decoration:none !important;")
 						.bg-yellow-rounded.center.create-height
-							img.uploads(src="/images/delete-bin.svg",)
-							img.uploads2(src="/images/delete-bin-s.svg",)
+							img.uploads(src="/images/delete-bin.svg")
+							img.uploads2(src="/images/delete-bin-s.svg")
 							.center.font-tw.uploads-text
 								| Delete
 					.clearfix
@@ -424,7 +425,7 @@ append content
 								.pull-left.font-e
 									| Time of event:
 								.pull-left.pad-left-ten
-									input.input-grey-rounded(name="start_date", type="time"  style="max-width:150px;")
+									input.input-grey-rounded(name="start_date" type="text" placeholder="00:00" style="max-width:150px;")
 					.col-lg-5.col-md-5.col-xs-5.pad-left-five.pad-right-zero.res-dis-non
 						.container.bg-purple.date-height.datepickerWrapper
 							.center
@@ -441,7 +442,7 @@ append content
 								.pull-left.font-e
 									| Time of event:
 								.pull-left.pad-left-ten
-									input.input-grey-rounded(name="start_date", type="time"  style="max-width:150px;")
+									input.input-grey-rounded(name="start_date" type="text" placeholder="23:59" style="max-width:150px;")
 					//- small calendars
 					.col-lg-12.col-md-12.col-xs-12.pad-left-zero.pad-right-zero.res-dis-non-vis
 						.container.bg-purple.pad-top-zero.pad-right-zero(style="height:32px;")
@@ -509,7 +510,7 @@ append content
 							.pull-right.pad-right-ten.learn-create
 								img(src="/images/optional-white.svg")
 								br
-								a.link-white(href="#", style="font-size:12px; padding-bottom:0px;") LEARN MORE
+								a.link-white.toggle_popover(href="" data-toggle="popover" data-placement="bottom" data-content="This is how your attendees self-select how they would categorize themselvesin the event. You can pre-define them or let them create their own." style="font-size:12px; padding-bottom:0px;") LEARN MORE
 								img.pad-left-five(src="/images/small-white-arrow.svg" style="")
 	
 
@@ -544,6 +545,8 @@ append content
 							span(val="Mentor") 8. Mentor
 							br
 							span(val="Educator") 9. Educator
+							br
+							span(val="Other") 10. Other
 					.col-lg-5.col-md-5.col-xs-5
 						.createCategory.font-evente.font-thin2.nspacer.gestlist(style="margin-top:20px; padding-left:20px; margin-left:50px;")
 							.col-lg-9.col-md-9.col-xs-9

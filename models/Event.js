@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var async = require('async');
 var sanitizer = require('sanitizer');
+var moment = require('moment')
 
 var schema = mongoose.Schema
 	, ObjectId = schema.ObjectId
@@ -143,7 +144,7 @@ scheme.statics.getEvent = function (id, cb, simple) {
 				stack.push(function(callback) {
 					if (ev.avatar == null || ev.avatar.url == null || ev.avatar.url.length == 0) {
 						var avatar = new Avatar({
-							url: "/images/event-avatar-new2.svg"
+							url: "/images/event-avatar-new.svg"
 						})
 						avatar.save();
 						ev.avatar = avatar._id;
@@ -528,6 +529,31 @@ scheme.methods.getGeo = function (cb) {
 		
 		cb();
 	})
+}
+
+scheme.methods.getStartDateFormatted = function () {
+	var start = this.start;
+	return moment(start).zone(0).format('dddd, Do, MMMM YYYY [at] h:mm:ss a');
+}
+scheme.methods.getEndDateFormatted = function () {
+	var end = this.end;
+	return moment(start).zone(0).format('dddd, Do, MMMM YYYY [at] h:mm:ss a');
+}
+scheme.methods.getEndDateCombinedFormatted = function () {
+	var format = 'dddd, Do, MMMM YYYY [at] h:mm:ss a';
+	var start = this.start;
+	var end = this.end;
+	
+	if (start.getFullYear() == end.getFullYear() && start.getMonth() == end.getMonth() && start.getDate() == end.getDate()) {
+		// The event ends on the same day.
+		format = 'h:mm:ss a';
+	}
+	
+	return moment(start).zone(0).format(format);
+}
+
+scheme.methods.isForeign = function () {
+	return this.source.facebook == true || this.source.eventbrite == true;
 }
 
 exports.Event = mongoose.model("Event", scheme);

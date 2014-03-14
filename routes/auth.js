@@ -53,11 +53,11 @@ exports.router = function (app) {
 		.post('/auth/password_reset', doPasswordReset)
 		.get('/auth/password_reset/:id', findPasswordReset)
 		.post('/auth/password_reset/:id', performPasswordReset)
-		.get('/auth/facebook', passport.authenticate('facebook', { scope: 'email' }))
+		.get('/auth/facebook', saveSocialRedirect, passport.authenticate('facebook', { scope: 'email' }))
 		.get('/auth/facebook/callback', passport.authenticate('facebook', socialRoute('Facebook')))
-		.get('/auth/twitter', passport.authenticate('twitter'))
+		.get('/auth/twitter', saveSocialRedirect, passport.authenticate('twitter'))
 		.get('/auth/twitter/callback', passport.authenticate('twitter', socialRoute('Twitter')))
-		.get('/auth/linkedin', passport.authenticate('linkedin', { scope: ['r_network', 'r_basicprofile', 'r_fullprofile', 'r_contactinfo', 'rw_nus', 'r_emailaddress'] }))
+		.get('/auth/linkedin', saveSocialRedirect, passport.authenticate('linkedin', { scope: ['r_network', 'r_basicprofile', 'r_fullprofile', 'r_contactinfo', 'rw_nus', 'r_emailaddress'] }))
 		.get('/auth/linkedin/callback', passport.authenticate('linkedin', socialRoute('LinkedIn')))
 		
 		.get('/auth/success', util.authorized, authSuccess)
@@ -68,6 +68,16 @@ exports.router = function (app) {
 
 exports.display = function(req, res) {
 	search.search(req, res)
+}
+
+function saveSocialRedirect (req, res, next) {
+	try {
+		req.session.socialRedirect = mongoose.Types.ObjectId(req.query.redirect);
+	} catch (e) {
+		req.session.socialRedirect = null;
+	}
+	
+	next()
 }
 
 function doPasswordLogin (req, res) {
@@ -326,6 +336,14 @@ function performPasswordReset (req, res) {
 }
 
 function authSuccess (req, res) {
+	if (req.session.socialRedirect) {
+		var evid = req.session.socialRedirect;
+		req.session.socialRedirect = null;
+		
+		res.redirect('/event/'+evid+"/registrationpage?redirect=1");
+		return;
+	}
+	
 	if (req.session.redirectAfterLogin) {
 		var redirect = req.session.redirectAfterLogin
 		

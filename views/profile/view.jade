@@ -1,7 +1,7 @@
 extends ../responsive
 
 append addonjs
-	script(src="/js/saveProfile#{minified}.js", defer)
+	script(src="/js/saveProfile.js?v=#{versionHash}" defer)
 
 mixin mobileText(text, id, name, required, value, type, placeholder)
 	.col-xs-12.hide-all3(style="float:none; margin:4px auto; height:30px;")

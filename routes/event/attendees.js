@@ -248,7 +248,7 @@ function joinEvent (req, res) {
 	
 	var ev = res.locals.ev;
 	
-	// Allow people to change their category..
+	// Allows people to change their category..
 	/*
 	if (res.locals.eventattending) {
 		res.format({
@@ -284,11 +284,8 @@ function joinEvent (req, res) {
 		}
 	}
 	
-	models.Event.findById(ev._id).select('attendees').populate({
-		path: 'attendees',
-		match: { isAttending: false }
-	}).exec(function(err, event) {
-		if (err || !event) {
+	isReallyAttending(ev, req.user, function(err, existingAttendee) {
+		if (err) {
 			console.log("Something foul is happening here :(");
 			// reject
 			res.format({
@@ -351,27 +348,25 @@ function joinEvent (req, res) {
 			attendee.category = "Attendee";
 		}
 		
-		for (var i = 0; i < event.attendees.length; i++) {
-			var _attendee = event.attendees[i];
-			if (_attendee.user.equals(req.user._id)) {
-				_attendee.isAttending = true;
-				_attendee.category = attendee.category;
-				
-				_attendee.save();
-				
-				res.format({
-					html: function() {
-						res.redirect('/event/'+ev._id);
-					},
-					json: function() {
-						res.send({
-							status: 200
-						})
-					}
-				})
-				
-				return;
-			}
+		// Existing attendees who have left the event get 'resurrected'
+		if (existingAttendee) {
+			existingAttendee.isAttending = true;
+			existingAttendee.category = attendee.category;
+			
+			existingAttendee.save();
+			
+			res.format({
+				html: function() {
+					res.redirect('/event/'+ev._id);
+				},
+				json: function() {
+					res.send({
+						status: 200
+					})
+				}
+			})
+			
+			return;
 		}
 		
 		if (ev.pricedTickets && attendee.hasPaid == false && !res.locals.eventattending) {
@@ -445,19 +440,7 @@ function payWithCard (req, res) {
 			ts[i].ticket.save();
 		}
 		
-		var attendee = new models.Attendee({
-			category: "",
-			hasPaid: true,
-			isAttending: false,
-			user: req.user._id
-		})
-		
-		models.Event.findById(ev._id, function(err, event) {
-			event.attendees.push(attendee._id);
-			event.save();
-		});
-		
-		attendee.save();
+		addAttendee(ev, req.user)
 		
 		emailConfirmation(req, res, transaction);
 		
@@ -536,19 +519,7 @@ function payWithCard (req, res) {
 			ts[i].ticket.save();
 		}
 		
-		var attendee = new models.Attendee({
-			category: "",
-			hasPaid: true,
-			isAttending: false,
-			user: req.user._id
-		})
-		
-		models.Event.findById(ev._id, function(err, event) {
-			event.attendees.push(attendee._id);
-			event.save();
-		});
-		
-		attendee.save();
+		addAttendee(ev, req.user)
 		
 		emailConfirmation(req, res, transaction);
 		
@@ -558,12 +529,54 @@ function payWithCard (req, res) {
 	})
 }
 
+exports.addAttendee = addAttendee = function (ev, user, force) {
+	if (typeof force === 'undefined') {
+		force = false;
+	}
+
+	var attendee = new models.Attendee({
+		category: "",
+		hasPaid: true,
+		isAttending: force,
+		user: user._id
+	});
+	
+	models.Event.findById(ev._id, function(err, event) {
+		event.attendees.push(attendee._id);
+		event.save();
+	});
+	
+	attendee.save();
+}
+
+exports.isReallyAttending = isReallyAttending = function (ev, user, cb) {
+	models.Event.findById(ev._id).select('attendees').populate('attendees').exec(function(err, event) {
+		if (err || !event) {
+			return cb(err);
+		}
+		
+		var really = null;
+		
+		for (var i = 0; i < event.attendees.length; i++) {
+			var attendee = event.attendees[i];
+			if (attendee.user.equals(user._id)) {
+				really = attendee;
+				
+				break;
+			}
+		}
+		
+		cb(null, really);
+	});
+}
+
 function emailConfirmation (req, res, transaction) {
 	var link = "/event/"+res.locals.ev._id;
 	var user = req.user;
 	
 	var rows = "";
 	
+	//TODO move this to jade..
 	var promo = null;
 	for (var i = 0; i < transaction.tickets.length; i++) {
 		var ticket = transaction.tickets[i];

@@ -1,14 +1,17 @@
 mixin eventItem(event)
 	.nspacer
 	- var link = '/event/'+event.id;
-	if (event.source.eventbrite == true)
-		- link = 'https://eventbrite.com/e/'+event.source.id
-	if (event.source.facebook == true)
-		- link = 'https://facebook.com/events/'+event.source.id
+	- var foreign = event.isForeign();
+	if (foreign)
+		- link += '?redirect=1';
+	
+	if (foreign && !loggedIn)
+		- link = '';
 	.row
-	a(href=link)
+	
+	a(href=link target="_blank" class= foreign && !loggedIn ? "openEvent" : null data-event=event.id)
 		.col-lg-3.col-md-3.col-sm-3.col-xs-3.pad-right-zero.don-dis
-			img.img-responsive(src="/images/event-avatar-new.svg")
+			img.img-responsive(src=event.avatar.url)
 		.col-lg-9.col-md-9.col-sm-9.col-xs-9.psev.pad-left-ten.no-pads1.other-dis
 			.nspacer-medium3
 				.font18.font16s.color-green.bold= event.name
