@@ -81,7 +81,7 @@ if (!(mode == "test")) {
 	mode = "";
 }
 
-exports.version = '0.2.7';
+exports.version = '0.2.8';
 exports.host = credentials.host ? credentials.host : "eventmost.com";
 exports.mode = mode;
 exports.sessionKey = 'em_sess';
