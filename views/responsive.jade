@@ -119,7 +119,8 @@ html
 		//- usually globally persistent
 		block js
 			script(src="/js/vendor/all_required.min.js?v=#{versionHash}" defer)
-			
+	
+
 			if !loggedIn
 				script(src="/js/signin.js?v=#{versionHash}" defer)
 			else

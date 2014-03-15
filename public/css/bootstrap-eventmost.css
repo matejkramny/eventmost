@@ -150,6 +150,62 @@ input[type=number]::-webkit-outer-spin-button {
 .show-not1{display: none;}
 
 
+/* item text with dots */
+      div.outbox {
+        padding: 0 0 0px 0;
+      }
+      div.outbox:after {
+        content: '';
+        display: block;
+        clear: both;
+      }
+      div.outbox p {
+        margin: 0 0 0px 0;
+      }
+      div.r {
+        width: 100%;
+      }
+      
+      div.box {
+        height: 50px;
+        padding: 7px 0px 0px 0px;
+/*        overflow: hidden; */
+      }
+      div.resize {
+        padding-bottom: 250px;
+      }
+      div.resize div.box {
+        position: absolute;
+        width: 40%;
+        height: 40px;
+      }
+      div.resize div.box.before {
+        right: 50%;
+        margin-right: 10px;
+      }
+      div.resize div.box.after {
+        left: 50%;
+        margin-left: 10px;
+      }
+
+      p.before {
+        color: #990000;
+      }
+      p.after {
+        color: #006600;
+      }
+      div.box.pathname {
+        height: auto;
+      }
+      .pathname {
+        height: 25px;
+      }
+
+/* end item text with dots */
+
+
+
+
 .header_image{
 position: relative;
 }
