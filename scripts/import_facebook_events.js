@@ -6,17 +6,40 @@ var models = require('../models'),
 
 graph.setAccessToken('CAAFYgmwS48gBAGlIVBFAnZBrlHXAyDp50KgOesyPMZB0HbpuqzqdxiY216MnQzhVYFrDPq5hY26MXWWevtrLw8JXclskMtEc2bVPJ19ZBcbt1dZAA55n9Dv35sZB7tvC7AZC42ZAi8ar0K7ApuGvdQHQ4Y4KNBIjveZCWGUs1ZAmxUx6oBz1RmYHrZCutvo89tZCK4ZD');
 
-graph.search({
-	type: 'event',
-	q: 'Oxford',
-	fields: 'name,location,start_time'
-}, function(err, res) {
+var dict = require('fs').readFileSync("/usr/share/dict/words", {
+	encoding: 'utf8'
+}).split('\n');
+var pos = 0;
+
+function search (q) {
+	console.log();
+	console.log('Searching for', q, 'position', pos);
+	console.log('...-----------------');
+	graph.search({
+		type: 'event',
+		q: q,
+		fields: 'name,location,start_time',
+		limit: 300
+	}, getPage);
+}
+
+search(dict[pos]);
+
+function getPage (err, res) {
 	if (err) throw err;
-	
+
 	console.log('found', res.data.length, 'events');
 	
 	console.log("Filtering.");
 	
+	if (res.data.length == 0) {
+		// search for next word
+		setTimeout(function() {
+			search(dict[++pos]);
+		}, 1000);
+		return;
+	}
+
 	async.reject(res.data, function(evn, cb) {
 		models.Event.findOne({
 			"source.facebook": true,
@@ -34,16 +57,24 @@ graph.search({
 		console.log('Parsing: ', filtered.length, 'events');
 		
 		var i = 0;
-		setInterval(function() {
+		var interval = setInterval(function() {
 			if (i < filtered.length) {
 				
 				farm(filtered[i]);
 				
 				i++;
+			} else {
+				console.log("Clearing interval");
+				clearInterval(interval);
+
+				if (res.paging && res.paging.next) {
+					console.log("Getting next page..")
+					graph.get(res.paging.next, getPage);
+				}
 			}
 		}, 1000);
 	});
-})
+};
 
 var fields = { fields: 'cover,description,end_time,location,name,start_time,owner,ticket_uri,venue' };
 function farm(ev) {
