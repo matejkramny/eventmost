@@ -102,7 +102,7 @@ function farm(ev) {
 			e.avatar = av._id;
 		} else {
 			var av = new models.Avatar({
-				url: "/images/event-avatar-new2.svg"
+				url: "/images/event-avatar-new.svg"
 			})
 			av.save();
 			
