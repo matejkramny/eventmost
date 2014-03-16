@@ -108,7 +108,8 @@ exports.listNearEvents = function (req, res) {
 		, lng = parseFloat(req.query.lng)
 		, limit = parseInt(req.query.limit)
 		, distance = req.query.distance
-		, htmlIsEnabled = Boolean(req.query.html);
+		, htmlIsEnabled = Boolean(req.query.html)
+		, page = parseInt(req.query.page)
 
 	if (!lat || !lng) {
 		// render a blank page, and tell it to ask user for browser positioning
@@ -132,19 +133,22 @@ exports.listNearEvents = function (req, res) {
 		limit = 10;
 	}
 	
-	models.Geolocation.find(
-		{ 'geo': {
+	var query = {
+		'geo': {
 			$geoWithin: {
 				$center: [
 					[lng, lat],
-					100
+					100 / 3959
 				]
 			}
-		}}).populate('event', 'name start end address venue_name avatar source')
+		}
+	};
+	models.Geolocation.find(query).populate('event', 'name start end address venue_name avatar source')
 		.limit(limit)
+		.skip(limit * page)
 		.exec(function(err, geos) {
 			if (err) throw err;
-			
+
 			if (geos) {
 				var events = [];
 				
@@ -171,16 +175,20 @@ exports.listNearEvents = function (req, res) {
 						},
 						json: function() {
 							if (events.length > 0 && htmlIsEnabled) {
-								var html = jade.renderFile(config.path + '/views/event/listBlank.jade', {
-									moment: moment,
-									events: events
-								});
+								models.Geolocation.find(query).count(function(err, count) {
+									var html = jade.renderFile(config.path + '/views/event/listBlank.jade', {
+										moment: moment,
+										events: events,
+										eventsTotal: count,
+										eventsSkip: limit * page
+									});
 
-								res.send({
-									html: html,
-									pagename: "Events near you",
-									events: events
-								});
+									res.send({
+										html: html,
+										pagename: "Events near you",
+										events: events
+									});
+								})
 
 								return;
 							}

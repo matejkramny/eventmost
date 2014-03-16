@@ -9,16 +9,27 @@ try {
 $(document).ready(function() {
 	$placeholder = $("#nearbyEventsPlaceholder");
 	$placeholderText = $placeholder.find("p");
-	
+	var limit = 10;
+	var page = 0;
+
+	$placeholder.on('click', 'a.ev-near.paging-page', function(ev) {
+		ev.preventDefault();
+
+		page = parseInt($(this).attr('data-skip'));
+		getNear(window.lastCoords);
+
+		return false;
+	})
+
 	function getNear (coords) {
 		$.ajax({
-			url: '/events/near?limit=5&html=1&lat='+coords.lat+'&lng='+coords.lng,
+			url: '/events/near?limit='+limit+'&page='+page+'&html=1&lat='+coords.lat+'&lng='+coords.lng,
 			method: 'GET',
 			dataType: 'json',
 			success: function(json, status, jqxhr) {
-				$placeholder.hide();
+				$placeholder.show();
 				
-				$placeholder.after(json.html);
+				$placeholder.html(json.html);
 
 				if (json.events.length == 0) {
 					$placeholder.show();
@@ -57,6 +68,7 @@ $(document).ready(function() {
 					localStorage["coordsSaved"] = Date.now();
 				}
 				
+				window.lastCoords = coords;
 				getNear(coords);
 			}, function(err) {
 				var msg = Geo.errorMessage(err);
@@ -72,7 +84,9 @@ $(document).ready(function() {
 		loadNear()
 		$("#tryAgainNearbyEvents").parent().addClass('hide');
 	} else if (isLocalStorageCapable && localStorage["didSaveCoords"]) {
-		getNear(JSON.parse(localStorage["coords"]));
+		var coords = JSON.parse(localStorage["coords"])
+		getNear(coords);
+		window.lastCoords = coords;
 		$("#tryAgainNearbyEvents").parent().addClass('hide');
 	} else if ($("#tryAgainNearbyEvents").length == 0) {
 		loadNear()
