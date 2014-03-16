@@ -1,33 +1,3 @@
-function formatEvent(event) {
-	event.start = new Date(event.start);
-	if (event.address == null || event.address.length == 0) {
-		event.address = "<h1>Location unavailable</h1>";
-	}
-	var avatar = "/images/event-avatar-new2.svg";
-	if (event.avatar && event.avatar.url)
-		avatar = event.avatar.url;
-	
-	if (!event.description) {
-		event.description = "";
-	}
-	if (!event.venue_name) {
-		event.venue_name = "";
-	}
-	var html = '<div class="nspacer col-md-12 col-xs-12 col-lg-12 col-sm-12">\
-        <div style="width:101.4%;" class="pull-left event"><a href="/event/'+event._id+'" class="slid-box">\
-            <article class="c-two" style="background: url('+avatar+') top left; background-size: 100% 100%;">\
-              <div class="slid-box-background">\
-                <h4><div class="eye hide2"></div><br> REVIEW</h4>\
-              </div>\
-            </article>\
-            <div class="col-lg-9 col-md-9 col-xs-9 psev pad-left-ten rbox eh">\
-              <h4>'+event.name+'</h4>\
-              <div class="smart-minus">'+event.description+'</div>\
-            </div></a></div>\
-      </div><div class="clearfix"></div>';
-	return html;
-}
-
 var isLocalStorageCapable = false;
 try {
 	if ('localStorage' in window && window['localStorage'] !== null) {
@@ -42,21 +12,15 @@ $(document).ready(function() {
 	
 	function getNear (coords) {
 		$.ajax({
-			url: '/events/near?limit=5&lat='+coords.lat+'&lng='+coords.lng,
+			url: '/events/near?limit=5&html=1&lat='+coords.lat+'&lng='+coords.lng,
 			method: 'GET',
 			dataType: 'json',
 			success: function(json, status, jqxhr) {
-				var events = json.events;
-		
 				$placeholder.hide();
-		
-				for (event in events) {
-					var ev = events[event];
-			
-					$placeholder.after(formatEvent(ev));
-				}
-		
-				if (events.length == 0) {
+				
+				$placeholder.after(json.html);
+
+				if (json.events.length == 0) {
 					$placeholder.show();
 					$placeholderText.html(":-( No events near you.. Go ahead and <a href='/event/add'>create one</a>!");
 				}
