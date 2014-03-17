@@ -85,7 +85,9 @@ var scheme = schema({
 	source: {
 		facebook: { type: Boolean, default: false },
 		eventbrite: { type: Boolean, default: false },
-		id: Number
+		meetup: { type: Boolean, default: false },
+		url: String,
+		id: String
 	}
 })
 

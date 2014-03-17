@@ -1,0 +1,26 @@
+include inc/item
+
+for event in events
+	mixin eventItem(event)
+
+if (events.length > 0)
+	- var pages = Math.ceil(eventsTotal / 10)
+	- var curpage = Math.ceil(eventsSkip / 10)
+	- var start = curpage - 2;
+	- var end = curpage + 3;
+	if (start < 0)
+		- start = 0;
+	if (end > pages)
+		- end = pages;
+	.nspacer
+		.pull-right(style='height:35px;')
+			ul.pagination
+				li
+					a.ev-near.paging-page(data-skip="0" href="#") «
+				- for (var i = start; i < end; i++)
+					li(class= curpage == i ? "active" : null)
+						a.ev-near.paging-page(data-skip=i*10 href="#")= i+1
+				
+				li
+					a.ev-near.paging-page(data-skip=((pages*10)-10) href='#') »
+	.clearfix

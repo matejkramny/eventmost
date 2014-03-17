@@ -2,6 +2,8 @@ var models = require('../../models')
 	, util = require('../../util')
 	, async = require('async')
 	, moment = require('moment')
+	, jade = require('jade')
+	, config = require('../../config')
 
 exports.router = function (app) {
 	app.get('/events', exports.listEvents)
@@ -102,26 +104,13 @@ exports.listMyEvents = function (req, res) {
 }
 
 exports.listNearEvents = function (req, res) {
-	//TODO mongo doesn't like the geospacial index
-	res.format({
-		html: function() {
-			res.render('event/list', { events: [], pagename: "Events near you", title: "Events nearby" })
-		},
-		json: function() {
-			// TODO security issue. Sharing too much
-			res.send({
-				events: [],
-				pagename: "Events near you"
-			})
-		}
-	})
-	return;
-	
 	var lat = parseFloat(req.query.lat)
-		,lng = parseFloat(req.query.lng)
-		,limit = parseInt(req.query.limit)
-		,distance = req.query.distance
-	
+		, lng = parseFloat(req.query.lng)
+		, limit = parseInt(req.query.limit)
+		, distance = req.query.distance
+		, htmlIsEnabled = Boolean(req.query.html)
+		, page = parseInt(req.query.page)
+
 	if (!lat || !lng) {
 		// render a blank page, and tell it to ask user for browser positioning
 		res.format({
@@ -144,23 +133,22 @@ exports.listNearEvents = function (req, res) {
 		limit = 10;
 	}
 	
-	console.log([lng, lat]);
-	models.Geolocation.find(
-		{ 'geo': {
-				$near: {
-					$geometry: {
-						type: "Point",
-						coordinates: [lng, lat]
-					},
-					$maxDistance: 0.9
-				}
+	var query = {
+		'geo': {
+			$geoWithin: {
+				$center: [
+					[lng, lat],
+					100 / 3959
+				]
 			}
-		}).populate('event')
+		}
+	};
+	models.Geolocation.find(query).populate('event', 'name start end address venue_name avatar source')
 		.limit(limit)
-		.select('name start end address venue_name avatar source')
+		.skip(limit * page)
 		.exec(function(err, geos) {
 			if (err) throw err;
-		
+
 			if (geos) {
 				var events = [];
 				
@@ -183,10 +171,28 @@ exports.listNearEvents = function (req, res) {
 				}, function(err) {
 					res.format({
 						html: function() {
-							res.render('event/list', { events: events, pagename: "Events near you", title: "Events nearby" })
+							res.render('event/list', { events: events, moment:moment, pagename: "Events near you", title: "Events nearby" })
 						},
 						json: function() {
-							// TODO security issue. Sharing too much
+							if (events.length > 0 && htmlIsEnabled) {
+								models.Geolocation.find(query).count(function(err, count) {
+									var html = jade.renderFile(config.path + '/views/event/listBlank.jade', {
+										moment: moment,
+										events: events,
+										eventsTotal: count,
+										eventsSkip: limit * page
+									});
+
+									res.send({
+										html: html,
+										pagename: "Events near you",
+										events: events
+									});
+								})
+
+								return;
+							}
+
 							res.send({
 								events: events,
 								pagename: "Events near you"
