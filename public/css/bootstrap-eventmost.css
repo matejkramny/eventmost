@@ -1259,6 +1259,8 @@ a.pink-border6 {width:121px; height:97px; background: transparent url('../../../
 
 
 
+
+
 .new-drop > li {background-color: :#fff; border:1px solid #e6e7e8;}
 .new-drop > li > a { background-color: #fff; color:#58585b ! important; font-size: 14px; padding:10px; min-width: 200px;}
 .new-drop > li > a:hover,
@@ -1342,6 +1344,41 @@ a.pink-border6 {width:121px; height:97px; background: transparent url('../../../
 .dropdown-menu-last {top: 80%; padding: 7px; background-color: #f1f1f2; border: none; box-shadow: 0px 0px 0px #888;}
 .dropdown-menu-last > li > a:hover,
 .dropdown-menu-last > li > a:focus { background-color: #f1f1f2; color:#542437 ! important;}
+
+.mif-dropdown > li {min-width: 220px;}
+.mif-dropdown {
+  border-radius:0px;
+}
+.mif-dropdown > li > a {
+  margin-top: 5px; 
+  background-color:#17a086 !important;
+    padding: 5px;
+    color: #fff !important;
+}
+.mif-dropdown > li.inverted > a {
+  margin-top: 5px; 
+  background-color: #FDD093 !important;
+  padding: 5px;
+  color: #542437  !important;
+}
+.mif-dropdown li {
+  text-align: left;
+   color: #fff !important;
+
+}
+.mif-dropdown li.inverted {
+  background-color: #FDD093 !important;
+}
+.mif-dropdown li a {
+  color: #fff !important;
+  font-size: 14px;
+}
+.mif-dropdown li a:hover {
+  background-color: #542437 !important;
+  color: #FFF !important;
+}
+
+
 /**** dropdown****/
 
 .border-bottom{border-bottom: 1px solid #542437 !important;}
@@ -3197,6 +3234,7 @@ min-height: 100px;
 .slid-box-background h4{font-size:16px; height:137px; }
 .slid-box article{ float:left;  height:120px; } 
 .c-two {width:140px;}
+
 }
 
 @media only screen and (max-width: 600px) {
@@ -3345,6 +3383,39 @@ min-height: 100px;
 .dif2{display: block; line-height: 1px;}
 .dropdown-menu-last > li > a {background-color: #f1f1f2 !important;}
 .dropdown-menu-last{background-color: #f1f1f2 !important;}
+.mif-dropdown > li {min-width: 220px;}
+.mif-dropdown {
+  border-radius:0px;
+}
+.mif-dropdown > li > a {
+  margin-top: 5px; 
+  background-color:#17a086 !important;
+    padding: 5px;
+    color: #fff !important;
+}
+.mif-dropdown > li.inverted > a {
+  margin-top: 5px; 
+  background-color: #FDD093 !important;
+  padding: 5px;
+  color: #542437  !important;
+}
+.mif-dropdown li {
+  text-align: left;
+   color: #fff !important;
+
+}
+.mif-dropdown li.inverted {
+  background-color: #FDD093 !important;
+}
+.mif-dropdown li a {
+  color: #fff !important;
+  font-size: 14px;
+}
+.mif-dropdown li a:hover {
+  background-color: #542437 !important;
+  color: #FFF !important;
+}
+.mif-dropdown{background-color:#f1f1f2!important;}
 }
 
 @media only screen and (max-width: 600px) {
@@ -3545,6 +3616,39 @@ table.gridtable td {
 table.gridtable-payment-yellow td {font-size: 10px;}
 table.gridtable-payment-yellow th {font-size: 10px;}
 table.gridtable-payment-yellow {font-size: 10px;}
+.mif-dropdown > li {min-width: 220px;}
+.mif-dropdown {
+  border-radius:0px;
+}
+.mif-dropdown > li > a {
+  margin-top: 5px; 
+  background-color:#17a086 !important;
+    padding: 5px;
+    color: #fff !important;
+}
+.mif-dropdown > li.inverted > a {
+  margin-top: 5px; 
+  background-color: #FDD093 !important;
+  padding: 5px;
+  color: #542437  !important;
+}
+.mif-dropdown li {
+  text-align: left;
+   color: #fff !important;
+
+}
+.mif-dropdown li.inverted {
+  background-color: #FDD093 !important;
+}
+.mif-dropdown li a {
+  color: #fff !important;
+  font-size: 14px;
+}
+.mif-dropdown li a:hover {
+  background-color: #542437 !important;
+  color: #FFF !important;
+}
+.mif-dropdown{background-color:#f1f1f2!important;}
 }
 
 
