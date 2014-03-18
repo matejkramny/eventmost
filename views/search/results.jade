@@ -1,46 +1,11 @@
 extends ../responsive
 
-block content
-	br
-	.row
-		.col-md-3.col-sm-3.col-lg-3
-			p.lead Search Options
-			form(action="/search/" method="GET")
-				input.form-control.font-s.search-input.header-links(type="search", name="q", placeholder="Key words" value= typeof search !== "undefined" ? search.query : null)
-				.clearfix
-				.radio
-					label
-						input(type="radio" name="type" value="events" checked = search.type == 'events' ? 'checked' : null)
-						|  Events
-				.radio
-					label
-						input(type="radio" name="type" value="people" checked = search.type == 'people' ? 'checked' : null)
-						|  People
-				br
-				.center
-					button.btn.btn-default Search!
-				.clearfix
-		.col-md-9.col-sm-9.col-lg-9
-			p.lead #{search.results.length} Search Results
-			if search.results.length == 0
-				p.lead There are no #{search.type} for your search criteria
-			for p in search.results
-				.row
-					a.col-md-2.col-sm-2.col-lg-2(href="/user/"+p._id)
-						img.circularespond(src= p.avatar.length > 0 ? p.avatar+"-116x116.png" : "/images/default_speaker.svg")
-					.col-md-10.col-sm-10.col-lg-10
-						.row
-							h4.col-md-12.col-sm-12.col-lg-12
-								a(href="/user/"+p._id): strong= p.getName()
-						.row
-							strong.col-md-12.col-sm-12.col-lg-12
-								if(p.position)
-									= p.position
-									| , 
-								if(p.company)
-									= p.company
-									| , 
-								if(p.location)
-									= p.location
-				br
-				.line-purple
+include ../event/inc/item
+
+append addonjs
+	script(src="/js/slidenav2.js?v={versionHash}" defer)
+	script(src="/js/vendor/jquery.dotdotdot.js?v={versionHash}" defer)
+	script(src="/js/dot-itme-text.js?v={versionHash}" defer)
+
+append contentemp
+	include page

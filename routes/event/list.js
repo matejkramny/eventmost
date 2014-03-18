@@ -138,7 +138,7 @@ exports.listNearEvents = function (req, res) {
 			$geoWithin: {
 				$center: [
 					[lng, lat],
-					100 / 3959
+					0.2
 				]
 			}
 		}
@@ -148,7 +148,7 @@ exports.listNearEvents = function (req, res) {
 		.skip(limit * page)
 		.exec(function(err, geos) {
 			if (err) throw err;
-
+			console.log(geos);
 			if (geos) {
 				var events = [];
 				

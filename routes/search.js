@@ -30,10 +30,13 @@ function search (req, res) {
 function searchEvents(req, res, q) {
 	var query = {
 		name: new RegExp(q, 'i'),
-		deleted: false
+		deleted: false,
+		start: {
+			$gte: new Date()
+		}
 	};
 	
-	models.Event.find(query).limit(10).populate('avatar').sort('-start').exec(function(err, evs) {
+	models.Event.find(query).limit(10).populate('avatar').sort('start').exec(function(err, evs) {
 		res.locals.search = {
 			query: q,
 			results: evs,
