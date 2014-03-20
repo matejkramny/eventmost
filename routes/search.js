@@ -3,6 +3,7 @@ var fs = require('fs'),
 	, mongoose = require('mongoose')
 	, util = require('../util')
 	, moment = require('moment')
+	, list = require('./event/list')
 
 exports.router = function (app) {
 	app.get('/search/', search)
@@ -28,6 +29,11 @@ function search (req, res) {
 }
 
 function searchEvents(req, res, q) {
+	if (req.query.arrange && req.query.arrange == 'nearby') {
+		list.listNearEvents(req, res);
+		return;
+	}
+
 	var query = {
 		name: new RegExp(q, 'i'),
 		deleted: false,

@@ -116,7 +116,7 @@ exports.listNearEvents = function (req, res) {
 		res.format({
 			html: function() {
 				res.locals.moment = moment;
-				res.render('event/list', { events: [], findNear: true, pagename: "Events near you", title: "Events nearby" });
+				res.render('search/results', { nearby: true, search: { results: [] }, moment:moment, title: "Events nearby" })
 			},
 			json: function() {
 				res.send({
@@ -143,8 +143,17 @@ exports.listNearEvents = function (req, res) {
 			}
 		}
 	};
-	models.Geolocation.find(query).populate('event', 'name start end address venue_name avatar source')
-		.limit(limit)
+	models.Geolocation.find(query).populate({
+		path: 'event',
+		select: 'name start end address venue_name avatar source',
+		match: {
+			deleted: false,
+			privateEvent: {
+				$ne: true
+			},
+			start: { $gte: Date.now() }
+		},
+	}).limit(limit)
 		.skip(limit * page)
 		.exec(function(err, geos) {
 			if (err) throw err;
@@ -171,7 +180,7 @@ exports.listNearEvents = function (req, res) {
 				}, function(err) {
 					res.format({
 						html: function() {
-							res.render('event/list', { events: events, moment:moment, pagename: "Events near you", title: "Events nearby" })
+							res.render('search/results', { nearby: true, search: { results: events }, moment:moment, title: "Events nearby" })
 						},
 						json: function() {
 							if (events.length > 0 && htmlIsEnabled) {
