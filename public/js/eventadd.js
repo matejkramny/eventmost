@@ -376,7 +376,7 @@ $(document).ready(function() {
 		//template.find("input[type=hidden]").val(category);
 		//var html = template.html();
 		var template = "";
-		template += "<div><div class='col-lg-9 col-md-9 col-xs-9'>\
+		template += "<div><div class='col-lg-9 col-md-9 col-xs-9' style='padding-left:0px;'>\
 							<input value='"+category+"' disabled='disabled' class='input-ashen-rounded font-exception-thin' type='text' style='height:35px;background-color:#D5D6D7;'>\
 						</div>\
 						<div class='col-lg-3 col-md-3 col-xs-3 pad-left-zero'>\

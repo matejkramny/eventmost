@@ -172,7 +172,7 @@ input[type=number]::-webkit-outer-spin-button {
 /*        overflow: hidden; */
       }
       div.resize {
-        padding-bottom: 250px;
+        padding-bottom: 0px;
       }
       div.resize div.box {
         position: absolute;
@@ -321,6 +321,11 @@ position: relative;
 .color-yellow{color: #fdd093;}
 .color-grey2{color: #7f7f7f;}
 
+.clearfix2{clear: both;}
+.clearfix2:before, .clearfix2:after {
+    content: " ";
+    display: table;
+}
 .bg-white {background-color: #fff; color: #58585b; }
 .bg-purple {background-color: #542437; color: #e6e7e8;}
 .bg-ashen {background-color: #e6e7e8; color: #542437;}
@@ -331,7 +336,7 @@ border-radius: 10px;}
 .bg-green {background-color: #0992a3; color: #f1f1f2;}
 .prof-width{max-width: 150px;}
 
-
+.nspacer-small-minus{margin-top: -30px;}
 .learn-create{margin-top: -15px;}
 .ex-st{margin-left: -10px;}
 .ex-st2{margin-left: 10px;}
@@ -520,6 +525,10 @@ min-height: 116px;
 }
 .font-change{font-size: 16px;}
 
+
+.no-border-focus, .no-border-focus:focus{border:none; box-shadow: none;}
+.no-border-focus2:focus, .no-border-focus2{ box-shadow: none; border:1px solid #ccc;}
+.no-border-focus2{border:1px solid #ccc;}
 .orcircle
     {
     width:50px;
@@ -1625,6 +1634,30 @@ input.mini-check[type=checkbox]:checked + label:before {
 
 
 
+.font-near-check{font-size: 16px; padding-top: 7px; font-weight: 400;}
+
+/**** new checkboxes ****/
+.amPmCheckbox input[type="checkbox"] {
+    display: none;
+}
+.amPmCheckbox input[type="checkbox"]+label {    
+    background: url('../../../images/check5-new.svg') no-repeat;
+    height:30px;
+    padding-left: 35px;
+    cursor: pointer !important;
+}
+.amPmCheckbox input[type="checkbox"]:checked + label {
+    background: url('../../../images/check5-new2.svg') no-repeat;
+    height:30px;
+}
+
+/**** end new checkboxes ****/
+
+
+
+
+
+
 p.check5 > input
 {
   padding: 0;
@@ -1738,6 +1771,7 @@ p.check5-purple-small > label
   color: #fff; 
   padding: 0 0 0 0px;
   padding-top: 5px;
+
   -moz-transition: color 1s ease; 
   -o-transition: color 1s ease; 
   -webkit-transition: color 1s ease; 
