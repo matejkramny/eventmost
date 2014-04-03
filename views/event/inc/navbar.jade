@@ -5,11 +5,11 @@ mixin navbar
 	.nspacer
 	.row
 		.col-md-12.col-xs-12.col-sm-12
-			a(href=base, class="link-purple", style="font-size: 25px; padding: 0 0 0 10px;")
 				.pull-left.linknamewidth.pad-left-zero.left.inline.nspacer-small.font-exception(type='submit', style="")
-					if (typeof hideArrow === "undefined" || hideArrow == false)
-						| &#8592 
-					| #{ev.name}
+					a(href=base, class="link-purple", style="font-size: 25px; padding: 0 0 0 10px;")
+						if (typeof hideArrow === "undefined" || hideArrow == false)
+							| &#8592 
+						| #{ev.name}
 			.pull-right
 				if eventadmin
 					.inline.nspacer-small.pad-right-five

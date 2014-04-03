@@ -10,11 +10,16 @@ html
 		title #{title}
 		link(href="/favicon.ico" type="image/x-icon" rel="icon")
 		link(href="/favicon.ico" type="image/x-icon" rel="shortcut icon")
+
+
 		
 		//- all css goes here
 		block css
 			link(rel="stylesheet" href="/css/all_combined.min.css?v=#{versionHash}")
 			link(rel="stylesheet" href="/css/bootstrap-eventmost.css?v=#{versionHash}")
+			link(rel="stylesheet" href="/css/crop/main.css?v=#{versionHash}")
+			link(rel="stylesheet" href="/css/crop/jquery.Jcrop.min.css?v=#{versionHash}")
+
 
 	body(ng-app="eventMost")
 		//- main container
@@ -22,7 +27,7 @@ html
 		header
 			.container
 				.row
-					.pull-left.col-md-4.col-xs-4
+					.pull-left.col-md-3.col-xs-3
 						a(href="/")
 							img.nspacer.logos(src="/images/logo.svg")
 				
@@ -60,9 +65,21 @@ html
 											h20(ng-bind="notifications" ng-init="notifications = #{user.mailboxUnread}")= user.mailboxUnread
 								.font-header-icon
 									| Inbox
+
+							.pull-right.width7(ng-controller="inboxNotifications")
+								a.image(href="/user/"+user._id)
+									img.mail.pull-right.img-mess-smart(src="/images/my-profile-icon.svg" alt="" style="width:100%;")
+								.font-header-icon
+									| My profile
+
+							.pull-right.width7(ng-controller="inboxNotifications")
+								a.image(href=base+"dropbox")
+									img.mail.pull-right.img-mess-smart(src="/images/small-dropbox-icon.svg" alt="" style="width:100%;")
+								.font-header-icon.center.drop-icon-text
+									| Event <br />dropbox
 						
-							.col-md-6.col-xs-6.pull-right
-								.pull-right.nspacer-small
+							.col-md-6.col-xs-6.pull-left.pad-header-se
+								.pull-left.nspacer-small
 									a.font-e.link-purple.header-links(href="/") Home
 									if !recentEvent
 										|  | 
@@ -76,8 +93,8 @@ html
 								.clearfix
 								.nspacer.hide-mini
 									form(method="GET", accept-charset="utf-8", action="/search/")
-										input.gonew2.pull-right.header-links(type="submit", value="GO", style="width:10%; height:36px;")
-										input.pull-right.font-s.search-input.pad-left-ten.header-links(type="search", name="q", placeholder="Search for Events or People on EventMost", style="width:75%;", value= typeof search !== "undefined" ? search.query : null)
+										input.pull-left.font-s.search-input.pad-left-ten.header-links(type="search", name="q", placeholder="Search for Events or People on EventMost", style="width:75%;", value= typeof search !== "undefined" ? search.query : null)
+										input.gonew2.pull-left.header-links(type="submit", value="GO", style="width:10%; height:36px; border-top-right-radius:10px;  border-bottom-right-radius:10px;")
 						else
 							.col-md-6.col-xs-6.pull-right(ng-controller="TakeoverController" ng-init="inboxUrl = '#{inbox_send_to}'; setCsrf('#{token}');")
 								.text-center.nspacer-small(ng-cloak style="height:20px;")
@@ -119,13 +136,13 @@ html
 		//- usually globally persistent
 		block js
 			script(src="/js/vendor/all_required.min.js?v=#{versionHash}" defer)
-	
 
 			if !loggedIn
 				script(src="/js/signin.js?v=#{versionHash}" defer)
 			else
 				script(src="/socket.io/socket.io.js?v=#{versionHash}" defer)
 				script(src="/js/inbox_notifications.js?v=#{versionHash}" defer)
+				script(src="/js/diferscript.js?v=#{versionHash}" defer)
 				if (typeof hide_bar_right !== 'undefined' && hide_bar_right === true)
 					script(src="/js/takeoverProfile.js?v=#{versionHash}" defer)
 					

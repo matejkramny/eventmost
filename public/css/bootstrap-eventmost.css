@@ -204,6 +204,31 @@ input[type=number]::-webkit-outer-spin-button {
 /* end item text with dots */
 
 
+/* crop tool */
+
+
+.small-event-border {
+  border: 5px solid #fff !important;
+  margin-top:-90px;
+  z-index: 999;
+  margin-left: 15px;
+}
+
+
+/* end crop tool */
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 .header_image{
@@ -321,6 +346,18 @@ position: relative;
 .color-yellow{color: #fdd093;}
 .color-grey2{color: #7f7f7f;}
 
+
+#link-wrap
+{
+   white-space: pre-wrap; /* css-3 */    
+    white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+    white-space: -pre-wrap; /* Opera 4-6 */    
+    white-space: -o-pre-wrap; /* Opera 7 */    
+    word-wrap: break-word; /* Internet Explorer 5.5+ */
+    white-space:normal;
+    word-wrap:break-word;
+}
+
 .clearfix2{clear: both;}
 .clearfix2:before, .clearfix2:after {
     content: " ";
@@ -375,6 +412,7 @@ border-radius: 10px;}
 .inmar{margin-top: 32px;}
 .abs{position: absolute;}
 .rel-bottom{position: relative; bottom: 0px;}
+.rel{position: relative;}
 
 .hide-prof-butt{margin-right: 5px;}
 .post-width{width:95%;}
@@ -524,7 +562,8 @@ background-color: #e6e7e8;
 min-height: 116px;
 }
 .font-change{font-size: 16px;}
-
+.pad-header-se{padding-left: 25px;}
+.drop-icon-text{margin-top: 50px; padding-left: 11px;}
 
 .no-border-focus, .no-border-focus:focus{border:none; box-shadow: none;}
 .no-border-focus2:focus, .no-border-focus2{ box-shadow: none; border:1px solid #ccc;}

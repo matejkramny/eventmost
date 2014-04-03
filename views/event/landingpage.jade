@@ -15,62 +15,78 @@ block content
 		+navbar
 	
 	.nspacer
+	//- if there is no avatar event description should go here
 	.col-md-3.col-lg-3.col-sm-3
-		.center
-			img.img-responsive(src=ev.avatar.url)
+		if (ev.avatar)
+			img.img-responsive(src=ev.avatar.url style="width:100%;")
 	.col-md-9.col-lg-9.col-sm-9
+		.col-md-9.col-lg-9.col-sm-9
+				.pull-left.linknamewidth.pad-left-zero.left.inline.nspacer-small.font-exception.font18.bold.color-green(type='submit', style="")
+					| #{ev.name}
+		.clearfix
 		.nspacer
-		.col-md-3.col-lg-3.col-sm-3.font-e.semi-bold
-			| When
-			.line-purple
-			.font-s.inline.semi-bold(title= eventStartFormatted style="word-wrap: break-word; word-break: break-word;")
-				= eventStartFormatted
+		.col-md-3.col-lg-3.col-sm-3.font16
+			.inline
+				img(src="/images/small-clock.svg" alt=""  )
+			.font16.inline.color-green.semi-bold
+				| WHEN
+			.font-s(title= eventStartFormatted style="word-wrap: break-word; word-break: break-word;")
+				.semi-bold
+					= eventStartFormatted
+				.poo(style="font-weight:200;")
 				= eventEndFormatted
-		.col-md-3.col-lg-3.col-sm-3.font-e.semi-bold
-			| Where
-			.line-purple
-			.font-s.inline.semi-bold(style="word-break:break-all; ")
+		.col-md-3.col-lg-3.col-sm-3.font16
+			.inline
+				img(src="/images/mapster2.svg" alt=""  )
+			.font16.inline.color-green.semi-bold
+				| WHERE
+			.font-s(style="word-break:break-all; ")
 				- if (ev.address || ev.venue_name)
 					strong.pull-left.break(style="word-wrap:break-word; word-break: break-word; white-space: -moz-pre-wrap; white-space: pre-wrap;")
-					span(style="word-wrap:break-word; word-break: break-word;")
-						img.pull-left.pad-right-five(src="/images/mapster.svg" alt="")
+					span(style="word-wrap:break-word; word-break: break-word;")		
 						= ev.venue_name
 					.pull-left(style="word-wrap:break-word; word-break: break-word;")
 						= ev.address
 					- if (!ev.address && !ev.venue_name)
 						| Event does not have a location
-		.col-md-3.col-lg-3.col-sm-3.font-e.semi-bold
-			| Event Organizers
-			.line-purple
-			.font-s.inline.semi-bold(style="word-wrap:break-word; word-break: break-word;")
+			.nspacer
+			#eventMap(style="height:110px;")
+		.col-md-4.col-lg-4.col-sm-4.font16
+			.inline
+				img(src="/images/organizer.svg" alt=""  )
+			.font16.inline.color-green.semi-bold
+				| EVENT ORGANIZER
+			.font16.inline(style="word-break:break-all; ")
 				for attendee in locals.ev.attendees
 					if (attendee.admin && attendee.isAttending)
-						a(href="/user/"+attendee.user._id)= attendee.user.getName()
+						a.link-purple.font16(href="/user/"+attendee.user._id)= attendee.user.getName()
 						br
-		.nspacer
-		.col-md-9.col-lg-9.col-sm-9.pad-right-zero
-			// google map here
-			#eventMap(style="height:197px;")
-		.col-md-3.col-lg-3.col-sm-3.font-e.semi-bold(style="margin-top:-127px;")
+		.col-md-2.col-lg-2.col-sm-2.font16
+			.inline
+				img(src="/images/sponsors-cion.svg" alt=""  )
+			.font16.inline.color-green.semi-bold
+				| SPONSORS
+			.nspacer
+
+			
 			if (ev.sponsorLayout.sponsor1)
-				.center
-					| Sponsors
-				.line-purple
 				if (ev.sponsorLayout.sponsor1)
-					img.img-responsive(src=ev.sponsorLayout.sponsor1.url)
+					img.img-responsive(src=ev.sponsorLayout.sponsor1.url style="width:100%;")
 				.nspacer-small
 				if (ev.sponsorLayout.sponsor2 && ev.sponsorLayout.layout > 0 && ev.sponsorLayout.layout != 3)
-					img.img-responsive(src=ev.sponsorLayout.sponsor2.url)
+					img.img-responsive(src=ev.sponsorLayout.sponsor2.url style="width:100%;")
 				.nspacer-small
 				if (ev.sponsorLayout.sponsor3 && ev.sponsorLayout.layout == 2)
-					img.img-responsive(src=ev.sponsorLayout.sponsor3.url)
+					img.img-responsive(src=ev.sponsorLayout.sponsor3.url style="width:100%;")
 		.clearfix
 	.clearfix
 
+	.nspacer-big
+
 
 	.col-md-12.col-lg-12.col-sm-12
-		.font.semi-bold
-			| Event description
+		.font16.semi-bold.color-green
+			| EVENT DESCRIPTION
 		.line-purple
 		.description-text-medium.break!= ev.description	
 
