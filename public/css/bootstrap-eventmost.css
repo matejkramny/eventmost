@@ -436,7 +436,7 @@ border-radius: 10px;}
 
 .linknamewidth{width: 50%;}
 .post-width-text{width:95%;}
-.post-width-text-new{width:96.3%;}
+.post-width-text-new{width:92%;}
 
 
 .col-lg-3-5{width:31.6%; float: left; padding-left: 5px; padding-right: 5px;}
@@ -549,6 +549,12 @@ a.link-white:hover {
 }
 
 
+
+
+
+
+
+
 .message-nr h20 {font-size: 22px; font-weight: 400; color: #542437;  margin-top: 45px; margin-left: 45px; position: absolute;
   padding-left: 7px; padding-right: 7px; background-color: #fdd093 !important; border-radius: 15px; }
 
@@ -564,6 +570,7 @@ min-height: 116px;
 .font-change{font-size: 16px;}
 .pad-header-se{padding-left: 25px;}
 .drop-icon-text{margin-top: 50px; padding-left: 11px;}
+.post-butt9{padding-top: 28px;}
 
 .no-border-focus, .no-border-focus:focus{border:none; box-shadow: none;}
 .no-border-focus2:focus, .no-border-focus2{ box-shadow: none; border:1px solid #ccc;}
@@ -945,6 +952,7 @@ input.file {
 .login::-webkit-input-placeholder, .pass::-webkit-input-placeholder, .name::-webkit-input-placeholder {   color:#542437 !important; }
 .postcommentarea::-webkit-input-placeholder{color:#fff !important;}
 .postcommentarea1::-webkit-input-placeholder{color:#fff !important;}
+.postcommentarea11::-webkit-input-placeholder{color:#0992a3 !important;}
 .postcommentarea-ashen::-webkit-input-placeholder{color:#fff !important;}
 
 
@@ -975,6 +983,21 @@ input.file {
   border: none;
   border-radius: 0px;
   padding-left: 10px;
+}
+.postcommentarea11 {
+  background-color: #f2f2f2 !important;
+  width: 100% ! important;
+  color: #0992a3 ! important;
+  font-size: 16px ! important;
+  border-color:#f2f2f2  !important;
+  resize:none !important;
+  min-height: 70px;
+  overflow: hidden;
+  font-weight: 400;
+  border: none;
+  border-radius: 0px;
+  padding-left: 10px;
+  padding-top: 10px;
 }
 .underpost{
   width: 95%;

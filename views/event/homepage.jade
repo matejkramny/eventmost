@@ -4,7 +4,14 @@ include inc/navbar
 include inc/attendee
 include inc/message
 
+
 append addonjs
+	script(src="/js/eventLandingPage.js?v=#{versionHash}" defer)
+	script(src="/js/drops.js?v=#{versionHash}" defer)
+	include inc/mapjs
+	script(src="/js/vendor/moment.min.js" defer)
+	script(src="/js/event_landingpage.js?v=#{versionHash}" defer)
+	script(src="https://js.stripe.com/v2/" async)
 	script(src="/js/vendor/moment.min.js" defer)
 	script(src="/js/mif.js?v=#{versionHash}" defer)
 
@@ -30,15 +37,12 @@ block content
 	//- comment post
 	.nspacer
 	div(ng-controller="commentsController" ng-cloak ng-init='init({ id: "#{ev._id}", user: "#{user._id}", csrf: "#{token}", attendee: #{JSON.stringify(attendee)} });')
-		.row
 			.col-sm-12.col-xs-12.col-md-12
-				.pull-left
-					img.pull-left.bubble-responsive(src="/images/bubble-left-blue.svg" style="vertical-align:top;")
-				.pull-left.bg-green.psev.post-width-text-new
-					textarea.postcommentarea1(placeholder="Post a comment here..." ng-model="text" comment-form)
-					.pull-right
-						a(href="" submit-comment)
-							img.post-butt(src="/images/post-button-new.svg")
+				.pull-left(style="height:70px; width:90%")
+					textarea.postcommentarea11(placeholder="Post a comment here..." ng-model="text" comment-form)
+				.pull-right.bg-green.center(style="height:70px; width:10%;")
+					a(href="" submit-comment)
+						img.post-butt9(src="/images/postish.svg" )
 				.clearfix
 			
 			//- other comments

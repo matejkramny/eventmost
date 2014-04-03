@@ -47,7 +47,19 @@ html
 									i.fa.fa-star.fa-fw
 					else
 						if (typeof hide_bar_right === 'undefined' && hide_bar_right !== true)
-							//- Only displayed when user is logged in
+							//- Only displayed when user is logged in		
+
+							.pull-right.width7(ng-controller="inboxNotifications")
+								a.image(href=base+"dropbox")
+									img.mail.pull-right.img-mess-smart(src="/images/small-dropbox-icon.svg" alt="" style="width:100%;")
+								.font-header-icon.center.drop-icon-text
+									| Event <br />dropbox
+							.pull-right.width7(ng-controller="inboxNotifications")
+								a.image(href="/user/"+user._id)
+									img.mail.pull-right.img-mess-smart(src="/images/my-profile-icon.svg" alt="" style="width:100%;")
+								.font-header-icon
+									| My profile
+
 							.pull-right.width7
 								a.image(href="/inbox")
 									img.mail.pull-right.img-mess-smart(src="/images/notes-icon.svg" alt="" style="width:100%;")
@@ -56,7 +68,7 @@ html
 											h20 0
 								.font-header-icon2
 									| Notes
-						
+
 							.pull-right.width7(ng-controller="inboxNotifications")
 								a.image(href="/inbox")
 									img.mail.pull-right.img-mess-smart(src="/images/message-icon.svg" alt="" style="width:100%;")
@@ -65,18 +77,6 @@ html
 											h20(ng-bind="notifications" ng-init="notifications = #{user.mailboxUnread}")= user.mailboxUnread
 								.font-header-icon
 									| Inbox
-
-							.pull-right.width7(ng-controller="inboxNotifications")
-								a.image(href="/user/"+user._id)
-									img.mail.pull-right.img-mess-smart(src="/images/my-profile-icon.svg" alt="" style="width:100%;")
-								.font-header-icon
-									| My profile
-
-							.pull-right.width7(ng-controller="inboxNotifications")
-								a.image(href=base+"dropbox")
-									img.mail.pull-right.img-mess-smart(src="/images/small-dropbox-icon.svg" alt="" style="width:100%;")
-								.font-header-icon.center.drop-icon-text
-									| Event <br />dropbox
 						
 							.col-md-6.col-xs-6.pull-left.pad-header-se
 								.pull-left.nspacer-small
