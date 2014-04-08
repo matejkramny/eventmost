@@ -4,24 +4,10 @@ append addonjs
 	script(src="/js/crop/jquery.min.js", defer)
 	script(src="/js/crop/jquery.Jcrop.min.js", defer)
 	script(src="/js/crop/script.js", defer)
-	script(src='/js/crop/FileAPI/FileAPI.min.js', defer)
-	script(src='/js/crop/FileAPI/FileAPI.exif.js', defer)
-	script(src='/js/crop/jquery.fileapi.js', defer)
-	script(src='/js/crop/jcrop/jquery.Jcrop.min.js', defer)
-	script(src='/js/crop/statics/jquery.modal.js', defer)
 	script(src="/js/vendor/jquery-ui-1.10.3.custom.min.js" defer)
 	script(src="/js/datepicker.js?v=#{versionHash}", defer)
 	script(src="/js/vendor/tiny.editor.packed.js", defer)
 	script(src="/js/vendor/jquery.jcarousel.min.js", defer)
-
-	script
-		!window.jQuery && document.write('<script src="/js/jquery.dev.js"><'+'/script>');
-	script
-		var FileAPI = {
-			debug: true
-			, media: true
-			, staticPath: './FileAPI/'};
-
 
 	if (typeof ev !== "undefined")
 		script.
@@ -367,35 +353,36 @@ append content
 							| Logo
 						.font.font-thin.nspacer.logo-text.dif2
 							| L<br />o<br />g<br />o
-					.col-lg-3-5
-					
-						.div
-							.example
-								.example__left
-									.userpic#userpic
-										.js-preview.userpic__preview
-										.btn.btn-success.js-fileapi-wrapper(style="margin-top:85px; margin-left:350px;")
-											.js-browse
-												span.btn-txt
-													| Choose
-												input#file_browse(type='file', name='avatar')
-											.js-upload(style="display: none;")
-												.progress.progress-success(style="display: none;")
-													.js-progress.bar(style="display: none;")
-												span.btn-txt
-													| Uploading
+					.col-lg-3-5		
+						//- crop toll
+						#profile_pic
+							img#thumb(src='/images/pro.svg')
 
+						form#upload_form(enctype='multipart/form-data', method='post', action='upload.php', onsubmit='return validateForm();')
+							input#w(type='hidden', name='w')
+							input#h(type='hidden', name='h')
+							input#x1(type='hidden', name='x1')
+							input#y1(type='hidden', name='y1')
+							input#x2(type='hidden', name='x2')
+							input#y2(type='hidden', name='y2')
 						
+						
+
+
+
+
+
+					//- crop toll browse button
 					.pull-left.button-event
 						.bg-yellow-rounded
 							#file_browse_wrapper
-								input#file_browse(name="avatar", type="file")
-					a.pad-left-five.pull-left.button-event.file_upload_wrapper(href="#" style="text-decoration:none !important;")
-						.bg-yellow-rounded.center.create-height
-							img.uploads(src="/images/upload-pin.svg")
-							img.uploads2(src="/images/upload-pin-s.svg")
-							.center.font-tw.uploads-text
-								| Upload
+								input#file_browse(type='file', style='', name='file_browse')
+								//- previous upload file with different name input#file_browse(name="avatar", type="file")
+					//- crop toll upload button when pressed  upload.php
+					.pull-left.button-event
+							#file_upload_wrapper(style="margin-left:4px;")
+								input#file_upload(type='submit', style='', value='Upload')
+
 					a.pad-left-five.pull-left.button-event.file_delete_wrapper(href="#" style="text-decoration:none !important;")
 						.bg-yellow-rounded.center.create-height
 							img.uploads(src="/images/delete-bin.svg")
@@ -403,10 +390,14 @@ append content
 							.center.font-tw.uploads-text
 								| Delete
 					.clearfix
+					//- crop toll preview
+					.info-m(style='display: none;')
+						| Select part of image you want to crop
+					#image_div(style='display: none;')
+						img#load_img(src='')
+					.error(style='display: none;')
 
-
-
-					
+					.clearfix
 					.popup#popup(style="display: none;")
 						.popup__body
 							.js-img

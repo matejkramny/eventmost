@@ -150,6 +150,37 @@ input[type=number]::-webkit-outer-spin-button {
 .show-not1{display: none;}
 
 
+
+
+#profile_pic{
+  width:312px; height:158px;padding:0px;overflow:hidden!important; margin-left: -1px;
+}
+
+
+.error{
+  width:400;padding:10px;margin:5px auto;border:1px solid #970F0F;border-radius:4px;background-color:#BA2222;color:#fff;
+}
+.info-m{
+  width:400;padding:10px;margin:5px auto;border:1px solid #0992a3;border-radius:4px;background-color:#0992a3;color:#fff;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* item text with dots */
       div.outbox {
         padding: 0 0 0px 0;
@@ -751,6 +782,28 @@ min-height: 116px;
     cursor: pointer !important;
 }
 #file_browse{
+    opacity:0.0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer !important;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+}
+
+#image_div{margin-top: 5px;}
+
+#file_upload_wrapper {
+    background: url('../../../images/pinner_button.svg') 0 0 no-repeat;
+    border:none;
+    height: 158px;
+
+    overflow:hidden;
+    cursor: pointer !important;
+}
+#file_upload_wrapper:hover  {
+    cursor: pointer !important;
+}
+#file_upload{
     opacity:0.0;
     width: 100%;
     height: 100%;
