@@ -51,6 +51,22 @@ function doAddEvent (req, res) {
 function uploadAvatarAsync (req, res) {
 	var avatarid = req.body.avatarid;
 	var avatar;
+
+	var size = {
+		x: parseFloat(req.body.x),
+		y: parseFloat(req.body.y),
+		w: parseFloat(req.body.w),
+		h: parseFloat(req.body.h)
+	}
+
+	for (var s in size) {
+		if (size.hasOwnProperty(s)) {
+			if (isNaN(size[s])) {
+				size = null;
+				break;
+			}
+		}
+	}
 	
 	function doCallback (err) {
 		if (err) {
@@ -75,7 +91,7 @@ function uploadAvatarAsync (req, res) {
 		avatar = new models.Avatar({
 			createdBy: req.user._id
    	});
-		avatar.doUpload(req.files.avatar, doCallback)
+		avatar.doUpload(req.files.avatar, doCallback, size)
 	} else {
 		models.Avatar.findOne(avatarid, function(av) {
 			// TODO warning possible hackable area (specify avatar id, and upload an image. it should overwrite it)
@@ -87,7 +103,7 @@ function uploadAvatarAsync (req, res) {
 			}
 			
 			avatar = av;
-			av.doUpload(req.files.avatar, doCallback)
+			av.doUpload(req.files.avatar, doCallback, size)
 		})
 	}
 }

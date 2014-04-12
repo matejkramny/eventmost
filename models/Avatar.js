@@ -4,6 +4,7 @@ var schema = mongoose.Schema;
 var ObjectId = schema.ObjectId;
 var fs = require('fs')
 var config = require('../config')
+var gm = require('gm')
 
 var scheme = schema({
 	url: String,
@@ -11,7 +12,7 @@ var scheme = schema({
 	created: { type: Date, default: Date.now }
 });
 
-scheme.methods.doUpload = function(avatar, cb) {
+scheme.methods.doUpload = function(avatar, cb, size) {
 	var self = this;
 	if (avatar != null && avatar.name.length != 0) {
 		var type = avatar.type;
@@ -43,9 +44,9 @@ scheme.methods.doUpload = function(avatar, cb) {
 		
 		self.url = "/avatars/"+this._id+"."+ext;
 		
-		fs.rename(avatar.path, config.path + "/public" + self.url, function(err) {
+		var callback = function(err) {
 			if (err) throw err;
-			
+
 			if (config.knox) {
 				config.knox.putFile(config.path + "/public" + self.url, "/public"+self.url, function(err, res) {
 					if (err) throw err;
@@ -56,7 +57,15 @@ scheme.methods.doUpload = function(avatar, cb) {
 			}
 			
 			cb(null);
-		})
+		}
+
+		if (typeof size === 'undefined' || size == null) {
+			fs.rename(avatar.path, config.path + "/public" + self.url, callback);
+		} else {
+			gm(avatar.path)
+				.crop(size.w, size.h, size.x, size.y)
+				.write(config.path + "/public" + self.url, callback);
+		}
 		
 		return;
 	} else {

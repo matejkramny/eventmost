@@ -225,8 +225,6 @@ $(document).ready(function() {
 			$(".avatar_preview").attr('src', img.target.result);
 		}
 		reader.readAsDataURL(file);
-		
-		uploadAvatar()
 	})
 	
 	$(".file_browse_wrapper").click(function(ev) {
@@ -234,6 +232,12 @@ $(document).ready(function() {
 		$("#file_browse").trigger('click');
 		return false;
 	})
+	
+	var avatar_coords = null;
+	window.setCoordinates = function(c) {
+		avatar_coords = c;
+	};
+
 	function uploadAvatar () {
 		if (typeof file === "undefined" || file == null) {
 			// opens the dialog
@@ -242,10 +246,15 @@ $(document).ready(function() {
 		}
 	
 		$("#avatarStatus").html("<br/>Uploading..");
-	
+		
 		var form = new FormData();
 		form.append("_csrf", $("head meta[name=_csrf]").attr('content'));
 		form.append("avatar", file);
+		form.append("x", avatar_coords.x);
+		form.append("y", avatar_coords.y);
+		form.append("w", avatar_coords.w);
+		form.append("h", avatar_coords.h);
+		
 		avatarUploadRequest = new XMLHttpRequest();
 		avatarUploadRequest.open("POST", "/event/add/avatar", true);
 		avatarUploadRequest.responseType = "json";
@@ -254,7 +263,7 @@ $(document).ready(function() {
 		avatarUploadRequest.upload.addEventListener('progress', xmlUploadProgress, false)
 		avatarUploadRequest.send(form);
 	}
-	$(".file_upload_wrapper").click(uploadAvatar);
+	$("#file_upload_wrapper").click(uploadAvatar);
 	
 	$(".file_delete_wrapper").click(function() {
 		file = null;

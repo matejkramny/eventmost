@@ -84,6 +84,7 @@ $(document).ready(function(){
 
 function showThumbnail(e)
 {
+    window.setCoordinates(e);
     var rx = 312 / e.w; //155 is the width of outer div of your profile pic
     var ry = 158 / e.h; //190 is the height of outer div of your profile pic
     $('#w').val(e.w);
