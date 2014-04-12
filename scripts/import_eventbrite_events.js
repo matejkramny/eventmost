@@ -40,7 +40,8 @@ function getPage (page) {
 			parsePage(events_mix, function() {
 				if (page < pages) getPage(page + 1);
 				else {
-					console.log("I AM FINISHED! :P")
+					console.log("I AM FINISHED! :P");
+					process.exit(0);
 				}
 			});
 	})

@@ -10,58 +10,13 @@ var key = 'key=34617a1c721e1f626d94250644578';
 getVenue(0);
 
 function getVenue (offset) {
-	console.log("Requesting Venues, offset", offset)
+	console.log("Requesting Events, offset", offset)
 	request(
 		[api,
-		'open_venues',
+		'open_events',
 		'?', key,
 		'&', 'city=Oxford',
 		'&', 'country=GB',
-		'&', 'offset=', offset].join(''), function(err, res, body) {
-			if (err) throw err;
-			
-			var parsed = null
-			try {
-				parsed = JSON.parse(body);
-			} catch (e) {
-				console.log("Error parsing JSON")
-				throw e;
-			}
-			
-			var venues = parsed.results;
-			
-			var num = parsed.meta.count;
-			var total = parsed.meta.total_count;
-			
-			var pages = Math.floor(total / num);
-			if (offset == 0) console.log(total, 'Total Venues,', pages, ' pages');
-			
-			console.log("Have", pages - offset, " more pages to go through");
-			
-			getEvents(venues, function() {
-				if (offset < pages) getVenue(offset + 1);
-				else {
-					console.log("I AM FINISHED! :P")
-				}
-			});
-	})
-}
-
-function getEvents(venues, cb) {
-	async.eachSeries(venues, function(venue, cb) {
-		getEventsForVenue(venue, 0, function() {
-			cb(null);
-		})
-	})
-}
-
-function getEventsForVenue(venue, offset, cb) {
-	console.log("Requesting Events for Venue", offset)
-	request(
-		[api,
-		'events',
-		'?', key,
-		'&', 'venue_id='+venue.id,
 		'&', 'offset=', offset].join(''), function(err, res, body) {
 			if (err) throw err;
 			
@@ -86,17 +41,16 @@ function getEventsForVenue(venue, offset, cb) {
 			
 			console.log("(Event) Have", pages - offset, " more pages to go through");
 			
-			parseEvents(evs, venue, function() {
-				if (offset < pages) getEventsForVenue(venue, offset+1, cb);
+			parseEvents(evs, function() {
+				if (offset < pages) getVenue(offset + 1);
 				else {
-					console.log("I AM FINISHED! :P - parsing a venue")
-					cb(null);
+					console.log("I AM FINISHED! :P")
 				}
 			});
-		})
+	})
 }
 
-function parseEvents (evs, venue, cb) {
+function parseEvents (evs, cb) {
 	// Filter existing events..
 	async.reject(evs, function(evn, cb) {
 		models.Event.findOne({
@@ -115,7 +69,7 @@ function parseEvents (evs, venue, cb) {
 		console.log('Parsing: ', filtered.length, 'events');
 		
 		async.eachSeries(filtered, function(ev, cb) {
-			parseEvent(ev, venue, cb);
+			parseEvent(ev, cb);
 		}, function(err) {
 			if (err) throw err;
 			
@@ -124,7 +78,7 @@ function parseEvents (evs, venue, cb) {
 	});
 }
 
-function parseEvent (ev, venue, cb) {
+function parseEvent (ev, cb) {
 	var e = new models.Event({
 		source: {
 			meetup: true,
@@ -136,7 +90,9 @@ function parseEvent (ev, venue, cb) {
 
 	});
 	
-	e.venue_name = venue.name;
+	if (ev.venue) {
+		e.venue_name = ev.venue.name;
+	}
 	e.created = new Date(ev.created);
 	e.start = new Date(ev.time);
 	e.end = new Date(ev.time + ev.duration);
@@ -157,22 +113,22 @@ function parseEvent (ev, venue, cb) {
 		e.avatar = av._id;
 	}
 	
-	var geo = new models.Geolocation({
-		geo: {
-			lat: venue.lat,
-			lng: venue.lon
-		},
-		event: e._id
-	});
-	geo.save();
-	
-	e.address = venue.address_1 + ', ' + venue.address_2 + ', ' + venue.city;
+	if (ev.venue) {
+		var geo = new models.Geolocation({
+			geo: {
+				lat: ev.venue.lat,
+				lng: ev.venue.lon
+			},
+			event: e._id
+		});
+		geo.save();
+		e.address = ev.venue.address_1 + ', ' + ev.venue.address_2 + ', ' + ev.venue.city;
+	}
 	
 	var smeta = new models.SocialMetadata({
 		type: 'MeetupEvent',
 		meta: {
-			event: ev,
-			venue: venue
+			event: ev
 		},
 		event: e._id
 	});
