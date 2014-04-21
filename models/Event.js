@@ -555,7 +555,7 @@ scheme.methods.getEndDateCombinedFormatted = function () {
 }
 
 scheme.methods.isForeign = function () {
-	return this.source.facebook == true || this.source.eventbrite == true;
+	return this.source.facebook == true || this.source.eventbrite == true || this.source.meetup == true;
 }
 
 exports.Event = mongoose.model("Event", scheme);

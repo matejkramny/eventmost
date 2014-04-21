@@ -257,8 +257,14 @@ function redirectToForeignEvent (req, res, page) {
 					url += 'eventbrite.com/e/';
 				} else if (ev.source.facebook) {
 					url += 'facebook.com/events/';
+				} else if (ev.source.meetup) {
+					url += 'meetup.com/e/';
 				}
 				url += ev.source.id;
+
+				if (ev.source.url) {
+					url = ev.source.url;
+				}
 			
 				res.redirect(url);
 			} else {
