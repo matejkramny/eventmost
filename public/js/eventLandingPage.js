@@ -100,4 +100,18 @@ $(document).ready(function() {
 			}
 		}
 	}
+		
+	var grey_rounded_box_click_cnt=0;
+		
+	$(".grey-rounded-box").click(function() {
+		grey_rounded_box_click_cnt++;
+		if(grey_rounded_box_click_cnt >= 2){
+			grey_rounded_box_click_cnt=0;	
+			return;
+		}
+		var href = $(".fakeattendee").attr('href');
+		self.location.href=href;
+	})
+
+	$(".grey-rounded-box").css({'cursor': 'pointer'})
 });

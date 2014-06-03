@@ -190,7 +190,51 @@ $(document).ready(function() {
 	var avatarUploadRequest;
 	var avatar_id;
 	var file;
-	$("#file_browse").change(function() {
+	$("input#file_browse1").change(function() {
+		var files = this.files;
+		console.log('was');
+		for (var i = 0; i < files.length; i++) {
+			file = files[i];
+			break;
+		}
+		
+		if (typeof file === "undefined" || file == null) {
+			return;
+		}
+		
+		var ext = file.name.split('.');
+		var extensionValid = false;
+		
+		if (ext.length > 0) {
+			ext = ext[ext.length-1].toLowerCase();
+			
+			// Check against valid extensions
+			if (ext == 'jpg' || ext == 'jpeg' || ext == 'png' || ext == 'gif') {
+				// valid.
+				extensionValid = true;
+			}
+		}
+		
+		if (!extensionValid) {
+			alert("The file is not valid :/. Please choose an image, thank you.");
+			return;
+		}
+		
+		var reader = new FileReader();
+		reader.onload = function(img) {
+			$(".avatar_preview").attr('src', img.target.result);
+		}
+		reader.readAsDataURL(file);
+		//uploadAvatar1();
+	})
+	/*
+	$("#file_browse_wrapper1").click(function(ev) {
+		ev.preventDefault();
+		$("input#file_browse1").trigger('click');
+		return false;
+	})*/
+
+	$("input#file_browse2").change(function() {
 		var files = this.files;
 		
 		for (var i = 0; i < files.length; i++) {
@@ -226,13 +270,14 @@ $(document).ready(function() {
 		}
 		reader.readAsDataURL(file);
 	})
-	
-	$(".file_browse_wrapper").click(function(ev) {
+	/*
+	$("#file_browse_wrapper2").click(function(ev) {
 		ev.preventDefault();
-		$("#file_browse").trigger('click');
+		$("input#file_browse2").trigger('click');
 		return false;
 	})
-	
+
+	*/
 	var avatar_coords = null;
 	window.setCoordinates = function(c) {
 		avatar_coords = c;
@@ -241,7 +286,7 @@ $(document).ready(function() {
 	function uploadAvatar () {
 		if (typeof file === "undefined" || file == null) {
 			// opens the dialog
-			$("#file_browse").trigger('click');
+			$("input#file_browse1").trigger('click');
 			return;
 		}
 	
@@ -263,7 +308,35 @@ $(document).ready(function() {
 		avatarUploadRequest.upload.addEventListener('progress', xmlUploadProgress, false)
 		avatarUploadRequest.send(form);
 	}
-	$("#file_upload_wrapper").click(uploadAvatar);
+	$("#file_upload_wrapper1").click(uploadAvatar);
+
+	
+	function uploadAvatar2 () {
+		if (typeof file === "undefined" || file == null) {
+			// opens the dialog
+			$("input#file_browse2").trigger('click');
+			return;
+		}
+	
+		$("#avatarStatus").html("<br/>Uploading..");
+		
+		var form = new FormData();
+		form.append("_csrf", $("head meta[name=_csrf]").attr('content'));
+		form.append("avatar", file);
+		form.append("x", avatar_coords.x);
+		form.append("y", avatar_coords.y);
+		form.append("w", avatar_coords.w);
+		form.append("h", avatar_coords.h);
+		
+		avatarUploadRequest = new XMLHttpRequest();
+		avatarUploadRequest.open("POST", "/event/add/avatar", true);
+		avatarUploadRequest.responseType = "json";
+		avatarUploadRequest.setRequestHeader("accept", "application/json");
+		avatarUploadRequest.onreadystatechange = xmlhttprequestResponse;
+		avatarUploadRequest.upload.addEventListener('progress', xmlUploadProgress, false)
+		avatarUploadRequest.send(form);
+	}
+	$("#file_upload_wrapper2").click(uploadAvatar2);
 	
 	$(".file_delete_wrapper").click(function() {
 		file = null;
@@ -557,7 +630,7 @@ $(document).ready(function() {
 					window.location = '/event/'+eventid;
 				}
 				
-				$("#invitationLink").html("<input size='' style='width:100%' value='" +"eventmost.com/event/"+eventid+"'></input>");
+				$("#invitationLink").html("<input size='' id='event_id_field' style='width:100%' value='" +"eventmost.com/event/"+eventid+"'></input>");
 				$(".gotoeventbutton").attr("href", "/event/"+eventid);
 			},
 			error: function(xhr, status, error) {
@@ -713,6 +786,36 @@ $(document).ready(function() {
 		$('#fromDateMobile, #fromDateDesktop').parent().find('input[type=time]').val('00:00');
 		$('#toDateMobile, #toDateDesktop').parent().find('input[type=time]').val('23:59');
 	}
+ 
+	$("#copy_event_id").click(function () {/*bind zclip to the button on click*/
+		$("#copy_event_id").zclip({
+			path:"/js/ZeroClipboard.swf",
+			copy:function(){alert("5555");alert($("input#event_id_field").val()); return "abcd"},
+            afterCopy: function() {
+               alert('copied')
+            }
+		})
+		//$( "#invitationLinkcopy" ).trigger( "click" );
+	})
+
+ 
+	/*
+	$("#copy_event_id").on('click', function (e) {
+		console.log($("input#event_id_field").val());
+		alert( $("input#event_id_field").val() );
+    	e.preventDefault();
+	}).zclip({
+	    path: '/js/ZeroClipboard.swf',
+	    copy: function(){
+	    	return $("input#event_id_field").val()
+	    },
+	    afterCopy: function() {
+               alert('copied');
+        }
+	});
+	*/
+
+
 });
 
 eventMost.controller('eventAdd', function($scope) {

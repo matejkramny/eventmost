@@ -2,12 +2,14 @@ extends ../responsive
 
 append addonjs
 	script(src="/js/crop/jquery.min.js", defer)
+	script(src="/js/vendor/angular.min.js", defer)
 	script(src="/js/crop/jquery.Jcrop.min.js", defer)
 	script(src="/js/crop/script.js", defer)
 	script(src="/js/vendor/jquery-ui-1.10.3.custom.min.js" defer)
 	script(src="/js/datepicker.js?v=#{versionHash}", defer)
 	script(src="/js/vendor/tiny.editor.packed.js", defer)
 	script(src="/js/vendor/jquery.jcarousel.min.js", defer)
+	script(src="/js/vendor/jquery.zclip.min.js", defer)
 
 	if (typeof ev !== "undefined")
 		script.
@@ -89,7 +91,6 @@ append content
 								| Event address
 						.pull-left.event-name-input
 								input.input-grey.current-location-field(name="address", type="text")
-
 				//- Current location checkbox
 				.clearfix.hide-all2
 				.col-xs-12.no-float.hide-all2
@@ -100,7 +101,6 @@ append content
 								label(for='creditcardsmaller223')
 						.pull-left.nspacer.logo-text.current-location-status
 								| use current location 
-
 				//- Event Date
 				.clearfix.hide-all2
 				.col-xs-12.no-float.hide-all2
@@ -331,9 +331,8 @@ append content
 				//- end mobile---------------------------
 
 	
-			form#desktop
+			form#desktop(ng-app)
 				//- -------------------------------standard
-
 				.nspacer-small.hide-mini
 				//- event name
 				.col-lg-11.col-md-11.col-xs-11.no-float.hide-mini
@@ -349,39 +348,31 @@ append content
 						.progress-bar.avatar-progress-upload(role="progress", aria-valuenow="0", aria-valuemin="0", aria-valuemax="100", style="width: 0%;")
 							span.sr-only 0% Uploaded
 					.col-lg-1.col-md-1.col-xs-1.bg-yellow.create-height
-						.font.font-thin.nspacer.logo-text.dif.font-exception
-							| Logo
+						.font-22.font-thin.nspacer.logo-text.dif.font-exception
+							|	Logo
 						.font.font-thin.nspacer.logo-text.dif2
 							| L<br />o<br />g<br />o
 					.col-lg-3-5		
 						//- crop toll
-						#profile_pic
+						#profile_pic.profile_pic
 							img#thumb(src='/images/pro.svg')
 
-						form#upload_form(enctype='multipart/form-data', method='post', action='upload.php', onsubmit='return validateForm();')
+						form#upload_form1(enctype='multipart/form-data', method='post', action='upload.php', onsubmit='return validateForm();')
 							input#w(type='hidden', name='w')
 							input#h(type='hidden', name='h')
 							input#x1(type='hidden', name='x1')
 							input#y1(type='hidden', name='y1')
 							input#x2(type='hidden', name='x2')
 							input#y2(type='hidden', name='y2')
-						
-						
-
-
-
-
-
 					//- crop toll browse button
 					.pull-left.button-event
 						.bg-yellow-rounded
-							#file_browse_wrapper
-								input#file_browse(type='file', style='', name='file_browse')
-								//- previous upload file with different name input#file_browse(name="avatar", type="file")
+							#file_browse_wrapper1.file_browse_wrapper
+								input#file_browse1.file_browse(type='file', name='avatar1')
 					//- crop toll upload button when pressed  upload.php
 					.pull-left.button-event
-							#file_upload_wrapper(style="margin-left:4px;")
-								input#file_upload(type='submit', style='', value='Upload')
+							#file_upload_wrapper1.file_upload_wrapper(style="margin-left:4px;")
+								input#file_upload1.file_upload(type='submit', style='', value='Upload')
 
 					a.pad-left-five.pull-left.button-event.file_delete_wrapper(href="#" style="text-decoration:none !important;")
 						.bg-yellow-rounded.center.create-height
@@ -389,15 +380,73 @@ append content
 							img.uploads2(src="/images/delete-bin-s.svg")
 							.center.font-tw.uploads-text
 								| Delete
-					.clearfix
+					.clearfix					
 					//- crop toll preview
-					.info-m(style='display: none;')
+					#info-m.info-m(style='display: none;')
 						| Select part of image you want to crop
 					#image_div(style='display: none;')
 						img#load_img(src='')
-					.error(style='display: none;')
-
+					#error.error(style='display: none;')
 					.clearfix
+
+					//.line-purple
+					.nspacer
+					.font2.pull-left.font-exception
+						| Add large background photo? 
+					.col-lg-1.col-md-1.col-xs-1.pad-right-zero(style="width:50px;")
+						p.check5-purple-small
+							input.includePricedTickets#creditcardsmaller23( name="background", ng-model="background", ng-init="background=false", placeholder="", type="checkbox", value="Logo")
+							label(for='creditcardsmaller23')
+					.font-22
+						| (click 
+						a(href="#") here 
+						| to see example)				
+					.clearfix
+
+					.col-lg-1.col-md-1.col-xs-1.bg-yellow.create-height(ng-show="background")
+						.font-22.font-thin.nspacer.logo-text.dif.font-exception
+							|	Back-ground photo
+						.font.font-thin.nspacer.logo-text.dif2
+							| L<br />o<br />g<br />o
+					.col-lg-3-5(ng-show="background")
+						//- crop toll
+						#profile_pic2.profile_pic
+							img#thumb2(src='/images/pro.svg')
+
+						form#upload_form2(enctype='multipart/form-data', method='post', action='upload.php', onsubmit='return validateForm();')
+							input#w2(type='hidden', name='w2')
+							input#h2(type='hidden', name='h2')
+							input#x12(type='hidden', name='x12')
+							input#y12(type='hidden', name='y12')
+							input#x22(type='hidden', name='x22')
+							input#y22(type='hidden', name='y22')		
+
+					//- crop toll browse button
+					.pull-left.button-event(ng-show="background")
+						.bg-yellow-rounded
+							#file_browse_wrapper2.file_browse_wrapper
+								input#file_browse2.file_browse(type='file', style='', name='file_browse2')
+								//- previous upload file with different name input#file_browse2.file_browse(name="avatar", type="file")
+					//- crop toll upload button when pressed  upload.php
+					.pull-left.button-event(ng-show="background")
+							#file_upload_wrapper2.file_upload_wrapper(style="margin-left:4px;")
+								input#file_upload2.file_upload(type='submit', style='', value='Upload')
+
+					a.pad-left-five.pull-left.button-event.file_delete_wrapper(href="#" style="text-decoration:none !important;" ng-show="background")
+						.bg-yellow-rounded.center.create-height
+							img.uploads(src="/images/delete-bin.svg")
+							img.uploads2(src="/images/delete-bin-s.svg")
+							.center.font-tw.uploads-text
+								| Delete
+					.clearfix
+					//- crop toll preview
+					#info-m2.info-m(style='display: none;')
+						| Select part of image you want to crop
+					#image_div2(style='display: none;')
+						img#load_img2(src='')
+					#error2.error(style='display: none;')
+					.clearfix
+
 					.popup#popup(style="display: none;")
 						.popup__body
 							.js-img
@@ -754,14 +803,17 @@ append content
 						a#invitationLink(href="#", target="_blank") Sorry, an error occured :(. Please let us know
 				.clearfix
 				.nspacer-small
-					a.btn.btn-default.font-e.font-ah(href="", style="border-radius: 10px; padding:10px; padding-left:10px; padding-right:10px; margin-right:10px; color:#fff;")
+					a.btn.btn-default.font-e.font-ah(id="copy_event_id", href="", style="border-radius: 10px; padding:10px; padding-left:10px; padding-right:10px; margin-right:10px; color:#fff;")
 						| Copy
 				.clearfix
 				br
 			.nspacer
 	
 			//- ------Desktop-------
-
+			.col-lg-12.col-md-12.col-xs-12.center.hide-mini
+				p.font-22 For more planner options such as event layout, dropbox, feedback profiles and more, please go to "planner options" tab in the upper right hand portion of your event page.
+				br
+				br
 
 			.col-lg-12.col-md-12.col-xs-12.center.hide-mini
 				a.btn.btn-default.font-e.font-ah(href="/", style="border-radius: 10px; padding:10px; padding-left:35px; padding-right:35px; margin-right:20px; color:#fff;")
