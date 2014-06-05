@@ -10,7 +10,8 @@ var auth = require('./auth'),
 	admin = require('./admin'),
 	util = require('../util'),
 	models = require('../models'),
-	config = require('../config')
+	config = require('../config'),
+	ws = require('./ws')
 
 // HTTP router
 exports.router = function(app) {
@@ -47,6 +48,8 @@ exports.router = function(app) {
 	// search API
 	search.router(app)
 	
+	ws.router(app)
+
 	// Administration
 	admin.router(app)
 	

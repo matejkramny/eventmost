@@ -1,19 +1,14 @@
-var fs = require('fs'),
-	models = require('../models')
+var fs = require('fs')
+	, models = require('../../../models')
 	, mongoose = require('mongoose')
 	, util = require('../util')
-	, inbox = require('./inbox/index')
+	, inbox = require('./apiinbox/index')
 	, check = require('validator').check
-	, config = require('../config')
+	, config = require('../../../config');
 
 exports.router = function (app) {
-	app.get('/profile', util.authorized, profile)
-		.post('/profile/edit', util.authorized, doEditProfile)
-		.get('/user/:id', util.authorized, viewUser)
-		.all('/user/:id/*', util.authorized)
-		.get('/user/:id/save', saveUser)
-		.get('/user/:id/remove', removeProfile)
-		.post('/api/profile', util.authorized, profile)
+		//app.get('/api/test',function(req,res){res.send({token:"Test Token"})})
+		app.post('/api/profile', util.authorized, profile)
 		.post('/api/profile/edit', util.authorized, doEditProfile)
 		.get('/api/user/:id', viewUser)
 		.all('/api/user/:id/*', util.authorized)
@@ -40,14 +35,11 @@ function removeProfile (req, res) {
 		})
 	}
 	
-	res.redirect('/profiles')
+	res.send({removeProfile:true})
 }
 
 exports.profile = profile = function (req, res) {
 	res.format({
-		html: function() {
-			res.render('profile/view', { title: "My Profile" })
-		},
 		json: function() {
 			res.json({
 				user: req.user
@@ -66,10 +58,6 @@ function viewUser (req, res) {
 			res.format({
 				json: function() {
 					res.send(404, {})
-				},
-				html: function() {
-					// flash..
-					res.redirect('/')
 				}
 			})
 			return;
@@ -91,25 +79,7 @@ function viewUser (req, res) {
 			res.locals.primaryCard = primaryCard;
 			
 			res.format({
-				html: function() {
-					if (user != null) {
-						res.locals.theUser = user; //locals.user is the logged in user..
-						res.locals.saved = saved;
-						res.render('user', { title: user.getName() });
-					} else {
-						res.status(404);
-						res.redirect('/')
-					}
-				},
 				json: function() {
-					//TODO Disabled until the API is 'secure'
-				
-					res.status(404);
-					res.send({
-						message: "not found"
-					})
-					return;
-				
 					if (user != null) {
 						res.send({
 							user: user
@@ -135,19 +105,19 @@ function saveUser (req, res) {
 		if (err) throw err;
 		
 		if (!user) {
-			res.redirect('/');
+			res.send({saveStatus:"fault"});
 			return;
 		}
 		
 		for (var i = 0; i < req.user.savedProfiles.length; i++) {
 			if (req.user.savedProfiles[i] && req.user.savedProfiles[i]._id.equals(user._id)) {
-				res.redirect('/inbox')
+				res.send({saveStatus:"ok"})
 				return;
 			}
 		}
 		
 		if (user.notification.email.savedProfile) {
-			inbox.emailNotification(user, "inbox")
+			//inbox.emailNotification(user, "inbox")
 		}
 		user.mailboxUnread++;
 		user.save();
@@ -156,7 +126,6 @@ function saveUser (req, res) {
 			_id: user._id
 		})
 		req.user.save()
-		res.redirect('inbox')
 	});
 }
 
@@ -176,13 +145,9 @@ exports.doEditProfile = doEditProfile = function (req, res) {
 			json: function() {
 				res.send({
 					status: errors.length == 0 ? 200 : 400,
-					err: errors
+					err: errors,
+					editProfile:true
 				})
-			},
-			html: function() {
-				req.session.flash = errors;
-				req.session.flash.push("Profile updated!")
-				res.redirect('/profile');
 			}
 		})
 	}

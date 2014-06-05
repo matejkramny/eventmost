@@ -1,0 +1,331 @@
+var models = require('../../../../models'),
+	fs = require('fs'),
+	attending = require('./apievent').attending,
+	config = require('../../../../config'),
+	gm = require('gm'),
+	moment = require('moment'),
+	mongoose = require('mongoose'),
+	async = require('async')
+
+exports.router = function (app) {
+	app.get('/api/event/:id/dropbox', view)
+		.post('/api/event/:id/dropbox', saveDropbox)
+		.post('/api/event/:id/dropbox/upload', doUpload)
+		.get('/api/event/:id/dropbox/:fid/remove', doRemove)
+}
+
+function view (req, res) {
+	if (!res.locals.eventattending) {
+		res.format({
+			json: function() {
+				res.send({
+					status: 403,
+					message: "Not attending"
+				})
+			}
+		})
+		
+		return;
+	}
+	
+	res.format({
+		html: function() {
+			res.locals.moment = moment;
+			res.render('event/dropbox', { title: res.locals.ev.name+" Dropbox" })
+		}
+	})
+}
+
+function doRemove (req, res, next) {
+	var id = req.params.fid;
+	var ev = res.locals.ev;
+	var isPlanner = res.locals.eventadmin;
+	
+	try {
+		id = mongoose.Types.ObjectId(id);
+	} catch (e) {
+		req.session.flash.push("Bad File ID")
+		res.redirect('/event/'+ev._id);
+		return;
+	}
+	
+	// check which file to remove (id'd by filepath.. they are essentially unique)
+	var found = -1;
+	for (var i = 0; i < ev.files.length; i++) {
+		var f = ev.files[i];
+		
+		if (f._id && f._id.equals(id)) {
+			found = i;
+			break;
+		}
+	}
+	
+	if (found == -1) {
+		res.redirect('/event/'+ev._id+'/dropbox')
+		return;
+	}
+	
+	models.Event.findById(ev._id, function(err, ev) {
+		if (isPlanner || (ev.files[found].user && ev.files[found].user._id && ev.files[found].user._id.equals(req.user._id))) {
+			console.log(ev);
+			console.log(found);
+			console.log(ev.files[found].file);
+			try {
+				fs.unlink(config.path+"/public"+ev.files[found].file)
+				
+				if (config.knox) {
+					config.knox.deleteFile("/public"+ev.files[found].file, function(err, res) {
+						if (err) throw err;
+						
+						console.log("Unlinked Dropbox file from S3")
+						res.resume();
+					});
+					config.knox.deleteFile("/public"+ev.files[found].fileThumb, function(err, res) {
+						if (err) throw err;
+						
+						console.log("Unlinked Dropbox Thumbnail file from S3")
+						res.resume();
+					});
+				}
+			} catch (e) {
+				console.log("Failed to delete dropbox file.."+e.message);
+				console.log(e.stack);
+			}
+			
+			// Remove this file
+			ev.files.splice(found, 1);
+		} else {
+			req.session.flash.push("Unauthorized")
+			res.redirect('/event/'+ev._id);
+			return;
+		}
+	
+		ev.save(function(err) {
+			if (err) throw err;
+		})
+		res.format({
+			json: function() {
+				res.send({
+					status: 200,
+					message: "Removed"
+				})
+			}
+		})
+	});
+}
+
+function saveDropbox (req, res) {
+	var ev = res.locals.ev;
+	
+	var found = false;
+	var file;
+	
+	models.Event.findById(ev._id, function(err, ev) {
+		try {
+			var pid = mongoose.Types.ObjectId(req.body.file);
+		
+			for (var i = 0; i < ev.files.length; i++) {
+				if (ev.files[i]._id.equals(pid)) {
+					found = true;
+					file = ev.files[i]
+					break;
+				}
+			}
+		} catch (e) {
+			throw e;
+			res.format({
+				json: function() {
+					res.send({
+						status: 404
+					})
+				}
+			});
+		
+			return;
+		}
+	
+		if (!(res.locals.eventadmin || (file.user && file.user._id && file.user._id.equals(req.user._id)))) {
+			res.format({
+				json: function() {
+					res.send({
+						status: 404
+					})
+				}
+			})
+		
+			return;
+		}
+	
+		try {
+			if (found) {
+				var perms = JSON.parse(req.body.permissions);
+			
+				file.permissions.all = perms.all;
+				file.permissions.categories = perms.categories;
+			}
+		} catch (e) {
+			throw e;
+		}
+	
+		if (res.locals.eventadmin && typeof req.body.allowDropboxUpload !== 'undefined' && req.body.allowDropboxUpload.length > 0) {
+			ev.allowDropboxUpload = req.body.allowDropboxUpload == 'yes' ? true : false;
+		}
+		ev.save()
+	
+		req.session.flash = ["Dropbox Settings Updated"]
+		res.format({
+			json: function() {
+				res.send({
+					status: 200,
+					message: "Saved"
+				})
+			}
+		})
+	});
+}
+
+function doUpload (req, res) {
+	//TODO check attendee(s) can upload files
+	if (!res.locals.eventattending) {
+		res.format({
+			json: function() {
+				res.send({
+					status: 403,
+					message: "Not attending"
+				})
+			}
+		})
+		
+		return;
+	}
+	
+	var ev = res.locals.ev;
+	
+	if (req.files.upload == null || req.files.upload.name.length == 0) {
+		res.format({
+			json: function() {
+				res.send({
+					status: 403,
+					message: "No file"
+				});
+			}
+		})
+		
+		return;
+	}
+	
+	var ext = req.files.upload.name.split('.');
+	var extValid = false;
+	if (ext.length != 0) {
+		// Last . is extension
+		var ext = ext[ext.length-1];
+		// Check if its valid
+		// no executables
+		if (ext.length != 0 && ext != "exe") {
+			extValid = true;
+		}
+	}
+	
+	if (!extValid) {
+		// Invalid extension, deny upload
+		res.format({
+			json: function() {
+				res.send({
+					status: 403,
+					message: "Invalid extension"
+				})
+			}
+		})
+		// TODO delete the file? [maybe done automatically]
+		return;
+	}
+	
+	ext = ext.toLowerCase();
+	
+	var timestamp = Date.now();
+	var file = {
+		file: "/dropbox/"+ev._id+""+timestamp+"."+ext,
+		fileThumb: "/dropbox/"+ev._id+""+timestamp+"-thumb.png",
+		extension: ext,
+		user: req.user._id,
+		created: Date.now(),
+		name: req.files.upload.name
+	}
+	
+	fs.rename(req.files.upload.path, config.path+"/public"+file.file, function(err) {
+		if (err) throw err;
+		
+		if (config.knox) {
+			config.knox.putFile(config.path+"/public"+file.file, "/public"+file.file, function(err, res) {
+				if (err) throw err;
+				
+				console.log("Dropbox File Uploaded");
+				res.resume();
+			});
+		}
+		
+		fs.stat(config.path+"/public"+file.file, function(err, stat) {
+			if (err) throw err;
+			
+			// Calculate the size of the file
+			file.size = stat.size / 1024
+			if (file.size > 1024) {
+				file.size /= 1024;
+				file.size = Math.floor(file.size) + "mb"
+			} else {
+				file.size = Math.floor(file.size) + "kb"
+			}
+		
+			//Create thumbnail
+			if (ext == 'jpg' || ext == 'jpeg' || ext == 'png' || ext == 'gif') {
+				gm(config.path+"/public"+file.file).gravity('Center').thumb(205, 154, config.path+"/public"+file.fileThumb, 100, function(err) {
+					if (err) throw err;
+					
+					if (config.knox) {
+						config.knox.putFile(config.path+"/public"+file.fileThumb, "/public"+file.fileThumb, function(err, res) {
+							if (err) throw err;
+							
+							console.log("Dropbox File Thumbnail Uploaded");
+							res.resume();
+						});
+					}
+				})
+			} else if (ext == 'pdf') {
+				gm(config.path+"/public"+file.file+"[0]").adjoin().gravity('Center').thumb(205, 154, config.path+"/public"+file.fileThumb, 100, function(err) {
+					if (err) throw err;
+					
+					if (config.knox) {
+						config.knox.putFile(config.path+"/public"+file.fileThumb, "/public"+file.fileThumb, function(err, res) {
+							if (err) throw err;
+							
+							console.log("Dropbox File Thumbnail Uploaded");
+							res.resume();
+						});
+					}
+				})
+			}
+		
+			if (ev.files == null) {
+				ev.files = []
+			}
+		
+			models.Event.findById(ev._id, function(err, ev) {
+				ev.files.splice(0,0, file);
+		
+				ev.save(function(err) {
+					if (err) throw err;
+				});
+			});
+		
+			res.format({
+				json: function() {
+					req.session.flash.push("File Uploaded")
+					res.send({
+						status: 200,
+						message: 'Uploaded'
+					})
+				}
+			})
+		})
+	})
+}

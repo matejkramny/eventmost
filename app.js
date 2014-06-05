@@ -70,11 +70,13 @@ app.use(express.limit('25mb')); // File upload limit
 app.use(function(req, res, next) {
 	// Some users like to use webdav.. We don't want them to, so this middleware is all about blocking unwanted user agents
 	var source = req.headers['user-agent'];
+	console.log("source: "+source)
 	if (!source || source.match(/webdav/i) == null) {
+		console.log("moving on")
 		next();
 		return;
 	}
-	
+	console.log("generating error")
 	// Tell WebDAV to fuck off
 	res.send(400, "");
 });
@@ -224,6 +226,7 @@ io.set('log level', 1);
 // HTTP routes
 routes.router(app);
 
+
 // WS routes
 io.sockets.on('connection', function(socket) {
 	routes.socket(socket)
@@ -257,10 +260,11 @@ if (config.mode != "test") {
 	app.use(bugsnag.errorHandler);
 }
 app.use(function(err, req, res, next) {
+	console.log(eval(req.body))
 	res.format({
 		json: function() {
 			res.send(500, {
-				message: "Something went wrong."
+				message: "Something went wrong." + err
 			})
 		},
 		html: function() {

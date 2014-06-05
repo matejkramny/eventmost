@@ -41,6 +41,8 @@ var credentials = exports.credentials = {
 	S3_bucket: process.env.S3_BUCKET || ''
 };
 
+console.log(credentials);
+
 if (credentials.S3_enabled) {
 	exports.knox = knox.createClient({
 		key: credentials.S3_key,

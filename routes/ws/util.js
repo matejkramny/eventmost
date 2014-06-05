@@ -1,8 +1,5 @@
 exports.authorized = function (req, res, next) {
-	if (req.user) {
-		next()
-	}
-	else if (req.body._csrf) {
+	if (req.body._csrf) {
 		next()
 	}
 	 else {

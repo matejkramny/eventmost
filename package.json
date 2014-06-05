@@ -24,6 +24,7 @@
 		"passport-facebook": "latest",
 		"passport-twitter": "latest",
 		"passport-linkedin": "latest",
+		"passport-local": "latest",
 		"socket.io": "latest",
 		"nodemailer": "latest",
 		"bugsnag": "latest",
