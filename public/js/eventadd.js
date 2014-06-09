@@ -141,6 +141,7 @@ $(document).ready(function() {
 		ev.preventDefault();
 		
 		var now = new Date();
+
 		var time = ('0' + now.getHours()).slice(-2) + ":" + ('0' + now.getMinutes()).slice(-2);
 		$(this).parent().parent().parent().find('input[type=time]').val(time)
 		
@@ -787,35 +788,22 @@ $(document).ready(function() {
 		$('#toDateMobile, #toDateDesktop').parent().find('input[type=time]').val('23:59');
 	}
  
-	$("#copy_event_id").click(function () {/*bind zclip to the button on click*/
+ 	var cnt = 0;
+	$("#copy_event_id").mouseover(function () {/*bind zclip to the button on click*/
+		if(cnt==1)
+			return;
+		cnt = 1;
+		$("#event_id_field").select();
 		$("#copy_event_id").zclip({
 			path:"/js/ZeroClipboard.swf",
-			copy:function(){alert("5555");alert($("input#event_id_field").val()); return "abcd"},
-            afterCopy: function() {
-               alert('copied')
-            }
+			copy:function(){return $("input#event_id_field").val()},
+	        afterCopy: function() {
+	        	var hold = 1
+	        }
 		})
-		//$( "#invitationLinkcopy" ).trigger( "click" );
-	})
-
- 
-	/*
-	$("#copy_event_id").on('click', function (e) {
-		console.log($("input#event_id_field").val());
-		alert( $("input#event_id_field").val() );
-    	e.preventDefault();
-	}).zclip({
-	    path: '/js/ZeroClipboard.swf',
-	    copy: function(){
-	    	return $("input#event_id_field").val()
-	    },
-	    afterCopy: function() {
-               alert('copied');
-        }
 	});
-	*/
 
-
+	//$("#event_id_field").focus(function() { this.select(); });
 });
 
 eventMost.controller('eventAdd', function($scope) {
