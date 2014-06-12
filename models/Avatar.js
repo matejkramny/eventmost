@@ -8,11 +8,13 @@ var gm = require('gm')
 
 var scheme = schema({
 	url: String,
+	backgroundFlag: Boolean,
 	createdBy: { type: ObjectId, ref: 'User' },
 	created: { type: Date, default: Date.now }
 });
 
 scheme.methods.doUpload = function(avatar, cb, size) {
+	console.log("hello avatar");
 	var self = this;
 	if (avatar != null && avatar.name.length != 0) {
 		var type = avatar.type;
@@ -43,11 +45,12 @@ scheme.methods.doUpload = function(avatar, cb, size) {
 		}
 		
 		self.url = "/avatars/"+this._id+"."+ext;
-		
+		console.log(config.path + "/public" + self.url);
 		var callback = function(err) {
 			if (err) throw err;
 
 			if (config.knox) {
+
 				config.knox.putFile(config.path + "/public" + self.url, "/public"+self.url, function(err, res) {
 					if (err) throw err;
 					

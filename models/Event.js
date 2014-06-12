@@ -29,6 +29,10 @@ var scheme = schema({
 		type: ObjectId,
 		ref: 'Avatar'
 	},
+	backgroundImage: {
+		type: ObjectId,
+		ref: 'Avatar'
+	},
 	address: String,
 	allowDropboxUpload: { type: Boolean, default: false },
 	allowAttendeesToCreateCategories: { type: Boolean, default: false },
@@ -117,7 +121,7 @@ scheme.statics.getEvent = function (id, cb, simple) {
 				match: { isAttending: true }
 			})
 		if (!simple) {
-			q.populate('files.user avatar tickets messages')
+			q.populate('files.user backgroundImage avatar tickets messages')
 		}
 		
 		q.exec(function(err, ev) {
@@ -143,6 +147,7 @@ scheme.statics.getEvent = function (id, cb, simple) {
 			
 			if (!simple) {
 				//avatar etc
+				console.log('before get event = '+ ev)
 				stack.push(function(callback) {
 					if (ev.avatar == null || ev.avatar.url == null || ev.avatar.url.length == 0) {
 						var avatar = new Avatar({
@@ -152,11 +157,21 @@ scheme.statics.getEvent = function (id, cb, simple) {
 						ev.avatar = avatar._id;
 						ev.save();
 					}
+					/*
+					if (ev.backgroundImage == null || ev.backgroundImage.url == null || ev.backgroundImage.url.length == 0) {
+						var backgroundImage = new Avatar({
+							url: "/images/event-avatar-new.svg"
+						})
+						backgroundImage.save();
+						ev.backgroundImage = backgroundImage._id;
+						ev.save();
+					}*/
 					
 					ev.getGeo(function(geo) {
 						callback(null)
 					})
 				});
+				console.log('after get event = '+ ev)
 				stack.push(function (callback) {
 					ev.populate('sponsorLayout.sponsor1 sponsorLayout.sponsor2 sponsorLayout.sponsor3', callback)
 				})
@@ -244,9 +259,11 @@ scheme.methods.edit = function (body, user, files, cb) {
 	if (body.name && body.name.length > 0) {
 		this.name = body.name
 	}
-	
+	console.log(files);
+
 	// avatar, sponsor logos etc
 	if (files) {
+		
 		if (files.avatar != null) {
 			var av = this.avatar
 			if (!av) {
@@ -254,11 +271,24 @@ scheme.methods.edit = function (body, user, files, cb) {
 					createdBy: user._id
 				})
 			}
-			
+
 			this.avatar = av._id;
 			av.doUpload(files.avatar, function() {
 				av.save()
 			})
+			console.log(av);
+			var bg = this.backgroundImage
+			if (!bg) {
+				bg = new Avatar({
+					createdBy: user._id
+				})
+			}
+			
+			this.backgroundImage = bg._id;
+			bg.doUpload(files.backgroundImage, function() {
+				bg.save()
+			})
+			console.log(bg);
 		}
 		if (files.sponsor1 != null) {
 			var av;
@@ -333,8 +363,32 @@ scheme.methods.edit = function (body, user, files, cb) {
 		})
 		avatar.save();
 		this.avatar = avatar._id;
+		console.log('Avatar ='+this.avatar)
+	}
+
+	
+
+	if (body.backgroundImage) {
+		try {
+			this.backgroundImage = mongoose.Types.ObjectId(body.backgroundImage);
+		} catch (ex) {
+			// objectid invalid
+			if (process.env.NODE_ENV != 'production') {
+				throw ex;
+			}
+		}
 	}
 	
+	if (!this.backgroundImage) {
+		var backgroundImage = new Avatar({
+			url: "/images/default-background2.png"
+		})
+		backgroundImage.save();
+		this.backgroundImage = backgroundImage._id;
+		console.log('Background ='+this.backgroundImage)
+	}
+	
+
 	if (body.venue_name) {
 		this.venue_name = body.venue_name
 	}
@@ -482,6 +536,7 @@ scheme.methods.edit = function (body, user, files, cb) {
 		
 		cb(null);
 	});
+	console.log(this);
 }
 
 scheme.methods.validate = function (cb) {
