@@ -186,12 +186,16 @@ $(document).ready(function() {
 		enableTicketsTable(checked);
 	})
 	
-	// Avatar upload
+	// Avatar upload //baburw
 	var avatarUploadRequest;
 	var avatar_id;
+	var backgroundImage_id;
 	var file;
+	var file2;
+	var background_image;
 	$("input#file_browse1").change(function() {
 		var files = this.files;
+		background_image = false;
 		console.log('was');
 		for (var i = 0; i < files.length; i++) {
 			file = files[i];
@@ -236,17 +240,17 @@ $(document).ready(function() {
 
 	$("input#file_browse2").change(function() {
 		var files = this.files;
-		
+		background_image = true;
 		for (var i = 0; i < files.length; i++) {
-			file = files[i];
+			file2 = files[i];
 			break;
 		}
 		
-		if (typeof file === "undefined" || file == null) {
+		if (typeof file2 === "undefined" || file2 == null) {
 			return;
 		}
 		
-		var ext = file.name.split('.');
+		var ext = file2.name.split('.');
 		var extensionValid = false;
 		
 		if (ext.length > 0) {
@@ -268,7 +272,7 @@ $(document).ready(function() {
 		reader.onload = function(img) {
 			$(".avatar_preview").attr('src', img.target.result);
 		}
-		reader.readAsDataURL(file);
+		reader.readAsDataURL(file2);
 	})
 	/*
 	$("#file_browse_wrapper2").click(function(ev) {
@@ -295,6 +299,7 @@ $(document).ready(function() {
 		var form = new FormData();
 		form.append("_csrf", $("head meta[name=_csrf]").attr('content'));
 		form.append("avatar", file);
+		form.append("background_image", background_image);
 		form.append("x", avatar_coords.x);
 		form.append("y", avatar_coords.y);
 		form.append("w", avatar_coords.w);
@@ -312,7 +317,7 @@ $(document).ready(function() {
 
 	
 	function uploadAvatar2 () {
-		if (typeof file === "undefined" || file == null) {
+		if (typeof file2 === "undefined" || file2 == null) {
 			// opens the dialog
 			$("input#file_browse2").trigger('click');
 			return;
@@ -322,7 +327,8 @@ $(document).ready(function() {
 		
 		var form = new FormData();
 		form.append("_csrf", $("head meta[name=_csrf]").attr('content'));
-		form.append("avatar", file);
+		form.append("avatar", file2);
+		form.append("background_image", background_image);
 		form.append("x", avatar_coords.x);
 		form.append("y", avatar_coords.y);
 		form.append("w", avatar_coords.w);
@@ -332,7 +338,7 @@ $(document).ready(function() {
 		avatarUploadRequest.open("POST", "/event/add/avatar", true);
 		avatarUploadRequest.responseType = "json";
 		avatarUploadRequest.setRequestHeader("accept", "application/json");
-		avatarUploadRequest.onreadystatechange = xmlhttprequestResponse;
+		avatarUploadRequest.onreadystatechange = xmlhttprequestResponse2;
 		avatarUploadRequest.upload.addEventListener('progress', xmlUploadProgress, false)
 		avatarUploadRequest.send(form);
 	}
@@ -374,6 +380,7 @@ $(document).ready(function() {
 			updateProgress(percent)
 		}
 	}
+
 	function xmlhttprequestResponse () {
 		if (avatarUploadRequest.readyState == 4) {
 			if (avatarUploadRequest.status == 200) {
@@ -393,6 +400,28 @@ $(document).ready(function() {
 			}
 		}
 	}
+
+	function xmlhttprequestResponse2 () {
+	  if (avatarUploadRequest.readyState == 4) {
+	   if (avatarUploadRequest.status == 200) {
+	    result = avatarUploadRequest.response;
+	    console.log(result);
+	    console.log(typeof result);
+	    if (result.status != 200) {
+	     alert("Could not upload image\n"+result.err);
+	    } else {
+	     // store the avatar id in the form.
+	     backgroundImage_id = result.id;
+	     $("#avatarStatus").html("<br/>Uploaded");
+	    }
+	   } else {
+	    // Not ok
+	    alert(avatarUploadRequest.statusText);
+	   }
+	  }
+	 }
+
+
 	
 	// Categories & tickets
 	$(".selectedCategoriesList").on('click', 'a.remove-category', function(e) {
@@ -567,6 +596,7 @@ $(document).ready(function() {
 			_csrf: $("head meta[name=_csrf]").attr('content'),
 			name: $form.find('input[name=eventName]').val(),
 			avatar: avatar_id,
+			backgroundImage: backgroundImage_id,
 			venue_name: $form.find('input[name=venueName]').val(),
 			location: $form.find('input[name=address]').val(),
 			lat: lat,
@@ -787,35 +817,22 @@ $(document).ready(function() {
 		$('#toDateMobile, #toDateDesktop').parent().find('input[type=time]').val('23:59');
 	}
  
-	$("#copy_event_id").click(function () {/*bind zclip to the button on click*/
+ 	var cnt = 0;
+	$("#copy_event_id").mouseover(function () {/*bind zclip to the button on click*/
+		if(cnt==1)
+			return;
+		cnt = 1;
+		$("#event_id_field").select();
 		$("#copy_event_id").zclip({
 			path:"/js/ZeroClipboard.swf",
-			copy:function(){alert("5555");alert($("input#event_id_field").val()); return "abcd"},
-            afterCopy: function() {
-               alert('copied')
-            }
+			copy:function(){return $("input#event_id_field").val()},
+	        afterCopy: function() {
+	        	var hold = 1
+	        }
 		})
-		//$( "#invitationLinkcopy" ).trigger( "click" );
-	})
-
- 
-	/*
-	$("#copy_event_id").on('click', function (e) {
-		console.log($("input#event_id_field").val());
-		alert( $("input#event_id_field").val() );
-    	e.preventDefault();
-	}).zclip({
-	    path: '/js/ZeroClipboard.swf',
-	    copy: function(){
-	    	return $("input#event_id_field").val()
-	    },
-	    afterCopy: function() {
-               alert('copied');
-        }
 	});
-	*/
 
-
+	//$("#event_id_field").focus(function() { this.select(); });
 });
 
 eventMost.controller('eventAdd', function($scope) {

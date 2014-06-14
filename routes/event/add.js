@@ -51,7 +51,7 @@ function doAddEvent (req, res) {
 function uploadAvatarAsync (req, res) {
 	var avatarid = req.body.avatarid;
 	var avatar;
-
+	var background_image = ((req.body.background_image == 'true')? true: false);
 	var size = {
 		x: parseFloat(req.body.x),
 		y: parseFloat(req.body.y),
@@ -89,7 +89,8 @@ function uploadAvatarAsync (req, res) {
 	
 	if (!avatarid) {
 		avatar = new models.Avatar({
-			createdBy: req.user._id
+			createdBy: req.user._id,
+			backgroundFlag: background_image
    	});
 		avatar.doUpload(req.files.avatar, doCallback, size)
 	} else {
@@ -98,7 +99,8 @@ function uploadAvatarAsync (req, res) {
 			if (!av) {
 				// Make a new avatar
 				av = new models.Avatar({
-					createdBy: req.user._id
+					createdBy: req.user._id,
+					backgroundFlag: background_image
 				});
 			}
 			
