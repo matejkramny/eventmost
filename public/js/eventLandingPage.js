@@ -100,18 +100,29 @@ $(document).ready(function() {
 			}
 		}
 	}
-		
-	var grey_rounded_box_click_cnt=0;
-		
-	$(".grey-rounded-box").click(function() {
-		grey_rounded_box_click_cnt++;
-		if(grey_rounded_box_click_cnt >= 2){
-			grey_rounded_box_click_cnt=0;	
-			return;
-		}
-		var href = $(".fakeattendee").attr('href');
-		self.location.href=href;
-	})
+	
+	var attendeeanchors  = $(".fakeattendee")
+	var attendeeanchor
+	var $anchorparentdiv
+	var href
 
-	$(".grey-rounded-box").css({'cursor': 'pointer'})
+	$('.fakeattendee').each(function () {
+	    var $this = $(this);
+	    $anchorparentdiv = $this.parent().parent()
+	    $anchorparentdiv.on("click", $this, function () {
+	        href = $this.attr("href")
+	        self.location.href=href	        
+	    })
+
+		$anchorparentdiv.mouseover( function() {
+			//alert(this)
+		    $(this).addClass('grey-rounded-box-hover')
+		})
+
+		$anchorparentdiv.mouseout( function() {
+		    $(this).removeClass('grey-rounded-box-hover')
+		})
+
+		$anchorparentdiv.css({'cursor': 'pointer'})
+	})
 });
