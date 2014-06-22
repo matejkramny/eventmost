@@ -165,22 +165,6 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* item text with dots */
       div.outbox {
         padding: 0 0 0px 0;
@@ -247,20 +231,6 @@ input[type=number]::-webkit-outer-spin-button {
 
 
 /* end crop tool */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 .header_image{
 position: relative;
@@ -3894,9 +3864,10 @@ table.gridtable-payment-yellow {font-size: 10px;}
 margin-top: 5px;
 }
 
-.grey-rounded-box:hover{
-  background-color: #ffd093 !important;
+.grey-rounded-box-hover{
+  background-color: #ffd093 !important; 
 }
+
 .other-dis:hover{
   background-color: #542437 !important;
   color: #ffffff;
