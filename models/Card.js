@@ -53,7 +53,7 @@ scheme.methods.edit = function (html, cb) {
 				console.log("Loading. "+url)
 				
 				try {
-					var proc = exec('fab -f '+config.path+'/scripts/create_card.py -H eventmost@198.50.168.248 getCard:id="'+self._id+'"')
+					var proc = exec('fab -f '+config.path+'/scripts/create_card.py --password webkit2png -H root@127.0.0.1:2222 getCard:id="'+self._id+'"')
 					proc.stdout.on('data', function(chunk) {
 						console.log(chunk)
 					})

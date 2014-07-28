@@ -8,7 +8,7 @@ def getCard(id):
     # Upload .html file from the user
     put(path+'/../data/cardhtml/'+id+'.html', '~/'+id+'.html')
     # Take a screenshot of the business card
-    run("webkit2png -o ~/" + id + ".png -x 500 250 "+id+".html")
+    run("DISPLAY=:99.0 webkit2png -o ~/" + id + ".png -x 500 250 "+id+".html")
     # Retrieve the business card .png
     get(id+'.png', path+'/../public/businesscards/'+id+'.png')
     # delete the .html and .png
