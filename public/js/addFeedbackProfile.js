@@ -16,21 +16,41 @@ angular.module('eventMost')
 	$scope.init = function (profile, categories) {
 		$scope.profile = profile.user;
 		$scope.profile._id = profile._id;
-		$scope.categories = categories;
-		
+		$scope.categories = categories;		
 		$('.avatar-upload-image').attr('src', $scope.profile.avatar || "/images/big-avatar-blue.svg");
 	}
 	
 	var avatarUploadRequest;
 	
-	$scope.save = function () {		
+	$scope.save = function () {
+
+		var errmsg = '';
 		var form = new FormData();
 		
 		form.append("_csrf", $("head meta[name=_csrf]").attr('content'));
 		for (var name in $scope.profile) {
 			if (name == "avatar") continue;
 			form.append(name, $scope.profile[name]);
+
+			if( name == 'name' && ($scope.profile[name] == '' || $scope.profile[name] == null) )
+			{
+				errmsg += 'Name must be provided.';
+			}
+
+			if( name == 'category' && ($scope.profile[name] == '' || $scope.profile[name] == null) )
+			{
+				errmsg += 'Event category must be provided.';
+			}
+
+			if(errmsg != "")
+			{
+			    $("#errmsg").removeClass('errmsg-hide');
+			    $("#errmsg").addClass('errmsg-show');
+				$("#errmsg").html(errmsg);
+				return;
+			}
 		}
+
 		form.append("avatar", file);
 		avatarUploadRequest = new XMLHttpRequest();
 		avatarUploadRequest.open("POST", "/event/"+$("head meta[name=event_id]").attr('content')+"/admin/feedback/edit", true);
