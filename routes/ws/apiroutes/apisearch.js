@@ -6,18 +6,25 @@ var fs = require('fs'),
 	, list = require('./apievent/apilist')
 
 exports.router = function (app) {
-	app.get('/api/search/', search)
+	app.get('/api/search/', searchAPI)
 }
 
-exports.search = search;
+exports.search = searchAPI;
 
-function search (req, res) {
+function searchAPI (req, res) {
+	
+	console.log("/api/search/".red);
 	var q = req.query.q;
 	var type = req.query.type;
 	
-	if (!q) {
+	console.log("q = ".red + req.query.q);
+	console.log("type = ".red + req.query.type);
+	
+	if (!q) 
+	{
 		q = "";
 	}
+	
 	if (!type || type != 'people') {
 		type = 'events';
 	}
@@ -29,37 +36,54 @@ function search (req, res) {
 	}
 }
 
-function searchEvents(req, res, q) {
+function searchEvents(req, res, q) 
+{	
+	var skip = 0;
+	console.log("Searching Events ".red );
+	console.log("req.query.arrange".red + req.query.arrange );
+	
 	if (req.query.arrange && req.query.arrange == 'nearby') {
-		list.listNearEvents(req, res);
+		console.log("Arrange And Return . Dont Do Search".red);
+		list.listEventsAPI(req, res);
 		return;
 	}
 
 	var query = {
 		name: new RegExp(q, 'i'),
 		deleted: false,
-		start: {
-			$gte: new Date()
-		}
+		//start: {
+		//	$gte: new Date()
+		//}
 	};
 	
 	models.Event.find(query).limit(10).populate('avatar').sort('start').exec(function(err, evs) {
-		res.locals.search = {
-			query: q,
-			results: evs,
-			type: 'events'
-		}
-		res.locals.moment = moment;
 		
-		if (req.user) {
-			res.render('search/results')
-		} else {
-			res.render('login')
+		console.log("#############".red);
+		console.log(evs);
+		console.log("#############".red);
+		
+		if (err) throw err; 
+		if (evs) {
+			models.Event.find(query).count(function(err, total) {
+				res.format({
+					json: function() {
+						res.send({
+							events: evs,
+							total: total,
+							skip: skip,
+							pagename: "EventMost Events"
+						})
+					}
+				});
+			});
 		}
 	})
 }
 
 function searchPeople(req, res, q) {
+	
+	console.log("Searching People  = ".red );
+	
 	var split = q.split(' ');
 	var query = {
 		isFeedbackProfile: false,
