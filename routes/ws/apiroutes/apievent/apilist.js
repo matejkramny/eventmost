@@ -5,14 +5,23 @@ var models = require('../../../../models')
 	, config = require('../../../../config')
 
 exports.router = function (app) {
-	app.get('/api/events', exports.listEvents)
-		.post('/api/events/my', util.authorized, exports.listMyEvents)
-		.get('/api/events/near', exports.listNearEvents)
+	app.get('/api/events', exports.listEventsAPI)
+		.post('/api/events/my', util.authorized, exports.listMyEventsAPI)
+		.get('/api/events/near', exports.listNearEventsAPI)
 }
 
-exports.listEvents = function (req, res) {
+exports.listEventsAPI = function (req, res) {
+	
+	console.log("/api/events ".red);
+	
+	console.log("Skip ".red + req.query.skip);
+	
+	console.log("Past Events ".red + req.query.pastEvents);
+	
+	console.log("--".red);
+	
 	var skip = req.query.skip || 0;
-	var showPastEvents = req.query.pastEvents;
+	var showPastEvents = req.query.pastEvents == "1" ? true : false;
 	if (!showPastEvents || typeof showPastEvents === 'undefined') {
 		showPastEvents = false;
 	} else {
@@ -36,6 +45,11 @@ exports.listEvents = function (req, res) {
 		.limit(10)
 		.skip(skip)
 		.exec(function(err, evs) {
+			
+			console.log("####################".red);
+			console.log(evs);
+			console.log("####################".red);
+			
 		if (err) throw err; 
 		if (evs) {
 			models.Event.find(query).count(function(err, total) {
@@ -55,21 +69,44 @@ exports.listEvents = function (req, res) {
 }
 
 // TODO fix this
-exports.listMyEvents = function (req, res) {
+exports.listMyEventsAPI = function (req, res) {
+	
+	console.log("/api/events/my ".red);
+	console.log(req.body);
+	
 	var skip = req.body.skip || 0;
-	console.log(req.user._id);
-	models.Attendee.find({ 'user': req.user._id }, '_id', function(err, attendees) {
+	//console.log(req.user._id);
+	models.Attendee.find({ 'user': req.body._id }, '_id', function(err, attendees) {
+		
+		console.log("User Found ".red);
+		
+		console.log("############################".red);
+		console.log(attendees);
+		console.log("############################".red);
+		
+		
 		var query = { 'attendees': { $in: attendees } };
 		
 		models.Event.find(query)
 			.populate('avatar attendees.user')
 			.select('name start end address venue_name avatar source')
 			.sort('-created')
+			.limit(10)
 			.skip(skip)
 			.exec(function(err, evs) {
+				
+			console.log("############################".red);
+		    console.log(evs);
+		    console.log("############################".red);	
+				
 			if (err) throw err;
 			if (evs) {
 				models.Event.find(query).count(function(err, total) {
+					
+					console.log("############################".red);
+		    		console.log(total);
+		    		console.log("############################".red);	
+					
 					res.format({
 						json: function() {
 							res.send({
@@ -86,7 +123,12 @@ exports.listMyEvents = function (req, res) {
 	})
 }
 
-exports.listNearEvents = function (req, res) {
+exports.listNearEventsAPI = function (req, res) {
+	
+	console.log();
+	console.log("/api/events/near ".red);
+	console.log(req);
+	
 	console.log("lat: "+req.query.lat)
 	var lat = parseFloat(req.query.lat)
 		, lng = parseFloat(req.query.lng)
