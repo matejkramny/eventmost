@@ -51,9 +51,9 @@ function searchEvents(req, res, q)
 	var query = {
 		name: new RegExp(q, 'i'),
 		deleted: false,
-		//start: {
-		//	$gte: new Date()
-		//}
+		start: {
+			$gte: new Date()
+		}
 	};
 	
 	models.Event.find(query).limit(10).populate('avatar').sort('start').exec(function(err, evs) {
