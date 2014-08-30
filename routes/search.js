@@ -43,6 +43,16 @@ function searchEvents(req, res, q) {
 	};
 	
 	models.Event.find(query).limit(10).populate('avatar').sort('start').exec(function(err, evs) {
+		
+		//Cleaning up the description...
+
+		evs.forEach(function(entry) {
+			
+			if(entry.description != '')
+				entry.description = entry.description.replace(/(<([^>]+)>)/ig,"");
+				entry.description = entry.description.substr(0, 200)+"...";
+		});
+		
 		res.locals.search = {
 			query: q,
 			results: evs,
