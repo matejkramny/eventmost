@@ -48,9 +48,11 @@ function searchEvents(req, res, q) {
 
 		evs.forEach(function(entry) {
 			
-			if(entry.description != '')
+			if(entry.description != ''){
 				entry.description = entry.description.replace(/(<([^>]+)>)/ig,"");
 				entry.description = entry.description.substr(0, 200)+"...";
+
+			}
 		});
 		
 		res.locals.search = {
