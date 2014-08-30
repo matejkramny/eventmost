@@ -99,7 +99,7 @@ function download (city, download_finished) {
 			e.venue_name = ev.venue.name;
 		}
 		if (ev.description) {
-			e.description = ev.description;
+			e.description = ev.description.replace(/(<([^>]+)>)/ig,"");
 		}
 		
 		if (ev.start_date) {
