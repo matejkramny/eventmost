@@ -5,7 +5,7 @@ var models = require('../models'),
 	request = require('request')
 	
 var api = 'https://api.meetup.com/2/';
-var key = 'key=34617a1c721e1f626d94250644578';
+var key = 'key=07f2b6192d5f683257187f6a534c73';
 
 async.eachSeries(['Oxford', 'London'], function(city, cb) {
 	new download(city, cb);
@@ -88,6 +88,7 @@ function download (city, download_finished) {
 	}
 
 	self.parseEvent = function (ev, cb) {
+		var cleanDesc = ev.description.replace(/(<([^>]+)>)/ig,"");
 		var e = new models.Event({
 			source: {
 				meetup: true,
@@ -95,7 +96,7 @@ function download (city, download_finished) {
 				url: ev.event_url
 			},
 			name: ev.name,
-			description: ev.description,
+			description: cleanDesc,
 		});
 		
 		if (ev.venue) {
