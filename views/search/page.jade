@@ -323,4 +323,5 @@
 						.line-purple
 				else
 					for e in search.results
-						mixin eventItem(e)
+						if((e.venue_name) && e.venue_name != '')
+							mixin eventItem(e)
