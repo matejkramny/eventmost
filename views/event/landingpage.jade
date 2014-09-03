@@ -3,12 +3,33 @@ extends ../responsive
 include inc/navbar
 
 append addonjs
-	script(src="/js/eventLandingPage.js?v=#{versionHash}" defer)
-	script(src="/js/drops.js?v=#{versionHash}" defer)
-	include inc/mapjs
-	script(src="/js/vendor/moment.min.js" defer)
-	script(src="/js/event_landingpage.js?v=#{versionHash}" defer)
-	script(src="https://js.stripe.com/v2/" async)
+	//script(src="/js/eventLandingPage.js?v=#{versionHash}" defer)
+	//script(src="/js/drops.js?v=#{versionHash}" defer)
+	//include inc/mapjs
+	//script(src="/js/vendor/moment.min.js" defer)
+	//script(src="/js/event_landingpage.js?v=#{versionHash}" defer)
+	//script(src="https://js.stripe.com/v2/" async)
+	//script(src="/js/adminPanel.js?v=#{versionHash}", defer)
+	//script(src="/js/datepicker.js?v=#{versionHash}", defer)
+	//script(src="/js/vendor/tiny.editor.packed.js", defer)
+
+	script(src="/js/crop/jquery.min.js", defer)
+	script(src="/js/vendor/angular.min.js", defer)
+	//include inc/mapjs
+	script(src="/js/vendor/jquery-ui-1.10.3.custom.min.js" defer)
+	script(src="/js/adminPanel.js?v=#{versionHash}", defer)
+	script(src="/js/datepicker.js?v=#{versionHash}", defer)
+	script(src="/js/vendor/tiny.editor.packed.js", defer)
+	script(src="/js/vendor/jquery.jcarousel.min.js", defer)
+	script(src="/js/vendor/jquery.zclip.min.js", defer)
+	script(src="/js/event_landingpage.js?v=#{versionHash}", defer)
+	script(src="/js/landing_mif.js", defer)
+
+	if (typeof ev !== "undefined")
+		script.
+			window.emEvent = !{JSON.stringify(ev)}
+
+	script(src="/js/eventadd.js?v=#{versionHash}" defer)
 
 block content
 	if (eventattending)
@@ -30,27 +51,37 @@ block content
 				img(src="/images/small-clock.svg" alt=""  )
 			.font16.inline.color-green.semi-bold
 				| WHEN
+			- if (edit == 'e'){
+				button#editTimeButton.btn.btn-primary.btn-xs(data-toggle='modal', data-target='#eventTimeModal')
+					span.glyphicon.glyphicon-edit  Edit
+			- }	
 			.font-s(title= eventStartFormatted style="word-wrap: break-word; word-break: break-word;")
-				.semi-bold
+				#eventStartDate.semi-bold
 					= eventStartFormatted
-				.poo(style="font-weight:200;")
-				= eventEndFormatted
+				#eventEndDate.poo(style="font-weight:200;")
+					= eventEndFormatted
 		.col-md-3.col-lg-3.col-sm-3.font16
 			.inline
 				img(src="/images/mapster2.svg" alt=""  )
 			.font16.inline.color-green.semi-bold
 				| WHERE
+			- if (edit == 'e'){
+				button#editLocationButton.btn.btn-primary.btn-xs(data-toggle='modal', data-target='#eventLocationModal' )
+					span.glyphicon.glyphicon-edit  Edit
+			- }	
 			.font-s(style="word-break:break-all; ")
 				- if (ev.address || ev.venue_name)
 					strong.pull-left.break(style="word-wrap:break-word; word-break: break-word; white-space: -moz-pre-wrap; white-space: pre-wrap;")
-					span(style="word-wrap:break-word; word-break: break-word;")		
+					#venuname(style="word-wrap:break-word; word-break: break-word;")
 						= ev.venue_name
-					.pull-left(style="word-wrap:break-word; word-break: break-word;")
+					#eventaddr.pull-left(style="word-wrap:break-word; word-break: break-word;")
 						= ev.address
 					- if (!ev.address && !ev.venue_name)
 						| Event does not have a location
 			.nspacer
 			#eventMap(style="height:110px; width:180px;")
+				- if (ev.address)
+					iframe(width='180', height='110', frameborder='0', scrolling='no', marginheight='0', marginwidth='0', src="http://maps.google.com/maps?q=" + ev.address +"&output=embed")
 		.col-md-4.col-lg-4.col-sm-4.font16
 			.inline
 				img(src="/images/organizer.svg" alt=""  )
@@ -67,28 +98,83 @@ block content
 			.font16.inline.color-green.semi-bold
 				| SPONSORS
 			.nspacer
-
-			
-			if (ev.sponsorLayout.sponsor1)
-				if (ev.sponsorLayout.sponsor1)
-					img.img-responsive(src=ev.sponsorLayout.sponsor1.url style="width:100%;")
-				.nspacer-small
-				if (ev.sponsorLayout.sponsor2 && ev.sponsorLayout.layout > 0 && ev.sponsorLayout.layout != 3)
-					img.img-responsive(src=ev.sponsorLayout.sponsor2.url style="width:100%;")
-				.nspacer-small
-				if (ev.sponsorLayout.sponsor3 && ev.sponsorLayout.layout == 2)
-					img.img-responsive(src=ev.sponsorLayout.sponsor3.url style="width:100%;")
+			- if (edit == 'e'){
+						#sponsor1panel
+							.form-group.row
+								.col-sm-9.col-md-9.col-xs-9.col-lg-9
+									img#sponsor1Avatar.img-responsive(src= ev.sponsorLayout.sponsor1 ? ev.sponsorLayout.sponsor1.url : "")
+								.col-sm-3.col-md-3.col-xs-3.col-lg-3
+								if(ev.sponsorLayout.sponsor1)
+										a#sponsor1AvatarDelete.glyphicon.glyphicon-trash(style="cursor:pointer;" name="1" rel="tooltip" title="Delete Sponsor1 Image")
+							.nspacer
+							.form-group.row
+								.col-sm-6.col-md-6.col-xs-6.col-lg-6
+									.progress.hide
+										.progress-bar(aria-valuenow="", aria-valuemin="0", aria-valuemax="100", style="width: 100%")
+									//input.search-input.sponsor-browse(type="text" id="fileName" readonly="readonly" style="width:65%; padding-left:10px; padding-right:10px;")
+									#sp1(style="display: inline; cursor:pointer;" rel="tooltip" title="Upload Sponsor1 Image")
+										a.glyphicon.glyphicon-cloud-upload(id="buttonbrowse2" style="cursor:pointer; text-decoration:none;")&nbsp;<span class="anchr">Upload</span>
+										input#sponsor1(type="file", name="sponsor1", placeholder="Avatar File", for="sponsor1Avatar"  style="cursor:poiner; width:100%; opacity:0; position:relative; left:0px; top:-30px;")
+						#sponsor2panel
+							.form-group.row
+								.col-sm-9.col-md-9.col-xs-9.col-lg-9
+									img#sponsor2Avatar.img-responsive(src= ev.sponsorLayout.sponsor2 ? ev.sponsorLayout.sponsor2.url : "")
+								.col-sm-3.col-md-3.col-xs-3.col-lg-3
+								if(ev.sponsorLayout.sponsor2)
+									a#sponsor2AvatarDelete.glyphicon.glyphicon-trash(style="cursor:pointer;" name="2" rel="tooltip" title="Delete Sponsor2 Image")
+							.nspacer
+							.form-group.row
+								.col-sm-6.col-md-6.col-xs-6.col-lg-6
+									.progress.hide
+										.progress-bar(aria-valuenow="", aria-valuemin="0", aria-valuemax="100", style="width: 100%")
+									//input.search-input.sponsor-browse(type="text" id="fileName" readonly="readonly" style="width:65%; padding-left:10px; padding-right:10px;")
+									#sp2(style="display: inline; cursor:pointer;" rel="tooltip" title="Upload Sponsor2 Image")
+										a.glyphicon.glyphicon-cloud-upload(id="buttonbrowse2" style="cursor:pointer;text-decoration:none;")&nbsp;<span class="anchr">Upload</span>
+										input#sponsor2(type="file", name="sponsor2", placeholder="Avatar File", for="sponsor2Avatar"  style="cursor:poiner; width:100%; opacity:0; position:relative; left:0px; top:-30px;")
+						#sponsor3panel
+							.form-group.row
+								.col-sm-9.col-md-9.col-xs-9.col-lg-9
+									img#sponsor3Avatar.img-responsive(src= ev.sponsorLayout.sponsor3 ? ev.sponsorLayout.sponsor3.url : "")
+								.col-sm-3.col-md-3.col-xs-3.col-lg-3
+								if(ev.sponsorLayout.sponsor3)
+									a#sponsor3AvatarDelete.glyphicon.glyphicon-trash(style="cursor:pointer;" name="3" rel="tooltip" title="Delete Sponsor3 Image")
+							.nspacer
+							.form-group.row
+								.col-sm-6.col-md-6.col-xs-6.col-lg-6
+									.progress.hide
+										.progress-bar(aria-valuenow="", aria-valuemin="0", aria-valuemax="100", style="width: 100%")
+									//input.search-input.sponsor-browse(type="text" id="fileName" readonly="readonly" style="width:65%; padding-left:10px; padding-right:10px;")
+									#sp3(style="display: inline; cursor:pointer;" rel="tooltip" title="Upload Sponsor3 Image")
+										a.glyphicon.glyphicon-cloud-upload(id="buttonbrowse2" style="cursor:pointer;text-decoration:none;")&nbsp;<span class="anchr">Upload</span>
+										input#sponsor3(type="file", name="sponsor3", placeholder="Avatar File", for="sponsor3Avatar"  style="cursor:poiner; width:100%; opacity:0; position:relative; left:0px; top:-30px;")							
+				- } else {
+					if (ev.sponsorLayout.sponsor1)
+						if (ev.sponsorLayout.sponsor1)
+							img.img-responsive(src=ev.sponsorLayout.sponsor1.url style="width:100%;")
+						.nspacer-small
+						//if (ev.sponsorLayout.sponsor2 && ev.sponsorLayout.layout > 0 && ev.sponsorLayout.layout != 3)
+						if (ev.sponsorLayout.sponsor2)
+							img.img-responsive(src=ev.sponsorLayout.sponsor2.url style="width:100%;")
+						.nspacer-small
+						//if (ev.sponsorLayout.sponsor3 && ev.sponsorLayout.layout == 2)
+						if (ev.sponsorLayout.sponsor3)
+							img.img-responsive(src=ev.sponsorLayout.sponsor3.url style="width:100%;")
+				- }
 		.clearfix
 	.clearfix
 
 	.nspacer-big
 
-
 	.col-md-12.col-lg-12.col-sm-12
 		.font16.semi-bold.color-green
 			| EVENT DESCRIPTION
+			- if (edit == 'e'){
+				button.btn.btn-primary.btn-xs(data-toggle='modal', data-target='#eventDescModal')
+					span.glyphicon.glyphicon-edit  Edit
+			- }
+		br
 		.line-purple
-		.description-text-medium.break!= ev.description	
+		.description-text-medium.break!= ev.description
 
 	if (!eventattending)
 		if (ev.pricedTickets && !(attendee && attendee.hasPaid == true))
@@ -111,6 +197,6 @@ block content
 					else
 						button.btn.btn-primary.hide-prof-butt(data-toggle="modal" href="#signModal" style="border-radius: 10px; padding:10px; padding-right:25px; padding-left:25px;")
 							| Attend event
-	
 	if (!eventattending && loggedIn)
 		include ../modals/registration
+	include ../modals/mif

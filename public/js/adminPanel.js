@@ -36,16 +36,47 @@ $(document).ready(function() {
 		var reader = new FileReader();
 		reader.onload = function(img) {
 			$('#'+$this.attr('for')).attr('src', img.target.result);
+			$('#'+$this.attr('for')).removeClass('element-hide');
 		}
+
+		//alert(file);
 		reader.readAsDataURL(file);
 		
-		uploadAvatar($this)
+		uploadAvatar($this);
 	})
+
+	toggleImgDisplay();
+
+	function alertObject(obj){
+		var acc = []
+		$.each(obj, function(index, value) {
+		    acc.push(index + ': ' + value);
+		});
+		//alert(JSON.stringify(acc));
+	}
+
+	function toggleImgDisplay()
+	{
+		//alert($('#sponsor1Avatar').attr('src'));
+		if( $('#sponsor1Avatar').attr('src')=='' )
+			$('#sponsor1Avatar').addClass('element-hide');
+
+		//alert($('#sponsor2Avatar').attr('src'));
+		if( $('#sponsor2Avatar').attr('src')=='' )
+			$('#sponsor2Avatar').addClass('element-hide');
+
+		//alert($('#sponsor3Avatar').attr('src'));
+		if( $('#sponsor3Avatar').attr('src')=='' )
+			$('#sponsor3Avatar').addClass('element-hide');
+	}
 	
 	function uploadAvatar (el) {
 		if (typeof file === "undefined" || file == null) {
 			return;
 		}
+
+		//alert(el);
+		//console.log(el);
 		
 		var form = new FormData();
 		form.append("_csrf", $("head meta[name=_csrf]").attr('content'));
@@ -88,18 +119,57 @@ $(document).ready(function() {
 		var self = this;
 		
 		return function() {
-			if (self.request.readyState == 4) {
+			if (self.request.readyState == 4) {	
 				if (self.request.status == 200) {
+					//console.log("111");
 					result = self.request.response;
 					
 					if (result && result.status != 200) {
+					//console.log("222");
+
 						alert("Could not upload image\n"+result.err);
 					}
 				} else {
 					// Not ok
-					alert(self.request.statusText);
+					//console.log("333");
+					//console.log(self.request.statusText);
+					//console.log(self.request.response);
+					//alert(self.request.statusText);
 				}
 			}
 		}
+	}
+
+	$('#sponsor1AvatarDelete').click(function(){
+		//$('#sp1').show();
+		//$(this).hide();
+		imageDeleteRequest($('#sponsor1AvatarDelete').attr('name'));
+		$('#sponsor1Avatar').removeAttr('src');
+		$('#sponsor1AvatarDelete').addClass('element-hide');
+	});
+
+	$('#sponsor2AvatarDelete').click(function(){
+		imageDeleteRequest($('#sponsor2AvatarDelete').attr('name'));
+		$('#sponsor2Avatar').removeAttr('src');
+		$('#sponsor2AvatarDelete').addClass('element-hide');
+	});
+
+	$('#sponsor3AvatarDelete').click(function(){
+		imageDeleteRequest($('#sponsor3AvatarDelete').attr('name'));
+		$('#sponsor3Avatar').removeAttr('src');
+		$('#sponsor3AvatarDelete').addClass('element-hide');
+	});
+
+	function imageDeleteRequest(name) {
+		//console.log(name);
+		$.ajax({
+		  	type: "POST",
+		  	data: {"_csrf": $("head meta[name=_csrf]").attr('content'), 'name': name},
+		  	url: "/event/"+$("head meta[name=event_id]").attr('content')+"/delete/sponsor",
+		  	//dataType: "json",
+		  	success: function( data) {
+	    		//console.log( "delete the image "+ data );
+	  		}
+		});
 	}
 })

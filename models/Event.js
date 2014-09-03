@@ -147,7 +147,7 @@ scheme.statics.getEvent = function (id, cb, simple) {
 			
 			if (!simple) {
 				//avatar etc
-				console.log('before get event = '+ ev)
+				//console.log('before get event = '+ ev)
 				stack.push(function(callback) {
 					if (ev.avatar == null || ev.avatar.url == null || ev.avatar.url.length == 0) {
 						var avatar = new Avatar({
@@ -171,7 +171,7 @@ scheme.statics.getEvent = function (id, cb, simple) {
 						callback(null)
 					})
 				});
-				console.log('after get event = '+ ev)
+				//console.log('after get event = '+ ev)
 				stack.push(function (callback) {
 					ev.populate('sponsorLayout.sponsor1 sponsorLayout.sponsor2 sponsorLayout.sponsor3', callback)
 				})
@@ -259,11 +259,11 @@ scheme.methods.edit = function (body, user, files, cb) {
 	if (body.name && body.name.length > 0) {
 		this.name = body.name
 	}
-	console.log(files);
+	//console.log(files);
 
 	// avatar, sponsor logos etc
 	if (files) {
-		
+
 		if (files.avatar != null) {
 			var av = this.avatar
 			if (!av) {
@@ -272,11 +272,11 @@ scheme.methods.edit = function (body, user, files, cb) {
 				})
 			}
 
-			this.avatar = av._id;
+			this.avatar = av._id;			
 			av.doUpload(files.avatar, function() {
 				av.save()
 			})
-			console.log(av);
+			//console.log(av);
 			var bg = this.backgroundImage
 			if (!bg) {
 				bg = new Avatar({
@@ -288,61 +288,77 @@ scheme.methods.edit = function (body, user, files, cb) {
 			bg.doUpload(files.backgroundImage, function() {
 				bg.save()
 			})
-			console.log(bg);
 		}
+
 		if (files.sponsor1 != null) {
 			var av;
 			if (this.sponsorLayout.sponsor1) {
 				av = this.sponsorLayout.sponsor1;
 			}
+
+			//console.log("av= ");
+			//console.log(av)
 			
+			var ava = av;
 			if (!av) {
+				//console.log("123456789");
 				av = new Avatar({
 					createdBy: user._id
 				})
+				this.sponsorLayout.sponsor1 = av._id;
 			}
-			
-			this.sponsorLayout.sponsor1 = av._id;
-			
-			av.doUpload(files.sponsor1, function() {
-				av.save()
-			})
+						
+			//if (!ava) {
+				//this.sponsorLayout.layout = 0
+				this.sponsorLayout.layout = 1;
+				av.doUpload(files.sponsor1, function() {
+					av.save();
+				})
+			//}
 		}
+
 		if (files.sponsor2 != null) {
 			var av;
 			if (this.sponsorLayout.sponsor2) {
 				av = this.sponsorLayout.sponsor2;
 			}
 			
+			var ava = av;
 			if (!av) {
 				av = new Avatar({
 					createdBy: user._id
 				})
+				this.sponsorLayout.sponsor2 = av._id;
 			}
 			
-			this.sponsorLayout.sponsor2 = av._id;
-			
-			av.doUpload(files.sponsor2, function() {
-				av.save()
-			})
+			//if (!ava) {
+				this.sponsorLayout.layout = 1
+				av.doUpload(files.sponsor2, function() {
+					av.save()
+				})
+			//}
 		}
+
 		if (files.sponsor3 != null) {
 			var av;
 			if (this.sponsorLayout.sponsor3) {
 				av = this.sponsorLayout.sponsor3;
 			}
 			
+			var ava = av;
 			if (!av) {
 				av = new Avatar({
 					createdBy: user._id
 				})
+				this.sponsorLayout.sponsor3 = av._id;
 			}
-			
-			this.sponsorLayout.sponsor3 = av._id;
-			
-			av.doUpload(files.sponsor3, function() {
-				av.save()
-			})
+				
+			//if (!ava) {
+				this.sponsorLayout.layout = 2
+				av.doUpload(files.sponsor3, function() {
+					av.save()
+				})
+			//}
 		}
 	}
 	
@@ -363,10 +379,8 @@ scheme.methods.edit = function (body, user, files, cb) {
 		})
 		avatar.save();
 		this.avatar = avatar._id;
-		console.log('Avatar ='+this.avatar)
+		//console.log('Avatar ='+this.avatar)
 	}
-
-	
 
 	if (body.backgroundImage) {
 		try {
@@ -387,7 +401,6 @@ scheme.methods.edit = function (body, user, files, cb) {
 		this.backgroundImage = backgroundImage._id;
 		console.log('Background ='+this.backgroundImage)
 	}
-	
 
 	if (body.venue_name) {
 		this.venue_name = body.venue_name
@@ -536,7 +549,7 @@ scheme.methods.edit = function (body, user, files, cb) {
 		
 		cb(null);
 	});
-	console.log(this);
+	//console.log(this);
 }
 
 scheme.methods.validate = function (cb) {
@@ -588,13 +601,33 @@ scheme.methods.getGeo = function (cb) {
 	})
 }
 
+scheme.methods.setGeo = function (lat, lng, cb) {
+	var self = this;
+	Geolocation.find({ event: this._id }, function(err, geo) {
+		if (err) throw err;
+		
+		if (!isNaN(lat) && !isNaN(lng)) {
+			geo[0].geo.lat = lat;
+			geo[0].geo.lng = lng;
+			//geo[0].event = this._id;
+			geo[0].save();
+		}
+		
+		cb();
+	})
+}
+
 scheme.methods.getStartDateFormatted = function () {
 	var start = this.start;
-	return moment(start).zone(0).format('dddd, Do, MMMM YYYY [at] h:mm:ss a');
+	return start;
+	//return moment(start).zone(0).format('dddd, Do, MMMM YYYY [at] h:mm:ss a');
 }
+
 scheme.methods.getEndDateFormatted = function () {
 	var end = this.end;
-	return moment(start).zone(0).format('dddd, Do, MMMM YYYY [at] h:mm:ss a');
+	return end;
+	//return moment(start).zone(0).format('dddd, Do, MMMM YYYY [at] h:mm:ss a');
+	//return moment(end).zone(0).format('dddd, Do, MMMM YYYY [at] h:mm:ss a');
 }
 scheme.methods.getEndDateCombinedFormatted = function () {
 	var format = 'dddd, Do, MMMM YYYY [at] h:mm:ss a';
@@ -606,7 +639,7 @@ scheme.methods.getEndDateCombinedFormatted = function () {
 		format = 'h:mm:ss a';
 	}
 	
-	return moment(start).zone(0).format(format);
+	return moment(end).zone(0).format(format);
 }
 
 scheme.methods.isForeign = function () {

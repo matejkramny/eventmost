@@ -1,0 +1,117 @@
+#eventTimeModal.modal.fade(role="dialog")
+	#timeModal.modal-dialog(style="width:75%")
+		.modelContent.modal-content
+			.modal-header.right
+				a(href="#", class="close-reveal-modal", data-dismiss="modal")
+					img(src="/images/x.svg")
+			.modal-body(style="min-height:430px;")
+				//- normal calendars
+				.col-lg-2.col-md-2.col-xs-2.pad-left-zero.pad-right-zero.res-dis-non
+					.container.bg-purple.pad-top-zero.pad-right-zero(style="height:400px;")
+						.pull-left.event-address
+							.font.font-thin.logo-text
+								| Event date
+
+				.col-lg-5.col-md-5.col-xs-5.pad-left-five.pad-right-zero.res-dis-non
+					.container.bg-purple.date-height.datepickerWrapper
+						.center
+							.font.font-thin.logo-text
+								| FROM:
+						.datepicker#fromDateDesktop(style="min-height:300px;")
+						.clearfix
+						.nspacer
+						.pull-left
+							.input-grey-rounded.psev
+								a.link-purple.nowButton(href="#")
+									| NOW
+						.pull-right.nspacer-small
+							.pull-left.font-e
+								| Time of event:
+							.pull-left.pad-left-ten
+								input.input-grey-rounded(name="start_date" type="text" placeholder="00:00" style="max-width:150px;")
+				.col-lg-5.col-md-5.col-xs-5.pad-left-five.pad-right-zero.res-dis-non
+					.container.bg-purple.date-height.datepickerWrapper
+						.center
+							.font.font-thin.logo-text
+								| TO:
+						.datepicker#toDateDesktop(style="min-height:300px;")
+						.clearfix
+						.nspacer
+						.pull-left
+							.input-grey-rounded.psev
+								a.link-purple.nowButton(href="#")
+									| NOW
+						.pull-right.nspacer-small
+							.pull-left.font-e
+								| Time of event:
+							.pull-left.pad-left-ten
+								input.input-grey-rounded(name="start_date" type="text" placeholder="23:59" style="max-width:150px;")
+				br
+			.modal-footer
+				button.btn.btn-default(type='button', data-dismiss='modal') Close
+				button.btn.btn-primary(id='timeButton' data-dismiss='modal' type='button') Save changes
+#eventDescModal.modal.fade(role="dialog")
+	#descModel.modal-dialog
+		.modelContent.modal-content
+			.modal-header.right
+				a(href="#", class="close-reveal-modal", data-dismiss="modal")
+					img(src="/images/x.svg")
+			.modal-body
+				.nspacer-small
+				.bg-green
+					.pull-left
+						img.pencil(src="/images/pencil.svg")
+					.pull-left.font2.font-thin.nspacer-small
+						| Event description
+					.pull-right.pad-right-ten.nspacer
+						img(src="/images/optional-big-white.svg")
+					.clearfix
+				.clearfix
+				textarea#tinyeditor.tinyeditor(style="height: 200px width:1000px;", name="description", placeholder="Description...")
+				.clearfix
+			.modal-footer
+				button.btn.btn-default(type='button', data-dismiss='modal') Close
+				button.btn.btn-primary(id='descButton' data-dismiss='modal' type='button') Save changes
+#eventLocationModal.modal.fade(role="dialog" )
+	#locationModel.modal-dialog
+		.modal-content.modelContent
+			.modal-header.right
+				a(href="#", class="close-reveal-modal", data-dismiss="modal")
+					img(src="/images/x.svg")
+			.modal-body
+				#locationField
+					table#address
+						tr
+							td.label Event Venue
+							td.wideField(colspan='3')
+								input#modalvenue(placeholder='Enter event venue', type='text')
+						tr
+							td.label Event Address
+							td.wideField(colspan='3')
+								input#autocomplete(placeholder='Enter your address', onfocus='geolocate()', type='text')
+						tr
+							td.label Street address
+							td.slimField
+								input#street_number.field(disabled='true')
+							td.wideField(colspan='2')
+								input#route.field(disabled='true')
+						tr
+							td.label City
+							td.wideField(colspan='3')
+								input#locality.field(disabled='true')
+						tr
+							td.label State
+							td.slimField
+								input#administrative_area_level_1.field(disabled='true')
+							td.label Zip code
+							td.wideField
+								input#postal_code.field(disabled='true')
+						tr
+							td.label Country
+							td.wideField(colspan='3')
+								input#country.field(disabled='true')
+				br
+				#map-canvas
+			.modal-footer
+				button.btn.btn-default(type='button', data-dismiss='modal') Close
+				button.btn.btn-primary(id='locationButton' type='button' data-dismiss='modal') Save changes

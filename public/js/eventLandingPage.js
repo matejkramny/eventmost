@@ -125,4 +125,54 @@ $(document).ready(function() {
 
 		$anchorparentdiv.css({'cursor': 'pointer'})
 	})
+
+	//TINY editor
+	var editor = new TINY.editor.edit('editor', {
+		id: 'tinyeditor',
+		height: 175,
+		cssclass: 'tinyeditor',
+		controlclass: 'tinyeditor-control',
+		rowclass: 'tinyeditor-header',
+		dividerclass: 'tinyeditor-divider',
+		controls: ['bold', 'italic', 'underline', 'strikethrough', 'leftalign', 'centeralign', 'rightalign', 'blockjustify', 'font', 'size',],
+		footer: true,
+		fonts: ['Raleway', 'Verdana','Arial','Georgia','Trebuchet MS'],
+		xhtml: true,
+		cssfile: '/css/tinymce.iframe.css',
+		bodyid: 'editor',
+		footerclass: 'tinyeditor-footer',
+		resize: {
+			cssclass: 'resize'
+		}
+	});
+	//TINY editor
+	var editor1 = new TINY.editor.edit('editor', {
+		id: 'tinyeditor1',
+		height: 175,
+		cssclass: 'tinyeditor',
+		controlclass: 'tinyeditor-control',
+		rowclass: 'tinyeditor-header',
+		dividerclass: 'tinyeditor-divider',
+		controls: ['bold', 'italic', 'underline', 'strikethrough', 'leftalign', 'centeralign', 'rightalign', 'blockjustify', 'font', 'size',],
+		footer: true,
+		fonts: ['Raleway', 'Verdana','Arial','Georgia','Trebuchet MS'],
+		xhtml: true,
+		cssfile: '/css/tinymce.iframe.css',
+		bodyid: 'editor',
+		footerclass: 'tinyeditor-footer',
+		resize: {
+			cssclass: 'resize'
+		}
+	});
+	
+	// Datepicker
+	$(".datepickerWrapper .nowButton").click(function(ev) {
+		ev.preventDefault();
+		
+		var now = new Date();
+		var time = ('0' + now.getHours()).slice(-2) + ":" + ('0' + now.getMinutes()).slice(-2);
+		$(this).parent().parent().parent().find('input[type=time]').val(time)
+		
+		return false;
+	})
 });

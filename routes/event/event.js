@@ -15,8 +15,8 @@ var dropbox = require('./dropbox')
 
 exports.router = function (app) {
 	add.router(app)
-	
-	app.get('/event/:id/registrationpage', getEvent, attending, viewRegistrationPage)
+
+	app.get('/event/:id/registrationpage/:edit', getEvent, attending, viewRegistrationPage)
 		.get('/event/:id/tickets', getEvent, attending, viewTickets)
 		.get('/event/:id', redirectToRegistrationPage)
 		.get('/event/:id/*', redirectToRegistrationPage)
@@ -30,7 +30,7 @@ exports.router = function (app) {
 		.get('/event/:id/tickets', getEvent, viewTickets)
 		.post('/event/:id/post', postMessage)
 		
-		.get('/event/:id/registrationpage', viewRegistrationPage)
+		.get('/event/:id/registrationpage/:edit', viewRegistrationPage)
 	
 	edit.router(app)
 	messages.router(app)
@@ -151,7 +151,8 @@ function getEvent (req, res, next) {
 		}
 		
 		res.locals.ev = ev;
-		
+		//console.log(ev)
+	
 		next()
 	})
 }
@@ -203,6 +204,7 @@ exports.attending = attending = function (req, res, next) {
 }
 
 function redirectToRegistrationPage (req, res, next) {
+	//console.log('abc');
 	if (req.user) {
 		next();
 	} else {
@@ -215,7 +217,7 @@ function viewEvent (req, res) {
 	res.locals.hideArrow = true;
 	res.locals.moment = moment;
 	res.locals.stripe_key = config.credentials.stripe.pub;
-	
+
 	if (redirectToForeignEvent(req, res, '')) {
 		return;
 	}
@@ -236,8 +238,8 @@ function viewEvent (req, res) {
 		}
 		
 		res.locals.eventStartFormatted = res.locals.ev.getStartDateFormatted();
-		res.locals.eventEndFormatted = res.locals.ev.getEndDateCombinedFormatted();
-		
+		//res.locals.eventEndFormatted = res.locals.ev.getEndDateCombinedFormatted();		
+		res.locals.eventEndFormatted = res.locals.ev.getEndDateFormatted();
 		res.render('event/landingpage', { title: res.locals.ev.name });
 	}
 }
@@ -280,6 +282,9 @@ function redirectToForeignEvent (req, res, page) {
 }
 
 function viewRegistrationPage (req, res) {
+
+	//console.log("ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss");
+
 	if (!req.user && !req.session.redirectAfterLogin) {
 		req.session.redirectAfterLogin = "/event/"+req.params.id+"/registrationpage";
 	}
@@ -299,11 +304,14 @@ function viewRegistrationPage (req, res) {
 			}
 			
 			res.locals.eventStartFormatted = res.locals.ev.getStartDateFormatted();
-			res.locals.eventEndFormatted = res.locals.ev.getEndDateCombinedFormatted();
+			//res.locals.eventEndFormatted = res.locals.ev.getEndDateCombinedFormatted();
+			res.locals.eventEndFormatted = res.locals.ev.getEndDateFormatted();
 			
+			//console.log(res.locals.eventStartFormatted);
+
 			if (!res.locals.eventattending)
 				res.locals.hideArrow = true;
-			res.render('event/landingpage', { title: res.locals.ev.name });
+			res.render('event/landingpage', { title: res.locals.ev.name, edit: req.params.edit });
 		}
 	});
 }

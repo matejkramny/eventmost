@@ -38,3 +38,56 @@
 				.clearfix
 				a.close-reveal-modal(href="#", data-dismiss="modal")
 					img(src="/images/x.svg")
+#locationModal.modal.fade(role="dialog")
+	.modal-dialog
+		.modal-content
+			.modal-header
+				button.close(type='button', data-dismiss='modal')
+				span(aria-hidden='true') ×
+				span.sr-only Close
+				h4.modal-title Modal title
+			.modal-body
+				//- normal calendars
+				.col-lg-2.col-md-2.col-xs-2.pad-left-zero.pad-right-zero.res-dis-non
+					.container.bg-purple.pad-top-zero.pad-right-zero(style="height:62px;")
+						.pull-left.event-address
+							.font.font-thin.logo-text
+								| Event date
+
+				.col-lg-5.col-md-5.col-xs-5.pad-left-five.pad-right-zero.res-dis-non
+					.container.bg-purple.date-height.datepickerWrapper
+						.center
+							.font.font-thin.logo-text
+								| FROM:
+						.datepicker#fromDateDesktop(style="min-height:300px;")
+						.clearfix
+						.nspacer
+						.pull-left
+							.input-grey-rounded.psev
+								a.link-purple.nowButton(href="#")
+									| NOW
+						.pull-right.nspacer-small
+							.pull-left.font-e
+								| Time of event:
+							.pull-left.pad-left-ten
+								input.input-grey-rounded(name="start_date" type="text" placeholder="00:00" style="max-width:150px;")
+				.col-lg-5.col-md-5.col-xs-5.pad-left-five.pad-right-zero.res-dis-non
+					.container.bg-purple.date-height.datepickerWrapper
+						.center
+							.font.font-thin.logo-text
+								| TO:
+						.datepicker#toDateDesktop(style="min-height:300px;")
+						.clearfix
+						.nspacer
+						.pull-left
+							.input-grey-rounded.psev
+								a.link-purple.nowButton(href="#")
+									| NOW
+						.pull-right.nspacer-small
+							.pull-left.font-e
+								| Time of event:
+							.pull-left.pad-left-ten
+								input.input-grey-rounded(name="start_date" type="text" placeholder="23:59" style="max-width:150px;")
+			.modal-footer
+				button.btn.btn-default(type='button', data-dismiss='modal') Close
+				button.btn.btn-primary(type='button') Save changes
