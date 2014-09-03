@@ -32,9 +32,13 @@ function searchEvents(req, res, q) {
 	if (req.query.arrange && req.query.arrange == 'nearby') {
 		list.listNearEvents(req, res);
 		return;
+	}else{
+		list.listNearLandingEvents(req, res);
+		return;
 	}
-
-	var query = {
+	
+	/*------------------------ Start Normal Events ----------------------- */
+	/*var query = {
 		name: new RegExp(q, 'i'),
 		deleted: false,
 		start: {
@@ -68,6 +72,8 @@ function searchEvents(req, res, q) {
 			res.render('login')
 		}
 	})
+	*/
+	/*------------------------ End Normal Events ----------------------- */
 }
 
 function searchPeople(req, res, q) {
