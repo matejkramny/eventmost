@@ -1,4 +1,4 @@
-var mongoose = require('mongoose')
+/*var mongoose = require('mongoose')
 	, messages = require('./apimessages')
 	, models = require('../../../../models')
 	, io = require('../../../../app').io // has to fetch it
@@ -98,4 +98,4 @@ exports.notifyLike = function (ev, comment, attendee, cb) {
 		
 		cb(sockets)
 	})
-}
+}*/
