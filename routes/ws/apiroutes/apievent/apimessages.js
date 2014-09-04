@@ -3,28 +3,62 @@ var models = require('../../../../models')
 	, socket = require('./apisocket')
 	, inbox = require('../apiinbox/index')
 	, async = require('async')
+	, mongoose = require('mongoose')
 
 exports.router = function (app) {
-	app.get('/api/event/:id/comments', getComments)
-		.post('/api/event/:id/comment', postComment)
-		.delete('/api/event/:id/comment/:cid', deleteComment)
-		.post('/api/event/:id/like', likeComment)
+	app.get('/api/event/:id/comments', getCommentsAPI)
+		.post('/api/event/:id/comment', postCommentAPICustom)
+		.delete('/api/event/:id/comment/:cid', deleteCommentAPI)
+		.post('/api/event/:id/like', likeCommentAPI)
 }
 
-function getComments (req, res) {
-	res.locals.ev.getComments(function() {
-		res.format({
-			json: function() {
-				res.send({
-					status: 200,
-					comments: res.locals.ev.messages
-				})
+function getCommentsAPI (req, res) {
+	console.log("Get Comments ".red);
+	console.log(req.params.id);
+	
+	// Found the Event currently requested by user.
+	models.Event.findOne({_id:req.params.id} , function(err, event) 
+	{
+		console.log("#######".red);
+		console.log(event);
+		console.log("#######".red);
+		
+		// Fetch Messages By One By One.
+		var query = {'_id': {$in: event.messages}};
+		
+		models.EventMessage.find(query)
+		.populate({path: 'attendee'})
+		.select('attendee posted message spam isResponse')
+		.sort('-created')
+		.limit(10)
+		.exec(function(err, messages) {
+			
+			
+			var options = {
+				path: 'attendee.user',
+				model: 'User'
+			};
+			
+			models.EventMessage.populate(messages , options , function(err , usermessages)
+			{
+				console.log("####################".red);
+			console.log(usermessages);
+			console.log("####################".red);
+			
+			res.format({
+					json: function() {
+						res.send({
+							events: usermessages
+						})
+					}
+				});
 			}
-		})
+		);
 	})
+	});
 }
 
-function likeComment (req, res) {
+function likeCommentAPI (req, res) {
 	var cid = req.body.comment;
 	
 	try {
@@ -81,7 +115,33 @@ function likeComment (req, res) {
 	}
 }
 
-function postComment (req, res) {
+function postCommentAPICustom(req, res)
+{
+	console.log("Post Comments ".red);
+	console.log(req.body);
+	
+	var user_id = req.body._id;
+	
+	
+	
+	var message = req.body.message;
+	var event_id = req.params.id;
+	
+	var msg = new models.EventMessage({
+			attendee: user_id,
+			message: message
+		})
+		msg.save()
+		
+		console.log(msg);
+		
+		models.Event.findById(req.params.id, function(err, ev) {
+			ev.messages.push(msg._id);
+			ev.save()
+		});
+}
+
+function postCommentAPI (req, res) {
 	var message = req.body.message;
 	var inResponse = req.body.inResponse || "";
 	
@@ -245,7 +305,7 @@ function postComment (req, res) {
 	}
 }
 
-function deleteComment (req, res) {
+function deleteCommentAPI (req, res) {
 	var cid;
 	try {
 		cid = req.params.cid;
