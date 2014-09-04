@@ -13,12 +13,12 @@ exports.router = function (app) {
 		.all('/user/:id/*', util.authorized)
 		.get('/user/:id/save', saveUser)
 		.get('/user/:id/remove', removeProfile)
-		.post('/api/profile', util.authorized, profile)
-		.post('/api/profile/edit', util.authorized, doEditProfile)
-		.get('/api/user/:id', viewUser)
-		.all('/api/user/:id/*', util.authorized)
-		.get('/api/user/:id/save', saveUser)
-		.get('/api/user/:id/remove', removeProfile)
+		//.post('/api/profile', util.authorized, profile)
+		//.post('/api/profile/edit', util.authorized, doEditProfile)
+		//.get('/api/user/:id', viewUser)
+		//.all('/api/user/:id/*', util.authorized)
+		//.get('/api/user/:id/save', saveUser)
+		//.get('/api/user/:id/remove', removeProfile)
 }
 
 function removeProfile (req, res) {
@@ -44,6 +44,8 @@ function removeProfile (req, res) {
 }
 
 exports.profile = profile = function (req, res) {
+	
+	console.log("/profile".red);
 	res.format({
 		html: function() {
 			res.render('profile/view', { title: "My Profile" })
@@ -127,6 +129,8 @@ function viewUser (req, res) {
 }
 
 function saveUser (req, res) {
+	
+	console.log("Save User ".red);
 	var id = req.params.id;
 	
 	models.User.findOne({
@@ -163,8 +167,11 @@ function saveUser (req, res) {
 exports.doEditProfile = doEditProfile = function (req, res) {
 	// this works as incremental form submission.. some fields may save, some may not. It saves nevertheless (the valid ones)
 	// the requirements are very lenient
+	
+	console.log("PS19 # Going to edit profile".red);
 	var errors = [];
 	var u = req.user;
+	
 	
 	var blocking = false;
 	var cb = function () {
@@ -217,6 +224,7 @@ exports.doEditProfile = doEditProfile = function (req, res) {
 			u.surname = req.body.surname;
 		}
 	} catch (e) {
+		console.log("PS19 # Crashed".red);
 		errors.push(e.message)
 	}
 	
@@ -264,6 +272,14 @@ exports.doEditProfile = doEditProfile = function (req, res) {
 		u.notification.mobile.messages = req.body.mobileMessage == 'yes' ? true : false;
 	}
 	
+	if (typeof req.body.education !== 'undefined') {
+		u.education = req.body.education;
+	}
+	
+	
+	console.log("Company ".red + req.body.company);
+	
+	console.log("U Company".red);
 	if (typeof req.body.company !== 'undefined') {
 		u.company = req.body.company;
 	}
@@ -273,8 +289,8 @@ exports.doEditProfile = doEditProfile = function (req, res) {
 	if (typeof req.body.location !== 'undefined') {
 		u.location = req.body.location;
 	}
-	if (typeof req.body.interests !== 'undefined') {
-		u.interests = req.body.interests;
+	if (typeof req.body.interest !== 'undefined') {
+		u.interests = req.body.interest;
 	}
 	if (typeof req.body.website !== 'undefined') {
 		u.website = req.body.website;
@@ -285,6 +301,9 @@ exports.doEditProfile = doEditProfile = function (req, res) {
 	if (typeof req.body.desc !== 'undefined') {
 		u.desc = req.body.desc;
 	}
+	u.desc="Hardcode description";
+	
+	console.log("Description ".red + req.body.desc);
 	
 	if (req.body.password && req.body.password.length > 0) {
 		// user wants to change/create a password
@@ -301,10 +320,14 @@ exports.doEditProfile = doEditProfile = function (req, res) {
 		}
 	}
 	
+	
 	if (req.files && req.files.avatar != null && req.files.avatar.name.length != 0) {
 		var ext = req.files.avatar.type.split('/');
+		
 		var ext = ext[ext.length-1];
 		u.avatar = "/profileavatars/"+u._id+"."+ext;
+		
+		
 		
 		var createThumbnails = function() {
 			u.createThumbnails(function(){});
@@ -318,8 +341,13 @@ exports.doEditProfile = doEditProfile = function (req, res) {
 			}
 		}
 		
+		
 		fs.rename(req.files.avatar.path, config.path + "/public"+u.avatar, function(err) {
-			if (err) throw err;
+			if (err) 
+			{
+				
+				throw err;
+			}
 			
 			if (config.knox) {
 				config.knox.putFile(config.path + "/public"+u.avatar, "/public"+u.avatar, function(err, res) {
