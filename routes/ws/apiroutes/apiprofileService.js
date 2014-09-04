@@ -7,6 +7,8 @@ var fs = require('fs')
 	, config = require('../../../config');
 
 exports.router = function (app) {
+	
+	console.log("Mobile Profile Service Router");
 		//app.get('/api/test',function(req,res){res.send({token:"Test Token"})})
 		app.post('/api/profile', util.authorized, profile)
 		.post('/api/profile/edit', util.authorized, doEditProfile)
@@ -39,6 +41,8 @@ function removeProfile (req, res) {
 }
 
 exports.profile = profile = function (req, res) {
+	
+	console.log("/api/profile".red);
 	res.format({
 		json: function() {
 			res.json({
@@ -49,6 +53,8 @@ exports.profile = profile = function (req, res) {
 }
 
 function viewUser (req, res) {
+	
+	console.log("/api/profile".red);
 	var id = req.params.id;
 	
 	models.User.findById(id).populate('savedProfiles').exec(function(err, user) {
@@ -133,11 +139,20 @@ exports.doEditProfile = doEditProfile = function (req, res) {
 	// this works as incremental form submission.. some fields may save, some may not. It saves nevertheless (the valid ones)
 	// the requirements are very lenient
 	var errors = [];
-	var u = req.user;
+	//var u = new models.User();
+	
+	models.User.findOne({_id:req.body._id} , function(err, u) {
+	
+	
+	console.log("/api/profile/edit".red);
 	
 	var blocking = false;
 	var cb = function () {
+		console.log(u);
+		
 		u.save(function(err) {
+			console.log("Save Error ".red + err);
+			
 			if (err) throw err;
 		})
 		
@@ -182,6 +197,7 @@ exports.doEditProfile = doEditProfile = function (req, res) {
 			u.surname = req.body.surname;
 		}
 	} catch (e) {
+		console.log("Exception Caught ".red + e);
 		errors.push(e.message)
 	}
 	
@@ -229,6 +245,8 @@ exports.doEditProfile = doEditProfile = function (req, res) {
 		u.notification.mobile.messages = req.body.mobileMessage == 'yes' ? true : false;
 	}
 	
+
+	
 	if (typeof req.body.company !== 'undefined') {
 		u.company = req.body.company;
 	}
@@ -238,8 +256,8 @@ exports.doEditProfile = doEditProfile = function (req, res) {
 	if (typeof req.body.location !== 'undefined') {
 		u.location = req.body.location;
 	}
-	if (typeof req.body.interests !== 'undefined') {
-		u.interests = req.body.interests;
+	if (typeof req.body.interest !== 'undefined') {
+		u.interests = req.body.interest;
 	}
 	if (typeof req.body.website !== 'undefined') {
 		u.website = req.body.website;
@@ -302,4 +320,5 @@ exports.doEditProfile = doEditProfile = function (req, res) {
 	if (!blocking) {
 		cb()
 	}
+	})
 }
