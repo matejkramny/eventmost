@@ -10,8 +10,8 @@ exports.router = function (app) {
 	
 	console.log("Mobile Profile Service Router");
 		//app.get('/api/test',function(req,res){res.send({token:"Test Token"})})
-		app.post('/api/profile', util.authorized, profile)
-		.post('/api/profile/edit', util.authorized, doEditProfile)
+		app.post('/api/profile', util.authorized, profileAPI)
+		.post('/api/profile/edit', util.authorized, doEditProfileAPI)
 		.get('/api/user/:id', viewUser)
 		.all('/api/user/:id/*', util.authorized)
 		.get('/api/user/:id/save', saveUser)
@@ -40,7 +40,7 @@ function removeProfile (req, res) {
 	res.send({removeProfile:true})
 }
 
-exports.profile = profile = function (req, res) {
+exports.profileAPI = profileAPI = function (req, res) {
 	
 	console.log("/api/profile".red);
 	res.format({
@@ -135,7 +135,7 @@ function saveUser (req, res) {
 	});
 }
 
-exports.doEditProfile = doEditProfile = function (req, res) {
+exports.doEditProfileAPI = doEditProfileAPI = function (req, res) {
 	// this works as incremental form submission.. some fields may save, some may not. It saves nevertheless (the valid ones)
 	// the requirements are very lenient
 	var errors = [];
