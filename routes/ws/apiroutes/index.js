@@ -1,6 +1,6 @@
 var auth = require('./apiauth')
 	models = require('../../../models'),
-	//profile = require('./apiprofileService'),
+	apiprofile = require('./apiprofileService'),
 	events = require('./apievents'),
 	inbox = require('./apiinbox'),
 	config = require('../../../config'),
@@ -8,7 +8,7 @@ var auth = require('./apiauth')
 
 // HTTP router
 exports.router = function(app) {
-	
+
 	app.get('/api/token', getToken)// Used in the mobile apps
 		.get('/api/logout', logoutJSON)
 		.get('/api/loggedin', isloggedin)
@@ -16,7 +16,7 @@ exports.router = function(app) {
 	
 	// Used for JSON/XML auth responses
 	auth.router(app);
-	//profile.router(app);
+	apiprofile.router(app);
 	inbox.router(app);
 	search.router(app);
 	events.router(app);
@@ -29,6 +29,9 @@ exports.socket = function (socket) {
 }
 
 function getToken (req, res) {
+	
+	console.log("Sending App Token".red);
+	
 	res.send({
 		token: req.csrfToken()
 	});
