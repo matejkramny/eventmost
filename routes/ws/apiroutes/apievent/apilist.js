@@ -40,14 +40,14 @@ exports.listEventsAPI = function (req, res) {
 	
 	models.Event.find(query)
 		.populate('avatar attendees.user')
-		.select('name start end address venue_name avatar source')
+		.select('name start end address venue_name avatar source description')
 		.sort('-created')
 		.limit(10)
 		.skip(skip)
 		.exec(function(err, evs) {
 			
 			console.log("####################".red);
-			console.log(evs);
+			//console.log(evs);
 			console.log("####################".red);
 			
 		if (err) throw err; 
@@ -81,7 +81,7 @@ exports.listMyEventsAPI = function (req, res) {
 		console.log("User Found ".red);
 		
 		console.log("############################".red);
-		console.log(attendees);
+		//console.log(attendees);
 		console.log("############################".red);
 		
 		
@@ -96,7 +96,7 @@ exports.listMyEventsAPI = function (req, res) {
 			.exec(function(err, evs) {
 				
 			console.log("############################".red);
-		    console.log(evs);
+		    //console.log(evs);
 		    console.log("############################".red);	
 				
 			if (err) throw err;
@@ -104,7 +104,7 @@ exports.listMyEventsAPI = function (req, res) {
 				models.Event.find(query).count(function(err, total) {
 					
 					console.log("############################".red);
-		    		console.log(total);
+		    		//console.log(total);
 		    		console.log("############################".red);	
 					
 					res.format({
