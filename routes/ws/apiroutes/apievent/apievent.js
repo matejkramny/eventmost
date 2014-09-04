@@ -16,7 +16,7 @@ var dropbox = require('./apidropbox')
 exports.router = function (app) {
 	add.router(app)
 	
-	app.get('/api/event/:id/registrationpage', getEvent, attending, viewRegistrationPage)
+	/*app.get('/api/event/:id/registrationpage', getEvent, attending, viewRegistrationPage)
 		.get('/api/event/:id/tickets', getEvent, attending, viewTickets)
 		.get('/api/event/:id', redirectToRegistrationPage)
 		.get('/api/event/:id/*', redirectToRegistrationPage)
@@ -30,7 +30,7 @@ exports.router = function (app) {
 		.get('/api/event/:id/tickets', getEvent, viewTickets)
 		.post('/api/event/:id/post', postMessage)
 		
-		.get('/api/event/:id/registrationpage', viewRegistrationPage)
+		.get('/api/event/:id/registrationpage', viewRegistrationPage)*/
 	
 	edit.router(app)
 	messages.router(app)
