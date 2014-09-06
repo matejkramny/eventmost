@@ -16,11 +16,12 @@ html
 		//- all css goes here
 		block css
 			link(rel="stylesheet" href="/css/all_combined.min.css?v=#{versionHash}")
+			link(type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500")
 			link(rel="stylesheet" href="/css/bootstrap-eventmost.css?v=#{versionHash}")
 			link(rel="stylesheet" href="/css/crop/jquery.Jcrop.min.css?v=#{versionHash}")
+			
 
-
-	body(ng-app="eventMost")
+	body(ng-app="eventMost" onload="initialize()" )
 		//- main container
 		block container
 		header
@@ -135,13 +136,15 @@ html
 		//- usually globally persistent
 		block js
 			script(src="/js/vendor/all_required.min.js?v=#{versionHash}" defer)
+			script(src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places")
+			script(src="/js/google_autocomplete_addr.js")
 
 			if !loggedIn
 				script(src="/js/signin.js?v=#{versionHash}" defer)
 			else
 				script(src="/socket.io/socket.io.js?v=#{versionHash}" defer)
 				script(src="/js/inbox_notifications.js?v=#{versionHash}" defer)
-				script(src="/js/diferscript.js?v=#{versionHash}" defer)
+				//script(src="/js/diferscript.js?v=#{versionHash}" defer)
 				if (typeof hide_bar_right !== 'undefined' && hide_bar_right === true)
 					script(src="/js/takeoverProfile.js?v=#{versionHash}" defer)
 					

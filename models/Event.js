@@ -619,16 +619,28 @@ scheme.methods.setGeo = function (lat, lng, cb) {
 
 scheme.methods.getStartDateFormatted = function () {
 	var start = this.start;
-	return start;
-	//return moment(start).zone(0).format('dddd, Do, MMMM YYYY [at] h:mm:ss a');
+	//return start;
+	////return moment(start).zone(0).format('dddd, Do, MMMM YYYY [at] h:mm:ss a');
+	
+	var aStart = new Array();
+	aStart[0] = start;
+	aStart[1] = moment(start).zone(0).format('dddd, Do, MMMM YYYY [at] h:mm:ss a');
+
+	//console.log(aStart);
+	return aStart;
 }
 
 scheme.methods.getEndDateFormatted = function () {
 	var end = this.end;
-	return end;
-	//return moment(start).zone(0).format('dddd, Do, MMMM YYYY [at] h:mm:ss a');
-	//return moment(end).zone(0).format('dddd, Do, MMMM YYYY [at] h:mm:ss a');
+	//return end;
+	////return moment(end).zone(0).format('dddd, Do, MMMM YYYY [at] h:mm:ss a');
+
+	var aEnd = new Array();
+	aEnd[0] = end;
+	aEnd[1] = moment(end).zone(0).format('dddd, Do, MMMM YYYY [at] h:mm:ss a');
+	return aEnd;
 }
+
 scheme.methods.getEndDateCombinedFormatted = function () {
 	var format = 'dddd, Do, MMMM YYYY [at] h:mm:ss a';
 	var start = this.start;
