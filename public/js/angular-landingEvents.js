@@ -23,7 +23,7 @@ $(document).ready(function() {
 
 	function getNear (coords) {
 		$.ajax({
-			url: '/?limit='+limit+'&page='+page+'&html=1&lat='+coords.lat+'&lng='+coords.lng,
+			url: '/events/nearlanding?limit='+limit+'&page='+page+'&html=1&lat='+coords.lat+'&lng='+coords.lng,
 			method: 'GET',
 			dataType: 'json',
 			success: function(json, status, jqxhr) {
@@ -32,8 +32,30 @@ $(document).ready(function() {
 				$placeholder.html(json.html);
 
 				if (json.events.length == 0) {
+
+					$.ajax({
+						url: '/events/withoutgeolocation',
+						method: 'GET',
+						dataType: 'json',
+						success: function(json, status, jqxhr) {
+							$placeholder.show();
+							
+							$placeholder.html(json.html);
+
+							if (json.events.length == 0) {
+
+								
+								$placeholder.show();
+								$placeholderText.html("Sorry! No events happening around you <a href='/event/add'>create one</a>!");
+							}
+						},
+						error: function(jqxhr, status, error) {
+							console.log("error" + error)
+						}
+					});
+
 					$placeholder.show();
-					$placeholderText.html(":-( No events near you.. Go ahead and <a href='/event/add'>create one</a>!");
+					$placeholderText.html("Sorry! No events happening around you <a href='/event/add'>create one</a>!");
 				}
 			},
 			error: function(jqxhr, status, error) {
