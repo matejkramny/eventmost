@@ -9,6 +9,7 @@ exports.router = function (app) {
 	app.get('/events', exports.listEvents)
 		.get('/events/my', util.authorized, exports.listMyEvents)
 		.get('/events/near', exports.listNearEvents)
+		.get('/events/nearlanding', exports.listNearLandingEvents)
 }
 
 exports.listEvents = function (req, res) {
