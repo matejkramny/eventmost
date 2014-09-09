@@ -28,7 +28,7 @@ function getCommentsAPI (req, res) {
 		
 		models.EventMessage.find(query)
 		.populate({path: 'attendee'})
-		.select('attendee posted message spam isResponse')
+		.select('attendee posted message spam isResponse likes')
 		.sort('-created')
 		.limit(10)
 		.exec(function(err, messages) {
@@ -121,24 +121,58 @@ function postCommentAPICustom(req, res)
 	console.log(req.body);
 	
 	var user_id = req.body._id;
+	console.log("User ID ".red + user_id);
 	
-	
-	
-	var message = req.body.message;
-	var event_id = req.params.id;
-	
-	var msg = new models.EventMessage({
-			attendee: user_id,
-			message: message
-		})
-		msg.save()
+	models.Event.findOne({_id : req.params.id})
+	.populate(
+		{
+			path:'attendees',
+			match: { user: user_id }
+		}
+	)
+	.exec(function(err, event) 
+	{	
+		// Found the Event. Now Found the Attendee Against the User ID.
+		console.log(event);
+	// only attendee can comment
+	if(event.attendees.length > 0)
+	{
+		var message = req.body.message;
+		var event_id = event._id;
+		var attendee_id =  event.attendees[0]._id;
+		console.log(attendee_id);
 		
-		console.log(msg);
-		
-		models.Event.findById(req.params.id, function(err, ev) {
-			ev.messages.push(msg._id);
-			ev.save()
+		var msg = new models.EventMessage({
+				attendee: attendee_id,
+				message: message
 		});
+		
+			msg.save();
+			
+			console.log(msg);
+			
+			models.Event.findById(req.params.id, function(err, ev) {
+				ev.messages.push(msg._id);
+				ev.save()
+			});
+			
+			res.format({
+				json: function() {
+					res.send({
+						status: 200
+					})
+				}
+			})
+			
+			return;
+		
+	}
+	else
+	{
+		console.log("Sending 404");
+		res.status(404).send('Only Attendee Can Comment');
+	}
+	});
 }
 
 function postCommentAPI (req, res) {
