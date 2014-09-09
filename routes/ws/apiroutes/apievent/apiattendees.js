@@ -5,121 +5,128 @@ var config = require('../../../../config')
 	, transport = config.transport
 	, mongoose = require('mongoose')
 	, async = require('async')
+	, util = require('../../util')
 
 exports.router = function (app) {
 	attending = require('./apievent').attending
 	
-	app.get('/api/event/:id/attendees', listAttendees)
-		.get('/api/event/:id/attendee/:attendee', showAttendee)
-		.put('/api/event/:id/attendee/:attendee/register', getAttendee, registerAttendee)
-		.put('/api/event/:id/attendee/:attendee/unregister', getAttendee, unregisterAttendee)
+	app.get('/api/event/:id/attendees', listAttendeesAPI)
+		.get('/api/event/:id/attendee/:attendee', showAttendeeAPI)
+		.post('/api/event/:id/attendee/:attendee/register', util.authorized, getAttendeeAPI)
+		//.post('/api/event/:id/attendee/:attendee/register', getAttendeeAPI, registerAttendeeAPI)
+		.post('/api/event/:id/attendee/:attendee/unregister', getAttendeeAPI, unregisterAttendeeAPI)
 		.get('/api/event/:id/attendee/:attendee/remove', removeAttendee)
 		.post('/api/event/:id/join', joinEvent)
 		.post('/api/event/:id/buy/tickets', payWithCard)
 		.get('/api/event/:id/buy/tickets/getPromotionalCode/:code', getPromotionalCode)
 }
 
-function listAttendees (req, res) {
-	if (!res.locals.eventattending) {
-		res.format({
-			json: function() {
-				res.send({
-					status: 403,
-					message: "Not attending"
-				})
-			}
-		})
-		
-		return;
-	}
+function listAttendeesAPI (req, res) {
 	
-	res.format({
-		json: function() {
-			var _attendees = res.locals.ev.attendees;
-			var attendees = [];
-			for (var i = 0; i < _attendees.length; i++) {
-				var _attendee = _attendees[i];
-				
-				var name = _attendee.user.getName();
-				var attendee = _attendee.toObject();
-				
-				attendee = {
-					user: {
-						_id: attendee.user._id,
-						avatar: attendee.user.avatar,
-						company: attendee.user.company,
-						position: attendee.user.position,
-						name: name
-					},
-					category: attendee.category,
-					admin: attendee.admin,
-					_id: attendee._id,
-					checkedOff: attendee.checkedOff
-				}
-				if (attendee.user.avatar.length == 0) {
-					attendee.user.avatar = "/images/default_speaker-purple.svg";
-				} else {
-					attendee.user.avatar += "-116x116.png";
-				}
-				
-				attendees.push(attendee);
-			}
+	console.log("List Attendee API".red);
+	
+	
+	console.log(req.params.id);
+	
+	// Found the Event currently requested by user.
+	models.Event.findOne({_id:req.params.id} , function(err, event) 
+	{
+		console.log("#######".red);
+		console.log(event);
+		console.log("#######".red);
+		
+		// Fetch Messages By One By One.
+		var query = {'_id': {$in: event.attendees}};
+		
+		models.Attendee.find(query)
+		.populate({path: 'user'})
+		.select('user registered isAttending ticket checkedOff')
+		.sort('-created')
+		.limit(10)
+		.exec(function(err, messages) {
 			
-			res.send({
-				attendees: attendees
-			})
-		}
+			
+			var options = {
+				path: 'attendee.user',
+				model: 'User'
+			};
+			
+			models.Attendee.populate(messages , options , function(err , usermessages)
+			{
+				console.log("####################".red);
+			console.log(usermessages);
+			console.log("####################".red);
+			
+			res.format({
+					json: function() {
+						res.send({
+							events: usermessages
+						})
+					}
+				});
+			}
+		);
+	})
 	});
 }
 
-function getAttendee (req, res, next) {
-	if (res.locals.eventadmin !== true) {
-		res.format({
-			json: function() {
-				res.send({
-					status: 404
-				})
-			}
-		});
-		return;
-	}
+function getAttendeeAPI (req, res, next) 
+{
+	console.log("Get Attendee API -----".red);
 	
-	var attID = req.params.attendee;
-	var ev = res.locals.ev;
+	console.log("Res.Locals.EventAdmin ".red + res.locals.eventadmin);
 	
-	try {
-		attID = mongoose.Types.ObjectId(attID)
-	} catch (e) {
-		res.format({
-			json: function() {
-				res.send({
-					status: 404
-				})
-			}
-		});
-		return;
-	}
+		// if (res.locals.eventadmin !== true) {
+		// res.format({
+			// json: function() {
+				// res.send({
+					// status: 404
+				// })
+			// }
+		// });
+		// return;
+	// }
+// 	
+	// var attID = req.params.attendee;
+	// var ev = res.locals.ev;
+// 	
+	// try {
+		// attID = mongoose.Types.ObjectId(attID)
+	// } catch (e) {
+		// res.format({
+			// json: function() {
+				// res.send({
+					// status: 404
+				// })
+			// }
+		// });
+		// return;
+	// }
+// 	
+	// for (var i = 0; i < ev.attendees.length; i++) {
+		// var attendee = ev.attendees[i];
+// 		
+		// if (typeof attendee.user === "object" && attendee._id.equals(attID)) {
+			// res.locals.requestedAttendee = attendee;
+			// next()
+			// return;
+		// }
+	// }
+// 	
+	// res.format({
+		// json: function() {
+			// res.send({
+				// status: 404
+			// })
+		// }
+	// });
 	
-	for (var i = 0; i < ev.attendees.length; i++) {
-		var attendee = ev.attendees[i];
-		
-		if (typeof attendee.user === "object" && attendee._id.equals(attID)) {
-			res.locals.requestedAttendee = attendee;
-			next()
-			return;
-		}
-	}
-	
-	res.format({
-		json: function() {
-			res.send({
-				status: 404
-			})
-		}
-	});
 }
 
-function registerAttendee (req, res) {
+function registerAttendeeAPI (req, res) {
+	
+	console.log("Register Attendee API".red );
+	
 	res.locals.requestedAttendee.checkedOff = true;
 	res.locals.requestedAttendee.save();
 	
@@ -132,7 +139,7 @@ function registerAttendee (req, res) {
 	});
 }
 
-function unregisterAttendee (req, res) {
+function unregisterAttendeeAPI (req, res) {
 	res.locals.requestedAttendee.checkedOff = false;
 	res.locals.requestedAttendee.save();
 	
@@ -145,38 +152,53 @@ function unregisterAttendee (req, res) {
 	});
 }
 
-function showAttendee (req, res) {
-	var attID = req.params.attendee;
-	var ev = res.locals.ev;
+function showAttendeeAPI (req, res) {
+	console.log("Show Attendee API".red);
 	
-	try {
-		attID = mongoose.Types.ObjectId(attID)
-	} catch (e) {
-		res.redirect('/event/'+ev._id)
-		return;
-	}
 	
-	var found = false;
-	var theAttendee;
-	for (var i = 0; i < ev.attendees.length; i++) {
-		var attendee = ev.attendees[i];
+	console.log("Event ID".red + req.params.id);
+	console.log("Attendee ID".red  + req.params.attendee);
+	
+	// Found the Event currently requested by user.
+	models.Event.findOne({_id:req.params.id} , function(err, event) 
+	{
+		console.log("#######".red);
+		console.log(event);
+		console.log("#######".red);
 		
-		if (typeof attendee.user === "object" && attendee._id.equals(attID)) {
-			found = true;
-			theAttendee = attendee;
-			break;
-		}
-	}
-	
-	if (!found) {
-		res.redirect('/event/'+ev._id)
-		return;
-	}
-	
-	res.locals.theUser = theAttendee.user;
-	res.locals.theAttendee = theAttendee;
-	res.locals.saved = false;
-	res.render('user', { title: theAttendee.user.getName() + " In " + res.locals.ev.name });
+		// Fetch Messages By One By One.
+		var query = {'_id': req.params.attendee};
+		
+		models.Attendee.find(query)
+		.populate({path: 'user'})
+		.select('user registered isAttending ticket checkedOff')
+		.sort('-created')
+		.limit(10)
+		.exec(function(err, messages) {
+			
+			
+			var options = {
+				path: 'attendee.user',
+				model: 'User'
+			};
+			
+			models.Attendee.populate(messages , options , function(err , usermessages)
+			{
+				console.log("####################".red);
+			console.log(usermessages);
+			console.log("####################".red);
+			
+			res.format({
+					json: function() {
+						res.send({
+							events: usermessages
+						})
+					}
+				});
+			}
+		);
+	})
+	});
 }
 
 function removeAttendee (req, res) {
