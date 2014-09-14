@@ -120,6 +120,8 @@ app.use(function(req, res, next) {
 		res.locals.token = req.csrfToken();
 	}
 	
+	res.locals.token = req.session._csrf;
+	
 	res.header("X-Powered-By", "EventMost")
 	
 	res.locals.is_https = req.protocol == "https" ? true : false;
