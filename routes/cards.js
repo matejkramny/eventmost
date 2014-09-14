@@ -4,7 +4,7 @@ var models = require('../models'),
 	config = require('../config'),
 	fs = require('fs'),
 	util = require('../util'),
-	gm = require('gm').subClass({ imageMagick: true });
+	gm = require('gm');
 
 exports.router = function (app) {
 	app.get('/cards', util.authorized, showCards)
@@ -45,7 +45,6 @@ function uploadCardImage(req, res){
 		var writeURL = '/businesscards/'+cardId+'.png';
 	
 		gm(path)
-			.options({imageMagick: true})
 			.crop(w, h, x, y)
 			.write(config.path + "/public" + writeURL, function(err){
 			if (err) throw err;
