@@ -14,6 +14,45 @@ exports.router = function (app) {
 		.get('/cards/send', util.authorized, sendCard)
 		.get('/cards/choosePrimary', choosePrimary)
 		.get('/cards/choosePrimary/:id', doChoosePrimary)
+		.get('/cards/upload', uploadCard)
+		.post('/cards/upload', util.authorized, uploadCardImage)
+}
+
+function uploadCard(req, res){
+	res.render('profile/uploadcard', { title: "Upload Card" });
+}
+
+function uploadCardImage(req, res){
+	
+	var x = req.body.x;
+	var y = req.body.y;
+	var w = req.body.w;
+	var h = req.body.h;
+	var path = req.files.card.path;
+	var userId = req.session.passport.user;
+	
+	/*var ext = path.split('.');
+	ext = ext[ext.length-1];*/
+
+
+	var card = new models.Card({
+		user : userId
+	});
+
+	card.save(function(err, doc){
+		cardId = doc._id;
+		var writeURL = '/businesscards/'+cardId+'.png';
+	
+		gm(path)
+			.options({imageMagick: true})
+			.crop(w, h, x, y)
+			.write(config.path + "/public" + writeURL, function(err){
+			if (err) throw err;
+		});
+
+		res.send('sucesss');
+
+	});
 }
 
 function showCards (req, res) {
