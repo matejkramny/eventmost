@@ -3,7 +3,8 @@ var models = require('../models'),
 	inbox = require('./inbox/index'),
 	config = require('../config'),
 	fs = require('fs'),
-	util = require('../util')
+	util = require('../util'),
+	gm = require('gm').subClass({ imageMagick: true });
 
 exports.router = function (app) {
 	app.get('/cards', util.authorized, showCards)
