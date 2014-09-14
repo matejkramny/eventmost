@@ -1,0 +1,73 @@
+extends ../responsive
+
+append css
+	link(rel="stylesheet", href="/css/jquery.ui.resizable.min.css?v=#{versionHash}")
+	link(rel="stylesheet", href="/css/cardcreator.css?v=#{versionHash}")
+
+append addonjs
+	script(src="/js/cardcreator.js" defer)
+	script(src="/js/crop/jquery.min.js", defer)
+	script(src="/js/crop/jquery.Jcrop.min.js", defer)
+	script(src="/js/crop/crop.js", defer)
+
+
+
+block content
+	//- card tool
+	
+	.clearfix
+	.container(ng-controller="businessCards")
+		//- navbar could be added to navbar.jade
+		.nspacer
+		.row
+			.col-md-4.col-sm-4.col-lg-4.col-xs-12.nspacer
+				.font2.fontol
+					a.link-purple.bold(href="#")
+						| New Business Card Photo
+			.col-md-8.col-sm-8.col-lg-8.col-xs-12.pull-right.pad-right-zero
+				
+					
+								
+			.clearfix.hide-mini3-except-smart
+
+		
+		.clearfix
+		.nspacer
+		.progress.hide
+			.progress-bar#uploadProgress(role="progressbar", aria-valuenow="", aria-valuemin="0", aria-valuemax="100", style="")
+		
+		.row
+			.col-md-6.col-lg-6.nspacer
+				
+				form.form-horizontal
+					
+					.form-group(ng-hide="hasTemplateBackground")
+						label.col-lg-5.col-md-5.col-xs-5.font-e.nspacer(for="bgImage") Upload an Image
+						.col-lg-7.col-md-7.col-xs-7.nspacer-small
+							input#bgImage.input-ashen-rounded(type="file", card-image-upload, upload-target="background", style="font-size:1px; height:34px; display:none;cursor:pointer;")
+							a.btn.btn-primary.btn-sm.font-s(ng-hide="hasBackgroundImage", id="selectfile", onclick="$('#cardimage').click()") Select a file
+
+						button.btn.btn-danger(style="display:none", id="removeUploaded", onclick="removeUploadedImage()") Remove Uploaded Image
+						&nbsp;&nbsp;&nbsp;
+						a.btn.btn-primary.btn-sm.font-s(onclick="saveCard()", style="display:none", id="savecard") Save
+						input(type="file", id="cardimage", style="display:none", accept="image/*", onchange="showImage()")
+						input(type="hidden", id="imgPath", value="")
+						input(type="hidden", id="x", value="")
+						input(type="hidden", id="y", value="")
+						input(type="hidden", id="w", value="")
+						input(type="hidden", id="h", value="")
+						
+						
+						
+						div()
+							img(id="uploadedimage", style="height:100%; width:200%")
+
+
+
+				.nspacer
+				
+				.clearfix
+			
+	
+		include ../modals/businesscardLibrary
+		
