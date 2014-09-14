@@ -117,10 +117,10 @@ app.use(passport.session());
 app.use(function(req, res, next) {
 	// request middleware
 	if (config.mode != 'test') {
-		res.locals.token = req.csrfToken();
+		//res.locals.token = req.csrfToken();
 	}
 	
-	res.locals.token = req.session._csrf;
+	res.locals.token = req.csrfToken();
 	
 	res.header("X-Powered-By", "EventMost")
 	
