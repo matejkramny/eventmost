@@ -129,8 +129,12 @@ append content
 			.clearfix
 			.center
 				img.small-avatar(src= primaryCard == null ? "/images/default-card.svg" : "/businesscards/"+primaryCard._id+".png", class="nspacer-small img-responsive", style="margin:5px auto; max-height:100px;")
-				a.link-purple.font-thin2.resfont(href="/cards")
-					| Business Card Library
+				if(primaryCard == null)
+					a.link-purple.font-thin2.resfont(href="/cards")
+						| Add Business Card
+				else
+					a.link-purple.font-thin2.resfont(href="/cards")
+						| My Business Card
 			.pull-left.pad-left-ten.nspacer-small
 				img(src="/images/i.svg", alt="", height="16px" width="16px;")
 			.pull-left.pad-left-ten.font-s.nspacer-small.font-thin2
