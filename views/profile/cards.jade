@@ -8,10 +8,7 @@ block content
 			.col-sm-3.col-md-3.col-lg-6
 				br.hidden-xs
 				.btn-group.nspacer.pull-right
-					a.btn.btn-info(href="/cards/choosePrimary") Choose a Primary Business Card
-					a.btn.btn-primary(href="/card/new")
-						i.fa.fa-plus.fa-fw
-						|  New Business card
+					
 				br.visible-xs
 				br.visible-xs
 		
@@ -22,9 +19,24 @@ block content
 					
 					- var card = locals.cards[index];
 					- if (!card) continue;
+
 					
 					img.img-responsive.col-sm-4.col-md-4.col-lg-4(src="/businesscards/"+card._id+".png", style= card.primary ? "border-right:1px black solid; border-left:1px black solid;" : null)
 			br.hidden-xs
 		if (locals.cards.length == 0)
-			h3.text-center No business cards created yet
-			p.text-center.lead Create one using button in top right
+			h3.text-center No Business Cards Added
+			p.text-center.lead Create one from scratch or upload your own
+
+		br
+		br
+		center
+			
+			if (locals.cards.length != 0)
+				a.btn.btn-info(href="/cards/choosePrimary") Choose Primary
+				| &nbsp;
+			a.btn.btn-primary(href="/card/new")
+				i.fa.fa-plus.fa-fw
+				|  Create Business Card
+
+			| &nbsp;
+			a.btn.btn-info(href="/cards/upload") Upload Business Card Photo
