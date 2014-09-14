@@ -16,7 +16,7 @@ exports.router = function (app) {
 		.get('/cards/choosePrimary', choosePrimary)
 		.get('/cards/choosePrimary/:id', doChoosePrimary)
 		.get('/cards/upload', uploadCard)
-		.post('/cards/upload', util.authorized, uploadCardImage)
+		.post('/cards/upload', uploadCardImage)
 }
 
 function uploadCard(req, res){
