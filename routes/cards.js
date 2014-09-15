@@ -44,10 +44,8 @@ function uploadCardImage(req, res){
 		cardId = doc._id;
 		var writeURL = '/businesscards/'+cardId+'.png';
 	
-		gm(path)
-			.crop(w, h, x, y)
-			.write(config.path + "/public" + writeURL, function(err){
-			if (err) throw err;
+		gm(path).crop(w, h, x, y).write(config.path + "/public" + writeURL, function(err){
+			//if (err) throw err;
 		});
 
 		res.send('sucesss');
