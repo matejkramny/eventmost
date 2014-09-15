@@ -116,12 +116,6 @@ app.use(passport.session());
 
 // Custom middleware
 
-app.use(express.csrf());
-app.use(function(req, res, next){
-    res.locals.token = req.csrfToken();
-    next();
-});
-
 app.use(function(req, res, next) {
 	// request middleware
 	if (config.mode != 'test') {
