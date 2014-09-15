@@ -107,20 +107,27 @@ app.use(express.session({ // Session store
 	}
 }));
 if (config.mode != 'test') {
-	app.use(express.csrf()); // csrf protection
+	//app.use(express.csrf()); // csrf protection
 }
-app.use(express.csrf());
+
 
 app.use(passport.initialize());
 app.use(passport.session());
 
 // Custom middleware
+
+app.use(express.csrf());
+app.use(function(req, res, next){
+    res.locals.token = req.csrfToken();
+    next();
+});
+
 app.use(function(req, res, next) {
 	// request middleware
 	if (config.mode != 'test') {
-		res.locals.token = req.csrfToken();
+		//res.locals.token = req.csrfToken();
 	}
-	res.locals.csrftoken = req.csrfToken();
+	
 	res.header("X-Powered-By", "EventMost")
 	
 	res.locals.is_https = req.protocol == "https" ? true : false;
