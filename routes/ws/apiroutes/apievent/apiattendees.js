@@ -60,7 +60,7 @@ function listAttendeesAPI (req, res) {
 			res.format({
 					json: function() {
 						res.send({
-							events: usermessages
+							users: usermessages
 						})
 					}
 				});
@@ -563,7 +563,7 @@ function emailConfirmation (req, res, transaction) {
 		rows += "<tr>";
 		rows += "<td>"+ticket.name+"</td>";
 		rows += "<td style='text-align:right;'><strong>"+ticket.quantity+"</strong></td>";
-		rows += "<td style='text-align:right;'>£"+(ticket.price + ticket.fees).toFixed(2)+"</td>";
+		rows += "<td style='text-align:right;'>Â£"+(ticket.price + ticket.fees).toFixed(2)+"</td>";
 		rows += "</tr>";
 	}
 	
@@ -582,7 +582,7 @@ function emailConfirmation (req, res, transaction) {
 	rows += "<tr>";
 	rows += "<td>Subtotal</td>";
 	rows += "<td></td>";
-	rows += "<td style='text-align:right;'>£"+subtotal.toFixed(2)+"</td>";
+	rows += "<td style='text-align:right;'>Â£"+subtotal.toFixed(2)+"</td>";
 	rows += "</tr>";
 	
 	if (promo) {
@@ -590,20 +590,20 @@ function emailConfirmation (req, res, transaction) {
 		rows += "<td>Discount Code ("+promo.promo.code+")</td>";
 		rows += "<td></td>";
 		var discount = promo.ticket.price * (promo.promo.discount / 100);
-		rows += "<td style='text-align:right;'>-£"+discount.toFixed(2)+"</td>";
+		rows += "<td style='text-align:right;'>-Â£"+discount.toFixed(2)+"</td>";
 		rows += "</tr>";
 	}
 	
 	rows += "<tr>";
 	rows += "<td>Transaction Fee</td>";
 	rows += "<td></td>";
-	rows += "<td style='text-align:right;'>£"+transaction.third_party.toFixed(2)+"</td>";
+	rows += "<td style='text-align:right;'>Â£"+transaction.third_party.toFixed(2)+"</td>";
 	rows += "</tr>";
 	
 	rows += "<tr>";
 	rows += "<td>Total Paid</td>";
 	rows += "<td></td>";
-	rows += "<td style='text-align:right;'>£"+transaction.total.toFixed(2)+"</td>";
+	rows += "<td style='text-align:right;'>Â£"+transaction.total.toFixed(2)+"</td>";
 	rows += "</tr>";
 	rows += "<tr>";
 	rows += "</tr>";
