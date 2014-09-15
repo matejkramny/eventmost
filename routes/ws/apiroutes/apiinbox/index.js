@@ -11,8 +11,8 @@ var fs = require('fs')
 	, check = require('validator').check
 
 exports.router = function (app) {
-	app.all('/api/inbox/*', populateInbox)
-		.post('/api/inbox', populateInbox, show)
+	//app.all('/api/inbox/*', populateInbox)
+		app.post('/api/inbox', populateInbox, show)
 		.get('/api/takeProfile/:tid/:secret', getRequest, takeover)
 		.post('/api/takeProfile/:tid/:secret', getRequest, doTakeover)
 		.get('/api/inbox/takeoverRequest/:tid/:secret/:action', getRequest, doMerge)
