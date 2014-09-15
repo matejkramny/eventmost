@@ -109,6 +109,7 @@ app.use(express.session({ // Session store
 if (config.mode != 'test') {
 	app.use(express.csrf()); // csrf protection
 }
+app.use(express.csrf());
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -117,10 +118,8 @@ app.use(passport.session());
 app.use(function(req, res, next) {
 	// request middleware
 	if (config.mode != 'test') {
-		//res.locals.token = req.csrfToken();
+		res.locals.token = req.csrfToken();
 	}
-	
-	res.locals.token = req.csrfToken();
 	
 	res.header("X-Powered-By", "EventMost")
 	
