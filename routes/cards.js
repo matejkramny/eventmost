@@ -32,6 +32,7 @@ function uploadCardImage(req, res){
 	var path = req.files.card.path;
 	var userId = req.session.passport.user;
 	
+	console.log(x+path+userId);
 	/*var ext = path.split('.');
 	ext = ext[ext.length-1];*/
 
@@ -45,6 +46,7 @@ function uploadCardImage(req, res){
 		var writeURL = '/businesscards/'+cardId+'.png';
 	
 		gm(path).crop(w, h, x, y).write(config.path + "/public" + writeURL, function(err){
+			console.log("writing new image");
 			//if (err) throw err;
 		});
 
