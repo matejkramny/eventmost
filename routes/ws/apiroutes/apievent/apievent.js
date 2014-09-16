@@ -29,7 +29,7 @@ exports.router = function (app) {
 		
 		.get('/api/event/:id/tickets', getEvent, viewTickets)*/
 		app.post('/api/event/:id/post', postMessageAPI)
-		.get('/api/event/:id', getEventFromID)
+		//.get('/api/event/:id', getEventFromID)
 		/*
 		.get('/api/event/:id/registrationpage', viewRegistrationPage)*/
 	
