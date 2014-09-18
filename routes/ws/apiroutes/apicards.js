@@ -5,16 +5,16 @@ var models = require('../../../models'),
 	fs = require('fs'),
 	util = require('../../../util')
 
-exports.router = function (app) {
-	app.get('/cards', util.authorized, showCards)
-		.all('/api/card/*', util.authorized)
-		.get('/api/card/new', newCard)
-		.get('/api/card/:id', getCard)
-		.post('/api/card/new', doNewCard)
-		.get('/api/cards/send', util.authorized, sendCard)
-		.get('/api/cards/choosePrimary', choosePrimary)
-		.get('/api/cards/choosePrimary/:id', doChoosePrimary)
-}
+// exports.router = function (app) {
+	// app.get('/cards', util.authorized, showCards)
+		// .all('/api/card/*', util.authorized)
+		// .get('/api/card/new', newCard)
+		// .get('/api/card/:id', getCard)
+		// .post('/api/card/new', doNewCard)
+		// .get('/api/cards/send', util.authorized, sendCard)
+		// .get('/api/cards/choosePrimary', choosePrimary)
+		// .get('/api/cards/choosePrimary/:id', doChoosePrimary)
+// }
 
 function showCards (req, res) {
 	models.Card.find({ user: req.user._id }, { _id: 1, primary: 1 }).sort('-created').exec(function(err, cards) {

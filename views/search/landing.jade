@@ -6,7 +6,8 @@ append addonjs
 	script(src="/js/slidenav2.js?v={versionHash}" defer)
 	script(src="/js/vendor/jquery.dotdotdot.js?v={versionHash}" defer)
 	script(src="/js/dot-itme-text.js?v={versionHash}" defer)
-	script(src="/js/angular-landingEvents.js?v=#{versionHash}" defer)
+	if (gotEvents != true)
+		script(src="/js/angular-landingEvents.js?v=#{versionHash}" defer)
 
 append contentemp
 	include page

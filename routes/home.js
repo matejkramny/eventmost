@@ -3,24 +3,37 @@ var moment = require('moment')
 
 exports.display = function (req, res) {
 	var skip = req.query.skip || 0;
-	
-	models.Attendee.find({ 'user': req.user._id }, '_id', function(err, attendees) {
+	var firstDay = new Date();
+	var nextWeek = new Date(firstDay.getTime() + 7 * 24 * 60 * 60 * 1000);
+
+	var query = {
 		
-		var query = {
-			'attendees': {
-				$in: attendees
-			}
+		deleted: false,
+		start: {
+			$gte: new Date()
+		},
+		end: {
+			$lte: nextWeek
 		}
-		models.Event.find(query)
-			.sort('-created')
-			.limit(5)
-			.skip(skip)
-			.populate('avatar')
-			.select('name start end address venue_name avatar source')
-			.exec(function(err, evs) {
-			if (err) throw err;
+		
+	};
+	
+	models.Event.find(query).limit(100).skip(skip).populate('avatar').sort('start').exec(function(err, evs) {
+
+		//Cleaning up the description...
+
+		evs.forEach(function(entry) {
 			
-			models.Event.find(query).count(function(err, total) {
+			if((entry.description) && entry.description != ''){
+
+				//console.log(entry.description);
+				entry.description = entry.description.replace(/(<([^>]+)>)/ig,"");
+				entry.description = entry.description.substr(0, 200)+"...";
+
+			}
+		});
+		
+		models.Event.find(query).count(function(err, total) {
 				if (err) throw err;
 			
 				models.Card.findOne({ user: req.user._id, primary: true }, function(err, primaryCard) {
@@ -35,7 +48,8 @@ exports.display = function (req, res) {
 								myevents: evs || [],
 								myeventsTotal: total,
 								myeventsSkip: skip,
-								moment: moment
+								moment: moment,
+								totalnearEvents: 5
 							});
 						},
 						json: function() {
@@ -49,7 +63,5 @@ exports.display = function (req, res) {
 					});
 				})
 			})
-		});
-		
 	})
 }

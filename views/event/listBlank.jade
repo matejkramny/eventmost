@@ -3,6 +3,7 @@ include inc/item
 for event in events
 	mixin eventItem(event)
 
+//-
 if (events.length > 0)
 	- var pages = Math.ceil(eventsTotal / 10)
 	- var curpage = Math.ceil(eventsSkip / 10)

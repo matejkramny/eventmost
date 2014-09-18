@@ -84,7 +84,10 @@ append content
 	.col-xs-4.pad-right-zero.pad-left-zero.hide-all2.nspacer
 		a.link-green2(href="/search/?q=&arrange=nearby" alt="Events Nearby")
 			.font-bigs.font-thin.center.home-big
-				| Events nearby
+
+				| Events nearby 
+				#totalNearEvents
+
 				img.home-big3(src="/images/location-icon.svg", class="img-responsive", style="width:80%; margin:auto;")
 	//- My Events
 	.col-xs-4.bg-yellow.pad-right-zero.pad-left-zero.hide-all2.nspacer(style='height:242px;')
@@ -126,8 +129,12 @@ append content
 			.clearfix
 			.center
 				img.small-avatar(src= primaryCard == null ? "/images/default-card.svg" : "/businesscards/"+primaryCard._id+".png", class="nspacer-small img-responsive", style="margin:5px auto; max-height:100px;")
-				a.link-purple.font-thin2.resfont(href="/cards")
-					| Business Card Library
+				if(primaryCard == null)
+					a.link-purple.font-thin2.resfont(href="/cards")
+						| Add Business Card
+				else
+					a.link-purple.font-thin2.resfont(href="/cards")
+						| My Business Card
 			.pull-left.pad-left-ten.nspacer-small
 				img(src="/images/i.svg", alt="", height="16px" width="16px;")
 			.pull-left.pad-left-ten.font-s.nspacer-small.font-thin2
@@ -181,14 +188,16 @@ append content
 	.exc-spac
 	for event in myevents
 		mixin eventItem(event)
+
+
 	if myevents.length == 0
 		.nspacer.col-md-12.col-xs-12.col-lg-12.col-sm-12
 			p.lead.text-center No events found :(.
 				br
 				a(href="/event/add") Create an event
 	else
-		- var pages = Math.ceil(myeventsTotal / 5)
-		- var curpage = Math.ceil(myeventsSkip / 5)
+		- var pages = Math.ceil(myeventsTotal / 100)
+		- var curpage = Math.ceil(myeventsSkip / 100)
 		.nspacer
 			.pull-right(style='height:35px;')
 				ul.pagination
@@ -196,92 +205,10 @@ append content
 						a(href='/') «
 					- for (var i = 0; i < pages; i++)
 						li(class= curpage == i ? "active" : null)
-							a(href='/?skip='+i*5)= i+1
+							a(href='/?skip='+i*100)= i+1
 					
 					li
-						a(href='/?skip='+((pages*5)-5)) »
+						a(href='/?skip='+((pages*100)-100)) »
 		.clearfix
-
-	//- My Events
-	.nspacer.col-md-12.col-xs-12.font-bigs.font-thin.hide-mini
-		.bg-ashen(style='width:101.4%;')
-			.color-green.pad-left-ten
-				| My Events
-	for event in myevents
-		mixin eventItem(event)
-	if myevents.length == 0
-		.nspacer.col-md-12.col-xs-12.col-lg-12.col-sm-12
-			p.lead.text-center You have no events.
-				br
-				a(href="/event/add") Create an event
-	else
-		- var pages = Math.ceil(myeventsTotal / 5)
-		- var curpage = Math.ceil(myeventsSkip / 5)
-		.nspacer
-			.pull-right(style='height:35px;')
-				ul.pagination
-					li
-						a(href='/') «
-					- for (var i = 0; i < pages; i++)
-						li(class= curpage == i ? "active" : null)
-							a(href='/?skip='+i*5)= i+1
-					
-					li
-						a(href='/?skip='+((pages*5)-5)) »
-		.clearfix
-
-
-	//- nearby
-	.nspacer.col-md-12.col-xs-12.font-bigs.font-thin.hide-mini
-		.bg-ashen(style='width:101.4%;')
-			.color-green.pad-left-ten
-				span.pull-left Events Nearby
-				.pull-right.mfresponsive2
-					ul.nav.navbar-nav.nav-grey
-						li.dropdown
-							a.dropdown-toggle.dropdown-toggle-grey(href='#', data-toggle='dropdown')
-								| Arrange by
-								b.caret
-							ul.dropdown-menu.dropdown-menu-grey.pull-right
-								li
-									a(href='/') Most recent to latest
-								li
-									a(href='/') Latest to most recent
-								li
-									a(href='/') Events name A-Z
-								li
-									a(href='/') My planned events
-	.clearfix.hide-mini
-
-
-	.col-xs-12.hide-all2
-		.bg-ashen.color-green.font-ah.pad-left-ten(style="min-height:27px;")
-			| Events Nearby
-			.pull-right
-				ul.nav.navbar-nav.nav-grey(style="margin-right:-7px; margin-top:-5px;")
-					li.dropdown
-						a.dropdown-toggle.dropdown-toggle-grey(href='#', data-toggle='dropdown')
-							| Arrange by
-							b.caret
-						ul.dropdown-menu.dropdown-menu-grey.pull-right
-							li
-								a(href='/') Most recent to latest
-							li
-								a(href='/') Latest to most recent
-							li
-								a(href='/') Events name A-Z
-							li
-								a(href='/') My planned events
-	.clearfix.hide-all2
-	
-	//- Events nearby
-	#nearbyEventsPlaceholder
-		p.text-center.lead
-	
-	.center.hide2
-			button#tryAgainNearbyEvents.btn.btn-warning.font.big-pad-left.big-pad-right(type='submit', href="#", style="font-weight:300;")
-				| Allow EventMost to GeoLocate my current position
-	
-	.clearfix
 	
 	include modals/homemodals

@@ -6,74 +6,113 @@ var fs = require('fs')
 	, inbox = require('./index')
 
 exports.router = function (app) {
-	app.post('/api/inbox/messages', showMessages)
-		.post('/api/inbox/messages/new', doNewMessage)
-		.get('/api/inbox/message/:id', getMessage, showMessage)
-		.post('/api/inbox/message/:id', getMessage, postMessage)
+	app.post('/api/inbox/messages', showMessagesAPI)
+		.post('/api/inbox/messages/:id/new', doNewMessageAPI)
+		.post('/api/inbox/topic/:id' , getMessageAPI)
+		.post('/api/inbox/topics/new', newTopic)
+		//.get('/api/inbox/message/:id', getMessageAPI, showMessageAPI)
+		//.post('/api/inbox/message/:id', getMessageAPI, postMessageAPI)
 }
 
-function getMessage (req, res, next) {
+function getMessageAPI (req, res) {
 	var id = req.params.id;
+	console.log(req.params.id);
 	
-	try {
-		id = mongoose.Types.ObjectId(id);
-	} catch (e) {
-		res.send({error: "Topic not found"});
+	var query = {topic: req.params.id};
+	
+	models.Message.find(query)
+	.populate({ path:"sentBy", select:'name'})
+	.select('message timeSent sentBy')
+	.sort('timeSent')
+	.exec(function(err, topicmessages) {
+	 console.log("++ EVS".red + topicmessages + "EVS -- ".red);
+	 
+	 		 res.format({
+					json: function() {
+						res.send({
+							messages: topicmessages
+						})
+					}
+				 });
+	});
+		
+}
+
+function newTopic (req , res)
+{
+	console.log("new topic".red);
+	
+	console.log(req.body);
+	if(req.body._id == req.body._to)
+	{
+		res.status(404).send('To and From are same.');
 		return;
 	}
 	
-	var message = null;
-	for (var i = 0; i < res.locals.messages.length; i++) {
-		var msg = res.locals.messages[i].topic;
-		if (msg._id.equals(id)) {
-			message = msg;
-			break;
-		}
-	}
+	// Find if a topic exists between two.
+	var query = { users: {$all : [req.body._id , req.body._to]}};
 	
-	if (!message) {
-		res.send({error: "no message found"})
-		return;
-	}
-	
-	
-	models.Message.find({
-		topic: message._id
-	}).populate('sentBy')
-	  .sort('-timeSent').exec(function(err, messages) {
-		if (err) throw err;
-		
-		res.locals.message = message;
-		res.locals.messages = messages;
-		
-		next()
-	})
+	// Fetch My Topics.
+	models.Topic.find(query)
+	.select('users lastUpdated')
+	.sort('lastUpdated')
+	.exec(function(err, topics) {
+	 	console.log("++ EVS".red + topics + "EVS -- ".red);
+	 
+	 	if(topics.length > 0) // Topic is already created.
+	 	{
+	 		res.status(200).send('Topic already created');
+			return;
+	 	}
+	 	else // No topics found
+	 	{
+	 		var newtopic = new models.Topic({
+			lastUpdated: Date.now(),
+			users: [req.body._id, req.body._to]
+			});
+			
+			
+			newtopic.save(function(err) {
+			res.format({
+				json: function() {
+					res.send({
+						sent: true
+					});
+					}
+				});
+				});
+	 	}		
+	});
 }
 
-function showMessage (req, res) {
-	var otherUser = null;
-	for (var i = 0; i < res.locals.message.users.length; i++) {
-		if (!req.user._id.equals(res.locals.message.users[i]._id)) {
-			otherUser = res.locals.message.users[i];
-			break;
-		}
-	}
+function showMessageAPI (req, res) {
 	
-	var name = "Private Message"
-	if (otherUser)
-		name = "PM to "+otherUser.getName();
-		
-	res.format({
-		json: function() {
-			res.send({
-				message: res.locals.message,
-				messages: res.locals.messages
-			})
-		}
-	})
+	
+	
+	// var otherUser = null;
+	// for (var i = 0; i < res.locals.message.users.length; i++) {
+		// if (!req.user._id.equals(res.locals.message.users[i]._id)) {
+			// otherUser = res.locals.message.users[i];
+			// break;
+		// }
+	// }
+// 	
+	// var name = "Private Message"
+	// if (otherUser)
+		// name = "PM to "+otherUser.getName();
+// 		
+	// res.format({
+		// json: function() {
+			// res.send({
+				// message: res.locals.message,
+				// messages: res.locals.messages
+			// })
+		// }
+	// })
 }
 
-function postMessage (req, res) {
+function postMessageAPI (req, res) {
+	
 	var id = req.params.id;
 	var text = req.body.message;
 	
@@ -185,72 +224,60 @@ function postMessage (req, res) {
 	}
 }
 
-function doNewMessage (req, res) {
-	var to;
-	if (req.body.to != null) {
-		try {
-			to = mongoose.Types.ObjectId(req.body.to);
-		} catch (e) {
-			to = null;
-		}
-	}
+function doNewMessageAPI (req, res) {
+	console.log("do New Message API ######".red);
+	console.log(req.body);
+	console.log(req.params.id);
+	console.log("######".red);
 	
-	// check if can make messages
-	if (req.session.loggedin_as_user_locals != null && req.session.loggedin_as_user_locals.inbox_send_disabled === true) {
-		res.format({
-			json: function() {
-				res.send({
-					status: 404,
-					message: "Disabled"
-				})
-			}
+	
+	var msg = new models.Message({
+			topic: req.params.id,
+			message: req.body._message,
+			read: false,
+			timeSent: Date.now(),
+			sentBy: req.body._id
 		})
-		return;
-	}
 	
-	models.User.findOne({ _id: to }, function(err, user) {
-		console.log("to: "+to)
-		if (!user) {
+	
+	msg.save(function(err) {
 			res.format({
 				json: function() {
-					res.send(400, {
-						message: 'No Such User'
-					});
+					res.send({
+						sent: true
+					})
 				}
 			});
-			
-			return;
-		}
-		
-		var topic = new models.Topic({
-			lastUpdated: Date.now(),
-			users: [req.user._id, user._id]
-		})
-		topic.save();
-		res.format({
-			json: function() {
-				res.send({
-					status: 200,
-					message: {
-						lastMessage: '',
-						topic: {
-							users: [req.user, user],
-							lastUpdated: topic.lastUpdated,
-							_id: topic._id
-						}
-					}
-				})
-			}
-		})
 	});
 }
 
-function showMessages (req, res) {
-	res.format({
-		json: function() {
-			res.send({
-				messages: res.locals.messages
-			})
-		}
-	})
+function showMessagesAPI (req, res) {
+	
+	console.log("###### Show Messages API ----3".red);
+	
+	console.log(req.body._id);
+	
+	var currentuser = req.body._id;
+	
+	console.log("#############################".red);
+		
+	var query = { users: {$in : [currentuser]}};
+	
+	// Fetch My Topics.
+	models.Topic.find(query)
+	.populate({ path:"users", match:{_id : { $ne:currentuser} }})
+	.select('users lastUpdated')
+	.sort('lastUpdated')
+	.exec(function(err, topics) {
+	 console.log("++ EVS".red + topics + "EVS -- ".red);
+	 
+	 		res.format({
+					json: function() {
+						res.send({
+							topics: topics
+						})
+					}
+				});
+	 
+	});
 }

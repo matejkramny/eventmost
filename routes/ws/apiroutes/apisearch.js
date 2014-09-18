@@ -59,7 +59,7 @@ function searchEvents(req, res, q)
 	models.Event.find(query).limit(10).populate('avatar').sort('start').exec(function(err, evs) {
 		
 		console.log("#############".red);
-		console.log(evs);
+		//console.log(evs);
 		console.log("#############".red);
 		
 		if (err) throw err; 
@@ -83,7 +83,9 @@ function searchEvents(req, res, q)
 function searchPeople(req, res, q) {
 	
 	console.log("Searching People  = ".red );
-	
+	var skip = 0;
+	console.log("req.query.arrange".red + req.query.arrange );
+
 	var split = q.split(' ');
 	var query = {
 		isFeedbackProfile: false,
@@ -97,25 +99,24 @@ function searchPeople(req, res, q) {
 		query.surname = new RegExp(split[1], 'i');
 	}
 	
-	models.User.find(query).select('name surname desc avatar company position').sort("-name-surname").exec(function(err, people) {
-		if (err) throw err;
+	models.User.find(query).select('name surname desc avatar company position')
+	.sort("-name-surname")
+	.exec(function(err, people) {
 		
-		res.locals.search = {
-			query: q,
-			results: people,
-			type: 'people'
-		}
+		console.log("#############".red);
+		console.log(people);
+		console.log("#############".red);
 		
-		if (req.user) {
-			res.format({
-				json: function() {
-					res.send({
-						results: people
-					})
-				}
-			})
-		} else {
-//			res.render('login')
+		if (err) throw err; 
+		if (people) {
+			
+				res.format({
+					json: function() {
+						res.send({
+							users: people
+						})
+					}
+				});
 		}
-	});
+	})
 }
