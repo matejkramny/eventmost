@@ -228,7 +228,9 @@ function viewEvent (req, res) {
 			cb(!res.locals.eventadmin && attendee.hidden);
 		}, function(attendees) {
 			res.locals.attendees = attendees;
-			
+			res.locals.eventStartFormatted = res.locals.ev.getStartDateFormatted();
+			//console.log(res.locals.eventStartFormatted);
+			res.locals.eventEndFormatted = res.locals.ev.getEndDateFormatted();
 			res.render('event/homepage', { title: res.locals.ev.name });
 		})
 	} else {
@@ -307,8 +309,6 @@ function viewRegistrationPage (req, res) {
 			//res.locals.eventEndFormatted = res.locals.ev.getEndDateCombinedFormatted();
 			res.locals.eventEndFormatted = res.locals.ev.getEndDateFormatted();
 			
-			//console.log(res.locals.eventStartFormatted);
-
 			if (!res.locals.eventattending)
 				res.locals.hideArrow = true;
 			res.render('event/landingpage', { title: res.locals.ev.name, edit: req.params.edit });

@@ -17,6 +17,7 @@ function registerEventComments (data) {
 	var sock = this;
 	var user = sock.handshake.user;
 	var ev = data.event;
+
 	if (!ev) {
 		return;
 	}
@@ -34,7 +35,11 @@ function registerEventComments (data) {
 		var attending = false;
 		var isAdmin = false;
 		var theAttendee;
+
+		if (!user) { return; }
 		
+		//console.log(user);
+
 		for (var i = 0; i < ev.attendees.length; i++) {
 			var attendee = ev.attendees[i];
 			

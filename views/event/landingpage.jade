@@ -3,16 +3,6 @@ extends ../responsive
 include inc/navbar
 
 append addonjs
-	//script(src="/js/eventLandingPage.js?v=#{versionHash}" defer)
-	//script(src="/js/drops.js?v=#{versionHash}" defer)
-	//include inc/mapjs
-	//script(src="/js/vendor/moment.min.js" defer)
-	//script(src="/js/event_landingpage.js?v=#{versionHash}" defer)
-	//script(src="https://js.stripe.com/v2/" async)
-	//script(src="/js/adminPanel.js?v=#{versionHash}", defer)
-	//script(src="/js/datepicker.js?v=#{versionHash}", defer)
-	//script(src="/js/vendor/tiny.editor.packed.js", defer)
-
 	script(src="/js/crop/jquery.min.js", defer)
 	script(src="/js/vendor/angular.min.js", defer)
 	//include inc/mapjs
@@ -72,9 +62,9 @@ block content
 			.font-s(style="word-break:break-all; ")
 				- if (ev.address || ev.venue_name)
 					strong.pull-left.break(style="word-wrap:break-word; word-break: break-word; white-space: -moz-pre-wrap; white-space: pre-wrap;")
-					#venuname(style="word-wrap:break-word; word-break: break-word;")
+					#venuname(style="word-wrap:break-word; word-break: break-word;font-weight:bold;")
 						= ev.venue_name
-					#eventaddr.pull-left(style="word-wrap:break-word; word-break: break-word;")
+					#eventaddr.pull-left(style="word-wrap:break-word; word-break: break-word;font-weight:bold;")
 						= ev.address
 					- if (!ev.address && !ev.venue_name)
 						| Event does not have a location
@@ -87,6 +77,7 @@ block content
 				img(src="/images/organizer.svg" alt=""  )
 			.font16.inline.color-green.semi-bold
 				| EVENT ORGANIZER
+			.clearfix
 			.font16.inline(style="word-break:break-all; ")
 				for attendee in locals.ev.attendees
 					if (attendee.admin && attendee.isAttending)

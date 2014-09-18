@@ -10,8 +10,6 @@ html
 		title #{title}
 		link(href="/favicon.ico" type="image/x-icon" rel="icon")
 		link(href="/favicon.ico" type="image/x-icon" rel="shortcut icon")
-
-
 		
 		//- all css goes here
 		block css
@@ -19,8 +17,8 @@ html
 			link(rel="stylesheet" href="/css/bootstrap-eventmost.css?v=#{versionHash}")
 			link(rel="stylesheet" href="/css/crop/jquery.Jcrop.min.css?v=#{versionHash}")
 
-
-	body(ng-app="eventMost" style="background: url("+ev.backgroundImage.url+") center fixed; background-size: 100%;")
+	<!--body(ng-app="eventMost" style="background: url("+ev.backgroundImage.url+") center fixed; background-size: 100%;")-->
+	body(ng-app="eventMost" style="background: url("+ev.backgroundImage.url.indexOf('default-background2.png')>=0?ev.backgroundImage.url:''+") center fixed; background-size: 100%;")
 		//- main container
 		block container
 		header
