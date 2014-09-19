@@ -13,16 +13,10 @@ exports.router = function (app) {
 }
 
 function getCommentsAPI (req, res) {
-	console.log("Get Comments ".red);
-	console.log(req.params.id);
 	
 	// Found the Event currently requested by user.
 	models.Event.findOne({_id:req.params.id} , function(err, event) 
 	{
-		console.log("#######".red);
-		console.log(event);
-		console.log("#######".red);
-		
 		// Fetch Messages By One By One.
 		var query = {'_id': {$in: event.messages}};
 		
@@ -30,10 +24,8 @@ function getCommentsAPI (req, res) {
 		.populate({path: 'attendee'})
 		.select('attendee posted message spam isResponse likes')
 		.sort('-created')
-		.limit(10)
+		.limit(25)
 		.exec(function(err, messages) {
-			
-			
 			var options = {
 				path: 'attendee.user',
 				model: 'User'
@@ -41,11 +33,7 @@ function getCommentsAPI (req, res) {
 			
 			models.EventMessage.populate(messages , options , function(err , usermessages)
 			{
-				console.log("####################".red);
-			console.log(usermessages);
-			console.log("####################".red);
-			
-			res.format({
+				res.format({
 					json: function() {
 						res.send({
 							events: usermessages
@@ -118,10 +106,7 @@ function likeCommentAPI (req, res) {
 function postCommentAPICustom(req, res)
 {
 	console.log("Post Comments ".red);
-	console.log(req.body);
-	
 	var user_id = req.body._id;
-	console.log("User ID ".red + user_id);
 	
 	models.Event.findOne({_id : req.params.id})
 	.populate(
@@ -133,7 +118,7 @@ function postCommentAPICustom(req, res)
 	.exec(function(err, event) 
 	{	
 		// Found the Event. Now Found the Attendee Against the User ID.
-		console.log(event);
+		console.log("Event ".red +event);
 	// only attendee can comment
 	if(event.attendees.length > 0)
 	{
