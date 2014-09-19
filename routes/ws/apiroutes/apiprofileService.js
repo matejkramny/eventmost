@@ -12,32 +12,33 @@ exports.router = function (app) {
 		//app.get('/api/test',function(req,res){res.send({token:"Test Token"})})
 		app.post('/api/profile', util.authorized, profileAPI)
 		.post('/api/profile/edit', util.authorized, doEditProfileAPI)
-		.get('/api/user/:id', viewUser)
+		.post('/api/user', viewUserAPI)
 		.all('/api/user/:id/*', util.authorized)
-		.get('/api/user/:id/save', saveUser)
-		.get('/api/user/:id/remove', removeProfile)
+		.post('/api/user/:id/save', saveUserAPI)
+		.post('/api/user/:id/remove', removeProfileAPI)
 }
 
-function removeProfile (req, res) {
-	var id = req.params.id;
+function removeProfileAPI (req, res) {
+	console.log("Remove User Profle API".red);
+	var id = req.body._id;
+	var save_user =  req.params.id;
 	
-	var removeIndex = -1;
-	for (var i = 0; i < req.user.savedProfiles.length; i++) {
-		var uid = req.user.savedProfiles[i];
-		if (uid.equals(mongoose.Types.ObjectId(id))) {
-			removeIndex = i;
-			break;
-		}
-	}
-	
-	if (removeIndex != -1) {
-		req.user.savedProfiles.splice(removeIndex, 1);
-		req.user.save(function(err) {
+	// Save profile
+		models.User.findById(id, function(err, user) {
 			if (err) throw err;
-		})
-	}
-	
-	res.send({removeProfile:true})
+			
+			if (user) {
+				//if (user.notification.email.businessCards) {
+				//	inbox.emailNotification(user, "inbox")
+				//}
+				//user.mailboxUnread++;
+				
+				// find the card
+				user.savedProfiles.pull(save_user)
+				user.save();
+				return;
+			}
+		});
 }
 
 exports.profileAPI = profileAPI = function (req, res) {
@@ -52,87 +53,50 @@ exports.profileAPI = profileAPI = function (req, res) {
 	});
 }
 
-function viewUser (req, res) {
+function viewUserAPI (req, res) {
 	
 	console.log("/api/profile".red);
-	var id = req.params.id;
+	var id = req.body._id;
 	
-	models.User.findById(id).populate('savedProfiles').exec(function(err, user) {
+	models.User.findById(id)
+	.exec(function(err, user) {
 		if (err) throw err;
 		
-		if (!user) {
+		if (user) {
 			res.format({
-				json: function() {
-					res.send(404, {})
-				}
-			})
-			return;
-		}
-		
-		// check if user is self or user is 
-		var saved = false;
-		for (var i = 0; i < req.user.savedProfiles.length; i++) {
-			var uid = req.user.savedProfiles[i]._id;
-			if (uid && uid.equals(user._id)) {
-				saved = true;
-				break;
-			}
-		}
-		
-		models.Card.findOne({ user: id, primary: true }, function(err, primaryCard) {
-			if (err) throw err;
-			
-			res.locals.primaryCard = primaryCard;
-			
-			res.format({
-				json: function() {
-					if (user != null) {
+					json: function() {
 						res.send({
 							user: user
 						})
-					} else {
-						res.status(404);
-						res.send({
-							message: "not found"
-						})
 					}
-				}
-			})
-		})
+				});
+			return;
+		}
 	})
 }
 
-function saveUser (req, res) {
-	var id = req.params.id;
+function saveUserAPI (req, res) {
 	
-	models.User.findOne({
-		_id: mongoose.Types.ObjectId(id)
-	}, function(err, user) {
-		if (err) throw err;
-		
-		if (!user) {
-			res.send({saveStatus:"fault"});
-			return;
-		}
-		
-		for (var i = 0; i < req.user.savedProfiles.length; i++) {
-			if (req.user.savedProfiles[i] && req.user.savedProfiles[i]._id.equals(user._id)) {
-				res.send({saveStatus:"ok"})
+	console.log("Save User Profle API".red);
+	var id = req.body._id;
+	var save_user =  req.params.id;
+	
+	// Save profile
+		models.User.findById(id, function(err, user) {
+			if (err) throw err;
+			
+			if (user) {
+				//if (user.notification.email.businessCards) {
+				//	inbox.emailNotification(user, "inbox")
+				//}
+				//user.mailboxUnread++;
+				
+				// find the card
+				user.savedProfiles.push(save_user)
+				user.save();
 				return;
 			}
-		}
-		
-		if (user.notification.email.savedProfile) {
-			//inbox.emailNotification(user, "inbox")
-		}
-		user.mailboxUnread++;
-		user.save();
-		
-		req.user.savedProfiles.push({
-			_id: user._id
-		})
-		req.user.save()
-	});
+		});
 }
 
 exports.doEditProfileAPI = doEditProfileAPI = function (req, res) {
