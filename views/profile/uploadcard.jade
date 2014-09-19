@@ -40,7 +40,7 @@ block content
 			.col-md-6.col-lg-6.nspacer
 				
 				form.form-horizontal
-					
+					img(style="display:none", id="loading", src="/images/loading.gif")
 					.form-group(ng-hide="hasTemplateBackground")
 						label.col-lg-5.col-md-5.col-xs-5.font-e.nspacer(for="bgImage") Upload an Image
 						.col-lg-7.col-md-7.col-xs-7.nspacer-small
@@ -61,6 +61,13 @@ block content
 						
 						div()
 							img(id="uploadedimage", style="height:100%; width:200%")
+							br
+							br
+
+							div(id="previewDiv" style="display:none")
+								label.col-lg-5.col-md-5.col-xs-5.font-e.nspacer(for="bgImage") Preview
+							div(style="width:400px; height:200px; overflow:hidden;")
+								img(id="preview" style="margin-top:10px")
 
 
 
