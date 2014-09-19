@@ -15,36 +15,25 @@ exports.router = function (app) {
 		.post('/api/event/:id/attendee/:attendee/register', util.authorized, getAttendeeAPI)
 		//.post('/api/event/:id/attendee/:attendee/register', getAttendeeAPI, registerAttendeeAPI)
 		.post('/api/event/:id/attendee/:attendee/unregister', getAttendeeAPI, unregisterAttendeeAPI)
-		.get('/api/event/:id/attendee/:attendee/remove', removeAttendee)
-		.post('/api/event/:id/join', joinEvent)
+		.post('/api/event/:id/attendee/:attendee/remove', removeAttendeeAPI)
+		.post('/api/event/:id/join', joinEventAPI)
 		.post('/api/event/:id/buy/tickets', payWithCard)
 		.get('/api/event/:id/buy/tickets/getPromotionalCode/:code', getPromotionalCode)
 }
 
 function listAttendeesAPI (req, res) {
-	
-	console.log("List Attendee API".red);
-	
-	
-	console.log(req.params.id);
-	
 	// Found the Event currently requested by user.
 	models.Event.findOne({_id:req.params.id} , function(err, event) 
 	{
-		console.log("#######".red);
-		console.log(event);
-		console.log("#######".red);
-		
 		// Fetch Messages By One By One.
-		var query = {'_id': {$in: event.attendees}};
+		var query = {'_id': {$in: event.attendees}, 'isAttending': true};
 		
 		models.Attendee.find(query)
 		.populate({path: 'user'})
-		.select('user registered isAttending ticket checkedOff')
+		.select('user registered isAttending ticket checkedOff admin')
 		.sort('-created')
 		.limit(10)
 		.exec(function(err, messages) {
-			
 			
 			var options = {
 				path: 'attendee.user',
@@ -53,10 +42,6 @@ function listAttendeesAPI (req, res) {
 			
 			models.Attendee.populate(messages , options , function(err , usermessages)
 			{
-				console.log("####################".red);
-			console.log(usermessages);
-			console.log("####################".red);
-			
 			res.format({
 					json: function() {
 						res.send({
@@ -73,54 +58,7 @@ function listAttendeesAPI (req, res) {
 function getAttendeeAPI (req, res, next) 
 {
 	console.log("Get Attendee API -----".red);
-	
 	console.log("Res.Locals.EventAdmin ".red + res.locals.eventadmin);
-	
-		// if (res.locals.eventadmin !== true) {
-		// res.format({
-			// json: function() {
-				// res.send({
-					// status: 404
-				// })
-			// }
-		// });
-		// return;
-	// }
-// 	
-	// var attID = req.params.attendee;
-	// var ev = res.locals.ev;
-// 	
-	// try {
-		// attID = mongoose.Types.ObjectId(attID)
-	// } catch (e) {
-		// res.format({
-			// json: function() {
-				// res.send({
-					// status: 404
-				// })
-			// }
-		// });
-		// return;
-	// }
-// 	
-	// for (var i = 0; i < ev.attendees.length; i++) {
-		// var attendee = ev.attendees[i];
-// 		
-		// if (typeof attendee.user === "object" && attendee._id.equals(attID)) {
-			// res.locals.requestedAttendee = attendee;
-			// next()
-			// return;
-		// }
-	// }
-// 	
-	// res.format({
-		// json: function() {
-			// res.send({
-				// status: 404
-			// })
-		// }
-	// });
-	
 }
 
 function registerAttendeeAPI (req, res) {
@@ -155,17 +93,9 @@ function unregisterAttendeeAPI (req, res) {
 function showAttendeeAPI (req, res) {
 	console.log("Show Attendee API".red);
 	
-	
-	console.log("Event ID".red + req.params.id);
-	console.log("Attendee ID".red  + req.params.attendee);
-	
 	// Found the Event currently requested by user.
 	models.Event.findOne({_id:req.params.id} , function(err, event) 
 	{
-		console.log("#######".red);
-		console.log(event);
-		console.log("#######".red);
-		
 		// Fetch Messages By One By One.
 		var query = {'_id': req.params.attendee};
 		
@@ -184,10 +114,6 @@ function showAttendeeAPI (req, res) {
 			
 			models.Attendee.populate(messages , options , function(err , usermessages)
 			{
-				console.log("####################".red);
-			console.log(usermessages);
-			console.log("####################".red);
-			
 			res.format({
 					json: function() {
 						res.send({
@@ -201,187 +127,154 @@ function showAttendeeAPI (req, res) {
 	});
 }
 
-function removeAttendee (req, res) {
-	var attID = req.params.attendee;
-	var ev = res.locals.ev;
+function removeAttendeeAPI (req, res) {
 	
-	try {
-		attID = mongoose.Types.ObjectId(attID)
-	} catch (e) {
-		res.redirect('/event/'+ev._id)
-		return;
-	}
+	var event_id = req.params.id;
+	var attendee_id = req.params.attendee;
+	var current_user = req.body._id;
 	
-	if (!(res.locals.attendee._id.equals(attID) || res.locals.eventadmin === true)) {
-		res.format({
-			json: function() {
-				res.send({
-					status: 404
-				})
-			}
-		});
-		return;
-	}
+	console.log(req.params);
+	console.log(req.body);
 	
-	for (var i = 0; i < ev.attendees.length; i++) {
-		var attendee = ev.attendees[i];
-		
-		if (typeof attendee.user === "object" && attendee._id.equals(attID)) {
-			if (attendee.admin) {
-				break;
-			}
-			
-			attendee.isAttending = false;
-			attendee.save();
-			break;
+	// Find if current_user is event admin or not.
+	models.Event.findOne({_id : event_id})
+	.populate(
+		{
+			path:'attendees',
+			match: { user: current_user }
 		}
-	}
-	
-	res.redirect('/event/'+ev._id);
-}
-
-function joinEvent (req, res) {
-	var password = req.body.password;
-	var category = req.body.category;
-	
-	var ev = res.locals.ev;
-	
-	// Allows people to change their category..
-	/*
-	if (res.locals.eventattending) {
-		res.format({
-			json: function() {
-				res.send({
-					status: 400,
-					message: "Already attending"
-				})
-			}
-		})
-		return;
-	}*/
-	
-	if (ev.accessRequirements.password) {
-		if (ev.accessRequirements.passwordString != password) {
-			// display flash stating they got the password wrong.
-			res.format({
-				json: function() {
-					res.send({
-						status: 400,
-						message: "Event password incorrect"
-					})
-				}
-			});
-			return;
-		}
-	}
-	
-	isReallyAttending(ev, req.user, function(err, existingAttendee) {
-		if (err) {
-			console.log("Something foul is happening here :(");
-			// reject
-			res.format({
-				json: function() {
-					res.send({
-						status: 500,
-						mesage: "Server Error."
-					})
-				}
-			});
-			
-			return;
-		}
-		
-		var attendee;
-		if (res.locals.eventattending) {
-			attendee = res.locals.attendee;
-		} else {
-  			attendee = new models.Attendee({
-  				user: req.user._id
-			});
-		}
-	
-		if (category && category.length > 0) {
-			// Check if category exists & is valid
-			var foundCategory = false;
-			for (var i = 0; i < ev.categories.length; i++) {
-				if (category == ev.categories[i]) {
-					// Good
-					foundCategory = true;
-					break;
-				}
-			}
-		
-			if (foundCategory || ev.allowAttendeesToCreateCategories == true) {
-				attendee.category = category;
-			} else {
-				// reject
+	)
+	.exec(function(err, event) 
+	{	
+		if(event.attendees[0].admin & event.attendees[0].user !=current_user)
+		{
+			models.Attendee.findOne({_id : attendee_id})
+			.exec(function(err, Attendee) 
+			{
+				Attendee.isAttending= false;
+				Attendee.save();
+				
 				res.format({
-					json: function() {
-						res.send({
-							status: 400,
-							mesage: "An Invalid category selected."
-						})
+				json: function() {
+					res.send({
+						status: 200
+					});
 					}
-				})
-				return;
-			}
+				});
+				
+			});
 		}
-		
-		if (!attendee.category) {
-			attendee.category = "Attendee";
-		}
-		
-		// Existing attendees who have left the event get 'resurrected'
-		if (existingAttendee) {
-			existingAttendee.isAttending = true;
-			existingAttendee.category = attendee.category;
-			
-			existingAttendee.save();
-			
+		else
+		{
+			console.log("only admin can do this action");
 			res.format({
 				json: function() {
 					res.send({
 						status: 200
-					})
-				}
-			})
-			
-			return;
+					});
+					}
+				});
 		}
 		
-		if (ev.pricedTickets && attendee.hasPaid == false && !res.locals.eventattending) {
-			// reject
-			res.format({
+	
+	// if (!(res.locals.attendee._id.equals(attID) || res.locals.eventadmin === true)) {
+		// res.format({
+			// json: function() {
+				// res.send({
+					// status: 404
+				// })
+			// }
+		// });
+		// return;
+	// }
+// 	
+	// for (var i = 0; i < ev.attendees.length; i++) {
+		// var attendee = ev.attendees[i];
+// 		
+		// if (typeof attendee.user === "object" && attendee._id.equals(attID)) {
+			// if (attendee.admin) {
+				// break;
+			// }
+// 			
+			// attendee.isAttending = false;
+			// attendee.save();
+			// break;
+		// }
+	// }
+// 	
+	// res.redirect('/event/'+ev._id);
+	});
+}
+
+function joinEventAPI (req, res) {
+	console.log(req.body);
+	console.log(" Join Event API ".red);
+	
+	var Event_ID = req.params.id;
+	var User_ID =  req.body._id;
+	
+	// Get the Event.
+	// Found the Event currently requested by user.
+	models.Event.findOne({_id:Event_ID} , function(err, event) 
+	{
+		var query = {'_id': {$in: event.attendees} , 'user' : User_ID};
+		
+		// Suppose it will always return one object if application.
+		// Should never have two record against same user
+		models.Attendee.findOne(query)
+		.exec(function(err, existing_attendee) 
+		{
+			console.log(existing_attendee);
+			
+			if(existing_attendee) // You are already attending
+			{
+				console.log(existing_attendee.isAttending);
+				// Check if its isAttending is false;
+				// Make it true again.
+				if(!existing_attendee.isAttending)
+				{
+					existing_attendee.isAttending =  true;
+					existing_attendee.save();
+				}
+				
+				res.format({
 				json: function() {
 					res.send({
-						status: 400,
-						message: "This is a paid event, we have no record of you purchasing a ticket."
-					})
-				}
-			})
-			return;
-		}
-		
-		attendee.save()
-		
-		if (res.locals.eventattending) {
-			req.session.flash = ["Your Category has been updated to "+attendee.category];
-		} else {
-			models.Event.findById(ev._id, function(err, event) {
-				event.attendees.push(attendee._id);
-				event.save();
-			});
-			req.session.flash = ["Yay! You're now attending "+ev.name+"!"]
-		}
-		
-		res.format({
-			json: function() {
-				res.send({
-					status: 200
-				})
+						status: 200
+					});
+					}
+				});
 			}
-		})
-	})
+			else // New Attendee
+			{
+				var attendee = new models.Attendee({
+					user: User_ID
+					});
+					
+					attendee.category = "Attendee";
+					attendee.save();
+					
+					// add to event
+					event.attendees.push(attendee._id);
+					event.save();
+					
+					
+					res.format({
+					json: function() {
+						res.send({
+						status: 200
+						});
+						}
+					});
+				
+			}
+			
+			
+		});
+		
+	});
+
+	return;
 }
 
 function payWithCard (req, res) {
