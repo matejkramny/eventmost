@@ -6,29 +6,58 @@ var fs = require('fs')
 	, transport = require('../../../../app').transport
 
 exports.router = function (app) {
-	app.get('/api/cards', util.authorized, showCards)
-		.all('/api/card/*', util.authorized)
-		.get('/api/card/new', newCard)
-		.get('/api/card/:id', getCard)
-		.post('/api/card/new', doNewCard)
-		.get('/api/cards/send', util.authorized, sendCard)
-		.get('/api/cards/choosePrimary', choosePrimary)
-		.get('/api/cards/choosePrimary/:id', doChoosePrimary)
+	app.post('/api/cards', showCardsAPI)
+		//.all('/api/card/*', util.authorized)
+		//.get('/api/card/new', newCardAPI)
+		//.get('/api/card/:id', getCardAPI)
+		.post('/api/card/new', doNewCardAPI)
+		.post('/api/cards/send', sendCardAPI)
+		//.get('/api/cards/choosePrimary', choosePrimary)
+		.post('/api/cards/choosePrimary/:id', doChoosePrimaryAPI)
+		.post('/api/cards/sharedwithme', getCardsSharedWithMeAPI)
+		.get('/api/addsharedcard', addcardsapi)
 }
 
-function showCards (req, res) {
-	models.Card.find({ user: req.user._id }, { _id: 1, primary: 1 }).sort('-created').exec(function(err, cards) {
-		res.locals.cards = cards;
+
+ function addcardsapi(req, res)
+ {
+	 models.User.findById("540d914cefe0aaa4148a042c", function(err, ev) {
+				 ev.savedProfiles.push(mongoose.Types.ObjectId('54044fb5b0704280069b6790'));
+				 ev.save()
+			 });
+ }
+
+function showCardsAPI (req, res) {
+	
+	console.log("Shows Cards ".red);
+	console.log(req.body);
+	
+	//console.log(req.user._id);
+	
+	var query = { 'user': req.body._id};
 		
-		res.render('profile/cards', { title: "Business cards" });
-	});
+	models.Card.find(query)
+	.populate('user')
+	.exec(function(err, usercards) {
+					res.format({
+						json: function() {
+							res.send({
+								cards: usercards
+							})
+						}
+					})
+				});
+
 }
 
-function newCard (req, res) {
-	res.render('profile/cardtool', { title: "Business cards" });
+function newCardAPI (req, res) {
+	console.log("Create New Card ".red);
+
+			
+			
 }
 
-function getCard (req, res) {
+function getCardAPI (req, res) {
 	var id = req.params.id;
 	
 	try {
@@ -55,75 +84,57 @@ function getCard (req, res) {
 	})
 }
 
-function doNewCard (req, res) {
-	new models.Card({
-		user: req.user._id
-	}).edit(req.files.html, function(err) {
-		if (err && err.length) {
-			req.session.flash = err;
-		}
-		
-		res.format({
-			html: function() {
-				res.redirect('/cards');
-			},
-			json: function() {
-				res.send({
-					status: 200
-				})
-			}
-		})
-	})
+function doNewCardAPI (req, res) {
+	console.log("do New Card".red);
+	
+	console.log(req.body);
+
+	var newcard = new models.Card({
+				user: req.body._id,
+				location: req.body._location,
+				created: Date.now(),
+				primary: false
+			})
+	
+	newcard.save(function(err) {
+			res.format({
+				json: function() {
+					res.send({
+						status: 200
+					})
+				}
+			})
+			return;
+				});
 }
 
-function sendCard (req, res) {
-	var to = req.query.to || null;
-	var id = req.query.id || null;
+function sendCardAPI (req, res) {
 	
-	if (id) {
-		try {
-			id = mongoose.Types.ObjectId(id);
-		} catch (e) {
-			res.redirect('back');
-			return;
-		}
-	}
+	var to = req.body._to || null;
+	var id = req.body._id || null;
+	var card_id = req.body._cardID;
 	
-	try {
-		to = mongoose.Types.ObjectId(to);
-	} catch (e) {
-		res.redirect('/')
-		return;
-	}
+	console.log("------ Send Card API -------".red);
+	console.log(req.body);
 	
-	if (to && id) {
 		// Send the card
 		models.User.findById(to, function(err, user) {
 			if (err) throw err;
 			
 			if (user) {
-				if (user.notification.email.businessCards) {
-					inbox.emailNotification(user, "inbox")
-				}
-				user.mailboxUnread++;
+				//if (user.notification.email.businessCards) {
+				//	inbox.emailNotification(user, "inbox")
+				//}
+				//user.mailboxUnread++;
 				
 				// find the card
 				user.receivedCards.push({
-					from: req.user._id,
-					card: id
+					from: req.body._id,
+					card: card_id
 				})
 				user.save()
 			}
-			
-			req.session.flash = ["Business Card Sent"]
-			res.redirect('/user/'+to);
 		});
-	} else {
-		models.Card.find({ user: req.user._id }, { _id: 1 }).sort('-created').exec(function(err, cards) {
-			if (err) throw err;
-			res.render('profile/sendCard', { cards: cards, title: "Send business card", sendTo: to });
-		})
-	}
 }
 
 function doEditCard (req, res) {
@@ -138,32 +149,46 @@ function choosePrimary (req, res) {
 	});
 }
 
-function doChoosePrimary (req, res) {
+function doChoosePrimaryAPI (req, res) {
 	var id = req.params.id;
+	console.log("do Choose Primary API");
+	console.log("card id ".red + id);
+	console.log(req.body);
 	
-	try {
-		id = mongoose.Types.ObjectId(id);
-	} catch (e) {
-		res.redirect('back');
-		return;
-	}
 	
-	models.Card.findOne({ _id: id, user: req.user._id }, function(err, card) {
+	models.Card.findOne({ _id: id, user: req.body._id }, function(err, card) {
 		if (err) throw err;
 		
 		if (card) {
-			models.Card.update({ user: req.user._id }, { $set: { primary: false }}, { multi: true }, function(err) {
+			
+			models.Card.update({ user: req.body._id }, { $set: { primary: false }}, { multi: true }, function(err) {
 				if (err) throw err;
 				
 				models.Card.update({ _id: id }, { $set: { primary: true }}, function(err) {
-					req.session.flash.push("Primary Card Changed");
-					res.redirect('/cards');
+					
 					return;
 				});
 			});
 		} else {
-			res.redirect('back');
+			
 			return;
 		}
 	})
+}
+
+function getCardsSharedWithMeAPI(req, res)
+{
+	models.User.findOne({_id:req.body._id})
+	.populate('receivedCards.card receivedCards.from')
+	.select('receivedCards.card receivedCards.from' )
+	.exec(function(err, current_user) 
+	{
+		res.format({
+		json: function() {
+				res.send({
+					cards: current_user.receivedCards
+						})
+					}
+				})
+		});
 }
