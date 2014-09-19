@@ -11,15 +11,6 @@ exports.router = function (app) {
 }
 
 exports.listEventsAPI = function (req, res) {
-	
-	console.log("/api/events ".red);
-	
-	console.log("Skip ".red + req.query.skip);
-	
-	console.log("Past Events ".red + req.query.pastEvents);
-	
-	console.log("--".red);
-	
 	var skip = req.query.skip || 0;
 	var showPastEvents = req.query.pastEvents == "1" ? true : false;
 	if (!showPastEvents || typeof showPastEvents === 'undefined') {
@@ -46,10 +37,6 @@ exports.listEventsAPI = function (req, res) {
 		.skip(skip)
 		.exec(function(err, evs) {
 			
-			console.log("####################".red);
-			//console.log(evs);
-			console.log("####################".red);
-			
 		if (err) throw err; 
 		if (evs) {
 			models.Event.find(query).count(function(err, total) {
@@ -71,20 +58,9 @@ exports.listEventsAPI = function (req, res) {
 // TODO fix this
 exports.listMyEventsAPI = function (req, res) {
 	
-	console.log("/api/events/my ".red);
-	console.log(req.body);
-	
 	var skip = req.body.skip || 0;
-	//console.log(req.user._id);
+	
 	models.Attendee.find({ 'user': req.body._id }, '_id', function(err, attendees) {
-		
-		console.log("User Found ".red);
-		
-		console.log("############################".red);
-		//console.log(attendees);
-		console.log("############################".red);
-		
-		
 		var query = { 'attendees': { $in: attendees } };
 		
 		models.Event.find(query)
@@ -95,17 +71,10 @@ exports.listMyEventsAPI = function (req, res) {
 			.skip(skip)
 			.exec(function(err, evs) {
 				
-			console.log("############################".red);
-		    //console.log(evs);
-		    console.log("############################".red);	
 				
 			if (err) throw err;
 			if (evs) {
 				models.Event.find(query).count(function(err, total) {
-					
-					console.log("############################".red);
-		    		//console.log(total);
-		    		console.log("############################".red);	
 					
 					res.format({
 						json: function() {
