@@ -29,7 +29,7 @@ exports.router = function (app) {
 		
 		.get('/api/event/:id/tickets', getEvent, viewTickets)*/
 		app.post('/api/event/:id/post', postMessageAPI)
-		//.get('/api/event/:id', getEventFromID)
+		.get('/api/event/:id', getEventAPI)
 		/*
 		.get('/api/event/:id/registrationpage', viewRegistrationPage)*/
 	
@@ -65,6 +65,28 @@ function logImpression (req, res, next) {
 	impression.save()
 	
 	next()
+}
+
+function getEventAPI(req, res)
+{
+	console.log("Get Event API".red);
+	
+	var query = {_id: req.params.id};
+		
+		models.Event.findById(req.params.id)
+		.exec(function(err, thisevent) {
+			if (err) throw err;
+			if (thisevent) {
+				
+				res.format({
+					json: function() {
+						res.send({
+							event: thisevent
+						});
+					}
+				});
+			}
+		});
 }
 
 // Middleware to get :id param into res.local
@@ -315,8 +337,8 @@ function postMessageAPI (req, res) {
 	.populate(
 		{
 			// Also need to check admin here.
-			 path:'attendees'
-			// match: { user: user_id }
+			path:'attendees',
+			match: { user: user_id }
 		}
 	)
 	.exec(function(err, event) 
