@@ -158,15 +158,10 @@ function doPasswordLogin (req, res) {
 		password = req.body.password,
 		name = req.body.name;
 		
-		console.log("email: "+email);
-		console.log("password: "+password);
-		console.log("name: "+name)
 	try {
 		if (!email || !password) {
 			throw Error();
 		}
-		
-//		check(email).isEmail();
 	} catch (e) {
 		res.send({
 			status: 404,
