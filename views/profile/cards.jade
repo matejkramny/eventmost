@@ -3,6 +3,10 @@ extends ../responsive
 block content
 	.container
 		.row
+			if(locals.message)
+				center
+					h2=locals.message
+					
 			.col-sm-9.col-md-9.col-lg-6
 				h1 Business Card Library
 			.col-sm-3.col-md-3.col-lg-6

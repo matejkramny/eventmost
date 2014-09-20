@@ -50,6 +50,7 @@ function uploadCardImage(req, res){
 			//if (err) throw err;
 		});
 
+		req.session.message = 'Your business card has been saved';
 		res.send('sucesss');
 
 	});
@@ -58,6 +59,11 @@ function uploadCardImage(req, res){
 function showCards (req, res) {
 	models.Card.find({ user: req.user._id }, { _id: 1, primary: 1 }).sort('-created').exec(function(err, cards) {
 		res.locals.cards = cards;
+		if(req.session.message){
+			res.locals.message = req.session.message;
+			req.session.message = null;
+		}
+
 		
 		res.render('profile/cards', { title: "Business cards" });
 	});
