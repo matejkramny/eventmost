@@ -17,8 +17,18 @@ exports.router = function (app) {
 function viewDropboxAPI (req, res) {
 	console.log("View Drop Box API");
 	
-	
-	
+	var event_id =  req.params.id;
+	models.Event.findById(event_id, function(err, ev) {
+		
+		res.format({
+			json: function() {
+				res.send({
+					files: ev.files
+				})
+			}
+		})
+		
+	});
 }
 
 function doRemove (req, res, next) {
