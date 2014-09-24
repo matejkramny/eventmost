@@ -51,7 +51,7 @@ exports.router = function (app) {
 		.post('/api/auth/password_reset/:id', performPasswordReset)
 		.get('/api/auth/facebook', saveSocialRedirect, passport.authenticate('facebook', { scope: 'email' }))
 		.get('/api/auth/facebook/callback', passport.authenticate('facebook', socialRoute('Facebook')))
-		.get('/api/auth/twitter', saveSocialRedirect, passport.authenticate('twitter'))
+		.post('/api/auth/twitter', saveSocialRedirect, passport.authenticate('twitter'))
 		.get('/api/auth/twitter/callback', passport.authenticate('twitter', socialRoute('Twitter')))
 		.get('/api/auth/linkedin', saveSocialRedirect, passport.authenticate('linkedin', { scope: ['r_network', 'r_basicprofile', 'r_fullprofile', 'r_contactinfo', 'rw_nus', 'r_emailaddress'] }))
 		.get('/api/auth/linkedin/callback', passport.authenticate('linkedin', socialRoute('LinkedIn')))
@@ -66,6 +66,8 @@ exports.display = function(req, res) {
 };
 
 function saveSocialRedirect (req, res, next) {
+	
+	console.log("Save Social Redirect---------".red);
 	try {
 		req.session.socialRedirect = mongoose.Types.ObjectId(req.query.redirect);
 	} catch (e) {
