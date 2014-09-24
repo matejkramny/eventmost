@@ -30,9 +30,9 @@
 				.font-s(style="word-break:break-all; ")
 					- if (ev.address || ev.venue_name)
 						strong.pull-left.break(style="word-wrap:break-word; word-break: break-word; white-space: -moz-pre-wrap; white-space: pre-wrap;")
-						span(style="word-wrap:break-word; word-break: break-word;")
+						span(style="word-wrap:break-word; word-break: break-word;font-weight:bold;")
 							= ev.venue_name
-						.pull-left(style="word-wrap:break-word; word-break: break-word;")
+						.pull-left(style="word-wrap:break-word; word-break: break-word;font-weight:bold;")
 							= ev.address
 						- if (!ev.address && !ev.venue_name)
 							| Event does not have a location

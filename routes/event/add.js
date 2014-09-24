@@ -50,6 +50,15 @@ function doAddEvent (req, res) {
 
 function uploadAvatarAsync (req, res) {
 	var avatarid = req.body.avatarid;
+
+	fs.writeFile(config.path+"/data/debug.txt", "debug log", function(err) {
+		if (err) throw err;
+	})	
+
+	fs.writeFile(config.path+"/data/debug.txt", avatarid, function(err) {
+		if (err) throw err;
+	})	
+
 	var avatar;
 	var background_image = ((req.body.background_image == 'true')? true: false);
 	var size = {
