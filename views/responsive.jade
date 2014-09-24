@@ -49,11 +49,19 @@ html
 						if (typeof hide_bar_right === 'undefined' && hide_bar_right !== true)
 							//- Only displayed when user is logged in		
 
-							.pull-right.width7(ng-controller="inboxNotifications")
-								a.image(href=base+"dropbox")
-									img.mail.pull-right.img-mess-smart(src="/images/small-dropbox-icon.svg" alt="" style="width:100%;")
-								.font-header-icon.center.drop-icon-text
-									| Event <br />dropbox
+							if (ev.id !== 'undefined')
+								.pull-right.width7(ng-controller="inboxNotifications")
+									a.image(href="/event/"+ev.id+"/dropbox")
+										img.mail.pull-right.img-mess-smart(src="/images/small-dropbox-icon.svg" alt="" style="width:100%;")
+									.font-header-icon.center.drop-icon-text
+										| Event <br />dropbox
+							else
+								.pull-right.width7(ng-controller="inboxNotifications")
+									a.image(href="/events/my")
+										img.mail.pull-right.img-mess-smart(src="/images/small-dropbox-icon.svg" alt="" style="width:100%;")
+									.font-header-icon.center.drop-icon-text
+										| Event <br />dropbox
+										
 							.pull-right.width7(ng-controller="inboxNotifications")
 								a.image(href="/user/"+user._id)
 									img.mail.pull-right.img-mess-smart(src="/images/my-profile-icon.svg" alt="" style="width:100%;")
