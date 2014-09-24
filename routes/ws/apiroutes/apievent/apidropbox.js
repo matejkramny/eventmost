@@ -8,32 +8,17 @@ var models = require('../../../../models'),
 	async = require('async')
 
 exports.router = function (app) {
-	app.get('/api/event/:id/dropbox', view)
+	app.get('/api/event/:id/dropbox', viewDropboxAPI)
 		.post('/api/event/:id/dropbox', saveDropbox)
-		.post('/api/event/:id/dropbox/upload', doUpload)
+		.post('/api/event/:id/dropbox/upload', doUploadAPI)
 		.get('/api/event/:id/dropbox/:fid/remove', doRemove)
 }
 
-function view (req, res) {
-	if (!res.locals.eventattending) {
-		res.format({
-			json: function() {
-				res.send({
-					status: 403,
-					message: "Not attending"
-				})
-			}
-		})
-		
-		return;
-	}
+function viewDropboxAPI (req, res) {
+	console.log("View Drop Box API");
 	
-	res.format({
-		html: function() {
-			res.locals.moment = moment;
-			res.render('event/dropbox', { title: res.locals.ev.name+" Dropbox" })
-		}
-	})
+	
+	
 }
 
 function doRemove (req, res, next) {
@@ -184,37 +169,20 @@ function saveDropbox (req, res) {
 	});
 }
 
-function doUpload (req, res) {
-	//TODO check attendee(s) can upload files
-	if (!res.locals.eventattending) {
-		res.format({
-			json: function() {
-				res.send({
-					status: 403,
-					message: "Not attending"
-				})
-			}
-		})
-		
-		return;
-	}
+function doUploadAPI (req, res) {
 	
-	var ev = res.locals.ev;
+	console.log("------Upload File--------".red);
+	console.log(req.body);
+	console.log(req.files);
 	
-	if (req.files.upload == null || req.files.upload.name.length == 0) {
-		res.format({
-			json: function() {
-				res.send({
-					status: 403,
-					message: "No file"
-				});
-			}
-		})
-		
-		return;
-	}
+	console.log("Config PATH ".red + config.path);
 	
-	var ext = req.files.upload.name.split('.');
+	var event_id = req.params.id;
+	var user_id = req.body.userid;
+	
+	console.log("Verify File Extension".red);
+	
+	var ext = req.files.uploadedfile.name.split('.');
 	var extValid = false;
 	if (ext.length != 0) {
 		// Last . is extension
@@ -240,27 +208,43 @@ function doUpload (req, res) {
 		return;
 	}
 	
+	console.log("Extension is Ok".red);
+	
 	ext = ext.toLowerCase();
 	
 	var timestamp = Date.now();
 	var file = {
-		file: "/dropbox/"+ev._id+""+timestamp+"."+ext,
-		fileThumb: "/dropbox/"+ev._id+""+timestamp+"-thumb.png",
+		file: "/dropbox/"+event_id+""+timestamp+"."+ext,
+		fileThumb: "/dropbox/"+event_id+""+timestamp+"-thumb." + ext,
 		extension: ext,
-		user: req.user._id,
+		user: user_id,
 		created: Date.now(),
-		name: req.files.upload.name
+		name: req.files.uploadedfile.name
 	}
 	
-	fs.rename(req.files.upload.path, config.path+"/public"+file.file, function(err) {
-		if (err) throw err;
+	console.log("Created New File".red);
+	
+	fs.rename(req.files.uploadedfile.path, config.path+"/public"+file.file, function(err) {
+		if (err) 
+		{
+			console.log(err);
+			throw err;
+		}
 		
-		if (config.knox) {
+		console.log("Fs - Rename is Good".red);
+		console.log("config.PATH : ".red  + config.path+"/public"+file.file);
+		console.log("/public + file.file : ".red + "/public"+file.file);
+		
+		
+		if (config.knox != null) {
 			config.knox.putFile(config.path+"/public"+file.file, "/public"+file.file, function(err, res) {
-				if (err) throw err;
-				
+				if (err)
+				{
+					console.log("KNOX - Put File Error ".red + err);
+					throw err;
+				}
 				console.log("Dropbox File Uploaded");
-				res.resume();
+				//res.resume();
 			});
 		}
 		
@@ -276,17 +260,23 @@ function doUpload (req, res) {
 				file.size = Math.floor(file.size) + "kb"
 			}
 		
+			console.log(config.path+"/public"+file.file);
+			console.log(config.path+"/public"+file.fileThumb);
+			
 			//Create thumbnail
 			if (ext == 'jpg' || ext == 'jpeg' || ext == 'png' || ext == 'gif') {
 				gm(config.path+"/public"+file.file).gravity('Center').thumb(205, 154, config.path+"/public"+file.fileThumb, 100, function(err) {
-					if (err) throw err;
-					
-					if (config.knox) {
+					if (err)
+					{
+						console.log("gm error ".red + err); 
+						throw err;
+					}
+					if (config.knox != null) {
 						config.knox.putFile(config.path+"/public"+file.fileThumb, "/public"+file.fileThumb, function(err, res) {
 							if (err) throw err;
 							
 							console.log("Dropbox File Thumbnail Uploaded");
-							res.resume();
+							//res.resume();
 						});
 					}
 				})
@@ -294,7 +284,7 @@ function doUpload (req, res) {
 				gm(config.path+"/public"+file.file+"[0]").adjoin().gravity('Center').thumb(205, 154, config.path+"/public"+file.fileThumb, 100, function(err) {
 					if (err) throw err;
 					
-					if (config.knox) {
+					if (config.knox != null) {
 						config.knox.putFile(config.path+"/public"+file.fileThumb, "/public"+file.fileThumb, function(err, res) {
 							if (err) throw err;
 							
@@ -305,11 +295,14 @@ function doUpload (req, res) {
 				})
 			}
 		
-			if (ev.files == null) {
+			
+		
+			models.Event.findById(event_id, function(err, ev) {
+				
+				if (ev.files == null) {
 				ev.files = []
 			}
-		
-			models.Event.findById(ev._id, function(err, ev) {
+				
 				ev.files.splice(0,0, file);
 		
 				ev.save(function(err) {
