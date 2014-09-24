@@ -9,4 +9,4 @@ EventMost website
 TODO
 ----
 
-IS ON TRELLOo
+IS ON TRELLO
