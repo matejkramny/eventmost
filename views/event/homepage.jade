@@ -1,6 +1,6 @@
 //baburw
 extends ../responsive_event_view
-include inc/navbar
+//- include inc/navbar
 include inc/attendee
 include inc/message
 
@@ -15,7 +15,7 @@ append addonjs
 	script(src="/js/mif.js?v=#{versionHash}" defer)
 
 block content
-	+navbar
+	//- +navbar
 	
 	case ev.sponsorLayout.layout
 		when 0
