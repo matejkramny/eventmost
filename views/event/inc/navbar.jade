@@ -37,19 +37,20 @@ mixin navbar
 									li.inverted: a(href=base+"admin/register") Check People In
 									li.inverted: a(href=base+"admin/email") Send Mass Private Messages
 				
-				.inline.nspacer-small.pad-right-five
-					.font-x1.bg-purple.center.psev2.prof-wall
-						a.link-white(href= (eventattending == true ? base+"attendee/"+attendee._id : base+"attendees")) My profile <br />
-							img(src="/images/menu-profile.svg", alt="", style="")
-				//.inline.nspacer-small.pad-right-five
-					.font-x1.bg-purple.psev2.prof-wall
-						a.link-white(href=base+"registrationpage/n") Registration
-							br
-							| page
-							img.pad-left-ten(src="/images/menu-registration.svg", alt="", style="")
-				.inline.nspacer-small
-					.font-x1.bg-purple.center.psev2.prof-wall
-						a.link-white(href=base+"dropbox") Event dropbox <br />
-							img(src="/images/menu-drop.svg", alt="", style="")
+				//-
+					.inline.nspacer-small.pad-right-five
+						.font-x1.bg-purple.center.psev2.prof-wall
+							a.link-white(href= (eventattending == true ? base+"attendee/"+attendee._id : base+"attendees")) My profile <br />
+								img(src="/images/menu-profile.svg", alt="", style="")
+					//.inline.nspacer-small.pad-right-five
+						.font-x1.bg-purple.psev2.prof-wall
+							a.link-white(href=base+"registrationpage/n") Registration
+								br
+								| page
+								img.pad-left-ten(src="/images/menu-registration.svg", alt="", style="")
+					.inline.nspacer-small
+						.font-x1.bg-purple.center.psev2.prof-wall
+							a.link-white(href=base+"dropbox") Event dropbox <br />
+								img(src="/images/menu-drop.svg", alt="", style="")
 			.clearfix
 	.clearfix
