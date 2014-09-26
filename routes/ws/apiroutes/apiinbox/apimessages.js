@@ -16,8 +16,6 @@ exports.router = function (app) {
 
 function getMessageAPI (req, res) {
 	var id = req.params.id;
-	console.log(req.params.id);
-	
 	var query = {topic: req.params.id};
 	
 	models.Message.find(query)
@@ -25,7 +23,6 @@ function getMessageAPI (req, res) {
 	.select('message timeSent sentBy')
 	.sort('timeSent')
 	.exec(function(err, topicmessages) {
-	 console.log("++ EVS".red + topicmessages + "EVS -- ".red);
 	 
 	 		 res.format({
 					json: function() {
@@ -40,9 +37,7 @@ function getMessageAPI (req, res) {
 
 function newTopic (req , res)
 {
-	console.log("new topic".red);
-	
-	console.log(req.body);
+
 	if(req.body._id == req.body._to)
 	{
 		res.status(404).send('To and From are same.');
@@ -57,7 +52,6 @@ function newTopic (req , res)
 	.select('users lastUpdated')
 	.sort('lastUpdated')
 	.exec(function(err, topics) {
-	 	console.log("++ EVS".red + topics + "EVS -- ".red);
 	 
 	 	if(topics.length > 0) // Topic is already created.
 	 	{
@@ -225,11 +219,6 @@ function postMessageAPI (req, res) {
 }
 
 function doNewMessageAPI (req, res) {
-	console.log("do New Message API ######".red);
-	console.log(req.body);
-	console.log(req.params.id);
-	console.log("######".red);
-	
 	
 	var msg = new models.Message({
 			topic: req.params.id,
@@ -252,15 +241,7 @@ function doNewMessageAPI (req, res) {
 }
 
 function showMessagesAPI (req, res) {
-	
-	console.log("###### Show Messages API ----3".red);
-	
-	console.log(req.body._id);
-	
 	var currentuser = req.body._id;
-	
-	console.log("#############################".red);
-		
 	var query = { users: {$in : [currentuser]}};
 	
 	// Fetch My Topics.
@@ -269,8 +250,6 @@ function showMessagesAPI (req, res) {
 	.select('users lastUpdated')
 	.sort('lastUpdated')
 	.exec(function(err, topics) {
-	 console.log("++ EVS".red + topics + "EVS -- ".red);
-	 
 	 		res.format({
 					json: function() {
 						res.send({
