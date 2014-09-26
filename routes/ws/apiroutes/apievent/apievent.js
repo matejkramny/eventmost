@@ -25,10 +25,10 @@ exports.router = function (app) {
 		
 		.all('/api/event/:id/*', getEvent, attending)
 		.get('/api/event/:id/*', logImpression)
-		.get('/api/event/:id', getEvent, attending, logImpression, viewEvent)
+		.get('/api/event/:id', getEvent, attending, logImpression, viewEvent)*/
 		
-		.get('/api/event/:id/tickets', getEvent, viewTickets)*/
-		app.post('/api/event/:id/post', postMessageAPI)
+		app.get('/api/event/:id/tickets', viewTicketsAPI)
+		.post('/api/event/:id/post', postMessageAPI)
 		.get('/api/event/:id', getEventAPI)
 		/*
 		.get('/api/event/:id/registrationpage', viewRegistrationPage)*/
@@ -318,17 +318,31 @@ function viewRegistrationPage (req, res) {
 	});
 }
 
-function viewTickets (req, res) {
-	res.send({
-		tickets: res.locals.ev.tickets
+function viewTicketsAPI (req, res) {
+	// Found the Event currently requested by user.
+	models.Event.findOne({_id:req.params.id} , function(err, event) 
+	{
+		// Fetch Messages By One By One.
+		var query = {'_id': {$in: event.tickets}};
+		
+		models.Ticket.find(query)
+		.select('price quantity name description start end showRemainingTickets')
+		.exec(function(err, event_tickets) {
+			res.format({
+					json: function() {
+						res.send({
+							tickets: event_tickets
+						})
+					}
+				});
+			}
+		);
 	})
+	
 }
 
 function postMessageAPI (req, res) {
 	
-	console.log("##### Post Message ####".red);
-	console.log(req.body);
-	console.log("#######################".red);
 	
 	 var message = req.body.message;
 	 var user_id = req.body._id;
@@ -351,8 +365,6 @@ function postMessageAPI (req, res) {
 		var message = req.body.message;
 		var event_id = event._id;
 		var attendee_id =  event.attendees[0].user;
-		console.log("Attendee ".red +  attendee_id);
-		console.log("User ".red + user_id);
 		
 		// Find if a topic exist between two users or not
 		var query = { users: {$all : [user_id , attendee_id]}};
@@ -375,7 +387,6 @@ function postMessageAPI (req, res) {
 		
 			msg.save();
 			
-			console.log(msg);
 			
 			res.format({
 				json: function() {
@@ -404,7 +415,6 @@ function postMessageAPI (req, res) {
 			
 			newtopic.save();
 			
-			console.log(msg);
 			
 			res.format({
 				json: function() {
