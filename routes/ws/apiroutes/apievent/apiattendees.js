@@ -17,7 +17,7 @@ exports.router = function (app) {
 		.post('/api/event/:id/attendee/:attendee/unregister', getAttendeeAPI, unregisterAttendeeAPI)
 		.post('/api/event/:id/attendee/:attendee/remove', removeAttendeeAPI)
 		.post('/api/event/:id/join', joinEventAPI)
-		.post('/api/event/:id/buy/tickets', payWithCard)
+		.post('/api/event/:id/buy/tickets', getTransactionsAPI)
 		.get('/api/event/:id/buy/tickets/getPromotionalCode/:code', getPromotionalCode)
 }
 
@@ -175,34 +175,6 @@ function removeAttendeeAPI (req, res) {
 					}
 				});
 		}
-		
-	
-	// if (!(res.locals.attendee._id.equals(attID) || res.locals.eventadmin === true)) {
-		// res.format({
-			// json: function() {
-				// res.send({
-					// status: 404
-				// })
-			// }
-		// });
-		// return;
-	// }
-// 	
-	// for (var i = 0; i < ev.attendees.length; i++) {
-		// var attendee = ev.attendees[i];
-// 		
-		// if (typeof attendee.user === "object" && attendee._id.equals(attID)) {
-			// if (attendee.admin) {
-				// break;
-			// }
-// 			
-			// attendee.isAttending = false;
-			// attendee.save();
-			// break;
-		// }
-	// }
-// 	
-	// res.redirect('/event/'+ev._id);
 	});
 }
 
@@ -224,11 +196,9 @@ function joinEventAPI (req, res) {
 		models.Attendee.findOne(query)
 		.exec(function(err, existing_attendee) 
 		{
-			console.log(existing_attendee);
 			
 			if(existing_attendee) // You are already attending
 			{
-				console.log(existing_attendee.isAttending);
 				// Check if its isAttending is false;
 				// Make it true again.
 				if(!existing_attendee.isAttending)
@@ -277,122 +247,11 @@ function joinEventAPI (req, res) {
 	return;
 }
 
-function payWithCard (req, res) {
+function payWithCardAPI (req, res) {
+	
 	var token = req.body.payment_id;
 	var ev = res.locals.ev;
 	
-	var meta = getTransactions(req, res);
-	var transaction = meta.transaction;
-	if (transaction.status == 'failed') {
-		res.send({
-			status: 400,
-			message: transaction.message
-		});
-		return;
-	}
-	
-	var total = transaction.total;
-	if (total == 0) {
-		// Free tickets
-		transaction.third_party = 0;
-		
-		transaction.status = 'complete';
-		transaction.save();
-		
-		var ts = meta.tickets;
-		for (var i = 0; i < ts.length; i++) {
-			ts[i].ticket.quantity -= ts[i].quantity;
-			if (ts[i].ticket.quantity < 0) ts[i].ticket.quantity = 0;
-			ts[i].ticket.save();
-		}
-		
-		addAttendee(ev, req.user)
-		
-		emailConfirmation(req, res, transaction);
-		
-		res.send({
-			status: 200
-		})
-		
-		return;
-	}
-	
-	if (!token) {
-		res.send({
-			status: 400
-		});
-		return;
-	}
-	
-	//'Reverse the fees'
-	total = (total + 0.2) / (1 - 0.025);
-	
-	transaction.third_party = total - transaction.total;
-	transaction.total = total;
-	
-	stripe.charges.create({
-		amount: Math.round(total * 100), //must be in pennies
-		currency: "gbp",
-		card: token,
-		description: "EventMost Tickets",
-		metadata: {
-			transaction: transaction._id
-		}
-	}, function(err, charge) {
-		if (err) {
-			console.log(err);
-			
-			transaction.status = 'failed';
-			transaction.message = err.toString();
-			transaction.save();
-			
-			var message = "";
-			switch (err.type) {
-				case 'StripeCardError':
-					// A declined card error
-					message = err.message; // => e.g. "Your card's expiration year is invalid."
-					break;
-				case 'StripeInvalidRequestError':
-				case 'StripeAPIError':
-				case 'StripeConnectionError':
-				case 'StripeAuthenticationError':
-				default:
-					message = "Server Error. We have been notified, and are working on it. Please try again later.";
-					bugsnag.notify(new Error("Card Processing Error: "+err.type), {
-						error: err,
-						transaction: transaction._id,
-						user: req.user._id
-					})
-			}
-			
-			res.send({
-				status: 400,
-				message: message
-			});
-			
-			return;
-		}
-		
-		console.log(charge);
-		
-		transaction.status = 'complete';
-		transaction.save();
-		
-		var ts = meta.tickets;
-		for (var i = 0; i < ts.length; i++) {
-			ts[i].ticket.quantity -= ts[i].quantity;
-			if (ts[i].ticket.quantity < 0) ts[i].ticket.quantity = 0;
-			ts[i].ticket.save();
-		}
-		
-		addAttendee(ev, req.user)
-		
-		emailConfirmation(req, res, transaction);
-		
-		res.send({
-			status: 200
-		})
-	})
 }
 
 exports.addAttendee = addAttendee = function (ev, user, force) {
@@ -404,7 +263,7 @@ exports.addAttendee = addAttendee = function (ev, user, force) {
 		category: "",
 		hasPaid: true,
 		isAttending: force,
-		user: user._id
+		user: user
 	});
 	
 	models.Event.findById(ev._id, function(err, event) {
@@ -547,126 +406,259 @@ Please do not reply to this email, because we are super popular and probably won
 	});
 }
 
-function getTransactions (req, res) {
-	var __tickets = req.body.tickets;
-	var transactions = [];
+function getTransactionsAPI (req, res) {
 	
-	var transaction = new models.Transaction({
-		event: res.locals.ev._id,
-		user: req.user._id,
-		total: 0,
-		profit: 0,
-		planner: 0,
-		third_party: 0
-	})
+	console.log("Get Transactions".red);
+	// Only one Ticket _ PS19 later to be changed
+	var __tickets;
 	
-	var ts = [];
-	var promo = lookupPromoCode(res.locals.ev, req.body.promotionalCode);
+	var token = req.body.payment_id;
+	var ev = res.locals.ev;
 	
-	for (var i = 0; i < res.locals.ev.tickets.length; i++) {
-		var ticket = res.locals.ev.tickets[i];
-		for (var t = 0; t < __tickets.length; t++) {
-			_id = __tickets[t].id;
-			try {
-				_id = mongoose.Types.ObjectId(_id);
-			} catch (e) {
-				continue;
-			}
+	var query = {'_id': req.body.ticket_id};
+	models.Ticket.find(query)
+	.exec(function(err, event_tickets) {
+		
+		__tickets = event_tickets;
+	
+		var transactions = [];
+		
+		var transaction = new models.Transaction({
+			event: req.params.id,
+			user: req.body._id,
+			total: 0,
+			profit: 0,
+			planner: 0,
+			third_party: 0
+		});
+		
+		models.Event.findOne({_id:req.params.id} , function(err, ev) 
+		{
+			var ts = [];
+			var promo = lookupPromoCode(ev, req.body.promotionalCode);
 			
-			if (ticket._id.equals(_id) && __tickets[t].quantity > 0) {
-				var sold_or_expired = false;
-				var now = new Date();
-				if (ticket.hasSaleDates && !(now.getTime() > ticket.start.getTime() && now.getTime() < ticket.end.getTime())) {
-					sold_or_expired = true;
-				}
-				if (ticket.quantity <= 0) {
-					sold_or_expired = true;
-				}
-				if (__tickets[t].quantity > ticket.quantity) {
-					sold_or_expired = true;
-				}
-				var min = ticket.min_per_order;
-				if (min < 0) min = 0;
-				var max = ticket.max_per_order;
-				if (max < 0) max = 0;
-				
-				if (min != 0 && min > __tickets[t].quantity) {
-					sold_or_expired = true;
-				}
-				if (max != 0 && __tickets[t].quantity > max) {
-					sold_or_expired = true;
-				}
-				
-				if (sold_or_expired) {
-					// valid date range..
-					transaction.status = 'failed';
-					transaction.message = "You tried to purchase tickets which are either sold out or are expired. Please reload the page and try again.";
-					
-					return {
-						tickets: ts,
-						transaction: transaction
-					};
-				}
-				
-				ts.push({
-					ticket: ticket,
-					quantity: __tickets[t].quantity
-				})
-				
-				var name = ticket.name;
-				
-				var em_fee = ticket.price * 0.024 + 0.2;
-				if (ticket.price == 0) {
-					em_fee = 0;
-				}
-				
-				var promoForThisTicket = null;
-				if (promo && promo.ticket._id.equals(ticket._id)) {
-					promoForThisTicket = {
-						code: promo.discount.code,
-						discount: promo.discount.discount
+			
+			models.Ticket.find({'_id': {$in: ev.tickets}} , function(err, these_tickets)
+			{ 
+				for (var i = 0; i < these_tickets.length; i++) {
+					var ticket = these_tickets[i];
+					for (var t = 0; t < __tickets.length; t++) {
+						_id = __tickets[t].id;
+						try {
+							_id = mongoose.Types.ObjectId(_id);
+						} catch (e) {
+							continue;
+						}
+						
+						if (ticket._id.equals(_id) && __tickets[t].quantity > 0) {
+							var sold_or_expired = false;
+							var now = new Date();
+							if (ticket.hasSaleDates && !(now.getTime() > ticket.start.getTime() && now.getTime() < ticket.end.getTime())) {
+								sold_or_expired = true;
+							}
+							if (ticket.quantity <= 0) {
+								sold_or_expired = true;
+							}
+							if (__tickets[t].quantity > ticket.quantity) {
+								sold_or_expired = true;
+							}
+							var min = ticket.min_per_order;
+							if (min < 0) min = 0;
+							var max = ticket.max_per_order;
+							if (max < 0) max = 0;
+							
+							if (min != 0 && min > __tickets[t].quantity) {
+								sold_or_expired = true;
+							}
+							if (max != 0 && __tickets[t].quantity > max) {
+								sold_or_expired = true;
+							}
+							
+							if (sold_or_expired) {
+								
+								// valid date range..
+								transaction.status = 'failed';
+								transaction.message = "You tried to purchase tickets which are either sold out or are expired. Please reload the page and try again.";
+								
+								return {
+									tickets: ts,
+									transaction: transaction
+								};
+							}
+							
+							ts.push({
+								ticket: ticket,
+								quantity: __tickets[t].quantity
+							});
+							
+							var name = ticket.name;
+							
+							var em_fee = ticket.price * 0.024 + 0.2;
+							if (ticket.price == 0) {
+								em_fee = 0;
+							}
+							
+							var promoForThisTicket = null;
+							if (promo && promo.ticket._id.equals(ticket._id)) {
+								promoForThisTicket = {
+									code: promo.discount.code,
+									discount: promo.discount.discount
+								};
+							}
+							
+							var quantity = __tickets[t].quantity;
+							transaction.tickets.push({
+								price: ticket.price,
+								fees: em_fee,
+								quantity: quantity,
+								ticket: ticket._id,
+								name: name,
+								promo: promoForThisTicket
+							});
+							
+							
+							
+							
+							if (promoForThisTicket) {
+								var discount = ticket.price * (promoForThisTicket.discount / 100);
+								var newPrice = ticket.price - discount;
+								var __em_fee = newPrice * 0.024 + 0.2;
+								if (newPrice == 0) {
+									__em_fee = 0;
+								}
+								
+								quantity -= 1;
+								
+								transaction.profit += __em_fee;
+								transaction.planner += newPrice;
+								transaction.total += newPrice + __em_fee;
+							}
+							
+							transaction.profit += em_fee * quantity;
+							transaction.planner += ticket.price * quantity;
+							
+							var ticketPrice = ticket.price + em_fee;
+							var ticketTotal = ticketPrice * quantity;
+							transaction.total += ticketTotal;
+						}
 					}
 				}
 				
-				var quantity = __tickets[t].quantity;
-				transaction.tickets.push({
-					price: ticket.price,
-					fees: em_fee,
-					quantity: quantity,
-					ticket: ticket._id,
-					name: name,
-					promo: promoForThisTicket
-				})
 				
-				if (promoForThisTicket) {
-					var discount = ticket.price * (promoForThisTicket.discount / 100);
-					var newPrice = ticket.price - discount;
-					var __em_fee = newPrice * 0.024 + 0.2;
-					if (newPrice == 0) {
-						__em_fee = 0;
-					}
-					
-					quantity -= 1;
-					
-					transaction.profit += __em_fee;
-					transaction.planner += newPrice;
-					transaction.total += newPrice + __em_fee;
+				if (transaction.status == 'failed') {
+					res.send({
+						status: 400,
+						message: transaction.message
+					});
+					return;
 				}
 				
-				transaction.profit += em_fee * quantity;
-				transaction.planner += ticket.price * quantity;
 				
-				var ticketPrice = ticket.price + em_fee;
-				var ticketTotal = ticketPrice * quantity;
-				transaction.total += ticketTotal;
-			}
-		}
-	}
+				var total = transaction.total;
+				if (total == 0) {
+					// Free tickets
+					transaction.third_party = 0;
+					
+					transaction.status = 'complete';
+					transaction.save();
+					
+					for (var i = 0; i < ts.length; i++) {
+						ts[i].ticket.quantity -= ts[i].quantity;
+						if (ts[i].ticket.quantity < 0) ts[i].ticket.quantity = 0;
+						ts[i].ticket.save();
+					}
+					
+					addAttendee(ev, req.body._id);
+					
+					//emailConfirmation(req, res, transaction);
+					
+					
+					
+					res.send({
+						status: 200
+					});
+					
+					return;
+				}
+				
+				 if (!token) {
+					  res.send({
+						  status: 400
+					  });
+					  return;
+				 }
+ 	
+				//'Reverse the fees'
+				total = (total + 0.2) / (1 - 0.025);
+				
+				transaction.third_party = total - transaction.total;
+				transaction.total = total;
 	
-	return {
-		tickets: ts,
-		transaction: transaction
-	};
+				stripe.charges.create({
+					amount: Math.round(total * 100), //must be in pennies
+					currency: "gbp",
+					card: token,
+					description: "EventMost Tickets",
+					metadata: {
+						transaction: transaction._id
+					}}, function(err, charge) {
+						if (err) {
+							console.log(err);
+							transaction.status = 'failed';
+							transaction.message = err.toString();
+							transaction.save();
+							
+							var message = "";
+							switch (err.type) {
+								case 'StripeCardError':
+									// A declined card error
+									message = err.message; // => e.g. "Your card's expiration year is invalid."
+									break;
+								case 'StripeInvalidRequestError':
+								case 'StripeAPIError':
+								case 'StripeConnectionError':
+								case 'StripeAuthenticationError':
+								default:
+									message = "Server Error. We have been notified, and are working on it. Please try again later.";
+									bugsnag.notify(new Error("Card Processing Error: "+err.type), {
+										error: err,
+										transaction: transaction._id,
+										user: req.body._id
+									});
+							}
+							
+							res.send({
+								status: 400,
+								message: message
+							});
+							
+							return;
+						}
+						
+						console.log(charge);
+						
+						console.log("Transaction Complete".red);
+						transaction.status = 'complete';
+						transaction.save();
+		
+						var ts = meta.tickets;
+						for (var i = 0; i < ts.length; i++) {
+							ts[i].ticket.quantity -= ts[i].quantity;
+							if (ts[i].ticket.quantity < 0) ts[i].ticket.quantity = 0;
+							ts[i].ticket.save();
+						}
+						
+						addAttendee(ev, req.body._id);
+						
+						//emailConfirmation(req, res, transaction);
+						
+						res.send({
+							status: 200
+						});
+					});
+			});
+		});
+	});
 }
 
 function lookupPromoCode (ev, code) {

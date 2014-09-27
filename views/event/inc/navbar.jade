@@ -13,43 +13,44 @@ mixin navbar
 			.pull-right
 				if eventadmin
 					.inline.nspacer-small.pad-right-five
-						.font-x1.bg-purple.center.psev2.prof-wall( style="text-align:left;  background-color:#17a086;")
-							.dropdown(style="padding:0;")
-								a.link-white(href data-toggle="dropdown" )
-									| Planner
-									br
-									| Options
-									img.pad-left-ten(src="/images/menu-tools.svg" style="margin-top:-10px;")
-								ul.dropdown-menu.mif-dropdown(style=" background-color:#f1f1f2;  margin-top:15px; margin-left:-77px;")
-									li 
-										a(href=base+"admin/panel") Edit Event/Ticket Details
-									li
-										a(href=base+"admin/panel") Admin Powers/Controls
-									li
-										a(href=base+"registrationpage/e") Edit Event Appearance	
-										//a(href=base+"admin/logos") Edit Event Appearance
-									li 
-										a(href=base+"admin/summary") Event Analytics/Ticket Sales
-									li.inverted: a(href=base+"admin/feedback")
-										i.fa.fa-star.fa-fw
-										|  Feedback Profiles 
-										i.fa.fa-star.fa-fw
-									li.inverted: a(href=base+"admin/register") Check People In
-									li.inverted: a(href=base+"admin/email") Send Mass Private Messages
+						if (hideArrow == true)
+							.font-x1.bg-purple.center.psev2.prof-wall( style="text-align:left;  background-color:#17a086;")
+								.dropdown(style="padding:0;")
+									a.link-white(href data-toggle="dropdown" )
+										| Planner
+										br
+										| Options
+										img.pad-left-ten(src="/images/menu-tools.svg" style="margin-top:-10px;")
+									ul.dropdown-menu.mif-dropdown(style=" background-color:#f1f1f2;  margin-top:15px; margin-left:-77px;")
+										li 
+											a(href=base+"admin/panel") Edit Event/Ticket Details
+										li
+											a(href=base+"admin/panel") Admin Powers/Controls
+										li 
+											a(href=base+"admin/logos") Edit Event Appearance
+										li 
+											a(href=base+"admin/summary") Event Analytics/Ticket Sales
+										li.inverted: a(href=base+"admin/feedback")
+											i.fa.fa-star.fa-fw
+											|  Feedback Profiles 
+											i.fa.fa-star.fa-fw
+										li.inverted: a(href=base+"admin/register") Check People In
+										li.inverted: a(href=base+"admin/email") Send Mass Private Messages
 				
-				.inline.nspacer-small.pad-right-five
-					.font-x1.bg-purple.center.psev2.prof-wall
-						a.link-white(href= (eventattending == true ? base+"attendee/"+attendee._id : base+"attendees")) My profile <br />
-							img(src="/images/menu-profile.svg", alt="", style="")
-				//.inline.nspacer-small.pad-right-five
-					.font-x1.bg-purple.psev2.prof-wall
-						a.link-white(href=base+"registrationpage/n") Registration
-							br
-							| page
-							img.pad-left-ten(src="/images/menu-registration.svg", alt="", style="")
-				.inline.nspacer-small
-					.font-x1.bg-purple.center.psev2.prof-wall
-						a.link-white(href=base+"dropbox") Event dropbox <br />
-							img(src="/images/menu-drop.svg", alt="", style="")
+				//-
+					.inline.nspacer-small.pad-right-five
+						.font-x1.bg-purple.center.psev2.prof-wall
+							a.link-white(href= (eventattending == true ? base+"attendee/"+attendee._id : base+"attendees")) My profile <br />
+								img(src="/images/menu-profile.svg", alt="", style="")
+					//.inline.nspacer-small.pad-right-five
+						.font-x1.bg-purple.psev2.prof-wall
+							a.link-white(href=base+"registrationpage/n") Registration
+								br
+								| page
+								img.pad-left-ten(src="/images/menu-registration.svg", alt="", style="")
+					.inline.nspacer-small
+						.font-x1.bg-purple.center.psev2.prof-wall
+							a.link-white(href=base+"dropbox") Event dropbox <br />
+								img(src="/images/menu-drop.svg", alt="", style="")
 			.clearfix
 	.clearfix
