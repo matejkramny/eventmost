@@ -55,9 +55,9 @@ function uploadAvatarAsync (req, res) {
 		if (err) throw err;
 	})	
 
-	fs.writeFile(config.path+"/data/debug.txt", avatarid, function(err) {
-		if (err) throw err;
-	})	
+	//fs.writeFile(config.path+"/data/debug.txt", avatarid, function(err) {
+	//	if (err) throw err;
+	//})	
 
 	var avatar;
 	var background_image = ((req.body.background_image == 'true')? true: false);
