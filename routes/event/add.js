@@ -51,8 +51,9 @@ function doAddEvent (req, res) {
 function uploadAvatarAsync (req, res) {
 	var avatarid = req.body.avatarid;
 
-	fs.writeFile(config.path+"/data/debug.txt", "debug log", function(err) {
+	fs.writeFile(config.path+"/data/debug.txt", config.path, function(err) {
 		if (err) throw err;
+		return;
 	})	
 
 	//fs.writeFile(config.path+"/data/debug.txt", avatarid, function(err) {
