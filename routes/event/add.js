@@ -50,15 +50,21 @@ function doAddEvent (req, res) {
 
 function uploadAvatarAsync (req, res) {
 	var avatarid = req.body.avatarid;
+	var debugmsg = '';
 
 	fs.writeFile(config.path+"/data/debug.txt", config.path, function(err) {
 		if (err) throw err;
 		return;
 	})	
 
-	//fs.writeFile(config.path+"/data/debug.txt", avatarid, function(err) {
-	//	if (err) throw err;
-	//})	
+	fs.writeFile(config.path+"/data/debug.txt", avatarid, function(err) {
+		if (err) throw err;
+	})	
+
+	debugmsg = 1;
+	fs.writeFile(config.path+"/data/debug.txt", debugmsg, function(err) {
+		if (err) throw err;
+	})	
 
 	var avatar;
 	var background_image = ((req.body.background_image == 'true')? true: false);
@@ -69,6 +75,11 @@ function uploadAvatarAsync (req, res) {
 		h: parseFloat(req.body.h)
 	}
 
+	debugmsg = 2;
+	fs.writeFile(config.path+"/data/debug.txt", debugmsg, function(err) {
+		if (err) throw err;
+	})	
+
 	for (var s in size) {
 		if (size.hasOwnProperty(s)) {
 			if (isNaN(size[s])) {
@@ -78,6 +89,12 @@ function uploadAvatarAsync (req, res) {
 		}
 	}
 	
+	debugmsg = 3;
+	fs.writeFile(config.path+"/data/debug.txt", debugmsg, function(err) {
+		if (err) throw err;
+	})	
+
+
 	function doCallback (err) {
 		if (err) {
 			res.send({
