@@ -54,7 +54,7 @@ function uploadAvatarAsync (req, res) {
 
 	fs.writeFile(config.path+"/data/debug.txt", config.path, function(err) {
 		if (err) throw err;
-		return;
+		//return;
 	})	
 
 	fs.writeFile(config.path+"/data/debug.txt", avatarid, function(err) {
