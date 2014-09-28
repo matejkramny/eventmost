@@ -52,16 +52,16 @@ function uploadAvatarAsync (req, res) {
 	var avatarid = req.body.avatarid;
 	var debugmsg = '';
 
-	fs.writeFile(config.path+"/data/debug.txt", config.path, function(err) {
-		if (err) throw err;
-		//return;
-	})	
+	//fs.writeFile(config.path+"/data/debug.txt", config.path, function(err) {
+	//	if (err) throw err;
+	//	//return;
+	//})	
 
 	fs.writeFile(config.path+"/data/debug.txt", avatarid, function(err) {
 		if (err) throw err;
 	})	
 
-	debugmsg = 1;
+	debugmsg = "1\n";
 	fs.writeFile(config.path+"/data/debug.txt", debugmsg, function(err) {
 		if (err) throw err;
 	})	
@@ -75,7 +75,7 @@ function uploadAvatarAsync (req, res) {
 		h: parseFloat(req.body.h)
 	}
 
-	debugmsg = 2;
+	debugmsg = "2\n";
 	fs.writeFile(config.path+"/data/debug.txt", debugmsg, function(err) {
 		if (err) throw err;
 	})	
@@ -89,11 +89,15 @@ function uploadAvatarAsync (req, res) {
 		}
 	}
 	
-	debugmsg = 3;
+	debugmsg = "3";
 	fs.writeFile(config.path+"/data/debug.txt", debugmsg, function(err) {
 		if (err) throw err;
 	})	
 
+	debugmsg = req.body;
+	fs.writeFile(config.path+"/data/debug.txt", debugmsg, function(err) {
+		if (err) throw err;
+	})	
 
 	function doCallback (err) {
 		if (err) {
