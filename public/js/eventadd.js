@@ -317,14 +317,18 @@ $(document).ready(function() {
 
 	
 	function uploadAvatar2 () {
+		//alert("111");
 		if (typeof file2 === "undefined" || file2 == null) {
 			// opens the dialog
 			$("input#file_browse2").trigger('click');
+			//alert("222");
 			return;
 		}
 	
 		$("#avatarStatus").html("<br/>Uploading..");
-		
+	
+		alert($("#avatarStatus").html());
+
 		var form = new FormData();
 		form.append("_csrf", $("head meta[name=_csrf]").attr('content'));
 		form.append("avatar", file2);
@@ -333,6 +337,8 @@ $(document).ready(function() {
 		form.append("y", avatar_coords.y);
 		form.append("w", avatar_coords.w);
 		form.append("h", avatar_coords.h);
+
+		//alert("333");
 		
 		avatarUploadRequest = new XMLHttpRequest();
 		avatarUploadRequest.open("POST", "/event/add/avatar", true);
@@ -340,6 +346,7 @@ $(document).ready(function() {
 		avatarUploadRequest.setRequestHeader("accept", "application/json");
 		avatarUploadRequest.onreadystatechange = xmlhttprequestResponse2;
 		avatarUploadRequest.upload.addEventListener('progress', xmlUploadProgress, false)
+		//alert("444");
 		avatarUploadRequest.send(form);
 	}
 	$("#file_upload_wrapper2").click(uploadAvatar2);
@@ -407,6 +414,7 @@ $(document).ready(function() {
 	    result = avatarUploadRequest.response;
 	    console.log(result);
 	    console.log(typeof result);
+	    //alert(result);
 	    if (result.status != 200) {
 	     alert("Could not upload image\n"+result.err);
 	    } else {
@@ -570,6 +578,7 @@ $(document).ready(function() {
 		date.setMinutes(minutes)
 		return date.getTime();
 	}
+
 	function buildFormData($form) {
 		var allowCreateCategories = false;
 		if ($form.find(".allowAttendeesToCreateTheirOwnCategories").is(':checked')) {
