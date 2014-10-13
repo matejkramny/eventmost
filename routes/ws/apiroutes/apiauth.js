@@ -47,6 +47,7 @@ exports.router = function (app) {
 	app.post('/api/auth/password',doPasswordLogin)
 		.post('/api/register', registerUser)
 		.post('/api/auth/password_reset', doPasswordReset)
+		.post('/api/auth/changepassword', change_password)
 		.get('/api/auth/password_reset/:id', findPasswordReset)
 		.post('/api/auth/password_reset/:id', performPasswordReset)
 		.get('/api/auth/facebook', saveSocialRedirect, passport.authenticate('facebook', { scope: 'email' }))
@@ -482,4 +483,51 @@ function doLogin (req, res) {
 	}
 	
 	return completeLogin(req, res, uid);
+}
+
+function change_password(req, res){
+
+	var user_id = req.body._id;
+	var email = req.body.email;
+	var oldpassword = req.body.oldpassword;
+	var newpassword = req.body.newpassword;
+	var response = null;
+
+	oldpassword = models.User.getHash(oldpassword);
+	newpassword = models.User.getHash(newpassword);
+
+	var query = {
+		_id : mongoose.Types.ObjectId(user_id),
+		email : email,
+		password : oldpassword
+	}
+
+	models.User.findOne(query).exec(function (err, user){
+		if (user) {
+
+			models.User.update(query, {$set : {password: newpassword}}, function (err){
+				res.format({
+					json: function() {
+						res.send({
+							status : 200,
+							changeStatus : "OK",
+							user : user
+						});
+					}
+				});
+				return;
+			});
+		}else{
+			res.format({
+				json: function() {
+					res.send({
+						status : 404,
+						message : "Invalid Information",
+						err : err
+					});
+				}
+			});
+			return;
+		}
+	});
 }
