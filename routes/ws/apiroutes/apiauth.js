@@ -508,7 +508,7 @@ function change_password(req, res){
 			models.User.update(query, {$set : {password: newpassword}}, function (err){
 				user.password = newpassword;
 
-				var options = {
+				/*var options = {
 					from: "EventMost <notifications@eventmost.com>",
 					to: email+" <"+email+">",
 					subject: "Password Change Notification",
@@ -527,7 +527,7 @@ function change_password(req, res){
 					if (err) throw err;
 			
 					console.log("Email sent.."+response.message)
-				});
+				});*/
 
 				res.format({
 					json: function() {
