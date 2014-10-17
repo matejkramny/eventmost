@@ -507,6 +507,26 @@ function change_password(req, res){
 
 			models.User.update(query, {$set : {password: newpassword}}, function (err){
 				user.password = newpassword;
+				
+				var options = {
+					from: "EventMost <notifications@eventmost.com>",
+					to: email+" <"+email+">",
+					subject: "Password Change Notification",
+					html: "<img src=\"http://eventmost.com/images/logo.svg\">\
+			<br/><br/><p><strong>Hi ,</strong><br/><br/>Your password was changed at "+moment().format('DD/MM/YYYY HH:mm:ss')+".<br/>If you have not authorised this, please contact us <strong>IMMEDIATELY</strong> at <a href='mailto:support@eventmost.com'>support@eventmost.com</a>"
+				}
+				if (!config.transport_enabled) {
+					console.log("Transport not enabled!")
+					console.log(options);
+					return;
+				}
+				
+				transport.sendMail(options, function(err, response) {
+					if (err) throw err;
+			
+					console.log("Email sent.."+response.message)
+				});
+
 				res.format({
 					json: function() {
 						res.send({
