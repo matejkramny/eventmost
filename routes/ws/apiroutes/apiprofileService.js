@@ -105,11 +105,12 @@ exports.doEditProfileAPI = doEditProfileAPI = function (req, res) {
 	var errors = [];
 	//var u = new models.User();
 	
+	//console.log(u);
 	models.User.findOne({_id:req.body._id} , function(err, u) {
 	
 	
 	console.log("/api/profile/edit".red);
-	
+	console.log (req.body);
 	var blocking = false;
 	var cb = function () {
 		console.log(u);
@@ -166,47 +167,72 @@ exports.doEditProfileAPI = doEditProfileAPI = function (req, res) {
 	}
 	
 	//Privacy
-	if (typeof req.body.showProfile !== 'undefined') {
-		u.privacy.showProfile = req.body.showProfile == 'yes' ? true : false;
-	}
-	if (typeof req.body.allowLocation !== 'undefined') {
-		u.privacy.allowLocation = req.body.allowLocation == 'yes' ? true : false;
+	if (typeof req.body.allowPM !== 'undefined') {
+		u.privacy.allowPM = req.body.allowPM;
+		
 	}
 	if (typeof req.body.allowWall !== 'undefined') {
-		u.privacy.allowWall = req.body.allowWall == 'yes' ? true : false;
+		u.privacy.allowWall = req.body.allowWall;
 	}
-	if (typeof req.body.allowPM !== 'undefined') {
-		u.privacy.allowPM = req.body.allowPM == 'yes' ? true : false;
+	if (typeof req.body.allowLocation !== 'undefined') {
+
+		u.privacy.allowLocation = req.body.allowLocation;
 	}
+	if (typeof req.body.showProfile !== 'undefined') {
+		
+		u.privacy.showProfile = req.body.showProfile;
+		}
+	
+	
+		
+	
+	
 	
 	//Notification - Email Stuff 
 	if (typeof req.body.emailPrivateMessages !== 'undefined') {
-		u.notification.email.privateMessages = req.body.emailPrivateMessages == 'yes' ? true : false;
+		//u.notification.email.privateMessages = req.body.emailPrivateMessages == 'yes' ? true : false;
+		u.notification.email.privateMessages = req.body.emailPrivateMessages;
+	
 	}
 	if (typeof req.body.emailBusinessCards !== 'undefined') {
-		u.notification.email.businessCards = req.body.emailBusinessCards == 'yes' ? true : false;
+		//u.notification.email.businessCards = req.body.emailBusinessCards == 'yes' ? true : false;
+		u.notification.email.businessCards = req.body.emailBusinessCards;
 	}
 	if (typeof req.body.emailComments !== 'undefined') {
-		u.notification.email.comments = req.body.emailComments == 'yes' ? true : false;
+		//u.notification.email.comments = req.body.emailComments == 'yes' ? true : false;
+		//console.log(req.body.emailComments);
+		u.notification.email.comments = req.body.emailComments;
 	}
 	if (typeof req.body.emailSavedProfile !== 'undefined') {
-		u.notification.email.savedProfile = req.body.emailSavedProfile == 'yes' ? true : false;
+		//u.notification.email.savedProfile = req.body.emailSavedProfile == 'yes' ? true : false;
+		//console.log(req.body.emailSavedProfile);
+		u.notification.email.savedProfile = req.body.emailSavedProfile;
 	}
 	//Notification - Mobile Stuff 
 	if (typeof req.body.mobilePrivateMessages !== 'undefined') {
-		u.notification.mobile.privateMessages = req.body.mobilePrivateMessages == 'yes' ? true : false;
+		//u.notification.mobile.privateMessages = req.body.mobilePrivateMessages == 'yes' ? true : false;
+		//console.log(req.body.mobilePrivateMessages);
+		u.notification.mobile.privateMessages = req.body.mobilePrivateMessages;
 	}
 	if (typeof req.body.mobileBusinessCards !== 'undefined') {
-		u.notification.mobile.businessCards = req.body.mobileBusinessCards == 'yes' ? true : false;
+		//u.notification.mobile.businessCards = req.body.mobileBusinessCards == 'yes' ? true : false;
+			//console.log(req.body.mobileBusinessCards);
+		u.notification.mobile.businessCards = req.body.mobileBusinessCards;
 	}
 	if (typeof req.body.mobileComments !== 'undefined') {
-		u.notification.mobile.comments = req.body.mobileComments == 'yes' ? true : false;
+		//u.notification.mobile.comments = req.body.mobileComments == 'yes' ? true : false;
+		//console.log(req.body.mobileComments);
+		u.notification.mobile.comments = req.body.mobileComments;
 	}
 	if (typeof req.body.mobileSavedProfile !== 'undefined') {
-		u.notification.mobile.savedProfile = req.body.mobileSavedProfile == 'yes' ? true : false;
+		//u.notification.mobile.savedProfile = req.body.mobileSavedProfile == 'yes' ? true : false;
+		//console.log(req.body.mobileSavedProfile);
+		u.notification.mobile.savedProfile = req.body.mobileSavedProfile;
 	}
 	if (typeof req.body.mobileMessage !== 'undefined') {
-		u.notification.mobile.messages = req.body.mobileMessage == 'yes' ? true : false;
+		//u.notification.mobile.messages = req.body.mobileMessage == 'yes' ? true : false;
+		//console.log(req.body.mobileMessage);
+		u.notification.mobile.messages = req.body.mobileMessage;
 	}
 	
 
