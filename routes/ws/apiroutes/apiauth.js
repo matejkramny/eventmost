@@ -506,6 +506,7 @@ function change_password(req, res){
 		if (user) {
 
 			models.User.update(query, {$set : {password: newpassword}}, function (err){
+				user.password = newpassword;
 				res.format({
 					json: function() {
 						res.send({

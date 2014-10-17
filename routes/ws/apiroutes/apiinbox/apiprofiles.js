@@ -8,6 +8,8 @@ var fs = require('fs')
 exports.router = function (app) {
 	app.post('/api/inbox/savedProfiles', exports.showSavedProfilesAPI)
 	app.post('/api/inbox/saverProfiles', exports.showSaverProfilesAPI)
+	app.post('/api/privacysetting', privacysettings)
+	app.post('/api/notificationsetting', notificationsettings)
 }
 
 exports.showSavedProfilesAPI = function (req, res) {
@@ -50,4 +52,166 @@ exports.showSaverProfilesAPI = function (req, res) {
 				});
 			}
 		});
+}
+
+function notificationsettings(req, res){
+	var user_id = req.body._id;
+	var messages = req.body.messages;
+	var savedProfile = req.body.savedProfile;
+	var	comments = req.body.comments;
+	var businessCards = req.body.businessCards;
+	var privateMessages = req.body.privateMessages;
+
+	var query = {
+		_id : mongoose.Types.ObjectId(user_id)
+	}
+
+	if(messages == 1){
+		messages = true;
+	}else{
+		messages = false;
+	}
+
+	if(savedProfile == 1){
+		savedProfile = true;
+	}else{
+		savedProfile = false;
+	}
+
+	if(comments == 1){
+		comments = true;
+	}else{
+		comments = false;
+	}
+
+	if(businessCards == 1){
+		businessCards = true;
+	}else{
+		businessCards = false;
+	}
+
+	if(privateMessages == 1){
+		privateMessages = true;
+	}else{
+		privateMessages = false;
+	}
+
+
+	var updatedValues = {
+		"messages" : messages,
+		"savedProfile" : savedProfile,
+		"comments" : comments,
+		"businessCards" : businessCards,
+		"privateMessages" : privateMessages
+	}
+
+	models.User.findOne(query).exec(function (err, user){
+		if (user) {
+
+			models.User.update(query, {$set : {"notification.mobile" : updatedValues}}, function (err){
+
+				user.notification.mobile = updatedValues;
+				res.format({
+					json: function() {
+						res.send({
+							status : 200,
+							updateStatus : "OK",
+							user : user
+						});
+					}
+				});
+				return;
+			});
+		}else{
+			res.format({
+				json: function() {
+					res.send({
+						status : 404,
+						message : "Invalid Information",
+						err : err
+					});
+				}
+			});
+			return;
+		}
+	});
+}
+
+
+
+
+function privacysettings(req, res){
+	var user_id = req.body._id;
+	var showProfile = req.body.showProfile;
+	var allowLocation = req.body.allowLocation;
+	var	allowWall = req.body.allowWall;
+	var allowPM = req.body.allowPM;
+
+	var query = {
+		_id : mongoose.Types.ObjectId(user_id)
+	}
+
+	if(showProfile == 1){
+		showProfile = true;
+	}else{
+		showProfile = false;
+	}
+
+	if(allowLocation == 1){
+		allowLocation = true;
+	}else{
+		allowLocation = false;
+	}
+
+	if(allowWall == 1){
+		allowWall = true;
+	}else{
+		allowWall = false;
+	}
+
+	if(allowPM == 1){
+		allowPM = true;
+	}else{
+		allowPM = false;
+	}
+
+	//if(showProfile != '' && allowLocation != '' && allowWall != '' && allowPM != '')
+
+	var updatedValues = {
+		"showProfile" : showProfile,
+		"allowLocation" : allowLocation,
+		"allowWall" : allowWall,
+		"allowPM" : allowPM
+	}
+
+	models.User.findOne(query).exec(function (err, user){
+		if (user) {
+
+			models.User.update(query, {$set : {privacy : updatedValues}}, function (err){
+
+				user.privacy = updatedValues;
+				res.format({
+					json: function() {
+						res.send({
+							status : 200,
+							updateStatus : "OK",
+							user : user
+						});
+					}
+				});
+				return;
+			});
+		}else{
+			res.format({
+				json: function() {
+					res.send({
+						status : 404,
+						message : "Invalid Information",
+						err : err
+					});
+				}
+			});
+			return;
+		}
+	});
 }
