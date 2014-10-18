@@ -143,7 +143,7 @@ function notificationsettings(req, res){
 	models.User.findOne(query).exec(function (err, user){
 		if (user) {
 
-			models.User.update(query, {$set : {"notification.mobile" : updatedValues, , "notification.email" : updatedValuesEmail}}, function (err){
+			models.User.update(query, {$set : {"notification.mobile" : updatedValues , "notification.email" : updatedValuesEmail}}, function (err){
 
 				user.notification.mobile = updatedValues;
 				user.notification.email = updatedValuesEmail;
