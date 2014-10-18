@@ -61,6 +61,11 @@ function notificationsettings(req, res){
 	var	comments = req.body.comments;
 	var businessCards = req.body.businessCards;
 	var privateMessages = req.body.privateMessages;
+	var e_savedProfile = req.body.e_savedProfile;
+	var	e_comments = req.body.e_comments;
+	var e_businessCards = req.body.e_businessCards;
+	var e_privateMessages = req.body.e_privateMessages;
+
 
 	var query = {
 		_id : mongoose.Types.ObjectId(user_id)
@@ -95,6 +100,29 @@ function notificationsettings(req, res){
 	}else{
 		privateMessages = false;
 	}
+	if(e_savedProfile == 1){
+		e_savedProfile = true;
+	}else{
+		e_savedProfile = false;
+	}
+
+	if(e_comments == 1){
+		e_comments = true;
+	}else{
+		e_comments = false;
+	}
+
+	if(e_businessCards == 1){
+		e_businessCards = true;
+	}else{
+		e_businessCards = false;
+	}
+
+	if(e_privateMessages == 1){
+		e_privateMessages = true;
+	}else{
+		e_privateMessages = false;
+	}
 
 
 	var updatedValues = {
@@ -105,12 +133,20 @@ function notificationsettings(req, res){
 		"privateMessages" : privateMessages
 	}
 
+	var updatedValuesEmail = {
+		"savedProfile" : e_savedProfile,
+		"comments" : e_comments,
+		"businessCards" : e_businessCards,
+		"privateMessages" : e_privateMessages
+	}
+
 	models.User.findOne(query).exec(function (err, user){
 		if (user) {
 
-			models.User.update(query, {$set : {"notification.mobile" : updatedValues}}, function (err){
+			models.User.update(query, {$set : {"notification.mobile" : updatedValues, , "notification.email" : updatedValuesEmail}}, function (err){
 
 				user.notification.mobile = updatedValues;
+				user.notification.email = updatedValuesEmail;
 				res.format({
 					json: function() {
 						res.send({
