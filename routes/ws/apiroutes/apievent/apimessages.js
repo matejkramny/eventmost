@@ -17,9 +17,10 @@ function getCommentsAPI (req, res) {
 	// Found the Event currently requested by user.
 	models.Event.findOne({_id:req.params.id} , function(err, event) 
 	{
+		
 		// Fetch Messages By One By One.
 		var query = {'_id': {$in: event.messages}};
-		
+		console.log(req.body);
 		models.EventMessage.find(query)
 		.populate({path: 'attendee'})
 		.select('attendee posted message spam isResponse likes')
@@ -51,6 +52,9 @@ function likeCommentAPI (req, res) {
 	
 	try {
 		models.EventMessage.findById(cid, function(err, comment) {
+			 var posted = comment.posted
+			
+				console.log(posted);
 			if (err || !comment) {
 				res.format({
 					json: function() {
@@ -59,11 +63,13 @@ function likeCommentAPI (req, res) {
 				})
 				return;
 			}
+				
+			var att=req.body.attendee;
 			
-			var att = res.locals.attendee;
 			var found = false;
+		
 			for (var i = 0; i < comment.likes.length; i++) {
-				if (comment.likes[i].equals(att._id)) {
+				if (comment.likes[i].equals(att)) {
 					found = true;
 					break;
 				}
@@ -79,16 +85,20 @@ function likeCommentAPI (req, res) {
 					}
 				})
 			} else {
-				comment.likes.push(att._id);
+				comment.likes.push(att);
 				comment.save();
 				
-				socket.notifyLike(res.locals.ev, comment, att)
-				
+				//socket.notifyLike(res.locals.ev, comment, att)
+				var totalLikes=comment.likes.length
+			
 				res.format({
 					json: function() {
 						res.send({
 							status: 200,
-							message: "Liked"
+							message: "Liked",
+							posted:posted,
+					        likes:totalLikes
+							
 						})
 					}
 				})
