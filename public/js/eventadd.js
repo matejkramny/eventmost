@@ -290,7 +290,7 @@ $(document).ready(function() {
 	function uploadAvatar () {
 		if (typeof file === "undefined" || file == null) {
 			// opens the dialog
-			$("input#file_browse1").trigger('click');
+			//$("input#file_browse1").trigger('click');
 			return;
 		}
 	
@@ -300,11 +300,16 @@ $(document).ready(function() {
 		form.append("_csrf", $("head meta[name=_csrf]").attr('content'));
 		form.append("avatar", file);
 		form.append("background_image", background_image);
-		form.append("x", avatar_coords.x);
+		/*form.append("x", avatar_coords.x);
 		form.append("y", avatar_coords.y);
 		form.append("w", avatar_coords.w);
-		form.append("h", avatar_coords.h);
-		
+		form.append("h", avatar_coords.h);*/
+
+		form.append("x", $("#x1").val());
+		form.append("y", $("#y1").val());
+		form.append("w", $("#w").val());
+		form.append("h", $("#h").val());
+
 		avatarUploadRequest = new XMLHttpRequest();
 		avatarUploadRequest.open("POST", "/event/add/avatar", true);
 		avatarUploadRequest.responseType = "json";
@@ -312,33 +317,31 @@ $(document).ready(function() {
 		avatarUploadRequest.onreadystatechange = xmlhttprequestResponse;
 		avatarUploadRequest.upload.addEventListener('progress', xmlUploadProgress, false)
 		avatarUploadRequest.send(form);
+
+		
 	}
 	$("#file_upload_wrapper1").click(uploadAvatar);
 
 	
 	function uploadAvatar2 () {
-		//alert("111");
 		if (typeof file2 === "undefined" || file2 == null) {
 			// opens the dialog
-			$("input#file_browse2").trigger('click');
-			//alert("222");
+			//$("input#file_browse2").trigger('click');
 			return;
 		}
 	
 		$("#avatarStatus").html("<br/>Uploading..");
-	
-		alert($("#avatarStatus").html());
-
+		
 		var form = new FormData();
 		form.append("_csrf", $("head meta[name=_csrf]").attr('content'));
 		form.append("avatar", file2);
 		form.append("background_image", background_image);
-		form.append("x", avatar_coords.x);
-		form.append("y", avatar_coords.y);
-		form.append("w", avatar_coords.w);
-		form.append("h", avatar_coords.h);
+		
 
-		//alert("333");
+		form.append("x", $("#x12").val());
+		form.append("y", $("#y12").val());
+		form.append("w", $("#w2").val());
+		form.append("h", $("#h2").val());
 		
 		avatarUploadRequest = new XMLHttpRequest();
 		avatarUploadRequest.open("POST", "/event/add/avatar", true);
@@ -346,27 +349,60 @@ $(document).ready(function() {
 		avatarUploadRequest.setRequestHeader("accept", "application/json");
 		avatarUploadRequest.onreadystatechange = xmlhttprequestResponse2;
 		avatarUploadRequest.upload.addEventListener('progress', xmlUploadProgress, false)
-		//alert("444");
 		avatarUploadRequest.send(form);
+
 	}
 	$("#file_upload_wrapper2").click(uploadAvatar2);
 	
 	$(".file_delete_wrapper").click(function() {
+		
 		file = null;
 		avatarUploadRequest = null;
 		
-		$(".avatar_preview").attr('src', '/images/logo-avatar.svg');
-		$("#file_browse").attr("name", "avatar");
-		$(".avatarStatus").html("");
-		
-		if (avatar_id.length == 0) {
-			return;
-		}
+		$("#thumb").attr('src', '/images/logo-avatar.svg');
+		$("#thumb").attr('style', '');
+		$("#file_browse1").attr("value", "");
+		$("#info-m").html("Avatar has been removed");
+		jcrop_api.destroy();
+		$("#image_div").hide();
 		
 		$.ajax({
 			url: "/event/"+avatar_id+"/avatar/remove",
 			type: "GET"
 		})
+	});
+
+	$(".file_delete_wrapper2").click(function() {
+		
+		file = null;
+		avatarUploadRequest = null;
+		
+		$("#thumb2").attr('src', '/images/logo-avatar.svg');
+		$("#thumb2").attr('style', '');
+		$("#file_browse2").attr("value", "");
+		$("#info-m2").html("Avatar has been removed");
+		jcrop_api2.destroy();
+		$("#image_div2").hide();
+		$.ajax({
+			url: "/event/"+avatar_id+"/avatar/remove",
+			type: "GET"
+		})
+	});
+
+	$("#cropButton1").click(function (){
+
+		$("#info-m").html("Image Cropped!");
+		$("#image_div").hide();
+
+		uploadAvatar();
+	});
+
+	$("#cropButton2").click(function (){
+
+		$("#info-m2").html("Image Cropped!");
+		$("#image_div2").hide();
+
+		uploadAvatar2();
 	});
 	
 	function updateProgress(perc) {
@@ -414,7 +450,6 @@ $(document).ready(function() {
 	    result = avatarUploadRequest.response;
 	    console.log(result);
 	    console.log(typeof result);
-	    //alert(result);
 	    if (result.status != 200) {
 	     alert("Could not upload image\n"+result.err);
 	    } else {
@@ -578,7 +613,6 @@ $(document).ready(function() {
 		date.setMinutes(minutes)
 		return date.getTime();
 	}
-
 	function buildFormData($form) {
 		var allowCreateCategories = false;
 		if ($form.find(".allowAttendeesToCreateTheirOwnCategories").is(':checked')) {
@@ -625,7 +659,12 @@ $(document).ready(function() {
 	}
 	
 	var isLoading = false;
-	$(".eventSubmitBtn").click(function() {
+	$(".eventSubmitBtn").click(submitThisEvent);
+
+	function submitThisEvent() {
+		uploadAvatar();
+		uploadAvatar2();
+
 		if (isLoading) {
 			return;
 		}
@@ -676,7 +715,7 @@ $(document).ready(function() {
 				isLoading = false;
 			}
 		})
-	});
+	}
 	
 	// Invitation link select all text inside it
 	$("#invitationLink").click(function(ev) {

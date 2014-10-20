@@ -6,7 +6,7 @@ append addonjs
 	script(src="/js/crop/jquery.Jcrop.min.js", defer)
 	script(src="/js/crop/script.js", defer)
 	script(src="/js/vendor/jquery-ui-1.10.3.custom.min.js" defer)
-	script(src="/js/datepicker.js?v=#{versionHash}", defer)
+	script(src="/js/datepicker.js", defer)
 	script(src="/js/vendor/tiny.editor.packed.js", defer)
 	script(src="/js/vendor/jquery.jcarousel.min.js", defer)
 	script(src="/js/vendor/jquery.zclip.min.js", defer)
@@ -15,7 +15,7 @@ append addonjs
 		script.
 			window.emEvent = !{JSON.stringify(ev)}
 		
-	script(src="/js/eventadd.js?v=#{versionHash}" defer)
+	script(src="/js/eventadd.js" defer)
 
 
 append content
@@ -67,7 +67,7 @@ append content
 						img(src="/images/upload-pin-s1.svg")
 						.center
 							| Upload
-					button.btn.btn-warning.hide-all2.file_delete_wrapper(type='button', style="border-radius: 10px; padding:5px; padding-top:15px; width:32%; margin-top:-15px;")
+					button.btn.btn-warning.hide-all2.file_delete_wrapper(type='button',  style="border-radius: 10px; padding:5px; padding-top:15px; width:32%; margin-top:-15px;")
 						img(src="/images/bin1.svg")
 						.center
 							| Delete
@@ -371,10 +371,11 @@ append content
 								input#file_browse1.file_browse(type='file', name='avatar1')
 					//- crop toll upload button when pressed  upload.php
 					.pull-left.button-event
-							#file_upload_wrapper1.file_upload_wrapper(style="margin-left:4px;")
-								input#file_upload1.file_upload(type='submit', style='', value='Upload')
+							//-
+								#file_upload_wrapper1.file_upload_wrapper(style="margin-left:4px;")
+									input#file_upload1.file_upload(type='submit', style='', value='Upload')
 
-					a.pad-left-five.pull-left.button-event.file_delete_wrapper(href="#" style="text-decoration:none !important;")
+					a.pad-left-five.pull-left.button-event.file_delete_wrapper(href="#", style="text-decoration:none !important;")
 						.bg-yellow-rounded.center.create-height
 							img.uploads(src="/images/delete-bin.svg")
 							img.uploads2(src="/images/delete-bin-s.svg")
@@ -385,7 +386,13 @@ append content
 					#info-m.info-m(style='display: none;')
 						| Select part of image you want to crop
 					#image_div(style='display: none;')
+						.a(id="cropButton1")
+							#crop_div(style='float: right; margin-right:10%')
+								h3(style="float:left")
+									| Crop 
+									img(src='/images/crop.jpeg', width="30", heigth="30")
 						img#load_img(src='')
+
 					#error.error(style='display: none;')
 					.clearfix
 
@@ -429,10 +436,11 @@ append content
 								//- previous upload file with different name input#file_browse2.file_browse(name="avatar", type="file")
 					//- crop toll upload button when pressed  upload.php
 					.pull-left.button-event(ng-show="background")
+						//-
 							#file_upload_wrapper2.file_upload_wrapper(style="margin-left:4px;")
 								input#file_upload2.file_upload(type='submit', style='', value='Upload')
 
-					a.pad-left-five.pull-left.button-event.file_delete_wrapper(href="#" style="text-decoration:none !important;" ng-show="background")
+					a.pad-left-five.pull-left.button-event.file_delete_wrapper2(href="#" style="text-decoration:none !important;" ng-show="background")
 						.bg-yellow-rounded.center.create-height
 							img.uploads(src="/images/delete-bin.svg")
 							img.uploads2(src="/images/delete-bin-s.svg")
@@ -443,6 +451,11 @@ append content
 					#info-m2.info-m(style='display: none;')
 						| Select part of image you want to crop
 					#image_div2(style='display: none;')
+						.a(id="cropButton2")
+							#crop_div(style='float: right; margin-right:10%')
+								h3(style="float:left")
+									| Crop 
+									img(src='/images/crop.jpeg', width="30", heigth="30")
 						img#load_img2(src='')
 					#error2.error(style='display: none;')
 					.clearfix

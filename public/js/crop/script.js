@@ -20,8 +20,8 @@ $(document).ready(function(){
         }
         
         // Check the size of selected image if it is greater than 250 kb or not
-        else if (selectedImg.size > 250 * 1024) {
-            $('#error').html('The file you selected is too big. Max file size limit is 250 KB').fadeIn(500);
+        else if (selectedImg.size > 2048 * 1024) {
+            $('#error').html('The file you selected is too big. Max file size limit is 2MB').fadeIn(500);
             $('#info-m').html('Select part of image you want to crop').fadeIn(500);
             flag++;
             isError = true;
@@ -58,9 +58,11 @@ $(document).ready(function(){
                 // initialize Jcrop Plugin on the selected image
                 $('#load_img').Jcrop({
                     minSize: [33, 17], // min crop size
-                    aspectRatio: 312/158, //keep aspect ratio
+                    //aspectRatio: 312/158, //keep aspect ratio
                     bgFade: true, // use fade effect
                     bgOpacity: .3, // fade opacity
+                    boxWidth : 800,
+                    boxHeight : 800,
                     onChange: showThumbnail,
                     onSelect: showThumbnail
                 }, function(){
@@ -72,6 +74,7 @@ $(document).ready(function(){
 
                     // Store the Jcrop API in the jcrop_api variable
                     jcrop_api = this;
+                    $('#info-m').html('Select part of image you want to crop').fadeIn(500);
                 });
             };
         };
@@ -101,8 +104,8 @@ $(document).ready(function(){
         }
         
         // Check the size of selected image if it is greater than 250 kb or not
-        else if (selectedImg.size > 250 * 1024) {
-            $('#error2').html('The file you selected is too big. Max file size limit is 250 KB').fadeIn(500);
+        else if (selectedImg.size > 2048 * 1024) {
+            $('#error2').html('The file you selected is too big. Max file size limit is 2MB').fadeIn(500);
             $('#info-m2').html('Select part of image you want to crop').fadeIn(500);
             flag++;
             isError2 = true;
@@ -139,9 +142,11 @@ $(document).ready(function(){
                 // initialize Jcrop Plugin on the selected image
                 $('#load_img2').Jcrop({
                     minSize: [33, 17], // min crop size
-                    aspectRatio: 312/158, //keep aspect ratio
+                    //aspectRatio: 312/158, //keep aspect ratio
                     bgFade: true, // use fade effect
                     bgOpacity: .3, // fade opacity
+                    boxWidth : 800,
+                    boxHeight : 800,
                     onChange: showThumbnail2,
                     onSelect: showThumbnail2
                 }, function(){
@@ -153,6 +158,7 @@ $(document).ready(function(){
 
                     // Store the Jcrop API in the jcrop_api variable
                     jcrop_api2 = this;
+                    $('#info-m2').html('Select part of image you want to crop').fadeIn(500);
                 });
             };
         };
@@ -225,4 +231,15 @@ function validateForm2(){
     }else {
         return true;
     }
+}
+
+function deleteImage(imgDiv){
+    //alert("helo");
+    var thumbId = document.getElementById('thumb');
+    thumbId.src = '/images/pro.svg';
+
+    //alert(imgDiv);
+    //jcrop_api.destroy();
+    $('#'+imgDiv).fadeOut(500);
+
 }
