@@ -294,7 +294,7 @@ $(document).ready(function() {
 			return;
 		}
 	
-		$("#avatarStatus").html("<br/>Uploading..");
+		$("#info-m").html("Uploading..");
 		
 		var form = new FormData();
 		form.append("_csrf", $("head meta[name=_csrf]").attr('content'));
@@ -330,13 +330,12 @@ $(document).ready(function() {
 			return;
 		}
 	
-		$("#avatarStatus").html("<br/>Uploading..");
+		$("#info-m2").html("Uploading..");
 		
 		var form = new FormData();
 		form.append("_csrf", $("head meta[name=_csrf]").attr('content'));
 		form.append("avatar", file2);
 		form.append("background_image", background_image);
-		
 
 		form.append("x", $("#x12").val());
 		form.append("y", $("#y12").val());
@@ -391,18 +390,16 @@ $(document).ready(function() {
 
 	$("#cropButton1").click(function (){
 
-		$("#info-m").html("Image Cropped!");
 		$("#image_div").hide();
-
 		uploadAvatar();
+		$("#info-m").html("Image Cropped!");
 	});
 
 	$("#cropButton2").click(function (){
-
-		$("#info-m2").html("Image Cropped!");
+		
 		$("#image_div2").hide();
-
 		uploadAvatar2();
+		$("#info-m2").html("Image Cropped!");
 	});
 	
 	function updateProgress(perc) {
