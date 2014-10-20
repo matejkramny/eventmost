@@ -318,6 +318,8 @@ $(document).ready(function() {
 		avatarUploadRequest.upload.addEventListener('progress', xmlUploadProgress, false)
 		avatarUploadRequest.send(form);
 
+		$("#info-m").html("Image Cropped!");
+
 		
 	}
 	$("#file_upload_wrapper1").click(uploadAvatar);
@@ -349,6 +351,8 @@ $(document).ready(function() {
 		avatarUploadRequest.onreadystatechange = xmlhttprequestResponse2;
 		avatarUploadRequest.upload.addEventListener('progress', xmlUploadProgress, false)
 		avatarUploadRequest.send(form);
+
+		$("#info-m2").html("Image Cropped!");
 
 	}
 	$("#file_upload_wrapper2").click(uploadAvatar2);
@@ -392,14 +396,14 @@ $(document).ready(function() {
 
 		$("#image_div").hide();
 		uploadAvatar();
-		$("#info-m").html("Image Cropped!");
+		
 	});
 
 	$("#cropButton2").click(function (){
 		
 		$("#image_div2").hide();
 		uploadAvatar2();
-		$("#info-m2").html("Image Cropped!");
+		
 	});
 	
 	function updateProgress(perc) {
