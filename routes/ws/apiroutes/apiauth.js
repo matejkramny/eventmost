@@ -48,6 +48,7 @@ exports.router = function (app) {
 		.post('/api/register', registerUser)
 		.post('/api/auth/password_reset', doPasswordReset)
 		.post('/api/auth/changepassword', change_password)
+		.post('/api/auth/facebookMobile', facebookMobile)
 		.get('/api/auth/password_reset/:id', findPasswordReset)
 		.post('/api/auth/password_reset/:id', performPasswordReset)
 		.get('/api/auth/facebook', saveSocialRedirect, passport.authenticate('facebook', { scope: 'email' }))
@@ -79,6 +80,52 @@ function saveSocialRedirect (req, res, next) {
 	
 //	res.send({name:req.query.ridrect})
 }
+
+function facebookMobile(req, res){
+	var email = req.body.email;
+	var fb_id = req.body.fb_id;
+	var name = req.body.name;
+
+	models.User.findOne({
+		"facebook": {"userid" : fb_id}
+	}, function (err, user){
+
+		if(user){
+			res.format({
+				json: function() {
+					res.send({
+						status: 200,
+						user : user
+					});
+				}
+			});
+			return;
+		}else{
+			var newUser = {
+				"email" : email,
+				"name" : name,
+				"facebook" : {
+					"userid" : fb_id
+				}
+			}
+
+			var newUser = new models.User(newUser);
+			newUser.save();
+
+			res.format({
+				json: function() {
+					res.send({
+						status : 200,
+						changeStatus : "OK",
+						user : newUser
+					});
+				}
+			});
+			return;
+		}
+	});
+}
+
 
 function registerUser(req, res){
 	var email = req.body.login,
