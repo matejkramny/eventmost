@@ -46,11 +46,13 @@ exports.router = function (app) {
 	}
 	app.post('/api/auth/password',doPasswordLogin)
 		.post('/api/register', registerUser)
-		.post('/api/auth/password_reset', doPasswordReset)
-		.post('/api/auth/changepassword', change_password)
 		.post('/api/auth/facebookMobile', facebookMobile)
+		.post('/api/auth/twitterApp', twitterApp)
+		.post('/api/auth/LinkedInApp', LinkedInApp)
+		.post('/api/auth/password_reset', doPasswordReset)
 		.get('/api/auth/password_reset/:id', findPasswordReset)
 		.post('/api/auth/password_reset/:id', performPasswordReset)
+		.post('/api/auth/changepassword', change_password)
 		.get('/api/auth/facebook', saveSocialRedirect, passport.authenticate('facebook', { scope: 'email' }))
 		.get('/api/auth/facebook/callback', passport.authenticate('facebook', socialRoute('Facebook')))
 		.post('/api/auth/twitter', saveSocialRedirect, passport.authenticate('twitter'))
@@ -70,6 +72,7 @@ exports.display = function(req, res) {
 function saveSocialRedirect (req, res, next) {
 	
 	console.log("Save Social Redirect---------".red);
+	console.log(req.body);
 	try {
 		req.session.socialRedirect = mongoose.Types.ObjectId(req.query.redirect);
 	} catch (e) {
@@ -82,12 +85,14 @@ function saveSocialRedirect (req, res, next) {
 }
 
 function facebookMobile(req, res){
+
 	var email = req.body.email;
 	var fb_id = req.body.fb_id;
 	var name = req.body.name;
 
 	models.User.findOne({
 		"facebook": {"userid" : fb_id}
+		
 	}, function (err, user){
 
 		if(user){
@@ -104,9 +109,104 @@ function facebookMobile(req, res){
 			var newUser = {
 				"email" : email,
 				"name" : name,
-				"facebook" : {
+					"facebook" : {
 					"userid" : fb_id
 				}
+			}
+
+			var newUser = new models.User(newUser);
+			newUser.save();
+
+			res.format({
+				json: function() {
+					res.send({
+						status : 200,
+						changeStatus : "OK",
+						user : newUser
+					});
+				}
+			});
+			return;
+		}
+	});
+}
+
+function twitterApp(req, res){
+
+	var email = req.body.email;
+	var twitter_id = req.body.twitter_id;
+	var name = req.body.displayname;
+	
+
+	models.User.findOne({
+		"twitter":{"userid" : twitter_id}
+	}, function (err, user){
+
+		if(user){
+			res.format({
+				json: function() {
+					res.send({
+						status: 200,
+						user : user
+					});
+				}
+			});
+			return;
+		}else{
+			var newUser = {
+				"email" : email,
+				"name" : name,
+					"twitter" : {
+					"userid" : twitter_id
+				}
+			}
+
+			var newUser = new models.User(newUser);
+			newUser.save();
+
+			res.format({
+				json: function() {
+					res.send({
+						status : 200,
+						changeStatus : "OK",
+						user : newUser
+					});
+				}
+			});
+			return;
+		}
+	});
+}
+function LinkedInApp(req, res){
+	console.log(req.body);
+	var email = req.body.email;
+	var linkedin_id = req.body.linkedin_id;
+	var name = req.body.name;
+	
+	
+	
+	models.User.findOne({
+		"LinkedIn":{"userid" : linkedin_id}
+	}, function (err, user){
+
+		if(user){
+			res.format({
+				json: function() {
+					res.send({
+						status: 200,
+						user : user
+					});
+				}
+			});
+			return;
+		}else{
+			var newUser = {
+				"email" : email,
+				"name" : name,
+				"LinkedIn" : {
+					"userid" : linkedin_id
+				}
+				
 			}
 
 			var newUser = new models.User(newUser);
@@ -264,6 +364,7 @@ function doPasswordLogin (req, res) {
 }
 
 function doPasswordReset (req, res) {
+	console.log(req.body);
 	var email = req.body.email;
 	if (!email) {
 		res.send({
@@ -350,7 +451,7 @@ function authSuccess (req, res) {
 		var evid = req.session.socialRedirect;
 		req.session.socialRedirect = null;
 		
-//		res.redirect('/event/'+evid+"/registrationpage?redirect=1");
+	//res.redirect('/event/'+evid+"/registrationpage?redirect=1");
 		return;
 	}
 	
@@ -359,7 +460,7 @@ function authSuccess (req, res) {
 		
 		req.session.redirectAfterLogin = null;
 		
-//		res.redirect(redirect); 
+		//res.redirect(redirect); 
 		
 		return;
 	}
@@ -531,7 +632,6 @@ function doLogin (req, res) {
 	
 	return completeLogin(req, res, uid);
 }
-
 function change_password(req, res){
 
 	var user_id = req.body._id;
@@ -601,3 +701,4 @@ function change_password(req, res){
 		}
 	});
 }
+
