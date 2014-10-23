@@ -131,16 +131,15 @@ function facebookMobile(req, res){
 }
 
 function twitterApp(req, res){
-
-	var email = req.body.email;
-	var twitter_id = req.body.twitter_id;
-	var name = req.body.displayname;
 	
+	var email = req.body.email;
+	var twitter = req.body.twitter_id;
+	var name = req.body.displayname;
 
 	models.User.findOne({
-		"twitter":{"userid" : twitter_id}
+		"twitter": {"userid" : twitter}
 	}, function (err, user){
-
+	
 		if(user){
 			res.format({
 				json: function() {
@@ -156,7 +155,7 @@ function twitterApp(req, res){
 				"email" : email,
 				"name" : name,
 					"twitter" : {
-					"userid":twitter_id
+					"userid" : twitter
 				}
 			}
 
@@ -176,6 +175,7 @@ function twitterApp(req, res){
 		}
 	});
 }
+
 function LinkedInApp(req, res){
 	console.log(req.body);
 	var email = req.body.email;
