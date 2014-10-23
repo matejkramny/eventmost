@@ -85,14 +85,13 @@ function saveSocialRedirect (req, res, next) {
 }
 
 function facebookMobile(req, res){
-
+	
 	var email = req.body.email;
 	var fb_id = req.body.fb_id;
 	var name = req.body.name;
 
 	models.User.findOne({
 		"facebook": {"userid" : fb_id}
-		
 	}, function (err, user){
 
 		if(user){
@@ -157,7 +156,7 @@ function twitterApp(req, res){
 				"email" : email,
 				"name" : name,
 					"twitter" : {
-					"userid" : twitter_id
+					"userid":twitter_id
 				}
 			}
 
@@ -183,10 +182,8 @@ function LinkedInApp(req, res){
 	var linkedin_id = req.body.linkedin_id;
 	var name = req.body.name;
 	
-	
-	
 	models.User.findOne({
-		"LinkedIn":{"userid" : linkedin_id}
+		"linkedin":{"userid" : linkedin_id}
 	}, function (err, user){
 
 		if(user){
@@ -203,7 +200,7 @@ function LinkedInApp(req, res){
 			var newUser = {
 				"email" : email,
 				"name" : name,
-				"LinkedIn" : {
+				"linkedin" : {
 					"userid" : linkedin_id
 				}
 				
