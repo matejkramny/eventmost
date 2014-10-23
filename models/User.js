@@ -34,7 +34,7 @@ var scheme = schema({
 		userid: String
 	},
 	twitter: {
-		userid: Number
+		userid: String
 	},
 	linkedin: {
 		userid: String
