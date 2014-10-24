@@ -177,15 +177,15 @@ function twitterApp(req, res){
 }
 
 function LinkedInApp(req, res){
-	console.log(req.body);
+	//console.log(req.body);
 	var email = req.body.email;
-	var linkedin_id = req.body.linkedin_id;
+	var linkedin = req.body.linkedin_id;
 	var name = req.body.name;
 	
 	models.User.findOne({
-		"linkedin":{"userid" : linkedin_id}
+		"linkedin":{"userid" : linkedin}
 	}, function (err, user){
-
+		console.log(user);
 		if(user){
 			res.format({
 				json: function() {
@@ -201,7 +201,7 @@ function LinkedInApp(req, res){
 				"email" : email,
 				"name" : name,
 				"linkedin" : {
-					"userid" : linkedin_id
+					"userid" : linkedin
 				}
 				
 			}
