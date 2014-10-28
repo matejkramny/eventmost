@@ -30,6 +30,7 @@ exports.router = function (app) {
 		app.get('/api/event/:id/tickets', viewTicketsAPI)
 		.post('/api/event/:id/post', postMessageAPI)
 		.get('/api/event/:id', getEventAPI)
+		.get('/api/event/:id/avatar',getavatar)
 		/*
 		.get('/api/event/:id/registrationpage', viewRegistrationPage)*/
 	
@@ -77,7 +78,7 @@ function getEventAPI(req, res)
 		.exec(function(err, thisevent) {
 			if (err) throw err;
 			if (thisevent) {
-				
+				console.log(thisevent);
 				res.format({
 					json: function() {
 						res.send({
@@ -85,9 +86,38 @@ function getEventAPI(req, res)
 						});
 					}
 				});
-			}
+				
+		}
 		});
+		
 }
+function getavatar(req, res)
+{
+	var query = {_id: req.params.id};
+		
+		models.Event.findById(req.params.id)
+		.exec(function(err, thisevent) {
+			if (err) throw err;
+			if (thisevent) {
+				
+				models.Avatar.findById(thisevent.avatar)
+				.exec(function(err, thisavatar) {
+					if (err) throw err;
+					console.log(thisavatar);
+					
+					res.format({
+					json: function() {
+						res.send({
+							avatar: thisavatar
+						});
+					}
+				});
+				});			
+			}
+			
+			});
+			
+		}
 
 // Middleware to get :id param into res.local
 function getEvent (req, res, next) {
