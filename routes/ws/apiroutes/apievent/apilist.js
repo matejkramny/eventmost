@@ -8,6 +8,7 @@ exports.router = function (app) {
 	app.get('/api/events', exports.listEventsAPI)
 		.post('/api/events/my', util.authorized, exports.listMyEventsAPI)
 		.get('/api/events/near', exports.listNearEventsAPI)
+		.post('/api/sortedevents', exports.sortedevents)
 }
 
 exports.listEventsAPI = function (req, res) {
@@ -37,6 +38,61 @@ exports.listEventsAPI = function (req, res) {
 		.skip(skip)
 		.exec(function(err, evs) {
 			
+		if (err) throw err; 
+		if (evs) {
+			models.Event.find(query).count(function(err, total) {
+				res.format({
+					json: function() {
+						res.send({
+							events: evs,
+							total: total,
+							skip: skip,
+							pagename: "EventMost Events"
+						})
+					}
+				});
+			});
+		}
+	})
+}
+
+exports.sortedevents = function (req, res) {
+	var sortby = req.body.sortby;
+	var skip = req.query.skip || 0;
+	var showPastEvents = req.query.pastEvents;
+	if (!showPastEvents || typeof showPastEvents === 'undefined') {
+		showPastEvents = false;
+	} else {
+		showPastEvents = Boolean(showPastEvents);
+	}
+	
+	var query = {
+		deleted: false,
+		privateEvent: {
+			$ne: true 
+		}
+
+	};
+	if (!showPastEvents) {
+		query.start = { $gte: Date.now() };
+	}
+
+	if(sortby == 1){
+		sortquery = {"created" : -1};
+	}else if(sortby == 2){
+		sortquery = {"created" : 1};
+	}else{
+		sortquery = {"name" : 1};
+	}
+	
+	
+	models.Event.find(query)
+		.populate('avatar attendees.user')
+		.select('name start end address venue_name avatar source')
+		.sort(sortquery)
+		.limit(10)
+		.skip(skip)
+		.exec(function(err, evs) {
 		if (err) throw err; 
 		if (evs) {
 			models.Event.find(query).count(function(err, total) {
