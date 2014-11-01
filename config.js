@@ -70,7 +70,8 @@ exports.stripe = stripe(credentials.stripe.secret);
 
 // Create SMTP transport method
 exports.transport_enabled = credentials.smtp.user.length > 0;
-exports.transport = mailer.createTransport("Mandrill", {
+exports.transport = mailer.createTransport({
+	service: 'Mandrill',
 	auth: {
 		user: credentials.smtp.user,
 		pass: credentials.smtp.pass
