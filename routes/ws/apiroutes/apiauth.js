@@ -6,7 +6,8 @@ var mongoose = require('mongoose')
 	, LocalStrategy = require('passport-local').Strategy
 	, TwitterStrategy = require('passport-twitter').Strategy
 	, LinkedinStrategy = require('passport-linkedin').Strategy
-	, FacebookStrategy = require('passport-facebook').Strategy;
+	, FacebookStrategy = require('passport-facebook').Strategy
+	, moment = require('moment');
 
 passport.serializeUser(function(user, done) {
 	done(null, user._id);
@@ -662,11 +663,11 @@ function change_password(req, res){
 					}
 				});
 
-				/*var options = {
+				var options = {
 					from: "EventMost <notifications@eventmost.com>",
 					to: email+" <"+email+">",
 					subject: "Password Change Notification",
-					html: "<strong>Hi ,</strong><br/><br/>Your password was changed at "+moment().format('DD/MM/YYYY HH:mm:ss')+".<br/>If you have not authorised this, please contact us <strong>IMMEDIATELY</strong> at <a href='mailto:support@eventmost.com'>support@eventmost.com</a>"
+					html: "<img src=\"http://dev.eventmost.com/images/logo.png\"><br/><br/><p><strong>Hi,</strong><br/><br/>Your password was changed at "+moment().format('DD/MM/YYYY HH:mm:ss')+".<br/>If you have not authorised this, please contact us <strong>IMMEDIATELY</strong> at <a href='mailto:support@eventmost.com'>support@eventmost.com</a>"
 				}
 
 
@@ -682,7 +683,6 @@ function change_password(req, res){
 			
 					console.log("Email sent.."+response.message)
 				});
-				*/
 				return;
 			});
 		}else{
