@@ -652,11 +652,21 @@ function change_password(req, res){
 			models.User.update(query, {$set : {password: newpassword}}, function (err){
 				user.password = newpassword;
 
-				/*var options = {
+				res.format({
+					json: function() {
+						res.send({
+							status : 200,
+							changeStatus : "OK",
+							user : user
+						});
+					}
+				});
+
+				var options = {
 					from: "EventMost <notifications@eventmost.com>",
 					to: email+" <"+email+">",
 					subject: "Password Change Notification",
-					html: "<img src=\"http://eventmost.com/images/logo.svg\">\
+					html: "<img src=\"http://dev.eventmost.com/images/logo.svg\">\
 			<br/><br/><p><strong>Hi ,</strong><br/><br/>Your password was changed at "+moment().format('DD/MM/YYYY HH:mm:ss')+".<br/>If you have not authorised this, please contact us <strong>IMMEDIATELY</strong> at <a href='mailto:support@eventmost.com'>support@eventmost.com</a>"
 				}
 
@@ -671,16 +681,6 @@ function change_password(req, res){
 					if (err) throw err;
 			
 					console.log("Email sent.."+response.message)
-				});*/
-
-				res.format({
-					json: function() {
-						res.send({
-							status : 200,
-							changeStatus : "OK",
-							user : user
-						});
-					}
 				});
 				return;
 			});
