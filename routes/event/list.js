@@ -151,7 +151,7 @@ exports.listNearEvents = function (req, res) {
 	
 	var query = {
 		'geo': {
-			$near : [lng,lat], $maxDistance : 1/111.12
+			$near : [lng,lat], $maxDistance : 5000
 		}
 	};
 
