@@ -46,7 +46,7 @@ $(document).ready(function() {
 
 								
 								$placeholder.show();
-								$placeholderText.html("Sorry! No events happening around you <a href='/event/add'>create one</a>!");
+								$placeholderText.html("No events happening around you <a href='/event/add'>create one</a>!");
 							}
 						},
 						error: function(jqxhr, status, error) {
@@ -55,7 +55,7 @@ $(document).ready(function() {
 					});
 
 					$placeholder.show();
-					$placeholderText.html("Sorry! No events happening around you <a href='/event/add'>create one</a>!");
+					$placeholderText.html("No events happening around you <a href='/event/add'>create one</a>!");
 				}
 			},
 			error: function(jqxhr, status, error) {
