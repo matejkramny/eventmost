@@ -269,7 +269,7 @@ function redirectToForeignEvent (req, res, page) {
 				if (ev.source.url) {
 					url = ev.source.url;
 				}
-			
+				
 				res.redirect(url);
 			} else {
 				// Redirect without the ?redirect=1
