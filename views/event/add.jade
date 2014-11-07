@@ -112,7 +112,7 @@ append content
 					.container.bg-purple.date-height.datepickerWrapper(style="margin-top:-20px;")
 						.center
 							.font.logo-text
-								| FROM:
+								| FROM1:
 						.datepicker#fromDateMobile(style="min-height:300px;")
 						.clearfix
 						.nspacer
@@ -513,7 +513,7 @@ append content
 						.container.bg-purple.date-height.datepickerWrapper
 							.center
 								.font.font-thin.logo-text
-									| FROM:
+									| FROM2:
 							.datepicker#fromDateDesktop(style="min-height:300px;")
 							.clearfix
 							.nspacer
@@ -525,7 +525,7 @@ append content
 								.pull-left.font-e
 									| Time of event:
 								.pull-left.pad-left-ten
-									input.input-grey-rounded(name="start_date" type="text" placeholder="00:00" style="max-width:150px;")
+									input.input-grey-rounded(name="start_date" type="time")
 					.col-lg-5.col-md-5.col-xs-5.pad-left-five.pad-right-zero.res-dis-non
 						.container.bg-purple.date-height.datepickerWrapper
 							.center
@@ -542,7 +542,7 @@ append content
 								.pull-left.font-e
 									| Time of event:
 								.pull-left.pad-left-ten
-									input.input-grey-rounded(name="start_date" type="text" placeholder="23:59" style="max-width:150px;")
+									input.input-grey-rounded(name="start_date" type="time")
 					//- small calendars
 					.col-lg-12.col-md-12.col-xs-12.pad-left-zero.pad-right-zero.res-dis-non-vis
 						.container.bg-purple.pad-top-zero.pad-right-zero(style="height:32px;")

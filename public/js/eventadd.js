@@ -599,7 +599,9 @@ $(document).ready(function() {
 	}
 	function getTime (datepicker) {
 		var dpicker = $(datepicker);
-		var time = dpicker.parent().find("input[type=text]").val();
+		var time = dpicker.parent().find("input[type=time]").val();
+		//var dTime = dpicker.parent().find("select").val();
+		//console.log(dTime);
 		var split = time.split(':')
 		
 		var hours = 0;
