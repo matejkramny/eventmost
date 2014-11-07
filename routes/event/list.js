@@ -179,6 +179,11 @@ exports.listNearEvents = function (req, res) {
 					if (geos[i].event == null) {
 						continue;
 					}
+
+					if((geos[i].event.source) && (geos[i].event.source.facebook == true || geos[i].event.source.meetup == true)){
+						continue;
+					}
+
 					if (geos[i].event.deleted != true) {
 						geos[i].event.geo = geos[i].geo;
 						geos[i].event.description = geos[i].event.description.replace(/(<([^>]+)>)/ig,"");
@@ -268,24 +273,28 @@ exports.listNearLandingEvents = function (req, res) {
 					
 				};
 
-				
+				var newEvs = [];
 				models.Event.find(query).limit(100).populate('avatar').sort('start').exec(function(err, evs) {
 
 					//Cleaning up the description...
 
 					evs.forEach(function(entry) {
-						
-						if((entry.description) && entry.description != ''){
+						if((entry.source) && (entry.source.facebook == true || entry.source.meetup == true)){
+				
+						}else{
+							if((entry.description) && entry.description != ''){
 
-							//console.log(entry.description);
-							entry.description = entry.description.replace(/(<([^>]+)>)/ig,"");
-							entry.description = entry.description.substr(0, 200)+"...";
+								//console.log(entry.description);
+								entry.description = entry.description.replace(/(<([^>]+)>)/ig,"");
+								entry.description = entry.description.substr(0, 200)+"...";
 
+							}
+							newEvs.push(entry);
 						}
 					});
 
 					res.locals.moment = moment;
-					res.render('search/landing', { nearby: true, search: { results: evs}, moment:moment, title: "EventMost" })
+					res.render('search/landing', { nearby: true, search: { results: newEvs}, moment:moment, title: "EventMost" })
 				});
 
 				
@@ -341,6 +350,11 @@ exports.listNearLandingEvents = function (req, res) {
 						continue;
 
 					}
+
+					if((geos[i].event.source) && (geos[i].event.source.facebook == true || geos[i].event.source.meetup == true)){
+						continue;
+					}
+
 					if (geos[i].event.deleted != true) {
 						//geos[i].event.avatar = JSON.stringify({"avatar" : {'url': 'test url'}});
 						geos[i].event.geo = geos[i].geo;
