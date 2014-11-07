@@ -283,14 +283,15 @@
 								| Arrange by
 							ul.dropdown-menu.pull-right.new-drop(style="background-color:#f1f1f2 !important; color:#58585b;  padding:0px;")
 								li
-									a(href='/search/?q=&arrange=nearby') Events Nearest My Location
+									a(href='/search/?arrange=nearby') Events Nearest My Location
 								li
-									a(href='/search/?q') Events Happening Soon
+									a(href='/search/') Events Happening Soon
 				.col-md-3.col-sm-3.col-lg-3.pull-right.don-dis
 					| &nbsp;
-				.pull-right.bg-green.center.addfil(style="height:38px; padding-top:8px;")
-					a.link-ashen#open2(href='#')
-						| Add filters
+				//- 
+					.pull-right.bg-green.center.addfil(style="height:38px; padding-top:8px;")
+						a.link-ashen#open2(href='#')
+							| Add filters
 					
 				.clearfix
 				.bg-green.font-ah.pad-left-ten(style="min-height:1px;")
