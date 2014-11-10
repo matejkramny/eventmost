@@ -186,8 +186,11 @@ exports.listNearEvents = function (req, res) {
 
 					if (geos[i].event.deleted != true) {
 						geos[i].event.geo = geos[i].geo;
-						geos[i].event.description = geos[i].event.description.replace(/(<([^>]+)>)/ig,"");
-						geos[i].event.description = geos[i].event.description.substr(0, 200)+"...";
+						if((geos[i].event.description) && geos[i].event.description != ''){
+							geos[i].event.description = geos[i].event.description.replace(/(<([^>]+)>)/ig,"");
+							geos[i].event.description = geos[i].event.description.substr(0, 200)+"...";
+						}
+						
 						events.push(geos[i].event);
 						totalEvents++;
 					}
