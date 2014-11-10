@@ -393,14 +393,14 @@ scheme.methods.edit = function (body, user, files, cb) {
 		}
 	}
 	
-	if (!this.backgroundImage) {
+	/*if (!this.backgroundImage) {
 		var backgroundImage = new Avatar({
 			url: "/images/default-background2.png"
 		})
 		backgroundImage.save();
 		this.backgroundImage = backgroundImage._id;
 		console.log('Background ='+this.backgroundImage)
-	}
+	}*/
 
 	if (body.venue_name) {
 		this.venue_name = body.venue_name
