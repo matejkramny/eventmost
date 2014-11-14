@@ -88,7 +88,7 @@ exports.sortedevents = function (req, res) {
 	
 	models.Event.find(query)
 		.populate('avatar attendees.user')
-		.select('name start end address venue_name avatar source')
+		.select('name start end address venue_name avatar source description')
 		.sort(sortquery)
 		.limit(10)
 		.skip(skip)
@@ -121,7 +121,7 @@ exports.listMyEventsAPI = function (req, res) {
 		
 		models.Event.find(query)
 			.populate('avatar attendees.user')
-			.select('name start end address venue_name avatar source')
+			.select('name start end address venue_name avatar source description')
 			.sort('start')
 			.limit(50)
 			.skip(skip)
@@ -192,7 +192,7 @@ exports.listNearEventsAPI = function (req, res) {
 	};
 	models.Geolocation.find(query).populate({
 		path: 'event',
-		select: 'name start end address venue_name avatar source',
+		select: 'name start end address venue_name avatar source description',
 		match: {
 			deleted: false,
 			privateEvent: {
