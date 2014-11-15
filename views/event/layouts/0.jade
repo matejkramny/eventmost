@@ -9,11 +9,11 @@
 				.div(style=" max-height:350px; overflow:hidden; text-align: center;")
 						img.img-responsive(src=ev.backgroundImage.url style="width:100%;")
 
-		.col-md-3.col-lg-3.col-sm-3
+		.col-md-3.col-lg-3.col-sm-3(style="margin-top:2%; margin-bottom:2%")
 			img.small-event-border(src=ev.avatar.url style="width:275px; max-height:205px;")
 		.col-md-9.col-lg-9.col-sm-9
 			.nspacer
-			.col-md-3.col-lg-3.col-sm-3.font16
+			.col-md-3.col-lg-3.col-sm-3.font16(style="padding: 10 0 0 10")
 				.inline
 					img(src="/images/small-clock.svg" alt=""  )
 				.font16.inline.color-green.semi-bold
@@ -23,39 +23,42 @@
 						= eventStartFormatted[1]
 					.poo(style="font-weight:200;")
 					= eventEndFormatted[1]
-			.col-md-3.col-lg-3.col-sm-3.font16
-				.inline
-					img(src="/images/mapster2.svg" alt=""  )
-				.font16.inline.color-green.semi-bold
-					| WHERE
-				.font-s(style="word-break:break-all; ")
-					- if (ev.address || ev.venue_name)
-						strong.pull-left.break(style="word-wrap:break-word; word-break: break-word; white-space: -moz-pre-wrap; white-space: pre-wrap;")
-						span(style="word-wrap:break-word; word-break: break-word;font-weight:bold;")
-							= ev.venue_name
-						.pull-left(style="word-wrap:break-word; word-break: break-word;font-weight:bold;")
-							= ev.address
-						- if (!ev.address && !ev.venue_name)
-							| Event does not have a location
-				.nspacer
-				#eventMap(style="height:110px; width:180px;")
-			.col-md-4.col-lg-4.col-sm-4.font16
+			.col-md-3.col-lg-3.col-sm-3.font16(style="width:40%; padding: 0 0 0 0")
+				div(style="float:left; width:34%")
+					.inline
+						img(src="/images/mapster2.svg" alt=""  )
+					.font16.inline.color-green.semi-bold
+						| WHERE
+					.font-s(style="word-break:break-all; ")
+						- if (ev.address || ev.venue_name)
+							strong.pull-left.break(style="word-wrap:break-word; word-break: break-word; white-space: -moz-pre-wrap; white-space: pre-wrap;")
+							span(style="word-wrap:break-word; word-break: break-word;font-weight:bold;")
+								= ev.venue_name
+							.pull-left(style="word-wrap:break-word; word-break: break-word;font-weight:bold;")
+								= ev.address
+							- if (!ev.address && !ev.venue_name)
+								| Event does not have a location
+				div(style="float:left")
+					#eventMap(style="height:110px; width:180px;")
+			.col-md-4.col-lg-4.col-sm-4.font16(style="width:18%; padding: 0 0 0 0")
 				.inline
 					img(src="/images/organizer.svg" alt=""  )
 				.font16.inline.color-green.semi-bold
-					| EVENT ORGANIZER
+					| ORGANIZER
 				.font16.inline(style="word-break:break-all; ")
 					for attendee in locals.ev.attendees
 						if (attendee.admin && attendee.isAttending)
 							a.link-purple.font16(href="/user/"+attendee.user._id)= attendee.user.getName()
 							br
-			.col-md-2.col-lg-2.col-sm-2.font16
+			.col-md-2.col-lg-2.col-sm-2.font16(style="padding: 0 0 0 0")
+				
+				
+			- if (title == 'Add Logos'){
 				.inline
 					img(src="/images/sponsors-cion.svg" alt=""  )
 				.font16.inline.color-green.semi-bold
 					| SPONSORS
 				.nspacer
-				- if (title == 'Add Logos'){
 						#sponsor1panel
 							.form-group.row
 								.col-sm-9.col-md-9.col-xs-9.col-lg-9
