@@ -208,8 +208,8 @@ function redirectToRegistrationPage (req, res, next) {
 	if (req.user) {
 		next();
 	} else {
-		req.session.redirectAfterLogin = "/event/"+req.params.id+"/registrationpage#openAttend";
-		res.redirect('/event/'+req.params.id+"/registrationpage")
+		req.session.redirectAfterLogin = "/event/"+req.params.id+"/registrationpage/edit#openAttend";
+		res.redirect('/event/'+req.params.id+"/registrationpage/edit")
 	}
 }
 
@@ -289,6 +289,7 @@ function viewRegistrationPage (req, res) {
 
 	if (!req.user && !req.session.redirectAfterLogin) {
 		req.session.redirectAfterLogin = "/event/"+req.params.id+"/registrationpage";
+		console.log("through viewRegistrationPage");
 	}
 	
 	var ev = res.locals.ev;
