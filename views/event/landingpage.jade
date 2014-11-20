@@ -29,14 +29,14 @@ block content
 	//- if there is no avatar event description should go here
 	.col-md-3.col-lg-3.col-sm-3
 		if (ev.avatar)
-			img.img-responsive(src=ev.avatar.url style="width:100%;")
+			img.img-responsive(src=ev.avatar.url style="width:100%; max-height:205px; min-height:200px")
 	.col-md-9.col-lg-9.col-sm-9
 		.col-md-9.col-lg-9.col-sm-9
 				.pull-left.linknamewidth.pad-left-zero.left.inline.nspacer-small.font-exception.font18.bold.color-green(type='submit', style="")
-					| #{ev.name}
+					| #{ev.name} ~~landingpage.jade~~
 		.clearfix
 		.nspacer
-		.col-md-3.col-lg-3.col-sm-3.font16
+		.col-md-3.col-lg-3.col-sm-3.font16(style="padding: 10 0 0 10")
 			.inline
 				img(src="/images/small-clock.svg" alt=""  )
 			.font16.inline.color-green.semi-bold
@@ -50,46 +50,47 @@ block content
 					= eventStartFormatted[1]
 				#eventEndDate.poo(style="font-weight:200;")
 					= eventEndFormatted[1]
-		.col-md-3.col-lg-3.col-sm-3.font16
-			.inline
-				img(src="/images/mapster2.svg" alt=""  )
-			.font16.inline.color-green.semi-bold
-				| WHERE
-			- if (edit == 'e'){
-				button#editLocationButton.btn.btn-primary.btn-xs(data-toggle='modal', data-target='#eventLocationModal' )
-					span.glyphicon.glyphicon-edit  Edit
-			- }	
-			.font-s(style="word-break:break-all; ")
-				- if (ev.address || ev.venue_name)
-					strong.pull-left.break(style="word-wrap:break-word; word-break: break-word; white-space: -moz-pre-wrap; white-space: pre-wrap;")
-					#venuname(style="word-wrap:break-word; word-break: break-word;font-weight:bold;")
-						= ev.venue_name
-					#eventaddr.pull-left(style="word-wrap:break-word; word-break: break-word;font-weight:bold;")
-						= ev.address
-					- if (!ev.address && !ev.venue_name)
-						| Event does not have a location
-			.nspacer
-			#eventMap(style="height:110px; width:180px;")
+		.col-md-3.col-lg-3.col-sm-3.font16(style="width:40%; padding: 0 0 0 0")
+			div(style="float:left; width:34%")
+				.inline
+					img(src="/images/mapster2.svg" alt=""  )
+				.font16.inline.color-green.semi-bold
+					| WHERE
+				- if (edit == 'e'){
+					button#editLocationButton.btn.btn-primary.btn-xs(data-toggle='modal', data-target='#eventLocationModal' )
+						span.glyphicon.glyphicon-edit  Edit
+				- }	
+				.font-s(style="word-break:break-all; ")
+					- if (ev.address || ev.venue_name)
+						strong.pull-left.break(style="word-wrap:break-word; word-break: break-word; white-space: -moz-pre-wrap; white-space: pre-wrap;")
+						#venuname(style="word-wrap:break-word; word-break: break-word;font-weight:bold;")
+							= ev.venue_name
+						#eventaddr.pull-left(style="word-wrap:break-word; word-break: break-word;font-weight:bold;")
+							= ev.address
+						- if (!ev.address && !ev.venue_name)
+							| Event does not have a location
+			div(style="float:left")
 				- if (ev.address)
-					iframe(width='180', height='110', frameborder='0', scrolling='no', marginheight='0', marginwidth='0', src="http://maps.google.com/maps?q=" + ev.address +"&output=embed")
-		.col-md-4.col-lg-4.col-sm-4.font16
+					iframe(width='180px', height='110px', frameborder='0', scrolling='no', marginheight='0', marginwidth='0', src="http://maps.google.com/maps?q=" + ev.address +"&output=embed")
+		.col-md-4.col-lg-4.col-sm-4.font16(style="width:18%; padding: 0 0 0 0")
 			.inline
 				img(src="/images/organizer.svg" alt=""  )
 			.font16.inline.color-green.semi-bold
-				| EVENT ORGANIZER
+				| ORGANIZER
 			.clearfix
 			.font16.inline(style="word-break:break-all; ")
 				for attendee in locals.ev.attendees
 					if (attendee.admin && attendee.isAttending)
 						a.link-purple.font16(href="/user/"+attendee.user._id)= attendee.user.getName()
 						br
-		.col-md-2.col-lg-2.col-sm-2.font16
-			.inline
-				img(src="/images/sponsors-cion.svg" alt=""  )
-			.font16.inline.color-green.semi-bold
-				| SPONSORS
-			.nspacer
+		.col-md-2.col-lg-2.col-sm-2.font16(style="padding: 0 0 0 0")
+			
 			- if (edit == 'e'){
+					.inline
+						img(src="/images/sponsors-cion.svg" alt=""  )
+					.font16.inline.color-green.semi-bold
+						| SPONSORS
+					.nspacer
 						#sponsor1panel
 							.form-group.row
 								.col-sm-9.col-md-9.col-xs-9.col-lg-9
