@@ -24,135 +24,137 @@ append addonjs
 block content
 	if (eventattending)
 		+navbar
-	
 	.nspacer
-	//- if there is no avatar event description should go here
-	.col-md-3.col-lg-3.col-sm-3
-		if (ev.avatar)
-			img.img-responsive(src=ev.avatar.url style="width:100%; max-height:205px; min-height:200px")
-	.col-md-9.col-lg-9.col-sm-9
+	.col-md-12.col-lg-12.col-sm-12
+		.nspacer-big.font-exception.font18.bold.color-green.center(type='submit', style="")
+			| #{ev.name}
+		.nspacer-big
+		if (ev.backgroundImage)
+			.rel
+				.div(style=" max-height:350px; overflow:hidden; text-align: center;")
+						img.img-responsive(src=ev.backgroundImage.url style="width:100%;")
+		.nspacer-big
+		.col-md-3.col-lg-3.col-sm-3(style="margin-top:3%; margin-bottom:2%")
+			img.small-event-border(src=ev.avatar.url style="width:275px; max-height:205px; min-height:200px")
+
 		.col-md-9.col-lg-9.col-sm-9
-				.pull-left.linknamewidth.pad-left-zero.left.inline.nspacer-small.font-exception.font18.bold.color-green(type='submit', style="")
-					| #{ev.name}
-		.clearfix
-		.nspacer
-		.col-md-3.col-lg-3.col-sm-3.font16(style="padding: 10 0 0 10")
-			.inline
-				img(src="/images/small-clock.svg" alt=""  )
-			.font16.inline.color-green.semi-bold
-				| WHEN
-			- if (edit == 'e'){
-				button#editTimeButton.btn.btn-primary.btn-xs(data-toggle='modal', data-target='#eventTimeModal')
-					span.glyphicon.glyphicon-edit  Edit
-			- }	
-			.font-s(title= eventStartFormatted style="word-wrap: break-word; word-break: break-word;")
-				#eventStartDate.semi-bold
-					= eventStartFormatted[1]
-				#eventEndDate.poo(style="font-weight:200;")
-					= eventEndFormatted[1]
-		.col-md-3.col-lg-3.col-sm-3.font16(style="width:40%; padding: 0 0 0 0")
-			div(style="float:left; width:34%")
+			.col-md-3.col-lg-3.col-sm-3.font16(style="padding: 10 0 0 10")
 				.inline
-					img(src="/images/mapster2.svg" alt=""  )
+					img(src="/images/small-clock.svg" alt=""  )
 				.font16.inline.color-green.semi-bold
-					| WHERE
+					| WHEN
 				- if (edit == 'e'){
-					button#editLocationButton.btn.btn-primary.btn-xs(data-toggle='modal', data-target='#eventLocationModal' )
+					button#editTimeButton.btn.btn-primary.btn-xs(data-toggle='modal', data-target='#eventTimeModal')
 						span.glyphicon.glyphicon-edit  Edit
 				- }	
-				.font-s(style="word-break:break-all; ")
-					- if (ev.address || ev.venue_name)
-						strong.pull-left.break(style="word-wrap:break-word; word-break: break-word; white-space: -moz-pre-wrap; white-space: pre-wrap;")
-						#venuname(style="word-wrap:break-word; word-break: break-word;font-weight:bold;")
-							= ev.venue_name
-						#eventaddr.pull-left(style="word-wrap:break-word; word-break: break-word;font-weight:bold;")
-							= ev.address
-						- if (!ev.address && !ev.venue_name)
-							| Event does not have a location
-			div(style="float:left")
-				- if (ev.address)
-					iframe(width='180px', height='110px', frameborder='0', scrolling='no', marginheight='0', marginwidth='0', src="http://maps.google.com/maps?q=" + ev.address +"&output=embed")
-		.col-md-4.col-lg-4.col-sm-4.font16(style="width:18%; padding: 0 0 0 0")
-			.inline
-				img(src="/images/organizer.svg" alt=""  )
-			.font16.inline.color-green.semi-bold
-				| ORGANIZER
-			.clearfix
-			.font16.inline(style="word-break:break-all; ")
-				for attendee in locals.ev.attendees
-					if (attendee.admin && attendee.isAttending)
-						a.link-purple.font16(href="/user/"+attendee.user._id)= attendee.user.getName()
-						br
-		.col-md-2.col-lg-2.col-sm-2.font16(style="padding: 0 0 0 0")
-			
-			- if (edit == 'e'){
+				.font-s(title= eventStartFormatted style="word-wrap: break-word; word-break: break-word;")
+					#eventStartDate.semi-bold
+						= eventStartFormatted[1]
+					#eventEndDate.poo(style="font-weight:200;")
+						= eventEndFormatted[1]
+			.col-md-3.col-lg-3.col-sm-3.font16(style="width:40%; padding: 0 0 0 0")
+				div(style="float:left; width:34%")
 					.inline
-						img(src="/images/sponsors-cion.svg" alt=""  )
+						img(src="/images/mapster2.svg" alt=""  )
 					.font16.inline.color-green.semi-bold
-						| SPONSORS
-					.nspacer
-						#sponsor1panel
-							.form-group.row
-								.col-sm-9.col-md-9.col-xs-9.col-lg-9
-									img#sponsor1Avatar.img-responsive(src= ev.sponsorLayout.sponsor1 ? ev.sponsorLayout.sponsor1.url : "")
-								.col-sm-3.col-md-3.col-xs-3.col-lg-3
-								if(ev.sponsorLayout.sponsor1)
-										a#sponsor1AvatarDelete.glyphicon.glyphicon-trash(style="cursor:pointer;" name="1" rel="tooltip" title="Delete Sponsor1 Image")
-							.nspacer
-							.form-group.row
-								.col-sm-6.col-md-6.col-xs-6.col-lg-6
-									.progress.hide
-										.progress-bar(aria-valuenow="", aria-valuemin="0", aria-valuemax="100", style="width: 100%")
-									//input.search-input.sponsor-browse(type="text" id="fileName" readonly="readonly" style="width:65%; padding-left:10px; padding-right:10px;")
-									#sp1(style="display: inline; cursor:pointer;" rel="tooltip" title="Upload Sponsor1 Image")
-										a.glyphicon.glyphicon-cloud-upload(id="buttonbrowse2" style="cursor:pointer; text-decoration:none;")&nbsp;<span class="anchr">Upload</span>
-										input#sponsor1(type="file", name="sponsor1", placeholder="Avatar File", for="sponsor1Avatar"  style="cursor:poiner; width:100%; opacity:0; position:relative; left:0px; top:-30px;")
-						#sponsor2panel
-							.form-group.row
-								.col-sm-9.col-md-9.col-xs-9.col-lg-9
-									img#sponsor2Avatar.img-responsive(src= ev.sponsorLayout.sponsor2 ? ev.sponsorLayout.sponsor2.url : "")
-								.col-sm-3.col-md-3.col-xs-3.col-lg-3
-								if(ev.sponsorLayout.sponsor2)
-									a#sponsor2AvatarDelete.glyphicon.glyphicon-trash(style="cursor:pointer;" name="2" rel="tooltip" title="Delete Sponsor2 Image")
-							.nspacer
-							.form-group.row
-								.col-sm-6.col-md-6.col-xs-6.col-lg-6
-									.progress.hide
-										.progress-bar(aria-valuenow="", aria-valuemin="0", aria-valuemax="100", style="width: 100%")
-									//input.search-input.sponsor-browse(type="text" id="fileName" readonly="readonly" style="width:65%; padding-left:10px; padding-right:10px;")
-									#sp2(style="display: inline; cursor:pointer;" rel="tooltip" title="Upload Sponsor2 Image")
-										a.glyphicon.glyphicon-cloud-upload(id="buttonbrowse2" style="cursor:pointer;text-decoration:none;")&nbsp;<span class="anchr">Upload</span>
-										input#sponsor2(type="file", name="sponsor2", placeholder="Avatar File", for="sponsor2Avatar"  style="cursor:poiner; width:100%; opacity:0; position:relative; left:0px; top:-30px;")
-						#sponsor3panel
-							.form-group.row
-								.col-sm-9.col-md-9.col-xs-9.col-lg-9
-									img#sponsor3Avatar.img-responsive(src= ev.sponsorLayout.sponsor3 ? ev.sponsorLayout.sponsor3.url : "")
-								.col-sm-3.col-md-3.col-xs-3.col-lg-3
-								if(ev.sponsorLayout.sponsor3)
-									a#sponsor3AvatarDelete.glyphicon.glyphicon-trash(style="cursor:pointer;" name="3" rel="tooltip" title="Delete Sponsor3 Image")
-							.nspacer
-							.form-group.row
-								.col-sm-6.col-md-6.col-xs-6.col-lg-6
-									.progress.hide
-										.progress-bar(aria-valuenow="", aria-valuemin="0", aria-valuemax="100", style="width: 100%")
-									//input.search-input.sponsor-browse(type="text" id="fileName" readonly="readonly" style="width:65%; padding-left:10px; padding-right:10px;")
-									#sp3(style="display: inline; cursor:pointer;" rel="tooltip" title="Upload Sponsor3 Image")
-										a.glyphicon.glyphicon-cloud-upload(id="buttonbrowse2" style="cursor:pointer;text-decoration:none;")&nbsp;<span class="anchr">Upload</span>
-										input#sponsor3(type="file", name="sponsor3", placeholder="Avatar File", for="sponsor3Avatar"  style="cursor:poiner; width:100%; opacity:0; position:relative; left:0px; top:-30px;")							
-				- } else {
-					if (ev.sponsorLayout.sponsor1)
+						| WHERE
+					- if (edit == 'e'){
+						button#editLocationButton.btn.btn-primary.btn-xs(data-toggle='modal', data-target='#eventLocationModal' )
+							span.glyphicon.glyphicon-edit  Edit
+					- }	
+					.font-s(style="word-break:break-all; ")
+						- if (ev.address || ev.venue_name)
+							strong.pull-left.break(style="word-wrap:break-word; word-break: break-word; white-space: -moz-pre-wrap; white-space: pre-wrap;")
+							#venuname(style="word-wrap:break-word; word-break: break-word;font-weight:bold;")
+								= ev.venue_name
+							#eventaddr.pull-left(style="word-wrap:break-word; word-break: break-word;font-weight:bold;")
+								= ev.address
+							- if (!ev.address && !ev.venue_name)
+								| Event does not have a location
+				div(style="float:left")
+					- if (ev.address)
+						iframe(width='180px', height='110px', frameborder='0', scrolling='no', marginheight='0', marginwidth='0', src="http://maps.google.com/maps?q=" + ev.address +"&output=embed")
+			.col-md-4.col-lg-4.col-sm-4.font16(style="width:18%; padding: 0 0 0 0")
+				.inline
+					img(src="/images/organizer.svg" alt=""  )
+				.font16.inline.color-green.semi-bold
+					| ORGANIZER
+				.clearfix
+				.font16.inline(style="word-break:break-all; ")
+					for attendee in locals.ev.attendees
+						if (attendee.admin && attendee.isAttending)
+							a.link-purple.font16(href="/user/"+attendee.user._id)= attendee.user.getName()
+							br
+			.col-md-2.col-lg-2.col-sm-2.font16(style="padding: 0 0 0 0")
+				
+				- if (edit == 'e'){
+						.inline
+							img(src="/images/sponsors-cion.svg" alt=""  )
+						.font16.inline.color-green.semi-bold
+							| SPONSORS
+						.nspacer
+							#sponsor1panel
+								.form-group.row
+									.col-sm-9.col-md-9.col-xs-9.col-lg-9
+										img#sponsor1Avatar.img-responsive(src= ev.sponsorLayout.sponsor1 ? ev.sponsorLayout.sponsor1.url : "")
+									.col-sm-3.col-md-3.col-xs-3.col-lg-3
+									if(ev.sponsorLayout.sponsor1)
+											a#sponsor1AvatarDelete.glyphicon.glyphicon-trash(style="cursor:pointer;" name="1" rel="tooltip" title="Delete Sponsor1 Image")
+								.nspacer
+								.form-group.row
+									.col-sm-6.col-md-6.col-xs-6.col-lg-6
+										.progress.hide
+											.progress-bar(aria-valuenow="", aria-valuemin="0", aria-valuemax="100", style="width: 100%")
+										//input.search-input.sponsor-browse(type="text" id="fileName" readonly="readonly" style="width:65%; padding-left:10px; padding-right:10px;")
+										#sp1(style="display: inline; cursor:pointer;" rel="tooltip" title="Upload Sponsor1 Image")
+											a.glyphicon.glyphicon-cloud-upload(id="buttonbrowse2" style="cursor:pointer; text-decoration:none;")&nbsp;<span class="anchr">Upload</span>
+											input#sponsor1(type="file", name="sponsor1", placeholder="Avatar File", for="sponsor1Avatar"  style="cursor:poiner; width:100%; opacity:0; position:relative; left:0px; top:-30px;")
+							#sponsor2panel
+								.form-group.row
+									.col-sm-9.col-md-9.col-xs-9.col-lg-9
+										img#sponsor2Avatar.img-responsive(src= ev.sponsorLayout.sponsor2 ? ev.sponsorLayout.sponsor2.url : "")
+									.col-sm-3.col-md-3.col-xs-3.col-lg-3
+									if(ev.sponsorLayout.sponsor2)
+										a#sponsor2AvatarDelete.glyphicon.glyphicon-trash(style="cursor:pointer;" name="2" rel="tooltip" title="Delete Sponsor2 Image")
+								.nspacer
+								.form-group.row
+									.col-sm-6.col-md-6.col-xs-6.col-lg-6
+										.progress.hide
+											.progress-bar(aria-valuenow="", aria-valuemin="0", aria-valuemax="100", style="width: 100%")
+										//input.search-input.sponsor-browse(type="text" id="fileName" readonly="readonly" style="width:65%; padding-left:10px; padding-right:10px;")
+										#sp2(style="display: inline; cursor:pointer;" rel="tooltip" title="Upload Sponsor2 Image")
+											a.glyphicon.glyphicon-cloud-upload(id="buttonbrowse2" style="cursor:pointer;text-decoration:none;")&nbsp;<span class="anchr">Upload</span>
+											input#sponsor2(type="file", name="sponsor2", placeholder="Avatar File", for="sponsor2Avatar"  style="cursor:poiner; width:100%; opacity:0; position:relative; left:0px; top:-30px;")
+							#sponsor3panel
+								.form-group.row
+									.col-sm-9.col-md-9.col-xs-9.col-lg-9
+										img#sponsor3Avatar.img-responsive(src= ev.sponsorLayout.sponsor3 ? ev.sponsorLayout.sponsor3.url : "")
+									.col-sm-3.col-md-3.col-xs-3.col-lg-3
+									if(ev.sponsorLayout.sponsor3)
+										a#sponsor3AvatarDelete.glyphicon.glyphicon-trash(style="cursor:pointer;" name="3" rel="tooltip" title="Delete Sponsor3 Image")
+								.nspacer
+								.form-group.row
+									.col-sm-6.col-md-6.col-xs-6.col-lg-6
+										.progress.hide
+											.progress-bar(aria-valuenow="", aria-valuemin="0", aria-valuemax="100", style="width: 100%")
+										//input.search-input.sponsor-browse(type="text" id="fileName" readonly="readonly" style="width:65%; padding-left:10px; padding-right:10px;")
+										#sp3(style="display: inline; cursor:pointer;" rel="tooltip" title="Upload Sponsor3 Image")
+											a.glyphicon.glyphicon-cloud-upload(id="buttonbrowse2" style="cursor:pointer;text-decoration:none;")&nbsp;<span class="anchr">Upload</span>
+											input#sponsor3(type="file", name="sponsor3", placeholder="Avatar File", for="sponsor3Avatar"  style="cursor:poiner; width:100%; opacity:0; position:relative; left:0px; top:-30px;")							
+					- } else {
 						if (ev.sponsorLayout.sponsor1)
-							img.img-responsive(src=ev.sponsorLayout.sponsor1.url style="width:100%;")
-						.nspacer-small
-						//if (ev.sponsorLayout.sponsor2 && ev.sponsorLayout.layout > 0 && ev.sponsorLayout.layout != 3)
-						if (ev.sponsorLayout.sponsor2)
-							img.img-responsive(src=ev.sponsorLayout.sponsor2.url style="width:100%;")
-						.nspacer-small
-						//if (ev.sponsorLayout.sponsor3 && ev.sponsorLayout.layout == 2)
-						if (ev.sponsorLayout.sponsor3)
-							img.img-responsive(src=ev.sponsorLayout.sponsor3.url style="width:100%;")
-				- }
-		.clearfix
+							if (ev.sponsorLayout.sponsor1)
+								img.img-responsive(src=ev.sponsorLayout.sponsor1.url style="width:100%;")
+							.nspacer-small
+							//if (ev.sponsorLayout.sponsor2 && ev.sponsorLayout.layout > 0 && ev.sponsorLayout.layout != 3)
+							if (ev.sponsorLayout.sponsor2)
+								img.img-responsive(src=ev.sponsorLayout.sponsor2.url style="width:100%;")
+							.nspacer-small
+							//if (ev.sponsorLayout.sponsor3 && ev.sponsorLayout.layout == 2)
+							if (ev.sponsorLayout.sponsor3)
+								img.img-responsive(src=ev.sponsorLayout.sponsor3.url style="width:100%;")
+					- }
+			.clearfix
 	.clearfix
 
 	.nspacer-big
