@@ -10,6 +10,7 @@ $(document).ready(function() {
 	function deselectAllCategories() {
 		$eventCategoryList.find("input[type=button]").each(function() {
 			$(this).removeClass("eventCategorySelected");
+			$(this).css("border", "");
 		})
 	}
 	
@@ -18,9 +19,12 @@ $(document).ready(function() {
 		
 		if ($(this).hasClass("eventCategorySelected")) {
 			$(this).removeClass("eventCategorySelected");
+			$(this).css("border", "");
+
 		} else {
 			deselectAllCategories();
 			$(this).addClass("eventCategorySelected");
+			$(this).css("border", "#333 1px solid");
 			selectedCategory = cat;
 		}
 	})
@@ -66,7 +70,7 @@ $(document).ready(function() {
 			},
 			success: function(data, status, xhr) {
 				if (data.status != 200) {
-					$accessEventWarningMessage.html("Sorry, could not attend because: "+data.message);
+					$accessEventWarningMessage.html("Sorry, could not attend because(data status not 200): "+data.message);
 				} else {
 					// basically refresh the page
 					$accessEventWarningMessage.html("All done, if the page doesn't reload automagically, hit F5 or Control+r or CMD+R");
@@ -74,7 +78,7 @@ $(document).ready(function() {
 				}
 			},
 			error: function(xhr, status, err) {
-				$accessEventWarningMessage.html("Sorry, could not attend because: "+err);
+				$accessEventWarningMessage.html("Sorry, could not attend because (ajax error): "+err);
 			}
 		})
 	}
