@@ -711,7 +711,7 @@ $(document).ready(function() {
 					window.location = '/event/'+eventid;
 				}
 				
-				$("#invitationLink").html("<input size='' id='event_id_field' style='width:100%' value='" +"eventmost.com/event/"+eventid+"'></input>");
+				$("#invitationLink").html("<input size='' id='event_id_field' style='width:100%' value='" +"dev.eventmost.com/event/"+eventid+"'></input>");
 				$(".gotoeventbutton").attr("href", "/event/"+eventid);
 			},
 			error: function(xhr, status, error) {
