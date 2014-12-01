@@ -182,12 +182,7 @@ exports.listNearEventsAPI = function (req, res) {
 	
 	var query = {
 		'geo': {
-			$geoWithin: {
-				$center: [
-					[lng, lat],
-					0.2
-				]
-			}
+			$near : [lng,lat], $maxDistance : 10/111.12
 		}
 	};
 	models.Geolocation.find(query).populate({
