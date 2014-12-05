@@ -34,7 +34,7 @@ exports.listEventsAPI = function (req, res) {
 		.populate('avatar attendees.user')
 		.select('name start end address venue_name avatar source')
 		.sort('-created')
-		.limit(10)
+		.limit(50)
 		.skip(skip)
 		.exec(function(err, evs) {
 			
@@ -90,7 +90,7 @@ exports.sortedevents = function (req, res) {
 		.populate('avatar attendees.user')
 		.select('name start end address venue_name avatar source description')
 		.sort(sortquery)
-		.limit(10)
+		.limit(50)
 		.skip(skip)
 		.exec(function(err, evs) {
 		if (err) throw err; 
