@@ -43,14 +43,58 @@ function removeProfileAPI (req, res) {
 }
 
 function uploadAvatar(req, res){
-	var fileName = req.files.uploaded_file.name;
-	res.format({
-		json: function() {
-			res.json({
-				avatarname: fileName
+
+	models.User.findOne({_id:req.body._id} , function(err, u) {
+		if (req.files && req.files.avatar != null && req.files.avatar.name.length != 0) {
+			var ext = req.files.avatar.type.split('/');
+			var ext = ext[ext.length-1];
+			u.avatar = "/profileavatars/"+u._id+"."+ext;
+			
+			var createThumbnails = function() {
+				u.createThumbnails(function(){});
+			}
+			if (!blocking) {
+				blocking = true;
+				createThumbnails = function() {
+					u.createThumbnails(function() {
+						cb()
+					});
+				}
+			}
+			
+			fs.rename(req.files.avatar.path, config.path + "/public"+u.avatar, function(err) {
+				if (err) throw err;
+				
+				if (config.knox) {
+					config.knox.putFile(config.path + "/public"+u.avatar, "/public"+u.avatar, function(err, res) {
+						if (err) throw err;
+						
+						console.log("Profile File Uploaded");
+						u.save();
+						res.format({
+							json: function() {
+								res.json({
+									status: "OK"
+								})
+							}
+						});
+					})
+				}
+				
+				createThumbnails()
+
+				
 			})
+		}else{
+			res.format({
+				json: function() {
+					res.json({
+						status: "No File Received!"
+					})
+				}
+			});
 		}
-	});
+	}
 }
 
 
@@ -125,7 +169,7 @@ exports.doEditProfileAPI = doEditProfileAPI = function (req, res) {
 	//console.log("/api/profile/edit"+req);
 	//console.log (req.body);
 
-	console.log(req.files.avatar.name);
+	//console.log(req.files.avatar.name);
 
 	var blocking = false;
 	var cb = function () {
