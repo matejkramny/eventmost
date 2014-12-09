@@ -43,24 +43,20 @@ function removeProfileAPI (req, res) {
 }
 
 function uploadAvatar(req, res){
-
-	models.User.findOne({_id:req.body._id} , function(err, u) {
+	
+	models.User.findOne({_id:req.query._id} , function(err, u) {
 		if (req.files && req.files.avatar != null && req.files.avatar.name.length != 0) {
 			var ext = req.files.avatar.type.split('/');
 			var ext = ext[ext.length-1];
 			u.avatar = "/profileavatars/"+u._id+"."+ext;
 			
 			var createThumbnails = function() {
-				u.createThumbnails(function(){});
+				u.createThumbnails(function(){
+					u.save();
+				});
 			}
-			if (!blocking) {
-				blocking = true;
-				createThumbnails = function() {
-					u.createThumbnails(function() {
-						cb()
-					});
-				}
-			}
+
+			
 
 			console.log(req.files.avatar.path);
 			console.log(config.path);
@@ -73,19 +69,23 @@ function uploadAvatar(req, res){
 					config.knox.putFile(config.path + "/public"+u.avatar, "/public"+u.avatar, function(err, res) {
 						if (err) throw err;
 						
-						console.log("Profile File Uploaded");
-						u.save();
-						res.format({
-							json: function() {
-								res.json({
-									status: "OK"
-								})
-							}
-						});
+						
 					})
 				}
+
+				createThumbnails();
+
+				console.log("Profile File Uploaded");
+						
+				res.format({
+					json: function() {
+						res.json({
+							status: "OK"
+						})
+					}
+				});
 				
-				createThumbnails()
+				
 
 				
 			});
