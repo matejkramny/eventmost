@@ -12,6 +12,7 @@ exports.router = function (app) {
 		//app.get('/api/test',function(req,res){res.send({token:"Test Token"})})
 		app.post('/api/profile', util.authorized, profileAPI)
 		.post('/api/profile/edit', util.authorized, doEditProfileAPI)
+		.post('profile/uploadAvatar', uploadAvatar)
 		.post('/api/user', viewUserAPI)
 		.all('/api/user/:id/*', util.authorized)
 		.post('/api/user/:id/save', saveUserAPI)
@@ -40,6 +41,18 @@ function removeProfileAPI (req, res) {
 			}
 		});
 }
+
+function uploadAvatar(req, res){
+	var fileName = req.files.uploaded_file.name;
+	res.format({
+		json: function() {
+			res.json({
+				avatarname: fileName
+			})
+		}
+	});
+}
+
 
 exports.profileAPI = profileAPI = function (req, res) {
 	
