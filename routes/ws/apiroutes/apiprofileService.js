@@ -84,7 +84,7 @@ function uploadAvatar(req, res){
 				createThumbnails()
 
 				
-			})
+			});
 		}else{
 			res.format({
 				json: function() {
@@ -94,7 +94,7 @@ function uploadAvatar(req, res){
 				}
 			});
 		}
-	}
+	});
 }
 
 
