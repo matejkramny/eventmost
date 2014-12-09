@@ -12,7 +12,7 @@ exports.router = function (app) {
 		//app.get('/api/test',function(req,res){res.send({token:"Test Token"})})
 		app.post('/api/profile', util.authorized, profileAPI)
 		.post('/api/profile/edit', util.authorized, doEditProfileAPI)
-		.post('profile/uploadAvatar', uploadAvatar)
+		.post('/api/profile/uploadAvatar', uploadAvatar)
 		.post('/api/user', viewUserAPI)
 		.all('/api/user/:id/*', util.authorized)
 		.post('/api/user/:id/save', saveUserAPI)
