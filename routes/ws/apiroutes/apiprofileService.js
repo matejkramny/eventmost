@@ -61,6 +61,10 @@ function uploadAvatar(req, res){
 					});
 				}
 			}
+
+			console.log(req.files.avatar.path);
+			console.log(config.path);
+			console.log(u.avatar);
 			
 			fs.rename(req.files.avatar.path, config.path + "/public"+u.avatar, function(err) {
 				if (err) throw err;
