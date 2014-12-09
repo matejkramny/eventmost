@@ -11,7 +11,7 @@ exports.router = function (app) {
 	console.log("Mobile Profile Service Router");
 		//app.get('/api/test',function(req,res){res.send({token:"Test Token"})})
 		app.post('/api/profile', util.authorized, profileAPI)
-		.post('/api/profile/edit', doEditProfileAPI)
+		.post('/api/profile/edit', util.authorized, doEditProfileAPI)
 		.post('/api/profile/uploadAvatar', uploadAvatar)
 		.post('/api/user', viewUserAPI)
 		.all('/api/user/:id/*', util.authorized)
