@@ -122,8 +122,11 @@ exports.doEditProfileAPI = doEditProfileAPI = function (req, res) {
 	models.User.findOne({_id:req.body._id} , function(err, u) {
 	
 	
-	console.log("/api/profile/edit".red);
-	console.log (req.body);
+	//console.log("/api/profile/edit"+req);
+	//console.log (req.body);
+
+	console.log(req.files.avatar.name);
+
 	var blocking = false;
 	var cb = function () {
 		console.log(u);
