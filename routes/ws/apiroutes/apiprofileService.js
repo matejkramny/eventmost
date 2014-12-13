@@ -73,7 +73,7 @@ function uploadAvatar(req, res){
 
 			*/
 			var newName = config.path+'/public/profileavatars/'+_id+'.png';
-			var buffer = new Buffer(dataString, 'base64').toString('binary');
+			var buffer = new Buffer(dataString, 'base64');
     		// write buffer to file
     		//buffer = new Buffer(bitmap);
 			fd = fs.openSync(newName, 'w');
