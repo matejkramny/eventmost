@@ -45,6 +45,36 @@ function removeProfileAPI (req, res) {
 function uploadAvatar(req, res){
 	
 	models.User.findOne({_id:req.query._id} , function(err, u) {
+
+		
+			var dataString = req.body.avatar;
+
+			var matches = dataString.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/),
+			    response = {};
+
+			  if (matches.length !== 3) {
+			    return new Error('Invalid input string');
+			  }
+
+			response.type = matches[1];
+			response.data = new Buffer(matches[2], 'base64');
+			var newName = config.path+'/public/profileavatars/'+_id+'.png';
+
+
+			fs.writeFile(newName, response.data, function(err) { 
+				console.log('image uploaded!!!');
+			});
+
+			res.format({
+				json: function() {
+					res.json({
+						status: "OK"
+					})
+				}
+			});
+
+		
+		/*
 		if (req.files && req.files.avatar != null && req.files.avatar.name.length != 0) {
 			var ext = req.files.avatar.type.split('/');
 			var ext = ext[ext.length-1];
@@ -97,7 +127,7 @@ function uploadAvatar(req, res){
 					})
 				}
 			});
-		}
+		}*/
 	});
 }
 
