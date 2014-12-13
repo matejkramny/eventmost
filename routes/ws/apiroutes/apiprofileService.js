@@ -55,7 +55,11 @@ function uploadAvatar(req, res){
 
 			dataString.replace(" ", "+");
 
+			console.log("-----------");
 			console.log(dataString);
+			console.log("-----------");
+			
+
 
 			/*var matches = dataString.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/),
 			    response = {};
