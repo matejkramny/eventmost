@@ -53,12 +53,12 @@ function uploadAvatar(req, res){
 			var _id = req.body._id;
 			var dataString = req.body.avatar;
 
-			dataString.replace(" ", "+");
+			//dataString.replace(" ", "+");
 
 			console.log("-----------");
 			console.log(dataString);
 			console.log("-----------");
-			
+
 
 
 			/*var matches = dataString.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/),
@@ -73,9 +73,9 @@ function uploadAvatar(req, res){
 
 			*/
 			var newName = config.path+'/public/profileavatars/'+_id+'.png';
-			var bitmap = new Buffer(dataString, 'base64');
+			var buffer = new Buffer(dataString, 'base64').toString('binary');
     		// write buffer to file
-    		buffer = new Buffer(bitmap);
+    		//buffer = new Buffer(bitmap);
 			fd = fs.openSync(newName, 'w');
 			fs.writeSync(fd, buffer, 0, buffer.length, 0);
 			fs.closeSync(fd);
