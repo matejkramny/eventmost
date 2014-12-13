@@ -53,7 +53,7 @@ function uploadAvatar(req, res){
 			var _id = req.body._id;
 			var dataString = req.body.avatar;
 
-			//dataString.replace(" ", "+");
+			dataString.replace(" ", "+");
 
 			console.log(dataString);
 
