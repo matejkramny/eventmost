@@ -49,7 +49,7 @@ function uploadAvatar(req, res){
 			console.log(req);
 			var dataString = req.body.avatar;
 
-			var matches = dataString.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/),
+			/*var matches = dataString.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/),
 			    response = {};
 
 			  if (matches.length !== 3) {
@@ -57,11 +57,11 @@ function uploadAvatar(req, res){
 			  }
 
 			response.type = matches[1];
-			response.data = new Buffer(matches[2], 'base64');
+			response.data = new Buffer(matches[2], 'base64');*/
 			var newName = config.path+'/public/profileavatars/'+_id+'.png';
-
-
-			fs.writeFile(newName, response.data, function(err) { 
+			var bitmap = new Buffer(dataString, 'base64');
+    		// write buffer to file
+    		fs.writeFileSync(newName, bitmap, function(err) { 
 				console.log('image uploaded!!!');
 			});
 
