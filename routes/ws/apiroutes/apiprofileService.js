@@ -46,7 +46,7 @@ function uploadAvatar(req, res){
 
 
 	
-	models.User.findOne({_id:req.body._id} , function(err, u) {
+	/*models.User.findOne({_id:req.body._id} , function(err, u) {
 
 			//console.log(req);
 
@@ -71,7 +71,7 @@ function uploadAvatar(req, res){
 			response.type = matches[1];
 			response.data = new Buffer(matches[2], 'base64');
 
-			*/
+			
 			var newName = config.path+'/public/profileavatars/'+_id+'.png';
 			var buffer = new Buffer(dataString, 'base64');
     		// write buffer to file
@@ -87,10 +87,11 @@ function uploadAvatar(req, res){
 					})
 				}
 			});
-		});
+		});*/
 
 		
-		/*
+	models.User.findOne({_id:req.body._id} , function(err, u) {
+		
 		if (req.files && req.files.avatar != null && req.files.avatar.name.length != 0) {
 			var ext = req.files.avatar.type.split('/');
 			var ext = ext[ext.length-1];
