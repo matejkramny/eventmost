@@ -44,11 +44,11 @@ function removeProfileAPI (req, res) {
 
 function uploadAvatar(req, res){
 	
-	models.User.findOne({_id:req.query._id} , function(err, u) {
+	models.User.findOne({_id:req.body._id} , function(err, u) {
 
 			console.log(req);
 
-			var _id = req.query._id;
+			var _id = req.body._id;
 			var dataString = req.body.avatar;
 
 			/*var matches = dataString.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/),
