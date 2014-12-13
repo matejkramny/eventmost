@@ -46,10 +46,13 @@ function uploadAvatar(req, res){
 	
 	models.User.findOne({_id:req.body._id} , function(err, u) {
 
-			console.log(req);
+			//console.log(req);
 
 			var _id = req.body._id;
 			var dataString = req.body.avatar;
+			dataString.replace(" ", "+");
+
+			console.log(dataString);
 
 			/*var matches = dataString.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/),
 			    response = {};
