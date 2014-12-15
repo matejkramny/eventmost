@@ -50,11 +50,11 @@ exports.listEventsAPI = function (req, res) {
 
 						//console.log(entry.description);
 						entry.description = entry.description.replace(/(<([^>]+)>)/ig,"");
-						entry.description = entry.description.substr(0, 200)+"...";
+						//entry.description = entry.description.substr(0, 200)+"...";
 					}
 					
 				});
-				
+
 				res.format({
 					json: function() {
 						res.send({
