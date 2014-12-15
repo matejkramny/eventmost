@@ -31,7 +31,7 @@ append content
 
 	.col-md-3.col-xs-3.nspacer.he1.hide-mini
 		a(href="/profile")
-			img.img-responsive(src= user.avatar.length == 0 ? "/images/big-avatar.svg" : user.avatar, style="max-height: 100%; margin:0 auto;")
+			img.img-responsive(src= user.avatar.length == 0 ? "/images/big-avatar.svg" : user.avatar, style="max-height: 100%; margin:0 auto; width:100%; height:100%")
 	a(href="/event/add")
 		.col-md-9.col-xs-9.nspacer.bg-purple.font-bigs.font-thin.center.he1.img-responsive.hide-mini
 			a.link-ashen.space(href="/event/add") Create event
@@ -85,9 +85,9 @@ append content
 		a.link-green2(href="/search/?arrange=nearby" alt="Events Nearby")
 			.font-bigs.font-thin.center.home-big
 
-				| Events nearby 
+				| Events Nearby 
 				#totalNearEvents
-
+				
 				img.home-big3(src="/images/location-icon.svg", class="img-responsive", style="width:80%; margin:auto;")
 	//- My Events
 	.col-xs-4.bg-yellow.pad-right-zero.pad-left-zero.hide-all2.nspacer(style='height:242px;')
@@ -158,8 +158,11 @@ append content
 		.col-md-6.col-xs-6.pad-right-zero.pad-left-zero
 			a.link-green2(href="/search/?arrange=nearby", alt="Events Nearby")
 				.font-bigs.font-thin.center.home-big(style="font-weight:100;")
-					| Events nearby
-					img.home-big3(src="/images/location-icon.svg", alt="",)
+					| Events Nearby
+					#totalNearEvents
+					div(style="float:left; margin-left:30%; margin-top:6%")
+						img.home-big3(style="z-index:1")(src="/images/location-icon.svg", alt="",)
+					div.numberCircle(style="float:right; margin-right:33%; z-index:2") 8
 		//- My Events
 		.col-md-6.col-xs-6.bg-yellow.pad-right-zero.pad-left-zero
 			a.link-purple2(href="/events/my", alt="My Events")
