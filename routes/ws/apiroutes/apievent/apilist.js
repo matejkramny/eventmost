@@ -12,6 +12,8 @@ exports.router = function (app) {
 }
 
 exports.listEventsAPI = function (req, res) {
+	console.log(config.path);
+
 	var skip = req.query.skip || 0;
 	var showPastEvents = req.query.pastEvents == "1" ? true : false;
 	if (!showPastEvents || typeof showPastEvents === 'undefined') {
@@ -32,7 +34,7 @@ exports.listEventsAPI = function (req, res) {
 	
 	models.Event.find(query)
 		.populate('avatar attendees.user')
-		.select('name start end address venue_name avatar source')
+		.select('name start end address venue_name avatar source description')
 		.sort('-created')
 		.limit(50)
 		.skip(skip)
