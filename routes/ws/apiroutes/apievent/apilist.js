@@ -110,6 +110,18 @@ exports.sortedevents = function (req, res) {
 		if (err) throw err; 
 		if (evs) {
 			models.Event.find(query).count(function(err, total) {
+
+				evs.forEach(function(entry) {
+						
+					if((entry.description) && entry.description != ''){
+
+						//console.log(entry.description);
+						entry.description = entry.description.replace(/(<([^>]+)>)/ig,"");
+						//entry.description = entry.description.substr(0, 200)+"...";
+					}
+					
+				});
+
 				res.format({
 					json: function() {
 						res.send({
@@ -144,6 +156,17 @@ exports.listMyEventsAPI = function (req, res) {
 			if (err) throw err;
 			if (evs) {
 				models.Event.find(query).count(function(err, total) {
+
+					evs.forEach(function(entry) {
+						
+						if((entry.description) && entry.description != ''){
+
+							//console.log(entry.description);
+							entry.description = entry.description.replace(/(<([^>]+)>)/ig,"");
+							//entry.description = entry.description.substr(0, 200)+"...";
+						}
+						
+					});
 					
 					res.format({
 						json: function() {
