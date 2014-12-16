@@ -131,7 +131,7 @@ append content
 					.container.bg-purple.date-height.datepickerWrapper(style="margin-top:-20px;")
 						.center
 							.font.logo-text
-								| TO:
+								| TO++:
 						.datepicker#toDateMobile(style="min-height:300px;")
 						.clearfix
 						.nspacer
@@ -525,7 +525,7 @@ append content
 								.pull-left.font-e
 									| Time of event:
 								.pull-left.pad-left-ten(style="width:50%")
-									input.input-grey-rounded(name="start_date" type="time")
+									input.input-grey-rounded(type="time", name="start_date", id="fromTime")
 					.col-lg-5.col-md-5.col-xs-5.pad-left-five.pad-right-zero.res-dis-non
 						.container.bg-purple.date-height.datepickerWrapper
 							.center
@@ -542,7 +542,7 @@ append content
 								.pull-left.font-e
 									| Time of event:
 								.pull-left.pad-left-ten(style="width:50%")
-									input.input-grey-rounded(name="start_date" type="time")
+									input.input-grey-rounded(type="time", name="start_date", id="toTime")
 					//- small calendars
 					.col-lg-12.col-md-12.col-xs-12.pad-left-zero.pad-right-zero.res-dis-non-vis
 						.container.bg-purple.pad-top-zero.pad-right-zero(style="height:32px;")
@@ -560,7 +560,7 @@ append content
 							.pull-left.font-e
 								| Time of event:
 							.pull-left.pad-left-ten
-								input.input-grey-rounded(name="start_date", type="time")
+								input.input-grey-rounded(type="time", name="start_date")
 							.clearfix
 							.nspacer
 							.pull-left
@@ -571,12 +571,12 @@ append content
 						.container.bg-purple.date-height
 							.center
 								.font.font-thin.logo-text
-									| TO:
+									| TO--:
 							.datepicker(style="min-height:300px;")
 							.pull-left.font-e
 								| Time of event:
 							.pull-left.pad-left-ten
-								input.input-grey-rounded(name="start_date", type="time")
+								input.input-grey-rounded(type="time", name="start_date")
 							.clearfix
 							.nspacer
 							.pull-left
@@ -804,6 +804,9 @@ append content
 			.clearfix
 			.nspacer-medium
 			.center
+				div.logo-text(id="successCopy", style="font-size:20px; display:none")
+						| Copied to Clipboard!
+				br
 				img(src="/images/publish.svg")
 
 			.nspacer
