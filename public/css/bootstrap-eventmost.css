@@ -3985,3 +3985,19 @@ margin-top: 5px;
     margin: 0px;
     padding: 0px
 }
+
+.numberCircle {
+    border-radius: 50%;
+    behavior: url(PIE.htc); /* remove if you don't care about IE8 */
+
+    width: 45px;
+    height: 45px;
+    padding: 8px;
+    
+    background: #0992A3;
+    border: 2px solid #0992A3;
+    color: #fff;
+    text-align: center;
+    
+    font: 22px Arial, sans-serif;
+}
