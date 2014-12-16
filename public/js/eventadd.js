@@ -11,6 +11,7 @@ $(document).ready(function() {
 	}
 	
 	var editingEvent = null
+
 	
 	function getNear(coords) {
 		lat = coords.lat;
@@ -597,6 +598,8 @@ $(document).ready(function() {
 	function getValue(selector) {
 		return $(selector).val();
 	}
+
+	
 	function getTime (datepicker) {
 		var dpicker = $(datepicker);
 		var time = dpicker.parent().find("input[type=time]").val();
@@ -879,6 +882,9 @@ $(document).ready(function() {
 			copy:function(){return $("input#event_id_field").val()},
 	        afterCopy: function() {
 	        	var hold = 1
+	        	//console.log("copied");
+	        	$('#successCopy').show();
+	        	$('#successCopy').delay(3000).fadeOut();
 	        }
 		})
 	});
@@ -938,4 +944,5 @@ eventMost.controller('eventAdd', function($scope) {
 			discount: null
 		})
 	}
+
 })
