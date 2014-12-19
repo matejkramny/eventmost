@@ -71,6 +71,7 @@ exports.listEventsAPI = function (req, res) {
 }
 
 exports.sortedevents = function (req, res) {
+
 	var sortby = req.body.sortby;
 	var skip = req.query.skip || 0;
 	var showPastEvents = req.query.pastEvents;
@@ -91,14 +92,15 @@ exports.sortedevents = function (req, res) {
 		query.start = { $gte: Date.now() };
 	}
 
+
+
 	if(sortby == 1){
-		sortquery = {"created" : -1};
+		sortquery = {"start" : -1};
 	}else if(sortby == 2){
-		sortquery = {"created" : 1};
+		sortquery = {"start" : 1};
 	}else{
 		sortquery = {"name" : 1};
 	}
-	
 	
 	models.Event.find(query)
 		.populate('avatar attendees.user')
@@ -218,7 +220,7 @@ exports.listNearEventsAPI = function (req, res) {
 	
 	var query = {
 		'geo': {
-			$near : [lng,lat], $maxDistance : 10/111.12
+			$near : [lng,lat], $maxDistance : 10/111.12 //10km radius
 		}
 	};
 	models.Geolocation.find(query).populate({
