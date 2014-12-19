@@ -7,7 +7,7 @@ var models = require('../../../../models')
 exports.router = function (app) {
 	app.get('/api/events', exports.listEventsAPI)
 		.post('/api/events/my', util.authorized, exports.listMyEventsAPI)
-		.get('/api/events/near', exports.listNearEventsAPI)
+		.get('/api/events/near/:lat/:lng', exports.listNearEventsAPI)
 		.post('/api/sortedevents', exports.sortedevents)
 }
 
@@ -188,20 +188,26 @@ exports.listMyEventsAPI = function (req, res) {
 
 exports.listNearEventsAPI = function (req, res) {
 	
-	console.log();
-	console.log("/api/events/near ".red);
-	console.log(req);
-	
-	console.log("lat: "+req.query.lat)
-	var lat = parseFloat(req.query.lat)
-		, lng = parseFloat(req.query.lng)
+	/*console.log(req.query);
+	console.log(req.params);
+	console.log(req.params.lat);
+	console.log(req.params.lng);
+	console.log(req.body);*/
+
+	var lat = parseFloat(req.params.lat)
+		, lng = parseFloat(req.params.lng)
 		, limit = parseInt(req.query.limit)
 		, distance = req.query.distance
 		, htmlIsEnabled = Boolean(req.query.html)
 		, page = parseInt(req.query.page)
 
+
+	
+
+
 	if (!lat || !lng) {
 		// render a blank page, and tell it to ask user for browser positioning
+		console.log("stuck here");
 		res.format({
 			json: function() {
 				res.send({
@@ -215,7 +221,7 @@ exports.listNearEventsAPI = function (req, res) {
 	}
 	
 	if (limit == NaN) {
-		limit = 10;
+		limit = 50;
 	}
 	
 	var query = {
@@ -237,7 +243,7 @@ exports.listNearEventsAPI = function (req, res) {
 		.skip(limit * page)
 		.exec(function(err, geos) {
 			if (err) throw err;
-			console.log(geos);
+			
 			if (geos) {
 				var events = [];
 				
@@ -250,6 +256,8 @@ exports.listNearEventsAPI = function (req, res) {
 						events.push(geos[i].event);
 					}
 				}
+
+				
 				
 				// May slow the app down.. Mongoose does not seem to support sub-document population (event.avatar)
 				async.each(geos, function(geo, cb) {
