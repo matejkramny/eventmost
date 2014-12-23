@@ -11,12 +11,7 @@ exports.display = function (req, res) {
 		deleted: false,
 		start: {
 			$gte: new Date()
-		},
-		end: {
-			$lte: nextWeek
 		}
-
-		
 	};
 	var newEvs = [];
 	
