@@ -1,7 +1,7 @@
 .nspacer
 .row
 	.col-md-12.col-lg-12.col-sm-12
-		.nspacer-big.font-exception.font18.bold.color-green.center(type='submit', style="")
+		//- .nspacer-big.font-exception.font18.bold.color-green.center(type='submit', style="")
 			| #{ev.name}
 		.nspacer-big
 		if (ev.backgroundImage)
@@ -11,7 +11,7 @@
 
 		.col-md-3.col-lg-3.col-sm-3(style="margin-top:2%; margin-bottom:2%")
 			img.small-event-border(src=ev.avatar.url style="width:275px; max-height:205px; min-height:200px")
-		.col-md-9.col-lg-9.col-sm-9
+		.col-md-9.col-lg-9.col-sm-9(style="margin-top:-5%")
 			.nspacer
 			.col-md-3.col-lg-3.col-sm-3.font16(style="padding: 10 0 0 10")
 				.inline
