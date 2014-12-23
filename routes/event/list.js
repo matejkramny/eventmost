@@ -88,7 +88,7 @@ exports.listMyEvents = function (req, res) {
 
 							//console.log(entry.description);
 							entry.description = entry.description.replace(/(<([^>]+)>)/ig,"");
-							entry.description = entry.description.substr(0, 200)+"...";
+							entry.description = entry.description.substr(0, 120)+"...";
 						}
 						
 					});
@@ -146,6 +146,16 @@ exports.listNearEvents = function (req, res) {
 	if (limit == NaN) {
 		limit = 10;
 	}
+
+	/*
+	
+	In order to use mongodb $near queries with km bounds, you need to convert the radius value to km. By default mongodb $near accepts $maxDistance as radius. 
+	Convert distance by 111.12 (one degree is approximately 111.12 kilometers) when using km, or leave distance as it is on using degree to your question
+	what do I set as maxdistance if I am searching for documents within a 1 km radius?
+	you can use this:
+	db.places.find( { loc : { $near : [50,50] , $maxDistance : 1/111.12 } } )
+
+	*/
 	
 	var query = {
 		'geo': {
@@ -186,7 +196,7 @@ exports.listNearEvents = function (req, res) {
 						geos[i].event.geo = geos[i].geo;
 						if((geos[i].event.description) && geos[i].event.description != ''){
 							geos[i].event.description = geos[i].event.description.replace(/(<([^>]+)>)/ig,"");
-							geos[i].event.description = geos[i].event.description.substr(0, 200)+"...";
+							geos[i].event.description = geos[i].event.description.substr(0, 120)+"...";
 						}
 						
 						events.push(geos[i].event);
@@ -267,12 +277,20 @@ exports.listNearLandingEvents = function (req, res) {
 					deleted: false,
 					start: {
 						$gte: new Date()
+					}
+				};
+
+				/*
+
+				deleted: false,
+					start: {
+						$gte: new Date()
 					},
 					end: {
 						$lte: nextWeek
 					}
-					
-				};
+
+				*/
 
 				var newEvs = [];
 				models.Event.find(query).limit(100).populate('avatar').sort('start').exec(function(err, evs) {
@@ -287,7 +305,7 @@ exports.listNearLandingEvents = function (req, res) {
 
 								//console.log(entry.description);
 								entry.description = entry.description.replace(/(<([^>]+)>)/ig,"");
-								entry.description = entry.description.substr(0, 200)+"...";
+								entry.description = entry.description.substr(0, 120)+"...";
 
 							}
 							newEvs.push(entry);
@@ -360,7 +378,7 @@ exports.listNearLandingEvents = function (req, res) {
 						//geos[i].event.avatar = JSON.stringify({"avatar" : {'url': 'test url'}});
 						geos[i].event.geo = geos[i].geo;
 						geos[i].event.description = geos[i].event.description.replace(/(<([^>]+)>)/ig,"");
-						geos[i].event.description = geos[i].event.description.substr(0, 200)+"...";
+						geos[i].event.description = geos[i].event.description.substr(0, 120)+"...";
 
 						events.push(geos[i].event);
 					}
