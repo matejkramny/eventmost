@@ -10,6 +10,50 @@ exports.router = function (app) {
 		.get('/events/my', util.authorized, exports.listMyEvents)
 		.get('/events/near', exports.listNearEvents)
 		.get('/events/nearlanding', exports.listNearLandingEvents)
+		.get('/events/countnear/:lat/:lng', countnear)
+}
+
+function countnear(req, res){
+	var total = 0
+	var lat = parseFloat(req.params.lat)
+		, lng = parseFloat(req.params.lng)
+
+	var query = {
+		'geo': {
+			$near : [lng,lat], $maxDistance : 10/111.12
+		}
+	};
+
+	models.Geolocation.find(query).populate({
+		path: 'event',
+		select: 'name',
+		match: {
+			deleted: false,
+			privateEvent: {
+				$ne: true
+			},
+			start: { $gte: Date.now() }
+		}
+	}).exec(function(err, geos) {
+		if(geos){
+			for (var i = 0; i < geos.length; i++) {	
+				//console.log(geos[i]);
+				if (geos[i].event == null) {
+					continue;
+				}
+				total++;
+			}
+		}
+
+		res.format({
+			json: function() {
+				res.send({
+					total: total
+				})
+			}
+		})
+		return;
+	});
 }
 
 exports.listEvents = function (req, res) {
@@ -125,6 +169,8 @@ exports.listNearEvents = function (req, res) {
 		, htmlIsEnabled = Boolean(req.query.html)
 		, page = parseInt(req.query.page)
 
+	console.log(lat +"___"+ lng)
+
 	if (!lat || !lng) {
 		// render a blank page, and tell it to ask user for browser positioning
 		res.format({
@@ -163,7 +209,9 @@ exports.listNearEvents = function (req, res) {
 		}
 	};
 
-	var totalEvents = 0;
+	
+
+	
 	models.Geolocation.find(query).populate({
 		path: 'event',
 		select: 'name description start end address venue_name avatar source',
@@ -178,10 +226,9 @@ exports.listNearEvents = function (req, res) {
 		.skip(limit * page)
 		.exec(function(err, geos) {
 			if (err) throw err;
-			console.log(geos);
+			//console.log(geos);
 			if (geos) {
 				var events = [];
-				
 				
 				for (var i = 0; i < geos.length; i++) {
 					if (geos[i].event == null) {
@@ -200,7 +247,7 @@ exports.listNearEvents = function (req, res) {
 						}
 						
 						events.push(geos[i].event);
-						totalEvents++;
+						
 					}
 				}
 				
@@ -213,7 +260,7 @@ exports.listNearEvents = function (req, res) {
 				}, function(err) {
 					res.format({
 						html: function() {
-							res.render('search/results', { nearby: true, search: { results: events }, totalEvents: totalevents, moment:moment, title: "Events nearby" })
+							res.render('search/results', { nearby: true, search: { results: events }, moment:moment, title: "Events nearby" })
 						},
 						json: function() {
 							if (events.length > 0 && htmlIsEnabled) {
@@ -394,7 +441,7 @@ exports.listNearLandingEvents = function (req, res) {
 					res.format({
 						html: function() {
 							console.log("redering the view");
-							console.log(events);
+							//console.log(events);
 							res.render('search/landing', { nearby: true, gotEvents : true, search: { results: events }, moment:moment, title: "Events nearby" })
 						},
 						json: function() {

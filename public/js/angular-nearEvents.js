@@ -41,6 +41,28 @@ $(document).ready(function() {
 			}
 		})
 	}
+
+	function showNumNear(coords){
+		//alert(coords.lat+"==="+coords.lng);
+
+
+		$.ajax({
+			url: '/events/countnear/'+coords.lat+'/'+coords.lng,
+			method: 'GET',
+			success: function(msg) {
+				//alert(msg.total);
+				if(msg.total != 0){
+					$('#totEvents').show();
+					$('#totEvents').html(msg.total);	
+				}
+				return;
+			}
+			/*error: function(jqxhr, status, error) {
+				console.log("error" + error)
+			}*/
+		})
+
+	}
 	
 	$(document).on('click', "#tryAgainNearbyEvents", function(ev) {
 		ev.preventDefault();
@@ -86,9 +108,14 @@ $(document).ready(function() {
 	} else if (isLocalStorageCapable && localStorage["didSaveCoords"]) {
 		var coords = JSON.parse(localStorage["coords"])
 		getNear(coords);
+		showNumNear(coords);
 		window.lastCoords = coords;
 		$("#tryAgainNearbyEvents").parent().addClass('hide');
 	} else if ($("#tryAgainNearbyEvents").length == 0) {
 		loadNear()
 	}
+
+
+
+
 })
