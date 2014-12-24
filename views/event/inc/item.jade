@@ -7,12 +7,12 @@ mixin eventItem(event)
 	
 	if (foreign && !loggedIn)
 		- link = '';
-	.row(style="margin-bottom:10px")
+	
 	
 	a.link-purple(href=link target="_blank" class= foreign && !loggedIn ? "openEvent" : null data-event=event.id)
-		.col-lg-3.col-md-3.col-sm-3.col-xs-3.pad-right-zero.don-dis(style="width:23%; margin:0px 0px 0px 0px")
-			img(src= event.avatar ? event.avatar.url : "", width="200px", height="150px")(style="display:block")
-		.col-lg-9.col-md-9.col-sm-9.col-xs-9.psev.pad-left-ten.no-pads1.other-dis(style="width:77%; height:100%; margin:0px 0px 0px 0px")
+		.col-lg-3.col-md-3.col-sm-3.col-xs-3.pad-right-zero.don-dis(style="width:23%; margin:0px 0px 0px 0px;")
+			img(src= event.avatar ? event.avatar.url : "", height="150px")(style="display:block; max-width:100%; float:right")
+		.col-lg-9.col-md-9.col-sm-9.col-xs-9.psev.pad-left-ten.no-pads1.other-dis(style="width:77%; height:100%; margin:0px 0px 0px 0px;")
 			.nspacer-medium3(style="margin-top:0px")
 				.font16.font16s.color-green.bold= event.name
 				.outbox
@@ -37,4 +37,6 @@ mixin eventItem(event)
 						span.pad-left-ten
 							if (event.address)
 							= event.address
+
 	.clearfix
+	.row(style="margin-bottom:20px; margin-top:20px; border-top: 1px solid #0992a3;")
