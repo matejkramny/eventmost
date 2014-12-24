@@ -15,10 +15,11 @@ mixin eventItem(event)
 		.col-lg-9.col-md-9.col-sm-9.col-xs-9.psev.pad-left-ten.no-pads1.other-dis(style="width:77%; height:100%; margin:0px 0px 0px 0px;")
 			.nspacer-medium3(style="margin-top:0px")
 				.font16.font16s.color-green.bold= event.name
-				.outbox
-					.r
-						.box.after.dot2
-							.smart-minus(style="width:100%; word-wrap: break-word; height:100%")!= event.description
+				if event.description
+					.outbox
+						.r
+							.box.after.dot2
+								.smart-minus(style="width:100%; word-wrap: break-word; height:100%")!= event.description
 			.nspacer-small.od.break(style="white-space: nowrap;")
 				.pull-left.color-green.font16.bold.font16s
 					| WHEN
