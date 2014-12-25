@@ -295,7 +295,7 @@ $(document).ready(function() {
 	};
 
 	function uploadAvatar () {
-		alert(file);
+		//alert(file);
 		console.log(file);
 		//console.log(file);
 		if (typeof file === "undefined" || file == null) {
