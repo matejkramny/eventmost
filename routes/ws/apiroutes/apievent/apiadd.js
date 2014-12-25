@@ -6,7 +6,7 @@ var models = require('../../../../models'),
 exports.router = function (app) {
 	app.get('/api/event/add', util.authorized, addEventAPI)
 		.post('/api/event/add', util.authorized, doAddEventAPI)
-		.post('/api/event/add/avatar', util.authorized, uploadAvatarAsync)
+		.post('/api/event/add/avatar', uploadAvatarAsync)
 		.get('/api/event/:avatarid/avatar/remove', util.authorized, removeAvatar)
 }
 
