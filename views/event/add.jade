@@ -1,5 +1,6 @@
 extends ../responsive
 
+
 append addonjs
 	script(src="/js/crop/jquery.min.js", defer)
 	script(src="/js/vendor/angular.min.js", defer)
@@ -10,6 +11,10 @@ append addonjs
 	script(src="/js/vendor/tiny.editor.packed.js", defer)
 	script(src="/js/vendor/jquery.jcarousel.min.js", defer)
 	script(src="/js/vendor/jquery.zclip.min.js", defer)
+	script(src="/js/crop/hammer.js", defer)
+	script(src="/js/crop/jquery.mousewheel.js", defer)
+	script(src="/js/crop/jquery.cropbox.js", defer)
+
 
 	if (typeof ev !== "undefined")
 		script.
@@ -347,25 +352,25 @@ append content
 					.progress.hide
 						.progress-bar.avatar-progress-upload(role="progress", aria-valuenow="0", aria-valuemin="0", aria-valuemax="100", style="width: 0%;")
 							span.sr-only 0% Uploaded
-					.col-lg-1.col-md-1.col-xs-1.bg-yellow.create-height
-						.font-22.font-thin.nspacer.logo-text.dif.font-exception
-							|	Logo
-						.font.font-thin.nspacer.logo-text.dif2
-							| L<br />o<br />g<br />o
+					.col-lg-2.col-md-2.col-xs-2.pad-left-zero.pad-right-zero.res-dis-non(style="width:12.5%")
+						.container.bg-green.pad-top-zero.pad-right-zero(style="height:62px;")
+							.pull-left.event-address
+								.font.font-thin.logo-text
+									| Event Logo
+
 					.col-lg-3-5		
 						//- crop toll
-						#profile_pic.profile_pic
-							img#thumb(src='/images/pro.svg')
+						//-
+							#profile_pic.profile_pic
+								img#thumb(src='/images/pro.svg')
 
 						form#upload_form1(enctype='multipart/form-data', method='post', action='upload.php', onsubmit='return validateForm();')
-							input#w(type='hidden', name='w')
-							input#h(type='hidden', name='h')
-							input#x1(type='hidden', name='x1')
-							input#y1(type='hidden', name='y1')
-							input#x2(type='hidden', name='x2')
-							input#y2(type='hidden', name='y2')
+							input#w1(type='hidden')
+							input#h1(type='hidden')
+							input#x1(type='hidden')
+							input#y1(type='hidden')
 					//- crop toll browse button
-					.pull-left.button-event
+					.pull-left.button-event(style="margin-left:2%")
 						.bg-yellow-rounded
 							#file_browse_wrapper1.file_browse_wrapper
 								input#file_browse1.file_browse(type='file', name='avatar1')
@@ -387,7 +392,7 @@ append content
 						| Select part of image you want to crop
 					#image_div(style='display: none;')
 						.a(id="cropButton1")
-							#crop_div(style='float: right; margin-right:10%')
+							#crop_div(style='float: right; margin-right:55%')
 								h3(style="float:left")
 									| Crop 
 									img(src='/images/crop.jpeg', width="30", heigth="30")
@@ -399,10 +404,10 @@ append content
 					//.line-purple
 					.nspacer
 					.font2.pull-left.font-exception
-						| Add large background photo? 
+						| Add large Cover photo? 
 					.col-lg-1.col-md-1.col-xs-1.pad-right-zero(style="width:50px;")
 						p.check5-purple-small
-							input.includePricedTickets#creditcardsmaller23( name="background", ng-model="background", ng-init="background=false", placeholder="", type="checkbox", value="Logo")
+							input#creditcardsmaller23( name="background", ng-model="background", ng-init="background=false", placeholder="", type="checkbox", value="Logo")
 							label(for='creditcardsmaller23')
 					.font-22
 						| (click 
@@ -410,26 +415,25 @@ append content
 						| to see example)				
 					.clearfix
 
-					.col-lg-1.col-md-1.col-xs-1.bg-yellow.create-height(ng-show="background")(style="width: 20%;")
-						.font-22.font-thin.nspacer.logo-text.dif.font-exception
-							|	Back-ground photo
-						.font.font-thin.nspacer.logo-text.dif2
-							| L<br />o<br />g<br />o
+					.col-lg-2.col-md-2.col-xs-2.pad-left-zero.pad-right-zero.res-dis-non(ng-show="background")(style="width:12.5%")
+						.container.bg-green.pad-top-zero.pad-right-zero(style="height:62px;")
+							.pull-left.event-address
+								.font.font-thin.logo-text
+									| Cover Image
 					.col-lg-3-5(ng-show="background")
 						//- crop toll
-						#profile_pic2.profile_pic
-							img#thumb2(src='/images/pro.svg')
+						//-
+							#profile_pic2.profile_pic
+								img#thumb2(src='/images/pro.svg')
 
 						form#upload_form2(enctype='multipart/form-data', method='post', action='upload.php', onsubmit='return validateForm();')
-							input#w2(type='hidden', name='w2')
-							input#h2(type='hidden', name='h2')
-							input#x12(type='hidden', name='x12')
-							input#y12(type='hidden', name='y12')
-							input#x22(type='hidden', name='x22')
-							input#y22(type='hidden', name='y22')		
+							input#w2(type='hidden')
+							input#h2(type='hidden')
+							input#x2(type='hidden')
+							input#y2(type='hidden')		
 
 					//- crop toll browse button
-					.pull-left.button-event(ng-show="background")
+					.pull-left.button-event(ng-show="background")(style="margin-left:2%")
 						.bg-yellow-rounded
 							#file_browse_wrapper2.file_browse_wrapper
 								input#file_browse2.file_browse(type='file', style='', name='file_browse2')
@@ -729,8 +733,8 @@ append content
 						| YES
 					.col-lg-1.col-md-1.col-xs-1.pad-right-zero(style="width:50px;")
 						p.check5-purple-small
-							input#creditcardsmaller233(name="", placeholder="", type="checkbox", value="small", checked="checked")
-							label(for='creditcardsmaller233')
+							input#creditcardsmaller2334(name="", placeholder="", type="checkbox", value="small", checked="checked")
+							label(for='creditcardsmaller2334')
 					.font2.pull-left.font-exception
 						| NO
 					.clearfix

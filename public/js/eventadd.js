@@ -194,6 +194,7 @@ $(document).ready(function() {
 	var file;
 	var file2;
 	var background_image;
+
 	$("input#file_browse1").change(function() {
 		var files = this.files;
 		background_image = false;
@@ -202,6 +203,8 @@ $(document).ready(function() {
 			file = files[i];
 			break;
 		}
+
+		//alert(file);
 		
 		if (typeof file === "undefined" || file == null) {
 			return;
@@ -227,11 +230,11 @@ $(document).ready(function() {
 		
 		var reader = new FileReader();
 		reader.onload = function(img) {
-			$(".avatar_preview").attr('src', img.target.result);
+			//$(".avatar_preview").attr('src', img.target.result);
 		}
 		reader.readAsDataURL(file);
 		//uploadAvatar1();
-	})
+	});
 	/*
 	$("#file_browse_wrapper1").click(function(ev) {
 		ev.preventDefault();
@@ -271,10 +274,13 @@ $(document).ready(function() {
 		
 		var reader = new FileReader();
 		reader.onload = function(img) {
-			$(".avatar_preview").attr('src', img.target.result);
+			//$(".avatar_preview").attr('src', img.target.result);
 		}
 		reader.readAsDataURL(file2);
-	})
+	});
+
+
+
 	/*
 	$("#file_browse_wrapper2").click(function(ev) {
 		ev.preventDefault();
@@ -289,6 +295,9 @@ $(document).ready(function() {
 	};
 
 	function uploadAvatar () {
+		alert(file);
+		console.log(file);
+		//console.log(file);
 		if (typeof file === "undefined" || file == null) {
 			// opens the dialog
 			//$("input#file_browse1").trigger('click');
@@ -308,8 +317,8 @@ $(document).ready(function() {
 
 		form.append("x", $("#x1").val());
 		form.append("y", $("#y1").val());
-		form.append("w", $("#w").val());
-		form.append("h", $("#h").val());
+		form.append("w", $("#w1").val());
+		form.append("h", $("#h1").val());
 
 		avatarUploadRequest = new XMLHttpRequest();
 		avatarUploadRequest.open("POST", "/event/add/avatar", true);
@@ -320,9 +329,10 @@ $(document).ready(function() {
 		avatarUploadRequest.send(form);
 
 		$("#info-m").html("Image Cropped!");
-
+		$("#cropButton1").hide();
 		
 	}
+
 	$("#file_upload_wrapper1").click(uploadAvatar);
 
 	
@@ -340,8 +350,8 @@ $(document).ready(function() {
 		form.append("avatar", file2);
 		form.append("background_image", background_image);
 
-		form.append("x", $("#x12").val());
-		form.append("y", $("#y12").val());
+		form.append("x", $("#x2").val());
+		form.append("y", $("#y2").val());
 		form.append("w", $("#w2").val());
 		form.append("h", $("#h2").val());
 		
@@ -354,6 +364,7 @@ $(document).ready(function() {
 		avatarUploadRequest.send(form);
 
 		$("#info-m2").html("Image Cropped!");
+		$("#cropButton2").hide();
 
 	}
 	$("#file_upload_wrapper2").click(uploadAvatar2);
@@ -363,17 +374,21 @@ $(document).ready(function() {
 		file = null;
 		avatarUploadRequest = null;
 		
-		$("#thumb").attr('src', '/images/logo-avatar.svg');
-		$("#thumb").attr('style', '');
+		/*$("#thumb").attr('src', '/images/logo-avatar.svg');
+		$("#thumb").attr('style', '');*/
 		$("#file_browse1").attr("value", "");
 		$("#info-m").html("Avatar has been removed");
-		jcrop_api.destroy();
+		//jcrop_api.destroy();
 		$("#image_div").hide();
 		
 		$.ajax({
 			url: "/event/"+avatar_id+"/avatar/remove",
 			type: "GET"
 		})
+		avatar_id = '';
+		setTimeout(function (){
+			$("#info-m").hide();
+		}, 3000);
 	});
 
 	$(".file_delete_wrapper2").click(function() {
@@ -381,28 +396,33 @@ $(document).ready(function() {
 		file = null;
 		avatarUploadRequest = null;
 		
-		$("#thumb2").attr('src', '/images/logo-avatar.svg');
-		$("#thumb2").attr('style', '');
+		/*$("#thumb2").attr('src', '/images/logo-avatar.svg');
+		$("#thumb2").attr('style', '');*/
 		$("#file_browse2").attr("value", "");
 		$("#info-m2").html("Avatar has been removed");
-		jcrop_api2.destroy();
+
+		//jcrop_api2.destroy();
 		$("#image_div2").hide();
 		$.ajax({
 			url: "/event/"+avatar_id+"/avatar/remove",
 			type: "GET"
 		})
+		backgroundImage_id = '';
+		setTimeout(function (){
+			$("#info-m2").hide();
+		}, 3000);
 	});
 
 	$("#cropButton1").click(function (){
 
-		$("#image_div").hide();
+		//$("#image_div").hide();
 		uploadAvatar();
 		
 	});
 
 	$("#cropButton2").click(function (){
 		
-		$("#image_div2").hide();
+		//$("#image_div2").hide();
 		uploadAvatar2();
 		
 	});
@@ -668,8 +688,8 @@ $(document).ready(function() {
 	$(".eventSubmitBtn").click(submitThisEvent);
 
 	function submitThisEvent() {
-		uploadAvatar();
-		uploadAvatar2();
+		//uploadAvatar();
+		//uploadAvatar2();
 
 		if (isLoading) {
 			return;

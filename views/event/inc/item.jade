@@ -18,8 +18,8 @@ mixin eventItem(event)
 				if event.description
 					.outbox
 						.r
-							.box.after.dot2
-								.smart-minus(style="width:100%; word-wrap: break-word; height:100%")!= event.description
+							.box.after.dot2(style="height:auto")
+								.smart-minus(style="width:100%; word-wrap: break-word")!= event.description
 			.nspacer-small.od.break(style="white-space: nowrap;")
 				.pull-left.color-green.font16.bold.font16s
 					| WHEN
