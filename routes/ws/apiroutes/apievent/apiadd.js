@@ -55,47 +55,53 @@ function doAddEventAPI (req, res) {
 }
 
 function uploadAvatarAsync (req, res) {
-	var avatarid = req.body.avatarid;
-	var userid = req.body.userid;
-	var avatar;
-	
-	function doCallback (err) {
-		if (err) {
-			res.send({
-				status: 400,
-				err: err
-			});
-		}
-		
-		// Do magic
-		avatar.save(function(err) {
-			if (err) throw err;
-			
-			res.send({
-				status: 200,
-				id: avatar._id
-			});
-		});
-	}
-	
-	if (!avatarid) {
-		avatar = new models.Avatar({
-			createdBy: userid
-   	});
-		avatar.doUpload(req.files.avatar, doCallback)
-	} else {
-		models.Avatar.findOne(avatarid, function(av) {
-			// TODO warning possible hackable area (specify avatar id, and upload an image. it should overwrite it)
-			if (!av) {
-				// Make a new avatar
-				av = new models.Avatar({
-					createdBy: userid
+
+	if (req.files && req.files.avatar != null && req.files.avatar.name.length != 0) {
+
+		var ext = req.files.avatar.type.split('/');
+		var ext = ext[ext.length-1];
+		models.Avatar.findOne({_id:req.body._id} , function(err, u) {
+
+			if(!u){
+				u = new models.Avatar({
+					createdBy: req.body.userid
 				});
 			}
-			
-			avatar = av;
-			av.doUpload(req.files.avatar, doCallback)
-		})
+
+			u.url = "/avatars/"+u._id+"."+ext;
+			u.save();
+
+			fs.rename(req.files.avatar.path, config.path + "/public"+u.url, function(err) {
+				if (err) throw err;
+				
+				if (config.knox) {
+					config.knox.putFile(config.path + "/public"+u.url, "/public"+u.url, function(err, res) {
+						if (err) throw err;
+						
+						
+					})
+				}
+						
+				res.format({
+					json: function() {
+						res.json({
+							status: "OK",
+							avatar: u._id
+						})
+					}
+				});
+			});
+		});
+		
+	}else{
+
+		res.format({
+			json: function() {
+				res.json({
+					status: "No File Received!"
+				})
+			}
+		});
 	}
 }
 
