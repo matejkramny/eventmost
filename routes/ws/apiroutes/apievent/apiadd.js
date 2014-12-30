@@ -56,6 +56,7 @@ function doAddEventAPI (req, res) {
 
 function uploadAvatarAsync (req, res) {
 	var avatarid = req.body.avatarid;
+	var userid = req.body.userid;
 	var avatar;
 	
 	function doCallback (err) {
@@ -79,7 +80,7 @@ function uploadAvatarAsync (req, res) {
 	
 	if (!avatarid) {
 		avatar = new models.Avatar({
-			createdBy: req.user._id
+			createdBy: userid
    	});
 		avatar.doUpload(req.files.avatar, doCallback)
 	} else {
@@ -88,7 +89,7 @@ function uploadAvatarAsync (req, res) {
 			if (!av) {
 				// Make a new avatar
 				av = new models.Avatar({
-					createdBy: req.user._id
+					createdBy: userid
 				});
 			}
 			
