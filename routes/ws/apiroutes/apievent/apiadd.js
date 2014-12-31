@@ -58,10 +58,11 @@ function uploadAvatarAsync (req, res) {
 
 	if (req.files && req.files.avatar != null && req.files.avatar.name.length != 0) {
 
-		var ext = req.files.avatar.type.split('/');
-		var ext = ext[ext.length-1];
 		models.Avatar.findOne({_id:req.body._id} , function(err, u) {
 
+			var ext = req.files.avatar.type.split('/');
+			var ext = ext[ext.length-1];
+			
 			if(!u){
 				u = new models.Avatar({
 					createdBy: req.body.userid
