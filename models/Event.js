@@ -436,12 +436,9 @@ scheme.methods.edit = function (body, user, files, cb) {
 	if (body.password) {
 		this.accessRequirements.passwordString = body.password;
 	}
-
-	this.start = moment(body.start).zone(0).format('dddd, MMMM Do, YYYY [at] h:mm a');
-	this.end = moment(body.end).zone(0).format('dddd, MMMM Do, YYYY [at] h:mm a');
 	
 	// dates
-	/*if (typeof body.start == "string") {
+	if (typeof body.start == "string") {
 		var date = parseInt(body.start);
 		if (!isNaN(date)) {
 			this.start = date;
@@ -452,7 +449,7 @@ scheme.methods.edit = function (body, user, files, cb) {
 		if (!isNaN(date)) {
 			this.end = date;
 		}
-	}*/
+	}
 	
 	// categories - check typeof string
 	if (body.categories != null) {
