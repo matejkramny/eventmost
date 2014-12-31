@@ -181,11 +181,11 @@ function saveDropbox (req, res) {
 
 function doUploadAPI (req, res) {
 	
-	console.log("------Upload File--------".red);
+	//console.log("------Upload File--------".red);
 	console.log(req.body);
 	console.log(req.files);
 	
-	console.log("Config PATH ".red + config.path);
+	console.log("Config PATH " + config.path);
 	
 	var event_id = req.params.id;
 	var user_id = req.body.userid;
