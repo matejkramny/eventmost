@@ -18,7 +18,7 @@ function doAddEventAPI (req, res) {
 	
 	//console.log("/api/event/add".red);
 	//console.log("##############".red);
-	//console.log(req.body);
+	console.log(req.body);
 	//console.log("##############".red);
 	
 	models.User.findById(req.body._id , function(err, user) {
@@ -62,7 +62,7 @@ function uploadAvatarAsync (req, res) {
 
 			var ext = req.files.avatar.type.split('/');
 			var ext = ext[ext.length-1];
-			
+
 			if(!u){
 				u = new models.Avatar({
 					createdBy: req.body.userid
