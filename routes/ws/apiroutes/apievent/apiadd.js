@@ -69,8 +69,14 @@ function uploadAvatarAsync (req, res) {
 				});
 			}
 
+			var createThumbnails = function() {
+				u.createThumbnails(function(){
+					u.save();
+				});
+			}
+
 			u.url = "/avatars/"+u._id+"."+ext;
-			u.save();
+			
 
 			fs.rename(req.files.avatar.path, config.path + "/public"+u.url, function(err) {
 				if (err) throw err;
@@ -82,6 +88,8 @@ function uploadAvatarAsync (req, res) {
 						
 					})
 				}
+
+				createThumbnails();
 						
 				res.format({
 					json: function() {
