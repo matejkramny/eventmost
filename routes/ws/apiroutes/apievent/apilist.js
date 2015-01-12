@@ -34,12 +34,13 @@ exports.listEventsAPI = function (req, res) {
 	
 	models.Event.find(query)
 		.populate('avatar attendees.user')
-		.select('name start end address venue_name avatar source description')
+		.select('name start end address venue_name avatar source description attendees')
 		.sort('-created')
 		.limit(50)
 		.skip(skip)
+		.lean()
 		.exec(function(err, evs) {
-			
+
 		if (err) throw err; 
 		if (evs) {
 			models.Event.find(query).count(function(err, total) {
@@ -52,8 +53,42 @@ exports.listEventsAPI = function (req, res) {
 						entry.description = entry.description.replace(/(<([^>]+)>)/ig,"");
 						//entry.description = entry.description.substr(0, 200)+"...";
 					}
-					
+
+
+					if(entry.attendees){
+						entry.attendees.forEach(function (thisAttendee){
+
+							models.Attendee.findOne({"_id": thisAttendee}).exec(function (err, att){
+								if(att.admin == true){
+									models.User.findOne({"_id": att.user}).exec(function (err, user){
+										entry.organizer = user.getName;
+									})
+								}
+							});
+						});
+					}
+
+					if(entry.source.id){
+						var url = 'https://';
+						if (entry.source.eventbrite) {
+							url += 'eventbrite.com/e/';
+						} else if (entry.source.facebook) {
+							url += 'facebook.com/events/';
+						} else if (entry.source.meetup) {
+							url += 'meetup.com/e/';
+						}
+						url += entry.source.id;
+
+						if (entry.source.url) {
+							url = entry.source.url;
+						}
+
+						entry.isForeign = true;
+						entry.foreignUrl = url;
+					}
 				});
+
+				
 
 				res.format({
 					json: function() {
