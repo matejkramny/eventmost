@@ -1,13 +1,14 @@
 var models = require('../../../../models'),
 	fs = require('fs'),
 	util = require('../../util'),
-	config = require('../../../../config')
+	config = require('../../../../config'),
+	mongoose = require('mongoose')
 
 exports.router = function (app) {
 	app.get('/api/event/add', util.authorized, addEventAPI)
-		.post('/api/event/add', util.authorized, doAddEventAPI)
-		.post('/api/event/add/avatar', uploadAvatarAsync)
-		.get('/api/event/:avatarid/avatar/remove', util.authorized, removeAvatar)
+	.post('/api/event/add', util.authorized, doAddEventAPI)
+	.post('/api/event/add/avatar', uploadAvatarAsync)
+	.get('/api/event/:avatarid/avatar/remove', removeAvatar)
 }
 
 function addEventAPI (req, res) {
@@ -148,7 +149,7 @@ function removeAvatar (req, res) {
 		})
 	} catch (ex) {
 		res.send({
-			status: 400,
+			status: 401,
 			err: "ID Invalid"
 		})
 		return;
