@@ -3,7 +3,7 @@ var selectImgWidth,selectImgHeight,selectImgWidth2,selectImgHeight2,jcrop_api, j
 $(document).ready(function(){
     $("#file_browse1").change(function(){
         var previewId = document.getElementById('load_img');
-        //var thumbId = document.getElementById('thumb');
+        var thumbId = document.getElementById('thumb');
         previewId.src = '';
         $('#image_div').hide();
         var flag = 0;
@@ -37,49 +37,21 @@ $(document).ready(function(){
         // Make the HTML5 FileReader Object
         var oReader = new FileReader();
             oReader.onload = function(e) {
-                console.log("onload called");
-                console.log(e);
 
             // e.target.result is the DataURL (temporary source of the image)
-                //thumbId.src = previewId.src=e.target.result;
+                thumbId.src = previewId.src=e.target.result;
                 
                 // FileReader onload event handler
-
+                previewId.onload = function () {
 
                 // display the image with fading effect
-                previewId.src = e.target.result;
                 $('#image_div').fadeIn(500);
                 selectImgWidth = previewId.naturalWidth; //set the global image width
                 selectImgHeight = previewId.naturalHeight;//set the global image height
                 
                 // Create variables (in this scope) to hold the Jcrop API and image size
                
-
-                var image1 = $('#load_img'),
-                    cropwidth = 350,
-                    cropheight = 250;
-
-                image1.cropbox( {width: cropwidth, height: cropheight, showControls: 'auto' } )
-                    .on('cropbox', function( event, results, img ) {
-                      console.log("Event: ");
-                      console.log(event);
-
-                      console.log("Results: ");
-                      console.log(results);
-
-                      console.log("Image: ");
-                      console.log(img);
-
-                      $("#x1").val(results.cropX);
-                      $("#y1").val(results.cropY);
-                      $("#w1").val(results.cropW);
-                      $("#h1").val(results.cropH);
-
-                    });
-
-                    $("#cropButton1").show();
-
-                /*// destroy Jcrop if it is already existed
+                // destroy Jcrop if it is already existed
                 if (typeof jcrop_api != 'undefined') 
                     jcrop_api.destroy();
 
@@ -103,8 +75,8 @@ $(document).ready(function(){
                     // Store the Jcrop API in the jcrop_api variable
                     jcrop_api = this;
                     $('#info-m').html('Select part of image you want to crop').fadeIn(500);
-                });*/
-            
+                });
+            };
         };
 
         // read selected file as DataURL
@@ -115,7 +87,7 @@ $(document).ready(function(){
     
     $("#file_browse2").change(function(){
         var previewId = document.getElementById('load_img2');
-        //var thumbId = document.getElementById('thumb2');
+        var thumbId = document.getElementById('thumb2');
         previewId.src = '';
         $('#image_div2').hide();
         var flag = 0;
@@ -151,43 +123,20 @@ $(document).ready(function(){
             oReader.onload = function(e) {
 
             // e.target.result is the DataURL (temporary source of the image)
-                //thumbId.src = previewId.src=e.target.result;
+                thumbId.src = previewId.src=e.target.result;
                 
                 // FileReader onload event handler
-                //previewId.onload = function () {
+                previewId.onload = function () {
 
                 // display the image with fading effect
-                 previewId.src = e.target.result;
                 $('#image_div2').fadeIn(500);
                 selectImgWidth2 = previewId.naturalWidth; //set the global image width
                 selectImgHeight2 = previewId.naturalHeight;//set the global image height
                 
                 // Create variables (in this scope) to hold the Jcrop API and image size
-                var image2 = $('#load_img2'),
-                    cropwidth = 900,
-                    cropheight = 400;
-
-                image2.cropbox( {width: cropwidth, height: cropheight, showControls: 'auto' } )
-                    .on('cropbox', function( event, results, img ) {
-                      console.log("Event: ");
-                      console.log(event);
-
-                      console.log("Results: ");
-                      console.log(results);
-
-                      console.log("Image: ");
-                      console.log(img);
-
-                      $("#x2").val(results.cropX);
-                      $("#y2").val(results.cropY);
-                      $("#w2").val(results.cropW);
-                      $("#h2").val(results.cropH);
-
-                    });
-
-                    $("#cropButton2").show();
+               
                 // destroy Jcrop if it is already existed
-                /*if (typeof jcrop_api2 != 'undefined') 
+                if (typeof jcrop_api2 != 'undefined') 
                     jcrop_api2.destroy();
 
                 // initialize Jcrop Plugin on the selected image
@@ -210,8 +159,8 @@ $(document).ready(function(){
                     // Store the Jcrop API in the jcrop_api variable
                     jcrop_api2 = this;
                     $('#info-m2').html('Select part of image you want to crop').fadeIn(500);
-                });*/
-            //};
+                });
+            };
         };
 
         // read selected file as DataURL
@@ -222,7 +171,7 @@ $(document).ready(function(){
 
 function showThumbnail(e)
 {
-    /*window.setCoordinates(e);
+    window.setCoordinates(e);
     var rx = 312 / e.w; //155 is the width of outer div of your profile pic
     var ry = 158 / e.h; //190 is the height of outer div of your profile pic
     $('#w').val(e.w);
@@ -233,12 +182,17 @@ function showThumbnail(e)
     $('#y1').val(e.y);
     $('#x2').val(e.x2);
     $('#y2').val(e.y2);
-    /*$('#thumb').css({
+    $('#thumb').css({
         width: Math.round(rx * selectImgWidth) + 'px',
         height: Math.round(ry * selectImgHeight) + 'px',
         marginLeft: '-' + Math.round(rx * e.x) + 'px',
         marginTop: '-' + Math.round(ry * e.y) + 'px'
-    });*/
+    });
+
+    console.log(Math.round(e.w) +" - "+ Math.round(e.h));
+
+    $('#realdimensionlabel').html("Selected: "+ Math.round(e.w) + " x "+Math.round(e.h));
+    
 }
 
 function validateForm(){
@@ -254,7 +208,7 @@ function validateForm(){
 
 function showThumbnail2(e)
 {
-    /*window.setCoordinates(e);
+    window.setCoordinates(e);
     var rx = 312 / e.w; //155 is the width of outer div of your profile pic
     var ry = 158 / e.h; //190 is the height of outer div of your profile pic
     $('#w2').val(e.w);
@@ -265,12 +219,12 @@ function showThumbnail2(e)
     $('#y12').val(e.y);
     $('#x22').val(e.x2);
     $('#y22').val(e.y2);
-    /*$('#thumb2').css({
+    $('#thumb2').css({
         width: Math.round(rx * selectImgWidth2) + 'px',
         height: Math.round(ry * selectImgHeight2) + 'px',
         marginLeft: '-' + Math.round(rx * e.x) + 'px',
         marginTop: '-' + Math.round(ry * e.y) + 'px'
-    });*/
+    });
 }
 
 function validateForm2(){
@@ -282,4 +236,15 @@ function validateForm2(){
     }else {
         return true;
     }
+}
+
+function deleteImage(imgDiv){
+    //alert("helo");
+    var thumbId = document.getElementById('thumb');
+    thumbId.src = '/images/pro.svg';
+
+    //alert(imgDiv);
+    //jcrop_api.destroy();
+    $('#'+imgDiv).fadeOut(500);
+
 }

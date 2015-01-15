@@ -97,7 +97,9 @@ function uploadAvatarAsync (req, res) {
 	debugmsg = req.body;
 	fs.writeFile(config.path+"/data/debug.txt", debugmsg, function(err) {
 		if (err) throw err;
-	})	
+	})
+
+
 
 	function doCallback (err) {
 		if (err) {
@@ -108,14 +110,17 @@ function uploadAvatarAsync (req, res) {
 		}
 		
 		// Do magic
-		avatar.save(function(err) {
-			if (err) throw err;
-			
-			res.send({
-				status: 200,
-				id: avatar._id
+		avatar.createThumbnails(function (){
+			avatar.save(function(err) {
+				if (err) throw err;
+				
+				res.send({
+					status: 200,
+					id: avatar._id
+				});
 			});
 		});
+		
 	}
 	
 	if (!avatarid) {
