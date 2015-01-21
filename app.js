@@ -23,6 +23,7 @@ if (config.mode != "test") {
 		notifyReleaseStages: ['production'],
 		appVersion: config.version
 	})
+	bugsnag.notify(new Error("Non-fatal"));
 }
 
 var app = exports.app = express();
