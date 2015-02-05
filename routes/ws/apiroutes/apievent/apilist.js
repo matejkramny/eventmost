@@ -9,6 +9,7 @@ exports.router = function (app) {
 		.post('/api/events/my', util.authorized, exports.listMyEventsAPI)
 		.get('/api/events/near/:lat/:lng', exports.listNearEventsAPI)
 		.post('/api/sortedevents', exports.sortedevents)
+		.get('/api/event/detail/:id', exports.eventdetails)
 }
 
 exports.listEventsAPI = function (req, res) {
@@ -105,6 +106,60 @@ exports.listEventsAPI = function (req, res) {
 	})
 }
 
+exports.eventdetails = function (req, res){
+
+	var attendeeObject = [];
+	var comments = null;
+	var query = {"_id" : req.params.id};	
+
+	models.Event.find(query)
+	.populate('avatar attendees.user messages sponsorLayout.sponsor1 sponsorLayout.sponsor2 sponsorLayout.sponsor3')
+	.select('name start end address venue_name avatar source description attendees messages sponsorLayout')
+	.lean()
+	.exec(function(err, ev) {
+		
+		var entry = ev[0];
+		async.series([
+			function(callback){
+				if(entry.attendees){
+					models.Attendee.find({"_id": {$in : entry.attendees}}).populate('user').lean().exec(function (err, att){
+						entry.attendees = "";
+						att.forEach(function (thisAtt){
+							if(thisAtt.admin == true){
+								entry.organizer = thisAtt.user.name;
+							}
+
+							attendeeObject.push({
+								"_id" : thisAtt._id,
+								"name" : thisAtt.user.name,
+								"avatar" : thisAtt.user.avatar,
+								"admin" : thisAtt.admin
+							});
+						});
+
+						entry.attendees = attendeeObject;
+						callback(null, 'one');
+					});
+				}else{
+					callback(null, 'one');
+				}
+				
+			}],function(err, results){
+				if((entry.description) && entry.description != ''){
+					entry.description = entry.description.replace(/(<([^>]+)>)/ig,"");
+				}
+
+				res.format({
+					json: function() {
+						res.send({
+							event: entry
+						});
+					}
+				});
+			});
+	});
+}
+
 exports.sortedevents = function (req, res) {
 
 	var sortby = req.body.sortby;
@@ -121,7 +176,6 @@ exports.sortedevents = function (req, res) {
 		privateEvent: {
 			$ne: true 
 		}
-
 	};
 	if (!showPastEvents) {
 		query.start = { $gte: Date.now() };
