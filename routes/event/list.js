@@ -132,7 +132,7 @@ exports.listMyEvents = function (req, res) {
 
 							//console.log(entry.description);
 							entry.description = entry.description.replace(/(<([^>]+)>)/ig,"");
-							entry.description = entry.description.substr(0, 150)+"...";
+							entry.description = entry.description.substr(0, 350);
 						}
 						
 					});
@@ -243,7 +243,7 @@ exports.listNearEvents = function (req, res) {
 						geos[i].event.geo = geos[i].geo;
 						if((geos[i].event.description) && geos[i].event.description != ''){
 							geos[i].event.description = geos[i].event.description.replace(/(<([^>]+)>)/ig,"");
-							geos[i].event.description = geos[i].event.description.substr(0, 150)+"...";
+							geos[i].event.description = geos[i].event.description.substr(0, 350);
 						}
 						
 						events.push(geos[i].event);
@@ -352,7 +352,7 @@ exports.listNearLandingEvents = function (req, res) {
 
 								//console.log(entry.description);
 								entry.description = entry.description.replace(/(<([^>]+)>)/ig,"");
-								entry.description = entry.description.substr(0, 150)+"...";
+								entry.description = entry.description.substr(0, 350);
 
 							}
 							newEvs.push(entry);
@@ -425,7 +425,7 @@ exports.listNearLandingEvents = function (req, res) {
 						//geos[i].event.avatar = JSON.stringify({"avatar" : {'url': 'test url'}});
 						geos[i].event.geo = geos[i].geo;
 						geos[i].event.description = geos[i].event.description.replace(/(<([^>]+)>)/ig,"");
-						geos[i].event.description = geos[i].event.description.substr(0, 150)+"...";
+						geos[i].event.description = geos[i].event.description.substr(0, 350);
 
 						events.push(geos[i].event);
 					}
