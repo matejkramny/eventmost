@@ -3531,7 +3531,7 @@ min-height: 100px;
 .no-pads{padding-left: 0px; padding-right: 0px;}
   .other-dis{margin-left: 10px; width: 100% !important;}
   .don-dis{display: none;}
-   .font16s{font-size: 10px !important; }
+   /*.font16s{font-size: 10px !important; }*/
 .odf {padding-top: 10px; height: 35px; padding-right: 20px;}
 
 }
@@ -4009,14 +4009,19 @@ margin-top: 5px;
 .padd{ padding:10px !important}
 .width900{ width:98% !important}
 .row{ margin:0px !important;}
+.wwrap{ height: auto !important;}
 }
-@media only screen and (min-width: 981px) and (max-width: 999px) {.width900{ width:85% !important}}
+@media only screen and (min-width: 981px) and (max-width: 999px) {
+  .width900{ width:85% !important }
+  .img-none{ display:none !important }
+  .wwrap{ height: 200px !important;}
+}
 @media only screen and (min-width: 981px) and (max-width: 1211px) {
- .width900{ width:74% !important}}
- }
- @media only screen and (min-width: 981px) and (max-width: 999px) {
- .width900{ width:74% !important}}
- }
- @media only screen and(max-width: 1000px) {
- .width900{ width:60% !important}
- }
+.width900{ width:74% !important}
+}
+@media only screen and (min-width: 981px) and (max-width: 999px) {
+.width900{ width:74% !important}
+}
+@media only screen and(max-width: 1000px) {
+.width900{ width:60% !important}
+}

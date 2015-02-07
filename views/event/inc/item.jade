@@ -11,8 +11,8 @@ mixin eventItem(event)
 	
 	a.link-purple(href=link target="_blank" class= foreign && !loggedIn ? "openEvent" : null data-event=event.id)
 		div.wwrap.color.padd
-			div.img-none(style="float:left; width:180px; border-right:1px solid #ccc")
-				.col-lg-3.col-md-3.col-sm-3.col-xs-3.pad-right-zero.don-dis(style="max-width:230px; margin:0px 0px 0px 0px; display:table-cell; vertical-align:middle; height:130px; float:none")
+			div.img-none(style="float:left; width:215px; border-right:1px solid #ccc; height: 180px; overflow:hidden")
+				.col-lg-3.col-md-3.col-sm-3.col-xs-3.pad-right-zero.don-dis(style="margin:0px 0px 0px 0px; display:table-cell; vertical-align:middle; height:180px; float:none")
 					img(src= event.avatar ? event.avatar.url : "" )(style="display:block; width:90%; margin:0px auto")
 			.col-lg-9.col-md-9.col-sm-9.col-xs-9.psev.pad-left-ten.no-pads1.other-dis(style="width:77%; height:100%; margin:0px 0px 0px 0px;")
 				.nspacer-medium3(style="margin-top:0px")
