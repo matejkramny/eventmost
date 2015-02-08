@@ -138,7 +138,7 @@ exports.listMyEvents = function (req, res) {
 							entry.description = entry.description.substr(0, 350);
 		    				var newLength = entry.description.length;
 		    				if(totalLength > 350){
-		    					entry.description = entry.description+"...";
+		    					entry.description = entry.description+" . . .";
 		    				}
 						}
 						
@@ -257,7 +257,7 @@ exports.listNearEvents = function (req, res) {
 							var newLength = geos[i].event.description.length;
 
 							if(totalLength > 350){
-		    					geos[i].event.description = geos[i].event.description+"...";
+		    					geos[i].event.description = geos[i].event.description+" . . .";
 		    				}
 						}
 						
@@ -373,7 +373,7 @@ exports.listNearLandingEvents = function (req, res) {
 								entry.description = entry.description.substr(0, 350);
 			    				var newLength = entry.description.length;
 			    				if(totalLength > 350){
-			    					entry.description = entry.description+"...";
+			    					entry.description = entry.description+" . . .";
 			    				}
 
 							}
@@ -454,7 +454,7 @@ exports.listNearLandingEvents = function (req, res) {
 						var newLength = geos[i].event.description.length;
 
 						if(totalLength > 350){
-	    					geos[i].event.description = geos[i].event.description+"...";
+	    					geos[i].event.description = geos[i].event.description+" . . .";
 	    				}
 
 						events.push(geos[i].event);

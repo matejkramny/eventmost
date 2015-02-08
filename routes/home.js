@@ -32,7 +32,7 @@ exports.display = function (req, res) {
 					entry.description = entry.description.substr(0, 350);
     				var newLength = entry.description.length;
     				if(totalLength > 350){
-    					entry.description = entry.description+"...";
+    					entry.description = entry.description+" . . .";
     				}
 					
 					newEvs.push(entry);
