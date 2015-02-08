@@ -8,39 +8,39 @@ mixin eventItem(event)
 	if (foreign && !loggedIn)
 		- link = '';
 	
-	
-	a.link-purple(href=link target="_blank" class= foreign && !loggedIn ? "openEvent" : null data-event=event.id)
-		div.wwrap.color.padd
-			div.img-none(style="float:left; width:215px; border-right:1px solid #ccc; height: 180px; overflow:hidden")
-				.col-lg-3.col-md-3.col-sm-3.col-xs-3.pad-right-zero.don-dis(style="margin:0px 0px 0px 0px; display:table-cell; vertical-align:middle; height:180px; float:none")
-					img(src= event.avatar ? event.avatar.url : "" )(style="display:block; width:90%; margin:0px auto")
-			.col-lg-9.col-md-9.col-sm-9.col-xs-9.psev.pad-left-ten.no-pads1.other-dis(style="width:77%; height:100%; margin:0px 0px 0px 0px;")
-				.nspacer-medium3(style="margin-top:0px")
-					.font16.font16s.color-green.bold= event.name
-					if event.description
-						.outbox
-							.r
-								.box.after.dot2(style="height:auto")
-									.smart-minus(style="width:100%; word-wrap: break-word")!= event.description
-				.nspacer-small.od.break(style="white-space: nowrap;")
-					.pull-left.color-green.font16.bold.font16s
-						| WHEN
-					.pull-left.pad-left-ten.font16s.bold.break(style="margin-top:2px;")
-							= locals.moment(event.start).fromNow()
-					.pull-left.pad-left-ten.font16s.break(style="margin-top:2px;")
-							= locals.moment(event.start).format('dddd Do MMMM YYYY [at] h:mm:ss a')
-					.clearfix
-				.nspacer-small.od
-					
-					.pull-left.font16s(style="margin-top:2px;")
-						.pull-left.color-green.font16.bold.font16s(style="margin-right:10px") 
-							| WHERE
-						span
-							if (event.venue_name)
-							= event.venue_name
-							span.pad-left-ten
-								if (event.address)
-								= event.address
+	if event.description
+		a.link-purple(href=link target="_blank" class= foreign && !loggedIn ? "openEvent" : null data-event=event.id)
+			div.wwrap.color.padd
+				div.img-none(style="float:left; width:215px; border-right:1px solid #ccc; height: 180px; overflow:hidden")
+					.col-lg-3.col-md-3.col-sm-3.col-xs-3.pad-right-zero.don-dis(style="margin:0px 0px 0px 0px; display:table-cell; vertical-align:middle; height:180px; float:none")
+						img(src= event.avatar ? event.avatar.url : "" )(style="display:block; width:90%; margin:0px auto")
+				.col-lg-9.col-md-9.col-sm-9.col-xs-9.psev.pad-left-ten.no-pads1.other-dis(style="width:77%; height:100%; margin:0px 0px 0px 0px;")
+					.nspacer-medium3(style="margin-top:0px")
+						.font16.font16s.color-green.bold= event.name
+						if event.description
+							.outbox
+								.r
+									.box.after.dot2(style="height:auto")
+										.smart-minus(style="width:100%; word-wrap: break-word")!= event.description
+					.nspacer-small.od.break(style="white-space: nowrap;")
+						.pull-left.color-green.font16.bold.font16s
+							| WHEN
+						.pull-left.pad-left-ten.font16s.bold.break(style="margin-top:2px;")
+								= locals.moment(event.start).fromNow()
+						.pull-left.pad-left-ten.font16s.break(style="margin-top:2px;")
+								= locals.moment(event.start).format('dddd Do MMMM YYYY [at] h:mm:ss a')
+						.clearfix
+					.nspacer-small.od
+						
+						.pull-left.font16s(style="margin-top:2px;")
+							.pull-left.color-green.font16.bold.font16s(style="margin-right:10px") 
+								| WHERE
+							span
+								if (event.venue_name)
+								= event.venue_name
+								span.pad-left-ten
+									if (event.address)
+									= event.address
 
-	.clearfix
-	.row(style="margin-bottom:20px; margin-top:20px; border-top: 1px solid #f7f7f7;")
+		.clearfix
+		.row(style="margin-bottom:20px; margin-top:20px; border-top: 1px solid #f7f7f7;")

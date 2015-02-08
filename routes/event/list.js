@@ -132,7 +132,14 @@ exports.listMyEvents = function (req, res) {
 
 							//console.log(entry.description);
 							entry.description = entry.description.replace(/(<([^>]+)>)/ig,"");
+							entry.description = entry.description.trim();
+							entry.description = entry.description.replace(/(\r\n|\n|\r)/gm,"");
+							var totalLength = entry.description.length;
 							entry.description = entry.description.substr(0, 350);
+		    				var newLength = entry.description.length;
+		    				if(totalLength > 350){
+		    					entry.description = entry.description+"...";
+		    				}
 						}
 						
 					});
@@ -243,7 +250,15 @@ exports.listNearEvents = function (req, res) {
 						geos[i].event.geo = geos[i].geo;
 						if((geos[i].event.description) && geos[i].event.description != ''){
 							geos[i].event.description = geos[i].event.description.replace(/(<([^>]+)>)/ig,"");
+							geos[i].event.description = geos[i].event.description.trim();
+							geos[i].event.description = geos[i].event.description.replace(/(\r\n|\n|\r)/gm,"");
+							var totalLength = geos[i].event.description.length;
 							geos[i].event.description = geos[i].event.description.substr(0, 350);
+							var newLength = geos[i].event.description.length;
+
+							if(totalLength > 350){
+		    					geos[i].event.description = geos[i].event.description+"...";
+		    				}
 						}
 						
 						events.push(geos[i].event);
@@ -352,7 +367,14 @@ exports.listNearLandingEvents = function (req, res) {
 
 								//console.log(entry.description);
 								entry.description = entry.description.replace(/(<([^>]+)>)/ig,"");
+								entry.description = entry.description.trim();
+								entry.description = entry.description.replace(/(\r\n|\n|\r)/gm,"");
+								var totalLength = entry.description.length;
 								entry.description = entry.description.substr(0, 350);
+			    				var newLength = entry.description.length;
+			    				if(totalLength > 350){
+			    					entry.description = entry.description+"...";
+			    				}
 
 							}
 							newEvs.push(entry);
@@ -425,7 +447,15 @@ exports.listNearLandingEvents = function (req, res) {
 						//geos[i].event.avatar = JSON.stringify({"avatar" : {'url': 'test url'}});
 						geos[i].event.geo = geos[i].geo;
 						geos[i].event.description = geos[i].event.description.replace(/(<([^>]+)>)/ig,"");
+						geos[i].event.description = geos[i].event.description.trim();
+						geos[i].event.description = geos[i].event.description.replace(/(\r\n|\n|\r)/gm,"");
+						var totalLength = geos[i].event.description.length;
 						geos[i].event.description = geos[i].event.description.substr(0, 350);
+						var newLength = geos[i].event.description.length;
+
+						if(totalLength > 350){
+	    					geos[i].event.description = geos[i].event.description+"...";
+	    				}
 
 						events.push(geos[i].event);
 					}

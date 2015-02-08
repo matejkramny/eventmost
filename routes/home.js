@@ -19,16 +19,24 @@ exports.display = function (req, res) {
 
 		//Cleaning up the description...
 		evs.forEach(function(entry) {
+			entry.name = entry.name.replace(/(<([^>]+)>)/ig,"");
+
 			if((entry.source) && (entry.source.facebook == true || entry.source.meetup == true)){
 				
 			}else{
 				if((entry.description) && entry.description != ''){
-					//console.log(entry.description);
 					entry.description = entry.description.replace(/(<([^>]+)>)/ig,"");
-					entry.description = entry.description.substr(0, 200)+"...";
+					entry.description = entry.description.trim();
+					entry.description = entry.description.replace(/(\r\n|\n|\r)/gm,"");
+					var totalLength = entry.description.length;
+					entry.description = entry.description.substr(0, 350);
+    				var newLength = entry.description.length;
+    				if(totalLength > 350){
+    					entry.description = entry.description+"...";
+    				}
+					
+					newEvs.push(entry);
 				}
-
-				newEvs.push(entry);
 			}
 
 			
