@@ -1,15 +1,28 @@
 .header-image
 		.header_image
-			video(autoplay="autoplay", poster="https://www.paypalobjects.com/webstatic/mktg/wright/videos/home-signup.jpg", src="https://www.paypalobjects.com/webstatic/mktg/wright/videos/home-signup.webm", type="video/webm" loop="loop" style="width: 1424px; height: auto; visibility: visible;")
+			video(autoplay="autoplay", id="videoContainer" poster="https://www.paypalobjects.com/webstatic/mktg/wright/videos/home-signup.jpg", src="https://www.paypalobjects.com/webstatic/mktg/wright/videos/home-signup.webm", type="video/webm" loop="loop" style="width: 1440px; height: 810px; visibility: visible;")
+			
 			.container.ale
-				.textbanner
-					| We are the only site that has all events from facebook, <br />eventbrite, meetup.com, and local private websites!
-					| <br /><br /> <b>Find any event here or create your own!</b>
-				.nspacer-awsome
-				.searchbanner
-					form(method="GET", accept-charset="utf-8", action="/search/")
-						input.pull-left.font-s.search-input.pad-left-ten.tempclass2(type="search", name="q", placeholder="search event by location, organizers, or key words", style=" height:50px; border-radius:0px; background-color:#f1f1f2;", value= typeof search !== "undefined" ? search.query : null)
-						input.gonew2.pull-left.header-links.tempclass3(type="submit", value="GO", style="width:10%;")
+					.textbanner(id="textbanner")(style="display:none")
+						| We are what the event attendees have been asking for
+					.textbanner(id="textbanner2", style="display:none")
+						| Search-events-below-or-create-your-own
+					.nspacer-awsome
+					.searchbanner(style="display:none; top:210px" id="searchbanner")
+						form(method="GET", accept-charset="utf-8", action="/search/")
+							input.pull-left.font-s.search-input.pad-left-ten.tempclass2(type="search", name="q", placeholder="search event by location, organizers, or key words", style=" height:50px; border-radius:0px; background-color:#f1f1f2;", value= typeof search !== "undefined" ? search.query : null)
+							input.gonew2.pull-left.header-links.tempclass3(type="submit", value="GO", style="width:10%;")
+					
+			//-
+				.container.ale
+					.textbanner
+						| We are the only site that has all events from facebook, <br />eventbrite, meetup.com, and local private websites!
+						| <br /><br /> <b>Find any event here or create your own!</b>
+					.nspacer-awsome
+					.searchbanner
+						form(method="GET", accept-charset="utf-8", action="/search/")
+							input.pull-left.font-s.search-input.pad-left-ten.tempclass2(type="search", name="q", placeholder="search event by location, organizers, or key words", style=" height:50px; border-radius:0px; background-color:#f1f1f2;", value= typeof search !== "undefined" ? search.query : null)
+							input.gonew2.pull-left.header-links.tempclass3(type="submit", value="GO", style="width:10%;")
 
 	.container
 
@@ -276,7 +289,7 @@
 								button.btn.btn-primary.font-e(type='submit', style="background-color:#0892a3; border-radius: 8px; margin-bottom:10px; font-size:15px; color:#e6e7e8; width:100%; min-width:150px;")
 									| ENTER
 			.col-md-12.col-sm-12.col-lg-12(style="padding-right:5px; padding-left:5px;")
-				.pull-right.bg-green
+				.pull-right.bg-green(id="arrangeby")
 					ul.nav.navbar-nav(style="padding:0px !important;")
 						li.dropdown
 							a.dropdown-toggle(href='#', data-toggle='dropdown' style="padding-top:0px; font-size:14px; text-align:left;")
@@ -326,3 +339,7 @@
 					for e in search.results
 						if((e.venue_name) && e.venue_name != '')
 							mixin eventItem(e)
+
+block js
+	script(src="/js/crop/jquery.min.js" defer)
+	script(src="/js/landingpage.js" defer)
