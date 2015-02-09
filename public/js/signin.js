@@ -62,7 +62,7 @@ $(document).ready(function() {
 			})
 		}
 		
-		redirect = '/event/'+$(this).attr('data-event')+"/registrationpage?redirect=1";
+		redirect = '/event/'+$(this).attr('data-event');
 		
 		$('#signModal').modal('show');
 	})

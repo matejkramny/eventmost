@@ -340,12 +340,13 @@ function authSuccess (req, res) {
 		var evid = req.session.socialRedirect;
 		req.session.socialRedirect = null;
 		
-		res.redirect('/event/'+evid+"/registrationpage?redirect=1");
+		res.redirect('/event/'+evid+"/registrationpage/edit");
 		return;
 	}
 	
 	if (req.session.redirectAfterLogin) {
 		var redirect = req.session.redirectAfterLogin
+		console.log("redirect: "+redirect);
 		
 		req.session.redirectAfterLogin = null;
 		
@@ -391,6 +392,7 @@ function doLogin (req, res) {
 			
 			req.login(user, function(err) {
 				var referrer = req.session.loggedin_as_user_referrer;
+				console.log("This referrer:"+referrer);
 				delete req.session.loggedin_as_user;
 				delete req.session.loggedin_as_user_referrer;
 				delete req.session.loggedin_as_user_restrict;
