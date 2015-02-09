@@ -118,7 +118,7 @@ exports.listMyEvents = function (req, res) {
 		models.Event.find(query)
 			.populate('avatar attendees.user')
 			.select('name description start end address venue_name avatar source')
-			.sort('-created')
+			.sort('-end')
 			.skip(skip)
 			.exec(function(err, evs) {
 			if (err) throw err;
