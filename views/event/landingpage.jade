@@ -27,14 +27,14 @@ block content
 	.nspacer
 	.col-md-12.col-lg-12.col-sm-12
 		.nspacer-big.font-exception.font18.bold.color-green.center(type='submit', style="")
-			| #{ev.name} landingpage.jade
+			| #{ev.name}
 		.nspacer-big
 		if (ev.backgroundImage)
 			.rel
 				.div(style=" max-height:350px; overflow:hidden; text-align: center;")
 						img.img-responsive(src=ev.backgroundImage.url style="width:100%;")
 		.nspacer-big
-		.col-md-3.col-lg-3.col-sm-3(style="margin-top:7%; margin-bottom:2%")
+		.col-md-3.col-lg-3.col-sm-3(style="margin-top:3%; margin-bottom:2%")
 			img.small-event-border2(src=ev.avatar.url style="max-width:100%;")
 
 		.col-md-9.col-lg-9.col-sm-9
