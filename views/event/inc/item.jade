@@ -2,9 +2,10 @@ mixin eventItem(event)
 	.nspacer
 	- var link = '/event/'+event.id;
 	- var foreign = event.isForeign();
-	if (foreign)
-		- link += '?redirect=1';
-	
+	//- 
+		if (foreign)
+			- link += '?redirect=1';
+		
 	if (foreign && !loggedIn)
 		- link = '';
 	
