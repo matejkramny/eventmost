@@ -328,7 +328,7 @@ function joinEvent (req, res) {
 				attendee.category = category;
 			} else {
 				// reject
-				res.format({
+				/*res.format({
 					html: function() {
 						req.session.flash.push("An Invalid category selected.")
 						res.redirect('/event/'+ev._id);
@@ -340,7 +340,7 @@ function joinEvent (req, res) {
 						})
 					}
 				})
-				return;
+				return;*/
 			}
 		}
 		
