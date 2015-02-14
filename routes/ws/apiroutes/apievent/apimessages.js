@@ -8,7 +8,7 @@ var models = require('../../../../models')
 exports.router = function (app) {
 	app.get('/api/event/:id/comments', getCommentsAPI)
 		.post('/api/event/:id/comment', postCommentAPICustom)
-		.delete('/api/event/:id/comment/:cid', deleteCommentAPI)
+		.post('/api/event/:id/:attendeeid/deletecomment/:cid', deleteCommentAPI)
 		.post('/api/event/:id/like', likeCommentAPI)
 }
 
@@ -349,6 +349,9 @@ function deleteCommentAPI (req, res) {
 		
 		return;
 	}
+
+	var attendeeid;
+	attendeeid = req.params.attendeeid;
 	
 	models.EventMessage.findById(cid, function(err, msg) {
 		if (err || !msg) {
@@ -363,7 +366,7 @@ function deleteCommentAPI (req, res) {
 			return;
 		}
 		
-		if (res.locals.eventadmin || msg.attendee.equals(res.locals.attendee._id)) {
+		if (msg.attendee.equals(attendeeid)) {
 			// Can delete comment
 			if (msg.isResponse) {
 				// Delete from parent
