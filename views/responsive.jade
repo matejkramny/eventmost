@@ -36,17 +36,19 @@ html
 					if loggedIn == false
 						.pull-right.logo-right
 								//- Only displayed when users are guests
-								button.btn.btn-warning.pb.pull-right(type='button' data-toggle="modal" href="#signModal" )
+								button.btn.btn-warning.pb.pull-right(type='button' data-toggle="modal" href="#signModal", style="width:95px")
 									b SIGN UP
-								button.btn.btn-default.pb.pull-right(type='button' data-toggle="modal" href="#loginModal" style="margin-right:-4px;")
+								button.btn.btn-default.pb.pull-right(type='button' data-toggle="modal" href="#loginModal", style="margin-right:-4px; width:95px")
 									b LOGIN
 								button.btn.btn-primary.pb3.pull-right(type='button' data-toggle="modal" href="#signModal" )
 									|  Create <br />Event 
 								br
-								button.btn.btn-primary.pb2.pull-right(type='button' data-toggle="modal" href="#signModal" )
-									i.fa.fa-star.fa-fw
+								button.btn.btn-primary.pb2.pull-right(type='button' data-toggle="modal" href="#signModal", style="width:186px" )
+									i.fa.fa-fw(style="margin-right:10px; padding-bottom:2px")
+										img(src="/images/big-white-star.svg", style="height:15px; width=15px; vertical-align:initial")
 									|  Create Event 
-									i.fa.fa-star.fa-fw
+									i.fa.fa-fw(style="margin-left:10px; padding-bottom:2px")
+										img(src="/images/big-white-star.svg", style="height:15px; width=15px; vertical-align:initial")
 					else
 						if (typeof hide_bar_right === 'undefined' && hide_bar_right !== true)
 							//- Only displayed when user is logged in		
