@@ -19,6 +19,45 @@ exports.router = function (app) {
 		.post('/api/event/:id/join', joinEventAPI)
 		.post('/api/event/:id/buy/tickets', getTransactionsAPI)
 		.get('/api/event/:id/buy/tickets/getPromotionalCode/:code', getPromotionalCode)
+		.post('/api/event/getattendeeid', getattendeeid)
+}
+
+function getattendeeid(req, res){
+	var eventid = req.body.id;
+	var userid = req.body.userid;
+
+	if(eventid == null || userid == null){
+		res.format({
+			json: function() {
+				res.send({
+					message: "Invalid Arguments"
+				})
+			}
+		});
+	}else{
+		var query = {"_id" : eventid};	
+
+		models.Event.find(query)
+		.populate('attendees')
+		.select('attendees')
+		.lean()
+		.exec(function(err, ev) {
+			var allattendees = ev[0].attendees;
+			allattendees.forEach(function(att) {
+
+				if(att.user == userid){
+					res.format({
+						json: function() {
+							res.send({
+								attendee_id: att._id
+							})
+						}
+					});
+					return;
+				}
+			});
+		});
+	}
 }
 
 function listAttendeesAPI (req, res) {
