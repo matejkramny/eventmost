@@ -8,7 +8,7 @@ var models = require('../../../../models')
 exports.router = function (app) {
 	app.get('/api/event/:id/comments', getCommentsAPI)
 		.post('/api/event/:id/comment', postCommentAPICustom)
-		.post('/api/event/:id/:attendeeid/deletecomment/:cid', deleteCommentAPI)
+		.post('/api/event/deletecomment', deleteCommentAPI)
 		.post('/api/event/:id/like', likeCommentAPI)
 }
 
@@ -337,7 +337,7 @@ function postCommentAPI (req, res) {
 function deleteCommentAPI (req, res) {
 	var cid;
 	try {
-		cid = req.params.cid;
+		cid = req.body.commentid;
 	} catch (e) {
 		res.format({
 			json: function() {
@@ -351,7 +351,7 @@ function deleteCommentAPI (req, res) {
 	}
 
 	var attendeeid;
-	attendeeid = req.params.attendeeid;
+	attendeeid = req.body.attendeeid;
 	
 	models.EventMessage.findById(cid, function(err, msg) {
 		if (err || !msg) {
