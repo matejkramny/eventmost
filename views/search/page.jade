@@ -12,7 +12,20 @@
 						form(method="GET", accept-charset="utf-8", action="/search/")
 							input.pull-left.font-s.search-input.pad-left-ten.tempclass2(type="search", name="q", placeholder="search event by location, organizers, or key words", style=" height:50px; border-radius:0px; background-color:#f1f1f2;", value= typeof search !== "undefined" ? search.query : null)
 							input.gonew2.pull-left.header-links.tempclass3(type="submit", value="GO", style="width:10%;")
-					
+					.searchbanner(style="width:500px; margin: 0px auto; left:35%; top:200px")
+						div(id="plane", style="display:none")
+							img(src="/images/social.svg", style="height:400px;")
+							.div(style="top:215px; position:absolute")
+								| One social network for all your events
+						div(id="plane2", style="display:none;")
+							img(src="/images/dropbox.svg", style="height:400px;")
+							.div(style="top:215px; position:absolute")
+								| An Event Dropbox for sharing slideshows, photos etc
+						div(id="plane3", style="display:none;")
+							img(src="/images/feedback.svg", style="height:400px;")
+							.div(style="top:215px; position:absolute")
+								| Simple way to leave feedback for guest speakers
+
 			//-
 				.container.ale
 					.textbanner

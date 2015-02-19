@@ -1,0 +1,30 @@
+#plane{
+position:absolute; 
+top:0px; 
+
+background-repeat: no-repeat; 
+display:block;
+height:100px; 
+width:350px;
+margin-left: 100px;
+}
+#plane2{
+position:absolute; 
+top:0px; 
+
+background-repeat: no-repeat; 
+display:block;
+height:100px; 
+width:350px;
+margin-left: 100px;
+}
+#plane3{
+position:relative; 
+top:0px; 
+
+background-repeat: no-repeat; 
+display:block;
+height:100px; 
+width:350px;
+margin-left: 100px;
+}
