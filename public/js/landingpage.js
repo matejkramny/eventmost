@@ -1,18 +1,22 @@
 var counter = 1;
 $(document).ready(function(){
+	$('#header').hide();
+	showText();
 
 	setTimeout(function() {
     	$("#videoContainer")[0].pause();
-    	showText();
-    	//showForm();
-
     }, 3000);
-	//alert("im ready");
 });
 
+function moveuptillvideo(){
+	$('html, body').animate({
+	    scrollTop: $("#videoContainer").offset().top
+	}, 500);
+}
 
 function showText(){
-	$( "#textbanner" ).fadeIn( 3000, function() {
+	//$('#videoContainer')[0].scrollIntoView(true);
+	$( "#textbanner" ).fadeIn( 6000, function() {
 		
       	image_animate();
       	
@@ -29,7 +33,7 @@ function image_animate() {
 		$('#plane').show();
 
 		setTimeout(function() {
-			$('#plane').animate({left: -400, top: 200}, 7000, 'swing', function(){
+			$('#plane').animate({left: -400, top: 200}, 1000, 'swing', function(){
 				$('#plane2').show();
 				counter++;
 				image_animate();
@@ -39,7 +43,7 @@ function image_animate() {
 	if(counter == 2) {
 		console.log("second log moving");
 		setTimeout(function(){
-			$('#plane2').animate({top: 200}, 7000, 'swing', function(){
+			$('#plane2').animate({top: 200}, 1000, 'swing', function(){
 				$('#plane3').show();
 				counter++;
 				image_animate();
@@ -49,14 +53,27 @@ function image_animate() {
 	if(counter == 3) {
 		console.log("third log moving");
 		setTimeout(function(){
-			$('#plane3').animate({right: -400, top: 200}, 7000, 'swing', function(){
+			$('#plane3').animate({right: -400, top: 200}, 1000, 'swing', function(){
 				counter++;
 				showForm();
 			});
 		}, 4000);
+		
 	}
 }
 
+function moveUp(){
+	$('#plane').animate({top: 50}, 1000, 'swing', function(){
+		
+	});
+	$('#plane2').animate({top: 50}, 1000, 'swing', function(){
+			
+		});
+	$('#plane3').animate({top: 50}, 1000, 'swing', function(){
+			});
+	
+	
+}
 
 function showForm(){
 	$( "#textbanner" ).fadeOut( 3000, function() {
@@ -79,13 +96,16 @@ function showForm(){
 		});
 
 		$( "#searchbanner" ).fadeIn( 3000, function() {
+			moveUp();
 			setTimeout(function() {
+				$('#header').show();
 		    	$('html, body').animate({
 				    scrollTop: $("#arrangeby").offset().top
 				}, 500);
 
-		    }, 3000);
+		    }, 1000);
 		});
 
   	});
+  	
 }

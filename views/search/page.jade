@@ -3,27 +3,30 @@
 			video(autoplay="autoplay", id="videoContainer" poster="https://www.paypalobjects.com/webstatic/mktg/wright/videos/home-signup.jpg", src="https://www.paypalobjects.com/webstatic/mktg/wright/videos/home-signup.webm", type="video/webm" loop="loop" style="width: 1440px; height: 810px; visibility: visible;")
 			
 			.container.ale
-					.textbanner(id="textbanner")(style="display:none")
-						| We are what the event attendees have been asking for
-					.textbanner(id="textbanner2", style="display:none")
+					.textbanner(id="textbanner")(style="display:none; font-size:30px; top:50px; font-weight:bold")
+						| We are what the event attendees have been asking for!
+					.textbanner(id="textbanner2", style="display:none; font-size:30px; top:50px")
 						| Search-events-below-or-create-your-own
 					.nspacer-awsome
-					.searchbanner(style="display:none; top:210px" id="searchbanner")
+					.searchbanner(style="display:none; top:110px" id="searchbanner")
 						form(method="GET", accept-charset="utf-8", action="/search/")
 							input.pull-left.font-s.search-input.pad-left-ten.tempclass2(type="search", name="q", placeholder="search event by location, organizers, or key words", style=" height:50px; border-radius:0px; background-color:#f1f1f2;", value= typeof search !== "undefined" ? search.query : null)
 							input.gonew2.pull-left.header-links.tempclass3(type="submit", value="GO", style="width:10%;")
 					.searchbanner(style="width:500px; margin: 0px auto; left:35%; top:200px")
 						div(id="plane", style="display:none")
-							img(src="/images/social.svg", style="height:400px;")
-							.div(style="top:215px; position:absolute")
+							div
+								img(src="/images/social.png")
+							div
 								| One social network for all your events
 						div(id="plane2", style="display:none;")
-							img(src="/images/dropbox.svg", style="height:400px;")
-							.div(style="top:215px; position:absolute")
+							div
+								img(src="/images/dropbox.png")
+							div
 								| An Event Dropbox for sharing slideshows, photos etc
 						div(id="plane3", style="display:none;")
-							img(src="/images/feedback.svg", style="height:400px;")
-							.div(style="top:215px; position:absolute")
+							div
+								img(src="/images/feedback.png")
+							div
 								| Simple way to leave feedback for guest speakers
 
 			//-
@@ -324,8 +327,9 @@
 
 				if (typeof nearby !== "undefined" && nearby)
 					//- Events nearby
-					#nearbyEventsPlaceholder
-						p.text-center.lead Locating events around you..
+					//-
+						#nearbyEventsPlaceholder
+							p.text-center.lead Locating events around you..
 
 				if (search.type == 'people')
 					for p in search.results
