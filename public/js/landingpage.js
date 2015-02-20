@@ -92,7 +92,7 @@ function showForm(){
 		}
 
 		$el.html(html).children().hide().each(function(i){
-		  $(this).delay(i*100).fadeIn(200);
+		  $(this).delay(i*100).fadeIn(100);
 		});
 
 		$( "#searchbanner" ).fadeIn( 3000, function() {
