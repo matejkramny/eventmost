@@ -99,6 +99,14 @@ function showForm(){
 			moveUp();
 			setTimeout(function() {
 				$('#header').show();
+				$('#header').css({"float": "left",
+							    "height": "85px",
+							    "opacity": "0.6",
+							    "position": "absolute",
+							    "width": "100%",
+							    "z-index": "99999"});
+				$('#textbanner2').css({"top": "90px"});
+				$('#searchbanner').css({"top": "150px"});
 		    	$('html, body').animate({
 				    scrollTop: $("#arrangeby").offset().top
 				}, 500);
