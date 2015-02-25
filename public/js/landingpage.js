@@ -33,7 +33,7 @@ function image_animate() {
 		$('#plane').show();
 
 		setTimeout(function() {
-			$('#plane').animate({left: -400, top: 200}, 1000, 'swing', function(){
+			$('#plane').animate({left: -400, top: 200}, 500, 'swing', function(){
 				$('#plane2').show();
 				counter++;
 				image_animate();
@@ -43,7 +43,7 @@ function image_animate() {
 	if(counter == 2) {
 		console.log("second log moving");
 		setTimeout(function(){
-			$('#plane2').animate({top: 200}, 1000, 'swing', function(){
+			$('#plane2').animate({top: 200}, 500, 'swing', function(){
 				$('#plane3').show();
 				counter++;
 				image_animate();
@@ -53,7 +53,7 @@ function image_animate() {
 	if(counter == 3) {
 		console.log("third log moving");
 		setTimeout(function(){
-			$('#plane3').animate({right: -400, top: 200}, 1000, 'swing', function(){
+			$('#plane3').animate({right: -400, top: 200}, 500, 'swing', function(){
 				counter++;
 				showForm();
 			});
@@ -92,7 +92,7 @@ function showForm(){
 		}
 
 		$el.html(html).children().hide().each(function(i){
-		  $(this).delay(i*100).fadeIn(100);
+		  $(this).delay(i*50).fadeIn(50);
 		});
 
 		$( "#searchbanner" ).fadeIn( 3000, function() {
