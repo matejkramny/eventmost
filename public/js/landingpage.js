@@ -71,6 +71,9 @@ function moveUp(){
 		});
 	$('#plane3').animate({top: 50}, 1000, 'swing', function(){
 			});
+	$('#eventswrapper').animate({top: -540}, 1000, 'swing', function(){
+		$('#header').show();
+			});
 	
 	
 }
@@ -98,7 +101,7 @@ function showForm(){
 		$( "#searchbanner" ).fadeIn( 3000, function() {
 			moveUp();
 			setTimeout(function() {
-				$('#header').show();
+				
 				$('#header').css({"float": "left",
 							    "height": "85px",
 							    "position": "absolute",

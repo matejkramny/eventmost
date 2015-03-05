@@ -2,6 +2,7 @@
 		.header_image
 			video(autoplay="autoplay", id="videoContainer", src="timelaps.mp4", type="video/webm" loop="loop" style="width: 100%; height: 100%; visibility: visible;")
 			
+
 			.container.ale
 					.textbanner(id="textbanner")(style="display:none; font-size:30px; top:50px; font-weight:bold")
 						| We are what the event attendees have been asking for:
@@ -40,322 +41,323 @@
 							input.pull-left.font-s.search-input.pad-left-ten.tempclass2(type="search", name="q", placeholder="search event by location, organizers, or key words", style=" height:50px; border-radius:0px; background-color:#f1f1f2;", value= typeof search !== "undefined" ? search.query : null)
 							input.gonew2.pull-left.header-links.tempclass3(type="submit", value="GO", style="width:10%;")
 
-	.container
+	div(id="eventswrapper", style="width:100%; position:relative; background-color: white")
+		.container
 
-		.row
+			.row
 
-			//.col-sm-8.col-md-8.col-lg-8.pad-left-zero
-				.nspacer
-				form(method="GET", accept-charset="utf-8", action="/search/")
-					input.pull-left.font-s.search-input.pad-left-ten.header-links(type="search", name="q", placeholder="search event by location, organizers, or key words", style="width:75%; height:50px; border-radius:0px; background-color:#f1f1f2;", value= typeof search !== "undefined" ? search.query : null)
-					input.gonew2.pull-left.header-links(type="submit", value="GO", style="width:10%;")
-		//.nspacer
-		//.row
-			#slidenav
-				.row
-					.col-sm-5.col-lg-5.col-md-5.col-xs-5
-						.bg-green.nor-pad.nspacer-medium(style="color:#f1f1f2;")
-							| Filter Events
-						.bg-white.nor-pad
-							.pull-left
-								| show events by organizers I’m following
+				//.col-sm-8.col-md-8.col-lg-8.pad-left-zero
+					.nspacer
+					form(method="GET", accept-charset="utf-8", action="/search/")
+						input.pull-left.font-s.search-input.pad-left-ten.header-links(type="search", name="q", placeholder="search event by location, organizers, or key words", style="width:75%; height:50px; border-radius:0px; background-color:#f1f1f2;", value= typeof search !== "undefined" ? search.query : null)
+						input.gonew2.pull-left.header-links(type="submit", value="GO", style="width:10%;")
+			//.nspacer
+			//.row
+				#slidenav
+					.row
+						.col-sm-5.col-lg-5.col-md-5.col-xs-5
+							.bg-green.nor-pad.nspacer-medium(style="color:#f1f1f2;")
+								| Filter Events
+							.bg-white.nor-pad
+								.pull-left
+									| show events by organizers I’m following
+								.pull-right
+									.checkboxs.nspacer-small
+										input.mini-check( id="check1" type="checkbox" name="check" value="check1")
+										label.mini-check2(for="check1")
+								.clearfix
+							.bg-white.nor-pad(style="margin-top:1px;")
+								.pull-left
+									| show events by my Facebook friends
+								.pull-right
+									.checkboxs.nspacer-small
+										input.mini-check( id="check2" type="checkbox" name="check" value="check1")
+										label.mini-check2(for="check2")
+								.clearfix
+							.bg-white.nor-pad(style="margin-top:1px;")
+								.pull-left
+									| show events in a certain postal code/s
+								.pull-right
+									.checkboxs.nspacer-small
+										input.mini-check( id="check3" type="checkbox" name="check" value="check1")
+										label.mini-check2(for="check3")
+								.clearfix
+							.bg-white.nor-pad(style="margin-top:1px;")
+								.pull-left
+									| show events with certain key words
+								.pull-right
+									.checkboxs.nspacer-small
+										input.mini-check( id="check4" type="checkbox" name="check" value="check1")
+										label.mini-check2(for="check4")
+								.clearfix
+						.col-sm-2.col-lg-2.col-md-2.col-xs-2
+							.no-float(style="position:absolute; left:35%; top:50px;")
+								.orcircle
+									| or
+						.col-sm-5.col-lg-5.col-md-5.col-xs-5
+							.bg-green.nor-pad.nspacer-medium(style="color:#f1f1f2;")
+								| Sync with my Calendar
+							.bg-white.nor-pad
+								.pull-left(style="margin-top:7px; width:30%;")
+									| Google calendar
+								.pull-left(style="width:65%;")
+									input.input-grey.psev(type="text" placeholder="email address" style="background-color:#e6e7e8; color:#58585b; font-size:14px; margin-left:10px;")
+								.clearfix
+							.bg-white.nor-pad(style="margin-top:1px;")
+								.pull-left(style="margin-top:7px; width:30%;")
+									| Apple calendar
+								.pull-left(style="width:65%;")
+									input.input-grey.psev(type="text" placeholder="email address" style="background-color:#e6e7e8; color:#58585b; font-size:14px; margin-left:10px;")
+								.clearfix
+					.clearfix
+					.nspacer-awsome
+					.row
+						.col-sm-10.col-lg-10.col-md-10.col-xs-10.no-float
+							.pull-right.ex-st2(style="margin-left:20px;")
+								a(href="/logout", class="logout")
+									button.btn.btn-default.font-e.inmar(type='submit', style="border-radius: 8px; margin-bottom:10px; font-size:15px; color:#e6e7e8; width:100%;")
+										| DELETE
+							.pull-right.ex-st2
+									.bold.code
+										| Codes saved:
+									input.input-grey.psev(type="text" style="background-color:#e6e7e8; color:#58585b; font-size:14px; margin-left:10px; border-radius:10px; margin-top:14px;")
+							.pull-right.ex-st2(style="margin-left:20px;")
+								a(href="/logout", class="logout")
+									button.btn.btn-default.font-e.inmar(type='submit', style="border-radius: 8px; margin-bottom:10px; font-size:15px; color:#e6e7e8; width:100%;")
+										| DELETE
+							.pull-right.ex-st2
+									.bold.code
+										| Codes saved:
+									input.input-grey.psev(type="text" style="background-color:#e6e7e8; color:#58585b; font-size:14px; margin-left:10px; border-radius:10px; margin-top:14px;")
+							.pull-right.ex-st2(style="margin-left:20px;")
+								a(href="/logout", class="logout")
+									button.btn.btn-default.font-e.inmar(type='submit', style="border-radius: 8px; margin-bottom:10px; font-size:15px; color:#e6e7e8; width:100%;")
+										| SAVE	
+							.pull-right.ex-st2.inmar
+									input.input-grey.psev.inmar(type="text" style="background-color:#e6e7e8; color:#58585b; font-size:14px; margin-left:10px; border-radius:10px;")						
 							.pull-right
-								.checkboxs.nspacer-small
-									input.mini-check( id="check1" type="checkbox" name="check" value="check1")
-									label.mini-check2(for="check1")
-							.clearfix
-						.bg-white.nor-pad(style="margin-top:1px;")
-							.pull-left
-								| show events by my Facebook friends
+								.right.font-x1.purple(style="margin-top:35px;")
+									| Enter postal code
+
+						.clearfix
+						.nspacer-small
+						.col-sm-10.col-lg-10.col-md-10.col-xs-10.no-float
+							.pull-right.ex-st2(style="margin-left:20px;")
+								a(href="/logout", class="logout")
+									button.btn.btn-default.font-e(type='submit', style="border-radius: 8px; margin-bottom:10px; font-size:15px; color:#e6e7e8; width:100%;")
+										| DELETE
+							.pull-right.ex-st2
+									input.input-grey.psev(type="text" style="background-color:#e6e7e8; color:#58585b; font-size:14px; margin-left:10px; border-radius:10px;")		
+							.pull-right.ex-st2(style="margin-left:20px;")
+								a(href="/logout", class="logout")
+									button.btn.btn-default.font-e(type='submit', style="border-radius: 8px; margin-bottom:10px; font-size:15px; color:#e6e7e8; width:100%;")
+										| DELETE	
+							.pull-right.ex-st2
+									input.input-grey.psev(type="text" style="background-color:#e6e7e8; color:#58585b; font-size:14px; margin-left:10px; border-radius:10px;")
+							.pull-right.ex-st2(style="margin-left:20px;")
+								a(href="/logout", class="logout")
+									button.btn.btn-default.font-e(type='submit', style="border-radius: 8px; margin-bottom:10px; font-size:15px; color:#e6e7e8; width:100%;")
+										| SAVE
+							.pull-right.ex-st2
+									input.input-grey.psev(type="text" style="background-color:#e6e7e8; color:#58585b; font-size:14px; margin-left:10px; border-radius:10px;")
 							.pull-right
-								.checkboxs.nspacer-small
-									input.mini-check( id="check2" type="checkbox" name="check" value="check1")
-									label.mini-check2(for="check2")
-							.clearfix
-						.bg-white.nor-pad(style="margin-top:1px;")
-							.pull-left
-								| show events in a certain postal code/s
-							.pull-right
-								.checkboxs.nspacer-small
-									input.mini-check( id="check3" type="checkbox" name="check" value="check1")
-									label.mini-check2(for="check3")
-							.clearfix
-						.bg-white.nor-pad(style="margin-top:1px;")
-							.pull-left
-								| show events with certain key words
-							.pull-right
-								.checkboxs.nspacer-small
-									input.mini-check( id="check4" type="checkbox" name="check" value="check1")
-									label.mini-check2(for="check4")
-							.clearfix
-					.col-sm-2.col-lg-2.col-md-2.col-xs-2
-						.no-float(style="position:absolute; left:35%; top:50px;")
-							.orcircle
-								| or
-					.col-sm-5.col-lg-5.col-md-5.col-xs-5
-						.bg-green.nor-pad.nspacer-medium(style="color:#f1f1f2;")
-							| Sync with my Calendar
-						.bg-white.nor-pad
-							.pull-left(style="margin-top:7px; width:30%;")
-								| Google calendar
-							.pull-left(style="width:65%;")
-								input.input-grey.psev(type="text" placeholder="email address" style="background-color:#e6e7e8; color:#58585b; font-size:14px; margin-left:10px;")
-							.clearfix
-						.bg-white.nor-pad(style="margin-top:1px;")
-							.pull-left(style="margin-top:7px; width:30%;")
-								| Apple calendar
-							.pull-left(style="width:65%;")
-								input.input-grey.psev(type="text" placeholder="email address" style="background-color:#e6e7e8; color:#58585b; font-size:14px; margin-left:10px;")
-							.clearfix
-				.clearfix
-				.nspacer-awsome
-				.row
-					.col-sm-10.col-lg-10.col-md-10.col-xs-10.no-float
-						.pull-right.ex-st2(style="margin-left:20px;")
-							a(href="/logout", class="logout")
-								button.btn.btn-default.font-e.inmar(type='submit', style="border-radius: 8px; margin-bottom:10px; font-size:15px; color:#e6e7e8; width:100%;")
-									| DELETE
-						.pull-right.ex-st2
-								.bold.code
-									| Codes saved:
-								input.input-grey.psev(type="text" style="background-color:#e6e7e8; color:#58585b; font-size:14px; margin-left:10px; border-radius:10px; margin-top:14px;")
-						.pull-right.ex-st2(style="margin-left:20px;")
-							a(href="/logout", class="logout")
-								button.btn.btn-default.font-e.inmar(type='submit', style="border-radius: 8px; margin-bottom:10px; font-size:15px; color:#e6e7e8; width:100%;")
-									| DELETE
-						.pull-right.ex-st2
-								.bold.code
-									| Codes saved:
-								input.input-grey.psev(type="text" style="background-color:#e6e7e8; color:#58585b; font-size:14px; margin-left:10px; border-radius:10px; margin-top:14px;")
-						.pull-right.ex-st2(style="margin-left:20px;")
-							a(href="/logout", class="logout")
-								button.btn.btn-default.font-e.inmar(type='submit', style="border-radius: 8px; margin-bottom:10px; font-size:15px; color:#e6e7e8; width:100%;")
-									| SAVE	
-						.pull-right.ex-st2.inmar
+								.right.font-x1.purple(style="margin-top:5px;")
+									| Enter word
+						.clearfix
+						.nspacer-small
+						.col-sm-10.col-lg-10.col-md-10.col-xs-10.no-float
+							.pull-right.ex-st2(style="margin-left:20px;")
+								a(href="/logout", class="logout")
+									button.btn.btn-default.font-e(type='submit', style="border-radius: 8px; margin-bottom:10px; font-size:15px; color:#e6e7e8; width:100%;")
+										| DELETE
+							.pull-right.ex-st2
+									input.input-grey.psev(type="text" style="background-color:#e6e7e8; color:#58585b; font-size:14px; margin-left:10px; border-radius:10px;")		
+							.pull-right.ex-st2(style="margin-left:20px;")
+								a(href="/logout", class="logout")
+									button.btn.btn-default.font-e(type='submit', style="border-radius: 8px; margin-bottom:10px; font-size:15px; color:#e6e7e8; width:100%;")
+										| DELETE	
+							.pull-right.ex-st2
+									input.input-grey.psev(type="text" style="background-color:#e6e7e8; color:#58585b; font-size:14px; margin-left:10px; border-radius:10px;")
+						.clearfix
+						.nspacer-small
+						.col-sm-10.col-lg-10.col-md-10.col-xs-10.no-float
+							.pull-right.ex-st2(style="margin-left:20px;")
+								a(href="/logout", class="logout")
+									button.btn.btn-primary.font-e(type='submit', style="background-color:#0892a3; border-radius: 8px; margin-bottom:10px; font-size:15px; color:#e6e7e8; width:100%; min-width:150px;")
+										| ENTER
+
+				.otherabsolute
+					#open
+						a.fc-button(href="", style="background-color:#d1d2d4; color: #542437; text-decoration: none; text-align:left; padding-right:85px;") calendar<br> settings
+				#calendar
+
+			.nspacer
+			.row
+				#slidenav2
+					.row
+						.col-sm-5.col-lg-5.col-md-5.col-xs-5.no-float
+							.bg-green.nor-pad.nspacer-medium(style="color:#f1f1f2;")
+								| Filter Events
+							.bg-white.nor-pad
+								.pull-left
+									| show events by organizers I’m following
+								.pull-right
+									.checkboxs.nspacer-small
+										input.mini-check( id="check12" type="checkbox" name="check" value="check1")
+										label.mini-check2(for="check12")
+								.clearfix
+							.bg-white.nor-pad(style="margin-top:1px;")
+								.pull-left
+									| show events by my Facebook friends
+								.pull-right
+									.checkboxs.nspacer-small
+										input.mini-check( id="check22" type="checkbox" name="check" value="check1")
+										label.mini-check2(for="check22")
+								.clearfix
+							.bg-white.nor-pad(style="margin-top:1px;")
+								.pull-left
+									| show events in a certain postal code/s
+								.pull-right
+									.checkboxs.nspacer-small
+										input.mini-check( id="check33" type="checkbox" name="check" value="check1")
+										label.mini-check2(for="check33")
+								.clearfix
+							.bg-white.nor-pad(style="margin-top:1px;")
+								.pull-left
+									| show events with certain key words
+								.pull-right
+									.checkboxs.nspacer-small
+										input.mini-check( id="check44" type="checkbox" name="check" value="check1")
+										label.mini-check2(for="check44")
+								.clearfix
+					.clearfix
+					.nspacer-awsome
+					.row
+						.col-sm-10.col-lg-10.col-md-10.col-xs-10.no-float
+							.pull-right.ex-st2(style="margin-left:20px;")
+								a(href="/logout", class="logout")
+									button.btn.btn-default.font-e.inmar(type='submit', style="border-radius: 8px; margin-bottom:10px; font-size:15px; color:#e6e7e8; width:100%;")
+										| DELETE
+							.pull-right.ex-st2
+									.bold.code
+										| Codes saved:
+									input.input-grey.psev(type="text" style="background-color:#e6e7e8; color:#58585b; font-size:14px; margin-left:10px; border-radius:10px; margin-top:14px;")
+							.pull-right.ex-st2(style="margin-left:20px;")
+								a(href="/logout", class="logout")
+									button.btn.btn-default.font-e.inmar(type='submit', style="border-radius: 8px; margin-bottom:10px; font-size:15px; color:#e6e7e8; width:100%;")
+										| DELETE
+							.pull-right.ex-st2
+									.bold.code
+										| Codes saved:
+									input.input-grey.psev(type="text" style="background-color:#e6e7e8; color:#58585b; font-size:14px; margin-left:10px; border-radius:10px; margin-top:14px;")
+							.pull-right.ex-st2(style="margin-left:20px;")
+								a(href="/logout", class="logout")
+									button.btn.btn-default.font-e.inmar(type='submit', style="border-radius: 8px; margin-bottom:10px; font-size:15px; color:#e6e7e8; width:100%;")
+										| SAVE	
+							.pull-right.ex-st2.inmar
 								input.input-grey.psev.inmar(type="text" style="background-color:#e6e7e8; color:#58585b; font-size:14px; margin-left:10px; border-radius:10px;")						
-						.pull-right
-							.right.font-x1.purple(style="margin-top:35px;")
-								| Enter postal code
+							.pull-right
+								.right.font-x1.purple(style="margin-top:35px;")
+									| Enter postal code
 
-					.clearfix
-					.nspacer-small
-					.col-sm-10.col-lg-10.col-md-10.col-xs-10.no-float
-						.pull-right.ex-st2(style="margin-left:20px;")
-							a(href="/logout", class="logout")
-								button.btn.btn-default.font-e(type='submit', style="border-radius: 8px; margin-bottom:10px; font-size:15px; color:#e6e7e8; width:100%;")
-									| DELETE
-						.pull-right.ex-st2
+						.clearfix
+						.nspacer-small
+						.col-sm-10.col-lg-10.col-md-10.col-xs-10.no-float
+							.pull-right.ex-st2(style="margin-left:20px;")
+								a(href="/logout", class="logout")
+									button.btn.btn-default.font-e(type='submit', style="border-radius: 8px; margin-bottom:10px; font-size:15px; color:#e6e7e8; width:100%;")
+										| DELETE
+							.pull-right.ex-st2
 								input.input-grey.psev(type="text" style="background-color:#e6e7e8; color:#58585b; font-size:14px; margin-left:10px; border-radius:10px;")		
-						.pull-right.ex-st2(style="margin-left:20px;")
-							a(href="/logout", class="logout")
-								button.btn.btn-default.font-e(type='submit', style="border-radius: 8px; margin-bottom:10px; font-size:15px; color:#e6e7e8; width:100%;")
-									| DELETE	
-						.pull-right.ex-st2
+							.pull-right.ex-st2(style="margin-left:20px;")
+								a(href="/logout", class="logout")
+									button.btn.btn-default.font-e(type='submit', style="border-radius: 8px; margin-bottom:10px; font-size:15px; color:#e6e7e8; width:100%;")
+										| DELETE	
+							.pull-right.ex-st2
 								input.input-grey.psev(type="text" style="background-color:#e6e7e8; color:#58585b; font-size:14px; margin-left:10px; border-radius:10px;")
-						.pull-right.ex-st2(style="margin-left:20px;")
-							a(href="/logout", class="logout")
-								button.btn.btn-default.font-e(type='submit', style="border-radius: 8px; margin-bottom:10px; font-size:15px; color:#e6e7e8; width:100%;")
-									| SAVE
-						.pull-right.ex-st2
-								input.input-grey.psev(type="text" style="background-color:#e6e7e8; color:#58585b; font-size:14px; margin-left:10px; border-radius:10px;")
-						.pull-right
-							.right.font-x1.purple(style="margin-top:5px;")
-								| Enter word
-					.clearfix
-					.nspacer-small
-					.col-sm-10.col-lg-10.col-md-10.col-xs-10.no-float
-						.pull-right.ex-st2(style="margin-left:20px;")
-							a(href="/logout", class="logout")
-								button.btn.btn-default.font-e(type='submit', style="border-radius: 8px; margin-bottom:10px; font-size:15px; color:#e6e7e8; width:100%;")
-									| DELETE
-						.pull-right.ex-st2
+							.pull-right.ex-st2(style="margin-left:20px;")
+								a(href="/logout", class="logout")
+									button.btn.btn-default.font-e(type='submit', style="border-radius: 8px; margin-bottom:10px; font-size:15px; color:#e6e7e8; width:100%;")
+										| SAVE
+							.pull-right.ex-st2
+									input.input-grey.psev(type="text" style="background-color:#e6e7e8; color:#58585b; font-size:14px; margin-left:10px; border-radius:10px;")
+							.pull-right
+								.right.font-x1.purple(style="margin-top:5px;")
+									| Enter word
+						.clearfix
+						.nspacer-small
+						.col-sm-10.col-lg-10.col-md-10.col-xs-10.no-float
+							.pull-right.ex-st2(style="margin-left:20px;")
+								a(href="/logout", class="logout")
+									button.btn.btn-default.font-e(type='submit', style="border-radius: 8px; margin-bottom:10px; font-size:15px; color:#e6e7e8; width:100%;")
+										| DELETE
+							.pull-right.ex-st2
 								input.input-grey.psev(type="text" style="background-color:#e6e7e8; color:#58585b; font-size:14px; margin-left:10px; border-radius:10px;")		
-						.pull-right.ex-st2(style="margin-left:20px;")
-							a(href="/logout", class="logout")
-								button.btn.btn-default.font-e(type='submit', style="border-radius: 8px; margin-bottom:10px; font-size:15px; color:#e6e7e8; width:100%;")
-									| DELETE	
-						.pull-right.ex-st2
-								input.input-grey.psev(type="text" style="background-color:#e6e7e8; color:#58585b; font-size:14px; margin-left:10px; border-radius:10px;")
+							.pull-right.ex-st2(style="margin-left:20px;")
+								a(href="/logout", class="logout")
+									button.btn.btn-default.font-e(type='submit', style="border-radius: 8px; margin-bottom:10px; font-size:15px; color:#e6e7e8; width:100%;")
+										| DELETE	
+							.pull-right.ex-st2
+									input.input-grey.psev(type="text" style="background-color:#e6e7e8; color:#58585b; font-size:14px; margin-left:10px; border-radius:10px;")
+						.clearfix
+						.nspacer-small
+						.col-sm-10.col-lg-10.col-md-10.col-xs-10.no-float
+							.pull-right.ex-st2(style="margin-left:20px;")
+								a(href="/logout", class="logout")
+									button.btn.btn-primary.font-e(type='submit', style="background-color:#0892a3; border-radius: 8px; margin-bottom:10px; font-size:15px; color:#e6e7e8; width:100%; min-width:150px;")
+										| ENTER
+				.col-md-12.col-sm-12.col-lg-12(style="padding-right:5px; padding-left:5px;")
+					.pull-right.bg-green(id="arrangeby")
+						ul.nav.navbar-nav(style="padding:0px !important;")
+							li.dropdown
+								a.dropdown-toggle(href='#', data-toggle='dropdown' style="padding-top:0px; font-size:14px; text-align:left;")
+									| Arrange by
+								ul.dropdown-menu.pull-right.new-drop(style="background-color:#f1f1f2 !important; color:#58585b;  padding:0px;")
+									li
+										a(href='/search/?arrange=nearby') Events Nearest My Location
+									li
+										a(href='/search/') Events Happening Soon
+					.col-md-3.col-sm-3.col-lg-3.pull-right.don-dis
+						| &nbsp;
+					//- 
+						.pull-right.bg-green.center.addfil(style="height:38px; padding-top:8px;")
+							a.link-ashen#open2(href='#')
+								| Add filters
+						
 					.clearfix
-					.nspacer-small
-					.col-sm-10.col-lg-10.col-md-10.col-xs-10.no-float
-						.pull-right.ex-st2(style="margin-left:20px;")
-							a(href="/logout", class="logout")
-								button.btn.btn-primary.font-e(type='submit', style="background-color:#0892a3; border-radius: 8px; margin-bottom:10px; font-size:15px; color:#e6e7e8; width:100%; min-width:150px;")
-									| ENTER
+					.bg-green.font-ah.pad-left-ten(style="min-height:1px;")
 
-			.otherabsolute
-				#open
-					a.fc-button(href="", style="background-color:#d1d2d4; color: #542437; text-decoration: none; text-align:left; padding-right:85px;") calendar<br> settings
-			#calendar
+					if (typeof nearby !== "undefined" && nearby)
+						//- Events nearby
+						//-
+							#nearbyEventsPlaceholder
+								p.text-center.lead Locating events around you..
 
-		.nspacer
-		.row
-			#slidenav2
-				.row
-					.col-sm-5.col-lg-5.col-md-5.col-xs-5.no-float
-						.bg-green.nor-pad.nspacer-medium(style="color:#f1f1f2;")
-							| Filter Events
-						.bg-white.nor-pad
-							.pull-left
-								| show events by organizers I’m following
-							.pull-right
-								.checkboxs.nspacer-small
-									input.mini-check( id="check12" type="checkbox" name="check" value="check1")
-									label.mini-check2(for="check12")
-							.clearfix
-						.bg-white.nor-pad(style="margin-top:1px;")
-							.pull-left
-								| show events by my Facebook friends
-							.pull-right
-								.checkboxs.nspacer-small
-									input.mini-check( id="check22" type="checkbox" name="check" value="check1")
-									label.mini-check2(for="check22")
-							.clearfix
-						.bg-white.nor-pad(style="margin-top:1px;")
-							.pull-left
-								| show events in a certain postal code/s
-							.pull-right
-								.checkboxs.nspacer-small
-									input.mini-check( id="check33" type="checkbox" name="check" value="check1")
-									label.mini-check2(for="check33")
-							.clearfix
-						.bg-white.nor-pad(style="margin-top:1px;")
-							.pull-left
-								| show events with certain key words
-							.pull-right
-								.checkboxs.nspacer-small
-									input.mini-check( id="check44" type="checkbox" name="check" value="check1")
-									label.mini-check2(for="check44")
-							.clearfix
-				.clearfix
-				.nspacer-awsome
-				.row
-					.col-sm-10.col-lg-10.col-md-10.col-xs-10.no-float
-						.pull-right.ex-st2(style="margin-left:20px;")
-							a(href="/logout", class="logout")
-								button.btn.btn-default.font-e.inmar(type='submit', style="border-radius: 8px; margin-bottom:10px; font-size:15px; color:#e6e7e8; width:100%;")
-									| DELETE
-						.pull-right.ex-st2
-								.bold.code
-									| Codes saved:
-								input.input-grey.psev(type="text" style="background-color:#e6e7e8; color:#58585b; font-size:14px; margin-left:10px; border-radius:10px; margin-top:14px;")
-						.pull-right.ex-st2(style="margin-left:20px;")
-							a(href="/logout", class="logout")
-								button.btn.btn-default.font-e.inmar(type='submit', style="border-radius: 8px; margin-bottom:10px; font-size:15px; color:#e6e7e8; width:100%;")
-									| DELETE
-						.pull-right.ex-st2
-								.bold.code
-									| Codes saved:
-								input.input-grey.psev(type="text" style="background-color:#e6e7e8; color:#58585b; font-size:14px; margin-left:10px; border-radius:10px; margin-top:14px;")
-						.pull-right.ex-st2(style="margin-left:20px;")
-							a(href="/logout", class="logout")
-								button.btn.btn-default.font-e.inmar(type='submit', style="border-radius: 8px; margin-bottom:10px; font-size:15px; color:#e6e7e8; width:100%;")
-									| SAVE	
-						.pull-right.ex-st2.inmar
-							input.input-grey.psev.inmar(type="text" style="background-color:#e6e7e8; color:#58585b; font-size:14px; margin-left:10px; border-radius:10px;")						
-						.pull-right
-							.right.font-x1.purple(style="margin-top:35px;")
-								| Enter postal code
-
-					.clearfix
-					.nspacer-small
-					.col-sm-10.col-lg-10.col-md-10.col-xs-10.no-float
-						.pull-right.ex-st2(style="margin-left:20px;")
-							a(href="/logout", class="logout")
-								button.btn.btn-default.font-e(type='submit', style="border-radius: 8px; margin-bottom:10px; font-size:15px; color:#e6e7e8; width:100%;")
-									| DELETE
-						.pull-right.ex-st2
-							input.input-grey.psev(type="text" style="background-color:#e6e7e8; color:#58585b; font-size:14px; margin-left:10px; border-radius:10px;")		
-						.pull-right.ex-st2(style="margin-left:20px;")
-							a(href="/logout", class="logout")
-								button.btn.btn-default.font-e(type='submit', style="border-radius: 8px; margin-bottom:10px; font-size:15px; color:#e6e7e8; width:100%;")
-									| DELETE	
-						.pull-right.ex-st2
-							input.input-grey.psev(type="text" style="background-color:#e6e7e8; color:#58585b; font-size:14px; margin-left:10px; border-radius:10px;")
-						.pull-right.ex-st2(style="margin-left:20px;")
-							a(href="/logout", class="logout")
-								button.btn.btn-default.font-e(type='submit', style="border-radius: 8px; margin-bottom:10px; font-size:15px; color:#e6e7e8; width:100%;")
-									| SAVE
-						.pull-right.ex-st2
-								input.input-grey.psev(type="text" style="background-color:#e6e7e8; color:#58585b; font-size:14px; margin-left:10px; border-radius:10px;")
-						.pull-right
-							.right.font-x1.purple(style="margin-top:5px;")
-								| Enter word
-					.clearfix
-					.nspacer-small
-					.col-sm-10.col-lg-10.col-md-10.col-xs-10.no-float
-						.pull-right.ex-st2(style="margin-left:20px;")
-							a(href="/logout", class="logout")
-								button.btn.btn-default.font-e(type='submit', style="border-radius: 8px; margin-bottom:10px; font-size:15px; color:#e6e7e8; width:100%;")
-									| DELETE
-						.pull-right.ex-st2
-							input.input-grey.psev(type="text" style="background-color:#e6e7e8; color:#58585b; font-size:14px; margin-left:10px; border-radius:10px;")		
-						.pull-right.ex-st2(style="margin-left:20px;")
-							a(href="/logout", class="logout")
-								button.btn.btn-default.font-e(type='submit', style="border-radius: 8px; margin-bottom:10px; font-size:15px; color:#e6e7e8; width:100%;")
-									| DELETE	
-						.pull-right.ex-st2
-								input.input-grey.psev(type="text" style="background-color:#e6e7e8; color:#58585b; font-size:14px; margin-left:10px; border-radius:10px;")
-					.clearfix
-					.nspacer-small
-					.col-sm-10.col-lg-10.col-md-10.col-xs-10.no-float
-						.pull-right.ex-st2(style="margin-left:20px;")
-							a(href="/logout", class="logout")
-								button.btn.btn-primary.font-e(type='submit', style="background-color:#0892a3; border-radius: 8px; margin-bottom:10px; font-size:15px; color:#e6e7e8; width:100%; min-width:150px;")
-									| ENTER
-			.col-md-12.col-sm-12.col-lg-12(style="padding-right:5px; padding-left:5px;")
-				.pull-right.bg-green(id="arrangeby")
-					ul.nav.navbar-nav(style="padding:0px !important;")
-						li.dropdown
-							a.dropdown-toggle(href='#', data-toggle='dropdown' style="padding-top:0px; font-size:14px; text-align:left;")
-								| Arrange by
-							ul.dropdown-menu.pull-right.new-drop(style="background-color:#f1f1f2 !important; color:#58585b;  padding:0px;")
-								li
-									a(href='/search/?arrange=nearby') Events Nearest My Location
-								li
-									a(href='/search/') Events Happening Soon
-				.col-md-3.col-sm-3.col-lg-3.pull-right.don-dis
-					| &nbsp;
-				//- 
-					.pull-right.bg-green.center.addfil(style="height:38px; padding-top:8px;")
-						a.link-ashen#open2(href='#')
-							| Add filters
-					
-				.clearfix
-				.bg-green.font-ah.pad-left-ten(style="min-height:1px;")
-
-				if (typeof nearby !== "undefined" && nearby)
-					//- Events nearby
-					//-
-						#nearbyEventsPlaceholder
-							p.text-center.lead Locating events around you..
-
-				if (search.type == 'people')
-					for p in search.results
-						.row
-							a.col-md-2.col-sm-2.col-lg-2(href="/user/"+p._id)
-								img.circularespond(src= p.avatar.length > 0 ? p.avatar+"-116x116.png" : "/images/default_speaker.svg")
-							.col-md-10.col-sm-10.col-lg-10
-								.row
-									h4.col-md-12.col-sm-12.col-lg-12
-										a(href="/user/"+p._id): strong= p.getName()
-								.row
-									strong.col-md-12.col-sm-12.col-lg-12
-										if(p.position)
-											= p.position
-											| , 
-										if(p.company)
-											= p.company
-											| , 
-										if(p.location)
-											= p.location
-						br
-						.line-purple
-				else
-					for e in search.results
-						if((e.venue_name) && e.venue_name != '')
-							mixin eventItem(e)
+					if (search.type == 'people')
+						for p in search.results
+							.row
+								a.col-md-2.col-sm-2.col-lg-2(href="/user/"+p._id)
+									img.circularespond(src= p.avatar.length > 0 ? p.avatar+"-116x116.png" : "/images/default_speaker.svg")
+								.col-md-10.col-sm-10.col-lg-10
+									.row
+										h4.col-md-12.col-sm-12.col-lg-12
+											a(href="/user/"+p._id): strong= p.getName()
+									.row
+										strong.col-md-12.col-sm-12.col-lg-12
+											if(p.position)
+												= p.position
+												| , 
+											if(p.company)
+												= p.company
+												| , 
+											if(p.location)
+												= p.location
+							br
+							.line-purple
+					else
+						for e in search.results
+							if((e.venue_name) && e.venue_name != '')
+								mixin eventItem(e)
 
 block js
 	script(src="/js/crop/jquery.min.js" defer)
