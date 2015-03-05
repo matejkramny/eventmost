@@ -76,7 +76,7 @@ function moveUp(){
 }
 
 function showForm(){
-	$( "#textbanner" ).fadeOut( 3000, function() {
+	$( "#textbanner" ).fadeOut( 200, function() {
 		$( "#textbanner2" ).show();
     	var $el = $("#textbanner2"), text = $el.text(),
 		    words = text.split(""), html = "";
@@ -92,7 +92,7 @@ function showForm(){
 		}
 
 		$el.html(html).children().hide().each(function(i){
-		  $(this).delay(i*50).fadeIn(50);
+		  $(this).delay(i*20).fadeIn(20);
 		});
 
 		$( "#searchbanner" ).fadeIn( 3000, function() {
@@ -101,15 +101,12 @@ function showForm(){
 				$('#header').show();
 				$('#header').css({"float": "left",
 							    "height": "85px",
-							    "opacity": "0.6",
 							    "position": "absolute",
 							    "width": "100%",
 							    "z-index": "99999"});
 				$('#textbanner2').css({"top": "90px"});
 				$('#searchbanner').css({"top": "150px"});
-		    	$('html, body').animate({
-				    scrollTop: $("#arrangeby").offset().top
-				}, 500);
+		    	
 
 		    }, 1000);
 		});
