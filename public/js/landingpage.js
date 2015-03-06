@@ -71,9 +71,15 @@ function moveUp(){
 		});
 	$('#plane3').animate({top: 50}, 1000, 'swing', function(){
 			});
-	$('#eventswrapper').animate({top: -540}, 1000, 'swing', function(){
+	
+	var diff = $("#eventswrapper").offset().top - ($("#plane").offset().top + 130 + 100);
+	$('#eventswrapper').animate({top: -diff}, 1000, 'swing', function(){
+	  $('#header').show();
+	});
+
+	/*$('#eventswrapper').animate({top: -540}, 1000, 'swing', function(){
 		$('#header').show();
-			});
+			});*/
 	
 	
 }
