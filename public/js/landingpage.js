@@ -63,6 +63,7 @@ function image_animate() {
 }
 
 function moveUp(){
+	console.log(navigator.platform+"--");
 	$('#plane').animate({top: 50}, 1000, 'swing', function(){
 		
 	});
@@ -73,6 +74,10 @@ function moveUp(){
 			});
 	
 	var diff = $("#eventswrapper").offset().top - ($("#plane").offset().top + 130 + 100);
+	if(navigator.platform == "Win32"){
+		diff = diff+170;
+	}
+		
 	$('#eventswrapper').animate({top: -diff}, 1000, 'swing', function(){
 	  $('#header').show();
 	});
