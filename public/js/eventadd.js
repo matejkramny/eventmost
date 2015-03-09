@@ -353,7 +353,7 @@ $(document).ready(function() {
 		avatarUploadRequest.upload.addEventListener('progress', xmlUploadProgress, false)
 		avatarUploadRequest.send(form);
 
-		$("#info-m2").html("Image Cropped!");
+		$("#info-m2").html("Background Photo has been cropped. :)");
 
 	}
 	$("#file_upload_wrapper2").click(uploadAvatar2);
