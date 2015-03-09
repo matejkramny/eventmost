@@ -42,7 +42,7 @@ block content
 				.inline
 					img(src="/images/small-clock.svg" alt=""  )
 				.font16.inline.color-green.semi-bold
-					| WHEN
+					| WHEN-l
 				- if (edit == 'e'){
 					button#editTimeButton.btn.btn-primary.btn-xs(data-toggle='modal', data-target='#eventTimeModal')
 						span.glyphicon.glyphicon-edit  Edit
@@ -52,8 +52,8 @@ block content
 						= eventStartFormatted[1]
 					#eventEndDate.poo(style="font-weight:200;")
 						= eventEndFormatted[1]
-			.col-md-3.col-lg-3.col-sm-3.font16(style="width:40%; padding: 0 0 0 0")
-				div(style="float:left; width:38%")
+			.col-md-3.col-lg-3.col-sm-3.font16
+				div(style="float:left")
 					.inline
 						img(src="/images/mapster2.svg" alt=""  )
 					.font16.inline.color-green.semi-bold
@@ -71,10 +71,12 @@ block content
 								= ev.address
 							- if (!ev.address && !ev.venue_name)
 								| Event does not have a location
-				div(style="float:left")
+			.col-md-3.col-lg-3.col-sm-3.font16
+				div
 					- if (ev.address)
-						iframe(width='196px', height='130px', frameborder='0', scrolling='no', marginheight='0', marginwidth='0', src="http://maps.google.com/maps?q=" + ev.address +"&output=embed")
-			.col-md-4.col-lg-4.col-sm-4.font16(style="width:18%; padding: 0 0 0 0")
+						.map-area
+							iframe(frameborder='0', scrolling='no', marginheight='0', marginwidth='0', src="http://maps.google.com/maps?q=" + ev.address +"&output=embed")
+			.col-md-3.col-lg-3.col-sm-3.font16
 				.inline
 					img(src="/images/organizer.svg" alt=""  )
 				.font16.inline.color-green.semi-bold
