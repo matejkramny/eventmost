@@ -1,6 +1,7 @@
 extends ../responsive
 
 append addonjs
+	script(src="/js/eventadd.js" defer)
 	script(src="/js/crop/jquery.min.js", defer)
 	script(src="/js/vendor/angular.min.js", defer)
 	script(src="/js/crop/jquery.Jcrop.min.js", defer)
@@ -15,7 +16,7 @@ append addonjs
 		script.
 			window.emEvent = !{JSON.stringify(ev)}
 		
-	script(src="/js/eventadd.js" defer)
+	
 
 
 append content
@@ -354,7 +355,7 @@ append content
 							| L<br />o<br />g<br />o
 					.col-lg-3-5		
 						//- crop toll
-						#profile_pic.profile_pic
+						#profile_pic.profile_pic(style="height:150px; width:300px")
 							img#thumb(src='/images/pro.svg')
 
 						form#upload_form1(enctype='multipart/form-data', method='post', action='upload.php', onsubmit='return validateForm();')
@@ -388,17 +389,19 @@ append content
 
 					
 					#image_div(style='display: none;')
-						.a(id="cropButton1")
-							#crop_div(style='float: right; margin-right:10%')
-								h3(style="float:left")
-									| Crop 
-									img(src='/images/crop.jpeg', width="30", heigth="30")
-							div(#recommendeddimensionlabel)
-								| Minimum: 300 x 150
-							div#realdimensionlabel
-								| 
-						img#load_img(src='')
-
+						div(#recommendeddimensionlabel)
+							| Minimum: 300 x 200
+						div#realdimensionlabel
+							| 
+						.sourceimage
+							img#load_img(src='')
+						div(style="float:left; width:15%")
+							.a(id="cropButton1")
+								#crop_div(style='float: right; margin-right:10%')
+									h3(style="float:left")
+										| Crop 
+										img(src='/images/crop.jpeg', width="30", heigth="30")
+						div(style="clear:both")					
 					#error.error(style='display: none;')
 					.clearfix
 
@@ -416,15 +419,16 @@ append content
 						| to see example)				
 					.clearfix
 
-					.col-lg-1.col-md-1.col-xs-1.bg-yellow.create-height(ng-show="background")(style="width: 20%;")
+					.col-lg-1.col-md-1.col-xs-1.bg-yellow.create-height(ng-show="background")(style="width: 20%; margin-right:4px")
 						.font-22.font-thin.nspacer.logo-text.dif.font-exception
 							|	Back-ground photo
 						.font.font-thin.nspacer.logo-text.dif2
 							| L<br />o<br />g<br />o
 					.col-lg-3-5(ng-show="background")
 						//- crop toll
-						#profile_pic2.profile_pic
-							img#thumb2(src='/images/pro.svg')
+						//- 
+							#profile_pic2.profile_pic
+								img#thumb2(src='/images/pro.svg')
 
 						form#upload_form2(enctype='multipart/form-data', method='post', action='upload.php', onsubmit='return validateForm();')
 							input#w2(type='hidden', name='w2')
@@ -457,12 +461,20 @@ append content
 					#info-m2.info-m(style='display: none;')
 						| Select part of image you want to crop
 					#image_div2(style='display: none;')
-						.a(id="cropButton2")
-							#crop_div(style='float: right; margin-right:10%')
-								h3(style="float:left")
-									| Crop 
-									img(src='/images/crop.jpeg', width="30", heigth="30")
-						img#load_img2(src='')
+						div(#recommendeddimensionlabel2)
+							| Minimum: 500 x 200
+						div#realdimensionlabel2
+							| 
+						div(style="float:left; width:70%")
+							img#load_img2(src='')
+						div(style="float:left; width:30%")
+							.a(id="cropButton2")
+								#crop_div(style='float: right; margin-right:10%')
+									h3(style="float:left")
+										| Crop 
+										img(src='/images/crop.jpeg', width="30", heigth="30")				
+
+
 					#error2.error(style='display: none;')
 					.clearfix
 

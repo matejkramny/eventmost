@@ -400,7 +400,7 @@ $(document).ready(function() {
 		//alert(c_w+" "+c_h);
 		
 
-		if(c_w < 300 || c_h < 150){
+		if(c_w < 300 || c_h < 200){
 			alert("Sorry! You can not crop with this dimension.");
 		}else{
 			$("#image_div").hide();
@@ -410,10 +410,17 @@ $(document).ready(function() {
 	});
 
 	$("#cropButton2").click(function (){
+		var c_w = $('#w2').val();
+    	var c_h = $('#h2').val();
+		//alert(c_w+" "+c_h);
 		
-		$("#image_div2").hide();
-		uploadAvatar2();
-		
+
+		if(c_w < 500 || c_h < 150){
+			alert("Sorry! You can not crop with this dimension.");
+		}else{
+			$("#image_div2").hide();
+			uploadAvatar2();
+		}
 	});
 	
 	function updateProgress(perc) {
