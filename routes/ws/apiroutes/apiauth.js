@@ -250,7 +250,7 @@ function registerUser(req, res){
 	}, function(err, user) {
 		if (err == null && user) {
 			res.send({
-				status: 404,
+				status: 405,
 				err: ["This email is already Registered"]
 			});
 			
@@ -284,7 +284,7 @@ function registerUser(req, res){
 			res.format({
 				json: function() {
 					res.send({
-						status: 404,
+						status: 406,
 						message: "Error Registering",
 						err: err
 					})
@@ -348,9 +348,9 @@ function doPasswordLogin (req, res) {
 			res.format({
 				json: function() {
 					res.send({
-						status: 404,
+						status: 405,
 						message: "Bad Login",
-						err: err
+						err: ["Authentication Failed!"]
 					})
 				}
 			})
@@ -366,8 +366,8 @@ function doPasswordReset (req, res) {
 	var email = req.body.email;
 	if (!email) {
 		res.send({
-			status: 400,
-			err: []
+			status: 404,
+			err: ["Missing Email."]
 		})
 		
 		return;
@@ -381,8 +381,8 @@ function doPasswordReset (req, res) {
 	}, function(err, user) {
 		if (err || !user) {
 			res.send({
-				status: 404,
-				err: ["If the email is registered, you will receive it shortly."]
+				status: 405,
+				message: ["Email is not registered."]
 			});
 			
 			return;
@@ -414,8 +414,8 @@ function doPasswordReset (req, res) {
 			console.log(options);
 			
 			res.send({
-				status: 404,
-				err: ["If the email is registered, you will receive it shortly."]
+				status: 406,
+				err: ["Server is unable to send email."]
 			});
 			
 			return;
@@ -438,7 +438,7 @@ function doPasswordReset (req, res) {
 		});
 		
 		res.send({
-			status: 404,
+			status: 200,
 			err: ["If the email is registered, you will receive it shortly."]
 		});
 	})
