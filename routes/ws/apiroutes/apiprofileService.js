@@ -127,7 +127,8 @@ function uploadAvatar(req, res){
 				res.format({
 					json: function() {
 						res.json({
-							status: "OK"
+							status: 200,
+							message: "File Uploaded Successfully."
 						})
 					}
 				});
@@ -140,7 +141,8 @@ function uploadAvatar(req, res){
 			res.format({
 				json: function() {
 					res.json({
-						status: "No File Received!"
+						status: 404,
+						message: "No File Received!"
 					})
 				}
 			});

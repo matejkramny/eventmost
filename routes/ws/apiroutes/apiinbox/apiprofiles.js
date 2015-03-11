@@ -71,7 +71,7 @@ function notificationsettings(req, res){
 		_id : mongoose.Types.ObjectId(user_id)
 	}
 
-	if(messages == 1){
+	/*if(messages == 1){
 		messages = true;
 	}else{
 		messages = false;
@@ -122,7 +122,7 @@ function notificationsettings(req, res){
 		e_privateMessages = true;
 	}else{
 		e_privateMessages = false;
-	}
+	}*/
 
 
 	var updatedValues = {
@@ -187,7 +187,7 @@ function privacysettings(req, res){
 		_id : mongoose.Types.ObjectId(user_id)
 	}
 
-	if(showProfile == 1){
+	/*if(showProfile == 1){
 		showProfile = true;
 	}else{
 		showProfile = false;
@@ -209,7 +209,7 @@ function privacysettings(req, res){
 		allowPM = true;
 	}else{
 		allowPM = false;
-	}
+	}*/
 
 	//if(showProfile != '' && allowLocation != '' && allowWall != '' && allowPM != '')
 
