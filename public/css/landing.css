@@ -1,6 +1,6 @@
 #plane{
 position:absolute; 
-top:0px; 
+top:-80px; 
 
 background-repeat: no-repeat; 
 display:block;
@@ -10,7 +10,7 @@ margin-left: 100px;
 }
 #plane2{
 position:absolute; 
-top:0px; 
+top:-80px; 
 
 background-repeat: no-repeat; 
 display:block;
@@ -20,7 +20,7 @@ margin-left: 100px;
 }
 #plane3{
 position:relative; 
-top:0px; 
+top:-80px; 
 
 background-repeat: no-repeat; 
 display:block;

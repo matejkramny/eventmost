@@ -5,7 +5,7 @@ $(document).ready(function(){
 
 	setTimeout(function() {
     	$("#videoContainer")[0].pause();
-    }, 3000);
+    }, 7000);
 });
 
 function moveuptillvideo(){
@@ -73,11 +73,12 @@ function moveUp(){
 	$('#plane3').animate({top: 50}, 1000, 'swing', function(){
 			});
 	
-	var diff = $("#eventswrapper").offset().top - ($("#plane").offset().top + 130 + 100);
+	var diff = $("#eventswrapper").offset().top - ($("#plane").offset().top + 100);
 	if(navigator.platform == "Win32"){
 		diff = diff+170;
 	}
-		
+	
+	
 	$('#eventswrapper').animate({top: -diff}, 1000, 'swing', function(){
 	  $('#header').show();
 	});
@@ -109,7 +110,7 @@ function showForm(){
 		  $(this).delay(i*20).fadeIn(20);
 		});
 
-		$( "#searchbanner" ).fadeIn( 3000, function() {
+		$( "#searchbanner" ).fadeIn( 1000, function() {
 			moveUp();
 			setTimeout(function() {
 				
