@@ -1328,7 +1328,9 @@ a.pink-border6 {width:121px; height:97px; background: transparent url('../../../
     padding-bottom: 5px;
     padding-top: 20px;
 }
-.dropdown {padding: 7px; padding-left: 15px;}
+.small-img{ margin-top:-50px; margin-left:20px;}
+
+.dropdown {padding: 0px;}
 .dropdown-toggle {color: #f1f1f2;    font-size: 20px; font-weight: 300;}
 .dropdown-toggle:hover, .dropdown-toggle:focus {color: #00adef; text-decoration: none;}
 .nav .open > a, .nav .open > a:hover, .nav .open > a:focus {background-color: #f2f2ef !important;}

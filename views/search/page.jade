@@ -42,9 +42,9 @@
 							input.gonew2.pull-left.header-links.tempclass3(type="submit", value="GO", style="width:10%;")
 
 	div(id="eventswrapper", style="width:100%; position:relative; background-color: white")
-		.container
+		.container(id="eventscontainer")
 
-			.row
+			.row(style="margin-top:-40px")
 
 				//.col-sm-8.col-md-8.col-lg-8.pad-left-zero
 					.nspacer
@@ -310,7 +310,7 @@
 					.pull-right.bg-green(id="arrangeby")
 						ul.nav.navbar-nav(style="padding:0px !important;")
 							li.dropdown
-								a.dropdown-toggle(href='#', data-toggle='dropdown' style="padding-top:0px; font-size:14px; text-align:left;")
+								a.dropdown-toggle(href='#', data-toggle='dropdown' style="padding:2px 3px;  font-size:14px; text-align:left;")
 									| Arrange by
 								ul.dropdown-menu.pull-right.new-drop(style="background-color:#f1f1f2 !important; color:#58585b;  padding:0px;")
 									li
@@ -325,7 +325,7 @@
 								| Add filters
 						
 					.clearfix
-					.bg-green.font-ah.pad-left-ten(style="min-height:1px;")
+					//- .bg-green.font-ah.pad-left-ten(style="min-height:1px;")
 
 					if (typeof nearby !== "undefined" && nearby)
 						//- Events nearby
