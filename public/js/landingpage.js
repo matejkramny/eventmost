@@ -75,7 +75,7 @@ function moveUp(){
 	
 	var diff = $("#eventswrapper").offset().top - ($("#plane").offset().top + 100);
 	if(navigator.platform == "Win32"){
-		diff = diff+170;
+		diff = diff+30;
 	}
 	
 	
