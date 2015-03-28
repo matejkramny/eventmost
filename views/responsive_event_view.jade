@@ -46,7 +46,7 @@ html
 					else
 						if (typeof hide_bar_right === 'undefined' && hide_bar_right !== true)
 							//- Only displayed when user is logged in		
-
+							
 							.pull-right.width7(ng-controller="inboxNotifications")
 								a.image(href="/event/"+recentEvent+"/dropbox")
 									img.mail.pull-right.img-mess-smart(src="/images/small-dropbox-icon.svg" alt="" style="width:100%;")
@@ -58,14 +58,59 @@ html
 								.font-header-icon
 									| My profile
 
-							.pull-right.width7
-								a.image(href="/inbox")
-									img.mail.pull-right.img-mess-smart(src="/images/notes-icon.svg" alt="" style="width:100%;")
-									.row-fluid.minus2
-										.message-nr
-											h20 0
-								.font-header-icon2
-									| Notes
+							
+							if eventadmin
+								.pull-right.width7
+									.inline.nspacer-small.pad-right-five
+										if (hideArrow == true)
+											.font-x1.center.psev2.prof-wall( style="text-align:left; ")
+												.dropdown(style="padding:0;")
+													a.link-white(href data-toggle="dropdown" )
+														img.pad-left-ten(src="/images/menu-tools2.svg" style="margin-top:-10px; margin-left:-29px; font-size:11px !important; margin-bottom:5px;")
+													span(style="padding-top:10px;font-size:12px; color:#542437")
+														| Planner
+														br
+														| Options
+													ul.dropdown-menu.mif-dropdown(style=" background-color:#f1f1f2;  margin-top:15px; margin-left:-77px;")
+														li 
+															a(href=base+"admin/panel") Edit Event/Ticket Details
+														li
+															a(href=base+"admin/panel") Admin Powers/Controls
+														li 
+															a(href=base+"admin/logos") Edit Event Appearance
+														li 
+															a(href=base+"admin/summary") Event Analytics/Ticket Sales
+														li.inverted: a(href=base+"admin/feedback")
+															i.fa.fa-star.fa-fw
+															|  Feedback Profiles 
+															i.fa.fa-star.fa-fw
+														li.inverted: a(href=base+"admin/register") Check People In
+														li.inverted: a(href=base+"admin/email") Send Mass Private Messages
+								
+								//-
+									.inline.nspacer-small.pad-right-five
+										.font-x1.bg-purple.center.psev2.prof-wall
+											a.link-white(href= (eventattending == true ? base+"attendee/"+attendee._id : base+"attendees")) My profile <br />
+												img(src="/images/menu-profile.svg", alt="", style="")
+									//.inline.nspacer-small.pad-right-five
+										.font-x1.bg-purple.psev2.prof-wall
+											a.link-white(href=base+"registrationpage/n") Registration
+												br
+												| page
+												img.pad-left-ten(src="/images/menu-registration.svg", alt="", style="")
+									.inline.nspacer-small
+										.font-x1.bg-purple.center.psev2.prof-wall
+											a.link-white(href=dropboxUrl) Event dropbox <br />
+												img(src="/images/menu-drop.svg", alt="", style="")
+							//-
+								.pull-right.width7
+									a.image(href="/inbox")
+										img.mail.pull-right.img-mess-smart(src="/images/notes-icon.svg" alt="" style="width:100%;")
+										.row-fluid.minus2
+											.message-nr
+												h20 0
+									.font-header-icon2
+										| Notes
 
 							.pull-right.width7(ng-controller="inboxNotifications")
 								a.image(href="/inbox")
