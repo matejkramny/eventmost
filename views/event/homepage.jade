@@ -125,21 +125,22 @@ block content
 								a.link-white(href ng-click="deleteComment(subcomment, comment)") delete
 					.clearfix
 				
-			.underpost-smaller.pull-right.break.nspacer
-				.pull-left(style="overflow:hidden; border-radius:22px; -webkit-border-radius: 22px; -moz-border-radius:22px;width:44px;height:44px;border:0px solid #542437;")
-					if attendee.user.avatar && attendee.user.avatar.length != 0
-						img(src=attendee.user.avatar, style="width:44px;margin:0px auto auto 0px; height:44px")
-						| avatar show
-					else
-						img(src="/images/default_speaker-purple.svg", style="width:44px;margin:0px auto auto 0px;")
-						| length 0
-					
-				.pull-left.pad-left-ten.width85.width85posts
-					.font14.font14sm.break.nspacer-small
-						input.search-input.width100.psev(type"text" placeholder="Write a comment..." ng-model="text" comment-form comment="comment")
-					button.btn.btn-default.font14.pull-right.nspacer(submit-comment style="border-radius: 10px; padding:7px; padding-left:12px; padding-right:12px;")
-						| Submit
-				.clearfix
+			//-
+				.underpost-smaller.pull-right.break.nspacer
+					.pull-left(style="overflow:hidden; border-radius:22px; -webkit-border-radius: 22px; -moz-border-radius:22px;width:44px;height:44px;border:0px solid #542437;")
+						if attendee.user.avatar && attendee.user.avatar.length != 0
+							img(src=attendee.user.avatar, style="width:44px;margin:0px auto auto 0px; height:44px")
+							| avatar show
+						else
+							img(src="/images/default_speaker-purple.svg", style="width:44px;margin:0px auto auto 0px;")
+							| length 0
+						
+					.pull-left.pad-left-ten.width85.width85posts
+						.font14.font14sm.break.nspacer-small
+							input.search-input.width100.psev(type"text" placeholder="Write a comment..." ng-model="text" comment-form comment="comment")
+						button.btn.btn-default.font14.pull-right.nspacer(submit-comment style="border-radius: 10px; padding:7px; padding-left:12px; padding-right:12px;")
+							| Submit
+					.clearfix
 		
 		.clearfix
 		.nspacer-bigger
