@@ -350,7 +350,7 @@ $(document).ready(function() {
 		avatarUploadRequest.responseType = "json";
 		avatarUploadRequest.setRequestHeader("accept", "application/json");
 		avatarUploadRequest.onreadystatechange = xmlhttprequestResponse2;
-		avatarUploadRequest.upload.addEventListener('progress', xmlUploadProgress, false)
+		avatarUploadRequest.upload.addEventListener('progress', xmlUploadProgress2, false)
 		avatarUploadRequest.send(form);
 
 		$("#info-m2").html("Background Photo has been cropped. :)");
@@ -439,6 +439,25 @@ $(document).ready(function() {
 		if (ev.lengthComputable) {
 			var percent = Math.round(ev.loaded * 100 / ev.total);
 			updateProgress(percent)
+		}
+	}
+
+	function updateProgress2(perc) {
+		if (perc > 0) {
+			$("#coverprogressbar").removeClass('progress-bar-success').parent().removeClass("hide")
+		}
+		
+		$("#coverprogressbar").attr("aria-valuenow", perc).css("width", perc+"%").find("span").html(perc+"% Uploaded");
+		
+		if (perc >= 100) {
+			$("#coverprogressbar").addClass("progress-bar-success").parent().addClass("hide");
+		}
+	}
+	
+	function xmlUploadProgress2 (ev) {
+		if (ev.lengthComputable) {
+			var percent = Math.round(ev.loaded * 100 / ev.total);
+			updateProgress2(percent)
 		}
 	}
 
