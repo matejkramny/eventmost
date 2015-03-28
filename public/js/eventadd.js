@@ -501,28 +501,28 @@ $(document).ready(function() {
 	
 	$ticketsLock.addClass('hide')
 	setTimeout(function() {
-		if ($("#2creditcardsmaller233").is(":checked")) {
+		if ($("#dontincludepricedtickets").is(":checked")) {
 			$ticketsLock.removeClass('hide')
 		}
 	}, 200)
 	
 	//Yes,No hiding/showing the #ticketsWrapper
-	$("#2creditcardsmaller233, #creditcardsmaller233").change(function() {
+	$("#includepricedtickets").change(function() {
 		if ($(this).is(":checked")) {
-			$("#1creditcardsmaller23, #creditcardsmaller23").attr("checked", false)
-			$ticketsLock.removeClass("hide");
-		} else {
-			$("#1creditcardsmaller23, #creditcardsmaller23").attr("checked", "checked")
+			$("#dontincludepricedtickets").attr("checked", false)
 			$ticketsLock.addClass("hide");
+		} else {
+			$("#dontincludepricedtickets").attr("checked", "checked")
+			$ticketsLock.removeClass("hide");
 		}
 	})
-	$("#1creditcardsmaller23, #creditcardsmaller23").change(function() {
+	$("#dontincludepricedtickets").change(function() {
 		if ($(this).is(":checked")) {
-			$("#2creditcardsmaller233, #creditcardsmaller233").attr("checked", false)
-			$ticketsLock.addClass("hide");
-		} else {
-			$("#2creditcardsmaller233, #creditcardsmaller233").attr("checked", "checked")
+			$("#includepricedtickets").attr("checked", false)
 			$ticketsLock.removeClass("hide");
+		} else {
+			$("#includepricedtickets").attr("checked", "checked")
+			$ticketsLock.addClass("hide");
 		}
 	})
 	
