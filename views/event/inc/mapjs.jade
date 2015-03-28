@@ -16,7 +16,13 @@ if ev.address != null || ev.geo != null
 		script(defer="true").
 			function preInitialize() {
 				var location = new google.maps.LatLng(#{ev.geo.geo.lat}, #{ev.geo.geo.lng});
-				initialize(location)	
+				initialize(location)
+				mapId.addEventListener('click', function (){
+					window.open(
+					  'http://maps.google.com/maps?q=#{ev.geo.geo.lat},#{ev.geo.geo.lng}',
+					  '_blank'
+					);
+				});
 			}
 	else if ev.address != null
 		//- geolocate the address
@@ -28,6 +34,10 @@ if ev.address != null || ev.geo != null
 					if (status == google.maps.GeocoderStatus.OK) {
 						initialize(results[0].geometry.location);
 					}
+				});
+
+				mapId.addEventListener('click', function (){
+					alert('hhhh1');
 				});
 			}
 		
