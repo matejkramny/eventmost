@@ -241,7 +241,7 @@ function showThumbnail(e)
         marginTop: '-' + Math.round(ry * e.y) + 'px'
     });
 
-    console.log(Math.round(e.w) +" - "+ Math.round(e.h));
+    //console.log(Math.round(e.w) +" - "+ Math.round(e.h));
 
     $('#realdimensionlabel').html("Selected: "+ Math.round(e.w) + " x "+Math.round(e.h));
     

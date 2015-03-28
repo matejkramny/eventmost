@@ -425,13 +425,13 @@ $(document).ready(function() {
 	
 	function updateProgress(perc) {
 		if (perc > 0) {
-			$(".avatar-progress-upload").removeClass('progress-bar-success').parent().removeClass("hide")
+			$("#logoprogressbar").removeClass('progress-bar-success').parent().removeClass("hide")
 		}
 		
-		$(".avatar-progress-upload").attr("aria-valuenow", perc).css("width", perc+"%").find("span").html(perc+"% Uploaded");
+		$("#logoprogressbar").attr("aria-valuenow", perc).css("width", perc+"%").find("span").html(perc+"% Uploaded");
 		
 		if (perc >= 100) {
-			$(".avatar-progress-upload").addClass("progress-bar-success").parent().addClass("hide");
+			$("#logoprogressbar").addClass("progress-bar-success").parent().addClass("hide");
 		}
 	}
 	

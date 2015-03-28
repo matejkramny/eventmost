@@ -14,7 +14,7 @@ function showImage(){
 		previewImg.src = event.target.result;
 
 		var path = $("#cardimage").val();
-		console.log(path);
+		//console.log(path);
 
 		$('#uploadedimage').Jcrop({
 		    bgColor: 'black',
