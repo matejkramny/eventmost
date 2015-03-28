@@ -30,7 +30,7 @@ $(document).ready(function(){
         // Check the size of selected image if it is greater than 250 kb or not
         else if (selectedImg.size > 2048 * 1024) {
             $('#error').html('The file you selected is too big. Max file size limit is 2MB').fadeIn(500);
-            $('#info-m').html('Select part of image you want to crop').fadeIn(500);
+            //$('#info-m').html('Select part of image you want to crop').fadeIn(500);
             flag++;
             isError = true;
         }
@@ -140,7 +140,7 @@ $(document).ready(function(){
         // Check the size of selected image if it is greater than 250 kb or not
         else if (selectedImg.size > 2048 * 1024) {
             $('#error2').html('The file you selected is too big. Max file size limit is 2MB').fadeIn(500);
-            $('#info-m2').html('Select part of image you want to crop').fadeIn(500);
+            //$('#info-m2').html('Select part of image you want to crop').fadeIn(500);
             flag++;
             isError2 = true;
         }

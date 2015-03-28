@@ -319,7 +319,7 @@ $(document).ready(function() {
 		avatarUploadRequest.upload.addEventListener('progress', xmlUploadProgress, false)
 		avatarUploadRequest.send(form);
 
-		$("#info-m").html("Image Cropped!");
+		
 
 		
 	}
@@ -353,7 +353,7 @@ $(document).ready(function() {
 		avatarUploadRequest.upload.addEventListener('progress', xmlUploadProgress2, false)
 		avatarUploadRequest.send(form);
 
-		$("#info-m2").html("Background Photo has been cropped. :)");
+		
 
 	}
 	$("#file_upload_wrapper2").click(uploadAvatar2);
@@ -472,7 +472,7 @@ $(document).ready(function() {
 				} else {
 					// store the avatar id in the form.
 					avatar_id = result.id;
-					$("#avatarStatus").html("<br/>Uploaded");
+					$("#info-m").html("Logo Cropped!");
 				}
 			} else {
 				// Not ok
@@ -492,7 +492,7 @@ $(document).ready(function() {
 	    } else {
 	     // store the avatar id in the form.
 	     backgroundImage_id = result.id;
-	     $("#avatarStatus").html("<br/>Uploaded");
+	     $("#info-m2").html("Background Photo has been cropped. :)");
 	    }
 	   } else {
 	    // Not ok
