@@ -37,7 +37,10 @@ if ev.address != null || ev.geo != null
 				});
 
 				mapId.addEventListener('click', function (){
-					alert('hhhh1');
+					window.open(
+					  'https://www.google.com/maps/place/#{ev.address}',
+					  '_blank'
+					);
 				});
 			}
 		
