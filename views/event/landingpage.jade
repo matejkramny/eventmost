@@ -25,9 +25,33 @@ block content
 	if (eventattending)
 		+navbar
 	.nspacer
+
+	
+
 	.col-md-12.col-lg-12.col-sm-12
-		.nspacer-big.font-exception.font18.bold.color-green.center(type='submit', style="")
-			| #{ev.name}
+		if (ev.backgroundImage)
+			.row(style="position:absolute; margin-top:40px; z-index:99999")
+				.col-md-12.col-xs-12.col-sm-12
+						.pull-left.pad-left-zero.left.inline.nspacer-small.font-exception(type='submit', style="")
+							a(href=base, class="color-green no-decoration" style="font-size: 25px; padding: 10px 0 10px 10px; background-color: #fff; text-decoration:none")
+								if (typeof hideArrow === "undefined" || hideArrow == false)
+									| &#8592
+								else
+									
+								| #{ev.name}&nbsp;&nbsp;&nbsp;
+								br
+								br
+					.pull-right
+		else
+			.col-md-12.col-xs-12.col-sm-12
+				.pull-left.pad-left-zero.left.inline.nspacer-small.font-exception(type='submit', style="")
+					a(href=base, class="color-green no-decoration" style="font-size: 25px; padding: 10px 0 10px 10px; background-color: #fff; text-decoration:none")
+						| #{ev.name}&nbsp;&nbsp;&nbsp;
+						br
+						br
+			.pull-right
+						
+		.clearfix
 		.nspacer-big
 		if (ev.backgroundImage)
 			.rel
@@ -42,7 +66,7 @@ block content
 				.inline
 					img(src="/images/small-clock.svg" alt=""  )
 				.font16.inline.color-green.semi-bold
-					| WHEN-l
+					| WHEN
 				- if (edit == 'e'){
 					button#editTimeButton.btn.btn-primary.btn-xs(data-toggle='modal', data-target='#eventTimeModal')
 						span.glyphicon.glyphicon-edit  Edit
@@ -50,7 +74,10 @@ block content
 				.font-s(title= eventStartFormatted style="word-wrap: break-word; word-break: break-word;")
 					#eventStartDate.semi-bold
 						= eventStartFormatted[1]
-					#eventEndDate.poo(style="font-weight:200;")
+					if(eventEndFormatted[1])
+						.center.color-green
+							| - to -
+						#eventEndDat.poo(style="font-weight:200;")
 						= eventEndFormatted[1]
 			.col-md-3.col-lg-3.col-sm-3.font16
 				div(style="float:left")
