@@ -22,8 +22,11 @@
 				.font-s(title= eventStartFormatted style="word-wrap: break-word; word-break: break-word;")
 					.semi-bold
 						= eventStartFormatted[1]
-					.poo(style="font-weight:200;")
-					= eventEndFormatted[1]
+					if(eventEndFormatted[1])
+						.center.color-green
+							| - to -
+						.poo(style="font-weight:200;")
+						= eventEndFormatted[1]
 			.col-md-3.col-lg-3.col-sm-3.font16
 				div(style="float:left")
 					.inline
@@ -39,14 +42,16 @@
 								= ev.address
 							- if (!ev.address && !ev.venue_name)
 								| Event does not have a location
-			.col-md-3.col-lg-3.col-sm-3.font16					
+			.col-md-3.col-lg-3.col-sm-3.font16				
 				div
-					.map-area(id="eventMap", style="height:130px; width:90%;")
+					a(data-toggle="tooltip",title="Click to view on maps.google.com")
+						.map-area(id="eventMap", style="height:130px; width:90%;")
 			.col-md-3.col-lg-3.col-sm-3.font16
 				.inline
 					img(src="/images/organizer.svg" alt=""  )
 				.font16.inline.color-green.semi-bold
 					| ORGANIZER
+				.clearfix
 				.font16.inline(style="word-break:break-all; ")
 					for attendee in locals.ev.attendees
 						if (attendee.admin && attendee.isAttending)
