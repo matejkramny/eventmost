@@ -187,9 +187,9 @@ $(document).ready(function(){
 
                             // initialize Jcrop Plugin on the selected image
                             $('#load_img2').Jcrop({
-                                minSize: [500, 200], // min crop size
-                                setSelect: [0,0,500,200],
-                                aspectRatio: 500/200,
+                                minSize: [500, 250], // min crop size
+                                setSelect: [0,0,500,250],
+                                aspectRatio: 500/250,
                                 //aspectRatio: 312/158, //keep aspect ratio
                                 bgFade: true, // use fade effect
                                 bgOpacity: .3, // fade opacity
