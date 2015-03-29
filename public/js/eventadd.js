@@ -12,8 +12,8 @@ $(document).ready(function() {
 	} catch (e) {
 	}
 
-	//$('.timepicker-default').timepicker();
-	//$(".bootstrap-datetimepicker-widget").css("background-color", "#3c3e43");
+	$('.timepicker-default').timepicker();
+	$(".bootstrap-datetimepicker-widget").css("background-color", "#3c3e43");
 	
 	var editingEvent = null
 
@@ -148,7 +148,7 @@ $(document).ready(function() {
 		
 		var now = new Date();
 		var time = ('0' + now.getHours()).slice(-2) + ":" + ('0' + now.getMinutes()).slice(-2);
-		$(this).parent().parent().parent().find('input[type=time]').val(time)
+		$(this).parent().parent().parent().find('input[type=text]').val(time)
 		
 		return false;
 	})
@@ -675,7 +675,7 @@ $(document).ready(function() {
 	
 	function getTime (datepicker) {
 		var dpicker = $(datepicker);
-		var time = dpicker.parent().find("input[type=time]").val();
+		var time = dpicker.parent().find("input[type=text]").val();
 		//var dTime = dpicker.parent().find("select").val();
 		//console.log(dTime);
 		var split = time.split(':')
@@ -940,8 +940,8 @@ $(document).ready(function() {
 	} else {
 		addCategory("Guest Speaker");
 		
-		$('#fromDateMobile, #fromDateDesktop').parent().find('input[type=time]').val('00:00');
-		$('#toDateMobile, #toDateDesktop').parent().find('input[type=time]').val('23:59');
+		$('#fromDateMobile, #fromDateDesktop').parent().find('input[type=text]').val('00:00');
+		$('#toDateMobile, #toDateDesktop').parent().find('input[type=text]').val('23:59');
 	}
  
  	var cnt = 0;
