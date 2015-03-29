@@ -1340,8 +1340,17 @@ a.pink-border6 {width:121px; height:97px; background: transparent url('../../../
 top:
 }
 .no-decoration a:hover{text-decoration: none !important;}
-#coverpreviewdiv{ width:900px; height:300px;}
-#coverpreviewdiv img{ max-width:100%}
+/*#coverpreviewdiv{ width:900px; height:300px;}
+#coverpreviewdiv img{ max-width:100%}*/
+#coverpreviewdiv {
+    float: left;
+    max-height: 300px !important;
+    overflow: hidden;
+    width: 900px;
+}
+#coverpreviewdiv img {
+  width: 100%;
+}
 
 .dropdown {padding: 0px;}
 .dropdown-toggle {color: #f1f1f2;    font-size: 20px; font-weight: 300;}
@@ -4054,4 +4063,27 @@ margin-top: 5px;
 @media only screen and(max-width: 1000px) {
 .width900{ width:60% !important}
 .col-sm-3{ width:25%}
+}
+
+[class^="icon-"], [class*=" icon-"] {
+display:inline-block;
+width:14px;
+height:14px;
+margin-top:1px;
+*margin-right:.3em;
+line-height:14px;
+vertical-align:text-top;
+background-image:url("../images/glyphicons-halflings.png");
+background-position:14px 14px;
+background-repeat:no-repeat
+}
+.icon-white, .nav-pills>.active>a>[class^="icon-"], .nav-pills>.active>a>[class*=" icon-"], .nav-list>.active>a>[class^="icon-"], .nav-list>.active>a>[class*=" icon-"], .navbar-inverse .nav>.active>a>[class^="icon-"], .navbar-inverse .nav>.active>a>[class*=" icon-"], .dropdown-menu>li>a:hover>[class^="icon-"], .dropdown-menu>li>a:focus>[class^="icon-"], .dropdown-menu>li>a:hover>[class*=" icon-"], .dropdown-menu>li>a:focus>[class*=" icon-"], .dropdown-menu>.active>a>[class^="icon-"], .dropdown-menu>.active>a>[class*=" icon-"], .dropdown-submenu:hover>a>[class^="icon-"], .dropdown-submenu:focus>a>[class^="icon-"], .dropdown-submenu:hover>a>[class*=" icon-"], .dropdown-submenu:focus>a>[class*=" icon-"] {
+background-image:url("../images/glyphicons-halflings-white.png")
+}
+
+.icon-chevron-up {
+ background-position:-288px -120px
+}
+.icon-chevron-down {
+ background-position:-313px -119px
 }

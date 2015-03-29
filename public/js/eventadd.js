@@ -13,7 +13,10 @@ $(document).ready(function() {
 	}
 
 	$('.timepicker-default').timepicker();
-	$(".bootstrap-datetimepicker-widget").css("background-color", "#3c3e43");
+	$('.timepicker-default').click(function() {
+		$(".bootstrap-timepicker-widget").css("background-color", "#fff");
+	})
+	//$(".bootstrap-timepicker-widget").css("background-color", "#fff");
 	
 	var editingEvent = null
 
