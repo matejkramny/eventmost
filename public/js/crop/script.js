@@ -79,7 +79,7 @@ $(document).ready(function(){
                             // initialize Jcrop Plugin on the selected image
                             $('#load_img').Jcrop({
                                 minSize: [300, 200], // min crop size
-                                setSelect: [0,0,300,200],
+                                setSelect: [0,0,305,205],
                                 aspectRatio: 300/200,
                                 //aspectRatio: 312/158, //keep aspect ratio
                                 bgFade: true, // use fade effect
