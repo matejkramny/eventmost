@@ -1,6 +1,8 @@
 $(document).ready(function() {
 	var eventid = null;// used when event is created by ajax
 	var lat, lng;
+	var allowlogopreview = false;
+	var allowcoverpreview = false;
 	
 	var isLocalStorageCapable = false;
 	try {
@@ -9,6 +11,9 @@ $(document).ready(function() {
 		}
 	} catch (e) {
 	}
+
+	//$('.timepicker-default').timepicker();
+	//$(".bootstrap-datetimepicker-widget").css("background-color", "#3c3e43");
 	
 	var editingEvent = null
 
@@ -288,6 +293,14 @@ $(document).ready(function() {
 		avatar_coords = c;
 	};
 
+	function updatepreview(){
+		if(allowlogopreview == true && allowcoverpreview == true){
+			$('#previewphotos').removeClass('hide');
+		}else{
+			$('#previewphotos').addClass('hide');
+		}
+	}
+
 	function uploadAvatar () {
 		if (typeof file === "undefined" || file == null) {
 			// opens the dialog
@@ -374,6 +387,8 @@ $(document).ready(function() {
 			url: "/event/"+avatar_id+"/avatar/remove",
 			type: "GET"
 		})
+		allowlogopreview = false;
+		updatepreview();
 	});
 
 	$(".file_delete_wrapper2").click(function() {
@@ -391,6 +406,9 @@ $(document).ready(function() {
 			url: "/event/"+avatar_id+"/avatar/remove",
 			type: "GET"
 		})
+
+		allowcoverpreview = false;
+		updatepreview();
 	});
 
 	$("#cropButton1").click(function (){
@@ -473,6 +491,16 @@ $(document).ready(function() {
 					// store the avatar id in the form.
 					avatar_id = result.id;
 					$("#info-m").html("Logo Cropped!");
+					console.log("avatar_id:"+ avatar_id);
+					$.ajax({
+						url: "/eventavatar/"+avatar_id,
+						success: function(data, status, xhr) {
+							//console.log(data.avatar);
+							$('#logopreview').attr("src", data.avatar);
+							allowlogopreview = true;
+							updatepreview();
+						}			
+					});
 				}
 			} else {
 				// Not ok
@@ -493,6 +521,16 @@ $(document).ready(function() {
 	     // store the avatar id in the form.
 	     backgroundImage_id = result.id;
 	     $("#info-m2").html("Background Photo has been cropped. :)");
+	     console.log("backgroundImage_id:"+ backgroundImage_id);
+	     $.ajax({
+						url: "/eventavatar/"+backgroundImage_id,
+						success: function(data, status, xhr) {
+							//console.log(data.avatar);
+							$('#coverpreview').attr("src", data.avatar);
+							allowcoverpreview = true;
+							updatepreview();
+						}			
+					});
 	    }
 	   } else {
 	    // Not ok

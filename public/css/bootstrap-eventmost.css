@@ -1340,6 +1340,8 @@ a.pink-border6 {width:121px; height:97px; background: transparent url('../../../
 top:
 }
 .no-decoration a:hover{text-decoration: none !important;}
+#coverpreviewdiv{ width:900px; height:300px;}
+#coverpreviewdiv img{ max-width:100%}
 
 .dropdown {padding: 0px;}
 .dropdown-toggle {color: #f1f1f2;    font-size: 20px; font-weight: 300;}

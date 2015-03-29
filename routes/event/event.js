@@ -31,6 +31,7 @@ exports.router = function (app) {
 		.post('/event/:id/post', postMessage)
 		
 		.get('/event/:id/registrationpage/:edit', viewRegistrationPage)
+		.get('/eventavatar/:id', getEventAvatar)
 	
 	edit.router(app)
 	messages.router(app)
@@ -42,6 +43,23 @@ exports.router = function (app) {
 
 exports.socket = function (sock) {
 	socket.socket(sock);
+}
+
+function getEventAvatar(req, res) {
+	
+	models.Avatar.findById(req.params.id)
+	.exec(function(err, avatar) {
+		if (err) throw err;
+		if (avatar) {
+			res.format({
+				json: function() {
+					res.send({
+						avatar: avatar.url
+					});
+				}
+			});		
+		}
+	});	
 }
 
 function logImpression (req, res, next) {

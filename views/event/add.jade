@@ -11,6 +11,10 @@ append addonjs
 	script(src="/js/vendor/tiny.editor.packed.js", defer)
 	script(src="/js/vendor/jquery.jcarousel.min.js", defer)
 	script(src="/js/vendor/jquery.zclip.min.js", defer)
+	script(src="/js/bootstrap-timepicker.min.js", defer)
+
+
+
 
 	if (typeof ev !== "undefined")
 		script.
@@ -493,16 +497,16 @@ append content
 
 
 					.nspacer-small
-					//-
-						.col-lg-10.col-md-10.col-xs-10.pad-left-zero
-							.font.font-thin.logo-text
-								| Preview
-							div(style="margin-bottom:20px; margin-top:60px")
-								div(id="coverpreviewdiv")
-									img(id="coverpreview", src="/avatars/54b663ecd47bb8a740c15b71.jpeg")
-								div(style="margin-top:-50px; margin-left:20px;", id="logopreviewdiv")
-									img(id="logopreview", src="/avatars/54b663ccd47bb8a740c15b70.jpeg", width="260")
-						.clearfix			
+					
+					#previewphotos.col-lg-10.col-md-10.col-xs-10.pad-left-zero.hide
+						.font.font-thin.logo-text
+							| Preview
+						div(style="margin-bottom:20px; margin-top:60px")
+							div(id="coverpreviewdiv")
+								img(id="coverpreview", src="/avatars/54b663ecd47bb8a740c15b71.jpeg")
+							div(style="margin-top:-50px; margin-left:20px;", id="logopreviewdiv")
+								img(id="logopreview", src="/avatars/54b663ccd47bb8a740c15b70.jpeg", width="260")
+					.clearfix			
 					.col-lg-10.col-md-10.col-xs-10.pad-left-zero
 						.container.bg-green.pad-top-zero.pad-right-zero(style="height:62px;")
 							.pull-left.event-venue
