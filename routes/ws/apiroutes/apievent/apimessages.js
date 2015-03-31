@@ -34,13 +34,25 @@ function getCommentsAPI (req, res) {
 			
 			models.EventMessage.populate(messages , options , function(err , usermessages)
 			{
-				res.format({
-					json: function() {
-						res.send({
-							comments: usermessages
-						})
-					}
-				});
+				if(usermessages.length > 0){
+					res.format({
+						json: function() {
+							res.send({
+								status: 200,
+								comments: usermessages
+							})
+						}
+					});
+				}else{
+					res.format({
+						json: function() {
+							res.send({
+								status: 404,
+								message: "No Comment Found!"
+							})
+						}
+					});
+				}
 			}
 		);
 	})
