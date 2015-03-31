@@ -37,7 +37,7 @@ function getCommentsAPI (req, res) {
 				res.format({
 					json: function() {
 						res.send({
-							events: usermessages
+							comments: usermessages
 						})
 					}
 				});
