@@ -144,7 +144,7 @@ function postCommentAPICustom(req, res)
 	// only attendee can comment
 	if(event.attendees.length > 0)
 	{
-		var message = req.body.message;
+		var message = req.body.comment;
 		var event_id = event._id;
 		var attendee_id =  event.attendees[0]._id;
 		console.log(attendee_id);
@@ -166,7 +166,8 @@ function postCommentAPICustom(req, res)
 			res.format({
 				json: function() {
 					res.send({
-						status: 200
+						status: 200,
+						comment: message
 					})
 				}
 			})
@@ -176,8 +177,14 @@ function postCommentAPICustom(req, res)
 	}
 	else
 	{
-		console.log("Sending 404");
-		res.status(404).send('Only Attendee Can Comment');
+		res.format({
+			json: function() {
+				res.send({
+					status: 401,
+					message: "Not Authorized!"
+				})
+			}
+		});
 	}
 	});
 }
