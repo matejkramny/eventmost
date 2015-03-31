@@ -435,8 +435,8 @@ function deleteCommentAPI (req, res) {
 			res.format({
 				json: function() {
 					res.send({
-						status: 404,
-						message: "Not Owned by this user"
+						status: 401,
+						message: "Not Authorized!"
 					})
 				}
 			})
