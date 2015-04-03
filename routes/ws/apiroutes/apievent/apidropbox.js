@@ -20,13 +20,25 @@ function viewDropboxAPI (req, res) {
 	var event_id =  req.params.id;
 	models.Event.findById(event_id, function(err, ev) {
 		
-		res.format({
-			json: function() {
-				res.send({
-					files: ev.files
-				})
-			}
-		})
+		if(ev.files.length > 0){
+			res.format({
+				json: function() {
+					res.send({
+						status: 200,
+						files: ev.files
+					})
+				}
+			})
+		}else{
+			res.format({
+				json: function() {
+					res.send({
+						status: 404,
+						message: 'No File Found!'
+					})
+				}
+			})
+		}
 		
 	});
 }

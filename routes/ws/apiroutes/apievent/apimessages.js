@@ -60,57 +60,67 @@ function getCommentsAPI (req, res) {
 }
 
 function likeCommentAPI (req, res) {
-	var cid = req.body.comment;
+	var cid = req.body.commentid;
 	
 	try {
 		models.EventMessage.findById(cid, function(err, comment) {
-			 var posted = comment.posted
-			
-				console.log(posted);
-			if (err || !comment) {
-				res.format({
-					json: function() {
-						res.send(404, {})
-					}
-				})
-				return;
-			}
+			if(comment){
+				var posted = comment.posted
 				
-			var att=req.body.attendee;
-			
-			var found = false;
-		
-			for (var i = 0; i < comment.likes.length; i++) {
-				if (comment.likes[i].equals(att)) {
-					found = true;
-					break;
+					console.log(posted);
+				if (err || !comment) {
+					res.format({
+						json: function() {
+							res.send(404, {})
+						}
+					})
+					return;
 				}
-			}
-			
-			if (found) {
-				res.format({
-					json: function() {
-						res.send({
-							status: 400,
-							message: "You like this already"
-						})
-					}
-				})
-			} else {
-				comment.likes.push(att);
-				comment.save();
+					
+				var att=req.body.attendeeid;
 				
-				//socket.notifyLike(res.locals.ev, comment, att)
-				var totalLikes=comment.likes.length
+				var found = false;
 			
+				for (var i = 0; i < comment.likes.length; i++) {
+					if (comment.likes[i].equals(att)) {
+						found = true;
+						break;
+					}
+				}
+				
+				if (found) {
+					res.format({
+						json: function() {
+							res.send({
+								status: 400,
+								message: "You like this already"
+							})
+						}
+					})
+				} else {
+					comment.likes.push(att);
+					comment.save();
+					
+					//socket.notifyLike(res.locals.ev, comment, att)
+					var totalLikes=comment.likes.length
+				
+					res.format({
+						json: function() {
+							res.send({
+								status: 200,
+								message: "Liked",
+								posted:posted,
+						        likes:totalLikes
+							})
+						}
+					})
+				}
+			}else{
 				res.format({
 					json: function() {
 						res.send({
-							status: 200,
-							message: "Liked",
-							posted:posted,
-					        likes:totalLikes
-							
+							status: 404,
+							message: "Not Found!"
 						})
 					}
 				})
@@ -119,7 +129,10 @@ function likeCommentAPI (req, res) {
 	} catch (e) {
 		res.format({
 			json: function() {
-				res.send(404, {})
+				res.send({
+					status: 404,
+					message: "Not Found!"
+				})
 			}
 		})
 	}
