@@ -4,7 +4,7 @@ $(document).ready(function(){
 	showText();
 
 	setTimeout(function() {
-    	$("#videoContainer")[0].pause();
+    	//$("#videoContainer")[0].pause();
     }, 7000);
 });
 
@@ -54,6 +54,7 @@ function image_animate() {
 		console.log("third log moving");
 		setTimeout(function(){
 			$('#plane3').animate({right: -400, top: 200}, 500, 'swing', function(){
+				$("#videoContainer")[0].pause();
 				counter++;
 				showForm();
 			});
