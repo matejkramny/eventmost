@@ -30,28 +30,28 @@ function doAddEventAPI (req, res) {
 	
 	var newEvent = new models.Event({});
 	
-	newEvent.edit(req.body, user, req.files, function(err, ev) {
-		if (err && err.length > 0) {
+		newEvent.edit(req.body, user, req.files, function(err, ev) {
+			if (err && err.length > 0) {
+				res.format({
+					json: function() {
+						res.send({
+							status: 404,
+							err: "Unable to create event"
+						})
+					}
+				})
+				return;
+			}
+			
 			res.format({
 				json: function() {
 					res.send({
-						status: 400,
-						err: err
+						status: 200,
+						id: newEvent._id
 					})
 				}
-			})
-			return;
-		}
-		
-		res.format({
-			json: function() {
-				res.send({
-					status: 200,
-					id: newEvent._id
-				})
-			}
+			});
 		});
-	});
 	});
 }
 
@@ -95,7 +95,7 @@ function uploadAvatarAsync (req, res) {
 				res.format({
 					json: function() {
 						res.json({
-							status: "OK",
+							status: 200,
 							avatar: u._id
 						})
 					}
@@ -108,7 +108,8 @@ function uploadAvatarAsync (req, res) {
 		res.format({
 			json: function() {
 				res.json({
-					status: "No File Received!"
+					status: 404,
+					message: "No File Received!"
 				})
 			}
 		});
