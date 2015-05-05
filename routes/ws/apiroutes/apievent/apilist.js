@@ -6,10 +6,11 @@ var models = require('../../../../models')
 
 exports.router = function (app) {
 	app.get('/api/events', exports.listEventsAPI)
-		.post('/api/events/my', util.authorized, exports.listMyEventsAPI)
-		.get('/api/events/near/:lat/:lng', exports.listNearEventsAPI)
-		.post('/api/sortedevents', exports.sortedevents)
-		.get('/api/event/detail/:id', exports.eventdetails)
+	.post('/api/events/my', util.authorized, exports.listMyEventsAPI)
+	.get('/api/events/near/:lat/:lng', exports.listNearEventsAPI)
+	.post('/api/sortedevents', exports.sortedevents)
+	.get('/api/event/detail/:id', exports.eventdetails)
+	.post('/api/events/all', exports.allevents)
 }
 
 exports.listEventsAPI = function (req, res) {
@@ -163,7 +164,8 @@ exports.eventdetails = function (req, res){
 exports.sortedevents = function (req, res) {
 
 	var sortby = req.body.sortby;
-	var skip = req.query.skip || 0;
+	var skip = req.body.skip || 0;
+	var limit = req.body.limit || 50;
 	var showPastEvents = req.query.pastEvents;
 	if (!showPastEvents || typeof showPastEvents === 'undefined') {
 		showPastEvents = false;
@@ -195,7 +197,7 @@ exports.sortedevents = function (req, res) {
 		.populate('avatar attendees.user')
 		.select('name start end address venue_name avatar source description')
 		.sort(sortquery)
-		.limit(50)
+		.limit(limit)
 		.skip(skip)
 		.exec(function(err, evs) {
 		if (err) throw err; 
@@ -216,13 +218,23 @@ exports.sortedevents = function (req, res) {
 				res.format({
 					json: function() {
 						res.send({
-							events: evs,
+							status: 200,
 							total: total,
 							skip: skip,
-							pagename: "EventMost Events"
+							limit: limit,
+							events: evs
 						})
 					}
 				});
+			});
+		}else{
+			res.format({
+				json: function() {
+					res.send({
+						status: 404,
+						message: "No Event Found!"
+					})
+				}
 			});
 		}
 	})
@@ -346,37 +358,170 @@ exports.listNearEventsAPI = function (req, res) {
 					}
 				}
 
-				
-				
-				// May slow the app down.. Mongoose does not seem to support sub-document population (event.avatar)
-				async.each(geos, function(geo, cb) {
-					if (geo.event)
-						geo.event.populate('avatar', cb);
-					else
-						cb(null)
-				}, function(err) {
+				if(events.length > 0){
+					// May slow the app down.. Mongoose does not seem to support sub-document population (event.avatar)
+					async.each(geos, function(geo, cb) {
+						if (geo.event)
+							geo.event.populate('avatar', cb);
+						else
+							cb(null)
+					}, function(err) {
+						res.format({
+							json: function() {
+								res.send({
+									status: 200,
+									events: geos
+								})
+							}
+						})
+					})
+				}else{
 					res.format({
 						json: function() {
-							if (events.length > 0 && htmlIsEnabled) {
-								models.Geolocation.find(query).count(function(err, count) {
-									res.send({
-										pagename: "Events near you",
-										events: events
-									});
-								})
-
-								return;
-							}
-
 							res.send({
-								events: events,
-								pagename: "Events near you"
+								status: 404,
+								messages: "No Event Found!"
 							})
 						}
 					})
-				})
+				}				
 				
+				
+				
+			}else{
+				res.format({
+					json: function() {
+						res.send({
+							status: 404,
+							messages: "No Event Found!"
+						})
+					}
+				})
 			}
 		}
 	);
+}
+
+exports.allevents = function (req, res) {
+
+	/*
+	- Sortby
+	- Lng,Lat
+	- Limit
+
+	*/
+	console.log(req.body);
+	var sortby = req.body.sortby;
+	var longitude = req.body.longitude;
+	var latitude = req.body.latitude;
+	var limit = req.body.limit;
+
+	var query = {
+		start : { $gte: Date.now() },
+		deleted: false,
+		privateEvent: {
+			$ne: true 
+		}
+	};
+	
+	if(sortby != ""){
+		if(sortby == 1){
+			sortquery = {"start" : -1};
+		}else if(sortby == 2){
+			sortquery = {"start" : 1};
+		}else{
+			sortquery = {"name" : 1};
+		}
+	}else{
+		sortquery = {"start" : 1};
+	}
+
+	if(!limit){
+		limit = 50;
+	}
+	
+	if(longitude != "" && latitude != ""){
+
+		var queryforgeo = {
+			'geo': {
+				$near : [longitude,latitude], $maxDistance : 10/111.12 //10km radius
+			}
+		};
+		models.Geolocation.find(queryforgeo).populate({
+			path: 'event',
+			select: 'name start end address venue_name avatar source description',
+			match: query
+		}).limit(limit)
+			.exec(function(err, geos) {
+				if (err) throw err;
+				
+				if (geos) {
+					var events = [];
+					
+					for (var i = 0; i < geos.length; i++) {
+						if (geos[i].event == null) {
+							continue;
+						}
+						if (geos[i].event.deleted != true) {
+							geos[i].event.geo = geos[i].geo;
+							events.push(geos[i].event);
+						}
+					}
+
+					
+					
+					// May slow the app down.. Mongoose does not seem to support sub-document population (event.avatar)
+					async.each(geos, function(geo, cb) {
+						if (geo.event)
+							geo.event.populate('avatar', cb);
+						else
+							cb(null)
+					}, function(err) {
+						res.format({
+							json: function() {
+								res.send({
+									events: events,
+								})
+							}
+						})
+					})
+					
+				}
+			}
+		);
+
+	}else{
+
+		models.Event.find(query)
+			.populate('avatar')
+			.select('name start end address venue_name avatar source description')
+			.sort(sortquery)
+			.limit(limit)
+			.exec(function(err, evs) {
+			if (err) throw err; 
+			if (evs) {
+				models.Event.find(query).count(function(err, total) {
+
+					evs.forEach(function(entry) {
+							
+						if((entry.description) && entry.description != ''){
+
+							//console.log(entry.description);
+							entry.description = entry.description.replace(/(<([^>]+)>)/ig,"");
+							entry.description = entry.description.substr(0, 350)+"...";
+						}
+						
+					});
+
+					res.format({
+						json: function() {
+							res.send({
+								events: evs
+							})
+						}
+					});
+				});
+			}
+		})
+	}
 }
