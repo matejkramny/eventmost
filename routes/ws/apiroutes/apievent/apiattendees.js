@@ -65,32 +65,47 @@ function listAttendeesAPI (req, res) {
 	models.Event.findOne({_id:req.params.id} , function(err, event) 
 	{
 		// Fetch Messages By One By One.
-		var query = {'_id': {$in: event.attendees}, 'isAttending': true};
+		if(event){
+			var query = {'_id': {$in: event.attendees}, 'isAttending': true};
 		
-		models.Attendee.find(query)
-		.populate({path: 'user'})
-		.select('user registered isAttending ticket checkedOff admin')
-		.sort('-created')
-		.limit(10)
-		.exec(function(err, messages) {
-			
-			var options = {
-				path: 'attendee.user',
-				model: 'User'
-			};
-			
-			models.Attendee.populate(messages , options , function(err , usermessages)
-			{
+			models.Attendee.find(query)
+			.populate({path: 'user'})
+			.populate("user", "name email")
+			.select('user registered isAttending ticket checkedOff admin')
+			.sort('-created')
+			.limit(10)
+			.exec(function(err, messages) {
+				if(messages.length > 0){
+					res.format({
+							json: function() {
+								res.send({
+									status: 200,
+									users: messages
+								})
+							}
+						});
+				}else{
+					res.format({
+							json: function() {
+								res.send({
+									status: 402,
+									message: "No Attendee Found!"
+								})
+							}
+						});
+				}
+			})
+		}else{
 			res.format({
-					json: function() {
-						res.send({
-							users: usermessages
-						})
-					}
-				});
-			}
-		);
-	})
+						json: function() {
+							res.send({
+								status: 404,
+								message: "No Event Found!"
+							})
+						}
+					});
+		}
+		
 	});
 }
 
