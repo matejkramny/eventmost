@@ -25,11 +25,16 @@ exports.router = function (app) {
 function getattendeeid(req, res){
 	var eventid = req.body.id;
 	var userid = req.body.userid;
+	var resp = {
+		status: 404,
+		message: "Attendee not found!"
+	};
 
 	if(eventid == null || userid == null){
 		res.format({
 			json: function() {
 				res.send({
+					status: 401,
 					message: "Invalid Arguments"
 				})
 			}
@@ -42,20 +47,32 @@ function getattendeeid(req, res){
 		.select('attendees')
 		.lean()
 		.exec(function(err, ev) {
-			var allattendees = ev[0].attendees;
-			allattendees.forEach(function(att) {
+			if(ev.length > 0){
+				var allattendees = ev[0].attendees;
+				allattendees.forEach(function(att) {
+					if(att.user == userid){
+						resp = {
+							status: 200,
+							attendee_id: att._id
+						};
+					}
+				});
 
-				if(att.user == userid){
-					res.format({
-						json: function() {
-							res.send({
-								attendee_id: att._id
-							})
-						}
-					});
-					return;
-				}
-			});
+				res.format({
+					json: function() {
+						res.send(resp);
+					}
+				});
+			}else{
+				res.format({
+					json: function() {
+						res.send({
+							status: 402,
+							message: "Event not found!"
+						})
+					}
+				});
+			}
 		});
 	}
 }
