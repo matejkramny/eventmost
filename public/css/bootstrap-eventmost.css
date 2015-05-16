@@ -235,6 +235,15 @@ input[type=number]::-webkit-outer-spin-button {
   margin-left: 15px;
 }
 
+.col-md-3-assist .small-event-border2 {
+  margin-top:-150px;
+  z-index: 999;
+  margin-left: 15px;
+  padding:5px;
+  border: 2px solid #ccc;
+  background: none repeat scroll 0 0 #fff;
+}
+
 /* end crop tool */
 
 .header_image{
@@ -1330,7 +1339,7 @@ a.pink-border6 {width:121px; height:97px; background: transparent url('../../../
 }
 .small-img{ margin-top:-50px; margin-left:20px;}
 .strip {
- background:url('../images/strip.png') !important;
+ background:url('../images/strip5.png') !important;
  /*background-color: #ccc;
  background-image: repeating-linear-gradient(45deg, transparent, transparent 2px, rgba(255,255,255,.5) 2px, rgba(255,255,255,.5) 10px);*/
  width:100%;
