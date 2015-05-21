@@ -16,9 +16,9 @@
 			.rel
 				.div(style=" max-height:350px; overflow:hidden; text-align: center;")
 						img.img-responsive(src=ev.backgroundImage.url style="width:100%;")
-			.img-none(style="height: 10px;")
-				.col-md-3.col-lg-3.col-sm-3.col-md-3-assist(style="display: table-cell; margin-top: 3%; vertical-align: middle;")
-					img.small-event-border2(src=ev.avatar.url style="max-width:100%;")
+			.img-none(style="background: #fff; float:left; margin-top:-120px; overflow: hidden; position:relative; width:200px; margin-left:30px")
+				.col-md-3.col-lg-3.col-sm-3.col-md-3-assist(style="border: 2px solid #ccc; display: table-cell; float: none; height: 154px; margin: -100px 0 0; vertical-align: middle;")
+					img(src=ev.avatar.url style="display:block; margin:0px auto; width: 100%")
 		else
 			.img-none(style="height: 10px;")
 				.col-md-3.col-lg-3.col-sm-3(style="display: table-cell; margin-top: 3%; vertical-align: middle;")
