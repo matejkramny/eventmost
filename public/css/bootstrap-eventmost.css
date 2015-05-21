@@ -230,10 +230,11 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .small-event-border2 {
-  margin-top:-90px;
+  margin-top:-66px;
+  margin-bottom: 10px;
   z-index: 999;
   margin-left: 15px;
-  padding:5px;
+  padding:2px;
   border: 2px solid #ccc;
   background: none repeat scroll 0 0 #fff;
 }
@@ -242,7 +243,7 @@ input[type=number]::-webkit-outer-spin-button {
   margin-top:-150px;
   z-index: 999;
   margin-left: 15px;
-  padding:5px;
+  padding:2px;
   border: 2px solid #ccc;
   background: none repeat scroll 0 0 #fff;
 }
