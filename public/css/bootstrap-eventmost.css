@@ -4100,3 +4100,15 @@ background-image:url("../images/glyphicons-halflings-white.png")
 .icon-chevron-down {
  background-position:-313px -119px
 }
+
+.uploadforcrop{
+  width: 200px;
+  background: #fdd093;
+  border-radius: 10px;
+}
+
+.uploadforcrop img{
+  display: block;
+  margin: 0px auto;
+  padding: 0;
+}
