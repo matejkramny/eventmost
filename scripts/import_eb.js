@@ -173,11 +173,7 @@ function download (city, download_finished) {
 				console.log("Have", pages - page, " more pages to go through");
 				
 				self.parsePage(events_mix, function() {
-					if (page < pages) {
-
-						console.log("I AM FINISHED! :P");
-						download_finished();
-					}//self.getPage(page + 1);
+					if (page < pages) self.getPage(page + 1);
 					else {
 						console.log("I AM FINISHED! :P");
 						download_finished();
