@@ -173,7 +173,11 @@ function download (city, download_finished) {
 				console.log("Have", pages - page, " more pages to go through");
 				
 				self.parsePage(events_mix, function() {
-					if (page < pages) self.getPage(page + 1);
+					if (page < pages) {
+
+						console.log("I AM FINISHED! :P");
+						download_finished();
+					}//self.getPage(page + 1);
 					else {
 						console.log("I AM FINISHED! :P");
 						download_finished();
@@ -311,8 +315,8 @@ function download (city, download_finished) {
 		], function (err, result) {
 		    
 		    console.log("Inserted Eventbrite event "+result._id);
-			download_finished();
-			//cb(null);
+			//download_finished();
+			cb(null);
 		});
 	}
 
