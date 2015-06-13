@@ -16,12 +16,14 @@ $(document).ready(function() {
 		ev.preventDefault();
 
 		page = parseInt($(this).attr('data-skip'));
-		getNear(window.lastCoords);
+		//getNear(window.lastCoords);
 
 		return false;
 	})
 
-	function getNear (coords) {
+	/*function getNear (coords) {
+		console.log("from get near landingEvents.js");
+		console.log(coords);
 		$.ajax({
 			url: '/events/nearlanding?limit='+limit+'&page='+page+'&html=1&lat='+coords.lat+'&lng='+coords.lng,
 			method: 'GET',
@@ -62,7 +64,7 @@ $(document).ready(function() {
 				console.log("error" + error)
 			}
 		})
-	}
+	}*/
 	
 	$(document).on('click', "#tryAgainNearbyEvents", function(ev) {
 		ev.preventDefault();
@@ -91,7 +93,7 @@ $(document).ready(function() {
 				}
 				
 				window.lastCoords = coords;
-				getNear(coords);
+				//getNear(coords);
 			}, function(err) {
 				var msg = Geo.errorMessage(err);
 				$placeholderText.html(msg+"<br/><a id='tryAgainNearbyEvents' href='#'>Try again</a>");
@@ -100,6 +102,8 @@ $(document).ready(function() {
 			$placeholderText.html("Geolocalization not supported by your browser");
 		}
 	}
+
+
 	var coordsSaved = parseInt(localStorage["coordsSaved"]);
 	
 	if (isNaN(coordsSaved) || Date.now() - (60 * 60 * 6 * 1000) > coordsSaved) {
@@ -107,7 +111,7 @@ $(document).ready(function() {
 		$("#tryAgainNearbyEvents").parent().addClass('hide');
 	} else if (isLocalStorageCapable && localStorage["didSaveCoords"]) {
 		var coords = JSON.parse(localStorage["coords"])
-		getNear(coords);
+		//getNear(coords);
 		window.lastCoords = coords;
 		$("#tryAgainNearbyEvents").parent().addClass('hide');
 	} else if ($("#tryAgainNearbyEvents").length == 0) {
