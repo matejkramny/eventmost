@@ -11,6 +11,171 @@ exports.router = function (app) {
 		.get('/events/near', exports.listNearEvents)
 		.get('/events/nearlanding', exports.listNearLandingEvents)
 		.get('/events/countnear/:lat/:lng', countnear)
+		.get('/events/loadsoonevents', loadsoonevents)
+		.get('/events/loadnearevents/:lat/:lng', loadnearevents)
+}
+
+function loadsoonevents(req, res) {
+	var skip = 0;
+	
+	var query = {
+		deleted: false,
+		privateEvent: {
+			$ne: true
+		}
+	};
+	
+	query.start = { $gte: Date.now() };
+	
+	models.Event.find(query)
+		.populate('avatar attendees.user')
+		.select('name start description end address venue_name avatar source')
+		.sort('start')
+		.limit(100)
+		.skip(skip)
+		.exec(function(err, evs) {
+		if (err) throw err;
+		if (evs) {
+			evs.forEach(function(entry) {
+						
+				if((entry.description) && entry.description != ''){
+
+					//console.log(entry.description);
+					entry.description = entry.description.replace(/(<([^>]+)>)/ig,"");
+					entry.description = entry.description.trim();
+					entry.description = entry.description.replace(/(\r\n|\n|\r)/gm,"");
+					var totalLength = entry.description.length;
+					entry.description = entry.description.substr(0, 350);
+    				var newLength = entry.description.length;
+    				if(totalLength > 350){
+    					entry.description = entry.description+" . . .";
+    				}
+				}
+				
+			});
+
+			res.locals.pageURL = '/events';
+			res.locals.moment = moment;
+			res.format({
+				html: function() {
+					
+						res.render('event/inc/single', { events: evs});
+					
+				}
+			});
+		}
+	})
+}
+
+function loadnearevents(req, res) {
+	var lat = parseFloat(req.params.lat)
+		, lng = parseFloat(req.params.lng)
+		, limit = parseInt(req.query.limit)
+		, distance = req.query.distance
+		, htmlIsEnabled = Boolean(req.query.html)
+		, page = parseInt(req.query.page)
+
+	console.log(lat +"___"+ lng);
+
+	if (!lat || !lng) {
+		// render a blank page, and tell it to ask user for browser positioning
+		res.format({
+			html: function() {
+				res.locals.moment = moment;
+				res.render('event/inc/single', {events:[]})
+			}
+		})
+		return;
+	}
+	
+	if (limit == NaN) {
+		limit = 100;
+	}
+
+	/*
+	
+	In order to use mongodb $near queries with km bounds, you need to convert the radius value to km. By default mongodb $near accepts $maxDistance as radius. 
+	Convert distance by 111.12 (one degree is approximately 111.12 kilometers) when using km, or leave distance as it is on using degree to your question
+	what do I set as maxdistance if I am searching for documents within a 1 km radius?
+	you can use this:
+	db.places.find( { loc : { $near : [50,50] , $maxDistance : 1/111.12 } } )
+
+	*/
+	
+	var query = {
+		'geo': {
+			$near : [lng,lat], $maxDistance : 10/111.12
+		}
+	};
+
+	
+
+	
+	models.Geolocation.find(query).populate({
+		path: 'event',
+		select: 'name description start end address venue_name avatar source',
+		match: {
+			deleted: false,
+			privateEvent: {
+				$ne: true
+			},
+			start: { $gte: Date.now() }
+		},
+	}).limit(limit)
+		.skip(limit * page)
+		.exec(function(err, geos) {
+			if (err) throw err;
+			//console.log(geos);
+			if (geos) {
+				var events = [];
+				
+				for (var i = 0; i < geos.length; i++) {
+					if (geos[i].event == null) {
+						continue;
+					}
+
+					if((geos[i].event.source) && (geos[i].event.source.facebook == true || geos[i].event.source.meetup == true)){
+						continue;
+					}
+
+					if (geos[i].event.deleted != true) {
+						geos[i].event.geo = geos[i].geo;
+						if((geos[i].event.description) && geos[i].event.description != ''){
+							geos[i].event.description = geos[i].event.description.replace(/(<([^>]+)>)/ig,"");
+							geos[i].event.description = geos[i].event.description.trim();
+							geos[i].event.description = geos[i].event.description.replace(/(\r\n|\n|\r)/gm,"");
+							var totalLength = geos[i].event.description.length;
+							geos[i].event.description = geos[i].event.description.substr(0, 350);
+							var newLength = geos[i].event.description.length;
+
+							if(totalLength > 350){
+		    					geos[i].event.description = geos[i].event.description+" . . .";
+		    				}
+						}
+						
+						events.push(geos[i].event);
+						
+					}
+				}
+				
+				// May slow the app down.. Mongoose does not seem to support sub-document population (event.avatar)
+				async.each(geos, function(geo, cb) {
+					if (geo.event)
+						geo.event.populate('avatar', cb);
+					else
+						cb(null)
+				}, function(err) {
+					res.format({
+						html: function() {
+							res.locals.moment = moment;
+							res.render('event/inc/single', {events: events})
+						}
+					})
+				})
+				
+			}
+		}
+	);
 }
 
 function countnear(req, res){
@@ -71,9 +236,9 @@ exports.listEvents = function (req, res) {
 			$ne: true
 		}
 	};
-	if (!showPastEvents) {
+	//if (!showPastEvents) {
 		query.start = { $gte: Date.now() };
-	}
+	//}
 	
 	models.Event.find(query)
 		.populate('avatar attendees.user')
