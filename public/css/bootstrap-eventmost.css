@@ -236,7 +236,7 @@ input[type=number]::-webkit-outer-spin-button {
   margin-left: 15px;
   padding:2px;
   border: 2px solid #ccc;
-  background: none repeat scroll 0 0 #fff;
+  background: #ccc;
 }
 
 .col-md-3-assist .small-event-border2 {
