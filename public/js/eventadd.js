@@ -382,7 +382,7 @@ $(document).ready(function() {
 		file = null;
 		avatarUploadRequest = null;
 		
-		$("#thumb").attr('src', '/images/logo-avatar.svg');
+		$("#thumb").attr('src', '/images/upload.png');
 		$("#thumb").attr('style', '');
 		$("#file_browse1").attr("value", "");
 		$("#info-m").html("Avatar has been removed");
