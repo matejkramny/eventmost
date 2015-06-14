@@ -1,11 +1,11 @@
 extends ../responsive
 
 append addonjs
-	script(src="/js/eventadd.js" defer)
+	script(src="/js/eventadd.js?v=#{versionHash}" defer)
 	script(src="/js/crop/jquery.min.js", defer)
 	script(src="/js/vendor/angular.min.js", defer)
 	script(src="/js/crop/jquery.Jcrop.min.js", defer)
-	script(src="/js/crop/script.js", defer)
+	script(src="/js/crop/script.js?v=#{versionHash}", defer)
 	script(src="/js/vendor/jquery-ui-1.10.3.custom.min.js" defer)
 	script(src="/js/datepicker.js", defer)
 	script(src="/js/vendor/tiny.editor.packed.js", defer)
