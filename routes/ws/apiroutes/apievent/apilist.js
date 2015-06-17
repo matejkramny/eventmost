@@ -6,7 +6,7 @@ var models = require('../../../../models')
 
 exports.router = function (app) {
 	app.get('/api/events', exports.listEventsAPI)
-	.post('/api/events/my', util.authorized, exports.listMyEventsAPI)
+	.post('/api/events/my', exports.listMyEventsAPI)
 	.get('/api/events/near/:lat/:lng', exports.listNearEventsAPI)
 	.post('/api/sortedevents', exports.sortedevents)
 	.get('/api/event/detail/:id', exports.eventdetails)
