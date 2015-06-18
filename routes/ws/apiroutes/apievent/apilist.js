@@ -110,6 +110,7 @@ exports.listEventsAPI = function (req, res) {
 exports.eventdetails = function (req, res){
 
 	var attendeeObject = [];
+	var messagesObject = [];
 	var comments = null;
 	var query = {"_id" : req.params.id};	
 
@@ -145,6 +146,30 @@ exports.eventdetails = function (req, res){
 					callback(null, 'one');
 				}
 				
+			},
+			function(callback)
+			{
+				if(entry.messages){
+					models.EventMessage.find({"_id":{$in : entry.messages}}).populate("attendee").populate("likes").lean().exec(function (err, mes){
+						entry.messages = "";
+						mes.forEach(function (thisMessage){
+							messagesObject.push({
+								"message" : thisMessage.message,
+								"posted" : thisMessage.posted,
+								"spam" : thisMessage.spam,
+								"isResponse" : thisMessage.isResponse,
+								"attendee" : thisMessage.attendee._id, // only attendees can post comment
+								"likes" : thisMessage.likes, //Only attendees can like
+								"comments" : thisMessage.comments
+							});
+						});
+
+						entry.messages = messagesObject;
+						callback(null, "two");
+					})
+				}else {
+					callback(null, "two");
+				}
 			}],function(err, results){
 				if((entry.description) && entry.description != ''){
 					entry.description = entry.description.replace(/(<([^>]+)>)/ig,"");
