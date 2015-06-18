@@ -263,7 +263,17 @@ function joinEventAPI (req, res) {
 	
 	var Event_ID = req.params.id;
 	var User_ID =  req.body._id;
-	
+	var cat = req.body.cat;
+
+    if (!User_ID) {
+        res.send({
+            status: 412,
+            message: "UserID(_id) is missing"
+
+        })
+        return;
+    }
+
 	// Get the Event.
 	// Found the Event currently requested by user.
 	models.Event.findOne({_id:Event_ID} , function(err, event) 
@@ -275,7 +285,7 @@ function joinEventAPI (req, res) {
 		models.Attendee.findOne(query)
 		.exec(function(err, existing_attendee) 
 		{
-			
+
 			if(existing_attendee) // You are already attending
 			{
 				// Check if its isAttending is false;
@@ -283,6 +293,14 @@ function joinEventAPI (req, res) {
 				if(!existing_attendee.isAttending)
 				{
 					existing_attendee.isAttending =  true;
+                    existing_attendee.category = cat;
+					existing_attendee.save();
+				}
+
+				//If only category changes
+				if(!existing_attendee.category != cat)
+				{
+					existing_attendee.category = cat;
 					existing_attendee.save();
 				}
 				
@@ -300,7 +318,7 @@ function joinEventAPI (req, res) {
 					user: User_ID
 					});
 					
-					attendee.category = "Attendee";
+					attendee.category = cat;
 					attendee.save();
 					
 					// add to event
