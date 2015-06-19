@@ -11,6 +11,7 @@ exports.router = function (app) {
 	.post('/api/sortedevents', exports.sortedevents)
 	.get('/api/event/detail/:id', exports.eventdetails)
 	.post('/api/events/all', exports.allevents)
+	.get('/api/event/cat/:id',exports.geteventcategories)
 }
 
 exports.listEventsAPI = function (req, res) {
@@ -552,4 +553,58 @@ exports.allevents = function (req, res) {
 			}
 		})
 	}
+}
+
+exports.geteventcategories = function (req, res) {
+	//var EventID = req.params.id;
+	var Categories = null;
+
+	//var query = {"_id": mongoose.Types.ObjectId(EventID)};
+	//models.Event.findOne(query).populate("categories").exec(function (err, ev) {
+	var query = {"_id": req.params.id};
+
+	models.Event.find(query)
+		//.lean()
+		.exec(function (err, ev) {
+			ev = ev[0];
+			async.series([
+				function (callback) {
+					if (ev.categories != null) {
+						Categories = ev.categories;
+						callback(null);
+					} else {
+						callback(null);
+					}
+				}], function (err, results) {
+				if (Categories) {
+					res.format({
+						json: function () {
+							res.send({
+								status: 200,
+								categories: ev.categories
+							})
+						}
+					});
+				} else if (!event) {
+					res.format({
+						json: function () {
+							res.send({
+								staus: 404,
+								messages: "No Event found"
+							})
+						}
+					});
+				} else {
+					res.format({
+						json: function () {
+							res.send({
+								staus: 404,
+								messages: "No Category found"
+							})
+						}
+					});
+				}
+			});
+
+		});
 }
