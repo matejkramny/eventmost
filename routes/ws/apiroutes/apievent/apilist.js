@@ -135,7 +135,10 @@ exports.eventdetails = function (req, res){
 								"_id" : thisAtt._id,
 								"name" : thisAtt.user.name,
 								"avatar" : thisAtt.user.avatar,
-								"admin" : thisAtt.admin
+								"admin" : thisAtt.admin,
+								"category" : thisAtt.category,
+								"haspaid" : thisAtt.haspaid,
+								"checkedoff" : thisAtt.checkedoff
 							});
 						});
 
