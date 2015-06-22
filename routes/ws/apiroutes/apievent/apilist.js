@@ -112,6 +112,8 @@ exports.eventdetails = function (req, res){
 
 	var attendeeObject = [];
 	var messagesObject = [];
+	var currentUser = req.body.uid;
+	var isattending = false;
 	var comments = null;
 	var query = {"_id" : req.params.id};	
 
@@ -132,6 +134,10 @@ exports.eventdetails = function (req, res){
 								entry.organizer = thisAtt.user.name;
 							}
 
+							if(thisAtt.user._id.toString() == currentUser && thisAtt.isAttending){
+								isattending = true;
+							}
+
 							attendeeObject.push({
 								"_id" : thisAtt._id,
 								"name" : thisAtt.user.name,
@@ -139,7 +145,8 @@ exports.eventdetails = function (req, res){
 								"admin" : thisAtt.admin,
 								"category" : thisAtt.category,
 								"haspaid" : thisAtt.haspaid,
-								"checkedoff" : thisAtt.checkedoff
+								"checkedoff" : thisAtt.checkedoff,
+								"user": thisAtt.user
 							});
 						});
 
@@ -182,7 +189,8 @@ exports.eventdetails = function (req, res){
 				res.format({
 					json: function() {
 						res.send({
-							event: entry
+							event: entry,
+							attending: isattending
 						});
 					}
 				});
