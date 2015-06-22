@@ -240,6 +240,7 @@ exports.sortedevents = function (req, res) {
 						//console.log(entry.description);
 						entry.description = entry.description.replace(/(<([^>]+)>)/ig,"");
 						//entry.description = entry.description.substr(0, 200)+"...";
+						entry.avatar.url = config.host + entry.avatar.url;
 					}
 					
 				});
@@ -303,6 +304,7 @@ exports.listMyEventsAPI = function (req, res) {
 					res.format({
 						json: function() {
 							res.send({
+								status: 200,
 								events: evs,
 								total: total,
 								skip: skip,
@@ -311,8 +313,18 @@ exports.listMyEventsAPI = function (req, res) {
 						}
 					})
 				});
+			} else {
+				res.format({
+					json: function () {
+						res.send({
+							status: 404,
+							message: "No Event Found"
+						})
+
+					}
+				})
 			}
-		})
+			})
 	})
 }
 
