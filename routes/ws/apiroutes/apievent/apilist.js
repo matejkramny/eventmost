@@ -12,6 +12,7 @@ exports.router = function (app) {
 	.get('/api/event/detail/:id', exports.eventdetails)
 	.post('/api/events/all', exports.allevents)
 	.get('/api/event/cat/:id',exports.geteventcategories)
+	.get('/api/events/searchevents',exports.searchEvents)
 }
 
 exports.listEventsAPI = function (req, res) {
@@ -627,4 +628,63 @@ exports.geteventcategories = function (req, res) {
 			});
 
 		});
+}
+
+//Takes Text input
+exports.searchEvents = function (req, res) {
+	var text = req.body.text;
+	var temptext = text;
+	var events;
+	var paging = req.body.paging;
+
+	query = searchQuery(text);
+	//TODO: Fix Commented code to allow more deeper and better search by using async.queue
+	models.Event.find().or(query).limit(50)
+		.exec(function searchExact(err, ev) {
+
+			if (!ev || ev.length == 0) {
+				models.Event.find().or(searchQuery(text.split(/[ ,]+/)[0])).limit(50)
+					.exec(function searchByWord(err, event) {
+
+						if (!event || event.length == 0) {
+							models.Event.find().or(searchQuery(text.charAt(0))).limit(50)
+								.exec(function searchByWord(err, events) {
+									sendEvents(res, events)
+								})
+						} else {
+							sendEvents(res, event);
+						}
+
+					});
+			} else {
+				sendEvents(res, ev);
+			}
+		});
+
+}
+
+
+searchQuery = function (temptext) {
+	temptext = new RegExp(temptext,'i');
+	var query =
+		[
+			{"name": {$regex: temptext}},
+			{"description": {$regex: temptext}},
+			{"address": {$regex: temptext}},
+			{"venue_name": {$regex: temptext}},
+			{"categories": {$regex: temptext}}
+		];
+
+	return query;
+}
+
+sendEvents = function (res, ev) {
+	res.format({
+		json: function () {
+			res.send({
+				staus: 200,
+				events: ev
+			})
+		}
+	});
 }
