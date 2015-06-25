@@ -632,7 +632,7 @@ exports.geteventcategories = function (req, res) {
 
 //Takes Text input
 exports.searchEvents = function (req, res) {
-	var text = req.body.text;
+	var text = req.query.search;
 	var temptext = text;
 	var events;
 	var paging = req.body.paging;
