@@ -139,6 +139,25 @@ exports.eventdetails = function (req, res){
 								isattending = true;
 							}
 
+							var user = {
+								email: thisAtt.user.email,
+								lastAccess: thisAtt.user.lastAccess,
+								admin: thisAtt.user.admin,
+								businessCards: thisAtt.user.businessCards,
+								avatar: thisAtt.user.avatar,
+								interests: thisAtt.user.interests,
+								education: thisAtt.user.education,
+								website: thisAtt.user.website,
+								location: thisAtt.user.location,
+								company: thisAtt.user.company,
+								desc: thisAtt.user.desc,
+								position: thisAtt.user.position,
+								surname: thisAtt.user.surname,
+								name: thisAtt.user.name,
+								disabled: thisAtt.user.disabled,
+								created: thisAtt.user.created
+							}
+
 							attendeeObject.push({
 								"_id" : thisAtt._id,
 								"name" : thisAtt.user.name,
@@ -147,7 +166,7 @@ exports.eventdetails = function (req, res){
 								"category" : thisAtt.category,
 								"haspaid" : thisAtt.haspaid,
 								"checkedoff" : thisAtt.checkedoff,
-								"user": thisAtt.user
+								"user": user
 							});
 						});
 
