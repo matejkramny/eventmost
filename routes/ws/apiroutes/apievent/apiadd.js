@@ -96,7 +96,9 @@ function uploadAvatarAsync (req, res) {
 					json: function() {
 						res.json({
 							status: 200,
-							avatar: u._id
+							avatar: u._id,
+							url: config.host + u.url,
+							dateCreated: u.created
 						})
 					}
 				});

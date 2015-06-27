@@ -11,6 +11,8 @@ exports.router = function (app) {
 	.post('/api/sortedevents', exports.sortedevents)
 	.get('/api/event/detail/:id', exports.eventdetails)
 	.post('/api/events/all', exports.allevents)
+	.get('/api/event/cat/:id',exports.geteventcategories)
+	.get('/api/events/searchevents',exports.searchEvents)
 }
 
 exports.listEventsAPI = function (req, res) {
@@ -110,6 +112,9 @@ exports.listEventsAPI = function (req, res) {
 exports.eventdetails = function (req, res){
 
 	var attendeeObject = [];
+	var messagesObject = [];
+	var currentUser = req.body.uid;
+	var isattending = false;
 	var comments = null;
 	var query = {"_id" : req.params.id};	
 
@@ -130,11 +135,38 @@ exports.eventdetails = function (req, res){
 								entry.organizer = thisAtt.user.name;
 							}
 
+							if(thisAtt.user._id.toString() == currentUser && thisAtt.isAttending){
+								isattending = true;
+							}
+
+							var user = {
+								email: thisAtt.user.email,
+								lastAccess: thisAtt.user.lastAccess,
+								admin: thisAtt.user.admin,
+								businessCards: thisAtt.user.businessCards,
+								avatar: thisAtt.user.avatar,
+								interests: thisAtt.user.interests,
+								education: thisAtt.user.education,
+								website: thisAtt.user.website,
+								location: thisAtt.user.location,
+								company: thisAtt.user.company,
+								desc: thisAtt.user.desc,
+								position: thisAtt.user.position,
+								surname: thisAtt.user.surname,
+								name: thisAtt.user.name,
+								disabled: thisAtt.user.disabled,
+								created: thisAtt.user.created
+							}
+
 							attendeeObject.push({
 								"_id" : thisAtt._id,
 								"name" : thisAtt.user.name,
 								"avatar" : thisAtt.user.avatar,
-								"admin" : thisAtt.admin
+								"admin" : thisAtt.admin,
+								"category" : thisAtt.category,
+								"haspaid" : thisAtt.haspaid,
+								"checkedoff" : thisAtt.checkedoff,
+								"user": user
 							});
 						});
 
@@ -145,6 +177,30 @@ exports.eventdetails = function (req, res){
 					callback(null, 'one');
 				}
 				
+			},
+			function(callback)
+			{
+				if(entry.messages){
+					models.EventMessage.find({"_id":{$in : entry.messages}}).populate("attendee").populate("likes").lean().exec(function (err, mes){
+						entry.messages = "";
+						mes.forEach(function (thisMessage){
+							messagesObject.push({
+								"message" : thisMessage.message,
+								"posted" : thisMessage.posted,
+								"spam" : thisMessage.spam,
+								"isResponse" : thisMessage.isResponse,
+								"attendee" : thisMessage.attendee._id, // only attendees can post comment
+								"likes" : thisMessage.likes, //Only attendees can like
+								"comments" : thisMessage.comments
+							});
+						});
+
+						entry.messages = messagesObject;
+						callback(null, "two");
+					})
+				}else {
+					callback(null, "two");
+				}
 			}],function(err, results){
 				if((entry.description) && entry.description != ''){
 					entry.description = entry.description.replace(/(<([^>]+)>)/ig,"");
@@ -153,7 +209,8 @@ exports.eventdetails = function (req, res){
 				res.format({
 					json: function() {
 						res.send({
-							event: entry
+							event: entry,
+							attending: isattending
 						});
 					}
 				});
@@ -211,6 +268,7 @@ exports.sortedevents = function (req, res) {
 						//console.log(entry.description);
 						entry.description = entry.description.replace(/(<([^>]+)>)/ig,"");
 						//entry.description = entry.description.substr(0, 200)+"...";
+						entry.avatar.url = config.host + entry.avatar.url;
 					}
 					
 				});
@@ -274,6 +332,7 @@ exports.listMyEventsAPI = function (req, res) {
 					res.format({
 						json: function() {
 							res.send({
+								status: 200,
 								events: evs,
 								total: total,
 								skip: skip,
@@ -282,8 +341,18 @@ exports.listMyEventsAPI = function (req, res) {
 						}
 					})
 				});
+			} else {
+				res.format({
+					json: function () {
+						res.send({
+							status: 404,
+							message: "No Event Found"
+						})
+
+					}
+				})
 			}
-		})
+			})
 	})
 }
 
@@ -524,4 +593,117 @@ exports.allevents = function (req, res) {
 			}
 		})
 	}
+}
+
+exports.geteventcategories = function (req, res) {
+	//var EventID = req.params.id;
+	var Categories = null;
+
+	//var query = {"_id": mongoose.Types.ObjectId(EventID)};
+	//models.Event.findOne(query).populate("categories").exec(function (err, ev) {
+	var query = {"_id": req.params.id};
+
+	models.Event.find(query)
+		//.lean()
+		.exec(function (err, ev) {
+			ev = ev[0];
+			async.series([
+				function (callback) {
+					if (ev.categories != null) {
+						Categories = ev.categories;
+						callback(null);
+					} else {
+						callback(null);
+					}
+				}], function (err, results) {
+				if (Categories) {
+					res.format({
+						json: function () {
+							res.send({
+								status: 200,
+								categories: ev.categories
+							})
+						}
+					});
+				} else if (!event) {
+					res.format({
+						json: function () {
+							res.send({
+								staus: 404,
+								messages: "No Event found"
+							})
+						}
+					});
+				} else {
+					res.format({
+						json: function () {
+							res.send({
+								staus: 404,
+								messages: "No Category found"
+							})
+						}
+					});
+				}
+			});
+
+		});
+}
+
+//Takes Text input
+exports.searchEvents = function (req, res) {
+	var text = req.query.search;
+	var temptext = text;
+	var events;
+	var paging = req.body.paging;
+
+	query = searchQuery(text);
+	//TODO: Fix Commented code to allow more deeper and better search by using async.queue
+	models.Event.find().or(query).limit(50)
+		.exec(function searchExact(err, ev) {
+
+			if (!ev || ev.length == 0) {
+				models.Event.find().or(searchQuery(text.split(/[ ,]+/)[0])).limit(50)
+					.exec(function searchByWord(err, event) {
+
+						if (!event || event.length == 0) {
+							models.Event.find().or(searchQuery(text.charAt(0))).limit(50)
+								.exec(function searchByWord(err, events) {
+									sendEvents(res, events)
+								})
+						} else {
+							sendEvents(res, event);
+						}
+
+					});
+			} else {
+				sendEvents(res, ev);
+			}
+		});
+
+}
+
+
+searchQuery = function (temptext) {
+	temptext = new RegExp(temptext,'i');
+	var query =
+		[
+			{"name": {$regex: temptext}},
+			{"description": {$regex: temptext}},
+			{"address": {$regex: temptext}},
+			{"venue_name": {$regex: temptext}},
+			{"categories": {$regex: temptext}}
+		];
+
+	return query;
+}
+
+sendEvents = function (res, ev) {
+	res.format({
+		json: function () {
+			res.send({
+				staus: 200,
+				events: ev
+			})
+		}
+	});
 }
