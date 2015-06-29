@@ -337,7 +337,8 @@ function doPasswordLogin (req, res) {
 						user.linkedin = null;
 						res.send({
 							status: 200,
-							user: user
+							user: user,
+							registerStatus: user.disabled ? "Disabled": "OK"
 						}) 
 				  	}
 				})
