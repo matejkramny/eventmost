@@ -549,7 +549,12 @@ exports.allevents = function (req, res) {
 						res.format({
 							json: function() {
 								res.send({
+<<<<<<< HEAD
 									events: events,
+=======
+									status: 200,
+									events: events
+>>>>>>> apidev
 								})
 							}
 						})
@@ -585,6 +590,10 @@ exports.allevents = function (req, res) {
 					res.format({
 						json: function() {
 							res.send({
+<<<<<<< HEAD
+=======
+								status: 200,
+>>>>>>> apidev
 								events: evs
 							})
 						}

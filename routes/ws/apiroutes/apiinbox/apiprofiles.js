@@ -46,6 +46,7 @@ exports.showSaverProfilesAPI = function (req, res) {
 				res.format({
 					json: function() {
 						res.send({
+							status: 200,
 							profilesavers: savedprofiles
 						});
 					}
