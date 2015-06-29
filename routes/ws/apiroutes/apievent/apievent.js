@@ -361,6 +361,7 @@ function viewTicketsAPI (req, res) {
 			res.format({
 					json: function() {
 						res.send({
+							status: 200,
 							tickets: event_tickets
 						})
 					}
