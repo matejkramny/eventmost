@@ -549,7 +549,9 @@ exports.allevents = function (req, res) {
 						res.format({
 							json: function() {
 								res.send({
-									events: events,
+									status: 200,
+									events: events
+
 								})
 							}
 						})
@@ -585,6 +587,7 @@ exports.allevents = function (req, res) {
 					res.format({
 						json: function() {
 							res.send({
+								status: 200,
 								events: evs
 							})
 						}
