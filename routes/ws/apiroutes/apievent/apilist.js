@@ -13,7 +13,7 @@ exports.router = function (app) {
 	.post('/api/events/all', exports.allevents)
 	.get('/api/event/cat/:id',exports.geteventcategories)
 	.get('/api/events/searchevents',exports.searchEvents)
-}
+} 
 
 exports.listEventsAPI = function (req, res) {
 	console.log(config.path);
@@ -144,7 +144,7 @@ exports.eventdetails = function (req, res){
 								lastAccess: thisAtt.user.lastAccess,
 								admin: thisAtt.user.admin,
 								businessCards: thisAtt.user.businessCards,
-								avatar: thisAtt.user.avatar,
+								avatar: config.host + thisAtt.user.avatar,
 								interests: thisAtt.user.interests,
 								education: thisAtt.user.education,
 								website: thisAtt.user.website,
@@ -209,6 +209,7 @@ exports.eventdetails = function (req, res){
 				res.format({
 					json: function() {
 						res.send({
+							status: 200,
 							event: entry,
 							attending: isattending
 						});
@@ -328,7 +329,10 @@ exports.listMyEventsAPI = function (req, res) {
 						}
 						
 					});
-					
+
+					evs.avatar.url = config.host + evs.avatar.url;
+					evs.attendee.user.avatar = config.host + evs.attendee.user.avatar;
+
 					res.format({
 						json: function() {
 							res.send({
