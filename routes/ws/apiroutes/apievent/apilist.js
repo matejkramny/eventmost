@@ -13,7 +13,7 @@ exports.router = function (app) {
 	.post('/api/events/all', exports.allevents)
 	.get('/api/event/cat/:id',exports.geteventcategories)
 	.get('/api/events/searchevents',exports.searchEvents)
-}
+} 
 
 exports.listEventsAPI = function (req, res) {
 	console.log(config.path);
