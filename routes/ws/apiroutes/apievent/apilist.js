@@ -551,6 +551,7 @@ exports.allevents = function (req, res) {
 								res.send({
 									status: 200,
 									events: events
+
 								})
 							}
 						})
