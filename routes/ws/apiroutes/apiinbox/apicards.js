@@ -92,6 +92,7 @@ function doNewCardAPI (req, res) {
 	console.log(req.body);
 	var businessCard;
 	var base64Image;
+	var dir = 'public/businesscards';
 	var i = 0;
 	if(req.body._id == ""){
 		res.format({
@@ -105,6 +106,9 @@ function doNewCardAPI (req, res) {
 	} else {
 		models.User.findById(req.body._id, function(err, user) {
 			if(user != null){
+				if (!fs.existsSync(dir)){
+					fs.mkdirSync(dir);
+				}
 				//businessCard = req.body.businessCard;
 				console.log("upload card: " + req.files.uploadCard.path);
 				//base64Image = businessCard.replace(/^data:image\/png;base64,/, "");
