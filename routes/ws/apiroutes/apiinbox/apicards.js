@@ -32,6 +32,7 @@ function showCardsAPI (req, res) {
 
 	console.log("Shows Cards ".red);
 	console.log(req.body);
+	console.log("host: " + config.host);
 
 	//console.log(req.user._id);
 
@@ -119,7 +120,7 @@ function doNewCardAPI (req, res) {
 					var newcard = new models.Card({
 						user: req.body._id,
 						location: req.body._location,
-						url : 'public/businesscards/'+req.body._id + "+" + i +'.png',
+						url : config.host + '/businesscards/'+req.body._id + "+" + i +'.png',
 						created: Date.now(),
 						primary: false
 					})
