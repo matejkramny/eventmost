@@ -330,8 +330,11 @@ exports.listMyEventsAPI = function (req, res) {
 						
 					});
 
-					evs.avatar.url = config.host + evs.avatar.url;
-					evs.attendee.user.avatar = config.host + evs.attendee.user.avatar;
+					if (evs.avatar && evs.avatar.url)
+						evs.avatar.url = config.host + evs.avatar.url;
+
+					if (evs.attendee && evs.attendee.user && evs.attendee.user.avatar)
+						evs.attendee.user.avatar = config.host + evs.attendee.user.avatar;
 
 					res.format({
 						json: function() {
