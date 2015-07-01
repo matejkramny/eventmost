@@ -12,7 +12,10 @@ $(document).ready(function() {
 	} catch (e) {
 	}
 
-	$('.timepicker-default').timepicker();
+	$('.timepicker-default').timepicker({
+		minuteStep: 5
+	});
+
 	$('.timepicker-default').click(function() {
 		$(".bootstrap-timepicker-widget").css("background-color", "#fff");
 	})
@@ -379,7 +382,7 @@ $(document).ready(function() {
 		file = null;
 		avatarUploadRequest = null;
 		
-		$("#thumb").attr('src', '/images/logo-avatar.svg');
+		$("#thumb").attr('src', '/images/upload.png');
 		$("#thumb").attr('style', '');
 		$("#file_browse1").attr("value", "");
 		$("#info-m").html("Avatar has been removed");
@@ -948,7 +951,7 @@ $(document).ready(function() {
 	}
  
  	var cnt = 0;
-	$("#copy_event_id").mouseover(function () {/*bind zclip to the button on click*/
+	$("#copy_event_id").mouseover(function () { //bind zclip to the button on click
 		if(cnt==1)
 			return;
 		cnt = 1;
@@ -964,6 +967,27 @@ $(document).ready(function() {
 	        }
 		})
 	});
+	//$("#copy_event_id").click(function(){
+		
+	//	var linktext = document.getElementById('event_id_field').value;
+
+
+		/*var holdtext = $("#event_id_field").val();
+		alert(holdtext);
+		Copied = holdtext.createTextRange();
+		Copied.execCommand("Copy");
+		alert("done");*/
+
+		//----------------
+
+		/*var text = $("#invitationLink").val();
+		if(window.copy(text)){
+
+			alert("done");
+		}else{
+			alert("nop!");
+		}*/
+	//})
 
 	//$("#event_id_field").focus(function() { this.select(); });
 });

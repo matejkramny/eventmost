@@ -43,6 +43,7 @@ function showCardsAPI (req, res) {
 			res.format({
 				json: function() {
 					res.send({
+						status: 200,
 						cards: usercards
 					})
 				}
@@ -288,6 +289,7 @@ function getCardsSharedWithMeAPI(req, res)
 			res.format({
 				json: function() {
 					res.send({
+						status: 200,
 						cards: jsonCardArray
 					})
 				}

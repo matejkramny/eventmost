@@ -25,11 +25,16 @@ exports.router = function (app) {
 function getattendeeid(req, res){
 	var eventid = req.body.id;
 	var userid = req.body.userid;
+	var resp = {
+		status: 404,
+		message: "Attendee not found!"
+	};
 
 	if(eventid == null || userid == null){
 		res.format({
 			json: function() {
 				res.send({
+					status: 401,
 					message: "Invalid Arguments"
 				})
 			}
@@ -42,20 +47,32 @@ function getattendeeid(req, res){
 		.select('attendees')
 		.lean()
 		.exec(function(err, ev) {
-			var allattendees = ev[0].attendees;
-			allattendees.forEach(function(att) {
+			if(ev.length > 0){
+				var allattendees = ev[0].attendees;
+				allattendees.forEach(function(att) {
+					if(att.user == userid){
+						resp = {
+							status: 200,
+							attendee_id: att._id
+						};
+					}
+				});
 
-				if(att.user == userid){
-					res.format({
-						json: function() {
-							res.send({
-								attendee_id: att._id
-							})
-						}
-					});
-					return;
-				}
-			});
+				res.format({
+					json: function() {
+						res.send(resp);
+					}
+				});
+			}else{
+				res.format({
+					json: function() {
+						res.send({
+							status: 402,
+							message: "Event not found!"
+						})
+					}
+				});
+			}
 		});
 	}
 }
@@ -65,32 +82,47 @@ function listAttendeesAPI (req, res) {
 	models.Event.findOne({_id:req.params.id} , function(err, event) 
 	{
 		// Fetch Messages By One By One.
-		var query = {'_id': {$in: event.attendees}, 'isAttending': true};
+		if(event){
+			var query = {'_id': {$in: event.attendees}, 'isAttending': true};
 		
-		models.Attendee.find(query)
-		.populate({path: 'user'})
-		.select('user registered isAttending ticket checkedOff admin')
-		.sort('-created')
-		.limit(10)
-		.exec(function(err, messages) {
-			
-			var options = {
-				path: 'attendee.user',
-				model: 'User'
-			};
-			
-			models.Attendee.populate(messages , options , function(err , usermessages)
-			{
+			models.Attendee.find(query)
+			.populate({path: 'user'})
+			.populate("user", "name email")
+			.select('user registered isAttending ticket checkedOff admin')
+			.sort('-created')
+			.limit(10)
+			.exec(function(err, messages) {
+				if(messages.length > 0){
+					res.format({
+							json: function() {
+								res.send({
+									status: 200,
+									users: messages
+								})
+							}
+						});
+				}else{
+					res.format({
+							json: function() {
+								res.send({
+									status: 402,
+									message: "No Attendee Found!"
+								})
+							}
+						});
+				}
+			})
+		}else{
 			res.format({
-					json: function() {
-						res.send({
-							users: usermessages
-						})
-					}
-				});
-			}
-		);
-	})
+						json: function() {
+							res.send({
+								status: 404,
+								message: "No Event Found!"
+							})
+						}
+					});
+		}
+		
 	});
 }
 
@@ -156,6 +188,7 @@ function showAttendeeAPI (req, res) {
 			res.format({
 					json: function() {
 						res.send({
+							status: 200,
 							events: usermessages
 						})
 					}
@@ -231,7 +264,17 @@ function joinEventAPI (req, res) {
 	
 	var Event_ID = req.params.id;
 	var User_ID =  req.body._id;
-	
+	var cat = req.body.cat;
+
+    if (!User_ID) {
+        res.send({
+            status: 412,
+            message: "UserID(_id) is missing"
+
+        })
+        return;
+    }
+
 	// Get the Event.
 	// Found the Event currently requested by user.
 	models.Event.findOne({_id:Event_ID} , function(err, event) 
@@ -243,7 +286,7 @@ function joinEventAPI (req, res) {
 		models.Attendee.findOne(query)
 		.exec(function(err, existing_attendee) 
 		{
-			
+
 			if(existing_attendee) // You are already attending
 			{
 				// Check if its isAttending is false;
@@ -251,6 +294,14 @@ function joinEventAPI (req, res) {
 				if(!existing_attendee.isAttending)
 				{
 					existing_attendee.isAttending =  true;
+                    existing_attendee.category = cat;
+					existing_attendee.save();
+				}
+
+				//If only category changes
+				if(!existing_attendee.category != cat)
+				{
+					existing_attendee.category = cat;
 					existing_attendee.save();
 				}
 				
@@ -268,7 +319,7 @@ function joinEventAPI (req, res) {
 					user: User_ID
 					});
 					
-					attendee.category = "Attendee";
+					attendee.category = cat;
 					attendee.save();
 					
 					// add to event

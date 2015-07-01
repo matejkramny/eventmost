@@ -1,3 +1,19 @@
+var redirect = "/auth/success";
+$('#parentContainer').on('click','.openEvent',function(){
+	    var $link = $(this)
+		if (redirect == '/auth/success') {
+			$('.social-login-link').each(function() {
+				$(this).attr('href', $(this).attr('href') + '?redirect=' + $link.attr('data-event'));
+				
+			})
+		}
+		
+		redirect = '/event/'+$(this).attr('data-event');
+		event.preventDefault();
+		$('#signModal').modal('show');
+
+	}); 
+
 $(document).ready(function() {
 	$loginForm = $("#LoginForm")
 	$loginUserEmail = $("#LoginUserEmail")
@@ -9,7 +25,7 @@ $(document).ready(function() {
 	$registerUserEmail = $("#RegisterUserEmail")
 	$registerUserPassword = $("#RegisterUserPassword")
 	
-	var redirect = "/auth/success";
+	//var redirect = "/auth/success";
 	
 	$('.enable_popover').popover()
 	
@@ -54,7 +70,9 @@ $(document).ready(function() {
 		$("#forgotModal").modal('show')
 	})
 	
-	$('.openEvent').click(function() {
+	
+	
+	/*$('.openEvent').click(function() {
 		var $link = $(this)
 		if (redirect == '/auth/success') {
 			$('.social-login-link').each(function() {
@@ -65,7 +83,7 @@ $(document).ready(function() {
 		redirect = '/event/'+$(this).attr('data-event');
 		
 		$('#signModal').modal('show');
-	})
+	})*/
 	
 	function Form($form, $elements, options) {
 		this.form = $form;

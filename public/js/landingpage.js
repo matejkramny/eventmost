@@ -4,7 +4,7 @@ $(document).ready(function(){
 	showText();
 
 	setTimeout(function() {
-    	$("#videoContainer")[0].pause();
+    	//$("#videoContainer")[0].pause();
     }, 7000);
 });
 
@@ -54,6 +54,7 @@ function image_animate() {
 		console.log("third log moving");
 		setTimeout(function(){
 			$('#plane3').animate({right: -400, top: 200}, 500, 'swing', function(){
+				$("#videoContainer")[0].pause();
 				counter++;
 				showForm();
 			});
@@ -127,5 +128,43 @@ function showForm(){
 		});
 
   	});
-  	
+
+  	$("#loadSoonEvents").click(function (){
+  		//var soonRes = '<div class="nspacer"></div><div>This is a test</div>';
+        //$('#fetchedEvents').html(soonRes);
+        $('#successmsg').html('<div style="margin-top:10px"><center><img src="../images/loading.gif" /></center></div>');
+        
+        $.ajax({
+		  method: "GET",
+		  url: "/events/loadsoonevents"
+		  //data: { name: "John", location: "Boston" }
+		}).done(function( msg ) {
+			$('#successmsg').html('');
+		    $('#fetchedEvents').html(msg);
+		  });
+
+  	});
+
+  	$("#loadNearestEvents").click(function (){
+  		console.log(window.lastCoords);
+  		var coords = window.lastCoords;
+  		$('#successmsg').html('<div style="margin-top:10px"><center><img src="../images/loading.gif" /></center></div>');
+  		$.ajax({
+		  method: "GET",
+		  url: "/events/loadnearevents/"+coords.lat+"/"+coords.lng
+		  //data: { name: "John", location: "Boston" }
+		}).done(function( msg ) {
+			if(msg == ''){
+				console.log("msg is empty");
+				$('#successmsg').html('<div><center><h3>No Event Happening Around You!</h3></center></div>');
+				setTimeout(function(){
+					$('#successmsg').html('');
+				}, '3000');
+			}else{
+				$('#successmsg').html('');
+				$('#fetchedEvents').html(msg);	
+			}
+		    
+		  });
+  	});
 }

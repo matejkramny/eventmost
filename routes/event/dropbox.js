@@ -15,6 +15,7 @@ exports.router = function (app) {
 }
 
 function view (req, res) {
+	res.locals.dropboxpage = true;
 	if (!res.locals.eventattending) {
 		res.format({
 			html: function() {

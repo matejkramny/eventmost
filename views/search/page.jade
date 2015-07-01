@@ -306,7 +306,7 @@
 								a(href="/logout", class="logout")
 									button.btn.btn-primary.font-e(type='submit', style="background-color:#0892a3; border-radius: 8px; margin-bottom:10px; font-size:15px; color:#e6e7e8; width:100%; min-width:150px;")
 										| ENTER
-				.col-md-12.col-sm-12.col-lg-12(style="padding-right:5px; padding-left:5px;")
+				.col-md-12.col-sm-12.col-lg-12(style="padding-right:5px; padding-left:5px;", id="parentContainer")
 					.pull-right.bg-green(id="arrangeby")
 						ul.nav.navbar-nav(style="padding:0px !important;")
 							li.dropdown
@@ -314,9 +314,13 @@
 									| Arrange by
 								ul.dropdown-menu.pull-right.new-drop(style="background-color:#f1f1f2 !important; color:#58585b;  padding:0px;")
 									li
-										a(href='/search/?arrange=nearby') Events Nearest My Location
+										a(id="loadNearestEvents") Events Nearest My Locations
+										//-
+											a(href='/search/?q=&arrange=nearby') Events Nearest My Location
 									li
-										a(href='/search/') Events Happening Soon
+										a(id="loadSoonEvents") Events Happening Soon
+										//-
+											a(href='/search') Events Happening Soon	
 					.col-md-3.col-sm-3.col-lg-3.pull-right.don-dis
 						| &nbsp;
 					//- 
@@ -355,9 +359,11 @@
 							br
 							.line-purple
 					else
-						for e in search.results
-							if((e.venue_name) && e.venue_name != '')
-								mixin eventItem(e)
+						#successmsg
+						#fetchedEvents
+							for e in search.results
+								if((e.venue_name) && e.venue_name != '')
+									mixin eventItem(e)
 
 block js
 	script(src="/js/crop/jquery.min.js" defer)

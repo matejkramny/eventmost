@@ -44,7 +44,17 @@ function removeProfileAPI (req, res) {
 
 function uploadAvatar(req, res){
 
-
+	if(!req.body._id){
+		res.format({
+			json: function() {
+				res.json({
+					status: 404,
+					message: "User Id missing"
+				})
+			}
+		});
+		return;
+	}
 	
 	/*models.User.findOne({_id:req.body._id} , function(err, u) {
 
@@ -123,11 +133,12 @@ function uploadAvatar(req, res){
 				createThumbnails();
 
 				console.log("Profile File Uploaded");
-						
+
 				res.format({
 					json: function() {
 						res.json({
 							status: 200,
+							url: config.host + u.avatar,
 							message: "File Uploaded Successfully."
 						})
 					}
