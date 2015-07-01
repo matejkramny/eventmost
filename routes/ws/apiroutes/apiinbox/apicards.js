@@ -136,6 +136,7 @@ function doNewCardAPI (req, res) {
 							json: function() {
 								res.send({
 									status: 200,
+									_id:card._id,
 									message: "Business card added."
 								})
 							}
