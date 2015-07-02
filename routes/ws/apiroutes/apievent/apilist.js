@@ -206,6 +206,9 @@ exports.eventdetails = function (req, res){
 					entry.description = entry.description.replace(/(<([^>]+)>)/ig,"");
 				}
 
+				if(entry && entry.avatar)
+					entry.avatar.url = util.editURL(entry.avatar.url);
+
 				res.format({
 					json: function() {
 						res.send({
@@ -328,14 +331,16 @@ exports.listMyEventsAPI = function (req, res) {
 							entry.description = entry.description.replace(/(<([^>]+)>)/ig,"");
 							//entry.description = entry.description.substr(0, 200)+"...";
 						}
-						
+
+						if (entry.avatar && entry.avatar.url)
+							entry.avatar.url = util.editURL(entry.avatar.url);
+
+						if (entry.attendee && entry.attendee.user && entry.attendee.user.avatar)
+							entry.attendee.user.avatar = util.editURL(entry.attendee.user.avatar);
+
+
 					});
 
-					if (evs.avatar && evs.avatar.url)
-						evs.avatar.url = util.editURL(evs.avatar.url);
-
-					if (evs.attendee && evs.attendee.user && evs.attendee.user.avatar)
-						evs.attendee.user.avatar = util.editURL(evs.attendee.user.avatar);
 
 					res.format({
 						json: function() {

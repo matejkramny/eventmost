@@ -41,6 +41,11 @@ function showCardsAPI (req, res) {
 	models.Card.find(query)
 		//.populate('user')
 		.exec(function(err, usercards) {
+			usercards.forEach(function(ucard){
+				console.log(ucard);
+				ucard.url = util.editURL(ucard.url);
+			});
+
 			res.format({
 				json: function() {
 					res.send({

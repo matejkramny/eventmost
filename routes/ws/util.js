@@ -24,7 +24,7 @@ exports.editURL = function (link){
 		return;
 	}
 
-	if(link.charAt(0) != "/")
+	if(link.indexOf(config.host) < 0 && link.charAt(0) != "/")
 		link = "/" + link;
 
 	if(link.indexOf(config.host) < 0)
@@ -33,7 +33,7 @@ exports.editURL = function (link){
 	if(link.indexOf("http://") < 0)
 		link = "http://" + link;
 
-	console.log("returning " + link);
+	//console.log("returning " + link);
 	return link;
 }
 
