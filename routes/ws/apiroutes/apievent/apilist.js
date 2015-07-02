@@ -144,7 +144,7 @@ exports.eventdetails = function (req, res){
 								lastAccess: thisAtt.user.lastAccess,
 								admin: thisAtt.user.admin,
 								businessCards: thisAtt.user.businessCards,
-								avatar: config.host + thisAtt.user.avatar,
+								avatar: util.editURL(thisAtt.user.avatar),
 								interests: thisAtt.user.interests,
 								education: thisAtt.user.education,
 								website: thisAtt.user.website,
@@ -161,7 +161,7 @@ exports.eventdetails = function (req, res){
 							attendeeObject.push({
 								"_id" : thisAtt._id,
 								"name" : thisAtt.user.name,
-								"avatar" : thisAtt.user.avatar,
+								"avatar" : util.editURL(thisAtt.user.avatar),
 								"admin" : thisAtt.admin,
 								"category" : thisAtt.category,
 								"haspaid" : thisAtt.haspaid,
@@ -269,7 +269,8 @@ exports.sortedevents = function (req, res) {
 						//console.log(entry.description);
 						entry.description = entry.description.replace(/(<([^>]+)>)/ig,"");
 						//entry.description = entry.description.substr(0, 200)+"...";
-						entry.avatar.url = config.host + entry.avatar.url;
+						if(entry.avatar)
+							entry.avatar.url = util.editURL(entry.avatar.url);
 					}
 					
 				});
@@ -331,10 +332,10 @@ exports.listMyEventsAPI = function (req, res) {
 					});
 
 					if (evs.avatar && evs.avatar.url)
-						evs.avatar.url = config.host + evs.avatar.url;
+						evs.avatar.url = util.editURL(evs.avatar.url);
 
 					if (evs.attendee && evs.attendee.user && evs.attendee.user.avatar)
-						evs.attendee.user.avatar = config.host + evs.attendee.user.avatar;
+						evs.attendee.user.avatar = util.editURL(evs.attendee.user.avatar);
 
 					res.format({
 						json: function() {

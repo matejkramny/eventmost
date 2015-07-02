@@ -139,7 +139,7 @@ function uploadAvatar(req, res){
 					json: function() {
 						res.json({
 							status: 200,
-							url: config.host + u.avatar,
+							url: util.editURL(u.avatar),
 							message: "File Uploaded Successfully."
 						})
 					}
@@ -272,6 +272,7 @@ exports.doEditProfileAPI = doEditProfileAPI = function (req, res) {
 				if (err) throw err;
 			})
 
+			u.avatar= util.editURL(u.avatar);
 			res.format({
 				json: function () {
 					res.send({
