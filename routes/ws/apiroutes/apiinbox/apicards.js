@@ -32,14 +32,20 @@ function showCardsAPI (req, res) {
 
 	console.log("Shows Cards ".red);
 	console.log(req.body);
+	console.log("host: " + config.host);
 
 	//console.log(req.user._id);
 
 	var query = { 'user': req.body._id};
 
 	models.Card.find(query)
-		.populate('user')
+		//.populate('user')
 		.exec(function(err, usercards) {
+			usercards.forEach(function(ucard){
+				console.log(ucard);
+				ucard.url = util.editURL(ucard.url);
+			});
+
 			res.format({
 				json: function() {
 					res.send({
@@ -90,7 +96,10 @@ function doNewCardAPI (req, res) {
 	console.log("do New Card".red);
 
 	console.log(req.body);
-
+	var businessCard;
+	var base64Image;
+	var dir = 'public/businesscards';
+	var i = 0;
 	if(req.body._id == ""){
 		res.format({
 			json: function() {
@@ -103,24 +112,44 @@ function doNewCardAPI (req, res) {
 	} else {
 		models.User.findById(req.body._id, function(err, user) {
 			if(user != null){
-				var newcard = new models.Card({
-					user: req.body._id,
-					location: req.body._location,
-					created: Date.now(),
-					primary: false
-				})
+				if (!fs.existsSync(dir)){
+					fs.mkdirSync(dir);
+				}
+				//businessCard = req.body.businessCard;
+				console.log("upload card: " + req.files.uploadCard.path);
+				//base64Image = businessCard.replace(/^data:image\/png;base64,/, "");
+				console.log("userId: " + req.body._id);
+				models.Card.find({user:req.body._id}).count(function(err,count){
+					i = count+1;
 
-				newcard.save(function(err) {
-					res.format({
-						json: function() {
-							res.send({
-								status: 200,
-								message: "Business card added."
-							})
-						}
+					var newcard = new models.Card({
+						user: req.body._id,
+						location: req.body._location,
+						url : config.host + '/businesscards/'+req.body._id + "+" + i +'.png',
+						created: Date.now(),
+						primary: false
 					})
-					return;
-				});
+					console.log("business count: " + i);
+					newcard.save(function(err,card) {
+						fs.readFile(req.files.uploadCard.path, function (err, data) {
+							fs.writeFile('public/businesscards/'+req.body._id + "+" + i +'.png', data, function(err){
+								if (err) throw err
+								console.log('Business card  saved.')
+							})
+						});
+
+						res.format({
+							json: function() {
+								res.send({
+									status: 200,
+									_id:card._id,
+									message: "Business card added."
+								})
+							}
+						})
+						return;
+					});
+				})
 			} else {
 				res.format({
 					json: function() {

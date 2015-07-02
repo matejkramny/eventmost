@@ -11,6 +11,7 @@ var scheme = schema({
 		type: ObjectId,
 		ref: 'User'
 	},
+	url:String,
 	location: String,
 	created: { type: Date, default: Date.now() },
 	primary: { type: Boolean, default: false }

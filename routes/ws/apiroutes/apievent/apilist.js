@@ -120,7 +120,7 @@ exports.eventdetails = function (req, res){
 
 	models.Event.find(query)
 	.populate('avatar attendees.user messages sponsorLayout.sponsor1 sponsorLayout.sponsor2 sponsorLayout.sponsor3')
-	.select('name start end address venue_name avatar source description attendees messages sponsorLayout')
+	.select('name start end address venue_name avatar source description attendees messages sponsorLayout allowAttendeesToCreateCategories')
 	.lean()
 	.exec(function(err, ev) {
 		
@@ -144,7 +144,7 @@ exports.eventdetails = function (req, res){
 								lastAccess: thisAtt.user.lastAccess,
 								admin: thisAtt.user.admin,
 								businessCards: thisAtt.user.businessCards,
-								avatar: config.host + thisAtt.user.avatar,
+								avatar: util.editURL(thisAtt.user.avatar),
 								interests: thisAtt.user.interests,
 								education: thisAtt.user.education,
 								website: thisAtt.user.website,
@@ -161,7 +161,7 @@ exports.eventdetails = function (req, res){
 							attendeeObject.push({
 								"_id" : thisAtt._id,
 								"name" : thisAtt.user.name,
-								"avatar" : thisAtt.user.avatar,
+								"avatar" : util.editURL(thisAtt.user.avatar),
 								"admin" : thisAtt.admin,
 								"category" : thisAtt.category,
 								"haspaid" : thisAtt.haspaid,
@@ -205,6 +205,9 @@ exports.eventdetails = function (req, res){
 				if((entry.description) && entry.description != ''){
 					entry.description = entry.description.replace(/(<([^>]+)>)/ig,"");
 				}
+
+				if(entry && entry.avatar)
+					entry.avatar.url = util.editURL(entry.avatar.url);
 
 				res.format({
 					json: function() {
@@ -269,7 +272,8 @@ exports.sortedevents = function (req, res) {
 						//console.log(entry.description);
 						entry.description = entry.description.replace(/(<([^>]+)>)/ig,"");
 						//entry.description = entry.description.substr(0, 200)+"...";
-						entry.avatar.url = config.host + entry.avatar.url;
+						if(entry.avatar)
+							entry.avatar.url = util.editURL(entry.avatar.url);
 					}
 					
 				});
@@ -327,11 +331,16 @@ exports.listMyEventsAPI = function (req, res) {
 							entry.description = entry.description.replace(/(<([^>]+)>)/ig,"");
 							//entry.description = entry.description.substr(0, 200)+"...";
 						}
-						
+
+						if (entry.avatar && entry.avatar.url)
+							entry.avatar.url = util.editURL(entry.avatar.url);
+
+						if (entry.attendee && entry.attendee.user && entry.attendee.user.avatar)
+							entry.attendee.user.avatar = util.editURL(entry.attendee.user.avatar);
+
+
 					});
 
-					evs.avatar.url = config.host + evs.avatar.url;
-					evs.attendee.user.avatar = config.host + evs.attendee.user.avatar;
 
 					res.format({
 						json: function() {
