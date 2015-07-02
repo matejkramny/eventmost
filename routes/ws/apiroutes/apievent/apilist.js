@@ -120,7 +120,7 @@ exports.eventdetails = function (req, res){
 
 	models.Event.find(query)
 	.populate('avatar attendees.user messages sponsorLayout.sponsor1 sponsorLayout.sponsor2 sponsorLayout.sponsor3')
-	.select('name start end address venue_name avatar source description attendees messages sponsorLayout')
+	.select('name start end address venue_name avatar source description attendees messages sponsorLayout allowAttendeesToCreateCategories')
 	.lean()
 	.exec(function(err, ev) {
 		

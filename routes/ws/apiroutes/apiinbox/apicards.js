@@ -39,7 +39,7 @@ function showCardsAPI (req, res) {
 	var query = { 'user': req.body._id};
 
 	models.Card.find(query)
-		.populate('user')
+		//.populate('user')
 		.exec(function(err, usercards) {
 			res.format({
 				json: function() {
