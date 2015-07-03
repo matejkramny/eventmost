@@ -27,6 +27,7 @@ function getMessageAPI (req, res) {
 	 		 res.format({
 					json: function() {
 						res.send({
+							status: 200,
 							messages: topicmessages
 						})
 					}
@@ -35,48 +36,56 @@ function getMessageAPI (req, res) {
 		
 }
 
-function newTopic (req , res)
-{
+function newTopic(req, res) {
 
-	if(req.body._id == req.body._to)
-	{
+	if (req.body._id == req.body._to) {
 		res.status(404).send('To and From are same.');
 		return;
 	}
-	
+
 	// Find if a topic exists between two.
-	var query = { users: {$all : [req.body._id , req.body._to]}};
-	
+	var query = {users: {$all: [req.body._id, req.body._to]}};
+
 	// Fetch My Topics.
 	models.Topic.find(query)
-	.select('users lastUpdated')
-	.sort('lastUpdated')
-	.exec(function(err, topics) {
-	 
-	 	if(topics.length > 0) // Topic is already created.
-	 	{
-	 		res.status(200).send('Topic already created');
-			return;
-	 	}
-	 	else // No topics found
-	 	{
-	 		var newtopic = new models.Topic({
-			lastUpdated: Date.now(),
-			users: [req.body._id, req.body._to]
-			});
-			
-			
-			newtopic.save(function(err) {
-			res.format({
-				json: function() {
-					res.send({
-						sent: true
-					});
+		.select('users lastUpdated')
+		.sort('lastUpdated')
+		.exec(function (err, topics) {
+
+			if (topics.length > 0) // Topic is already created.
+			{
+				res.format({
+					json: function () {
+						res.send({
+							status: 200,
+							message: "Topic Already created",
+							topic: topics[0]._id
+						});
 					}
 				});
+				return;
+			}
+			else // No topics found
+			{
+				var newtopic = new models.Topic({
+					lastUpdated: Date.now(),
+					users: [req.body._id, req.body._to]
 				});
-	 	}		
-	});
+
+
+				newtopic.save(function (err) {
+					res.format({
+						json: function () {
+							res.send({
+								status: 200,
+								sent: true,
+								topic: newtopic._id
+							});
+						}
+					});
+				});
+			}
+		});
 }
 
 function showMessageAPI (req, res) {
@@ -218,26 +227,100 @@ function postMessageAPI (req, res) {
 	}
 }
 
-function doNewMessageAPI (req, res) {
-	
-	var msg = new models.Message({
-			topic: req.params.id,
-			message: req.body._message,
-			read: false,
-			timeSent: Date.now(),
-			sentBy: req.body._id
+function doNewMessageAPI(req, res) {
+
+	var userid = req.body.uid;
+	if(!userid){
+		res.format({
+			json: function () {
+				res.send({
+					status: 403,
+					message: "uid not present"
+				})
+			}
 		})
-	
-	
-	msg.save(function(err) {
-			res.format({
-				json: function() {
-					res.send({
-						sent: true
-					})
+		return;
+	}
+
+	if (req.body.message.length == 0) {
+		res.format({
+			json: function () {
+				res.send({
+					status: 403,
+					message: "Too short"
+				})
+			}
+		})
+		return;
+	}
+
+	models.Topic.findOne({"_id": req.params.id})
+		.populate("users")
+		.exec(function (err, topic) {
+
+			//Find Topic
+			if (!topic) {
+				res.format({
+					json: function () {
+						res.send({
+							status: 404,
+							message: "Topic does not exist"
+						})
+					}
+				})
+				return;
+			}
+
+			//Find if User ID is allowed or exists in Topic to post
+			var user;
+			for (var i = 0; i < topic.users.length; i++) {
+				if(userid == topic.users[i]._id){
+					user = topic.users[i];
+					break;
 				}
+			}
+			if(!user){
+				res.format({
+					json: function () {
+						res.send({
+							status: 404,
+							message: "Unautorized"
+						})
+					}
+				})
+				return;
+			} else{
+				user.mailboxUnread++;
+				user.save();
+			}
+
+			//Do the thing
+			var msg = new models.Message({
+				topic: req.params.id,
+				message: req.body.message,
+				read: false,
+				timeSent: Date.now(),
+				sentBy: userid
+			})
+
+			topic.lastUpdated = Date.now();
+			topic.save();
+
+			msg.save(function (err) {
+				res.format({
+					json: function () {
+						res.send({
+							status: 200,
+							sent: true
+						})
+					}
+				});
 			});
-	});
+
+
+		});
+
+
 }
 
 function showMessagesAPI (req, res) {
@@ -253,6 +336,7 @@ function showMessagesAPI (req, res) {
 	 		res.format({
 					json: function() {
 						res.send({
+							status: 200,
 							topics: topics
 						})
 					}
