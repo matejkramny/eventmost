@@ -180,28 +180,49 @@ exports.eventdetails = function (req, res){
 			},
 			function(callback)
 			{
-				if(entry.messages){
-					models.EventMessage.find({"_id":{$in : entry.messages}}).populate("attendee comments").populate("likes").lean().exec(function (err, mes){
+				if (entry.messages) {
+					models.EventMessage.find({"_id": {$in: entry.messages}}).populate("attendee attendee.user comments").populate("likes").lean().exec(function (err, mes) {
 						entry.messages = "";
 
-						mes.forEach(function (thisMessage){
 
-							messagesObject.push({
-								"_id" : thisMessage._id,
-								"message" : thisMessage.message,
-								"posted" : thisMessage.posted,
-								"spam" : thisMessage.spam,
-								"isResponse" : thisMessage.isResponse,
-								"attendee" : thisMessage.attendee, // only attendees can post comment
-								"likes" : thisMessage.likes, //Only attendees can like
-								"comments" : thisMessage.comments
+						//tis a callback hell
+						var count = -1;
+
+						success = function (callback) {
+							mes.forEach(function fore(thisMessage) {
+								page = models.User.findOne({"_id": thisMessage.attendee.user}).exec(function (err, user) {
+
+									thisMessage.attendee.user = user;
+									messagesObject.push({
+										"_id": thisMessage._id,
+										"message": thisMessage.message,
+										"posted": thisMessage.posted,
+										"spam": thisMessage.spam,
+										"isResponse": thisMessage.isResponse,
+										"attendee": thisMessage.attendee, // only attendees can post comment
+										"likes": thisMessage.likes, //Only attendees can like
+										"comments": thisMessage.comments
+									});
+
+									console.log(count);
+									if(count++ == entry.messages.length){
+										console.log(count);
+										entry.messages = messagesObject;
+										console.log(messagesObject);
+										second(entry);
+									}
+								});
 							});
-						});
+						}
 
-						entry.messages = messagesObject;
-						callback(null, "two");
+
+						second = function (mess) {
+							callback(null, "two");
+						}
+
+						success(second);
 					})
-				}else {
+				} else {
 					callback(null, "two");
 				}
 			}],function(err, results){
