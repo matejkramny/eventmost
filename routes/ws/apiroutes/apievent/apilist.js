@@ -9,7 +9,7 @@ exports.router = function (app) {
 	.post('/api/events/my', exports.listMyEventsAPI)
 	.get('/api/events/near/:lat/:lng', exports.listNearEventsAPI)
 	.post('/api/sortedevents', exports.sortedevents)
-	.get('/api/event/detail/:id', exports.eventdetails)
+	.post('/api/event/detail/:id', exports.eventdetails)
 	.post('/api/events/all', exports.allevents)
 	.get('/api/event/cat/:id',exports.geteventcategories)
 	.get('/api/events/searchevents',exports.searchEvents)
@@ -180,25 +180,49 @@ exports.eventdetails = function (req, res){
 			},
 			function(callback)
 			{
-				if(entry.messages){
-					models.EventMessage.find({"_id":{$in : entry.messages}}).populate("attendee").populate("likes").lean().exec(function (err, mes){
+				if (entry.messages) {
+					models.EventMessage.find({"_id": {$in: entry.messages}}).populate("attendee attendee.user comments").populate("likes").lean().exec(function (err, mes) {
 						entry.messages = "";
-						mes.forEach(function (thisMessage){
-							messagesObject.push({
-								"message" : thisMessage.message,
-								"posted" : thisMessage.posted,
-								"spam" : thisMessage.spam,
-								"isResponse" : thisMessage.isResponse,
-								"attendee" : thisMessage.attendee._id, // only attendees can post comment
-								"likes" : thisMessage.likes, //Only attendees can like
-								"comments" : thisMessage.comments
-							});
-						});
 
-						entry.messages = messagesObject;
-						callback(null, "two");
+
+						//tis a callback hell
+						var count = -1;
+
+						success = function (callback) {
+							mes.forEach(function fore(thisMessage) {
+								page = models.User.findOne({"_id": thisMessage.attendee.user}).exec(function (err, user) {
+
+									thisMessage.attendee.user = user;
+									messagesObject.push({
+										"_id": thisMessage._id,
+										"message": thisMessage.message,
+										"posted": thisMessage.posted,
+										"spam": thisMessage.spam,
+										"isResponse": thisMessage.isResponse,
+										"attendee": thisMessage.attendee, // only attendees can post comment
+										"likes": thisMessage.likes, //Only attendees can like
+										"comments": thisMessage.comments
+									});
+
+									console.log(count);
+									if(count++ == entry.messages.length){
+										console.log(count);
+										entry.messages = messagesObject;
+										console.log(messagesObject);
+										second(entry);
+									}
+								});
+							});
+						}
+
+
+						second = function (mess) {
+							callback(null, "two");
+						}
+
+						success(second);
 					})
-				}else {
+				} else {
 					callback(null, "two");
 				}
 			}],function(err, results){
