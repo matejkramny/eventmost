@@ -9,7 +9,7 @@ exports.router = function (app) {
 	.post('/api/events/my', exports.listMyEventsAPI)
 	.get('/api/events/near/:lat/:lng', exports.listNearEventsAPI)
 	.post('/api/sortedevents', exports.sortedevents)
-	.get('/api/event/detail/:id', exports.eventdetails)
+	.post('/api/event/detail/:id', exports.eventdetails)
 	.post('/api/events/all', exports.allevents)
 	.get('/api/event/cat/:id',exports.geteventcategories)
 	.get('/api/events/searchevents',exports.searchEvents)
@@ -181,15 +181,18 @@ exports.eventdetails = function (req, res){
 			function(callback)
 			{
 				if(entry.messages){
-					models.EventMessage.find({"_id":{$in : entry.messages}}).populate("attendee").populate("likes").lean().exec(function (err, mes){
+					models.EventMessage.find({"_id":{$in : entry.messages}}).populate("attendee comments").populate("likes").lean().exec(function (err, mes){
 						entry.messages = "";
+
 						mes.forEach(function (thisMessage){
+
 							messagesObject.push({
+								"_id" : thisMessage._id,
 								"message" : thisMessage.message,
 								"posted" : thisMessage.posted,
 								"spam" : thisMessage.spam,
 								"isResponse" : thisMessage.isResponse,
-								"attendee" : thisMessage.attendee._id, // only attendees can post comment
+								"attendee" : thisMessage.attendee, // only attendees can post comment
 								"likes" : thisMessage.likes, //Only attendees can like
 								"comments" : thisMessage.comments
 							});

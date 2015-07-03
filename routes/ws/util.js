@@ -24,6 +24,9 @@ exports.editURL = function (link){
 		return;
 	}
 
+	if (link.indexOf("http://") < 0 || link.indexOf("https://") < 0)
+		return link;
+
 	if(link.indexOf(config.host) < 0 && link.charAt(0) != "/")
 		link = "/" + link;
 
