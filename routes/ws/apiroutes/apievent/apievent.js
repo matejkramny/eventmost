@@ -33,7 +33,7 @@ exports.router = function (app) {
 		.post('/api/event/:id/post', postMessageAPI)
 		.get('/api/event/:id', getEventAPI)
 		.get('/api/event/:id/avatar', getavatar)
-		.get('/api/convertSVGToPNG', exports.convertImageSVGToPNG)
+		.post('/api/convertSVGToPNG', exports.convertImageSVGToPNG)
 	/*
 	 .get('/api/event/:id/registrationpage', viewRegistrationPage)*/
 	
@@ -478,9 +478,27 @@ exports.convertImageSVGToPNG = function(req,res) {
 	 console.log("Finished saving", error);
 	 });*/
 	console.log(config.path)
-	gm(config.path + '/public/images/1slider.svg').write(config.path + '/public/images/1image.png', function(err){
+	var imageName = req.body.url;
+	imageName = imageName.substr(imageName.lastIndexOf('/')+1);
+	console.log(imageName);
+	gm(req.body.url).write(config.path + '/public/images/'+imageName+'1.png', function(err){
 		if (err){
 			console.log(err);
-		} else{console.log('image converted.')}
+		} else{
+			console.log('image converted.');
+			fs.readFile(config.path + '/public/images/'+imageName+'1.png',function(err,data){
+				var base64Image = data.toString('base64');
+				//var decodedImage = new Buffer(base64Image, 'base64');
+				res.format({
+					json: function() {
+						res.send({
+							status: 200,
+							//base64: base64Image
+							url: util.editURL('/images/'+imageName+'1.png')
+						})
+					}
+				})
+			})
+		}
 	})
 }
