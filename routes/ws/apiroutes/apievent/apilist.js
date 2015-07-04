@@ -115,6 +115,7 @@ exports.eventdetails = function (req, res){
 	var messagesObject = [];
 	var currentUser = req.body.uid;
 	var isattending = false;
+	var attendingas = "";
 	var comments = null;
 	var query = {"_id" : req.params.id};	
 
@@ -137,6 +138,7 @@ exports.eventdetails = function (req, res){
 
 							if(thisAtt.user._id.toString() == currentUser && thisAtt.isAttending){
 								isattending = true;
+								attendingas = thisAtt.category;
 							}
 
 							var user = {
@@ -186,7 +188,7 @@ exports.eventdetails = function (req, res){
 
 
 						//tis a callback hell
-						var count = -1;
+						var count = 0;
 
 						success = function (callback) {
 							mes.forEach(function fore(thisMessage) {
@@ -204,11 +206,9 @@ exports.eventdetails = function (req, res){
 										"comments": thisMessage.comments
 									});
 
-									console.log(count);
-									if(count++ == entry.messages.length){
-										console.log(count);
+
+									if(++count == mes.length){
 										entry.messages = messagesObject;
-										console.log(messagesObject);
 										second(entry);
 									}
 								});
@@ -226,6 +226,7 @@ exports.eventdetails = function (req, res){
 					callback(null, "two");
 				}
 			}],function(err, results){
+				console.log("entering final");
 				if((entry.description) && entry.description != ''){
 					entry.description = entry.description.replace(/(<([^>]+)>)/ig,"");
 				}
@@ -238,7 +239,8 @@ exports.eventdetails = function (req, res){
 						res.send({
 							status: 200,
 							event: entry,
-							attending: isattending
+							attending: isattending,
+							attendingAs: attendingas
 						});
 					}
 				});

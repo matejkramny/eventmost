@@ -12,6 +12,8 @@ var dropbox = require('./apidropbox')
 	, config = require('../../../../config')
 	, mongoose = require('mongoose')
 	, async = require('async')
+	, gm = require('gm')
+	, fs = require('fs')
 
 exports.router = function (app) {
 	add.router(app)
@@ -26,13 +28,14 @@ exports.router = function (app) {
 		.all('/api/event/:id/*', getEvent, attending)
 		.get('/api/event/:id/*', logImpression)
 		.get('/api/event/:id', getEvent, attending, logImpression, viewEvent)*/
-		
-		app.get('/api/event/:id/tickets', viewTicketsAPI)
+
+	app.get('/api/event/:id/tickets', viewTicketsAPI)
 		.post('/api/event/:id/post', postMessageAPI)
 		.get('/api/event/:id', getEventAPI)
-		.get('/api/event/:id/avatar',getavatar)
-		/*
-		.get('/api/event/:id/registrationpage', viewRegistrationPage)*/
+		.get('/api/event/:id/avatar', getavatar)
+		.post('/api/convertSVGToPNG', exports.convertImageSVGToPNG)
+	/*
+	 .get('/api/event/:id/registrationpage', viewRegistrationPage)*/
 	
 	edit.router(app)
 	messages.router(app)
@@ -466,4 +469,36 @@ function postMessageAPI (req, res) {
 		res.status(404).send('Only Attendee Can Send Message');
 	}
 	});
+}
+
+exports.convertImageSVGToPNG = function(req,res) {
+	console.log("in");
+	/*var writeStream = fs.createWriteStream("E:/software/imagesconvert/image.png");
+	 gm("E:/software/imagesconvert/1slider.svg").setFormat("png").write(writeStream, function(error){
+	 console.log("Finished saving", error);
+	 });*/
+	console.log(config.path)
+	var imageName = req.body.url;
+	imageName = imageName.substr(imageName.lastIndexOf('/')+1);
+	console.log(imageName);
+	gm(req.body.url).write(config.path + '/public/images/'+imageName+'1.png', function(err){
+		if (err){
+			console.log(err);
+		} else{
+			console.log('image converted.');
+			fs.readFile(config.path + '/public/images/'+imageName+'1.png',function(err,data){
+				var base64Image = data.toString('base64');
+				//var decodedImage = new Buffer(base64Image, 'base64');
+				res.format({
+					json: function() {
+						res.send({
+							status: 200,
+							//base64: base64Image
+							url: util.editURL('/images/'+imageName+'1.png')
+						})
+					}
+				})
+			})
+		}
+	})
 }
