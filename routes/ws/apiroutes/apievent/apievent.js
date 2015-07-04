@@ -12,6 +12,8 @@ var dropbox = require('./apidropbox')
 	, config = require('../../../../config')
 	, mongoose = require('mongoose')
 	, async = require('async')
+	, gm = require('gm')
+	, fs = require('fs')
 
 exports.router = function (app) {
 	add.router(app)
@@ -26,13 +28,14 @@ exports.router = function (app) {
 		.all('/api/event/:id/*', getEvent, attending)
 		.get('/api/event/:id/*', logImpression)
 		.get('/api/event/:id', getEvent, attending, logImpression, viewEvent)*/
-		
-		app.get('/api/event/:id/tickets', viewTicketsAPI)
+
+	app.get('/api/event/:id/tickets', viewTicketsAPI)
 		.post('/api/event/:id/post', postMessageAPI)
 		.get('/api/event/:id', getEventAPI)
-		.get('/api/event/:id/avatar',getavatar)
-		/*
-		.get('/api/event/:id/registrationpage', viewRegistrationPage)*/
+		.get('/api/event/:id/avatar', getavatar)
+		.get('/api/convertSVGToPNG', exports.convertImageSVGToPNG)
+	/*
+	 .get('/api/event/:id/registrationpage', viewRegistrationPage)*/
 	
 	edit.router(app)
 	messages.router(app)
@@ -466,4 +469,18 @@ function postMessageAPI (req, res) {
 		res.status(404).send('Only Attendee Can Send Message');
 	}
 	});
+}
+
+exports.convertImageSVGToPNG = function(req,res) {
+	console.log("in");
+	/*var writeStream = fs.createWriteStream("E:/software/imagesconvert/image.png");
+	 gm("E:/software/imagesconvert/1slider.svg").setFormat("png").write(writeStream, function(error){
+	 console.log("Finished saving", error);
+	 });*/
+	console.log(config.path)
+	gm(config.path + '/public/images/1slider.svg').write(config.path + '/public/images/1image.png', function(err){
+		if (err){
+			console.log(err);
+		} else{console.log('image converted.')}
+	})
 }
