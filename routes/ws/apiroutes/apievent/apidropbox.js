@@ -19,8 +19,11 @@ function viewDropboxAPI (req, res) {
 	
 	var event_id =  req.params.id;
 	models.Event.findById(event_id, function(err, ev) {
-		
-		if(ev.files.length > 0){
+
+
+		var fileslist = [];
+
+		if(ev && ev.files.length > 0){
 
 			//tis a callback hell
 			var count = 0;
@@ -28,12 +31,25 @@ function viewDropboxAPI (req, res) {
 			callbackhell = function(callback){
 				ev.files.forEach(function (thisFile){
 					models.User.findOne({"_id":thisFile.user},function (err, user){
-						thisFile.user = {
-							_id: user._id,
-							fullname: user.getName()
-						}
+
+						fileslist.push({
+							file: thisFile.file,
+							fileThumb: thisFile.fileThumb,
+							extension: thisFile.extension,
+							user : {
+								id: user._id,
+								fullname: user.getName()
+							},
+							name: thisFile.name,
+							size: thisFile.size,
+							_id: thisFile._id,
+							permissions: thisFile.permissions,
+							created: thisFile.created
+
+						});
 
 						if(++count == ev.files.length){
+
 							callback();
 						}
 
@@ -46,7 +62,7 @@ function viewDropboxAPI (req, res) {
 					json: function() {
 						res.send({
 							status: 200,
-							files: ev.files
+							files: fileslist
 						})
 					}
 				})

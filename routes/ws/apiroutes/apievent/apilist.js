@@ -142,6 +142,7 @@ exports.eventdetails = function (req, res){
 							}
 
 							var user = {
+								_id: thisAtt.user._id,
 								email: thisAtt.user.email,
 								lastAccess: thisAtt.user.lastAccess,
 								admin: thisAtt.user.admin,
@@ -202,6 +203,7 @@ exports.eventdetails = function (req, res){
 
 
 									thisMessage.attendee.user = {
+										_id: user._id,
 										email: user.email,
 										lastAccess: user.lastAccess,
 										admin: user.admin,
