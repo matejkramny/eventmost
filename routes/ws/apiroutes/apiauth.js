@@ -329,7 +329,7 @@ function doPasswordLogin (req, res) {
 			req.login(user, function(err) {
 				if (err) throw err;
 
-				user.avatar = config.host + user.avatar;
+				user.avatar = util.editURL(user.avatar);
 				res.format({
 					json: function() {
 						user.password = null;
