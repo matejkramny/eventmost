@@ -37,7 +37,7 @@ function viewDropboxAPI (req, res) {
 							fullname: user.getName()
 						}
 
-						filelist.push(thisFile);
+						fileslist.push(thisFile);
 
 						if(++count == ev.files.length){
 							callback();
@@ -52,7 +52,7 @@ function viewDropboxAPI (req, res) {
 					json: function() {
 						res.send({
 							status: 200,
-							files: filelist
+							files: fileslist
 						})
 					}
 				})
