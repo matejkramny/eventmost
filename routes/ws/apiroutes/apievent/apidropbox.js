@@ -32,14 +32,24 @@ function viewDropboxAPI (req, res) {
 				ev.files.forEach(function (thisFile){
 					models.User.findOne({"_id":thisFile.user},function (err, user){
 
-						thisFile.user = {
-							_id: user._id,
-							fullname: user.getName()
-						}
+						fileslist.push({
+							file: thisFile.file,
+							fileThumb: thisFile.fileThumb,
+							extension: thisFile.extension,
+							user : {
+								id: user._id,
+								fullname: user.getName()
+							},
+							name: thisFile.name,
+							size: thisFile.size,
+							_id: thisFile._id,
+							permissions: thisFile.permissions,
+							created: thisFile.created
 
-						fileslist.push(thisFile);
+						});
 
 						if(++count == ev.files.length){
+
 							callback();
 						}
 
