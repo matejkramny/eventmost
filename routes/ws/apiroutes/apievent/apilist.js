@@ -133,7 +133,7 @@ exports.eventdetails = function (req, res){
 						entry.attendees = "";
 						att.forEach(function (thisAtt){
 							if(thisAtt.admin == true){
-								entry.organizer = thisAtt.user.name;
+								entry.organizer = thisAtt.user.getName();
 							}
 
 							if(thisAtt.user._id.toString() == currentUser && thisAtt.isAttending){
