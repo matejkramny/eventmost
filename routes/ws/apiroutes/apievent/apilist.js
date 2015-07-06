@@ -185,7 +185,7 @@ exports.eventdetails = function (req, res){
 			{
 				if (entry.messages) {
 					models.EventMessage.find({"_id": {$in: entry.messages}}).populate("attendee attendee.user comments").populate("likes").lean().exec(function (err, mes) {
-						entry.messages = "";
+						entry.messages = [];
 
 						console.log("EventDetail: messages " + mes.length)
 						//tis a callback hell
