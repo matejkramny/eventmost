@@ -194,7 +194,26 @@ exports.eventdetails = function (req, res){
 							mes.forEach(function fore(thisMessage) {
 								page = models.User.findOne({"_id": thisMessage.attendee.user}).exec(function (err, user) {
 
-									thisMessage.attendee.user = user;
+
+									thisMessage.attendee.user = {
+										email: user.email,
+										lastAccess: user.lastAccess,
+										admin: user.admin,
+										businessCards: user.businessCards,
+										avatar: util.editURL(user.avatar),
+										interests: user.interests,
+										education: user.education,
+										website: user.website,
+										location: user.location,
+										company: user.company,
+										desc: user.desc,
+										position: user.position,
+										surname: user.surname,
+										name: user.name,
+										disabled: user.disabled,
+										created: user.created
+									}
+
 									messagesObject.push({
 										"_id": thisMessage._id,
 										"message": thisMessage.message,
