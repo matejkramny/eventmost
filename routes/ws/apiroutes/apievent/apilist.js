@@ -65,7 +65,7 @@ exports.listEventsAPI = function (req, res) {
 							models.Attendee.findOne({"_id": thisAttendee}).exec(function (err, att){
 								if(att.admin == true){
 									models.User.findOne({"_id": att.user}).exec(function (err, user){
-										entry.organizer = user.getName;
+										entry.organizer = user.surname == "" ? user.name : user.name+ " " + user.surname;
 									})
 								}
 							});
@@ -130,10 +130,10 @@ exports.eventdetails = function (req, res){
 			function(callback){
 				if(entry.attendees){
 					models.Attendee.find({"_id": {$in : entry.attendees}}).populate('user').lean().exec(function (err, att){
-						entry.attendees = "";
+						entry.attendees = [];
 						att.forEach(function (thisAtt){
 							if(thisAtt.admin == true){
-								entry.organizer = thisAtt.user.getName();
+								entry.organizer = thisAtt.user.surname == "" ? thisAtt.user.name : thisAtt.user.name+ " " + thisAtt.user.surname;
 							}
 
 							if(thisAtt.user._id.toString() == currentUser && thisAtt.isAttending){
