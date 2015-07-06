@@ -23,7 +23,7 @@ function viewDropboxAPI (req, res) {
 
 		var fileslist = [];
 
-		if(ev.files.length > 0){
+		if(ev && ev.files.length > 0){
 
 			//tis a callback hell
 			var count = 0;
