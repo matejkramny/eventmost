@@ -477,16 +477,24 @@ exports.convertImageSVGToPNG = function(req,res) {
 	 gm("E:/software/imagesconvert/1slider.svg").setFormat("png").write(writeStream, function(error){
 	 console.log("Finished saving", error);
 	 });*/
-	console.log(config.path)
 	var imageName = req.body.url;
 	imageName = imageName.substr(imageName.lastIndexOf('/')+1);
+	imageName = imageName.substr(0,imageName.indexOf('.'));
 	console.log(imageName);
 	gm(req.body.url).write(config.path + '/public/images/'+imageName+'1.png', function(err){
 		if (err){
 			console.log(err);
 		} else{
 			console.log('image converted.');
-			fs.readFile(config.path + '/public/images/'+imageName+'1.png',function(err,data){
+			res.format({
+				json: function() {
+					res.send({
+						status: 200,
+						url: util.editURL('/images/'+imageName+'1.png')
+					})
+				}
+			})
+			/*fs.readFile(config.path + '/public/images/'+imageName+'1.png',function(err,data){
 				var base64Image = data.toString('base64');
 				//var decodedImage = new Buffer(base64Image, 'base64');
 				res.format({
@@ -498,7 +506,7 @@ exports.convertImageSVGToPNG = function(req,res) {
 						})
 					}
 				})
-			})
+			})*/
 		}
 	})
 }

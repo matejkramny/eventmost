@@ -65,7 +65,7 @@ exports.listEventsAPI = function (req, res) {
 							models.Attendee.findOne({"_id": thisAttendee}).exec(function (err, att){
 								if(att.admin == true){
 									models.User.findOne({"_id": att.user}).exec(function (err, user){
-										entry.organizer = user.getName;
+										entry.organizer = user.surname == "" ? user.name : user.name+ " " + user.surname;
 									})
 								}
 							});
@@ -130,10 +130,10 @@ exports.eventdetails = function (req, res){
 			function(callback){
 				if(entry.attendees){
 					models.Attendee.find({"_id": {$in : entry.attendees}}).populate('user').lean().exec(function (err, att){
-						entry.attendees = "";
+						entry.attendees = [];
 						att.forEach(function (thisAtt){
 							if(thisAtt.admin == true){
-								entry.organizer = thisAtt.user.name;
+								entry.organizer = thisAtt.user.surname == "" ? thisAtt.user.name : thisAtt.user.name+ " " + thisAtt.user.surname;
 							}
 
 							if(thisAtt.user._id.toString() == currentUser && thisAtt.isAttending){
@@ -173,6 +173,7 @@ exports.eventdetails = function (req, res){
 						});
 
 						entry.attendees = attendeeObject;
+						console.log("EventDetail: attendees " + att.length)
 						callback(null, 'one');
 					});
 				}else{
@@ -184,17 +185,41 @@ exports.eventdetails = function (req, res){
 			{
 				if (entry.messages) {
 					models.EventMessage.find({"_id": {$in: entry.messages}}).populate("attendee attendee.user comments").populate("likes").lean().exec(function (err, mes) {
-						entry.messages = "";
+						entry.messages = [];
 
-
+						console.log("EventDetail: messages " + mes.length)
 						//tis a callback hell
 						var count = 0;
 
 						success = function (callback) {
+							if(mes.length <= 0){
+								second(entry);
+								return;
+							}
+
 							mes.forEach(function fore(thisMessage) {
 								page = models.User.findOne({"_id": thisMessage.attendee.user}).exec(function (err, user) {
 
-									thisMessage.attendee.user = user;
+
+									thisMessage.attendee.user = {
+										email: user.email,
+										lastAccess: user.lastAccess,
+										admin: user.admin,
+										businessCards: user.businessCards,
+										avatar: util.editURL(user.avatar),
+										interests: user.interests,
+										education: user.education,
+										website: user.website,
+										location: user.location,
+										company: user.company,
+										desc: user.desc,
+										position: user.position,
+										surname: user.surname,
+										name: user.name,
+										disabled: user.disabled,
+										created: user.created
+									}
+
 									messagesObject.push({
 										"_id": thisMessage._id,
 										"message": thisMessage.message,

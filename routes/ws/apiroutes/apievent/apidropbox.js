@@ -21,14 +21,39 @@ function viewDropboxAPI (req, res) {
 	models.Event.findById(event_id, function(err, ev) {
 		
 		if(ev.files.length > 0){
-			res.format({
-				json: function() {
-					res.send({
-						status: 200,
-						files: ev.files
+
+			//tis a callback hell
+			var count = 0;
+
+			callbackhell = function(callback){
+				ev.files.forEach(function (thisFile){
+					models.User.findOne({"_id":thisFile.user},function (err, user){
+						thisFile.user = {
+							_id: user._id,
+							fullname: user.getName()
+						}
+
+						if(++count == ev.files.length){
+							callback();
+						}
+
 					})
-				}
-			})
+				})
+			}
+
+			done = function(){
+				res.format({
+					json: function() {
+						res.send({
+							status: 200,
+							files: ev.files
+						})
+					}
+				})
+			}
+
+			callbackhell(done);
+
 		}else{
 			res.format({
 				json: function() {
