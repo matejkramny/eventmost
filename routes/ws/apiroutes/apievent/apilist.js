@@ -505,7 +505,7 @@ exports.listNearEventsAPI = function (req, res) {
 							json: function() {
 								res.send({
 									status: 200,
-									events: geos
+									events: events
 								})
 							}
 						})
