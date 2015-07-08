@@ -109,7 +109,7 @@ exports.listEventsAPI = function (req, res) {
 	})
 }
 
-exports.eventdetails = function (req, res){
+exports.eventdetails = function (req, res) {
 
 	var attendeeObject = [];
 	var messagesObject = [];
@@ -117,84 +117,80 @@ exports.eventdetails = function (req, res){
 	var isattending = false;
 	var attendingas = "";
 	var comments = null;
-	var query = {"_id" : req.params.id};	
+	var query = {"_id": req.params.id};
 
 	models.Event.find(query)
-	.populate('avatar attendees.user messages sponsorLayout.sponsor1 sponsorLayout.sponsor2 sponsorLayout.sponsor3')
-	.select('name start end address venue_name avatar source description attendees messages sponsorLayout allowAttendeesToCreateCategories')
-	.lean()
-	.exec(function(err, ev) {
-		
-		var entry = ev[0];
-		async.series([
-			function(callback){
-				if(entry.attendees){
-					models.Attendee.find({"_id": {$in : entry.attendees}}).populate('user').lean().exec(function (err, att){
-						entry.attendees = [];
-						att.forEach(function (thisAtt){
-							if(thisAtt.admin == true){
-								entry.organizer = thisAtt.user.surname == "" ? thisAtt.user.name : thisAtt.user.name+ " " + thisAtt.user.surname;
-							}
+		.populate('avatar attendees.user messages sponsorLayout.sponsor1 sponsorLayout.sponsor2 sponsorLayout.sponsor3')
+		.select('name start end address venue_name avatar source description attendees messages sponsorLayout allowAttendeesToCreateCategories')
+		.lean()
+		.exec(function (err, ev) {
 
-							if(thisAtt.user._id.toString() == currentUser && thisAtt.isAttending){
-								isattending = true;
-								attendingas = thisAtt.category;
-							}
+			var entry = ev[0];
+			async.series([
+				function (callback) {
+					if (entry.attendees) {
+						models.Attendee.find({"_id": {$in: entry.attendees}}).populate('user').lean().exec(function (err, att) {
+							entry.attendees = [];
+							att.forEach(function (thisAtt) {
+								if (thisAtt.admin == true) {
+									entry.organizer = thisAtt.user.surname == "" ? thisAtt.user.name : thisAtt.user.name + " " + thisAtt.user.surname;
+								}
 
-							var user = {
-								_id: thisAtt.user._id,
-								email: thisAtt.user.email,
-								lastAccess: thisAtt.user.lastAccess,
-								admin: thisAtt.user.admin,
-								businessCards: thisAtt.user.businessCards,
-								avatar: util.editURL(thisAtt.user.avatar),
-								interests: thisAtt.user.interests,
-								education: thisAtt.user.education,
-								website: thisAtt.user.website,
-								location: thisAtt.user.location,
-								company: thisAtt.user.company,
-								desc: thisAtt.user.desc,
-								position: thisAtt.user.position,
-								surname: thisAtt.user.surname,
-								name: thisAtt.user.name,
-								disabled: thisAtt.user.disabled,
-								created: thisAtt.user.created
-							}
+								if (thisAtt.user._id.toString() == currentUser && thisAtt.isAttending) {
+									isattending = true;
+									attendingas = thisAtt.category;
+								}
 
-							attendeeObject.push({
-								"_id" : thisAtt._id,
-								"name" : thisAtt.user.name,
-								"avatar" : util.editURL(thisAtt.user.avatar),
-								"admin" : thisAtt.admin,
-								"category" : thisAtt.category,
-								"haspaid" : thisAtt.haspaid,
-								"checkedoff" : thisAtt.checkedoff,
-								"user": user
+								var user = {
+									_id: thisAtt.user._id,
+									email: thisAtt.user.email,
+									lastAccess: thisAtt.user.lastAccess,
+									admin: thisAtt.user.admin,
+									businessCards: thisAtt.user.businessCards,
+									avatar: util.editURL(thisAtt.user.avatar),
+									interests: thisAtt.user.interests,
+									education: thisAtt.user.education,
+									website: thisAtt.user.website,
+									location: thisAtt.user.location,
+									company: thisAtt.user.company,
+									desc: thisAtt.user.desc,
+									position: thisAtt.user.position,
+									surname: thisAtt.user.surname,
+									name: thisAtt.user.name,
+									disabled: thisAtt.user.disabled,
+									created: thisAtt.user.created
+								}
+
+								attendeeObject.push({
+									"_id": thisAtt._id,
+									"name": thisAtt.user.name,
+									"avatar": util.editURL(thisAtt.user.avatar),
+									"admin": thisAtt.admin,
+									"category": thisAtt.category,
+									"haspaid": thisAtt.haspaid,
+									"checkedoff": thisAtt.checkedoff,
+									"user": user
+								});
 							});
+
+							entry.attendees = attendeeObject;
+							console.log("EventDetail: attendees " + att.length)
+							callback(null, 'one');
 						});
-
-						entry.attendees = attendeeObject;
-						console.log("EventDetail: attendees " + att.length)
+					} else {
 						callback(null, 'one');
-					});
-				}else{
-					callback(null, 'one');
-				}
-				
-			},
-			function(callback)
-			{
-				if (entry.messages) {
-					models.EventMessage.find({"_id": {$in: entry.messages}}).populate("attendee attendee.user comments").populate("likes").lean().exec(function (err, mes) {
-						entry.messages = [];
+					}
 
-						console.log("EventDetail: messages " + mes.length)
-						//tis a callback hell
-						var count = 0;
+				},
+				function (callback) {
+					if (entry.messages) {
+						models.EventMessage.find({"_id": {$in: entry.messages}}).populate("attendee attendee.user comments").populate("likes").lean().exec(function (err, mes) {
+							entry.messages = [];
 
-						success = function (callback) {
-							if(mes.length <= 0){
-								second(entry);
+							var count = 0;
+
+							if (mes.length <= 0) {
+								callback(null, "two");
 								return;
 							}
 
@@ -234,35 +230,28 @@ exports.eventdetails = function (req, res){
 									});
 
 
-									if(++count == mes.length){
+									if (++count == mes.length) {
 										entry.messages = messagesObject;
-										second(entry);
+										callback(null, "two");
 									}
 								});
 							});
-						}
 
-
-						second = function (mess) {
-							callback(null, "two");
-						}
-
-						success(second);
-					})
-				} else {
-					callback(null, "two");
-				}
-			}],function(err, results){
+						})
+					} else {
+						callback(null, "two");
+					}
+				}], function (err, results) {
 				console.log("entering final");
-				if((entry.description) && entry.description != ''){
-					entry.description = entry.description.replace(/(<([^>]+)>)/ig,"");
+				if ((entry.description) && entry.description != '') {
+					entry.description = entry.description.replace(/(<([^>]+)>)/ig, "");
 				}
 
-				if(entry && entry.avatar)
+				if (entry && entry.avatar)
 					entry.avatar.url = util.editURL(entry.avatar.url);
 
 				res.format({
-					json: function() {
+					json: function () {
 						res.send({
 							status: 200,
 							event: entry,
@@ -272,7 +261,7 @@ exports.eventdetails = function (req, res){
 					}
 				});
 			});
-	});
+		});
 }
 
 exports.sortedevents = function (req, res) {

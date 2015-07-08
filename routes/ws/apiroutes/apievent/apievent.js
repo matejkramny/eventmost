@@ -4,6 +4,7 @@ var dropbox = require('./apidropbox')
 	, list = require('./apilist')
 	, util = require('../../util')
 	, messages = require('./apimessages')
+	, inboxMessages = require('../apimessages')
 	, attendees = require('./apiattendees')
 	, models = require('../../../../models')
 	, admin = require('./apiadmin/apiadmin')
@@ -402,63 +403,12 @@ function postMessageAPI(req, res) {
 				// Find if a topic exist between two users or not
 				var query = {users: {$all: [user_id, attendee_id]}};
 
-				// Fetch My Topics.
-				models.Topic.find(query)
-					.select('users lastUpdated')
-					.sort('lastUpdated')
-					.exec(function (err, topics) {
 
-						// topic found - add message to existing topic
-						if (topics.length > 0) {
-							var msg = new models.Message({
-								sentBy: user_id,
-								message: message,
-								timeSent: Date.now(),
-								topic: topics[0]._id
-							});
+				//find topic
+				topicID = inboxMessages.checkNewTopic(user_id, attendee_id);
+				//Send message
+				inboxMessages.postMessageAPI(topicID,message,res);
 
-							msg.save();
-
-
-							res.format({
-								json: function () {
-									res.send({
-										status: 200
-									})
-								}
-							})
-							return;
-						}
-						else // Not Topic found. Create a new one.
-						{
-							var newtopic = new models.Topic({
-								lastUpdated: Date.now(),
-								users: [user_id, attendee_id]
-							});
-
-							var msg = new models.Message({
-								sentBy: user_id,
-								message: message,
-								timeSent: Date.now(),
-								topic: newtopic._id
-							});
-
-							msg.save();
-
-							newtopic.save();
-
-
-							res.format({
-								json: function () {
-									res.send({
-										status: 200
-									})
-								}
-							})
-							return;
-
-						}
-					});
 			}
 			else {
 				console.log("Sending 404");
