@@ -10,18 +10,27 @@ exports.router = function (app) {
         .post('/api/inbox/messages/:id/new', doNewMessageAPI)
         .post('/api/inbox/topic/:id', getMessageAPI)
         .post('/api/inbox/topics/new', newTopic)
+        .post('/api/inbox/read/:id',readAPI)
+        .post('/api/inbox/delete/message/:id', deletemessageAPI)
+        .post('/api/inbox/delete/topic/:id', deletetopicAPI)
     //.get('/api/inbox/message/:id', getMessageAPI, showMessageAPI)
     //.post('/api/inbox/message/:id', getMessageAPI, postMessageAPI)
 }
 
 function getMessageAPI(req, res) {
     var id = req.params.id;
-    var query = {topic: req.params.id};
+    var query
+    if (req.body.read == undefined) {
+        query = {topic: req.params.id};
+    } else {
+        query = {topic: req.params.id, read: req.body.read};
+    }
 
+    console.log(query)
     models.Message.find(query)
         .populate({path: "sentBy", select: 'name'})
         .select('message timeSent sentBy')
-        .sort('timeSent')
+        .sort({"timesent": 1})
         .exec(function (err, topicmessages) {
 
             res.format({
@@ -33,10 +42,9 @@ function getMessageAPI(req, res) {
                 }
             });
         });
-
 }
 
-exports.newTopic = function (req, res) {
+function newTopic(req, res) {
 
     if (req.body._id == req.body._to) {
         res.status(404).send('To and From are same.');
@@ -46,7 +54,7 @@ exports.newTopic = function (req, res) {
     checkNewTopic(req.body._id, req.body._to);
 }
 
-exports.checkNewTopic = function (uid, to, res) {
+exports.checkNewTopic = checkNewTopic = function (uid, to, res) {
     // Find if a topic exists between two.
     var query = {users: {$all: [uid, req.body.to]}};
 
@@ -240,7 +248,7 @@ function showMessageAPI(req, res) {
     }
 }
 
-exports.doNewMessageAPI = function (req, res) {
+function doNewMessageAPI(req, res) {
 
     var userid = req.body.uid;
     if (!userid) {
@@ -255,7 +263,7 @@ exports.doNewMessageAPI = function (req, res) {
         return;
     }
 
-    if (req.body.message.length == 0) {
+    if (req.body.message && req.body.message.length == 0) {
         res.format({
             json: function () {
                 res.send({
@@ -266,11 +274,11 @@ exports.doNewMessageAPI = function (req, res) {
         })
         return;
     }
-
+    newMessage(req.params.id, req.body._message, userid, res);
 
 }
 
-exports.newMessage = function(topicID,message,res){
+exports.newMessage = newMessage = function(topicID,message,userid, res){
 
     models.Topic.findOne({"_id": topicID})
         .populate("users")
@@ -361,4 +369,29 @@ function showMessagesAPI(req, res) {
             });
 
         });
+}
+
+function readAPI(req,res){
+    messageid = req.params.id;
+
+    var query = {_id: messageid}
+    models.Message.findOneAndUpdate(query, { $set: { read: true }}, {upsert:true},function(err, message){
+        if(err) return res.send(500, {error: err})
+        return res.send(200)
+    });
+}
+
+function deletemessageAPI(req,res){
+    var query = {_id: req.params.id}
+    models.Message.find(query).remove().exec();
+    res.send(200);
+}
+
+function deletetopicAPI(req,res){
+    var query = {_id: req.params.id};
+    models.Topic.find(query).remove().exec();
+
+    query = {topic: req.params.id}
+    models.Message.find(query).remove().exec();
+    res.send(200);
 }

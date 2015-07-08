@@ -4,7 +4,7 @@ var dropbox = require('./apidropbox')
 	, list = require('./apilist')
 	, util = require('../../util')
 	, messages = require('./apimessages')
-	, inboxMessages = require('../apimessages')
+	, inboxMessages = require('../apiinbox/apimessages')
 	, attendees = require('./apiattendees')
 	, models = require('../../../../models')
 	, admin = require('./apiadmin/apiadmin')
@@ -407,7 +407,7 @@ function postMessageAPI(req, res) {
 				//find topic
 				topicID = inboxMessages.checkNewTopic(user_id, attendee_id);
 				//Send message
-				inboxMessages.postMessageAPI(topicID,message,res);
+				inboxMessages.newMessage(topicID,message,res);
 
 			}
 			else {
