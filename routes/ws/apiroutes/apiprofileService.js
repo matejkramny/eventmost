@@ -17,7 +17,8 @@ exports.router = function (app) {
 		.all('/api/user/:id/*', util.authorized)
 		.post('/api/user/:id/save', saveUserAPI)
 		.post('/api/user/:id/remove', removeProfileAPI)
-		.get('/api/user/:id', getUserInfo);
+		.get('/api/user/:id', getUserInfo)
+		.post('/api/profile/logingsettings/:id',loginsettings);
 }
 
 function removeProfileAPI (req, res) {
@@ -500,4 +501,31 @@ exports.getUserInfo = getUserInfo = function(req,res){
 	})
 	return;
 
+}
+
+exports.loginsettings = loginsettings = function (req, res) {
+	try {
+
+
+
+		var query = {_id: req.params.id};
+		var setvalue = {};
+
+		if (req.body.name != undefined)
+			setvalue.name = req.body.name;
+
+		if (req.body.surname != undefined)
+			setvalue.surname = req.body.surname;
+
+		if (req.body.company != undefined)
+			setvalue.company = req.body.company;
+
+		models.User.findOneAndUpdate(query, {$set: setvalue}, {upsert: false}, function (err, user) {
+			if (err | !user) return res.send(404, {error: err})
+			res.send(200);
+
+		})
+	} catch (err) {
+		console.log(err);
+	}
 }
