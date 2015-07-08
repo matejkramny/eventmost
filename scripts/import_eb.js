@@ -126,6 +126,7 @@ var models = require('../models'),
 	request = require('request')
 	
 var api = 'https://www.eventbriteapi.com/v3/events/search/';
+var api_venues = "https://www.eventbriteapi.com/v3/venues/"
 var app_key = 'token=AA4GISV6PONEGUPPZ34T';
 
 async.eachSeries(['London'], function(city, cb) {
@@ -156,7 +157,7 @@ function download (city, download_finished) {
 					console.log("Error parsing JSON")
 					throw e;
 				}
-
+				console.log(api+"?"+app_key+"&venue.city="+city+"&start_date.range_start="+range_start+"&start_date.range_end="+range_end);
 				//console.log(parsed);
 			
 				var events_mix = parsed.events;
@@ -235,7 +236,13 @@ function download (city, download_finished) {
 				}
 		        callback(null, av);
 		    },
-		    function(av, callback) {
+		    function(av, callback){
+		    	request(api_venues+ev.venue_id+"/?"+app_key, function(err, res, vnbody) {
+					venueObj = JSON.parse(vnbody);
+					callback(null, av, venueObj)
+				});
+		    },
+		    function(av, venueObj, callback) {
 		      	var eventDoc = {
 					source: {
 						eventbrite: true,
@@ -262,19 +269,29 @@ function download (city, download_finished) {
 				} else {
 					eventDoc.created = new Date();
 				}
-
+	 
 				eventDoc.address = "";
-				if (ev.venue.name) {
-					eventDoc.venue_name = ev.venue.name;
+				haveAddress = false;
+				
+				if (venueObj.name) {
+					eventDoc.venue_name = venueObj.name;
 				}
-				if (ev.venue.address.address_1) {
-					eventDoc.address += ev.venue.address.address_1;
+				if (venueObj.address.address_1 && venueObj.address.address_1 != null) {
+					eventDoc.address += venueObj.address.address_1;
+					haveAddress = true;
 				}
-				if (ev.venue.address.city && ev.venue.address.city != '') {
-					eventDoc.address += ', '+ev.venue.address.city;
+				if (venueObj.address.city && venueObj.address.city != '') {
+					if(haveAddress == true){
+						eventDoc.address += ', ';
+					}
+					eventDoc.address += venueObj.address.city;
+					haveAddress = true;
 				}
-				if (ev.venue.address.postal_code && ev.venue.address.postal_code != '') {
-					eventDoc.address += ', '+ev.venue.address.postal_code;
+				if (venueObj.address.postal_code && venueObj.address.postal_code != '') {
+					if(haveAddress == true){
+						eventDoc.address += ', ';
+					}
+					eventDoc.address += venueObj.address.postal_code;
 				}
 
 				eventDoc.avatar = av._id;
