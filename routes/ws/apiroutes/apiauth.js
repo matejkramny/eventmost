@@ -229,7 +229,7 @@ function registerUser(req, res){
 	var email = req.body.login,
 	password = req.body.password,
 	name = req.body.name;
-	
+
 	try {
 		if (!email || !password || !name) {
 			throw Error();
@@ -423,7 +423,7 @@ function doPasswordReset (req, res) {
 			return;
 		}
 		
-		transport.sendMail(options, function(err, response) {
+		config.transport.sendMail(options, function(err, response) {
 			if (err) throw err;
 		
 			console.log("Email sent.."+response.message)
@@ -566,7 +566,7 @@ function performPasswordReset (req, res) {
 				return;
 			}
 			
-			transport.sendMail(options, function(err, response) {
+			config.transport.sendMail(options, function(err, response) {
 				if (err) throw err;
 		
 				console.log("Email sent.."+response.message)
@@ -581,7 +581,7 @@ function performPasswordReset (req, res) {
 			emailNotification.save(function(err) {
 				if (err) throw err;
 			});
-			
+
 			return;
 		}
 		
