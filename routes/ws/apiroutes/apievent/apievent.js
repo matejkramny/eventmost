@@ -376,99 +376,95 @@ function viewTicketsAPI (req, res) {
 	
 }
 
-function postMessageAPI (req, res) {
-	
-	
-	 var message = req.body.message;
-	 var user_id = req.body._id;
-	 
-	 models.Event.findOne({_id : req.params.id})
-	.populate(
+function postMessageAPI(req, res) {
+
+
+	var message = req.body.message;
+	var user_id = req.body._id;
+
+	models.Event.findOne({_id: req.params.id})
+		.populate(
 		{
 			// Also need to check admin here.
-			path:'attendees',
-			match: { user: user_id }
+			path: 'attendees',
+			match: {user: user_id}
 		}
 	)
-	.exec(function(err, event) 
-	{	
-		// Found the Event. Now Found the Attendee Against the User ID.
-		//console.log(event);
-	// only attendee can comment
-	if(event.attendees.length > 0)
-	{
-		var message = req.body.message;
-		var event_id = event._id;
-		var attendee_id =  event.attendees[0].user;
-		
-		// Find if a topic exist between two users or not
-		var query = { users: {$all : [user_id , attendee_id]}};
-	
-		// Fetch My Topics.
-		models.Topic.find(query)
-		.select('users lastUpdated')
-		.sort('lastUpdated')
-		.exec(function(err, topics) {
-		
-		// topic found - add message to existing topic
-		if(topics.length > 0)	
-		{
-			var msg = new models.Message({
-				sentBy: user_id,
-				message: message,
-				timeSent: Date.now(),
-				topic: topics[0]._id
-				});
-		
-			msg.save();
-			
-			
-			res.format({
-				json: function() {
-					res.send({
-						status: 200
-					})
-				}
-			})
-			return;
-		}
-		else // Not Topic found. Create a new one.
-		{
-			var newtopic = new models.Topic({
-			lastUpdated: Date.now(),
-			users: [user_id , attendee_id]
-			});
-			
-			var msg = new models.Message({
-				sentBy: user_id,
-				message: message,
-				timeSent: Date.now(),
-				topic: newtopic._id
-				});
-		
-			msg.save();
-			
-			newtopic.save();
-			
-			
-			res.format({
-				json: function() {
-					res.send({
-						status: 200
-					})
-				}
-			})
-			return;
-				
-		}
-	});	
-	}
-	else
-	{
-		console.log("Sending 404");
-		res.status(404).send('Only Attendee Can Send Message');
-	}
-	});
+		.exec(function (err, event) {
+			// Found the Event. Now Found the Attendee Against the User ID.
+			//console.log(event);
+			// only attendee can comment
+			if (event.attendees.length > 0) {
+				var message = req.body.message;
+				var event_id = event._id;
+				var attendee_id = event.attendees[0].user;
+
+				// Find if a topic exist between two users or not
+				var query = {users: {$all: [user_id, attendee_id]}};
+
+				// Fetch My Topics.
+				models.Topic.find(query)
+					.select('users lastUpdated')
+					.sort('lastUpdated')
+					.exec(function (err, topics) {
+
+						// topic found - add message to existing topic
+						if (topics.length > 0) {
+							var msg = new models.Message({
+								sentBy: user_id,
+								message: message,
+								timeSent: Date.now(),
+								topic: topics[0]._id
+							});
+
+							msg.save();
+
+
+							res.format({
+								json: function () {
+									res.send({
+										status: 200
+									})
+								}
+							})
+							return;
+						}
+						else // Not Topic found. Create a new one.
+						{
+							var newtopic = new models.Topic({
+								lastUpdated: Date.now(),
+								users: [user_id, attendee_id]
+							});
+
+							var msg = new models.Message({
+								sentBy: user_id,
+								message: message,
+								timeSent: Date.now(),
+								topic: newtopic._id
+							});
+
+							msg.save();
+
+							newtopic.save();
+
+
+							res.format({
+								json: function () {
+									res.send({
+										status: 200
+									})
+								}
+							})
+							return;
+
+						}
+					});
+			}
+			else {
+				console.log("Sending 404");
+				res.status(404).send('Only Attendee Can Send Message');
+			}
+		});
 }
 
 exports.convertImageSVGToPNG = function(req,res) {
