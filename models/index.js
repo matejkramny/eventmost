@@ -21,5 +21,6 @@ module.exports = {
 	EventStat: require('./EventStat').EventStat,
 	UserTakeoverRequest: require('./UserTakeoverRequest').UserTakeoverRequest,
 	Transaction: require('./Transaction').Transaction,
-	PasswordReset: require('./PasswordReset').PasswordReset
+	PasswordReset: require('./PasswordReset').PasswordReset,
+	Contact: require('./Contact').Contact
 }
