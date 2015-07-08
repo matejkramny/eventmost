@@ -14,65 +14,57 @@ exports.router = function (app) {
 		.get('/api/event/:id/dropbox/:fid/remove', doRemove)
 }
 
-function viewDropboxAPI (req, res) {
+function viewDropboxAPI(req, res) {
 	console.log("View Drop Box API");
-	
-	var event_id =  req.params.id;
-	models.Event.findById(event_id, function(err, ev) {
+
+	var event_id = req.params.id;
+	models.Event.findById(event_id, function (err, ev) {
 
 
 		var fileslist = [];
 
-		if(ev && ev.files.length > 0){
+		if (ev && ev.files.length > 0) {
 
 			//tis a callback hell
 			var count = 0;
 
-			callbackhell = function(callback){
-				ev.files.forEach(function (thisFile){
-					models.User.findOne({"_id":thisFile.user},function (err, user){
+			ev.files.forEach(function (thisFile) {
+				models.User.findOne({"_id": thisFile.user}, function (err, user) {
 
-						fileslist.push({
-							file: thisFile.file,
-							fileThumb: thisFile.fileThumb,
-							extension: thisFile.extension,
-							user : {
-								id: user._id,
-								fullname: user.getName()
-							},
-							name: thisFile.name,
-							size: thisFile.size,
-							_id: thisFile._id,
-							permissions: thisFile.permissions,
-							created: thisFile.created
+					fileslist.push({
+						file: thisFile.file,
+						fileThumb: thisFile.fileThumb,
+						extension: thisFile.extension,
+						user: {
+							id: user._id,
+							fullname: user.getName()
+						},
+						name: thisFile.name,
+						size: thisFile.size,
+						_id: thisFile._id,
+						permissions: thisFile.permissions,
+						created: thisFile.created
 
-						});
+					});
 
-						if(++count == ev.files.length){
+					if (++count == ev.files.length) {
 
-							callback();
-						}
-
-					})
-				})
-			}
-
-			done = function(){
-				res.format({
-					json: function() {
-						res.send({
-							status: 200,
-							files: fileslist
+						res.format({
+							json: function () {
+								res.send({
+									status: 200,
+									files: fileslist
+								})
+							}
 						})
 					}
+
 				})
-			}
+			})
 
-			callbackhell(done);
-
-		}else{
+		} else {
 			res.format({
-				json: function() {
+				json: function () {
 					res.send({
 						status: 404,
 						message: 'No File Found!'
@@ -80,7 +72,7 @@ function viewDropboxAPI (req, res) {
 				}
 			})
 		}
-		
+
 	});
 }
 
@@ -242,7 +234,18 @@ function doUploadAPI (req, res) {
 	
 	var event_id = req.params.id;
 	var user_id = req.body.userid;
-	
+
+	if(!user_id){
+		res.format({
+			json: function() {
+				res.send({
+					status: 403,
+					message: "user id missing"
+				})
+			}
+		})
+	}
+
 	console.log("Verify File Extension".red);
 	
 	var ext = req.files.uploadedfile.name.split('.');
