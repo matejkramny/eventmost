@@ -142,8 +142,14 @@ function doNewCardAPI (req, res) {
 							json: function() {
 								res.send({
 									status: 200,
-									_id:card._id,
-									message: "Business card added."
+									card: {
+										_id: newcard._id,
+										user: newcard.user,
+										url: util.editURL(newcard.url),
+										primary: newcard.primary,
+										created: newcard.created,
+										_v: newcard._v
+									}
 								})
 							}
 						})

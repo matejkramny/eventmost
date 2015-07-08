@@ -338,3 +338,43 @@ Please do not reply to this email, because we are super popular and probably won
 		if (err) throw err;
 	});
 }
+
+exports.signupemail = function (person) {
+
+	if (!person.email || person.email.length == 0) {
+		console.log("No email")
+		return;
+	}
+
+	var options = {
+		from: "EventMost <notifications@eventmost.com>",
+		to: person.getName()+" <"+person.email+">",
+		subject: "You have one new message in your EventMost inbox, please view it here ",
+		html: "<img src=\"http://eventmost.com/images/logo.svg\">\
+<br/><br/><p><strong>Hi "+person.getName()+",</strong><br/><br/>Thanks for joining EventMost, <br/>\
+<br />Click <a href='http://eventmost.com/'>here</a> and please tell others going to your event to also create an account so they may take advantage of staying connected, exchanging business cards, keeping informed about the event, sending feedback to guest speakers, and using our event dropbox for sharing slide-shows, presentations, documents and photos.” \
+</p><br/>You can turn off email notifications in your settings.<br/>\
+Please do not reply to this email, because we are super popular and probably won't have time to read it..."
+	}
+	if (!config.transport_enabled) {
+		console.log("Transport not enabled!")
+		console.log(options);
+		return;
+	}
+
+	transport.sendMail(options, function(err, response) {
+		if (err) throw err;
+
+		console.log("Email sent.."+response.message)
+	})
+
+	// Record that an email was sent
+	var emailNotification = new models.EmailNotification({
+		to: person,
+		email: person.email,
+		type: "newMessage"
+	})
+	emailNotification.save(function(err) {
+		if (err) throw err;
+	});
+}
