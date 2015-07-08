@@ -3,6 +3,7 @@ var auth = require('./apiauth')
 	apiprofile = require('./apiprofileService'),
 	events = require('./apievents'),
 	inbox = require('./apiinbox'),
+	contact = require('./apicontact'),
 	config = require('../../../config'),
 	search = require('./apisearch');
 
@@ -20,6 +21,7 @@ exports.router = function(app) {
 	inbox.router(app);
 	search.router(app);
 	events.router(app);
+	contact.router(app);
 }
 
 // WS router
