@@ -3,6 +3,7 @@ var mongoose = require('mongoose')
 	, config = require('../../../config')
 	, models = require('../../../models') 
 	, util = require('../util')
+	, inbox = require('./apiinbox/index')
 	, LocalStrategy = require('passport-local').Strategy
 	, TwitterStrategy = require('passport-twitter').Strategy
 	, LinkedinStrategy = require('passport-linkedin').Strategy
@@ -263,7 +264,9 @@ function registerUser(req, res){
 			
 			req.login(user, function(err) {
 				if (err) throw err;
-				 
+
+				inbox.signupemail(user);
+
 				res.format({
 					json: function() {
 						user.password = null;
