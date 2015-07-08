@@ -272,27 +272,31 @@ function download (city, download_finished) {
 	 
 				eventDoc.address = "";
 				haveAddress = false;
+				if(venueObj){
+					if (venueObj.name) {
+						eventDoc.venue_name = venueObj.name;
+					}
+					if (venueObj.address.address_1 && venueObj.address.address_1 != null) {
+						eventDoc.address += venueObj.address.address_1;
+						haveAddress = true;
+					}
+					if (venueObj.address.city && venueObj.address.city != '') {
+						if(haveAddress == true){
+							eventDoc.address += ', ';
+						}
+						eventDoc.address += venueObj.address.city;
+						haveAddress = true;
+					}
+					if (venueObj.address.postal_code && venueObj.address.postal_code != '') {
+						if(haveAddress == true){
+							eventDoc.address += ', ';
+						}
+						eventDoc.address += venueObj.address.postal_code;
+					}
+				}else{
+					eventDoc.address = city;
+				}
 				
-				if (venueObj.name) {
-					eventDoc.venue_name = venueObj.name;
-				}
-				if (venueObj.address.address_1 && venueObj.address.address_1 != null) {
-					eventDoc.address += venueObj.address.address_1;
-					haveAddress = true;
-				}
-				if (venueObj.address.city && venueObj.address.city != '') {
-					if(haveAddress == true){
-						eventDoc.address += ', ';
-					}
-					eventDoc.address += venueObj.address.city;
-					haveAddress = true;
-				}
-				if (venueObj.address.postal_code && venueObj.address.postal_code != '') {
-					if(haveAddress == true){
-						eventDoc.address += ', ';
-					}
-					eventDoc.address += venueObj.address.postal_code;
-				}
 
 				eventDoc.avatar = av._id;
 
