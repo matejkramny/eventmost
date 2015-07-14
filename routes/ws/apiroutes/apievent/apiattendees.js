@@ -20,6 +20,9 @@ exports.router = function (app) {
 		.post('/api/event/:id/buy/tickets', getTransactionsAPI)
 		.get('/api/event/:id/buy/tickets/getPromotionalCode/:code', getPromotionalCode)
 		.post('/api/event/getattendeeid', getattendeeid)
+		.post('/api/event/makeadmin/:attendee', makeAdmin)
+		.post('/api/event/removeadmin/:attendee', removeAdmin),
+		.post('/api/event/removeadmin/:attendee', banAttendee)
 }
 
 function getattendeeid(req, res){
@@ -819,3 +822,32 @@ function getPromotionalCode (req, res) {
 		})
 	}
 }
+
+function makeAdmin(req,res){
+	try{
+		query = {"_id": req.params.attendee}
+
+		models.Attendee.findOneAndUpdate(query, { $set: { admin: true }}, {upsert:true},function(err, message){
+			if(err) return res.send(500, {error: err})
+			return res.send(200)
+		});
+	}catch (err){
+		console.log(err);
+	}
+}
+
+function removeAdmin(req,res){
+	try{
+		query = {"_id": req.params.attendee}
+
+		models.Attendee.findOneAndUpdate(query, { $set: { admin: false }}, {upsert:true},function(err, message){
+			if(err) return res.send(500, {error: err})
+			return res.send(200)
+		});
+	}catch (err){
+		console.log(err);
+	}
+}
+
+
+
