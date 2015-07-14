@@ -138,68 +138,63 @@ function likeCommentAPI (req, res) {
 	}
 }
 
-function postCommentAPICustom(req, res)
-{
+function postCommentAPICustom(req, res) {
 	console.log("Post Comments ".red);
 	var user_id = req.body._id;
-	
-	models.Event.findOne({_id : req.params.id})
-	.populate(
+
+	models.Event.findOne({_id: req.params.id})
+		.populate(
 		{
-			path:'attendees',
-			match: { user: user_id }
-		}
-	)
-	.exec(function(err, event) 
-	{	
-		// Found the Event. Now Found the Attendee Against the User ID.
-		console.log("Event ".red +event);
-	// only attendee can comment
-	if(event.attendees.length > 0)
-	{
-		var message = req.body.comment;
-		var event_id = event._id;
-		var attendee_id =  event.attendees[0]._id;
-		console.log(attendee_id);
-		
-		var msg = new models.EventMessage({
-				attendee: attendee_id,
-				message: message
-		});
-		
-			msg.save();
-			
-			console.log(msg);
-			
-			models.Event.findById(req.params.id, function(err, ev) {
-				ev.messages.push(msg._id);
-				ev.save()
-			});
-			
-			res.format({
-				json: function() {
-					res.send({
-						status: 200,
-						comment: message
-					})
-				}
-			})
-			
-			return;
-		
-	}
-	else
-	{
-		res.format({
-			json: function() {
-				res.send({
-					status: 401,
-					message: "Not Authorized!"
+			path: 'attendees',
+			match: {user: user_id}
+		})
+		.exec(function (err, event) {
+			// Found the Event. Now Found the Attendee Against the User ID.
+			console.log("Event ".red + event);
+			// only attendee can comment
+			if (event.attendees.length > 0) {
+				var message = req.body.comment;
+				var event_id = event._id;
+				var attendee_id = event.attendees[0]._id;
+				console.log(attendee_id);
+
+				var msg = new models.EventMessage({
+					attendee: attendee_id,
+					message: message
+				});
+
+				msg.save();
+
+				console.log(msg);
+
+				models.Event.findById(req.params.id, function (err, ev) {
+					ev.messages.push(msg._id);
+					ev.save()
+				});
+
+				res.format({
+					json: function () {
+						res.send({
+							status: 200,
+							comment: message
+						})
+					}
 				})
+
+				return;
+
+			}
+			else {
+				res.format({
+					json: function () {
+						res.send({
+							status: 401,
+							message: "Not Authorized!"
+						})
+					}
+				});
 			}
 		});
-	}
-	});
 }
 
 function postCommentAPI (req, res) {

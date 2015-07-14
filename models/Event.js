@@ -70,6 +70,10 @@ var scheme = schema({
 		type: ObjectId,
 		ref: 'EventMessage'
 	}],
+	banned: [{
+		type: ObjectId,
+		ref: 'User'
+	}],
 	//EventLayout
 	sponsorLayout: {
 		layout: { type: Number, default: 0 }, //Should we have a default with no logo/sponsor logo?
