@@ -238,7 +238,7 @@ function removeAttendeeAPI (req, res) {
 							ev.banned = [];
 						}
 
-						ev.banned.push(attendee_id.user);
+						ev.banned.push(Attendee.user);
 						ev.save()
 					});
 				}
