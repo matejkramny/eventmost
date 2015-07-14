@@ -132,8 +132,11 @@ exports.eventdetails = function (req, res) {
 						models.Attendee.find({"_id": {$in: entry.attendees}}).populate('user').lean().exec(function (err, att) {
 							entry.attendees = [];
 							att.forEach(function (thisAtt) {
-								if (thisAtt.admin == true) {
-									entry.organizer = thisAtt.user.surname == "" ? thisAtt.user.name : thisAtt.user.name + " " + thisAtt.user.surname;
+								if (thisAtt.admin == true || entry.organizer == undefined) {
+									entry.organizer = {
+										name:  thisAtt.user.surname == "" ? thisAtt.user.name : thisAtt.user.name + " " + thisAtt.user.surname,
+										id: thisAtt.user._id
+									}
 								}
 
 								if (thisAtt.user._id.toString() == currentUser && thisAtt.isAttending) {

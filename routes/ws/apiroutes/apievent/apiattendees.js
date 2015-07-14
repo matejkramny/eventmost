@@ -20,6 +20,9 @@ exports.router = function (app) {
 		.post('/api/event/:id/buy/tickets', getTransactionsAPI)
 		.get('/api/event/:id/buy/tickets/getPromotionalCode/:code', getPromotionalCode)
 		.post('/api/event/getattendeeid', getattendeeid)
+		.post('/api/event/makeadmin/:attendee', makeAdmin)
+		.post('/api/event/removeadmin/:attendee', removeAdmin)
+		.post('/api/event/:id/removeban/:uid', removeBan)
 }
 
 function getattendeeid(req, res){
@@ -204,6 +207,7 @@ function removeAttendeeAPI (req, res) {
 	var event_id = req.params.id;
 	var attendee_id = req.params.attendee;
 	var current_user = req.body._id;
+	var banned = req.body.ban == undefined ? false : req.body.ban;
 	
 	console.log(req.params);
 	console.log(req.body);
@@ -227,7 +231,18 @@ function removeAttendeeAPI (req, res) {
 				console.log("in attende function");
 				Attendee.isAttending= false;
 				Attendee.save();
-				
+
+				if(banned){
+					models.Event.findById(event_id, function (err, ev) {
+						if(ev.banned == undefined){
+							ev.banned = [];
+						}
+
+						ev.banned.push(Attendee.user);
+						ev.save()
+					});
+				}
+
 				res.format({
 				json: function() {
 					res.send({
@@ -279,6 +294,19 @@ function joinEventAPI (req, res) {
 	// Found the Event currently requested by user.
 	models.Event.findOne({_id:Event_ID} , function(err, event) 
 	{
+
+		if (!event.banned && ev.banned.length > 0) {
+			for (var i = 0; i <= ev.banned.length; i++) {
+				if (event.banned[i] == User_ID) {
+					res.send({
+						status: 412,
+						message: "UserID is banned from event"
+					})
+					return;
+				}
+			}
+		}
+
 		var query = {'_id': {$in: event.attendees} , 'user' : User_ID};
 		
 		// Suppose it will always return one object if application.
@@ -818,4 +846,46 @@ function getPromotionalCode (req, res) {
 			ticket: result.ticket._id
 		})
 	}
+}
+
+function makeAdmin(req,res){
+	try{
+		query = {"_id": req.params.attendee}
+
+		models.Attendee.findOneAndUpdate(query, { $set: { admin: true }}, {upsert:true},function(err, message){
+			if(err) return res.send(500, {error: err})
+			return res.send(200)
+		});
+	}catch (err){
+		console.log(err);
+	}
+}
+
+function removeAdmin(req,res){
+	try{
+		query = {"_id": req.params.attendee}
+
+		models.Attendee.findOneAndUpdate(query, { $set: { admin: false }}, {upsert:true},function(err, message){
+			if(err) return res.send(500, {error: err})
+			return res.send(200)
+		});
+	}catch (err){
+		console.log(err);
+	}
+}
+
+function removeBan(req,res){
+
+	models.Event.findById(req.params.id).exec(function(err, ev){
+		if(!ev.banned){
+
+			var i = ev.banned.indexOf(req.params.uid);
+			if(i != -1){
+				ev.banned.splice(i,1);
+				res.send(200, "User un-banned")
+			} else {
+				res.send(200, "User doesnt exist")
+			}
+		}
+	})
 }
