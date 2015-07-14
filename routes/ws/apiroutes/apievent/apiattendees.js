@@ -876,7 +876,7 @@ function removeAdmin(req,res){
 
 function removeBan(req,res){
 
-	models.Event.findById(req.params.id).exec(function(err, event){
+	models.Event.findById(req.params.id).exec(function(err, ev){
 		if(!ev.banned){
 
 			var i = ev.banned.indexOf(req.params.uid);
