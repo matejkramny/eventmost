@@ -97,6 +97,7 @@ function facebookMobile(req, res){
 	}, function (err, user){
 
 		if(user){
+			user.avatar = util.editURL(user.avatar);
 			res.format({
 				json: function() {
 					res.send({
