@@ -877,7 +877,7 @@ function removeAdmin(req,res){
 function removeBan(req,res){
 
 	console.log("Removing ban of " + req.params.uid);
-	models.Event.findById(req.params.id).exec(function(err, ev){
+	models.Event.findById(req.params.id).populate("banned").exec(function(err, ev){
 		if(ev){
 			console.log("Event Found")
 			if(!ev.banned){
