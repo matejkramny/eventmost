@@ -118,6 +118,8 @@ function facebookMobile(req, res){
 			var newUser = new models.User(newUser);
 			newUser.save();
 
+			newUser.avatar = util.editURL(newUser.avatar);
+			
 			res.format({
 				json: function() {
 					res.send({
