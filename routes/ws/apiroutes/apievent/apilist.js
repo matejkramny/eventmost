@@ -126,6 +126,16 @@ exports.eventdetails = function (req, res) {
 		.exec(function (err, ev) {
 
 			var entry = ev[0];
+
+			if(entry && entry.sponsorLayout){
+				if(entry.sponsorLayout.sponsor1)
+					entry.sponsorLayout.sponsor1.url = util.editURL(entry.sponsorLayout.sponsor1.url);
+				if(entry.sponsorLayout.sponsor2)
+					entry.sponsorLayout.sponsor2.url = util.editURL(entry.sponsorLayout.sponsor2.url);
+				if(entry.sponsorLayout.sponsor3)
+					entry.sponsorLayout.sponsor3.url = util.editURL(entry.sponsorLayout.sponsor3.url);
+			}
+
 			async.series([
 				function (callback) {
 					if (entry.attendees) {
