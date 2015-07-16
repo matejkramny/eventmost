@@ -237,9 +237,12 @@ function removeAttendeeAPI (req, res) {
 						if(ev.banned == undefined){
 							ev.banned = [];
 						}
-
-						ev.banned.push(Attendee.user);
-						ev.save()
+						console.log(Attendee.user)
+						var i = ev.banned.indexOf(Attendee.user);
+						if(i == -1){
+							ev.banned.push(Attendee.user);
+							ev.save()
+						}
 					});
 				}
 
@@ -295,8 +298,8 @@ function joinEventAPI (req, res) {
 	models.Event.findOne({_id:Event_ID} , function(err, event) 
 	{
 
-		if (!event.banned && ev.banned.length > 0) {
-			for (var i = 0; i <= ev.banned.length; i++) {
+		if (event.banned && event.banned.length > 0) {
+			for (var i = 0; i <= event.banned.length; i++) {
 				if (event.banned[i] == User_ID) {
 					res.send({
 						status: 412,
@@ -877,23 +880,25 @@ function removeAdmin(req,res){
 function removeBan(req,res){
 
 	console.log("Removing ban of " + req.params.uid);
-	models.Event.findById(req.params.id).populate("banned").exec(function(err, ev){
+	models.Event.findById(req.params.id).exec(function(err, ev){
 		if(ev){
-			console.log("Event Found")
-			if(!ev.banned){
-				console.log("banned: " + ev.banned)
+
+			if(ev.banned){
+
 				var i = ev.banned.indexOf(req.params.uid);
 				if(i != -1){
 					ev.banned.splice(i,1);
-					res.send(200, "User un-banned")
+					ev.save();
+					res.send(200, {status: 200, message: "User un-banned"})
 				} else {
-					res.send(200, "User doesnt exist")
+					res.send(200, {status: 200, message: "User doesnt exist"})
 				}
 			} else{
-				res.send(200,"User doesnt exist")
+				res.send(200,{status: 200, message: "no banned members found"})
 			}
 		} else{
-			res.send(404, "Event doesnt exist")
+			res.send(404, {status: 200, message: "Event doesnt exist"})
 		}
+
 	})
 }

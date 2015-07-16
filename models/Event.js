@@ -11,6 +11,7 @@ var schema = mongoose.Schema
 	, Ticket = require('./Ticket').Ticket
 	, EventMessage = require('./EventMessage').EventMessage
 	, config = require('../config')
+	, banned = require('./User').User
 
 var scheme = schema({
 	deleted: { type: Boolean, default: false },

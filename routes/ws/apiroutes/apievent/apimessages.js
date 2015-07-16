@@ -152,8 +152,8 @@ function postCommentAPICustom(req, res) {
 			// Found the Event. Now Found the Attendee Against the User ID.
 			console.log("Event ".red + event);
 			
-			if (!event.banned && ev.banned.length > 0) {
-				for (var i = 0; i <= ev.banned.length; i++) {
+			if (event.banned && event.banned.length > 0) {
+				for (var i = 0; i <= event.banned.length; i++) {
 					if (event.banned[i] == user_id) {
 						res.send({
 							status: 412,
