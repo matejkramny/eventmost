@@ -876,16 +876,24 @@ function removeAdmin(req,res){
 
 function removeBan(req,res){
 
+	console.log("Removing ban of " + req.params.uid);
 	models.Event.findById(req.params.id).exec(function(err, ev){
-		if(!ev.banned){
-
-			var i = ev.banned.indexOf(req.params.uid);
-			if(i != -1){
-				ev.banned.splice(i,1);
-				res.send(200, "User un-banned")
-			} else {
-				res.send(200, "User doesnt exist")
+		if(ev){
+			console.log("Event Found")
+			if(!ev.banned){
+				console.log("banned: " + ev.banned)
+				var i = ev.banned.indexOf(req.params.uid);
+				if(i != -1){
+					ev.banned.splice(i,1);
+					res.send(200, "User un-banned")
+				} else {
+					res.send(200, "User doesnt exist")
+				}
+			} else{
+				res.send(200,"User doesnt exist")
 			}
+		} else{
+			res.send(404, "Event doesnt exist")
 		}
 	})
 }
