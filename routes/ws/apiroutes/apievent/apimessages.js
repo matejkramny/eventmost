@@ -151,6 +151,19 @@ function postCommentAPICustom(req, res) {
 		.exec(function (err, event) {
 			// Found the Event. Now Found the Attendee Against the User ID.
 			console.log("Event ".red + event);
+			
+			if (event.banned && event.banned.length > 0) {
+				for (var i = 0; i <= event.banned.length; i++) {
+					if (event.banned[i] == user_id) {
+						res.send({
+							status: 412,
+							message: "UserID is banned from event"
+						})
+						return;
+					}
+				}
+			}
+			
 			// only attendee can comment
 			if (event.attendees.length > 0) {
 				var message = req.body.comment;
