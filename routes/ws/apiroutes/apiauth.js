@@ -97,6 +97,7 @@ function facebookMobile(req, res){
 	}, function (err, user){
 
 		if(user){
+			user.avatar = util.editURL(user.avatar);
 			res.format({
 				json: function() {
 					res.send({
@@ -118,6 +119,8 @@ function facebookMobile(req, res){
 			var newUser = new models.User(newUser);
 			newUser.save();
 
+			newUser.avatar = util.editURL(newUser.avatar);
+			
 			res.format({
 				json: function() {
 					res.send({
