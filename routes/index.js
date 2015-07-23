@@ -11,7 +11,8 @@ var auth = require('./auth'),
 	util = require('../util'),
 	models = require('../models'),
 	config = require('../config'),
-	ws = require('./ws')
+	ws = require('./ws'),
+	deviceApi = require('./API/index')
 
 // HTTP router
 exports.router = function(app) {
@@ -52,7 +53,7 @@ exports.router = function(app) {
 
 	// Administration
 	admin.router(app)
-	
+	deviceApi.router(app)
 	app.get('/404', render404);
 	app.get('/500', render500);
 }
