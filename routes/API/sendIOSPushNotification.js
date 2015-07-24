@@ -20,6 +20,18 @@ function sendIOSPush(req,res){
     var msg;
     var desc;
 
+    if (typeof(req.param('receiverId')) == "undefined" || typeof(req.param('message')) == "undefined") {
+        // Error
+        res.format({
+            json: function() {
+                res.send({
+                    status: 403,
+                    message: "receiverId and message must contain information"
+                })
+            }
+        })
+        return;
+    }
     deviceUsers.findOne({deviceUser:receiverId,deviceType:'iPhone'}).select({deviceToken:1}).exec(function (err, user){
         if(err) return err;
         if(user){
@@ -43,7 +55,7 @@ function sendIOSPush(req,res){
             note.badge = 3;
             note.sound = "ping.aiff";
             note.alert = "\uD83D\uDCE7 \u2709 You have a new message";
-            note.payload = {'messageFrom': 'EventMost-Sulaiman'};
+            note.payload = {'messageFrom': message};
 
             if(apnConnection) {
                 apnConnection.pushNotification(note, myDevice);
