@@ -1,7 +1,6 @@
 var apn = require('apn');
 var models = require('../../models');
 var mongoose = require('mongoose');
-var models = require('../../models');
 var deviceUsers = models.DeviceUsers;
 
 exports.router = function (app) {
