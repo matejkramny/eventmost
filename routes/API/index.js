@@ -6,5 +6,5 @@ var registerDeviceForPush = require('./registerDeviceForPush'),
 exports.router = function(app) {
     registerDeviceForPush.router(app);
     sendIOSPushNotification.router(app);
-    sendAndroidPushNotification(app);
+    sendAndroidPushNotification.router(app);
 }
