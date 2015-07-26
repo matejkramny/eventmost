@@ -25,7 +25,7 @@ function sendIOSPush(req,res){
             json: function() {
                 res.send({
                     status: 403,
-                    message: "receiverId and message must contain information"
+                    message: "receiverId, senderId and message must contain information"
                 })
             }
         })
@@ -132,6 +132,15 @@ function sendIOSPush(req,res){
             apnConnection.on('socketError', log('socketError'));
             apnConnection.on('transmissionError', log('transmissionError'));
             apnConnection.on('cacheTooSmall', log('cacheTooSmall'));*/
+        } else {
+            res.format({
+                json: function() {
+                    res.send({
+                        status: 404,
+                        messages: "No token found against the receiverId"
+                    })
+                }
+            })
         }
     });
 }
