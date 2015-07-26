@@ -8,17 +8,10 @@ exports.router = function (app) {
     app.post('/api/sendIOSPush',sendIOSPush)
 }
 
-var apnError = function(err){
-    console.log("APN Error:", err);
-}
-
 function sendIOSPush(req,res){
     var senderId = req.body.senderId;
     var receiverId = req.body.receiverId;
     var message = req.body.message;
-    var status = true;
-    var msg;
-    var desc;
 
     if (typeof(req.param('receiverId')) == "undefined" || typeof(req.param('senderId')) == "undefined" || typeof(req.param('message')) == "undefined") {
         // Error
