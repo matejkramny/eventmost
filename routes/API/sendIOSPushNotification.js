@@ -19,7 +19,7 @@ function sendIOSPush(req,res){
     var msg;
     var desc;
 
-    if (typeof(req.param('receiverId')) == "undefined" || typeof(req.param('message')) == "undefined") {
+    if (typeof(req.param('receiverId')) == "undefined" || typeof(req.param('senderId')) == "undefined" || typeof(req.param('message')) == "undefined") {
         // Error
         res.format({
             json: function() {
@@ -31,10 +31,10 @@ function sendIOSPush(req,res){
         })
         return;
     }
-    deviceUsers.findOne({deviceUser:receiverId,deviceType:'iPhone'}).select({deviceToken:1}).exec(function (err, user){
+    deviceUsers.findOne({deviceUser:receiverId,deviceType:'iPhone'}).select({deviceToken:1}).exec(function (err, token){
         if(err) return err;
-        if(user){
-            console.log(user);
+        if(token){
+            console.log(token);
             var options = {
                 //"pfx": "E:/software/iOS Push certificate/aps_development.p12",
                 "pfx": "public/certificate/aps_development.p12",
@@ -47,13 +47,13 @@ function sendIOSPush(req,res){
             //options.errorCallback = apnError;
             var apnConnection = new apn.Connection(options);
             //var myDevice = new apn.Device("606a9f3e90ce1703c58f1516c5a8839a0fd06b6c25bbdfcbc075aca25a945d87");
-            var myDevice = new apn.Device(user.deviceToken);
+            var myDevice = new apn.Device(token.deviceToken);
             var note = new apn.Notification();
 
             note.expiry = Math.floor(Date.now() / 1000) + 3600; // Expires 1 hour from now.
             note.badge = 3;
             note.sound = "ping.aiff";
-            note.alert = "\uD83D\uDCE7 \u2709 You have a new message";
+            note.alert = "\uD83D\uDCE7 \u2709 You have a new message from senderId " + senderId;
             note.payload = {'messageFrom': message};
 
             if(apnConnection) {
