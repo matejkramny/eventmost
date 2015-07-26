@@ -13,8 +13,13 @@ exports.sendPush = function(senderId, receiverId, message, deviceType){
         sendAndroidPush(senderId,receiverId,message);
     }
 }
-
+var apnError = function(err){
+    console.log("APN Error:", err);
+}
 function sendIOSPush(senderId, receiverId, message) {
+    var status = true;
+    var msg;
+    var desc;
     deviceUsers.findOne({deviceUser:receiverId,deviceType:'iPhone'}).select({deviceToken:1}).exec(function (err, token){
         if(err) return err;
         if(token){
