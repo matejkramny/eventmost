@@ -13,8 +13,6 @@ function sendAndroidPush(req,res) {
     var receiverId = req.body.receiverId;
     var message = req.body.message;
 
-    var message = new gcm.Message();
-
     if (typeof(req.param('receiverId')) == "undefined" || typeof(req.param('senderId')) == "undefined" || typeof(req.param('message')) == "undefined") {
         // Error
         res.format({
