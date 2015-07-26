@@ -130,6 +130,7 @@ function sendIOSPush(senderId, receiverId, message) {
 }
 
 function sendAndroidPush(senderId, receiverId, message) {
+    var message = new gcm.Message();
     deviceUsers.findOne({deviceUser:receiverId,deviceType:'Android'}).select({deviceToken:1}).exec(function (err, token){
         if (err) return err;
 
