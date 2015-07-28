@@ -25,7 +25,7 @@ block content
 		.row(ng-cloak ng-init="init({ csrf: '#{token}', user: '#{user._id}' })")
 			.col-md-12.col-sm-12.col-xs-12.col-lg-12(ng-hide="status.length == 0"): strong {{ status }}
 			.col-md-4.col-sm-4.col-xs-12.col-lg-4.content(id="content-1", style="border:1px solid #eee; padding-left:0px ; padding-right:0px; margin-right:25px")
-				ul.nav.nav-pills.nav-stacked(style="height: 380px; overflow-x:hidden; overflow-y:hidden;")
+				ul.nav.nav-pills.nav-stacked
 					.nspacer
 					li(ng-class="{ active: !message }")
 						a(href="" ng-click="message = null")
@@ -51,7 +51,7 @@ block content
 						.row(ng-show="message.messages.length == 0")
 							.col-md-12.col-lg-12.col-sm-12.col-xs-12.text-center(style="margin-top:100px;")
 								h3 No Messages
-				hr
+				
 				.row(style="border:1px solid #eee; padding:20px 0px")
 					.col-md-10.col-lg-10.col-sm-10.col-xs-10
 						textarea#inputMessage.form-control(ng-model="msg" required placeholder="Enter Message" disabled= inbox_disabled ? "disabled" : null)
