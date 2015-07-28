@@ -201,10 +201,10 @@ function sendCardAPI (req, res) {
 					if(err) throw err;
 					if(type) {
 						if(type.deviceType === 'iPhone') {
-							sendPushObj(id,to,"a business card has been shared with you.","iPhone");
+							sendPushObj.sendPush(id,to,"a business card has been shared with you.","iPhone");
 						} else if(type.deviceType === 'Android'){
 							//TODO: once we receive the android api key we will uncomment this
-							//sendPushObj(id,to,"a business card has been shared with you.","Android");
+							//sendPushObj.sendPush(id,to,"a business card has been shared with you.","Android");
 						}
 					} else {
 						console.log("No device user found against the id: " + to);
