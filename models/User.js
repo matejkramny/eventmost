@@ -54,6 +54,10 @@ var scheme = schema({
 			type: ObjectId,
 			ref: 'Card'
 		},
+		eventid: {
+			type: ObjectId,
+			ref: 'Event'
+		},
 		sent: { type: Date, default: Date.now }
 	}],
 	privacy: {

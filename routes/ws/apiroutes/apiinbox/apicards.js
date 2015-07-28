@@ -4,6 +4,8 @@ var fs = require('fs')
 	, util = require('../../util')
 	, async = require('async')
 	, transport = require('../../../../app').transport
+	, sendPushObj = require('../../../../routes/core/sendPush')
+	, deviceUsers = models.DeviceUsers
 
 exports.router = function (app) {
 	app.post('/api/cards', showCardsAPI)
@@ -100,12 +102,12 @@ function doNewCardAPI (req, res) {
 	var base64Image;
 	var dir = 'public/businesscards';
 	var i = 0;
-	if(req.body._id == ""){
+	if(req.body._id == "" || req.body.eventId == ""){
 		res.format({
 			json: function() {
 				res.send({
 					status: 404,
-					message: "Mandatory parameter _id(user id) required."
+					message: "Mandatory parameter _id(user id) or eventId is missing."
 				})
 			}
 		})
@@ -123,6 +125,7 @@ function doNewCardAPI (req, res) {
 					i = count+1;
 
 					var newcard = new models.Card({
+						eventid: req.body.eventId,
 						user: req.body._id,
 						location: req.body._location,
 						url : config.host + '/businesscards/'+req.body._id + "+" + i +'.png',
@@ -144,6 +147,7 @@ function doNewCardAPI (req, res) {
 									status: 200,
 									card: {
 										_id: newcard._id,
+										event: newcard.eventid,
 										user: newcard.user,
 										url: util.editURL(newcard.url),
 										primary: newcard.primary,
@@ -176,6 +180,7 @@ function sendCardAPI (req, res) {
 	var to = req.body._to || null;
 	var id = req.body._id || null;
 	var card_id = req.body._cardID;
+	var eventId = req.body.eventId;
 
 	console.log("------ Send Card API -------".red);
 	console.log(req.body);
@@ -191,9 +196,25 @@ function sendCardAPI (req, res) {
 			//user.mailboxUnread++;
 
 			// find the card
+			if(user.notification.mobile.businessCards) {
+				deviceUsers.findOne({deviceUser:to}).select({deviceType:1}).exec(function (err, type){
+					if(err) throw err;
+					if(type) {
+						if(type.deviceType === 'iPhone') {
+							sendPushObj(id,to,"a business card has been shared with you.","iPhone");
+						} else if(type.deviceType === 'Android'){
+							//TODO: once we receive the android api key we will uncomment this
+							//sendPushObj(id,to,"a business card has been shared with you.","Android");
+						}
+					} else {
+						console.log("No device user found against the id: " + to);
+					}
+				})
+			}
 			user.receivedCards.push({
 				from: req.body._id,
-				card: card_id
+				card: card_id,
+				eventid: eventId
 			})
 			user.save(function(err) {
 				res.format({
