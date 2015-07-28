@@ -61,7 +61,7 @@ function newTopic(req, res) {
 exports.checkNewTopic = checkNewTopic = function (uid, to, res, eventtopic) {
     // Find if a topic exists between two.
     var query = [
-        {users: {$all: [uid, req.body.to]}}
+        {users: {$all: [uid, req.body.to]}},
         {eventid: eventtopic}
     ];
 
