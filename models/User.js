@@ -41,8 +41,14 @@ var scheme = schema({
 	},
 	savedProfiles: [
 		{
-			type: ObjectId,
-			ref: 'User'
+			_id: {
+				type: ObjectId,
+				ref: 'User'
+			},
+			eventid: {
+				type: ObjectId,
+				ref: 'Event'
+			}
 		}
 	],
 	receivedCards: [{
