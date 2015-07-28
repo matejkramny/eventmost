@@ -52,10 +52,10 @@ block content
 							.col-md-12.col-lg-12.col-sm-12.col-xs-12.text-center(style="margin-top:100px;")
 								h3 No Messages
 				hr
-				.row
+				.row(style="border:1px solid #eee; padding:20px 0px")
 					.col-md-10.col-lg-10.col-sm-10.col-xs-10
-						input#inputMessage.form-control(ng-model="msg" required placeholder="Enter Message" disabled= inbox_disabled ? "disabled" : null)
-					.col-md-2.col-lg-2.col-sm-2.col-xs-2
+						textarea#inputMessage.form-control(ng-model="msg" required placeholder="Enter Message" disabled= inbox_disabled ? "disabled" : null)
+					.col-md-2.col-lg-2.col-sm-2.col-xs-2(style="margin-top:18px;")
 						button.form-control.btn.btn-info(ng-click="sendMessage()" disabled= inbox_disabled ? "disabled" : null) Send
 			.col-md-8.col-sm-8.col-xs-12.col-lg-8(ng-show="message == null")
 				h3.text-center New Message to:
