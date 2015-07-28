@@ -1,0 +1,211 @@
+extends ../../responsive
+
+include ../inc/message
+include ../inc/card
+include ../inc/savedProfile
+
+append addonjs
+	script(src="/js/vendor/moment.min.js?v=#{versionHash}" defer)
+	script(src="/js/inbox.js?v=#{versionHash}" defer)
+	script(src="/js/jquery.mCustomScrollbar.concat.min.js?v=#{versionHash}" defer)
+	link(rel="stylesheet" href="/css/jquery.mCustomScrollbar.css?v=#{versionHash}")
+
+block content
+	- var inbox_disabled = false;
+	if (typeof inbox_send_disabled !== 'undefined' && inbox_send_disabled === true)
+		- inbox_disabled = true;
+	
+	div(ng-controller="inboxController")
+		.row
+			.col-md-4.col-sm-4.col-xs-12.col-lg-4
+				h3(style="margin-left:20px;") Inbox
+			.col-md-8.col-sm-8.col-xs-12.col-lg-8
+				h3: a(ng-cloak href="/user/{{message.otherUser._id}}" target="_blank" style="color: #542437") {{ message.otherUser.name }} {{ message.otherUser.surname }}
+		.nspacer
+		.row(ng-cloak ng-init="init({ csrf: '#{token}', user: '#{user._id}' })")
+			.col-md-12.col-sm-12.col-xs-12.col-lg-12(ng-hide="status.length == 0"): strong {{ status }}
+			.col-md-4.col-sm-4.col-xs-12.col-lg-4.content(id="content-1", style="border:1px solid #eee; padding-left:0px ; padding-right:0px; margin-right:25px")
+				ul.nav.nav-pills.nav-stacked(style="height: 380px; overflow-x:hidden; border-top: 1px solid #333; border-bottom:1px solid #333; overflow-y:scroll;")
+					.nspacer
+					li(ng-class="{ active: !message }")
+						a(href="" ng-click="message = null")
+							i.fa.fa-fw.fa-pencil-square-o
+							|  New Message
+					li(ng-repeat="m in messages" ng-class="{ active: message.message._id == m.topic._id }")
+						a(href="" ng-click="selectMessage(m)")
+							img(ng-src="{{m.otherUser.avatar}}" style="width:30px;height:30px; border-radius:15px;")
+							span(style="margin-left:10px;") {{ m.otherUser.name }} {{ m.otherUser.surname }}
+							span.badge.pull-right(ng-show="m.unread > 0") {{m.unread}} New
+					.nspacer
+			.col-md-8.col-sm-8.col-xs-12.col-lg-8(ng-hide="message == null")
+				.content(id="content-2", style="height:290px;width:750px;")
+					div#messages(style="height: 390px;")
+						.row(ng-repeat="message in message.messages" ng-class="{ nspacer: $first }")
+							.col-md-2.col-lg-2.col-sm-2.col-xs-2.text-right
+								strong
+									a(href="/user/{{message.sentBy._id}}" target="_blank" style="color: #542437") {{ message.sentBy.name }} {{ message.sentBy.surname }}:
+							p.col-md-7.col-lg-7.col-sm-7.col-xs-7(style="margin-bottom:0;")
+								| {{ message.message }}
+							.col-md-3.col-lg-3.col-sm-3.col-xs-3.text-right
+								| {{ message.time }}
+						.row(ng-show="message.messages.length == 0")
+							.col-md-12.col-lg-12.col-sm-12.col-xs-12.text-center(style="margin-top:100px;")
+								h3 No Messages
+				hr
+				.row
+					.col-md-10.col-lg-10.col-sm-10.col-xs-10
+						input#inputMessage.form-control(ng-model="msg" required placeholder="Enter Message" disabled= inbox_disabled ? "disabled" : null)
+					.col-md-2.col-lg-2.col-sm-2.col-xs-2
+						button.form-control.btn.btn-info(ng-click="sendMessage()" disabled= inbox_disabled ? "disabled" : null) Send
+			.col-md-8.col-sm-8.col-xs-12.col-lg-8(ng-show="message == null")
+				h3.text-center New Message to:
+				
+				.nspacer
+				.row
+					.col-sm-8.col-xs-8.col-md-8.col-lg-8.col-lg-offset-2.col-md-offset-2.col-sm-offset-2.col-xs-offset-2
+						if (inbox_disabled)
+							h4.text-center Posting New Messages has been Disabled
+						else
+							form(method="POST", accept-charset="utf-8")
+								input.gonew2.pull-right.header-links(type="button", ng-click="searchUser()", value="SEARCH", style="width:20%;")
+								input.pull-right.font-s.search-input.pad-left-ten.header-links(ng-model="search", type="search", required="required", placeholder="Search for People on EventMost", style="width:77%;")
+				.nspacer
+			
+				.row
+					.nspacer-big
+					p.col-sm-12.col-lg-12.col-md-12.col-xs-12.lead.text-center(ng-show="progress.length > 0")
+						| {{ progress }}
+				div(ng-show="showPeopleSearch")
+					.nspacer-big
+					div(ng-repeat="person in peopleSearch")
+						.nspacer
+						.row
+							a.col-md-2.col-sm-2.col-lg-2(target="_blank" href="/user/{{person._id}}")
+								img.img-responsive(ng-src="{{person.avatar}}")
+							.col-md-8.col-sm-8.col-lg-8
+								.row
+									h4.col-md-12.col-sm-12.col-lg-12
+										a(target="_blank" href="/user/{{person._id}}"): strong {{person.name}} {{person.surname}}
+								.row
+									strong.col-md-12.col-sm-12.col-lg-12
+										span(ng-show="person.position.length > 0")
+											| {{person.position}}, 
+										span(ng-show="person.company.length > 0")
+											| {{person.company}}
+							.col-md-2.col-sm-2.col-lg-2
+								a.btn.btn-default.btn-md(ng-click="selectProfile(person)") Select
+						br
+						.line-purple(ng-hide="$last")
+				.clearfix
+			
+		//- end inbox title plus buttons
+	
+		.row
+			//- Takeover requests..
+			if (takeoverRequests.length > 0)
+				.col-md-12.col-xs-12.col-sm-12
+					.font-tw
+						b Take over Requests
+					.line-purple
+		.row
+			- var i = 0;
+			for request in takeoverRequests
+				if (i % 2 == 0)
+					.clearfix
+				.col-md-2.col-xs-2.col-sm-2.inv-till-1
+					.center.nspacer-medium
+						img(src= request.takeoverUser.avatar.length > 0 ? request.takeoverUser.avatar : "/images/default_speaker.svg", style="max-width:102px;margin:-1px auto auto -1px;", class="circularespond")
+					.font-s.center
+						a(href="/user/"+request.takeoverUser._id): b= request.takeoverUser.getName()
+						br
+						if (request.takeoverUser.company && request.takeoverUser.position)
+							= request.takeoverUser.company
+							| , 
+							= request.takeoverUser.position
+						- else if (request.takeoverUser.company)
+							= request.takeoverUser.company
+						- else if (request.takeoverUser.position)
+							= request.takeoverUser.position
+						- else
+							br
+				.col-md-3.col-xs-3.col-sm-3.inv-till-1
+					.nspacer-medium
+						b Profile is from event 
+							a(href="/event/"+request.event._id) #{request.event.name}
+						br
+						b Was sent to you by 
+							a(href="/user/"+request.requestedBy._id) #{request.requestedBy.getName()}
+						br
+						br
+						b You can 
+							a(href="/inbox/takeoverRequest/"+request._id+"/"+request.secret+"/accept") accept
+							|  or 
+							a(href="/inbox/takeoverRequest/"+request._id+"/"+request.secret+"/ignore") ignore
+							|  this request..
+				- i++;
+		.nspacer
+	
+	
+		//- end guest speakers
+		.row
+			.col-md-12.col-xs-12.col-sm-12
+				.font-tw
+					b Business cards receiveddd
+				.line-purple
+		.nspacer
+
+		//- business
+		.row
+			if (locals.user.receivedCards.length == 0)
+				p.text-center No cards received
+			.pull-left
+				- var i = 0;
+				for card in locals.user.receivedCards
+					+card(card)
+					if (i % 2 == 1)
+						.clearfix
+					- i++;
+				.clearfix
+		.nspacer-big
+		//- end business
+		
+		.row
+			.col-md-12.col-xs-12.col-sm-12
+				.font-tw
+					b Your Saved Profiles
+				.line-purple
+		.nspacer
+	
+		//- saved
+		if (locals.user.savedProfiles.length == 0)
+			p.text-center You haven't saved any profiles yet
+			.clearfix
+			.nspacer
+		.row
+			.col-md-12.col-xs-12.col-sm-12
+				.center
+					for saver in locals.user.savedProfiles
+						+savedProfile(saver)
+				.clearfix
+				.nspacer
+		
+		.row
+			.col-md-12.col-xs-12.col-sm-12
+				.font-tw
+					b People that Saved Your Profile
+				.line-purple
+		.nspacer
+	
+		//- saved
+		if (locals.savers.length == 0)
+			p.text-center No one has saved your profile yet.
+			.clearfix
+			.nspacer
+		.row
+			.col-md-12.col-xs-12.col-sm-12
+				.center
+					for saver in locals.savers
+						+savedProfile(saver)
+				.clearfix
+				.nspacer
+	
