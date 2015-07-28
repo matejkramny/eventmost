@@ -1,3 +1,19 @@
+(function($){
+			$(window).load(function(){
+				
+				$("#content-1").mCustomScrollbar({
+					theme:"minimal",
+          scrollInertia: 0
+				});
+				
+				$("#content-2").mCustomScrollbar({
+					theme:"minimal",
+          scrollInertia: 0
+				});
+				
+			});
+		})(jQuery);
+
 angular.module('eventMost')
 .controller('inboxController', function($scope, $http, $filter) {
 	$scope.messages = [];

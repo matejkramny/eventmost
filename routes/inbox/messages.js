@@ -7,20 +7,10 @@ var fs = require('fs')
 
 exports.router = function (app) {
 	app.get('/inbox/messages', showMessages)
-		.get('/messages', newmessages)
 		.get('/inbox/messages/new', doNewMessage)
 		.post('/inbox/messages/new', doNewMessage)
 		.get('/inbox/message/:id', getMessage, showMessage)
 		.post('/inbox/message/:id', getMessage, postMessage)
-}
-
-function newmessages(req, res){
-	console.log('i am getting here');
-	res.format({
-			html: function() {
-				res.render('inbox/new/all');
-			}
-		})
 }
 
 function getMessage (req, res, next) {

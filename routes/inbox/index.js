@@ -13,6 +13,7 @@ var fs = require('fs')
 exports.router = function (app) {
 	app.all('/inbox/*', util.authorized, populateInbox)
 		.get('/inbox', util.authorized, populateInbox, show)
+		.get('/messages', util.authorized, populateInbox, show2)
 		.get('/takeProfile/:tid/:secret', getRequest, takeover)
 		.post('/takeProfile/:tid/:secret', getRequest, doTakeover)
 		.get('/inbox/takeoverRequest/:tid/:secret/:action', getRequest, doMerge)
@@ -23,6 +24,15 @@ exports.router = function (app) {
 }
 
 exports.socket = function (socket) {
+}
+
+function newmessages(req, res){
+	console.log('i am getting here');
+	res.format({
+			html: function() {
+				res.render('inbox/new/all');
+			}
+		})
 }
 
 exports.populateInbox = populateInbox;
@@ -93,6 +103,20 @@ function show (req, res) {
 		html: function() {
 			res.locals.topics = res.locals.messages;
 			res.render('inbox/all', { pageName: "Inbox Dashboard", title: "Inbox" });
+		},
+		json: function() {
+			res.send({
+				topics: topics
+			})
+		}
+	})
+}
+
+function show2 (req, res) {
+	res.format({
+		html: function() {
+			res.locals.topics = res.locals.messages;
+			res.render('inbox/new/all', { pageName: "Inbox Dashboard", title: "Inbox" });
 		},
 		json: function() {
 			res.send({

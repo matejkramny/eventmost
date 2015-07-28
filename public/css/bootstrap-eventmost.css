@@ -236,7 +236,7 @@ input[type=number]::-webkit-outer-spin-button {
   margin-left: 15px;
   padding:2px;
   border: 2px solid #ccc;
-  background: #ccc;
+  background: none repeat scroll 0 0 #fff;
 }
 
 .col-md-3-assist .small-event-border2 {
@@ -805,7 +805,7 @@ padding-left: 10px;
 padding-right: 10px;
   height: 36px;
       border: 0px solid white; 
-}​
+}â€‹
 .sponsor-browse{
     border: 5px solid white; 
     background: rgba(255,255,255,0.5);
@@ -4112,3 +4112,13 @@ background-image:url("../images/glyphicons-halflings-white.png")
   margin: 0px auto;
   padding: 0;
 }
+.btn{  	}
+.btn:hover{ background:#0992A3 !important; color: #FFF !important; border:1px solid #0992A3 !important; padding:3px}
+
+.nav > li > a{ padding-top:5px !important; padding-bottom:5px !important}
+           .nav > li > a:hover, .nav > li > a:focus{ background:#f5f7fa !important; border-radius:0px !important; color:#428bca !important;}
+   .content img{ padding:0px !important}
+   .nav > li > a:active, .active{ background:#f5f7fa none repeat scroll 0 0 !important}
+   
+   #messages .nav > li > a:hover, .nav > li > a:focus{ background: none !important}
+   .form-control{float:left !important;}     textarea.form-control{ min-height:70px !important}
