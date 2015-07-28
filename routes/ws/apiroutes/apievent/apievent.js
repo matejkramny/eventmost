@@ -405,7 +405,7 @@ function postMessageAPI(req, res) {
 
 
 				//find topic
-				topicID = inboxMessages.checkNewTopic(user_id, attendee_id);
+				topicID = inboxMessages.checkNewTopic(user_id, attendee_id, null, event_id);
 				//Send message
 				inboxMessages.newMessage(topicID,message,res);
 
