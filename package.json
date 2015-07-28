@@ -42,7 +42,9 @@
 		"request": "latest",
 		"colors": "latest",
 		"stripe": "latest",
-		"knox": "latest"
+		"knox": "latest",
+		"apn": "latest",
+		"node-gcm": "latest"
 	},
 	"devDependencies": {
 		"should": "latest",
