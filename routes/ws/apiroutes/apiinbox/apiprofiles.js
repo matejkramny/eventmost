@@ -49,7 +49,7 @@ exports.showSavedProfilesAPI = function (req, res) {
 
 exports.showSaverProfilesAPI = function (req, res) {
 	
-		var query = {savedProfiles: req.body._id};
+		var query = {'savedProfiles._id': req.body._id,'savedProfiles.eventid':req.body.id};
 		
 		models.User.find(query)
 		.exec(function(err, savedprofiles) {
