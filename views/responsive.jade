@@ -78,7 +78,7 @@ html
 										| Notes
 
 							.pull-right.width7(ng-controller="inboxNotifications")
-								a.image(href="/inbox")
+								a.image(href="/messages")
 									img.mail.pull-right.img-mess-smart(src="/images/message-icon.svg" alt="" style="width:100%;")
 									.row-fluid.minus2
 										.message-nr
@@ -146,7 +146,7 @@ html
 			script(src="/js/vendor/all_required.min.js?v=#{versionHash}" defer)
 			script(src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places")
 			script(src="/js/google_autocomplete_addr.js")
-			
+
 
 			if !loggedIn
 				script(src="/js/signin.js?v=#{versionHash}" defer)

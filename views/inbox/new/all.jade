@@ -40,6 +40,55 @@ block content
 			.col-md-8.col-sm-8.col-xs-12.col-lg-8(ng-hide="message == null")
 				.content(id="content-2", style="height:290px;width:750px;")
 					div#messages(style="height: 390px;")
+						li(class="ng-scope" ng-repeat="m in messages", style="list-style:none")
+							div(style="float:left;margin-bottom:15px")
+								div(style="float:left")
+									img(src="images/default_speaker.svg" ng-src="/images/default_speaker.svg" style="width:40px;height:40px;")
+								div(style="float:left;padding-left:10px;margin-top:-5px; width:690px")
+									a(href="" ng-click="selectMessage(m)")
+										span.ng-binding(style=" padding-top:0px")
+											|	subwax
+									span(style="float:right; color:#000; padding-right:18px; font-size:12px; color:#CCC")
+										|	12:30
+									br
+									span
+										|	This is a test message, and another test message. And another test message. And another test message. And another test message.
+						li(class="ng-scope" ng-repeat="m in messages", style="list-style:none")
+							div(style="float:left;margin-bottom:15px")
+								div(style="float:left")
+									img(src="images/default_speaker.svg" ng-src="/images/default_speaker.svg" style="width:40px;height:40px;")
+								div(style="float:left;padding-left:10px;margin-top:-5px; width:690px")
+									a(href="" ng-click="selectMessage(m)")
+										span.ng-binding(style=" padding-top:0px")
+											|	subwax
+									span(style="float:right; color:#000; padding-right:18px; font-size:12px; color:#CCC")
+										|	12:30
+									br
+									span
+										|	This is a test message, and another test message. And another test message. And another test message. And another test message.
+
+						li(class="ng-scope" ng-repeat="m in messages", style="list-style:none")
+							div(style="float:left;margin-bottom:15px")
+								div(style="float:left")
+									img(src="images/default_speaker.svg" ng-src="/images/default_speaker.svg" style="width:40px;height:40px;")
+								div(style="float:left;padding-left:10px;margin-top:-5px; width:690px")
+									a(href="" ng-click="selectMessage(m)")
+										span.ng-binding(style=" padding-top:0px")
+											|	subwax
+									span(style="float:right; color:#000; padding-right:18px; font-size:12px; color:#CCC")
+										|	12:30
+									br
+									span
+										|	This is a test message, and another test message. And another test message. And another test message. And another test message.
+						//-
+							.row
+								.col-md-2.col-lg-2.col-sm-2.col-xs-2.text-right
+										strong
+											a(href="/user/abc" target="_blank" style="color: #542437") haseeb khilji:
+									p.col-md-7.col-lg-7.col-sm-7.col-xs-7(style="margin-bottom:0;")
+										| this is a message
+									.col-md-3.col-lg-3.col-sm-3.col-xs-3.text-right
+										| 12:30
 						.row(ng-repeat="message in message.messages" ng-class="{ nspacer: $first }")
 							.col-md-2.col-lg-2.col-sm-2.col-xs-2.text-right
 								strong
