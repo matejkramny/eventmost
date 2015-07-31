@@ -15,7 +15,8 @@ exports.router = function (app) {
 
 function getMessage (req, res, next) {
 	var id = req.params.id;
-	
+	console.log('topic id');
+	console.log(id);
 	try {
 		id = mongoose.Types.ObjectId(id);
 	} catch (e) {

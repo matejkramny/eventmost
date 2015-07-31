@@ -31,6 +31,8 @@ angular.module('eventMost')
 	})
 	
 	sock.on('inbox notification', function(data) {
+		console.log("---");
+		console.log(data);
 		for (var i = 0; i < $scope.messages.length; i++) {
 			if ($scope.messages[i].topic._id == data.topic._id) {
 				if (data.topic._id == $scope.message.message._id) {
@@ -79,6 +81,7 @@ angular.module('eventMost')
 	}
 	
 	$scope.sendMessage = function () {
+		console.log($scope);
 		$http.post('/inbox/message/'+$scope.message.message._id, {
 			_csrf: $scope.csrf,
 			message: $scope.msg
