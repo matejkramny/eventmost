@@ -51,16 +51,23 @@ function newTopic(req, res) {
         return;
     }
 
-    checkNewTopic(req.body._id, req.body._to);
+    if(req.eventid == null){
+        res.status(404).send("EventID is missing");
+    }
+
+    checkNewTopic(req.body._id, req.body._to, res, req.body.eventid);
 }
 
-exports.checkNewTopic = checkNewTopic = function (uid, to, res) {
+exports.checkNewTopic = checkNewTopic = function (uid, to, res, eventtopic) {
     // Find if a topic exists between two.
-    var query = {users: {$all: [uid, req.body.to]}};
+    var query = [
+        {users: {$all: [uid, req.body.to]}},
+        {eventid: eventtopic}
+    ];
 
     // Fetch My Topics.
     models.Topic.find(query)
-        .select('users lastUpdated')
+        .select('users lastUpdated eventid')
         .sort('lastUpdated')
         .exec(function (err, topics) {
 
@@ -86,7 +93,8 @@ exports.checkNewTopic = checkNewTopic = function (uid, to, res) {
             {
                 var newtopic = new models.Topic({
                     lastUpdated: Date.now(),
-                    users: [uid, to]
+                    users: [uid, to],
+                    eventid: eventtopic
                 });
 
 
@@ -356,7 +364,7 @@ function showMessagesAPI(req, res) {
     // Fetch My Topics.
     models.Topic.find(query)
         .populate({path: "users", match: {_id: {$ne: currentuser}}})
-        .select('users lastUpdated')
+        .select('users lastUpdated eventid')
         .sort('lastUpdated')
         .exec(function (err, topics) {
             res.format({

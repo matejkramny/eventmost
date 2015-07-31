@@ -5,6 +5,10 @@ var ObjectId = schema.ObjectId;
 
 var scheme = schema({
 	lastUpdated: Date,
+	eventid: {
+		type: ObjectId,
+		ref: 'Event'
+	},
 	users: [{
 		type: ObjectId,
 		ref: 'User'

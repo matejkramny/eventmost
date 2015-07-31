@@ -41,8 +41,14 @@ var scheme = schema({
 	},
 	savedProfiles: [
 		{
-			type: ObjectId,
-			ref: 'User'
+			_id: {
+				type: ObjectId,
+				ref: 'User'
+			},
+			eventid: {
+				type: ObjectId,
+				ref: 'Event'
+			}
 		}
 	],
 	receivedCards: [{
@@ -53,6 +59,10 @@ var scheme = schema({
 		card: {
 			type: ObjectId,
 			ref: 'Card'
+		},
+		eventid: {
+			type: ObjectId,
+			ref: 'Event'
 		},
 		sent: { type: Date, default: Date.now }
 	}],

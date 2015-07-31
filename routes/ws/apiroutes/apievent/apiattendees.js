@@ -857,7 +857,7 @@ function makeAdmin(req,res){
 
 		models.Attendee.findOneAndUpdate(query, { $set: { admin: true }}, {upsert:true},function(err, message){
 			if(err) return res.send(500, {error: err})
-			return res.send(200)
+			return res.send({ status: 200} )
 		});
 	}catch (err){
 		console.log(err);
@@ -870,7 +870,7 @@ function removeAdmin(req,res){
 
 		models.Attendee.findOneAndUpdate(query, { $set: { admin: false }}, {upsert:true},function(err, message){
 			if(err) return res.send(500, {error: err})
-			return res.send(200)
+			return res.send({ status: 200})
 		});
 	}catch (err){
 		console.log(err);

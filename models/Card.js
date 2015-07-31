@@ -7,6 +7,10 @@ var fs = require('fs')
 	, config = require('../config')
 
 var scheme = schema({
+	eventid: {
+		type: ObjectId,
+		ref: 'Event'
+	},
 	user: {
 		type: ObjectId,
 		ref: 'User'
