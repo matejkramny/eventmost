@@ -227,52 +227,64 @@ function viewUserAPI (req, res) {
 }
 
 function saveUserAPI (req, res) {
-	console.dir(req.body);
 	console.log("Save User Profle API".red);
 
 	var id = req.body._id;
 	var save_user =  req.params.id;
 	var eventId = req.body.eventId;
-	console.log(id);
 	// Save profile
 		models.User.findById(id, function(err, user) {
 			if (err) throw err;
-			console.log(user);
 			if (user) {
-				console.log("user found");
-				//if (user.notification.email.businessCards) {
-				//	inbox.emailNotification(user, "inbox")
-				//}
-				//user.mailboxUnread++;
-				if(user.notification.mobile.savedProfile) {
-					console.log("user notification found");
-					deviceUsers.findOne({deviceUser:id}).select({deviceType:1}).exec(function (err, type){
-						if(err) throw err;
-						if(type) {
-							if(type.deviceType === 'iPhone') {
-								console.log("sending push");
-								sendPushObj.sendPush(save_user,id,"a profile has been shared with you.","iPhone");
-							} else if(type.deviceType === 'Android'){
-								//TODO: once we receive the android api key we will uncomment this
-								//sendPushObj.sendPush(id,to,"a profile has been shared with you.","Android");
+				var query = {'savedProfiles._id': req.params.id,'savedProfiles.eventid':req.body.eventId};
+				models.User.find(query).exec(function(err,findProfile){
+					console.log(findProfile.length);
+					if(findProfile.length > 0){
+						res.format({
+							json: function() {
+								res.send({
+									status: 404,
+									message: "Profile has already been shared."
+								})
 							}
-						} else {
-							console.log("No device user found against the id: " + to);
-						}
-					})
-				}
-				// find the card
-				user.savedProfiles.push({_id:save_user,eventid:eventId});
-				user.save(function(err){
-					res.format({
-						json: function() {
-							res.send({
-								status: 200,
-								message: "Profile saved"
+						})
+					} else {
+						console.log("user found");
+						//if (user.notification.email.businessCards) {
+						//	inbox.emailNotification(user, "inbox")
+						//}
+						//user.mailboxUnread++;
+						if(user.notification.mobile.savedProfile) {
+							console.log("user notification found");
+							deviceUsers.findOne({deviceUser:id}).select({deviceType:1}).exec(function (err, type){
+								if(err) throw err;
+								if(type) {
+									if(type.deviceType === 'iPhone') {
+										console.log("sending push");
+										sendPushObj.sendPush(save_user,id,"a profile has been shared with you.","iPhone");
+									} else if(type.deviceType === 'Android'){
+										//TODO: once we receive the android api key we will uncomment this
+										//sendPushObj.sendPush(id,to,"a profile has been shared with you.","Android");
+									}
+								} else {
+									console.log("No device user found against the id: " + to);
+								}
 							})
 						}
-					})
-					return;
+						// find the card
+						user.savedProfiles.push({_id:save_user,eventid:eventId});
+						user.save(function(err){
+							res.format({
+								json: function() {
+									res.send({
+										status: 200,
+										message: "Profile saved"
+									})
+								}
+							})
+							return;
+						});
+					}
 				});
 			} else {
 				res.format({
