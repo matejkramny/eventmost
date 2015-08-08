@@ -140,7 +140,7 @@ function likeCommentAPI (req, res) {
 			json: function() {
 				res.send({
 					status: 404,
-					message: "Not Found!"
+					message: "Not Found!",
 					error: e
 				})
 			}
