@@ -222,6 +222,30 @@ function removeAttendeeAPI (req, res) {
 	)
 	.exec(function(err, event) 
 	{
+		if(err){
+			json: function() {
+					res.send({
+						status: 404,
+						message: err
+
+					});
+				}
+			});
+			return;
+		}
+
+		if(!event){
+			json: function() {
+					res.send({
+						status: 404,
+						message: "Event is not found"
+
+					});
+				}
+			});	
+			return;
+		}
+
 		if(event.attendees[0].admin || event.attendees[0]._id == attendee_id)
 		{
 

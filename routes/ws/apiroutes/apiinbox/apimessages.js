@@ -51,7 +51,7 @@ function newTopic(req, res) {
         return;
     }
 
-    if(req.eventid == null){
+    if(req.body.eventid == null){
         res.status(404).send("EventID is missing");
     }
 
