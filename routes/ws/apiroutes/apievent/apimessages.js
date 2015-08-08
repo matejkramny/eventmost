@@ -246,7 +246,6 @@ function postCommentAPICustom(req, res) {
 			path: 'attendees',
 			match: {user: user_id}
 		})
-		.populate( 'messages')
 		.exec(function (err, event) {
 			if(err){
 				res.send({
@@ -278,10 +277,10 @@ function postCommentAPICustom(req, res) {
 
 			if(inreplyto != undefined || inreplyto){
 				found = false;
-				for(var mess in event.messages){
-					if(mess._id == inreplyto){
+				for(var mess = 0; mess < event.messages.length ; mess++){
+					if(event.messages[mess] == inreplyto){
 						found = true;
-						beak;
+						break;
 					}
 				}
 				if(!found){
