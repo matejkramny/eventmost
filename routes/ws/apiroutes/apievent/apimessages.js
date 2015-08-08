@@ -238,6 +238,7 @@ function unlikeCommentAPI (req, res) {
 function postCommentAPICustom(req, res) {
 	console.log("Post Comments ".red);
 	var user_id = req.body._id;
+	var inreplyto = req.body.inreplyto
 
 	models.Event.findOne({_id: req.params.id})
 		.populate(
@@ -275,7 +276,7 @@ function postCommentAPICustom(req, res) {
 				}
 			}
 
-			if(inreplyto){
+			if(inreplyto != undefined || inreplyto){
 				found = false;
 				for(var mess in event.messages){
 					if(mess._id == inreplyto){
