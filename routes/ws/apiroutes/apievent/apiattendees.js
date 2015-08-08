@@ -223,6 +223,7 @@ function removeAttendeeAPI (req, res) {
 	.exec(function(err, event) 
 	{
 		if(err){
+			res.format({
 			json: function() {
 					res.send({
 						status: 404,
@@ -235,6 +236,7 @@ function removeAttendeeAPI (req, res) {
 		}
 
 		if(!event){
+			res.format({
 			json: function() {
 					res.send({
 						status: 404,
