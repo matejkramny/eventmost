@@ -312,7 +312,7 @@ function postCommentAPICustom(req, res) {
 						if(err)
 							console.log(err);
 
-						models.EventMessage.findByIdAndUpdate(inResponse, {$push: {comments: Attendee.user}}, function(err){
+						models.EventMessage.findByIdAndUpdate(inreplyto, {$push: {comments: msg}}, function(err){
 							if(err)
 								console.log(err)
 						});
