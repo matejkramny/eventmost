@@ -154,7 +154,7 @@ function sendAndroidPush(senderId, receiverId, message) {
             regIds.push(token.deviceToken);
 
             //TODO: Need an android app key
-            var sender = new gcm.Sender('YOUR_API_KEY_HERE');
+            var sender = new gcm.Sender('AIzaSyC8r1IGFX_dfSHP1d8O1m__88zAA1QtkVU');
 
             sender.send(message, regIds, function (err, result) {
                 if(err) console.error(err);
