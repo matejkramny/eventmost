@@ -241,8 +241,17 @@ function removeAttendeeAPI (req, res) {
 						var i = ev.banned.indexOf(Attendee.user);
 						console.log(i)
 						if(i == -1){
-							ev.banned.push(Attendee.user);
-							ev.save()
+							models.Event.findByIdAndUpdate(event_id, {$push: {banned: Attendee.user}}, 
+						        function(ex) {
+						            if (ex)
+						            {
+						                console.log("Exception : " + ex);
+						            }
+						        }
+							);
+
+							// ev.banned.push(Attendee.user);
+							// ev.save()
 							console.log("user banned")
 						}
 					});
