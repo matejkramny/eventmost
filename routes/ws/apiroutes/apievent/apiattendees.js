@@ -221,12 +221,12 @@ function removeAttendeeAPI (req, res) {
 		}
 	)
 	.exec(function(err, event) 
-	{	
+	{
 		if(event.attendees[0].admin || event.attendees[0]._id == attendee_id)
 		{
-			
+
 			models.Attendee.findOne({_id : attendee_id})
-			.exec(function(err, Attendee) 
+			.exec(function(err, Attendee)
 			{
 				console.log("in attende function");
 				Attendee.isAttending= false;
@@ -251,15 +251,15 @@ function removeAttendeeAPI (req, res) {
 					res.send({
 						status: 200,
 						message:"Event Attendee Removed"
-						
+
 					});
 					}
 				});
-				
+
 			});
-			
+
 		}
-		
+
 		else
 		{
 			console.log("only admin can do this action");
@@ -268,7 +268,7 @@ function removeAttendeeAPI (req, res) {
 					res.send({
 						status: 404,
 						message:"only admin can do this action",
-						
+
 					});
 					}
 				});
