@@ -245,7 +245,21 @@ function postCommentAPICustom(req, res) {
 			path: 'attendees',
 			match: {user: user_id}
 		})
+		.populate{ 'messages'}
 		.exec(function (err, event) {
+			if(err){
+				res.send({
+					status: 404,
+					message: err
+				})
+			}
+
+			if(!event){
+				res.send({
+					status: 404,
+					message: "Event not found"
+				})
+			}
 			// Found the Event. Now Found the Attendee Against the User ID.
 			console.log("Event ".red + event);
 			
@@ -258,6 +272,23 @@ function postCommentAPICustom(req, res) {
 						})
 						return;
 					}
+				}
+			}
+
+			if(inreplyto){
+				found = false;
+				for(var mess in event.messages){
+					if(mess._id == inreplyto){
+						found = true;
+						beak;
+					}
+				}
+				if(!found){
+					res.send({
+							status: 404,
+							message: "in Reply to message not found"
+						});
+					return;
 				}
 			}
 			
@@ -274,13 +305,40 @@ function postCommentAPICustom(req, res) {
 				});
 
 				msg.save();
+				console.log(msg)
+
+				if(inreplyto){
+					models.EventMessage.findByIdAndUpdate(inreplyto, {$set: { isResponse: true }}, function (err, message){
+						if(err)
+							console.log(err);
+
+						models.EventMessage.findByIdAndUpdate(inResponse, {$push: {comments: Attendee.user}}, function(err){
+							if(err)
+								console.log(err)
+						});
+					});
+					res.format({
+					json: function () {
+							res.send({
+								status: 200,
+								comment: message
+							})
+						}
+					})
+					return;
+				}
+
 
 				console.log(msg);
 
-				models.Event.findById(req.params.id, function (err, ev) {
-					ev.messages.push(msg._id);
-					ev.save()
+				models.Event.findByIdAndUpdate(req.params.id, {$push: { messages: msg }}, function (err, message){
+					if(err)
+						console.log(err);
 				});
+				// models.Event.findById(req.params.id, function (err, ev) {
+				// 	ev.messages.push(msg._id);
+				// 	ev.save()
+				// });
 
 				res.format({
 					json: function () {
