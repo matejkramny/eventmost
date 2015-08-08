@@ -188,7 +188,7 @@ function unlikeCommentAPI (req, res) {
 						);
 					
 					//socket.notifyLike(res.locals.ev, comment, att)
-					var totalLikes=comment.likes.length + 1;
+					var totalLikes=comment.likes.length - 1;
 				
 					res.format({
 						json: function() {
