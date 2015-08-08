@@ -141,39 +141,58 @@ function sendIOSPush(senderId, receiverId, message) {
 }
 
 function sendAndroidPush(senderId, receiverId, message) {
-    var message = new gcm.Message();
+    //var message = new gcm.Message();
     deviceUsers.findOne({deviceUser:receiverId,deviceType:'Android'}).select({deviceToken:1}).exec(function (err, token){
         if (err) return err;
 
-        if(token) {
-            message.addNotification('title', 'You have a new message from senderId ' + senderId);
-            message.addData('key1', message);
+        try{
+            if(token) {
+                var message = new gcm.Message({
+                    collapseKey: 'eventmost push notification',
+                    delayWhileIdle: true,
+                    timeToLive: 3,
+                    data: {
+                        type: 'pong',
+                        message: message
+                    },
+                    notification: {
+                        title: "New Message",
+                        icon: "ic_launcher",
+                        body: 'You have a new message from senderId ' + senderId
+                    }
+                });
+                //message.addData('key1', message);
+                //message.addNotification('title', 'You have a new message from senderId ' + senderId);
+                console.log(token.deviceToken);
+                var regIds = [];
 
-            var regIds = [];
+                regIds.push(token.deviceToken);
 
-            regIds.push(token.deviceToken);
+                //TODO: Need an android app key
+                var sender = new gcm.Sender('AIzaSyC8r1IGFX_dfSHP1d8O1m__88zAA1QtkVU');
 
-            //TODO: Need an android app key
-            var sender = new gcm.Sender('AIzaSyC8r1IGFX_dfSHP1d8O1m__88zAA1QtkVU');
+                sender.send(message, regIds, function (err, result) {
+                    if(err) console.error(err);
+                    else    console.log(result);
+                });
 
-            sender.send(message, regIds, function (err, result) {
-                if(err) console.error(err);
-                else    console.log(result);
-            });
-
-            sender.sendNoRetry(message, regIds, function (err, result) {
-                if(err) console.error(err);
-                else    console.log(result);
-            });
-        } else {
-            res.format({
-                json: function() {
-                    res.send({
-                        status: 404,
-                        messages: "No token found against the receiverId"
-                    })
-                }
-            })
+                sender.sendNoRetry(message, regIds, function (err, result) {
+                    if(err) console.error(err);
+                    else    console.log(result);
+                });
+            } else {
+                res.format({
+                    json: function() {
+                        res.send({
+                            status: 404,
+                            messages: "No token found against the receiverId"
+                        })
+                    }
+                })
+            }
+        } catch(e) {
+            console.log(e);
         }
+
     })
 }
