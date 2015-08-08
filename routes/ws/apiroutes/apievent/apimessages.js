@@ -72,7 +72,7 @@ function likeCommentAPI (req, res) {
 				if (err || !comment) {
 					res.format({
 						json: function() {
-							res.send(404, {})
+							res.send(404, {status: 404, error: err})
 						}
 					})
 					return;
@@ -129,7 +129,7 @@ function likeCommentAPI (req, res) {
 					json: function() {
 						res.send({
 							status: 404,
-							message: "Not Found!"
+							message: "Comment Not Found!"
 						})
 					}
 				})
@@ -141,6 +141,7 @@ function likeCommentAPI (req, res) {
 				res.send({
 					status: 404,
 					message: "Not Found!"
+					error: e
 				})
 			}
 		})
