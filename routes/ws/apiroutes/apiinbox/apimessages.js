@@ -79,7 +79,8 @@ exports.checkNewTopic = checkNewTopic = function (uid, to, res, eventtopic) {
                             res.send({
                                 status: 200,
                                 message: "Topic Already created",
-                                topic: topics[0]._id
+                                topic: topics[0]._id,
+                                eventId:topics[0].eventid
                             });
                         }
                     });
@@ -105,7 +106,8 @@ exports.checkNewTopic = checkNewTopic = function (uid, to, res, eventtopic) {
                                 res.send({
                                     status: 200,
                                     sent: true,
-                                    topic: newtopic._id
+                                    topic: newtopic._id,
+                                    eventId:newtopic.eventid
                                 });
                             }
                         });
