@@ -10,6 +10,7 @@ exports.router = function (app) {
 		.post('/api/event/:id/comment', postCommentAPICustom)
 		.post('/api/event/deletecomment', deleteCommentAPI)
 		.post('/api/event/:id/like', likeCommentAPI)
+		.post('/api/event/:id/unlike', unlikeCommentAPI)
 }
 
 function getCommentsAPI (req, res) {
@@ -67,7 +68,7 @@ function likeCommentAPI (req, res) {
 			if(comment){
 				var posted = comment.posted
 				
-					console.log(posted);
+				console.log(posted);
 				if (err || !comment) {
 					res.format({
 						json: function() {
@@ -98,11 +99,19 @@ function likeCommentAPI (req, res) {
 						}
 					})
 				} else {
-					comment.likes.push(att);
-					comment.save();
+					// comment.likes.push(att);
+					// comment.save();
+					models.EventMessage.findByIdAndUpdate(cid, {$push: {likes: att}}, 
+					        function(ex) {
+					            if (ex)
+					            {
+					                console.log("Exception : " + ex);
+					            }
+					        }
+						);
 					
 					//socket.notifyLike(res.locals.ev, comment, att)
-					var totalLikes=comment.likes.length
+					var totalLikes=comment.likes.length + 1;
 				
 					res.format({
 						json: function() {
@@ -111,6 +120,93 @@ function likeCommentAPI (req, res) {
 								message: "Liked",
 								posted:posted,
 						        likes:totalLikes
+							})
+						}
+					})
+				}
+			}else{
+				res.format({
+					json: function() {
+						res.send({
+							status: 404,
+							message: "Not Found!"
+						})
+					}
+				})
+			}
+		})
+	} catch (e) {
+		res.format({
+			json: function() {
+				res.send({
+					status: 404,
+					message: "Not Found!"
+				})
+			}
+		})
+	}
+}
+
+function unlikeCommentAPI (req, res) {
+	var cid = req.body.commentid;
+	
+	try {
+		models.EventMessage.findById(cid, function(err, comment) {
+			if(comment){
+				var posted = comment.posted
+				
+				console.log(posted);
+				if (err || !comment) {
+					res.format({
+						json: function() {
+							res.send(404, {})
+						}
+					})
+					return;
+				}
+					
+				var att=req.body.attendeeid;
+				
+				var found = false;
+			
+				for (var i = 0; i < comment.likes.length; i++) {
+					if (comment.likes[i].equals(att)) {
+						found = true;
+						break;
+					}
+				}
+				
+				if (found) {
+					models.EventMessage.findByIdAndUpdate(cid, {$pull: {likes: att}}, 
+					        function(ex) {
+					            if (ex)
+					            {
+					                console.log("Exception : " + ex);
+					            }
+					        }
+						);
+					
+					//socket.notifyLike(res.locals.ev, comment, att)
+					var totalLikes=comment.likes.length + 1;
+				
+					res.format({
+						json: function() {
+							res.send({
+								status: 200,
+								message: "Un-Liked",
+								posted:posted,
+						        likes:totalLikes
+							})
+						}
+					})
+				} else {
+					// comment.likes.push(att);
+					// comment.save();
+					res.format({
+						json: function() {
+							res.send({
+								status: 400,
+								message: "no likes found"
 							})
 						}
 					})
