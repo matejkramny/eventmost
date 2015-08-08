@@ -245,7 +245,7 @@ function postCommentAPICustom(req, res) {
 			path: 'attendees',
 			match: {user: user_id}
 		})
-		.populate{ 'messages'}
+		.populate( 'messages')
 		.exec(function (err, event) {
 			if(err){
 				res.send({
