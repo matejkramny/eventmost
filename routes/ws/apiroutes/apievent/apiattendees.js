@@ -239,9 +239,11 @@ function removeAttendeeAPI (req, res) {
 						}
 						console.log(Attendee.user)
 						var i = ev.banned.indexOf(Attendee.user);
+						console.log(i)
 						if(i == -1){
 							ev.banned.push(Attendee.user);
 							ev.save()
+							console.log("user banned")
 						}
 					});
 				}
