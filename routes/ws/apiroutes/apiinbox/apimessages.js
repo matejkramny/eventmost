@@ -427,7 +427,7 @@ function consolidatedAPI(req,res){
 
                 models.Event.find(query)
                     .populate('attendees.user')
-                    .select('name start end address venue_name avatar source description')
+                    .select('name start end address venue_name avatar source')
                     .sort('-created')
                     .exec(function(err, evs) {
                         console.log("events: " + evs);
