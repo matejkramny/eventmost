@@ -1,53 +1,52 @@
 {
-	"name": "eventmost",
-	"version": "0.2.9",
-	"private": true,
-	"scripts": {
-		"start": "node app.js",
-		"test": "mocha --reporter spec"
-	},
-	"start": "app.js",
-	"subdomain": "eventmost",
-	"domains": [
-		"eventmost.com",
-		"www.eventmost.com"
-	],
-	"dependencies": {
-		"express": "~3",
-		"jade": "latest",
-		"mongoose": "latest",
-		"async": "latest",
-		"validator": "2.1.0",
-		"session-mongoose": "latest",
-		"nodemailer": "latest",
-		"passport": "latest",
-		"passport-facebook": "latest",
-		"passport-twitter": "latest",
-		"passport-linkedin": "latest",
-		"passport-local": "latest",
-		"socket.io": "latest",
-		"nodemailer": "latest",
-		"bugsnag": "latest",
-		"newrelic": "latest",
-		"grunt": "latest",
-		"grunt-contrib-uglify": "latest",
-		"grunt-contrib-cssmin": "latest",
-		"grunt-contrib-jshint": "latest",
-		"grunt-contrib-watch": "latest",
-		"grunt-contrib-concat": "latest",
-		"sanitizer": "latest",
-		"moment": "latest",
-		"passport.socketio": "latest",
-		"gm": "latest",
-		"request": "latest",
-		"colors": "latest",
-		"stripe": "latest",
-		"knox": "latest",
-		"apn": "latest",
-		"node-gcm": "latest"
-	},
-	"devDependencies": {
-		"should": "latest",
-		"supertest": "latest"
-	}
+  "name": "eventmost",
+  "version": "0.2.9",
+  "private": true,
+  "scripts": {
+    "start": "node app.js",
+    "test": "mocha --reporter spec"
+  },
+  "start": "app.js",
+  "subdomain": "eventmost",
+  "domains": [
+    "eventmost.com",
+    "www.eventmost.com"
+  ],
+  "dependencies": {
+    "express": "~3",
+    "jade": "latest",
+    "mongoose": "latest",
+    "async": "latest",
+    "validator": "2.1.0",
+    "session-mongoose": "latest",
+    "nodemailer": "latest",
+    "passport": "latest",
+    "passport-facebook": "latest",
+    "passport-twitter": "latest",
+    "passport-linkedin": "latest",
+    "passport-local": "latest",
+    "socket.io": "latest",
+    "bugsnag": "latest",
+    "newrelic": "latest",
+    "grunt": "latest",
+    "grunt-contrib-uglify": "latest",
+    "grunt-contrib-cssmin": "latest",
+    "grunt-contrib-jshint": "latest",
+    "grunt-contrib-watch": "latest",
+    "grunt-contrib-concat": "latest",
+    "sanitizer": "latest",
+    "moment": "latest",
+    "passport.socketio": "latest",
+    "gm": "latest",
+    "request": "latest",
+    "colors": "latest",
+    "stripe": "latest",
+    "knox": "latest",
+    "apn": "^1.7.4",
+    "node-gcm": "^0.11.0"
+  },
+  "devDependencies": {
+    "should": "latest",
+    "supertest": "latest"
+  }
 }
