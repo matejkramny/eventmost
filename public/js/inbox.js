@@ -27,7 +27,7 @@ angular.module('eventMost')
 	
 	var sock = io.connect();
 	sock.on('connect', function() {
-		//console.log("Connected")
+		console.log("Connected")
 	})
 	
 	sock.on('inbox notification', function(data) {
