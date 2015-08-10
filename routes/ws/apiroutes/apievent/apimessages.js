@@ -10,6 +10,7 @@ exports.router = function (app) {
 		.post('/api/event/:id/comment', postCommentAPICustom)
 		.post('/api/event/deletecomment', deleteCommentAPI)
 		.post('/api/event/:id/like', likeCommentAPI)
+		.post('/api/event/:id/unlike', unlikeCommentAPI)
 }
 
 function getCommentsAPI (req, res) {
@@ -67,11 +68,11 @@ function likeCommentAPI (req, res) {
 			if(comment){
 				var posted = comment.posted
 				
-					console.log(posted);
+				console.log(posted);
 				if (err || !comment) {
 					res.format({
 						json: function() {
-							res.send(404, {})
+							res.send(404, {status: 404, error: err})
 						}
 					})
 					return;
@@ -98,11 +99,19 @@ function likeCommentAPI (req, res) {
 						}
 					})
 				} else {
-					comment.likes.push(att);
-					comment.save();
+					// comment.likes.push(att);
+					// comment.save();
+					models.EventMessage.findByIdAndUpdate(cid, {$push: {likes: att}}, 
+					        function(ex) {
+					            if (ex)
+					            {
+					                console.log("Exception : " + ex);
+					            }
+					        }
+						);
 					
 					//socket.notifyLike(res.locals.ev, comment, att)
-					var totalLikes=comment.likes.length
+					var totalLikes=comment.likes.length + 1;
 				
 					res.format({
 						json: function() {
@@ -111,6 +120,94 @@ function likeCommentAPI (req, res) {
 								message: "Liked",
 								posted:posted,
 						        likes:totalLikes
+							})
+						}
+					})
+				}
+			}else{
+				res.format({
+					json: function() {
+						res.send({
+							status: 404,
+							message: "Comment Not Found!"
+						})
+					}
+				})
+			}
+		})
+	} catch (e) {
+		res.format({
+			json: function() {
+				res.send({
+					status: 404,
+					message: "Not Found!",
+					error: e
+				})
+			}
+		})
+	}
+}
+
+function unlikeCommentAPI (req, res) {
+	var cid = req.body.commentid;
+	
+	try {
+		models.EventMessage.findById(cid, function(err, comment) {
+			if(comment){
+				var posted = comment.posted
+				
+				console.log(posted);
+				if (err || !comment) {
+					res.format({
+						json: function() {
+							res.send(404, {})
+						}
+					})
+					return;
+				}
+					
+				var att=req.body.attendeeid;
+				
+				var found = false;
+			
+				for (var i = 0; i < comment.likes.length; i++) {
+					if (comment.likes[i].equals(att)) {
+						found = true;
+						break;
+					}
+				}
+				
+				if (found) {
+					models.EventMessage.findByIdAndUpdate(cid, {$pull: {likes: att}}, 
+					        function(ex) {
+					            if (ex)
+					            {
+					                console.log("Exception : " + ex);
+					            }
+					        }
+						);
+					
+					//socket.notifyLike(res.locals.ev, comment, att)
+					var totalLikes=comment.likes.length - 1;
+				
+					res.format({
+						json: function() {
+							res.send({
+								status: 200,
+								message: "Un-Liked",
+								posted:posted,
+						        likes:totalLikes
+							})
+						}
+					})
+				} else {
+					// comment.likes.push(att);
+					// comment.save();
+					res.format({
+						json: function() {
+							res.send({
+								status: 400,
+								message: "no likes found"
 							})
 						}
 					})
@@ -141,6 +238,7 @@ function likeCommentAPI (req, res) {
 function postCommentAPICustom(req, res) {
 	console.log("Post Comments ".red);
 	var user_id = req.body._id;
+	var inreplyto = req.body.inreplyto
 
 	models.Event.findOne({_id: req.params.id})
 		.populate(
@@ -149,6 +247,19 @@ function postCommentAPICustom(req, res) {
 			match: {user: user_id}
 		})
 		.exec(function (err, event) {
+			if(err){
+				res.send({
+					status: 404,
+					message: err
+				})
+			}
+
+			if(!event){
+				res.send({
+					status: 404,
+					message: "Event not found"
+				})
+			}
 			// Found the Event. Now Found the Attendee Against the User ID.
 			console.log("Event ".red + event);
 			
@@ -161,6 +272,23 @@ function postCommentAPICustom(req, res) {
 						})
 						return;
 					}
+				}
+			}
+
+			if(inreplyto != undefined || inreplyto){
+				found = false;
+				for(var mess = 0; mess < event.messages.length ; mess++){
+					if(event.messages[mess] == inreplyto){
+						found = true;
+						break;
+					}
+				}
+				if(!found){
+					res.send({
+							status: 404,
+							message: "in Reply to message not found"
+						});
+					return;
 				}
 			}
 			
@@ -177,13 +305,40 @@ function postCommentAPICustom(req, res) {
 				});
 
 				msg.save();
+				console.log(msg)
+
+				if(inreplyto){
+					models.EventMessage.findByIdAndUpdate(inreplyto, {$set: { isResponse: true }}, function (err, message){
+						if(err)
+							console.log(err);
+
+						models.EventMessage.findByIdAndUpdate(inreplyto, {$push: {comments: msg}}, function(err){
+							if(err)
+								console.log(err)
+						});
+					});
+					res.format({
+					json: function () {
+							res.send({
+								status: 200,
+								comment: message
+							})
+						}
+					})
+					return;
+				}
+
 
 				console.log(msg);
 
-				models.Event.findById(req.params.id, function (err, ev) {
-					ev.messages.push(msg._id);
-					ev.save()
+				models.Event.findByIdAndUpdate(req.params.id, {$push: { messages: msg }}, function (err, message){
+					if(err)
+						console.log(err);
 				});
+				// models.Event.findById(req.params.id, function (err, ev) {
+				// 	ev.messages.push(msg._id);
+				// 	ev.save()
+				// });
 
 				res.format({
 					json: function () {
