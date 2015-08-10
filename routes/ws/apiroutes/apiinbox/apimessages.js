@@ -13,6 +13,7 @@ exports.router = function (app) {
         .post('/api/inbox/read/:id',readAPI)
         .post('/api/inbox/delete/message/:id', deletemessageAPI)
         .post('/api/inbox/delete/topic/:id', deletetopicAPI)
+        .post('/api/inbox/consolidatedAPI/:id',consolidatedAPI)
     //.get('/api/inbox/message/:id', getMessageAPI, showMessageAPI)
     //.post('/api/inbox/message/:id', getMessageAPI, postMessageAPI)
 }
@@ -51,7 +52,7 @@ function newTopic(req, res) {
         return;
     }
 
-    if(req.eventid == null){
+    if(req.body.eventid == null){
         res.status(404).send("EventID is missing");
     }
 
@@ -61,7 +62,7 @@ function newTopic(req, res) {
 exports.checkNewTopic = checkNewTopic = function (uid, to, res, eventtopic) {
     // Find if a topic exists between two.
     var query = [
-        {users: {$all: [uid, req.body.to]}},
+        {users: {$all: [uid, to]}},
         {eventid: eventtopic}
     ];
 
@@ -79,7 +80,8 @@ exports.checkNewTopic = checkNewTopic = function (uid, to, res, eventtopic) {
                             res.send({
                                 status: 200,
                                 message: "Topic Already created",
-                                topic: topics[0]._id
+                                topic: topics[0]._id,
+                                eventId:topics[0].eventid
                             });
                         }
                     });
@@ -105,7 +107,8 @@ exports.checkNewTopic = checkNewTopic = function (uid, to, res, eventtopic) {
                                 res.send({
                                     status: 200,
                                     sent: true,
-                                    topic: newtopic._id
+                                    topic: newtopic._id,
+                                    eventId:newtopic.eventid
                                 });
                             }
                         });
@@ -402,4 +405,64 @@ function deletetopicAPI(req,res){
     query = {topic: req.params.id}
     models.Message.find(query).remove().exec();
     res.send(200);
+}
+
+function consolidatedAPI(req,res){
+    var userId = req.params.id;
+    var query = {users: {$in: [userId]}};
+
+    var jsonTopicArray = [];
+    var jsonMainObject = {};
+    models.Topic.find(query)
+        .populate("users",'email')
+        .populate("eventid",'name')
+        .select('users eventid')
+        .exec(function (err, topics) {
+            jsonTopicArray.push(topics);
+            jsonMainObject["status"] = 200;
+            jsonMainObject["Topics"] = topics;
+
+            models.Attendee.find({ 'user': userId }, '_id', function(err, attendees) {
+                var query = { 'attendees': { $in: attendees } };
+
+                models.Event.find(query)
+                    .populate('attendees.user')
+                    .select('name start end address venue_name avatar source')
+                    .sort('-created')
+                    .exec(function(err, evs) {
+                        console.log("events: " + evs);
+                        if (err) throw err;
+                        if (evs) {
+                            jsonMainObject["Events"] = evs;
+                        }
+                        models.User.findOne({_id:userId} , function(err, current_user)
+                        {
+                            if(current_user){
+                                var query = {'_id': {$in: current_user.savedProfiles}};
+
+                                models.User.find(query)
+                                    .exec(function(err, savedprofiles) {
+                                        if (err) throw err;
+                                        if (savedprofiles) {
+                                            jsonMainObject["SavedProfiles"] = savedprofiles;
+                                        }
+                                        var query = {'savedProfiles._id': userId};
+                                        models.User.find(query)
+                                            .exec(function(err, savedprofiles) {
+                                                if (err) throw err;
+                                                if (savedprofiles) {
+                                                    jsonMainObject["SaverProfiles"] = savedprofiles;
+                                                }
+                                                res.format({
+                                                    json: function () {
+                                                        res.send(jsonMainObject);
+                                                    }
+                                                });
+                                            });
+                                    });
+                            }
+                        });
+                    })
+            })
+        })
 }

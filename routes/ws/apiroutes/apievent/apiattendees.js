@@ -221,12 +221,38 @@ function removeAttendeeAPI (req, res) {
 		}
 	)
 	.exec(function(err, event) 
-	{	
+	{
+		if(err){
+			res.format({
+			json: function() {
+					res.send({
+						status: 404,
+						message: err
+
+					});
+				}
+			});
+			return;
+		}
+
+		if(!event){
+			res.format({
+			json: function() {
+					res.send({
+						status: 404,
+						message: "Event is not found"
+
+					});
+				}
+			});	
+			return;
+		}
+
 		if(event.attendees[0].admin || event.attendees[0]._id == attendee_id)
 		{
-			
+
 			models.Attendee.findOne({_id : attendee_id})
-			.exec(function(err, Attendee) 
+			.exec(function(err, Attendee)
 			{
 				console.log("in attende function");
 				Attendee.isAttending= false;
@@ -239,9 +265,20 @@ function removeAttendeeAPI (req, res) {
 						}
 						console.log(Attendee.user)
 						var i = ev.banned.indexOf(Attendee.user);
+						console.log(i)
 						if(i == -1){
-							ev.banned.push(Attendee.user);
-							ev.save()
+							models.Event.findByIdAndUpdate(event_id, {$push: {banned: Attendee.user}}, 
+						        function(ex) {
+						            if (ex)
+						            {
+						                console.log("Exception : " + ex);
+						            }
+						        }
+							);
+
+							// ev.banned.push(Attendee.user);
+							// ev.save()
+							console.log("user banned")
 						}
 					});
 				}
@@ -251,15 +288,15 @@ function removeAttendeeAPI (req, res) {
 					res.send({
 						status: 200,
 						message:"Event Attendee Removed"
-						
+
 					});
 					}
 				});
-				
+
 			});
-			
+
 		}
-		
+
 		else
 		{
 			console.log("only admin can do this action");
@@ -268,7 +305,7 @@ function removeAttendeeAPI (req, res) {
 					res.send({
 						status: 404,
 						message:"only admin can do this action",
-						
+
 					});
 					}
 				});

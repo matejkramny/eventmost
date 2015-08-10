@@ -42,8 +42,13 @@
     "colors": "latest",
     "stripe": "latest",
     "knox": "latest",
+<<<<<<< HEAD
     "apn": "^1.7.4",
     "node-gcm": "^0.11.0"
+=======
+    "apn": "~1.7.4",
+    "node-gcm": "~0.11.0"
+>>>>>>> a3bd7020f481d129e4fbc0b944d33aa4b57cc264
   },
   "devDependencies": {
     "should": "latest",
