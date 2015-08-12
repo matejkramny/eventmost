@@ -113,6 +113,7 @@ function show (req, res) {
 }
 
 function show2 (req, res) {
+	console.log("show2 called");
 	res.format({
 		html: function() {
 			res.locals.topics = res.locals.messages;
