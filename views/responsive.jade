@@ -35,83 +35,83 @@ html
 						a(href="/")
 							img.nspacer.logos(src="/images/logo.svg")
 				
-		if loggedIn == false
-			.pull-right.logo-right(style="position: absolute; right:7%; z-index: 99999;")
-					//- Only displayed when users are guests
-					button.btn.btn-warning.pb.pull-right(type='button' data-toggle="modal" href="#signModal", style="width:95px")
-						b SIGN UP
-					button.btn.btn-default.pb.pull-right(type='button' data-toggle="modal" href="#loginModal", style="margin-right:-4px; width:95px")
-						b LOGIN
-					button.btn.btn-primary.pb3.pull-right(type='button' data-toggle="modal" href="#signModal" )
-						|  Create <br />Event 
-					br
-					button.btn.btn-primary.pb2.pull-right(type='button' data-toggle="modal" href="#signModal", style="width:186px" )
-						i.fa.fa-fw(style="margin-right:10px; padding-bottom:2px")
-							img(src="/images/big-white-star.svg", style="height:15px; width=15px; vertical-align:initial")
-						|  Create Event 
-						i.fa.fa-fw(style="margin-left:10px; padding-bottom:2px")
-							img(src="/images/big-white-star.svg", style="height:15px; width=15px; vertical-align:initial")
-		else
-			if (typeof hide_bar_right === 'undefined' && hide_bar_right !== true)
-				//- Only displayed when user is logged in		
+					if loggedIn == false
+						.pull-right.logo-right
+								//- Only displayed when users are guests
+								button.btn.btn-warning.pb.pull-right(type='button' data-toggle="modal" href="#signModal", style="width:95px")
+									b SIGN UP
+								button.btn.btn-default.pb.pull-right(type='button' data-toggle="modal" href="#loginModal", style="margin-right:-4px; width:95px")
+									b LOGIN
+								button.btn.btn-primary.pb3.pull-right(type='button' data-toggle="modal" href="#signModal" )
+									|  Create <br />Event 
+								br
+								button.btn.btn-primary.pb2.pull-right(type='button' data-toggle="modal" href="#signModal", style="width:186px" )
+									i.fa.fa-fw(style="margin-right:10px; padding-bottom:2px")
+										img(src="/images/big-white-star.svg", style="height:15px; width=15px; vertical-align:initial")
+									|  Create Event 
+									i.fa.fa-fw(style="margin-left:10px; padding-bottom:2px")
+										img(src="/images/big-white-star.svg", style="height:15px; width=15px; vertical-align:initial")
+					else
+						if (typeof hide_bar_right === 'undefined' && hide_bar_right !== true)
+							//- Only displayed when user is logged in		
 
-				.pull-right.width7(ng-controller="inboxNotifications")
-					a.image(href="/events/my")
-						img.mail.pull-right.img-mess-smart(src="/images/small-dropbox-icon.svg" alt="" style="width:100%;")
-					.font-header-icon.center.drop-icon-text
-						| Event <br />dropbox
+							.pull-right.width7(ng-controller="inboxNotifications")
+								a.image(href="/events/my")
+									img.mail.pull-right.img-mess-smart(src="/images/small-dropbox-icon.svg" alt="" style="width:100%;")
+								.font-header-icon.center.drop-icon-text
+									| Event <br />dropbox
+									
+							.pull-right.width7(ng-controller="inboxNotifications")
+								a.image(href="/user/"+user._id)
+									img.mail.pull-right.img-mess-smart(src="/images/my-profile-icon.svg" alt="" style="width:100%;")
+								.font-header-icon
+									| My profile
+
+							//-
+								.pull-right.width7
+									a.image(href="/inbox")
+										img.mail.pull-right.img-mess-smart(src="/images/notes-icon.svg" alt="" style="width:100%;")
+										.row-fluid.minus2
+											.message-nr
+												h20 0
+									.font-header-icon2
+										| Notes
+
+							.pull-right.width7(ng-controller="inboxNotifications")
+								a.image(href="/messages")
+									img.mail.pull-right.img-mess-smart(src="/images/message-icon.svg" alt="" style="width:100%;")
+									.row-fluid.minus2
+										.message-nr
+											h20(ng-bind="notifications" ng-init="notifications = #{user.mailboxUnread}")= user.mailboxUnread
+								.font-header-icon
+									| Inbox
 						
-				.pull-right.width7(ng-controller="inboxNotifications")
-					a.image(href="/user/"+user._id)
-						img.mail.pull-right.img-mess-smart(src="/images/my-profile-icon.svg" alt="" style="width:100%;")
-					.font-header-icon
-						| My profile
-
-				//-
-					.pull-right.width7
-						a.image(href="/inbox")
-							img.mail.pull-right.img-mess-smart(src="/images/notes-icon.svg" alt="" style="width:100%;")
-							.row-fluid.minus2
-								.message-nr
-									h20 0
-						.font-header-icon2
-							| Notes
-
-				.pull-right.width7(ng-controller="inboxNotifications")
-					a.image(href="/messages")
-						img.mail.pull-right.img-mess-smart(src="/images/message-icon.svg" alt="" style="width:100%;")
-						.row-fluid.minus2
-							.message-nr
-								h20(ng-bind="notifications" ng-init="notifications = #{user.mailboxUnread}")= user.mailboxUnread
-					.font-header-icon
-						| Inbox
-			
-				.col-md-6.col-xs-6.pull-left.pad-header-se
-					.pull-left.nspacer-small
-						a.font-e.link-purple.header-links(href="/") Home
-						if !recentEvent
-							|  | 
-							a.font-e.link-purple.header-links(href="/event/add") Create event
-						if user.admin
-							|  | 
-							a.font-e.link-purple.header-links(href="/admin") Administration
-						if recentEvent
-							|  | 
-							a.font-e.link-purple.header-links(href="/event/"+recentEvent) Return to Event: #{recentEventName}
-					.clearfix
-					.nspacer.hide-mini
-						form(method="GET", accept-charset="utf-8", action="/search/")
-							input.pull-left.font-s.search-input.pad-left-ten.header-links(type="search", name="q", placeholder="Search for Events or People on EventMost", style="width:75%;", value= typeof search !== "undefined" ? search.query : null)
-							input.gonew2.pull-left.header-links(type="submit", value="GO", style="width:10%; height:36px; border-top-right-radius:10px;  border-bottom-right-radius:10px;")
-			else
-				.col-md-6.col-xs-6.pull-right(ng-controller="TakeoverController" ng-init="inboxUrl = '#{inbox_send_to}'; setCsrf('#{token}');")
-					.text-center.nspacer-small(ng-cloak style="height:20px;")
-						| {{ progress }}
-					.clearfix
-					.nspacer.hide-mini
-						form
-							button.gonew2.pull-right.header-links(ng-click="sendInbox()" style="width:15%;") SEND
-							input.pull-right.font-s.search-input.pad-left-ten.header-links(type="email" name="email" ng-model="email" required="required" placeholder="Send This Inbox to an Email Address" style="width:70%;")
+							.col-md-6.col-xs-6.pull-left.pad-header-se
+								.pull-left.nspacer-small
+									a.font-e.link-purple.header-links(href="/") Home
+									if !recentEvent
+										|  | 
+										a.font-e.link-purple.header-links(href="/event/add") Create event
+									if user.admin
+										|  | 
+										a.font-e.link-purple.header-links(href="/admin") Administration
+									if recentEvent
+										|  | 
+										a.font-e.link-purple.header-links(href="/event/"+recentEvent) Return to Event: #{recentEventName}
+								.clearfix
+								.nspacer.hide-mini
+									form(method="GET", accept-charset="utf-8", action="/search/")
+										input.pull-left.font-s.search-input.pad-left-ten.header-links(type="search", name="q", placeholder="Search for Events or People on EventMost", style="width:75%;", value= typeof search !== "undefined" ? search.query : null)
+										input.gonew2.pull-left.header-links(type="submit", value="GO", style="width:10%; height:36px; border-top-right-radius:10px;  border-bottom-right-radius:10px;")
+						else
+							.col-md-6.col-xs-6.pull-right(ng-controller="TakeoverController" ng-init="inboxUrl = '#{inbox_send_to}'; setCsrf('#{token}');")
+								.text-center.nspacer-small(ng-cloak style="height:20px;")
+									| {{ progress }}
+								.clearfix
+								.nspacer.hide-mini
+									form
+										button.gonew2.pull-right.header-links(ng-click="sendInbox()" style="width:15%;") SEND
+										input.pull-right.font-s.search-input.pad-left-ten.header-links(type="email" name="email" ng-model="email" required="required" placeholder="Send This Inbox to an Email Address" style="width:70%;")
 		
 		if (is_acting_user)
 			div(style="width:100%; background: #ACD90C; color: #000;")
