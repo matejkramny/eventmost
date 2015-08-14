@@ -10,8 +10,8 @@ var credentials = exports.credentials = {
 	host: process.env.HOST || "",
 	bugsnag: process.env.BUGSNAG_KEY || "",
 	smtp: {
-		user: process.env.SMTP_USER || "",
-		pass: process.env.SMTP_PASS || ""
+		user: process.env.SMTP_USER || "matej@eventmost.com",
+		pass: process.env.SMTP_PASS || "EsgC1zJzZM0oPCemVfitMw"
 	},
 	newrelic: process.env.NEWRELIC || "",
 	stripe: {
@@ -29,7 +29,7 @@ var credentials = exports.credentials = {
 		},
 		linkedin: {
 			key: process.env.SOCIAL_LINKEDIN_KEY || "fakekey",
-			secret: process.env.SOCIAL_LINKEDIN_SECRET || "fakesecret"
+			secret: process.env.SOCIAL_LINKEDIN_SECRET || "fakekey"
 		}
 	},
 	session_secret: process.env.SESSION_SECRET || "KeyboardCat",
