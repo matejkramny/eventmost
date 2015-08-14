@@ -153,6 +153,7 @@ function postMessage (req, res) {
 			sentBy: req.user._id
 		})
 		
+		console.log('going for sockets');
 		var notAlertedUsers = inbox.pushMessageToSockets({
 			message: {
 				_id: msg._id,
