@@ -213,7 +213,7 @@ server.listen(app.get('port'), function(){
 
 exports.io = io = require('socket.io').listen(server)
 
-io.set('authorization', socketPassport.authorize({
+/*io.set('authorization', socketPassport.authorize({
 	cookieParser: express.cookieParser,
 	key: config.sessionKey,
 	secret: config.sessionSecret,
@@ -224,7 +224,7 @@ io.set('authorization', socketPassport.authorize({
 		accept(false);
 	}
 }))
-io.set('log level', 1);
+io.set('log level', 1);*/
 
 // HTTP routes
 routes.router(app);
