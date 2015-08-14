@@ -185,7 +185,6 @@ function postMessage (req, res) {
 					})
 				}
 			});
-			return;
 		})
 		
 	} else {
@@ -201,7 +200,6 @@ function postMessage (req, res) {
 					status: 404
 				})
 			}
-			return;
 		})
 		
 	}
