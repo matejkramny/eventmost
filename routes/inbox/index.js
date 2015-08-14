@@ -246,12 +246,14 @@ function doMerge (req, res) {
 exports.pushMessageToSockets = function (data) {
 	console.log("Pushing to sockets");
 	//console.log(io.sockets.adapter.rooms);
-	for (var clientId in io.sockets.adapter.rooms) {
+	io.emit('inbox notification', data);
+	console.log("emitting done");
+	/*for (var clientId in io.sockets.adapter.rooms) {
     	var clientSocket = io.sockets.connected[clientId];
     	console.log(clientId);
     	clientSocket.emit('inbox notification', data);
     	console.log("emitting done");
-	}
+	}*/
 
 	
 
