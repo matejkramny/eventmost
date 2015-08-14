@@ -248,6 +248,7 @@ exports.pushMessageToSockets = function (data) {
 	//console.log(io.sockets.adapter.rooms);
 	for (var clientId in io.sockets.adapter.rooms) {
     	var clientSocket = io.sockets.connected[clientId];
+    	console.log(clientId);
     	clientSocket.emit('inbox notification', data);
 	}
 
