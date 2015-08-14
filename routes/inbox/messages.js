@@ -177,6 +177,7 @@ function postMessage (req, res) {
 		async.parallel([
 		
 			function (cb) {
+				console.log("saving msg");
 				msg.save();
 			}
 		], function(err) {
