@@ -35,7 +35,7 @@ angular.module('eventMost')
 	$scope.showPeopleSearch = false;
 	$scope.csrf = "";
 	
-	var sock = io.connect();
+	var sock = io.connect('http://dev.eventmost.com/messages');
 	sock.on('connect', function() {
 		console.log("Connected")
 	})
