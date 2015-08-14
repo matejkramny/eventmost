@@ -252,6 +252,8 @@ exports.pushMessageToSockets = function (data) {
     	clientSocket.emit('inbox notification', data);
 	}
 
+	console.log("emitting done");
+
 	/*//console.log(io.sockets);
 	var sockets = io.sockets.adapter.rooms;
 	//console.log(sockets);
