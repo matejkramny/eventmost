@@ -3,16 +3,26 @@
 				
 				$("#content-1").mCustomScrollbar({
 					theme:"minimal",
-          scrollInertia: 0
+          			scrollInertia: 0
 				});
 				
 				$("#content-2").mCustomScrollbar({
 					theme:"minimal",
-          scrollInertia: 0
+          			scrollInertia: 0,
+          			scrollTo : "bottom"
 				});
+
+				$("#content-2").mCustomScrollbar("update");
+				$("#content-2").mCustomScrollbar("scrollTo", "bottom");
 				
 			});
+
+			function ttt(){
+				alert('hehe');
+			}
+
 		})(jQuery);
+
 
 angular.module('eventMost')
 .controller('inboxController', function($scope, $http, $filter) {
@@ -27,11 +37,11 @@ angular.module('eventMost')
 	
 	var sock = io.connect();
 	sock.on('connect', function() {
-		//console.log("Connected")
+		console.log("Connected")
 	})
 	
 	sock.on('inbox notification', function(data) {
-		console.log("---");
+		console.log("got some data");
 		console.log(data);
 		for (var i = 0; i < $scope.messages.length; i++) {
 			if ($scope.messages[i].topic._id == data.topic._id) {
@@ -77,16 +87,22 @@ angular.module('eventMost')
 		if (!$scope.$$phase) {
 			$scope.$digest();
 		}
-		$('#messages').scrollTop($('#messages')[0].scrollHeight);
+		//$('#messages').scrollBottom($('#messages')[0].scrollHeight);
+		$("#content-2").mCustomScrollbar("update");
+		$("#content-2").mCustomScrollbar("scrollTo", "bottom");
 	}
 	
 	$scope.sendMessage = function () {
-		console.log($scope);
+		var msg = $('#inputMessage').val();
 		$http.post('/inbox/message/'+$scope.message.message._id, {
 			_csrf: $scope.csrf,
-			message: $scope.msg
+			message: msg
 		})
 		$scope.msg = "";
+		/*var dd = {};
+		dd.message = msg;
+		$scope.message.messages.push(dd);*/
+
 	}
 	
 	$scope.processOtherUser = function () {

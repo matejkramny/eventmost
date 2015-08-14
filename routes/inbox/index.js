@@ -75,6 +75,25 @@ function populateInbox (req, res, next) {
 				cb(null)
 			});
 		},
+		/*function(cb) {
+			var savedIds = [];
+			if(req.user.savedProfiles.length > 0){
+				req.user.savedProfiles.forEach(function (savedId){
+					savedIds.push(mongoose.Types.ObjectId(savedId._id));
+				});
+
+				var savedQuery = [{ "_id": savedIds }];
+				console.log(savedQuery);
+				models.User.find(savedQuery).exec(function(err, saved) {
+					res.locals.saved = saved;
+					
+					cb(null)
+				});
+			}else{
+				cb(null)
+			}
+		},*/
+
 		function (cb) {
 			req.user.mailboxUnread = 0;
 			req.user.save();
@@ -225,16 +244,25 @@ function doMerge (req, res) {
 }
 
 exports.pushMessageToSockets = function (data) {
-	var sockets = io.sockets.clients();
-	
+	//console.log(io.sockets.adapter.rooms);
+	for (var clientId in io.sockets.adapter.rooms) {
+    	var clientSocket = io.sockets.connected[clientId];
+    	clientSocket.emit('inbox notification', data);
+	}
+
+	/*//console.log(io.sockets);
+	var sockets = io.sockets.adapter.rooms;
+	//console.log(sockets);
 	var notAlertedUsers = data.topic.users.slice();
 	for (var i = 0; i < sockets.length; i++) {
 		var s = sockets[i];
+		console.log(s);
 		var user = s.handshake.user;
 		
 		for (var x = notAlertedUsers.length-1; x >= 0; x--) {
 			if (notAlertedUsers[x]._id.equals(user._id)) {
 				data.mailboxUnread = notAlertedUsers[x].mailboxUnread;
+				console.log(data);
 				s.emit('inbox notification', data)
 				
 				notAlertedUsers.splice(x, 1);
@@ -242,7 +270,8 @@ exports.pushMessageToSockets = function (data) {
 		}
 	}
 	
-	return notAlertedUsers;
+	return notAlertedUsers;*/
+	return;
 }
 
 exports.emailMessageNotification = function (person, from, link, body) {

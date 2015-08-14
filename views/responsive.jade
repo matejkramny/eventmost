@@ -151,7 +151,7 @@ html
 			if !loggedIn
 				script(src="/js/signin.js?v=#{versionHash}" defer)
 			else
-				script(src="/socket.io/socket.io.js?v=#{versionHash}" defer)
+				script(src="/js/socket.io.js?v=#{versionHash}" defer)
 				script(src="/js/inbox_notifications.js?v=#{versionHash}" defer)
 				//script(src="/js/diferscript.js?v=#{versionHash}" defer)
 				if (typeof hide_bar_right !== 'undefined' && hide_bar_right === true)

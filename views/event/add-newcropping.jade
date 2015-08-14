@@ -1,0 +1,922 @@
+extends ../responsive
+
+
+append addonjs
+	script(src="/js/crop/jquery.min.js", defer)
+	script(src="/js/vendor/angular.min.js", defer)
+	script(src="/js/crop/jquery.Jcrop.min.js", defer)
+	script(src="/js/crop/script.js", defer)
+	script(src="/js/vendor/jquery-ui-1.10.3.custom.min.js" defer)
+	script(src="/js/datepicker.js", defer)
+	script(src="/js/vendor/tiny.editor.packed.js", defer)
+	script(src="/js/vendor/jquery.jcarousel.min.js", defer)
+	script(src="/js/vendor/jquery.zclip.min.js", defer)
+	script(src="/js/crop/hammer.js", defer)
+	script(src="/js/crop/jquery.mousewheel.js", defer)
+	script(src="/js/crop/jquery.cropbox.js", defer)
+
+
+	if (typeof ev !== "undefined")
+		script.
+			window.emEvent = !{JSON.stringify(ev)}
+		
+	script(src="/js/eventadd.js" defer)
+
+
+append content
+	include ../modals/add-modal
+	
+	
+	div(ng-controller="eventAdd")
+		#afterPublishHide
+			//- smart
+			//- ------------------------------mobile
+			//- event search for mobiles
+			.col-xs-12.hide-all2
+				form(method="POST", accept-charset="utf-8")
+					input.gonew2.pull-right.header-links(type="button", value="GO", style="width:10%;")
+					input(type="hidden", name="_csrf", value=token)
+					input.pull-right.font-s.search-input.pad-left-ten.header-links(type="search", placeholder="search events or people", style="width:87%;")
+			.clearfix.hide-all2
+
+			form#mobileForm
+				//- event name
+				.col-xs-12.no-float.hide-all2
+					.container.bg-green.pad-top-zero.pad-right-zero(style="height:38px;")
+						.pull-left.event-name
+							.font.logo-text
+								| Event name
+						.pull-left.event-name-input
+							input.input-grey(name="eventName", type="text", required="required")
+					.clearfix
+					//- logo
+					.nspacer-small
+					.col-xs-5.bg-yellow.pad-top-zero.pad-right-zero(style="height:38px;")
+						.pull-left.event-name
+							.font.logo-text.font-exception
+								| Logo
+					.col-xs-7.pad-right-zero
+						img.avatar_preview(src="/images/logo-avatar.svg",  class="img-responsive")
+					.clearfix
+				.hide-all2
+					.progress.hide
+						.progress-bar.avatar-progress-upload(role="progress", aria-valuenow="0", aria-valuemin="0", aria-valuemax="100", style="width: 0%;")
+							span.sr-only 0% Uploaded
+				.clearfix.hide-all2
+					//- image upload btns
+					button.btn.btn-warning.hide-all2.file_browse_wrapper(type='button', style="border-radius: 10px; padding:5px; padding-top:15px; width:32%; margin-top:-15px;")
+						img(src="/images/browses1.svg")
+						.center
+							| Browse
+					button.btn.btn-warning.hide-all2.file_upload_wrapper(type='button', style="border-radius: 10px; padding:5px; padding-top:15px; width:32%; margin-top:-15px;")
+						img(src="/images/upload-pin-s1.svg")
+						.center
+							| Upload
+					button.btn.btn-warning.hide-all2.file_delete_wrapper(type='button',  style="border-radius: 10px; padding:5px; padding-top:15px; width:32%; margin-top:-15px;")
+						img(src="/images/bin1.svg")
+						.center
+							| Delete
+
+				//- venue name
+				.clearfix.hide-all2
+				.col-xs-12.no-float.hide-all2
+					.container.bg-green.pad-top-zero.pad-right-zero(style="height:38px; margin-top:-15px;")
+						.pull-left.event-name
+							.font.logo-text
+								| Venue name
+						.pull-left.event-name-input
+							input.input-grey(name="venueName", type="text")
+
+				//- Event Address
+				.clearfix.hide-all2
+				.col-xs-12.no-float.hide-all2
+					.container.bg-purple.pad-top-zero.pad-right-zero(style="height:38px; margin-top:-35px;")
+						.pull-left.event-name
+							.font.logo-text
+								| Event address
+						.pull-left.event-name-input
+								input.input-grey.current-location-field(name="address", type="text")
+				//- Current location checkbox
+				.clearfix.hide-all2
+				.col-xs-12.no-float.hide-all2
+					.container.bg-purple.pad-top-zero.pad-right-zero(style="height:38px; margin-top:-35px;")
+						.pull-left
+							p.check5-purple-small
+								input(type="checkbox", id="creditcardsmaller223", value="small")
+								label(for='creditcardsmaller223')
+						.pull-left.nspacer.logo-text.current-location-status
+								| use current location 
+				//- Event Date
+				.clearfix.hide-all2
+				.col-xs-12.no-float.hide-all2
+					.center(style="margin-top:-20px;")
+						| Event date
+				//- FROM
+				.clearfix.hide-all2
+				.col-xs-12.no-float.hide-all2
+					.container.bg-purple.date-height.datepickerWrapper(style="margin-top:-20px;")
+						.center
+							.font.logo-text
+								| FROM1:
+						.datepicker#fromDateMobile(style="min-height:300px;")
+						.clearfix
+						.nspacer
+						.pull-left
+							.input-grey-rounded.psev
+								a.link-purple.nowButton(href="#", style="font-size:10px;")
+									| NOW
+						.pull-right
+							.pull-left.font-e
+								| Time of event:
+							.pull-left.pad-left-ten
+								input.input-grey-rounded(name="start_date", type="time")
+				//- TO
+				.clearfix.hide-all2
+				.col-xs-12.no-float.hide-all2
+					.container.bg-purple.date-height.datepickerWrapper(style="margin-top:-20px;")
+						.center
+							.font.logo-text
+								| TO++:
+						.datepicker#toDateMobile(style="min-height:300px;")
+						.clearfix
+						.nspacer
+						.pull-left
+							.input-grey-rounded.psev
+								a.link-purple.nowButton(href="#", style="font-size:10px;")
+									| NOW
+						.pull-right
+							.pull-left.font-e
+								| Time of event:
+							.pull-left.pad-left-ten
+								input.input-grey-rounded(name="start_date", type="time")
+
+				//- Event description
+				.col-xs-12.no-float.hide-all2				
+					.nspacer-small
+					.bg-green
+						.pull-left
+							img.psev(src="/images/pencil.svg")
+						.pull-left.font2.font-thin.nspacer-small
+							| Event description
+						.pull-right.pad-right-ten.nspacer
+							img(src="/images/optional-white.svg")
+						.clearfix
+					.clearfix
+
+					textarea#tinyeditor.hide-all2(style="height: 50px; width:1000px;", name="description", placeholder="Description...")
+
+				//- Ticket categories
+				.col-xs-12.no-float.hide-all2
+					.nspacer-small
+					.bg-purple(style="height:102px;")
+						.col-lg-12.col-md-12.col-xs-12.font2.center(style="padding-top:5px; font-size:13px;")
+							| Choose attendee / ticket categories
+						.col-lg-12.col-md-12.col-xs-12.font2.center
+							img(src="/images/optional-white.svg" class="img-responsive" style="margin:10px auto")
+						.col-lg-12.col-md-12.col-xs-12.font2.center
+							a.link-white(href="#", style="font-size:12px; padding-bottom:0px;") LEARN MORE
+							img.pad-left-five(src="/images/small-white-arrow.svg" style="")
+
+				//- Predefined categories
+				.col-xs-12.no-float.hide-all2
+					.pull-left.font2.font-exception
+						| Predefined categories
+					.clearfix
+					.predefinedCategories.font-evente.font-thin2.nspacer.pull-left.font-exception
+						span(val="Guest Speaker") 1. Guest Speaker
+						br
+						span(val="Attendee") 2. Attendee
+						br
+						span(val="Vendor") 3. Vendor
+						br
+						span(val="Entrepreneur") 4. Entrepreneur
+						br
+						span(val="Team") 5. Team
+						br
+						span(val="Startup Team") 6. Startup Team
+						br
+						span(val="Company") 7. Company
+						br
+						span(val="Mentor") 8. Mentor
+						br
+						span(val="Educator") 9. Educator
+					.clearfix
+				//- create your own
+				.clearfix.hide-all2
+				.col-xs-12.no-float.hide-all2
+					.pull-left.font2.font-exception
+						| Create your own
+					.clearfix
+					.createCategory.font-evente.font-thin2.nspacer.pull-left
+						.col-lg-9.col-md-9.col-xs-9
+							input#add-category-manual-6.input-ashen-rounded.font-exception(name="start_date", type="text", style="height:35px;")
+						.col-lg-3.col-md-3.col-xs-3.pad-left-zero
+							a.add-category-manual(href="#add-category-manual-6").addCategory
+								img(src="/images/ashen-arrow.svg" style="")
+						.clearfix
+						.nspacer-small
+						.col-lg-9.col-md-9.col-xs-9
+							input#add-category-manual-7.input-ashen-rounded.font-exception(name="start_date", type="text", style="height:35px;")
+						.col-lg-3.col-md-3.col-xs-3.pad-left-zero
+							a.add-category-manual(href="#add-category-manual-7").addCategory
+								img(src="/images/ashen-arrow.svg" style="")
+						.clearfix
+					.clearfix
+				//- selected cats
+				.clearfix.hide-all2
+				.col-xs-12.no-float.hide-all2
+					.pull-left.font2.font-exception
+						| Selected categories
+					.clearfix
+					.selectedCategoriesList.font-evente.font-thin2.nspacer.pull-left.font-exception
+						span(val="Guest Speaker") Guest Speaker
+							br
+						p.noneSelected.hide No categories :(
+					.clearfix
+
+				//- allow attendees checkbox
+				.clearfix.hide-all2
+				.col-xs-12.no-float.hide-all2
+					.nspacer
+					.font2.pull-left.font-exception
+						| Allow attendees to create their own categories?
+					.clearfix
+					.pull-left
+						label.checkbox.toggle.candy(style='width: 100px; margin-left:0px; margin-top:4px;', onclick='')
+							input.allowAttendeesToCreateTheirOwnCategories(type='checkbox', class="invisible")
+							span
+								span No
+								span Yes
+							a.slide-button
+					.clearfix
+					
+					.nspacer-medium
+	
+					//-tickets
+					.bg-purple.psev.font-lebig.pull-left.semi-bold
+						.pull-left
+							img(src="/images/small-ticket.svg" style="")
+						.pull-left.pad-right-ten
+							| Tickets
+					.clearfix
+					.line-purple
+					//- Include priced tickets checkbox
+					.nspacer
+					.font2.pull-left.font-exception
+						| Include priced tickets?
+					.clearfix
+				.clearfix.hide-all2
+				.col-xs-12.no-float.hide-all2.font-exception
+					.pull-left(style="width:50px;")
+						p.check5-purple-small
+							input.includePricedTickets(type="checkbox", id="1creditcardsmaller23", value="small")
+							label(for='1creditcardsmaller23')
+					.font2.pull-left
+						| YES
+					.col-lg-1.col-md-1.col-xs-1.pad-right-zero(style="width:50px;")
+						p.check5-purple-small
+							input(name="", placeholder="", type="checkbox", id="2creditcardsmaller233", value="small", checked="checked")
+							label(for='2creditcardsmaller233')
+					.font2.pull-left
+						| NO
+					.clearfix
+				.clearfix
+
+				//- Tickets table
+				.hide-all2
+					.col-xs-12.no-float.hide-all2.ticketsWrapper
+						table.gridtable(style="position:relative;")
+							thead
+								tr
+									th
+										| Ticket Type
+									th
+										| Ticket Price
+									th
+										| Number <br /> of tickets
+									th
+										| Who pays <br /> the fee?
+							tbody#tickets
+								tr(ng-repeat="ticket in tickets")
+									td.ticket-dropdown
+										ul.nav.navbar-nav(style="margin-top:-5px;")
+											li.dropdown
+												input.input-green(type="text", style="font-size:10px;", ng-model="ticket.customType", ng-show="ticket.isCustomType", placeholder="Custom ticket")
+												a.dropdown-toggle(href='#', data-toggle='dropdown')
+													span(ng-hide="ticket.isCustomType", style="text-transform: capitalize;") {{ ticket.type }}
+													b.caret
+												ul.dropdown-menu
+													li
+														a(href='', ng-click="ticket.type='premium'") Premium
+													li
+														a(href='', ng-click="ticket.type='standard'") Standard
+													li
+														a(href='', ng-click="ticket.type='custom'") Custom
+									td
+										input.input-green(type="number", min="0", ng-model="ticket.price", style="font-size:10px;")
+									td
+										input.input-green(type="number", min="1", ng-model="ticket.quantity", style="font-size:10px;")
+									td.ticket-dropdown2
+										ul.nav.navbar-nav(style="margin-top:-5px;")
+											li.dropdown
+												a.dropdown-toggle(href='#', data-toggle='dropdown')
+													| Me
+													b.caret
+												ul.dropdown-menu.pull-right
+													li
+														a(href='', ng-click="ticket.whopays='me'") Me
+													li
+														a(href='', ng-click="ticket.whopays='attendee'") Attendee
+							div.tickets-lock(style="width:100%;height:100%;position:absolute;left:0;top:0;background:#333;opacity:0.3;z-index:999;")
+						.clearfix
+					.nspacer
+					.center
+						button.btn.btn-info.font-bigs2.font-exception.eventSubmitBtn(type='submit', href="mobileForm", style="line-height:45px; padding:30px; padding-left:55px; padding-right:55px;")
+							| Publish<br /><b>my</b> event
+				//- end mobile---------------------------
+
+	
+			form#desktop(ng-app)
+				//- -------------------------------standard
+				.nspacer-small.hide-mini
+				//- event name
+				.col-lg-11.col-md-11.col-xs-11.no-float.hide-mini
+					.container.bg-green.pad-top-zero.pad-right-zero(style="height:62px;")
+						.pull-left.event-name
+							.font.font-thin.logo-text
+								| Event name
+						.pull-left.event-name-input
+								input.input-grey#eventNameDesktop(name="eventName", type="text", required="required", style="height:50px;")
+					.clearfix
+					.nspacer-small
+					.progress.hide
+						.progress-bar.avatar-progress-upload(role="progress", aria-valuenow="0", aria-valuemin="0", aria-valuemax="100", style="width: 0%;")
+							span.sr-only 0% Uploaded
+					.col-lg-2.col-md-2.col-xs-2.pad-left-zero.pad-right-zero.res-dis-non(style="width:12.5%")
+						.container.bg-green.pad-top-zero.pad-right-zero(style="height:62px;")
+							.pull-left.event-address
+								.font.font-thin.logo-text
+									| Event Logo
+
+					.col-lg-3-5		
+						//- crop toll
+						//-
+							#profile_pic.profile_pic
+								img#thumb(src='/images/pro.svg')
+
+						form#upload_form1(enctype='multipart/form-data', method='post', action='upload.php', onsubmit='return validateForm();')
+							input#w1(type='hidden')
+							input#h1(type='hidden')
+							input#x1(type='hidden')
+							input#y1(type='hidden')
+					//- crop toll browse button
+					.pull-left.button-event(style="margin-left:2%")
+						.bg-yellow-rounded
+							#file_browse_wrapper1.file_browse_wrapper
+								input#file_browse1.file_browse(type='file', name='avatar1')
+					//- crop toll upload button when pressed  upload.php
+					.pull-left.button-event
+							//-
+								#file_upload_wrapper1.file_upload_wrapper(style="margin-left:4px;")
+									input#file_upload1.file_upload(type='submit', style='', value='Upload')
+
+					a.pad-left-five.pull-left.button-event.file_delete_wrapper(href="#", style="text-decoration:none !important;")
+						.bg-yellow-rounded.center.create-height
+							img.uploads(src="/images/delete-bin.svg")
+							img.uploads2(src="/images/delete-bin-s.svg")
+							.center.font-tw.uploads-text
+								| Delete
+					.clearfix					
+					//- crop toll preview
+					#info-m.info-m(style='display: none;')
+						| Select part of image you want to crop
+					#image_div(style='display: none;')
+						.a(id="cropButton1")
+							#crop_div(style='float: right; margin-right:55%')
+								h3(style="float:left")
+									| Crop 
+									img(src='/images/crop.jpeg', width="30", heigth="30")
+						img#load_img(src='')
+
+					#error.error(style='display: none;')
+					.clearfix
+
+					//.line-purple
+					.nspacer
+					.font2.pull-left.font-exception
+						| Add large Cover photo? 
+					.col-lg-1.col-md-1.col-xs-1.pad-right-zero(style="width:50px;")
+						p.check5-purple-small
+							input#creditcardsmaller23( name="background", ng-model="background", ng-init="background=false", placeholder="", type="checkbox", value="Logo")
+							label(for='creditcardsmaller23')
+					.font-22
+						| (click 
+						a(href="#") here 
+						| to see example)				
+					.clearfix
+
+					.col-lg-2.col-md-2.col-xs-2.pad-left-zero.pad-right-zero.res-dis-non(ng-show="background")(style="width:12.5%")
+						.container.bg-green.pad-top-zero.pad-right-zero(style="height:62px;")
+							.pull-left.event-address
+								.font.font-thin.logo-text
+									| Cover Image
+					.col-lg-3-5(ng-show="background")
+						//- crop toll
+						//-
+							#profile_pic2.profile_pic
+								img#thumb2(src='/images/pro.svg')
+
+						form#upload_form2(enctype='multipart/form-data', method='post', action='upload.php', onsubmit='return validateForm();')
+							input#w2(type='hidden')
+							input#h2(type='hidden')
+							input#x2(type='hidden')
+							input#y2(type='hidden')		
+
+					//- crop toll browse button
+					.pull-left.button-event(ng-show="background")(style="margin-left:2%")
+						.bg-yellow-rounded
+							#file_browse_wrapper2.file_browse_wrapper
+								input#file_browse2.file_browse(type='file', style='', name='file_browse2')
+								//- previous upload file with different name input#file_browse2.file_browse(name="avatar", type="file")
+					//- crop toll upload button when pressed  upload.php
+					.pull-left.button-event(ng-show="background")
+						//-
+							#file_upload_wrapper2.file_upload_wrapper(style="margin-left:4px;")
+								input#file_upload2.file_upload(type='submit', style='', value='Upload')
+
+					a.pad-left-five.pull-left.button-event.file_delete_wrapper2(href="#" style="text-decoration:none !important;" ng-show="background")
+						.bg-yellow-rounded.center.create-height
+							img.uploads(src="/images/delete-bin.svg")
+							img.uploads2(src="/images/delete-bin-s.svg")
+							.center.font-tw.uploads-text
+								| Delete
+					.clearfix
+					//- crop toll preview
+					#info-m2.info-m(style='display: none;')
+						| Select part of image you want to crop
+					#image_div2(style='display: none;')
+						.a(id="cropButton2")
+							#crop_div(style='float: right; margin-right:10%')
+								h3(style="float:left")
+									| Crop 
+									img(src='/images/crop.jpeg', width="30", heigth="30")
+						img#load_img2(src='')
+					#error2.error(style='display: none;')
+					.clearfix
+
+					.popup#popup(style="display: none;")
+						.popup__body
+							.js-img
+						.div(style="margin: 0 0 5px; text-align: center;")
+							.js-upload.btn.btn_browse.btn_browse_small
+								| Upload
+
+
+					.nspacer-small
+					.col-lg-10.col-md-10.col-xs-10.pad-left-zero
+						.container.bg-green.pad-top-zero.pad-right-zero(style="height:62px;")
+							.pull-left.event-venue
+								.font.font-thin.logo-text
+									| Venue name
+							.pull-left.event-venue-input
+									input.input-grey#venueNameDesktop(name="venueName", type="text", style="height:50px;")
+					.col-lg-2.col-md-2.col-xs-2
+						img(src="/images/optional-big.svg", alt="", style="margin-top:15px;" class="img-responsive")
+					.clearfix
+
+					.nspacer-small
+					.col-lg-8.col-md-8.col-xs-8.pad-left-zero.pad-right-zero
+						.container.bg-purple.pad-top-zero.pad-right-zero(style="height:62px;")
+							.pull-left.event-address
+								.font.font-thin.logo-text
+									| Event address
+							.pull-left.event-address-input
+									input.input-grey.current-location-field(name="address", type="text", style="height:50px;")
+					.col-lg-2.col-md-2.col-xs-2.pad-left-five
+						.container.bg-purple.pad-top-zero.pad-right-zero(style="height:62px;")
+							.center.current-location
+								p.check5-purple-small
+									input(type="checkbox", id="creditcardsmaller3", value="small")
+									label(for='creditcardsmaller3')
+							.nspacer-min-big.current-location.current-location-status
+								| use current location 
+					.col-lg-2.col-md-2.col-xs-2
+						img(src="/images/optional-big.svg", alt="", style="margin-top:15px;" class="img-responsive")
+					.clearfix
+
+					.nspacer-small
+
+					//- normal calendars
+					.col-lg-2.col-md-2.col-xs-2.pad-left-zero.pad-right-zero.res-dis-non
+						.container.bg-purple.pad-top-zero.pad-right-zero(style="height:62px;")
+							.pull-left.event-address
+								.font.font-thin.logo-text
+									| Event date
+
+					.col-lg-5.col-md-5.col-xs-5.pad-left-five.pad-right-zero.res-dis-non
+						.container.bg-purple.date-height.datepickerWrapper
+							.center
+								.font.font-thin.logo-text
+									| FROM2:
+							.datepicker#fromDateDesktop(style="min-height:300px;")
+							.clearfix
+							.nspacer
+							.pull-left
+								.input-grey-rounded.psev
+									a.link-purple.nowButton(href="#")
+										| NOW
+							.pull-right.nspacer-small(style="width:70%")
+								.pull-left.font-e
+									| Time of event:
+								.pull-left.pad-left-ten(style="width:50%")
+									input.input-grey-rounded(type="time", name="start_date", id="fromTime")
+					.col-lg-5.col-md-5.col-xs-5.pad-left-five.pad-right-zero.res-dis-non
+						.container.bg-purple.date-height.datepickerWrapper
+							.center
+								.font.font-thin.logo-text
+									| TO:
+							.datepicker#toDateDesktop(style="min-height:300px;")
+							.clearfix
+							.nspacer
+							.pull-left
+								.input-grey-rounded.psev
+									a.link-purple.nowButton(href="#")
+										| NOW
+							.pull-right.nspacer-small(style="width:70%")
+								.pull-left.font-e
+									| Time of event:
+								.pull-left.pad-left-ten(style="width:50%")
+									input.input-grey-rounded(type="time", name="start_date", id="toTime")
+					//- small calendars
+					.col-lg-12.col-md-12.col-xs-12.pad-left-zero.pad-right-zero.res-dis-non-vis
+						.container.bg-purple.pad-top-zero.pad-right-zero(style="height:32px;")
+							.pull-left.event-address
+								.font.font-thin.logo-text
+									| Event date
+					.clearfix.res-dis-non-vis
+					.nspacer.res-dis-non-vis
+					.col-lg-6.col-md-6.col-xs-6.pad-left-zero.res-dis-non-vis
+						.container.bg-purple.date-height
+							.center
+								.font.font-thin.logo-text
+									| FROM:
+							.datepicker(style="min-height:300px;")
+							.pull-left.font-e
+								| Time of event:
+							.pull-left.pad-left-ten
+								input.input-grey-rounded(type="time", name="start_date")
+							.clearfix
+							.nspacer
+							.pull-left
+								.input-grey-rounded.psev
+									a.link-purple(href="#")
+										| NOW
+					.col-lg-6.col-md-6.col-xs-6.pad-left-five.pad-right-zero.res-dis-non-vis
+						.container.bg-purple.date-height
+							.center
+								.font.font-thin.logo-text
+									| TO--:
+							.datepicker(style="min-height:300px;")
+							.pull-left.font-e
+								| Time of event:
+							.pull-left.pad-left-ten
+								input.input-grey-rounded(type="time", name="start_date")
+							.clearfix
+							.nspacer
+							.pull-left
+								.input-grey-rounded.psev
+									a.link-purple(href="#")
+										| NOW
+					.clearfix
+
+					.nspacer-small
+					.bg-green
+						.pull-left
+							img.pencil(src="/images/pencil.svg")
+						.pull-left.font2.font-thin.nspacer-small
+							| Event description
+						.pull-right.pad-right-ten.nspacer
+							img(src="/images/optional-big-white.svg")
+						.clearfix
+					.clearfix
+
+					textarea#tinyeditor1.tinyeditor(style="height: 200px width:1000px;", name="description", placeholder="Description...")
+					.clearfix
+
+
+					//- Choose attendee labels
+					.nspacer-small
+					.bg-purple(style="height:82px;")
+						.col-lg-2.col-md-2.col-xs-2
+							img(src="/images/people2.svg", style="padding:5px;"  class="img-responsive")
+						.col-lg-7.col-md-7.col-xs-7.font2.font-thin.center(style="padding-top:25px;")
+							| Choose attendee / ticket categories
+						.col-lg-3.col-md-3.col-xs-3.font2.font-thin.pull-right(style="padding-top:25px;")
+							.pull-right.learn-create
+								img(src="/images/optional-white.svg")
+								br
+								a.link-white.toggle_popover(href="" data-toggle="popover" data-placement="bottom" data-content="This is how your attendees self-select how they would categorize themselvesin the event. You can pre-define them or let them create their own." style="font-size:12px; padding-bottom:0px;") LEARN MORE
+								img.pad-left-five(src="/images/small-white-arrow.svg" style="")
+							.clearfix
+						.clearfix
+					.clearfix
+	
+
+
+					.nspacer-small
+					.col-lg-4.col-md-4.col-xs-4.col-sm-4
+						.center.font2.font-exception
+							| Predefined categories
+					.col-lg-4.col-md-4.col-xs-4.col-sm-4
+						.left.font2.font-exception
+							| Create your own
+					.col-lg-4.col-md-4.col-xs-4
+						.left.font2.font-exception
+							| Selected categories
+					.col-lg-3.col-md-3.col-xs-3
+						.predefinedCategories.font-evente.font-thin2.nspacer.gestlist.font-exception-thin
+							span(val="Guest Speaker") 1. Guest Speaker
+							br
+							span(val="Attendee") 2. Attendee
+							br
+							span(val="Vendor") 3. Vendor
+							br
+							span(val="Entrepreneur") 4. Entrepreneur
+							br
+							span(val="Team") 5. Team
+							br
+							span(val="Startup Team") 6. Startup Team
+							br
+							span(val="Company") 7. Company
+							br
+							span(val="Mentor") 8. Mentor
+							br
+							span(val="Educator") 9. Educator
+							br
+							span(val="Other") 10. Other
+					.col-lg-5.col-md-5.col-xs-5
+						.createCategory.font-evente.font-thin2.nspacer.gestlist(style="margin-top:20px; padding-left:20px; margin-left:50px;")
+							.col-lg-9.col-md-9.col-xs-9
+								input#add-category-manual-1.input-ashen-rounded2.font-exception-thin(add-category-manual, type="text", style="height:35px;")
+							.col-lg-3.col-md-3.col-xs-3.pad-left-zero
+								a.add-category-manual(href="#add-category-manual-1").addCategory
+									img(src="/images/ashen-arrow.svg" style="")
+							.clearfix
+							.nspacer-small
+							.col-lg-9.col-md-9.col-xs-9
+								input#add-category-manual-2.input-ashen-rounded2.font-exception-thin(add-category-manual, type="text", style="height:35px;")
+							.col-lg-3.col-md-3.col-xs-3.pad-left-zero
+								a.add-category-manual(href="#add-category-manual-2").addCategory
+									img(src="/images/ashen-arrow.svg" style="")
+							.clearfix
+							.nspacer-small
+							.col-lg-9.col-md-9.col-xs-9
+								input#add-category-manual-3.input-ashen-rounded2.font-exception-thin(add-category-manual, type="text", style="height:35px;")
+							.col-lg-3.col-md-3.col-xs-3.pad-left-zero
+								a.add-category-manual(href="#add-category-manual-3").addCategory
+									img(src="/images/ashen-arrow.svg" style="")
+							.clearfix
+							.nspacer-small
+							.col-lg-9.col-md-9.col-xs-9
+								input#add-category-manual-4.input-ashen-rounded2.font-exception-thin(add-category-manual, type="text", style="height:35px;")
+							.col-lg-3.col-md-3.col-xs-3.pad-left-zero
+								a.add-category-manual(href="#add-category-manual-4").addCategory
+									img(src="/images/ashen-arrow.svg" style="")
+							.clearfix
+							.nspacer-small
+							.col-lg-9.col-md-9.col-xs-9
+								input#add-category-manual-5.input-ashen-rounded2.font-exception-thin(add-category-manual, type="text", style="height:35px;")
+							.col-lg-3.col-md-3.col-xs-3.pad-left-zero
+								a.add-category-manual(href="#add-category-manual-5").addCategory
+									img(src="/images/ashen-arrow.svg" style="")
+							.clearfix
+							.nspacer-small
+							.col-lg-9.col-md-9.col-xs-9
+								input.input-ashen-rounded2.font-exception-thin(add-category-manual, type="text", style="height:35px;")
+							.col-lg-3.col-md-3.col-xs-3.pad-left-zero
+								a.add-category-manual(href="#add-category-manual-6").addCategory
+									img(src="/images/ashen-arrow.svg" style="")
+					.col-lg-4.col-md-4.col-xs-4
+						.selectedCategoriesList.font-evente.font-thin2.nspacer.gestlist(style="padding-left:0px; margin-top:20px;")
+							.clearfix
+					.clearfix
+
+					.nspacer-bigger
+					.font2.pull-left.font-exception
+						| Allow attendees to create their own categories?
+					.pull-left
+						label.checkbox.toggle.candy(style='width: 100px; margin-left:20px; margin-top:4px;', onclick='')
+							input.allowAttendeesToCreateTheirOwnCategories(type='checkbox', class="invisible")
+							span
+								span No
+								span Yes
+							a.slide-button
+					.clearfix
+					
+					.nspacer-medium
+
+					.bg-purple.psev.font-lebig.pull-left.semi-bold
+						.pull-left
+							img(src="/images/small-ticket.svg", style="")
+						.pull-left.pad-right-ten
+							| Tickets
+					.clearfix
+					.line-purple
+					.nspacer
+					.font2.pull-left.font-exception
+						| Include priced tickets?
+					.col-lg-1.col-md-1.col-xs-1.pad-right-zero(style="width:50px;")
+						p.check5-purple-small
+							input.includePricedTickets#creditcardsmaller23(name="", placeholder="", type="checkbox", value="small")
+							label(for='creditcardsmaller23')
+					.font2.pull-left.font-exception
+						| YES
+					.col-lg-1.col-md-1.col-xs-1.pad-right-zero(style="width:50px;")
+						p.check5-purple-small
+							input#creditcardsmaller2334(name="", placeholder="", type="checkbox", value="small", checked="checked")
+							label(for='creditcardsmaller2334')
+					.font2.pull-left.font-exception
+						| NO
+					.clearfix
+				.clearfix
+				.col-lg-11.col-md-11.col-xs-11.no-float
+						//- ticket price table
+				//-.row-fluid.rel#tickets-table
+				//-display=inline becoz its locked by default
+
+				.hide-mini
+					.col-lg-11.col-md-11.col-xs-11.no-float.hide-mini.ticketsWrapper
+						table.table
+							thead
+								tr
+									th.col-sm-4.col-lg-4.col-md-4
+										| Ticket Name
+									th.col-sm-2.col-lg-2.col-md-2
+										| Price (0 for free)
+									th.col-sm-2.col-lg-2.col-md-2
+										| Quantity
+									th.col-sm-4.col-lg-4.col-md-4
+							tbody#tickets
+								tr(ng-repeat="ticket in tickets")
+									td
+										input.form-control.no-border-focus2(type="text" ng-model="ticket.name" placeholder="Ticket Name (Required)")
+									td
+										input.form-control.no-border-focus2(type="number", value="0.00", min="0", ng-model="ticket.price")
+									td
+										input.form-control.no-border-focus2(type="number", value="1", min="0", ng-model="ticket.quantity")
+									td(style="background:none;")
+										a.btn.btn-link.link-green(href ng-click="showTicket(ticket)" data-toggle="modal" data-target="#ticketModal")
+											i.fa.fa-gear.fa-fw
+											|  More Ticket Options
+										.btn-group.pull-right
+											a.btn.btn-link(href ng-click="addTicket()" title="Add Ticket" ng-show="$last")
+												i.fa.fa-plus.fa-fw
+											a.btn.btn-link(href ng-click="removeTicket($index)" style="color: red;" title="Remove Ticket" ng-disabled="tickets.length == 1")
+												i.fa.fa-minus.fa-fw
+							.nspacer-big
+							.clearfix
+							div.tickets-lock(style="width:100%;height:100%;position:absolute;left:0;top:0;background:#333;opacity:0.3;z-index:999;")
+						.clearfix
+					
+					.col-lg-11.col-md-11.col-xs-11.no-float.hide-mini.ticketsWrapper
+						.nspacer
+					
+						.nspacer
+					
+						.font2.pull-left.font-exception
+							| This is a <strong>Private</strong> event
+						.pull-left
+							label.checkbox.toggle.candy(style='width: 100px; margin-left:20px; margin-top:4px;')
+								input.privateEvent.invisible(type='checkbox')
+								span
+									span No
+									span Yes
+								a.slide-button
+						.clearfix
+						p.lead.privateEventMessage.hide Public Events have Greater Attendance. When you make an event private, users will not be able to find it without a link.
+						.nspacer
+					
+					.center
+						button.btn.btn-info.font-bigs2.font-exception.eventSubmitBtn(type='submit', href="desktop", style="line-height:45px; padding:30px; padding-left:55px; padding-right:55px;")
+							| <b>Publish<br />my</b> event
+				//- end desktop------------------------------------------
+
+		.clearfix
+		p.text-center.lead.hide#submitStatus
+		
+		#afterSubmit.hide
+			.clearfix
+			.nspacer-medium
+			.center
+				div.logo-text(id="successCopy", style="font-size:20px; display:none")
+						| Copied to Clipboard!
+				br
+				img(src="/images/publish.svg")
+
+			.nspacer
+
+			.col-lg-11.col-md-11.col-xs-11.no-float
+				.nspacer
+					.pull-left.font.re-font.logo-text.font-exception
+						| Invite people with this link: 
+						//- this is auto-replaced by js
+						a#invitationLink(href="#", target="_blank") Sorry, an error occured :(. Please let us know
+				.clearfix
+				.nspacer-small
+					a.btn.btn-default.font-e.font-ah(id="copy_event_id", href="", style="border-radius: 10px; padding:10px; padding-left:10px; padding-right:10px; margin-right:10px; color:#fff;")
+						| Copy
+				.clearfix
+				br
+			.nspacer
+	
+			//- ------Desktop-------
+			.col-lg-12.col-md-12.col-xs-12.center.hide-mini
+				p.font-22 For more planner options such as event layout, dropbox, feedback profiles and more, please go to "planner options" tab in the upper right hand portion of your event page.
+				br
+				br
+
+			.col-lg-12.col-md-12.col-xs-12.center.hide-mini
+				a.btn.btn-default.font-e.font-ah(href="/", style="border-radius: 10px; padding:10px; padding-left:35px; padding-right:35px; margin-right:20px; color:#fff;")
+					| Go to home page
+				a.btn.btn-default.font-e.font-ah.gotoeventbutton(href="", style="border-radius: 10px; padding:10px; padding-left:35px; padding-right:35px; margin-left:20px; color:#fff;")
+					| View the event
+			//- //------Desktop-------//
+	
+			//- ------Mobile-------
+
+
+
+			.col-lg-12.col-md-12.col-xs-12.center.hide-all2
+				.center
+					a.btn.btn-default.font-e.font-ah(href="/", style="border-radius: 10px; padding:10px; padding-left:35px; padding-right:35px; color:#fff;")
+						| Go to home page
+					a.btn.btn-default.font-e.font-ah.gotoeventbutton(href="", style="border-radius: 10px; padding:10px; padding-left:35px; padding-right:35px;color:#fff;")
+						| View the event
+		//- //------Desktop-------//
+		#ticketModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="", aria-hidden="true")
+			.modal-dialog
+				.modal-content
+					.modal-body.reveal-modal(style="background-color:#fdd093;")
+						.font-e.center
+							strong Ticket Options
+						.clearfix
+						.nspacer
+						form.form-horizontal
+							.form-group
+								label.control-label.col-sm-4.col-md-4.col-lg-4(style="font-weight:normal;") Description
+								.col-sm-7.col-md-7.col-lg-7
+									textarea.form-control.no-border-focus(placeholder="Additional Ticket Description" ng-model="ticket.description" style="resize:none;")
+							.form-group
+								.col-sm-8.col-md-8.col-lg-8.col-sm-offset-4.col-md-offset-4.col-lg-offset-4
+									.amPmCheckbox
+										input(type="checkbox" ng-model="ticket.hasSaleDates" name="data[Child][remember_me]" class="checkboxLabel main_street_input" id="am_2" value="1" )
+										label.font-near-check(for="am_2")
+											| Ticket has Start and End Sale Date
+							.form-group(ng-show="ticket.hasSaleDates")
+								label.control-label.col-sm-4.col-md-4.col-lg-4(style="font-weight:normal;") Sales Start
+								.col-sm-4.col-md-4.col-lg-4
+									input.form-control.no-border-focus(type="date" ng-model="ticket.start_date")
+								.col-sm-3.col-md-3.col-lg-3
+									input.form-control.no-border-focus(type="time" ng-model="ticket.start_time")
+							.form-group(ng-show="ticket.hasSaleDates")
+								label.control-label.col-sm-4.col-md-4.col-lg-4(style="font-weight:normal;") Sales End
+								.col-sm-4.col-md-4.col-lg-4
+									input.form-control.no-border-focus(type="date" ng-model="ticket.end_date")
+								.col-sm-3.col-md-3.col-lg-3
+									input.form-control.no-border-focus(type="time" ng-model="ticket.end_time")
+							.form-group
+								label.control-label.col-sm-4.col-md-4.col-lg-4(style="font-weight:normal;")
+								.col-sm-7.col-md-7.col-lg-7
+									.amPmCheckbox
+										input(type="checkbox" ng-model="ticket.showRemainingTickets" name="data[Child][remember_me]" class="checkboxLabel main_street_input" id="am_22" value="1" )
+										label.font-near-check(for="am_22")
+											| Show Remaining Tickets
+							.form-group
+								label.control-label.col-sm-4.col-md-4.col-lg-4(style="font-weight:normal;") Tickets Per Order
+								.col-sm-4.col-md-4.col-lg-4
+									input.form-control.no-border-focus(type="number" placeholder="Minimum" ng-model="ticket.min_per_order")
+								.col-sm-3.col-md-3.col-lg-3
+									input.form-control.no-border-focus(type="number" placeholder="Maximum" ng-model="ticket.max_per_order")
+							.form-group
+								label.control-label.col-sm-4.col-md-4.col-lg-4(style="font-weight:normal;") Discount Codes
+								.col-sm-8.col-md-8.col-lg-8
+									a.btn.btn-link.link-green(href ng-click="addDiscountCode(ticket)" style="margin-top:7px;")
+										i.fa.fa-plus.fa-fw
+										|  Discount Code
+							div(ng-repeat="code in ticket.discountCodes").form-group
+								label.control-label.col-sm-4.col-md-4.col-lg-4(style="font-weight:normal;")
+									a.btn.btn-link.btn-danger(href ng-click="ticket.discountCodes.splice($index, 1)" style="color: red;")
+										i.fa.fa-minus.fa-fw
+								.col-sm-4.col-md-4.col-lg-4
+									input.form-control(type="text" placeholder="Code" ng-model="code.code")
+								.col-sm-3.col-md-3.col-lg-3
+									input.form-control(type="number" placeholder="% Discount" ng-model="code.discount")
+						br
+						.center
+							button.btn.btn-primary.hide-prof-butt(type='submit' data-dismiss="modal" style="border-radius: 10px; padding:10px; padding-right:25px; padding-left:25px;")
+								| Good to Go!
+						
+						.clearfix
+						a.close-reveal-modal(href="#", data-dismiss="modal")
+							img(src="/images/x.svg")
+		

@@ -15,8 +15,6 @@ exports.router = function (app) {
 
 function getMessage (req, res, next) {
 	var id = req.params.id;
-	console.log('topic id');
-	console.log(id);
 	try {
 		id = mongoose.Types.ObjectId(id);
 	} catch (e) {
@@ -47,7 +45,6 @@ function getMessage (req, res, next) {
 		
 		res.locals.message = message;
 		res.locals.messages = messages;
-		
 		next()
 	})
 }
@@ -81,6 +78,8 @@ function showMessage (req, res) {
 function postMessage (req, res) {
 	var id = req.params.id;
 	var text = req.body.message;
+
+	console.log(id + "----" + text);
 	
 	// check if can make messages
 	if (req.session.loggedin_as_user_locals != null && req.session.loggedin_as_user_locals.inbox_send_disabled === true) {
@@ -113,7 +112,7 @@ function postMessage (req, res) {
 		return;
 	}
 	
-	var message = res.locals.message
+	var message = res.locals.message;
 	if (message) {
 		var isUser = false;
 		for (var i = 0; i < message.users.length; i++) {
@@ -166,18 +165,18 @@ function postMessage (req, res) {
 			topic: message
 		});
 		
-		for (var i = 0; i < notAlertedUsers.length; i++) {
+		/*for (var i = 0; i < notAlertedUsers.length; i++) {
 			var u = notAlertedUsers[i];
 			// These people are not connected by WS, so they're offline..
 			if (u.notification.email.privateMessages) {
 				inbox.emailMessageNotification(u, req.user, "inbox", "Message from <strong>"+req.user.getName()+"</strong>: "+msg.message);
 			}
-		}
+		}*/
 		
 		msg.save(function(err) {
 			res.format({
 				html: function() {
-					res.redirect('/inbox')
+					res.redirect('/messages')
 				},
 				json: function() {
 					res.send({
@@ -192,7 +191,7 @@ function postMessage (req, res) {
 		res.format({
 			html: function() {
 				res.status(403);
-				res.redirect('/inbox')
+				res.redirect('/messages')
 			},
 			json: function() {
 				res.send({
@@ -244,30 +243,59 @@ function doNewMessage (req, res) {
 			
 			return;
 		}
-		
-		var topic = new models.Topic({
-			lastUpdated: Date.now(),
-			users: [req.user._id, user._id]
-		})
-		topic.save();
-		res.format({
-			html: function() {
-				res.redirect('/inbox');
-			},
-			json: function() {
-				res.send({
-					status: 200,
-					message: {
-						lastMessage: '',
-						topic: {
-							users: [req.user, user],
-							lastUpdated: topic.lastUpdated,
-							_id: topic._id
-						}
-					}
+
+	//----------------------------------------
+			
+	var loggedInUserId = mongoose.Types.ObjectId(req.user._id);
+	var query = [{ users: {$in:[loggedInUserId, to]} }];
+    var isTopicExist = false;
+
+    // Fetch My Topics.
+    models.Topic.find(query)
+        .select('users lastUpdated')
+        .sort('lastUpdated')
+        .exec(function (err, topics) {
+
+        	for(var x=0; x < topics.length; x++) {
+        		//console.log(topic)
+        		var list = topics[x].users;
+
+        		if(list.indexOf(loggedInUserId) > -1 && list.indexOf(to) > -1){
+        			//Topic already exist...
+        			console.log("topic exist");
+        			isTopicExist = true;
+        			break;
+        		}
+        	}
+
+        	if(isTopicExist == false){
+        		//Topic doesn't exist...
+				console.log("topic doesnt exist");
+    			var topic = new models.Topic({
+					lastUpdated: Date.now(),
+					users: [req.user._id, user._id]
 				})
-			}
-		})
+				topic.save();
+        	}
+        	res.format({
+				html: function() {
+					res.redirect('/messages');
+				},
+				json: function() {
+					res.send({
+						status: 200,
+						message: {
+							lastMessage: '',
+							topic: {
+								users: [req.user, user],
+								lastUpdated: topic.lastUpdated,
+								_id: topic._id
+							}
+						}
+					})
+				}
+			})
+        });	
 	});
 }
 

@@ -80,7 +80,8 @@ function searchPeople(req, res, q) {
 	var split = q.split(' ');
 	var query = {
 		isFeedbackProfile: false,
-		disabled: false
+		disabled: false,
+		_id: {$ne: req.user._id}
 	};
 	
 	if (split.length > 0 && split[0].length > 0) {
