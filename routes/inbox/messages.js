@@ -186,6 +186,7 @@ function postMessage (req, res) {
 				}
 			});
 		})
+		return;
 	} else {
 		// 404
 		
@@ -200,6 +201,7 @@ function postMessage (req, res) {
 				})
 			}
 		})
+		return;
 	}
 }
 

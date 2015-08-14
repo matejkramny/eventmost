@@ -272,7 +272,7 @@ exports.pushMessageToSockets = function (data) {
 	}
 	
 	return notAlertedUsers;*/
-	return;
+	return true;
 }
 
 exports.emailMessageNotification = function (person, from, link, body) {
