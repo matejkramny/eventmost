@@ -94,8 +94,9 @@ angular.module('eventMost')
 	
 	$scope.sendMessage = function () {
 		var msg = $('#inputMessage').val();
+		console.log(msg)
 		$http.post('/inbox/message/'+$scope.message.message._id, {
-			_csrf: $scope.csrf,
+			//_csrf: $scope.csrf,
 			message: msg
 		})
 		$scope.msg = "";

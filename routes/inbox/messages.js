@@ -18,7 +18,7 @@ function getMessage (req, res, next) {
 	try {
 		id = mongoose.Types.ObjectId(id);
 	} catch (e) {
-		res.redirect('/inbox/messages');
+		res.redirect('/messages');
 		return;
 	}
 	
@@ -32,7 +32,7 @@ function getMessage (req, res, next) {
 	}
 	
 	if (!message) {
-		res.redirect('/inbox/messages')
+		res.redirect('/messages')
 		return;
 	}
 	
@@ -85,7 +85,7 @@ function postMessage (req, res) {
 	if (req.session.loggedin_as_user_locals != null && req.session.loggedin_as_user_locals.inbox_send_disabled === true) {
 		res.format({
 			html: function() {
-				res.redirect('/inbox');
+				res.redirect('/messages');
 			},
 			json: function() {
 				res.send({
@@ -100,7 +100,7 @@ function postMessage (req, res) {
 	if (text.length == 0) {
 		res.format({
 			html: function() {
-				res.redirect('/inbox');
+				res.redirect('/messages');
 			},
 			json: function() {
 				res.send({
