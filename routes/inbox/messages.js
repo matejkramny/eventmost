@@ -173,19 +173,26 @@ function postMessage (req, res) {
 				inbox.emailMessageNotification(u, req.user, "inbox", "Message from <strong>"+req.user.getName()+"</strong>: "+msg.message);
 			}
 		}*/
+
+		async.parallel([
 		
-		msg.save(function(err) {
+			function (cb) {
+				msg.save();
+			}
+		], function(err) {
+			if (err) throw err;
 			res.format({
 				html: function() {
 					res.redirect('/messages')
 				},
 				json: function() {
 					res.send({
+						status: 200,
 						sent: true
 					})
 				}
 			});
-		})
+		});
 		
 	} else {
 		// 404
