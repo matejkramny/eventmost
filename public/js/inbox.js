@@ -36,7 +36,7 @@ angular.module('eventMost')
 	$scope.csrf = "";
 	
 	var sock = io.connect();
-	sock.on('connection', function() {
+	sock.on('connect', function() {
 		console.log("Connected")
 	})
 	
