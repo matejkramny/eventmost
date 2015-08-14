@@ -182,6 +182,7 @@ function postMessage (req, res) {
 			}
 		], function(err) {
 			if (err) throw err;
+			console.log('generating response');
 			res.format({
 				html: function() {
 					res.redirect('/messages')

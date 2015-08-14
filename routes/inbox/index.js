@@ -276,7 +276,7 @@ exports.pushMessageToSockets = function (data) {
 	}
 	
 	return notAlertedUsers;*/
-	return;
+	return 1;
 }
 
 exports.emailMessageNotification = function (person, from, link, body) {
