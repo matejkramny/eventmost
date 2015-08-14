@@ -50,11 +50,12 @@ exports.listEventsAPI = function (req, res) {
 			models.Event.find(query).count(function(err, total) {
 
 				evs.forEach(function(entry) {
-
-					if(entry.avatar.url == '/images/event-avatar-new2.svg') {
-						entry.avatar.url ='/images/event_avatar_new.png';
-					} else if(entry.avatar.url == '/images/event-avatar-new.svg') {
-						entry.avatar.url ='/images/event_avatar_new.png';
+					if(entry.avatar){
+						if(entry.avatar.url == '/images/event-avatar-new2.svg') {
+							entry.avatar.url ='/images/event_avatar_new.png';
+						} else if(entry.avatar.url == '/images/event-avatar-new.svg') {
+							entry.avatar.url ='/images/event_avatar_new.png';
+						}
 					}
 
 					if((entry.description) && entry.description != ''){
@@ -146,11 +147,14 @@ exports.eventdetails = function (req, res) {
 
 			async.series([
 				function (callback) {
-					if(entry.avatar.url == '/images/event-avatar-new2.svg') {
-						entry.avatar.url ='/images/event_avatar_new.png';
-					} else if(entry.avatar.url == '/images/event-avatar-new.svg') {
-						entry.avatar.url ='/images/event_avatar_new.png';
+					if(entry.avatar){
+						if(entry.avatar.url == '/images/event-avatar-new2.svg') {
+							entry.avatar.url ='/images/event_avatar_new.png';
+						} else if(entry.avatar.url == '/images/event-avatar-new.svg') {
+							entry.avatar.url ='/images/event_avatar_new.png';
+						}
 					}
+
 					if (entry.attendees) {
 						models.Attendee.find({"_id": {$in: entry.attendees}}).populate('user').lean().exec(function (err, att) {
 							entry.attendees = [];
@@ -334,17 +338,18 @@ exports.sortedevents = function (req, res) {
 			models.Event.find(query).count(function(err, total) {
 
 				evs.forEach(function(entry) {
-					if(entry.avatar.url == '/images/event-avatar-new2.svg') {
-						entry.avatar.url ='/images/event_avatar_new.png';
-					} else if(entry.avatar.url == '/images/event-avatar-new.svg') {
-						entry.avatar.url ='/images/event_avatar_new.png';
-					}
+
 					if((entry.description) && entry.description != ''){
 
 						//console.log(entry.description);
 						entry.description = entry.description.replace(/(<([^>]+)>)/ig,"");
 						//entry.description = entry.description.substr(0, 200)+"...";
 						if(entry.avatar)
+							if(entry.avatar.url == '/images/event-avatar-new2.svg') {
+								entry.avatar.url ='/images/event_avatar_new.png';
+							} else if(entry.avatar.url == '/images/event-avatar-new.svg') {
+								entry.avatar.url ='/images/event_avatar_new.png';
+							}
 							entry.avatar.url = util.editURL(entry.avatar.url);
 					}
 					
@@ -396,11 +401,14 @@ exports.listMyEventsAPI = function (req, res) {
 				models.Event.find(query).count(function(err, total) {
 
 					evs.forEach(function(entry) {
-						if(entry.avatar.url == '/images/event-avatar-new2.svg') {
-							entry.avatar.url ='/images/event_avatar_new.png';
-						} else if(entry.avatar.url == '/images/event-avatar-new.svg') {
-							entry.avatar.url ='/images/event_avatar_new.png';
+						if(entry.avatar){
+							if(entry.avatar.url == '/images/event-avatar-new2.svg') {
+								entry.avatar.url ='/images/event_avatar_new.png';
+							} else if(entry.avatar.url == '/images/event-avatar-new.svg') {
+								entry.avatar.url ='/images/event_avatar_new.png';
+							}
 						}
+
 						if((entry.description) && entry.description != ''){
 
 							//console.log(entry.description);
