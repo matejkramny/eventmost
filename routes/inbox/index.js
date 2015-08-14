@@ -250,9 +250,10 @@ exports.pushMessageToSockets = function (data) {
     	var clientSocket = io.sockets.connected[clientId];
     	console.log(clientId);
     	clientSocket.emit('inbox notification', data);
+    	console.log("emitting done");
 	}
 
-	console.log("emitting done");
+	
 
 	/*//console.log(io.sockets);
 	var sockets = io.sockets.adapter.rooms;
@@ -275,7 +276,7 @@ exports.pushMessageToSockets = function (data) {
 	}
 	
 	return notAlertedUsers;*/
-	return true;
+	return;
 }
 
 exports.emailMessageNotification = function (person, from, link, body) {
