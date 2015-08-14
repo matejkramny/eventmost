@@ -534,6 +534,16 @@ exports.listNearEventsAPI = function (req, res) {
 						else
 							cb(null)
 					}, function(err) {
+						events.forEach(function(entry) {
+							if (entry.avatar && entry.avatar.url){
+								if(entry.avatar.url == '/images/event-avatar-new2.svg') {
+									entry.avatar.url ='/images/event_avatar_new.png';
+								} else if(entry.avatar.url == '/images/event-avatar-new.svg') {
+									entry.avatar.url ='/images/event_avatar_new.png';
+								}
+								entry.avatar.url = util.editURL(entry.avatar.url);
+							}
+						})
 						res.format({
 							json: function() {
 								res.send({
