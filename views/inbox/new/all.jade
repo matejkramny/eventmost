@@ -5,6 +5,7 @@ include ../inc/card
 include ../inc/savedProfile
 
 append addonjs
+	script(src="/js/socket.io.js" defer)
 	script(src="/js/vendor/moment.min.js?v=#{versionHash}" defer)
 	script(src="/js/inbox.js?v=#{versionHash}" defer)
 	script(src="/js/jquery.mCustomScrollbar.concat.min.js?v=#{versionHash}" defer)
