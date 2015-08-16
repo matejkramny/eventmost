@@ -188,7 +188,8 @@ function saveUser (req, res) {
 		], function (err, results) {
 		    // Here, results is an array of the value from each function
 		    //console.log(results); // outputs: ['two', 'five']
-		    
+		    console.log("going to messages");
+			res.redirect('/messages');
 
 		});
 
@@ -210,8 +211,7 @@ function saveUser (req, res) {
 		})
 		req.user.save()
 		res.redirect('/messages')*/
-		console.log("going to messages");
-		res.redirect('/messages');
+		
 	});
 	
 }
