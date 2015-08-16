@@ -3,6 +3,7 @@ var fs = require('fs'),
 	, mongoose = require('mongoose')
 	, util = require('../util')
 	, inbox = require('./inbox/index')
+	, async = require('async')
 	, check = require('validator').check
 	, config = require('../config')
 
@@ -143,8 +144,60 @@ function saveUser (req, res) {
 			return;
 		}
 		
-		console.log(req.user);
-		for (var i = 0; i < req.user.savedProfiles.length; i++) {
+		//console.log(req.user);
+		/*
+		- Check if already exist.
+		- Add / skip
+		- Redirect
+
+		*/
+
+		async.series([
+		    function (callback){
+
+		    	models.User.findOne({
+						_id: mongoose.Types.ObjectId(req.user._id)
+					}, function(err, loggedInUser) {
+						//console.log(loggedInUser);
+						if(loggedInUser.savedProfiles.length > 0){
+							//User have some saved profiles which needs to be verified...
+							for (var i = 0; i < loggedInUser.savedProfiles.length; i++) {
+
+								if (loggedInUser.savedProfiles[i]._id.equals(user._id)) {
+									console.log("matched");
+									callback();
+									//return;
+								}else{
+									console.log("not matched");
+									loggedInUser.savedProfiles.push({
+										_id: user._id
+									})
+									loggedInUser.save(function (err){
+										callback();
+									});
+								}
+							}
+						}else{
+							//User doesn't have any saved profile...
+							loggedInUser.savedProfiles.push({
+								_id: user._id
+							})
+							loggedInUser.save(function (err){
+								callback();
+							});
+						}
+						//callback();
+					});
+		    	
+		    }
+		], function (err, results) {
+		    // Here, results is an array of the value from each function
+		    //console.log(results); // outputs: ['two', 'five']
+		    console.log("going to messages");
+		    res.redirect('/messages');
+		});
+
+		/*for (var i = 0; i < req.user.savedProfiles.length; i++) {
 			if (req.user.savedProfiles[i] && req.user.savedProfiles[i]._id.equals(user._id)) {
 				res.redirect('/messages')
 				return;
@@ -161,7 +214,7 @@ function saveUser (req, res) {
 			_id: user._id
 		})
 		req.user.save()
-		res.redirect('/messages')
+		res.redirect('/messages')*/
 	});
 }
 
