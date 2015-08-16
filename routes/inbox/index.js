@@ -70,29 +70,36 @@ function populateInbox (req, res, next) {
 			})
 		},
 		function(cb) {
-			models.User.find({ savedProfiles: req.user._id }).exec(function(err, savers) {
-				res.locals.savers = savers;
+			saversofprofile = [];
+			models.User.find({ savedProfiles: {"_id": req.user._id }}).exec(function(err, savers) {
+				if(savers.length > 0){
+					res.locals.saversofprofile = savers;	
+				}else{
+					res.locals.saversofprofile = saversofprofile;
+				}
+				
 				cb(null)
 			});
 		},
-		/*function(cb) {
+		function(cb) {
+			
 			var savedIds = [];
+			var savedProfiles = [];
 			if(req.user.savedProfiles.length > 0){
 				req.user.savedProfiles.forEach(function (savedId){
 					savedIds.push(mongoose.Types.ObjectId(savedId._id));
 				});
-
-				var savedQuery = [{ "_id": savedIds }];
-				console.log(savedQuery);
+				var savedQuery = { "_id": savedIds };
 				models.User.find(savedQuery).exec(function(err, saved) {
-					res.locals.saved = saved;
+					res.locals.savedProfiles = saved;
 					
 					cb(null)
 				});
 			}else{
+				res.locals.savedProfiles = savedProfiles;
 				cb(null)
 			}
-		},*/
+		},
 
 		function (cb) {
 			req.user.mailboxUnread = 0;
@@ -133,6 +140,7 @@ function show (req, res) {
 
 function show2 (req, res) {
 	console.log("show2 called");
+	//console.log(res.locals);
 	res.format({
 		html: function() {
 			res.locals.topics = res.locals.messages;

@@ -206,18 +206,18 @@ block content
 		.nspacer
 	
 		//- saved
-		if (locals.user.savedProfiles.length == 0)
+		if (locals.savedProfiles.length == 0)
 			p.text-center You haven't saved any profiles yet
 			.clearfix
 			.nspacer
 		.row
 			.col-md-12.col-xs-12.col-sm-12
 				.center
-					for saver in locals.user.savedProfiles
+					for saver in locals.savedProfiles
 						+savedProfile(saver)
 				.clearfix
 				.nspacer
-		
+			
 		.row
 			.col-md-12.col-xs-12.col-sm-12
 				.font-tw
@@ -225,16 +225,17 @@ block content
 				.line-purple
 		.nspacer
 	
-		//- saved
-		if (locals.savers.length == 0)
-			p.text-center No one has saved your profile yet.
+		//- savers
+		if (locals.saversofprofile.length == 0)
+			p.text-center No one has saved your profile yet. 
 			.clearfix
 			.nspacer
-		.row
-			.col-md-12.col-xs-12.col-sm-12
-				.center
-					for saver in locals.savers
-						+savedProfile(saver)
-				.clearfix
-				.nspacer
+		else
+			.row
+				.col-md-12.col-xs-12.col-sm-12
+					.center
+						for saverofprofile in locals.saversofprofile
+							+savedProfile(saverofprofile)
+					.clearfix
+					.nspacer
 	

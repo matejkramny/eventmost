@@ -1,18 +1,17 @@
 mixin savedProfile(profile)
-	//-
-		.col-md-2.col-xs-2.col-sm-2.inv-till-1
-			.center.nspacer-medium
-					a(href="/user/"+profile._id): img(src= profile.avatar.length > 0 ? profile.avatar+"-116x116.png" : "/images/default_speaker.svg", style="max-width:102px;margin:-1px auto auto -1px;", class="circularespond")
-			.font-s
-				a(href="/user/"+profile._id): b= profile.getName()
+	.col-md-2.col-xs-2.col-sm-2.inv-till-1
+		.center.nspacer-medium
+			a(href="/user/"+profile._id): img(src= profile.avatar.length > 0 ? profile.avatar+"-116x116.png" : "/images/default_speaker.svg", style="max-width:102px;margin:-1px auto auto -1px;", class="circularespond")
+		.font-s
+			a(href="/user/"+profile._id): b= profile.getName()
+			br
+			if (profile.company && profile.position)
+				= profile.company
+				| , 
+				= profile.position
+			- else if (profile.company)
+				= profile.company
+			- else if (profile.position)
+				= profile.position
+			- else
 				br
-				if (profile.company && profile.position)
-					= profile.company
-					| , 
-					= profile.position
-				- else if (profile.company)
-					= profile.company
-				- else if (profile.position)
-					= profile.position
-				- else
-					br
