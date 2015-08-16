@@ -143,6 +143,7 @@ function saveUser (req, res) {
 			return;
 		}
 		
+		console.log(req.user.savedProfiles);
 		for (var i = 0; i < req.user.savedProfiles.length; i++) {
 			if (req.user.savedProfiles[i] && req.user.savedProfiles[i]._id.equals(user._id)) {
 				res.redirect('/messages')
