@@ -179,6 +179,7 @@ function saveUser (req, res) {
 						})
 						loggedInUser.save(function (err){
 							callback();
+							return;
 							
 						});
 						
