@@ -140,7 +140,7 @@ function show (req, res) {
 
 function show2 (req, res) {
 	console.log("show2 called");
-	//console.log(res.locals);
+	//console.log(req.user);
 	res.format({
 		html: function() {
 			res.locals.topics = res.locals.messages;
