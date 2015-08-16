@@ -165,9 +165,8 @@ function saveUser (req, res) {
 							for (var i = 0; i < loggedInUser.savedProfiles.length; i++) {
 								if (loggedInUser.savedProfiles[i]._id && loggedInUser.savedProfiles[i]._id.equals(user._id)) {
 									console.log("matched");
-									callback();
-
-									
+									res.redirect('/messages')
+									return;
 								}
 							}
 						}
