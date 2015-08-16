@@ -166,7 +166,6 @@ function saveUser (req, res) {
 								if (loggedInUser.savedProfiles[i]._id && loggedInUser.savedProfiles[i]._id.equals(user._id)) {
 									console.log("matched");
 									callback();
-									return;
 
 									
 								}
@@ -179,7 +178,6 @@ function saveUser (req, res) {
 						})
 						loggedInUser.save(function (err){
 							callback();
-							return;
 							
 						});
 						
@@ -192,6 +190,7 @@ function saveUser (req, res) {
 		    //console.log(results); // outputs: ['two', 'five']
 		    console.log("going to messages");
 			res.redirect('/messages');
+			return;
 
 		});
 
