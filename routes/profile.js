@@ -163,29 +163,22 @@ function saveUser (req, res) {
 						if(loggedInUser.savedProfiles.length > 0){
 							//User have some saved profiles which needs to be verified...
 							for (var i = 0; i < loggedInUser.savedProfiles.length; i++) {
-								if (loggedInUser.savedProfiles[i]._id.equals(user._id)) {
+								if (loggedInUser.savedProfiles[i]._id && loggedInUser.savedProfiles[i]._id.equals(user._id)) {
 									console.log("matched");
 									callback();
-									//return;
-								}else{
-									console.log("not matched");
-									loggedInUser.savedProfiles.push({
-										_id: user._id
-									})
-									loggedInUser.save(function (err){
-										callback();
-									});
+									return;
 								}
 							}
-						}else{
-							//User doesn't have any saved profile...
-							loggedInUser.savedProfiles.push({
-								_id: user._id
-							})
-							loggedInUser.save(function (err){
-								callback();
-							});
 						}
+						//User doesn't have any saved profile...\
+						console.log("not matched");
+						loggedInUser.savedProfiles.push({
+							_id: user._id
+						})
+						loggedInUser.save(function (err){
+							callback();
+						});
+						
 						//callback();
 					});
 		    	
