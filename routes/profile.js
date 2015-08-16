@@ -166,6 +166,7 @@ function saveUser (req, res) {
 								if (loggedInUser.savedProfiles[i]._id && loggedInUser.savedProfiles[i]._id.equals(user._id)) {
 									console.log("matched");
 									callback();
+									return;
 
 									
 								}
