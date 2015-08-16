@@ -158,11 +158,10 @@ function saveUser (req, res) {
 		    	models.User.findOne({
 						_id: mongoose.Types.ObjectId(req.user._id)
 					}, function(err, loggedInUser) {
-						//console.log(loggedInUser);
+						console.log(loggedInUser.savedProfiles);
 						if(loggedInUser.savedProfiles.length > 0){
 							//User have some saved profiles which needs to be verified...
 							for (var i = 0; i < loggedInUser.savedProfiles.length; i++) {
-
 								if (loggedInUser.savedProfiles[i]._id.equals(user._id)) {
 									console.log("matched");
 									callback();
