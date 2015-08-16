@@ -213,7 +213,6 @@ function saveUser (req, res) {
 	});
 	console.log("going to messages");
 	res.redirect('/messages');
-	return;
 }
 
 exports.doEditProfile = doEditProfile = function (req, res) {
