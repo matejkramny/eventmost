@@ -188,9 +188,8 @@ function saveUser (req, res) {
 		], function (err, results) {
 		    // Here, results is an array of the value from each function
 		    //console.log(results); // outputs: ['two', 'five']
-		    console.log("going to messages");
-		    res.redirect('/messages');
-		    return;
+		    
+
 		});
 
 		/*for (var i = 0; i < req.user.savedProfiles.length; i++) {
@@ -212,6 +211,9 @@ function saveUser (req, res) {
 		req.user.save()
 		res.redirect('/messages')*/
 	});
+	console.log("going to messages");
+	res.redirect('/messages');
+	return;
 }
 
 exports.doEditProfile = doEditProfile = function (req, res) {
