@@ -210,9 +210,10 @@ function saveUser (req, res) {
 		})
 		req.user.save()
 		res.redirect('/messages')*/
+		console.log("going to messages");
+		res.redirect('/messages');
 	});
-	console.log("going to messages");
-	res.redirect('/messages');
+	
 }
 
 exports.doEditProfile = doEditProfile = function (req, res) {
