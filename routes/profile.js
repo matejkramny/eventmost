@@ -167,6 +167,7 @@ function saveUser (req, res) {
 									console.log("matched");
 									callback();
 									return;
+									
 								}
 							}
 						}
@@ -177,6 +178,7 @@ function saveUser (req, res) {
 						})
 						loggedInUser.save(function (err){
 							callback();
+							return;
 						});
 						
 						//callback();
