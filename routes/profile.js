@@ -145,7 +145,7 @@ function saveUser (req, res) {
 		
 		for (var i = 0; i < req.user.savedProfiles.length; i++) {
 			if (req.user.savedProfiles[i] && req.user.savedProfiles[i]._id.equals(user._id)) {
-				res.redirect('/inbox')
+				res.redirect('/messages')
 				return;
 			}
 		}
@@ -160,7 +160,7 @@ function saveUser (req, res) {
 			_id: user._id
 		})
 		req.user.save()
-		res.redirect('inbox')
+		res.redirect('/messages')
 	});
 }
 
