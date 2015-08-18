@@ -3836,6 +3836,8 @@ table.gridtable-payment-yellow {font-size: 10px;}
 .dont-show320, .dont-show320-2{display:none;}
 .show320, .show320-2{display:block;}
 .filename{padding: 2px; padding-left: 10px; min-height:34px; font-size: 9px !important;}
+.content{ width:91% !important}
+#content-2{ width:98% !important}
 }
 
 /* Event registraion page */
@@ -4077,6 +4079,42 @@ margin-top: 5px;
 .width900{ width:60% !important}
 .col-sm-3{ width:25%}
 }
+
+/*----------- CSS for Messages -----------------*/
+
+@media all and (max-width:320px)and (min-width:241px){
+
+ }
+
+@media all and (max-width:360px)and (min-width:321px){
+
+ 
+ }
+
+@media all and (max-width:480px)and (min-width:361px){
+
+
+ }
+
+@media all and (max-width:639px)and (min-width:481px){
+
+ }
+
+@media all and (max-width:768px)and (min-width:640px){
+
+
+ }
+
+@media all and (max-width:800px)and (min-width:769px){
+
+ }
+
+@media all and (max-width:980px)and (min-width:800px){
+
+
+ }
+
+/*---------------------------------------------*/
 
 [class^="icon-"], [class*=" icon-"] {
 display:inline-block;
