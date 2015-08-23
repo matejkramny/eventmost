@@ -263,11 +263,10 @@ function saveUserAPI (req, res) {
 										console.log("sending push");
 										sendPushObj.sendPush(save_user,id,"a profile has been shared with you.","iPhone");
 									} else if(type.deviceType === 'Android'){
-										//TODO: once we receive the android api key we will uncomment this
-										//sendPushObj.sendPush(id,to,"a profile has been shared with you.","Android");
+										sendPushObj.sendPush(save_user,id,"a profile has been shared with you.","Android");
 									}
 								} else {
-									console.log("No device user found against the id: " + to);
+									console.log("No device user found against the id: " + id);
 								}
 							})
 						}
