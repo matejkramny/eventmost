@@ -362,7 +362,7 @@ exports.doEditProfileAPI = doEditProfileAPI = function (req, res) {
 				u.name = req.body.name;
 			}
 			if (typeof req.body.surname !== 'undefined') {
-				check(req.body.surname, 'Please Enter your Last Name').notNull()
+				//check(req.body.surname, 'Please Enter your Last Name').notNull()
 				u.surname = req.body.surname;
 			}
 		} catch (e) {
