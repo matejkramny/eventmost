@@ -27,8 +27,9 @@ function doContact (req, res) {
 		var options = {
 			from: "EventMost <noreply@eventmost.com>",
 			to: " <"+req.body.email+">",
-			subject: "Contact form submitted "+cont.subject,
-			html: "Contact form has been submitted on <strong>EventMost</strong>.<br /><strong>Subject:</strong> "+cont.subject+"<br/><strong>Message:</strong>"+cont.message+"<br/><br/>EventMost"
+			subject: "Contact Message "+cont.subject,
+			//html: "Contact form has been submitted on <strong>EventMost</strong>.<br /><strong>Subject:</strong> "+cont.subject+"<br/><strong>Message:</strong>"+cont.message+"<br/><br/>EventMost"
+			html: "We've received a new Message: <br /><br />"+cont.message+"<br/><br/>EventMost"
 		}
 		
 		/*if (!transport) {
