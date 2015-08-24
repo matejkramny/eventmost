@@ -10,8 +10,8 @@ var credentials = exports.credentials = {
 	host: process.env.HOST || "",
 	bugsnag: process.env.BUGSNAG_KEY || "",
 	smtp: {
-		user: process.env.SMTP_USER || "matej@eventmost.com",
-		pass: process.env.SMTP_PASS || "EsgC1zJzZM0oPCemVfitMw"
+		user: process.env.SMTP_USER || "",
+		pass: process.env.SMTP_PASS || ""
 	},
 	newrelic: process.env.NEWRELIC || "",
 	stripe: {
