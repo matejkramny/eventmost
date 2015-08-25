@@ -50,7 +50,15 @@ exports.listEventsAPI = function (req, res) {
 			models.Event.find(query).count(function(err, total) {
 
 				evs.forEach(function(entry) {
-						
+					if(entry.avatar && entry.avatar.url){
+						if(entry.avatar.url == '/images/event-avatar-new2.svg') {
+							entry.avatar.url ='/images/event_avatar_new.png';
+						} else if(entry.avatar.url == '/images/event-avatar-new.svg') {
+							entry.avatar.url ='/images/event_avatar_new.png';
+						}
+						entry.avatar.url = util.editURL(entry.avatar.url);
+					}
+
 					if((entry.description) && entry.description != ''){
 
 						//console.log(entry.description);
@@ -63,10 +71,12 @@ exports.listEventsAPI = function (req, res) {
 						entry.attendees.forEach(function (thisAttendee){
 
 							models.Attendee.findOne({"_id": thisAttendee}).exec(function (err, att){
-								if(att.admin == true){
-									models.User.findOne({"_id": att.user}).exec(function (err, user){
-										entry.organizer = user.surname == "" ? user.name : user.name+ " " + user.surname;
-									})
+								if(att) {
+									if(att.admin == true){
+										models.User.findOne({"_id": att.user}).exec(function (err, user){
+											entry.organizer = user.surname == "" ? user.name : user.name+ " " + user.surname;
+										})
+									}
 								}
 							});
 						});
@@ -125,155 +135,176 @@ exports.eventdetails = function (req, res) {
 		.lean()
 		.exec(function (err, ev) {
 
-			var entry = ev[0];
+			try {
+				var entry = ev[0];
 
-			if(entry && entry.sponsorLayout){
-				if(entry.sponsorLayout.sponsor1)
-					entry.sponsorLayout.sponsor1.url = util.editURL(entry.sponsorLayout.sponsor1.url);
-				if(entry.sponsorLayout.sponsor2)
-					entry.sponsorLayout.sponsor2.url = util.editURL(entry.sponsorLayout.sponsor2.url);
-				if(entry.sponsorLayout.sponsor3)
-					entry.sponsorLayout.sponsor3.url = util.editURL(entry.sponsorLayout.sponsor3.url);
-			}
-
-			async.series([
-				function (callback) {
-					if (entry.attendees) {
-						models.Attendee.find({"_id": {$in: entry.attendees}}).populate('user').lean().exec(function (err, att) {
-							entry.attendees = [];
-							att.forEach(function (thisAtt) {
-								if (thisAtt.admin == true || entry.organizer == undefined) {
-									entry.organizer = {
-										name:  thisAtt.user.surname == "" ? thisAtt.user.name : thisAtt.user.name + " " + thisAtt.user.surname,
-										id: thisAtt.user._id
-									}
-								}
-
-								if (thisAtt.user._id.toString() == currentUser && thisAtt.isAttending) {
-									isattending = true;
-									attendingas = thisAtt.category;
-								}
-
-								var user = {
-									_id: thisAtt.user._id,
-									email: thisAtt.user.email,
-									lastAccess: thisAtt.user.lastAccess,
-									admin: thisAtt.user.admin,
-									businessCards: thisAtt.user.businessCards,
-									avatar: util.editURL(thisAtt.user.avatar),
-									interests: thisAtt.user.interests,
-									education: thisAtt.user.education,
-									website: thisAtt.user.website,
-									location: thisAtt.user.location,
-									company: thisAtt.user.company,
-									desc: thisAtt.user.desc,
-									position: thisAtt.user.position,
-									surname: thisAtt.user.surname,
-									name: thisAtt.user.name,
-									disabled: thisAtt.user.disabled,
-									created: thisAtt.user.created
-								}
-
-								attendeeObject.push({
-									"_id": thisAtt._id,
-									"name": thisAtt.user.name,
-									"avatar": util.editURL(thisAtt.user.avatar),
-									"admin": thisAtt.admin,
-									"category": thisAtt.category,
-									"haspaid": thisAtt.haspaid,
-									"checkedoff": thisAtt.checkedoff,
-									"user": user
-								});
-							});
-
-							entry.attendees = attendeeObject;
-							console.log("EventDetail: attendees " + att.length)
-							callback(null, 'one');
-						});
-					} else {
-						callback(null, 'one');
-					}
-
-				},
-				function (callback) {
-					if (entry.messages) {
-						models.EventMessage.find({"_id": {$in: entry.messages}}).populate("attendee attendee.user comments").populate("likes").lean().exec(function (err, mes) {
-							entry.messages = [];
-
-							var count = 0;
-
-							if (mes.length <= 0) {
-								callback(null, "two");
-								return;
-							}
-
-							mes.forEach(function fore(thisMessage) {
-								page = models.User.findOne({"_id": thisMessage.attendee.user}).exec(function (err, user) {
-
-
-									thisMessage.attendee.user = {
-										_id: user._id,
-										email: user.email,
-										lastAccess: user.lastAccess,
-										admin: user.admin,
-										businessCards: user.businessCards,
-										avatar: util.editURL(user.avatar),
-										interests: user.interests,
-										education: user.education,
-										website: user.website,
-										location: user.location,
-										company: user.company,
-										desc: user.desc,
-										position: user.position,
-										surname: user.surname,
-										name: user.name,
-										disabled: user.disabled,
-										created: user.created
-									}
-
-									messagesObject.push({
-										"_id": thisMessage._id,
-										"message": thisMessage.message,
-										"posted": thisMessage.posted,
-										"spam": thisMessage.spam,
-										"isResponse": thisMessage.isResponse,
-										"attendee": thisMessage.attendee, // only attendees can post comment
-										"likes": thisMessage.likes, //Only attendees can like
-										"comments": thisMessage.comments
-									});
-
-
-									if (++count == mes.length) {
-										entry.messages = messagesObject;
-										callback(null, "two");
-									}
-								});
-							});
-
-						})
-					} else {
-						callback(null, "two");
-					}
-				}], function (err, results) {
-				console.log("entering final");
-				if ((entry.description) && entry.description != '') {
-					entry.description = entry.description.replace(/(<([^>]+)>)/ig, "");
+				if(entry && entry.sponsorLayout){
+					if(entry.sponsorLayout.sponsor1)
+						entry.sponsorLayout.sponsor1.url = util.editURL(entry.sponsorLayout.sponsor1.url);
+					if(entry.sponsorLayout.sponsor2)
+						entry.sponsorLayout.sponsor2.url = util.editURL(entry.sponsorLayout.sponsor2.url);
+					if(entry.sponsorLayout.sponsor3)
+						entry.sponsorLayout.sponsor3.url = util.editURL(entry.sponsorLayout.sponsor3.url);
 				}
 
-				if (entry && entry.avatar)
-					entry.avatar.url = util.editURL(entry.avatar.url);
+				async.series([
+					function (callback) {
+						if(entry.avatar && entry.avatar.url){
+							if(entry.avatar.url == '/images/event-avatar-new2.svg') {
+								entry.avatar.url ='/images/event_avatar_new.png';
+							} else if(entry.avatar.url == '/images/event-avatar-new.svg') {
+								entry.avatar.url ='/images/event_avatar_new.png';
+							}
+						}
 
+						if (entry.attendees) {
+							models.Attendee.find({"_id": {$in: entry.attendees}}).populate('user').lean().exec(function (err, att) {
+								entry.attendees = [];
+								att.forEach(function (thisAtt) {
+									if (thisAtt.admin == true || entry.organizer == undefined) {
+										entry.organizer = {
+											name:  thisAtt.user.surname == "" ? thisAtt.user.name : thisAtt.user.name + " " + thisAtt.user.surname,
+											id: thisAtt.user._id
+										}
+									}
+
+									if (thisAtt.user._id.toString() == currentUser && thisAtt.isAttending) {
+										isattending = true;
+										attendingas = thisAtt.category;
+									}
+
+									var user = {
+										_id: thisAtt.user._id,
+										email: thisAtt.user.email,
+										lastAccess: thisAtt.user.lastAccess,
+										admin: thisAtt.user.admin,
+										businessCards: thisAtt.user.businessCards,
+										avatar: util.editURL(thisAtt.user.avatar),
+										interests: thisAtt.user.interests,
+										education: thisAtt.user.education,
+										website: thisAtt.user.website,
+										location: thisAtt.user.location,
+										company: thisAtt.user.company,
+										desc: thisAtt.user.desc,
+										position: thisAtt.user.position,
+										surname: thisAtt.user.surname,
+										name: thisAtt.user.name,
+										disabled: thisAtt.user.disabled,
+										created: thisAtt.user.created
+									}
+
+									attendeeObject.push({
+										"_id": thisAtt._id,
+										"name": thisAtt.user.name,
+										"avatar": util.editURL(thisAtt.user.avatar),
+										"admin": thisAtt.admin,
+										"category": thisAtt.category,
+										"haspaid": thisAtt.haspaid,
+										"checkedoff": thisAtt.checkedoff,
+										"user": user
+									});
+								});
+
+								entry.attendees = attendeeObject;
+								console.log("EventDetail: attendees " + att.length)
+								callback(null, 'one');
+							});
+						} else {
+							callback(null, 'one');
+						}
+
+					},
+					function (callback) {
+						if (entry.messages) {
+							models.EventMessage.find({"_id": {$in: entry.messages}}).populate("attendee attendee.user comments").populate("likes").lean().exec(function (err, mes) {
+								entry.messages = [];
+
+								var count = 0;
+
+								if (mes.length <= 0) {
+									callback(null, "two");
+									return;
+								}
+
+								mes.forEach(function fore(thisMessage) {
+									page = models.User.findOne({"_id": thisMessage.attendee.user}).exec(function (err, user) {
+
+
+										thisMessage.attendee.user = {
+											_id: user._id,
+											email: user.email,
+											lastAccess: user.lastAccess,
+											admin: user.admin,
+											businessCards: user.businessCards,
+											avatar: util.editURL(user.avatar),
+											interests: user.interests,
+											education: user.education,
+											website: user.website,
+											location: user.location,
+											company: user.company,
+											desc: user.desc,
+											position: user.position,
+											surname: user.surname,
+											name: user.name,
+											disabled: user.disabled,
+											created: user.created
+										}
+
+										messagesObject.push({
+											"_id": thisMessage._id,
+											"message": thisMessage.message,
+											"posted": thisMessage.posted,
+											"spam": thisMessage.spam,
+											"isResponse": thisMessage.isResponse,
+											"attendee": thisMessage.attendee, // only attendees can post comment
+											"likes": thisMessage.likes, //Only attendees can like
+											"comments": thisMessage.comments
+										});
+
+
+										if (++count == mes.length) {
+											entry.messages = messagesObject;
+											callback(null, "two");
+										}
+									});
+								});
+
+							})
+						} else {
+							callback(null, "two");
+						}
+					}], function (err, results) {
+					console.log("entering final");
+					if ((entry.description) && entry.description != '') {
+						entry.description = entry.description.replace(/(<([^>]+)>)/ig, "");
+					}
+
+					if (entry && entry.avatar)
+						entry.avatar.url = util.editURL(entry.avatar.url);
+
+					res.format({
+						json: function () {
+							res.send({
+								status: 200,
+								event: entry,
+								attending: isattending,
+								attendingAs: attendingas
+							});
+						}
+					});
+				});
+			} catch(e) {
+				console.log(e);
 				res.format({
 					json: function () {
 						res.send({
-							status: 200,
-							event: entry,
-							attending: isattending,
-							attendingAs: attendingas
+							status: 404,
+							err: e
 						});
 					}
 				});
-			});
+			}
+
 		});
 }
 
@@ -321,14 +352,20 @@ exports.sortedevents = function (req, res) {
 			models.Event.find(query).count(function(err, total) {
 
 				evs.forEach(function(entry) {
-						
+
 					if((entry.description) && entry.description != ''){
 
 						//console.log(entry.description);
 						entry.description = entry.description.replace(/(<([^>]+)>)/ig,"");
 						//entry.description = entry.description.substr(0, 200)+"...";
-						if(entry.avatar)
-							entry.avatar.url = util.editURL(entry.avatar.url);
+					}
+					if(entry.avatar && entry.avatar.url){
+						if(entry.avatar.url == '/images/event-avatar-new2.svg') {
+							entry.avatar.url ='/images/event_avatar_new.png';
+						} else if(entry.avatar.url == '/images/event-avatar-new.svg') {
+							entry.avatar.url ='/images/event_avatar_new.png';
+						}
+						entry.avatar.url = util.editURL(entry.avatar.url);
 					}
 					
 				});
@@ -379,7 +416,7 @@ exports.listMyEventsAPI = function (req, res) {
 				models.Event.find(query).count(function(err, total) {
 
 					evs.forEach(function(entry) {
-						
+
 						if((entry.description) && entry.description != ''){
 
 							//console.log(entry.description);
@@ -387,8 +424,15 @@ exports.listMyEventsAPI = function (req, res) {
 							//entry.description = entry.description.substr(0, 200)+"...";
 						}
 
-						if (entry.avatar && entry.avatar.url)
+						if (entry.avatar && entry.avatar.url){
+							if(entry.avatar.url == '/images/event-avatar-new2.svg') {
+								entry.avatar.url ='/images/event_avatar_new.png';
+							} else if(entry.avatar.url == '/images/event-avatar-new.svg') {
+								entry.avatar.url ='/images/event_avatar_new.png';
+							}
 							entry.avatar.url = util.editURL(entry.avatar.url);
+						}
+
 
 						if (entry.attendee && entry.attendee.user && entry.attendee.user.avatar)
 							entry.attendee.user.avatar = util.editURL(entry.attendee.user.avatar);
@@ -503,6 +547,16 @@ exports.listNearEventsAPI = function (req, res) {
 						else
 							cb(null)
 					}, function(err) {
+						events.forEach(function(entry) {
+							if (entry.avatar && entry.avatar.url){
+								if(entry.avatar.url == '/images/event-avatar-new2.svg') {
+									entry.avatar.url ='/images/event_avatar_new.png';
+								} else if(entry.avatar.url == '/images/event-avatar-new.svg') {
+									entry.avatar.url ='/images/event_avatar_new.png';
+								}
+								entry.avatar.url = util.editURL(entry.avatar.url);
+							}
+						})
 						res.format({
 							json: function() {
 								res.send({

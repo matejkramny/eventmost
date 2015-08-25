@@ -447,7 +447,7 @@ function doPasswordReset (req, res) {
 		
 		res.send({
 			status: 200,
-			err: ["If the email is registered, you will receive it shortly."]
+			message: "If the email is registered, you will receive it shortly."
 		});
 	})
 }

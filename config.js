@@ -29,7 +29,7 @@ var credentials = exports.credentials = {
 		},
 		linkedin: {
 			key: process.env.SOCIAL_LINKEDIN_KEY || "fakekey",
-			secret: process.env.SOCIAL_LINKEDIN_SECRET || "fakesecret"
+			secret: process.env.SOCIAL_LINKEDIN_SECRET || "fakekey"
 		}
 	},
 	session_secret: process.env.SESSION_SECRET || "KeyboardCat",
