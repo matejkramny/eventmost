@@ -161,50 +161,59 @@ exports.eventdetails = function (req, res) {
 							models.Attendee.find({"_id": {$in: entry.attendees}}).populate('user').lean().exec(function (err, att) {
 								entry.attendees = [];
 								att.forEach(function (thisAtt) {
-									if (thisAtt.admin == true || entry.organizer == undefined) {
-										thisAtt.user.surname = thisAtt.user.surname == null ? "" : thisAtt.user.surname;
-										//thisAtt.user.surname = thisAtt.user.surname || "";
-										entry.organizer = {
-											name:  thisAtt.user.surname == "" ? thisAtt.user.name : thisAtt.user.name + " " + thisAtt.user.surname,
-											id: thisAtt.user._id
+									if (thisAtt.user) {
+										if (thisAtt.admin == true || entry.organizer == undefined) {
+											entry.organizer = {
+												name:  thisAtt.user.surname == "" ? thisAtt.user.name : thisAtt.user.name + " " + thisAtt.user.surname,
+												id: thisAtt.user._id
+											}
 										}
+
+										if (thisAtt.user._id.toString() == currentUser && thisAtt.isAttending) {
+											isattending = true;
+											attendingas = thisAtt.category;
+										}
+
+										var user = {
+											_id: thisAtt.user._id,
+											email: thisAtt.user.email,
+											lastAccess: thisAtt.user.lastAccess,
+											admin: thisAtt.user.admin,
+											businessCards: thisAtt.user.businessCards,
+											avatar: util.editURL(thisAtt.user.avatar),
+											interests: thisAtt.user.interests,
+											education: thisAtt.user.education,
+											website: thisAtt.user.website,
+											location: thisAtt.user.location,
+											company: thisAtt.user.company,
+											desc: thisAtt.user.desc,
+											position: thisAtt.user.position,
+											surname: thisAtt.user.surname,
+											name: thisAtt.user.name,
+											disabled: thisAtt.user.disabled,
+											created: thisAtt.user.created
+										}
+
+										attendeeObject.push({
+											"_id": thisAtt._id,
+											"name": thisAtt.user.name,
+											"avatar": util.editURL(thisAtt.user.avatar),
+											"admin": thisAtt.admin,
+											"category": thisAtt.category,
+											"haspaid": thisAtt.haspaid,
+											"checkedoff": thisAtt.checkedoff,
+											"user": user
+										});
+									} else {
+										attendeeObject.push({
+											"_id": thisAtt._id,
+											"admin": thisAtt.admin,
+											"category": thisAtt.category,
+											"haspaid": thisAtt.haspaid,
+											"checkedoff": thisAtt.checkedoff
+										});
 									}
 
-									if (thisAtt.user._id.toString() == currentUser && thisAtt.isAttending) {
-										isattending = true;
-										attendingas = thisAtt.category;
-									}
-
-									var user = {
-										_id: thisAtt.user._id == null ? "" : thisAtt.user._id,
-										email: thisAtt.user.email == null ? "" : thisAtt.user.email,
-										lastAccess: thisAtt.user.lastAccess == null ? "" : thisAtt.user.lastAccess,
-										admin: thisAtt.user.admin == null ? "" : thisAtt.user.admin,
-										businessCards: thisAtt.user.businessCards,
-										avatar: util.editURL(thisAtt.user.avatar),
-										interests: thisAtt.user.interests == null ? "" : thisAtt.user.interests,
-										education: thisAtt.user.education == null ? "" : thisAtt.user.education,
-										website: thisAtt.user.website == null ? "" : thisAtt.user.website,
-										location: thisAtt.user.location == null ? "" : thisAtt.user.location,
-										company: thisAtt.user.company == null ? "" : thisAtt.user.company,
-										desc: thisAtt.user.desc == null ? "" : thisAtt.user.desc,
-										position: thisAtt.user.position == null ? "" : thisAtt.user.position,
-										surname: thisAtt.user.surname == null ? "" : thisAtt.user.surname,
-										name: thisAtt.user.name == null ? "" : thisAtt.user.name,
-										disabled: thisAtt.user.disabled == null ? "" : thisAtt.user.disabled,
-										created: thisAtt.user.created == null ? "" : thisAtt.user.created
-									}
-
-									attendeeObject.push({
-										"_id": thisAtt._id == null ? "" : thisAtt._id,
-										"name": thisAtt.user.name == null ? "" : thisAtt.user.name,
-										"avatar": util.editURL(thisAtt.user.avatar),
-										"admin": thisAtt.admin == null ? "" : thisAtt.admin,
-										"category": thisAtt.category == null ? "" : thisAtt.category,
-										"haspaid": thisAtt.haspaid == null ? "" : thisAtt.haspaid,
-										"checkedoff": thisAtt.checkedoff == null ? "" : thisAtt.checkedoff,
-										"user": user
-									});
 								});
 
 								entry.attendees = attendeeObject;
@@ -231,32 +240,34 @@ exports.eventdetails = function (req, res) {
 								mes.forEach(function fore(thisMessage) {
 									page = models.User.findOne({"_id": thisMessage.attendee.user}).exec(function (err, user) {
 
-										thisMessage.attendee.user = {
-											_id: user._id == null ? "" : user._id,
-											email: user.email == null ? "" : user.email,
-											lastAccess: user.lastAccess == null ? "" : user.lastAccess,
-											admin: user.admin == null ? "" : user.admin,
-											businessCards: user.businessCards ,
-											avatar: util.editURL(user.avatar),
-											interests: user.interests == null ? "" : user.interests,
-											education: user.education == null ? "" : user.education,
-											website: user.website == null ? "" : user.website,
-											location: user.location == null ? "" : user.location,
-											company: user.company == null ? "" : user.company,
-											desc: user.desc == null ? "" : user.desc,
-											position: user.position == null ? "" : user.position,
-											surname: user.surname == null ? "" : user.surname,
-											name: user.name == null ? "" : user.name,
-											disabled: user.disabled == null ? "" : user.disabled,
-											created: user.created == null ? "" : user.created
+										if(user) {
+											thisMessage.attendee.user = {
+												_id: user._id,
+												email: user.email,
+												lastAccess: user.lastAccess,
+												admin: user.admin,
+												businessCards: user.businessCards,
+												avatar: util.editURL(user.avatar),
+												interests: user.interests,
+												education: user.education,
+												website: user.website,
+												location: user.location,
+												company: user.company,
+												desc: user.desc,
+												position: user.position,
+												surname: user.surname,
+												name: user.name,
+												disabled: user.disabled,
+												created: user.created
+											}
 										}
 
 										messagesObject.push({
-											"_id": thisMessage._id == null ? "" : thisMessage._id,
-											"message": thisMessage.message == null ? "" : thisMessage._id,
-											"posted": thisMessage.posted == null ? "" : thisMessage._id,
-											"spam": thisMessage.spam == null ? "" : thisMessage._id,
-											"isResponse": thisMessage.isResponse == null ? "" : thisMessage._id,
+											"_id": thisMessage._id,
+											"message": thisMessage.message,
+											"posted": thisMessage.posted,
+											"spam": thisMessage.spam,
+											"isResponse": thisMessage.isResponse,
 											"attendee": thisMessage.attendee, // only attendees can post comment
 											"likes": thisMessage.likes, //Only attendees can like
 											"comments": thisMessage.comments
