@@ -200,8 +200,8 @@ exports.eventdetails = function (req, res) {
 											"avatar": util.editURL(thisAtt.user.avatar),
 											"admin": thisAtt.admin,
 											"category": thisAtt.category,
-											"haspaid": thisAtt.haspaid,
-											"checkedoff": thisAtt.checkedoff,
+											"haspaid": thisAtt.hasPaid,
+											"checkedoff": thisAtt.checkedOff,
 											"user": user
 										});
 									} else {
@@ -209,8 +209,8 @@ exports.eventdetails = function (req, res) {
 											"_id": thisAtt._id,
 											"admin": thisAtt.admin,
 											"category": thisAtt.category,
-											"haspaid": thisAtt.haspaid,
-											"checkedoff": thisAtt.checkedoff
+											"haspaid": thisAtt.hasPaid,
+											"checkedoff": thisAtt.checkedOff
 										});
 									}
 
