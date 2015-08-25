@@ -176,6 +176,7 @@ block content
 	
 	
 		//- end guest speakers
+		
 		.row
 			.col-md-12.col-xs-12.col-sm-12
 				.font-tw
@@ -185,11 +186,11 @@ block content
 
 		//- business
 		.row
-			if (locals.user.receivedCards.length == 0)
+			if (locals.receivedCards.length == 0)
 				p.text-center No cards received
 			.pull-left
 				- var i = 0;
-				for card in locals.user.receivedCards
+				for card in locals.receivedCards
 					+card(card)
 					if (i % 2 == 1)
 						.clearfix

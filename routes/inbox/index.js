@@ -71,12 +71,15 @@ function populateInbox (req, res, next) {
 		},
 		function(cb) {
 			saversofprofile = [];
+			receivedCards = [];
 			models.User.find({ savedProfiles: {"_id": req.user._id }}).exec(function(err, savers) {
 				if(savers.length > 0){
 					res.locals.saversofprofile = savers;	
 				}else{
 					res.locals.saversofprofile = saversofprofile;
 				}
+
+				res.locals.receivedCards = receivedCards;
 				
 				cb(null)
 			});
@@ -140,7 +143,7 @@ function show (req, res) {
 
 function show2 (req, res) {
 	console.log("show2 called");
-	//console.log(req.user);
+	console.log(res.locals);
 	res.format({
 		html: function() {
 			res.locals.topics = res.locals.messages;
