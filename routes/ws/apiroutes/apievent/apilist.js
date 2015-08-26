@@ -204,14 +204,6 @@ exports.eventdetails = function (req, res) {
 											"checkedoff": thisAtt.checkedOff,
 											"user": user
 										});
-									} else {
-										attendeeObject.push({
-											"_id": thisAtt._id,
-											"admin": thisAtt.admin,
-											"category": thisAtt.category,
-											"haspaid": thisAtt.hasPaid,
-											"checkedoff": thisAtt.checkedOff
-										});
 									}
 
 								});
