@@ -20,7 +20,8 @@ exports.router = function (app) {
 		.post('/api/saveuser/:id/save', saveUserAPI)
 		.post('/api/user/:id/remove', removeProfileAPI)
 		.get('/api/user/:id', getUserInfo)
-		.post('/api/profile/logingsettings/:id',loginsettings);
+		.post('/api/profile/logingsettings/:id',loginsettings)
+		.post('/api/profile/deleteAvatar/',deleteAvatar);
 }
 
 function removeProfileAPI (req, res) {
@@ -578,4 +579,46 @@ exports.loginsettings = loginsettings = function (req, res) {
 	} catch (err) {
 		console.log(err);
 	}
+}
+
+function deleteAvatar(req,res) {
+	if(!req.body._id){
+		res.format({
+			json: function() {
+				res.json({
+					status: 404,
+					message: "User Id missing"
+				})
+			}
+		});
+		return;
+	}
+
+	var query = {_id:req.body._id};
+	models.User.findOne({_id:req.body._id} , function(err, u) {
+
+		if(u){
+			models.User.findOneAndUpdate(query,{$set:{avatar:''}},function(err,user){
+				if(err) throw err;
+
+				res.format({
+					json: function() {
+						res.json({
+							status: 200,
+							message: "User profile image is deleted."
+						})
+					}
+				});
+			})
+		}else{
+			res.format({
+				json: function() {
+					res.json({
+						status: 404,
+						message: "No User Found!"
+					})
+				}
+			});
+		}
+	});
 }
