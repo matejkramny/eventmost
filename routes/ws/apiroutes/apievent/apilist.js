@@ -252,6 +252,9 @@ exports.eventdetails = function (req, res) {
 												disabled: user.disabled,
 												created: user.created
 											}
+										} else {
+											thisMessage.attendee.user = "";
+											thisMessage.attendee.isAttending = false;
 										}
 
 										messagesObject.push({
