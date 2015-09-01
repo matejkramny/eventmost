@@ -96,7 +96,7 @@ var now = new Date();
 var range_start = new Date(now);
 var range_end = new Date(now);
 range_start.setDate(range_start.getDate() + 1);
-range_end.setDate(range_end.getDate() + 1);
+range_end.setDate(range_end.getDate() + 7);
 
 range_start.setHours(0);
 range_start.setMinutes(0);
