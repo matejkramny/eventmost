@@ -171,14 +171,15 @@ block content
 
 	- var attendees = locals.attendees.length
 	- for (var i = 0; i < attendees; i++)
-		.row
+		if(locals.ev.attendees[i].user.isFeedbackProfile)
+			.row
+		+attendee(locals.ev.attendees[i], locals.ev.attendees[i].user.feedbackProfileEvent != null)
+		if (++i < attendees)
 			+attendee(locals.ev.attendees[i], locals.ev.attendees[i].user.feedbackProfileEvent != null)
-			if (++i < attendees)
-				+attendee(locals.ev.attendees[i], locals.ev.attendees[i].user.feedbackProfileEvent != null)
-			if (++i < attendees)
-				+attendee(locals.ev.attendees[i], false)
-		.clearfix
+		if (++i < attendees)
+			+attendee(locals.ev.attendees[i], false)
 	
+	.row
 	.nspacer
 	.row
 		.col-md-12.col-xs-12.col-sm-12
