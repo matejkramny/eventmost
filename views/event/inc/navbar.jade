@@ -21,6 +21,22 @@ mixin navbar
 						
 					.clearfix
 			.clearfix
+		else if (feedbackpage)
+			.row
+				.col-md-12.col-xs-12.col-sm-12(style="margin-bottom:5%")
+						.pull-left.pad-left-zero.left.inline.nspacer-small.font-exception(type='submit', style="")
+							a(href=base, class="color-green no-decoration" style="font-size: 25px; padding: 10px 0 10px 10px; background-color: #fff; text-decoration:none")
+								if (typeof hideArrow === "undefined" || hideArrow == false)
+									| &#8592
+								else
+									
+								| #{ev.name}&nbsp;&nbsp;&nbsp;
+								br
+								br
+					.pull-right
+						
+					.clearfix
+			.clearfix
 		else
 			.row(style="position:absolute; margin-top:40px; z-index:99999")
 				.col-md-12.col-xs-12.col-sm-12
