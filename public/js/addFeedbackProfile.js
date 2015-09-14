@@ -4,6 +4,7 @@ angular.module('eventMost')
 .controller('feedbackProfileController', function($scope) {
 	$scope.profile = {
 		name: "",
+		email: "",
 		position: "",
 		company: "",
 		website: "",
@@ -35,6 +36,10 @@ angular.module('eventMost')
 			if( name == 'name' && ($scope.profile[name] == '' || $scope.profile[name] == null) )
 			{
 				errmsg += 'Name must be provided.';
+			}
+			if( name == 'email' && ($scope.profile[name] == '' || $scope.profile[name] == null) )
+			{
+				errmsg += 'Email must be provided.';
 			}
 
 			if( name == 'category' && ($scope.profile[name] == '' || $scope.profile[name] == null) )
