@@ -12,7 +12,6 @@ var dropbox = require('./dropbox')
 	, config = require('../../config')
 	, mongoose = require('mongoose')
 	, async = require('async')
-	, feedback = require('./feedback')
 
 exports.router = function (app) {
 	add.router(app)
@@ -40,7 +39,6 @@ exports.router = function (app) {
 	list.router(app)
 	dropbox.router(app)
 	admin.router(app)
-	feedback.router(app)
 }
 
 exports.socket = function (sock) {
