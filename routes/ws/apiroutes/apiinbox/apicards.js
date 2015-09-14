@@ -188,7 +188,6 @@ function sendCardAPI (req, res) {
 	// Send the card
 	models.User.findById(to, function(err, user) {
 		if (err) throw err;
-
 		if (user) {
 			//if (user.notification.email.businessCards) {
 			//	inbox.emailNotification(user, "inbox")
@@ -225,6 +224,15 @@ function sendCardAPI (req, res) {
 					}
 				})
 				return;
+			})
+		} else {
+			res.format({
+				json: function() {
+					res.send({
+						status: 200,
+						message: "No user found, or check the JSON parameters."
+					})
+				}
 			})
 		}
 	});
