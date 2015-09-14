@@ -35,16 +35,16 @@ angular.module('eventMost')
 
 			if( name == 'name' && ($scope.profile[name] == '' || $scope.profile[name] == null) )
 			{
-				errmsg += 'Name must be provided.';
+				errmsg += 'Name is missing.';
 			}
 			if( name == 'email' && ($scope.profile[name] == '' || $scope.profile[name] == null) )
 			{
-				errmsg += 'Email must be provided.';
+				errmsg += 'Email is invalid or missing.';
 			}
 
 			if( name == 'category' && ($scope.profile[name] == '' || $scope.profile[name] == null) )
 			{
-				errmsg += 'Event category must be provided.';
+				errmsg += 'Event category is missing.';
 			}
 
 			if(errmsg != "")
