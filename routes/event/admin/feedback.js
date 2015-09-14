@@ -19,7 +19,7 @@ exports.router = function (app) {
 }
 
 function eventFeedbackProfile (req, res) {
-	res.render('event/admin/feedback', { title: "Feedback Profile", ev: res.locals.ev })
+	res.render('event/admin/feedback', { title: "Feedback Profile", ev: res.locals.ev, feedbackpage: true })
 }
 
 function newFeedbackProfile (req, res) {
