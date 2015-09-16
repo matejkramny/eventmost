@@ -13,7 +13,8 @@ exports.router = function (app) {
 		.post('/event/:id/admin/feedback/edit', getProfile, doEditFeedbackProfile)
 		.get('/event/:id/admin/feedback/:fid', getProfile, editFeedbackProfile)
 		.all('/event/:id/admin/feedback/:fid/*', getProfile)
-		.get('/event/:id/admin/sendnewsletter', sendnewsletter)
+		.get('/event/:id/admin/sendnewsletter/:email', sendnewsletter)
+		.get('/event/:id/admin/sendfeedback', sendfeedback)
 
 		feedbackinbox.router(app)
 }
@@ -137,11 +138,16 @@ function doEditFeedbackProfile (req, res) {
 	})
 }
 
+function sendfeedback (req, res){
+
+	res.render('event/admin/sendfeedback', { title: "Feedback Profile", ev: res.locals.ev, feedbackpage: true })
+}
+
 function sendnewsletter (req, res) {
 	var eventid = req.params.id;
 	var logged_in_user = req.user;
 	var logged_in_user_id = req.user._id;
-	var email = "haseebkhilji@gmail.com"
+	var email = req.params.email;
 	console.log("hi newsletter");
 
 	models.Event.findOne({"_id": mongoose.Types.ObjectId(eventid)}).populate("messages attendees users").exec(function(err, ev) {
@@ -170,9 +176,9 @@ function sendnewsletter (req, res) {
 						var username = usr.user.name;
 						var user_category = usr.category;
 						var replylink = '/replycomment';
-						var profileImg = ((usr.user.avatar != '') ? 'http://localhost:3000'+usr.user.avatar : '');
+						var profileImg = ((usr.user.avatar != '') ? 'http://dev.eventmost.com'+usr.user.avatar : '');
 
-						commentString = '<div style="float:left; width:100%; margin-bottom:10px;" > <div style=" background:#E6E7E8; margin-left:10px; width:32%; float:left; padding:0px 10px 0px 0px;border-radius:110px; margin-bottom:10px; margin-right:10px;"> <div style="float:left; margin-right:15px;"><img src="'+profileImg+'" width="100" height="100" style="border-radius:110px " /></div> <div style=" float:left ; margin:20px 0px 0px 20px"> <div class="font20a nspacer font-exception" style=" font-weight:bold">'+username+'</div> <div style="float:left; font-weight:bold"><div class="font20a nspacer font-exception" >'+user_category+'</div></div> <div class="bold break font-change font-attendee font-exception"> Developer</div> </div> </div> <div style=" margin-top:10px;">'+thisComment+'</div> <div style=" margin-top:10px"><a href="'+replylink+'" style="color:#0992A3; font-weight:bold"><img src="http://demo.jamaltech.com/haseeb/newsletter/reply.png" style="padding-right:10px " width="40" align="left"/> <div style="margin:10px 0px 0px 0px; float:left">Reply</div></a></div> </div>';
+						commentString = '<div style="float:left; width:100%; margin-bottom:10px;" > <div style=" background:#E6E7E8; margin-left:10px; width:32%; float:left; padding:0px 10px 0px 0px;border-radius:110px; margin-bottom:10px; margin-right:10px;"> <div style="float:left; margin-right:15px;"><img src="'+profileImg+'" width="100" height="100" style="border-radius:110px " /></div> <div style=" float:left ; margin:20px 0px 0px 20px"> <div class="font20a nspacer font-exception" style=" font-weight:bold">'+username+'</div> <div style="float:left; font-weight:bold"><div class="font20a nspacer font-exception" >'+user_category+'</div></div> <div class="bold break font-change font-attendee font-exception"> Developer</div> </div> </div> <div style=" margin-top:10px;">'+thisComment+'</div> <div style=" margin-top:10px"><a href="'+replylink+'" style="color:#0992A3; font-weight:bold"><img src="http://dev.eventmost.com/images/reply.png" style="padding-right:10px " width="40" align="left"/> <div style="margin:10px 0px 0px 0px; float:left">Reply</div></a></div> </div>';
 						commentHTML+= commentString;
 						callback();
 					});
@@ -194,23 +200,28 @@ function sendnewsletter (req, res) {
 						}
 
 
+
+					/*res.format({
+							json: function() {
+								res.send({
+									status: 200,
+									//commentHTML: commentHTML,
+									//event: ev,
+									//attendees: attendees,
+									//comments: comments,
+									user: req.user._id,
+									email: email
+								})
+							}
+						})*/
+
+
 					config.transport.sendMail(options, function(err, response) {
-							if (err) throw err;
-							
-							console.log("Email sent.."+response.message)
-							res.format({
-								json: function() {
-									res.send({
-										status: 200,
-										//commentHTML: commentHTML,
-										//event: ev,
-										//attendees: attendees,
-										//comments: comments,
-										user: req.user._id
-									})
-								}
-							})
-						})
+						if (err) throw err;
+						
+						req.session.flash.push("Feedback sent successfully!");
+						res.redirect('/event/'+res.locals.ev._id)
+					})
 
 
 
@@ -239,17 +250,21 @@ function sendnewsletter (req, res) {
 
 					
 			}else{
-				res.format({
+				req.session.flash.push("Error: No Comment Found!");
+				res.redirect('/event/'+res.locals.ev._id)
+				/*res.format({
 					json: function() {
 						res.send({
 							status: 404,
 							message: "No Comment Found!"
 						})
 					}
-				})
+				})*/
 			}
 		}else{
-			res.format({
+			req.session.flash.push("Error: No Event Found!");
+			res.redirect('/event/'+res.locals.ev._id)
+			/*res.format({
 					json: function() {
 						res.send({
 							status: 404,
@@ -260,7 +275,7 @@ function sendnewsletter (req, res) {
 							user: req.user._id
 						})
 					}
-				})
+				})*/
 		}
 		
 		

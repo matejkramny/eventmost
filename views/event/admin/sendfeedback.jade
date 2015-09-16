@@ -1,0 +1,38 @@
+extends ../../responsive
+
+include ../inc/navbar
+include ../inc/single-feedback-profile
+
+block content
+	+navbar
+	.clearfix
+	
+	center
+		img(src="/images/loading.gif", id="loading", style="display:none")
+	.col-sm-9.col-md-9.col-lg-6
+		
+		h2 Send Newsletter to Feedback Profile
+	
+	.nspacer
+	
+	- var fps = 0;
+	for attendee in ev.attendees
+		if (attendee.user.isFeedbackProfile && attendee.user.feedbackProfileEvent && attendee.user.feedbackProfileEvent.equals(ev._id))
+			- fps++;
+			+feedbackProfile(attendee, true)
+			//-
+				.pull-right.text-left.pad-left-ten
+					a(href="/event/#{ev._id}/admin/feedback/#{attendee._id}/accessInbox")
+						.right.iconsbox.spacerbig
+							img.img-mess-smart(src="/images/feedback-inbox.svg", style="width:100%;")
+			.pull-right.text-left.pad-left-ten
+				.right.iconsbox.spacerbig
+					div(data-toggle="tooltip", data-placement="top" title= "Newsletter will be sent to "+attendee.user.email)
+						a(href="/event/"+ev._id+"/admin/sendnewsletter/"+attendee.user.email, onclick="document.getElementById('loading').style.display='block'")
+							| Send Newsletter
+					.nspacer
+		.clearfix
+		.nspacer
+	if (fps == 0)
+		p.text-center.lead No Feedback Profiles. Go to <strong>Feedback Profiles</strong>.
+	.clearfix
