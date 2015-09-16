@@ -413,7 +413,48 @@ function consolidatedAPI(req,res){
 
     var jsonTopicArray = [];
     var jsonMainObject = {};
-    models.Topic.find(query)
+    var jsonMainArray = [];
+    var consolidatedChats = [];
+    var eventIds = [];
+    var events;
+    models.Attendee.find({ 'user': userId }, '_id', function(err, attendees) {
+        var query = { 'attendees': { $in: attendees } };
+
+        models.Event.find(query)
+            .populate('attendees.user')
+            .select('name start end address venue_name avatar source description avatar')
+            .sort('-created')
+            .exec(function(err, evs) {
+                if(err) throw err;
+                //jsonMainObject["events"] = evs;
+                evs.forEach(function(obj){
+                    //var obj1 = JSON.parse(obj);
+                    consolidatedChats = [];
+                    console.log("eventid: " + obj._id + " userId: " + userId);
+                    //obj = JSON.parse(JSON.stringify(obj));
+                    models.User.find({_id:userId,receivedCards:{$elemMatch:{eventid:obj._id}}})
+                        .populate('receivedCards.card receivedCards.from')
+                        .select('receivedCards.card receivedCards.from' )
+                        .exec(function(err, current_user){
+                            //console.log(current_user.receivedCards.length);
+                            console.log(current_user);
+                            //obj["consolidateChats"] = current_user;
+                        })
+                    //obj = JSON.stringify(obj1);
+                    jsonMainArray.push(obj);
+                })
+                /* jsonMainObject["events"] = jsonMainArray;
+
+                 res.format({
+                 json: function () {
+                 res.send(jsonMainObject);
+                 }
+                 });*/
+            })
+
+
+    });
+    /*models.Topic.find(query)
         .populate("users",'email')
         .populate("eventid",'name')
         .select('users eventid')
@@ -464,5 +505,5 @@ function consolidatedAPI(req,res){
                         });
                     })
             })
-        })
+        })*/
 }
