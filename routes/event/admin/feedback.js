@@ -205,22 +205,22 @@ function sendnewsletter (req, res) {
 
 
 
-					res.format({
+					/*res.format({
 							json: function() {
 								res.send({
 									status: 200,
 									
 								})
 							}
-						})
+						})*/
 
 
-					/*config.transport.sendMail(options, function(err, response) {
+					config.transport.sendMail(options, function(err, response) {
 						if (err) throw err;
 						
 						req.session.flash.push("Feedback sent successfully!");
 						res.redirect('/event/'+res.locals.ev._id)
-					})*/
+					})
 
 
 
