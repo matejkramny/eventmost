@@ -150,7 +150,7 @@ function sendnewsletter (req, res) {
 	var email = req.params.email;
 	console.log("hi newsletter");
 
-	models.Event.findOne({"_id": mongoose.Types.ObjectId(eventid)}).populate("messages attendees users").exec(function(err, ev) {
+	models.Event.findOne({"_id": mongoose.Types.ObjectId(eventid)}).populate("messages attendees users avatar").exec(function(err, ev) {
 		
 		if(ev){
 			var comments = ev.messages;
@@ -178,7 +178,7 @@ function sendnewsletter (req, res) {
 						var replylink = '/replycomment';
 						var profileImg = ((usr.user.avatar != '') ? 'http://dev.eventmost.com'+usr.user.avatar : 'http://dev.eventmost.com/images/default_speaker-purple.png');
 
-						commentString = '<div style="float:left; width:100%; margin-bottom:10px;" > <div style=" background:#E6E7E8; margin-left:10px; width:32%; float:left; padding:0px 10px 0px 0px;border-radius:110px; margin-bottom:10px; margin-right:10px;"> <div><div class="immg"><img src="'+profileImg+'" style="border-radius:110px " /></div></div> <div style=" float:left ; margin:20px 0px 0px 20px"> <div class="font20a nspacer font-exception" style=" font-weight:bold">'+username+'</div> <div style="float:left; font-weight:bold"><div class="font20a nspacer font-exception" >'+user_category+'</div></div> <div class="bold break font-change font-attendee font-exception"> Developer</div> </div> </div> <div style=" margin-top:10px;">'+thisComment+'</div> <div style=" margin-top:10px"><a href="'+replylink+'" style="color:#0992A3; font-weight:bold"><img src="http://dev.eventmost.com/images/reply.png" style="padding-right:10px " width="40" align="left"/> <div style="margin:10px 0px 0px 0px; float:left">Reply</div></a></div> </div>';
+						commentString = '<div style="float:left; width:100%; margin-bottom:10px;" > <div style=" background:#E6E7E8; margin-left:10px; width:32%; float:left; padding:0px 10px 0px 0px;border-radius:110px; margin-bottom:10px; margin-right:10px;"> <div><div style="width:90px; height:90px; float:left"><img src="'+profileImg+'" style="border-radius:110px; max-width:100%; height:100% " /></div></div> <div style=" float:left ; margin:20px 0px 0px 20px"> <div class="font20a nspacer font-exception" style=" font-weight:bold">'+username+'</div> <div style="float:left; font-weight:bold"><div class="font20a nspacer font-exception" >'+user_category+'</div></div> <div class="bold break font-change font-attendee font-exception"> Developer</div> </div> </div> <div style=" margin-top:10px;">'+thisComment+'</div> <div style=" margin-top:10px"><a href="'+replylink+'" style="color:#0992A3; font-weight:bold"><img src="http://dev.eventmost.com/images/reply.png" style="padding-right:10px " width="40" align="left"/> <div style="margin:10px 0px 0px 0px; float:left">Reply</div></a></div> </div>';
 						commentHTML+= commentString;
 						callback();
 					});
@@ -189,8 +189,8 @@ function sendnewsletter (req, res) {
 				    // All tasks are done now
 				    console.log("async done!");
 				    //console.log(commentHTML);
-
-				    var eventAvatar = String(ev.avatar);
+				    console.log(ev);
+				    var eventAvatar = String(ev.avatar.url);
 				    eventAvatar = ((eventAvatar.indexOf("http") > -1) ? eventAvatar : 'http://dev.eventmost.com'+eventAvatar);
 				    
 
@@ -205,27 +205,22 @@ function sendnewsletter (req, res) {
 
 
 
-					/*res.format({
+					res.format({
 							json: function() {
 								res.send({
 									status: 200,
-									//commentHTML: commentHTML,
-									//event: ev,
-									//attendees: attendees,
-									//comments: comments,
-									user: req.user._id,
-									email: email
+									
 								})
 							}
-						})*/
+						})
 
 
-					config.transport.sendMail(options, function(err, response) {
+					/*config.transport.sendMail(options, function(err, response) {
 						if (err) throw err;
 						
 						req.session.flash.push("Feedback sent successfully!");
 						res.redirect('/event/'+res.locals.ev._id)
-					})
+					})*/
 
 
 
