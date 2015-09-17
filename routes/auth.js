@@ -187,9 +187,9 @@ function doPasswordReset (req, res) {
 			from: "EventMost <notifications@eventmost.com>",
 			to: user.getName()+" <"+user.email+">",
 			subject: "Password Reset Notification",
-			html: "<img src=\"http://eventmost.com/images/logo.svg\">\
+			html: "<img src=\"http://dev.eventmost.com/images/logo.svg\">\
 	<br/><br/><p><strong>Hi "+user.getName()+",</strong><br/><br/>You have asked us to reset your password. To do that, click on the link below.<br/>\
-	<a href='https://"+req.host+link+"'>Reset Your Password</a>\
+	<a href='http://"+req.host+link+"'>Reset Your Password</a>\
 	<br /><br />Note: If this wasn't you, discard this email. Link is valid for 2 hours.\
 	</p><br/>\
 	Please do not reply to this email, because we are super popular and probably won't have time to read it..."
