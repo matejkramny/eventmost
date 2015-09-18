@@ -20,6 +20,10 @@ exports.router = function (app) {
 		feedbackinbox.router(app)
 }
 
+function replyFeedback(req, res){
+
+}
+
 function eventFeedbackProfile (req, res) {
 	res.render('event/admin/feedback', { title: "Feedback Profile", ev: res.locals.ev, feedbackpage: true })
 }
