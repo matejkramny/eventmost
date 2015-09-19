@@ -13,15 +13,134 @@ exports.router = function (app) {
 		.post('/event/:id/admin/feedback/edit', getProfile, doEditFeedbackProfile)
 		.get('/event/:id/admin/feedback/:fid', getProfile, editFeedbackProfile)
 		.all('/event/:id/admin/feedback/:fid/*', getProfile)
-		.get('/event/:id/admin/sendnewsletter/:email', sendnewsletter)
+		.get('/event/:id/admin/sendnewsletter/:feedback_profile_id/:email', sendnewsletter)
 		.get('/event/:id/admin/sendfeedback', sendfeedback)
-		.get('/event/:id/:feedback_profile_id/reply-feedback', replyFeedback)
+		.get('/reply-feedback/:message_id/:user_id/:feedback_profile_id', replyFeedback)
+		.post('/reply-feedback', postReplyFeedback)
 
 		feedbackinbox.router(app)
 }
 
-function replyFeedback(req, res){
+function postReplyFeedback(req, res){
+	console.log(req.body);
 
+	var message = req.body.message;
+	var feedback_profile_id = req.body.feedback_profile_id;
+	var user_id = req.body.user_id;
+
+	var query = [{ users: {$in:[feedback_profile_id, user_id]} }];
+    var isTopicExist = false;
+    var topicId = null;
+
+	/*
+	+ Create topic (add comment from attendee as message) or get id if already exist, 
+	+ get topic id
+	+ message text
+	+ read: false
+	+ sentBy: feedback profile id
+	*/
+
+	async.series([
+	    function(callback){
+
+		    	models.Topic.find(query)
+		        .select('users lastUpdated')
+		        .sort('lastUpdated')
+		        .exec(function (err, topics) {
+		        	for(var x=0; x < topics.length; x++) {
+		        		//console.log(topic)
+		        		var list = topics[x].users;
+
+		        		if(list.indexOf(feedback_profile_id) > -1 && list.indexOf(user_id) > -1){
+		        			//Topic already exist...
+		        			console.log("topic exist");
+		        			isTopicExist = true;
+		        			topicId = topics[x]._id;
+		        			topics[x].lastUpdated = Date.now();
+		        			topics[x].save();
+		        			break;
+
+		        		}
+		        	}
+
+		        	if(isTopicExist == false){
+		        		//Topic doesn't exist...
+						console.log("topic doesnt exist");
+		    			var topic = new models.Topic({
+							lastUpdated: Date.now(),
+							users: [feedback_profile_id, user_id]
+						})
+						topicId = topic._id;
+						topic.save(function(err){
+							callback();
+						});
+		        	}else{
+		        		callback();
+		        	}
+		        });
+		        
+	    },
+
+	    function (callback){
+	    	var msg = new models.Message({
+				topic: topicId,
+				message: message,
+				read: false,
+				timeSent: Date.now(),
+				sentBy: req.body.feedback_profile_id
+			})
+
+			msg.save(function (err){
+				callback();
+			})
+	    }
+	], function (err) {
+	    // Here, results is an array of the value from each function
+	    console.log(topicId); // outputs: ['two', 'five']
+	    res.format({
+			json: function() {
+				res.send({
+					status: 200,
+					topicId: topicId
+					
+				})
+			}
+		})
+	});
+
+	
+
+    // Fetch My Topics.
+    
+
+	/*
+	
+
+	*/
+	
+}
+
+function replyFeedback(req, res){
+	var message_id = req.params.message_id;
+	var user_id = req.params.user_id;
+	var feedback_profile_id = req.params.feedback_profile_id;
+
+
+	models.EventMessage.findOne({"_id": mongoose.Types.ObjectId(message_id)}).exec(function (err, message){
+		var data = {
+			feedbackpage : true,
+			message_id : message_id,
+			user_id : user_id,
+			feedback_profile_id : feedback_profile_id,
+			question : message.message
+		}
+
+		console.log(message);
+
+		res.render('reply_feedback', data);
+	});
+
+	
 }
 
 function eventFeedbackProfile (req, res) {
@@ -153,6 +272,7 @@ function sendnewsletter (req, res) {
 	var logged_in_user = req.user;
 	var logged_in_user_id = req.user._id;
 	var email = req.params.email;
+	var feedback_profile_id = req.params.feedback_profile_id;
 	console.log("hi newsletter");
 
 	models.Event.findOne({"_id": mongoose.Types.ObjectId(eventid)}).populate("messages attendees users avatar").exec(function(err, ev) {
@@ -174,18 +294,21 @@ function sendnewsletter (req, res) {
 
 				   	var thisComment = item.message;
 					var attendee_id = item.attendee;
+					var thisCommentId = item._id;
 					models.Attendee.findOne({"_id": mongoose.Types.ObjectId(attendee_id)}).populate("user").exec(function (err, usr){
 						
 
 						console.log(usr.user.name+": "+thisComment);
 						console.log(usr.user);
 						var username = usr.user.name;
+						var user_id = usr.user._id;
 						var user_category = usr.category;
 						var user_position = usr.user.position;
-						var replylink = '/replycomment';
+						var replylink = 'http://dev.eventmost.com/reply-feedback/'+thisCommentId+'/'+user_id+'/'+feedback_profile_id;
 						var profileImg = ((usr.user.avatar != '') ? 'http://dev.eventmost.com'+usr.user.avatar : 'http://dev.eventmost.com/images/default_speaker-purple.png');
 
-						commentString = '<div style="float:left; width:100%; margin-bottom:10px;" > <div style=" background:#E6E7E8; margin-left:10px; width:32%; float:left; padding:0px 10px 0px 0px;border-radius:110px; margin-bottom:10px; margin-right:10px;"> <div><div style="width:90px; height:90px !important; float:left"><img src="'+profileImg+'" width="90px" height="90px" style="border-radius:110px; max-width:100% !important; min-height: auto !important; display: block !important;" alt="'+username+'" title="'+username+'" /></div></div> <div style=" float:left ; margin:20px 0px 0px 20px"> <div class="font20a nspacer font-exception" style=" font-weight:bold">'+username+'</div> <div style="float:left; font-weight:bold"><div class="font20a nspacer font-exception" >'+user_category+'</div></div> <div class="bold break font-change font-attendee font-exception"> '+user_position+'</div> </div> </div> <div style=" margin-top:10px;">'+thisComment+'</div> <div style=" margin-top:10px"><a href="'+replylink+'" style="color:#0992A3; font-weight:bold"><img src="http://dev.eventmost.com/images/reply.png" style="padding-right:10px " width="40" align="left"/> <div style="margin:10px 0px 0px 0px; float:left">Reply</div></a></div> </div>';
+						//commentString = '<div style="float:left; width:100%; margin-bottom:10px;" > <div style=" background:#E6E7E8; margin-left:10px; width:32%; float:left; padding:0px 10px 0px 0px;border-radius:110px; margin-bottom:10px; margin-right:10px;"> <div><div style="width:90px; height:90px !important; float:left"><img src="'+profileImg+'" width="90px" height="90px" style="border-radius:110px; max-width:100% !important; min-height: auto !important; display: block !important;" alt="'+username+'" title="'+username+'" /></div></div> <div style=" float:left ; margin:20px 0px 0px 20px"> <div class="font20a nspacer font-exception" style=" font-weight:bold">'+username+'</div> <div style="float:left; font-weight:bold"><div class="font20a nspacer font-exception" >'+user_category+'</div></div> <div class="bold break font-change font-attendee font-exception"> '+user_position+'</div> </div> </div> <div style=" margin-top:10px;">'+thisComment+'</div> <div style=" margin-top:10px"><a href="'+replylink+'" style="color:#0992A3; font-weight:bold"><img src="http://dev.eventmost.com/images/reply.png" style="padding-right:10px " width="40" align="left"/> <div style="margin:10px 0px 0px 0px; float:left">Reply</div></a></div> </div>';
+						commentString = '<tr> <td><table width="100%" border="0" cellspacing="0" cellpadding="0"> <tr> <td><table width="100%" border="0" cellspacing="0" cellpadding="0"> <tr> <td width="52%"><div style=" margin-left:10px; padding:0px 10px 0px 0px;border-radius:90px; margin-bottom:10px; margin-right:10px;"> <table width="100%" border="0" cellspacing="0" cellpadding="0"> <tr> <td width="40%" align="center" style="border-right: 1px solid #E6E7E8" ><img src="'+profileImg+'" height="90" max-width="100%" /></td> <td valign="middle" width="60%" background="" align="left" ><div style="background: #e6e7e8 0 0; border-radius: 0 90px 90px 0; float: left; margin: 0 0 0 20px; padding: 20px 10px; width: 78%;"> <div class="bold font-exception" style=" font-size:14px;">'+username+'</div> <div style="float:left;"> <div class=" font-exception" >'+user_category+'</div> </div> <div class=" break font-change font-attendee font-exception" style="float:left; clear:both; font-size:14px"> '+user_position+' </div> </div></td> </tr> </table> </div></td> <td width="48%" ><div style=" margin-top:10px; padding-right:10px">'+thisComment+'</div> <div style=" margin-top:10px"><a href="'+replylink+'" style="color:#0992A3; font-weight:bold"><img src="reply.png" style="padding-right:10px " width="40" align="left"/> <div style="margin:10px 0px 0px 0px; float:left">Reply</div> </a></div></td> </tr> </table></td> </tr> </table></td> </tr>'
 						commentHTML+= commentString;
 						callback();
 					});
@@ -201,7 +324,9 @@ function sendnewsletter (req, res) {
 				    eventAvatar = ((eventAvatar.indexOf("http") > -1) ? eventAvatar : 'http://dev.eventmost.com'+eventAvatar);
 				    
 
-				    var htmlcontent = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> <html xmlns="http://www.w3.org/1999/xhtml"> <head> <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> <title>Untitled Document</title> </head><style>.immg{ width:90px; height:90px; float:left} .immg img{max-width:100%; height:100%}</style> <body style="font-family:Arial, Helvetica, sans-serif"> <table width="700" border="0" cellspacing="0" cellpadding="0" bgcolor="#F7F7F7" align="center" style="padding:5px 0px"> <tr> <td> <table width="100%" border="0" cellspacing="0" cellpadding="0"> <tr> <td><img src="http://dev.eventmost.com/images/logo.png" style="text-align:center ; margin:0px auto; display:block; margin-bottom:10px" width="280px" height="58px" /></td> </tr> <tr> <td> <table width="100%" border="0" cellspacing="0" cellpadding="0"> <tr> <td bgcolor="#0992A3" style="padding:10px 10px 10px 10px; font-size:22px; color:#FFFFFF">'+ev.name+'</td> </tr> <tr> <td style="padding:10px 10px 10px 10px; font-size:16px; color:#000"><p><img src="'+eventAvatar+'" style="padding:0px 15px 10px 0px; float:left" width="150" />'+ev.description+'</p></td> </tr> <tr> <td style="padding:10px 10px 10px 10px; font-size:20px; color:#FED298; text-align:center"><p>Dear Speaker, We have selected following questions for you to send a reply if you want.</p></td> </tr> <tr> <td> <table width="100%" border="0" cellspacing="0" cellpadding="0"> <tr> <td > '+commentHTML+'</td> </tr> </table> </td> </tr> </table> </td> </tr> <tr bgcolor="#542437"> <td style="color:#FFFFFF; padding:20px 10px;font-size:14px; text-align:center">Copyright &copy; 2015 <b>EventMost</b> | <a style=" color:#FFFFFF; text-decoration:none; " href="/contact">Contact us</a></td> </tr> </table> </td> </tr> </table> </body> </html>';
+				    //var htmlcontent = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> <html xmlns="http://www.w3.org/1999/xhtml"> <head> <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> <title>Untitled Document</title> </head><style>.immg{ width:90px; height:90px; float:left} .immg img{max-width:100%; height:100%}</style> <body style="font-family:Arial, Helvetica, sans-serif"> <table width="700" border="0" cellspacing="0" cellpadding="0" bgcolor="#F7F7F7" align="center" style="padding:5px 0px"> <tr> <td> <table width="100%" border="0" cellspacing="0" cellpadding="0"> <tr> <td><img src="http://dev.eventmost.com/images/logo.png" style="text-align:center ; margin:0px auto; display:block; margin-bottom:10px" width="280px" height="58px" /></td> </tr> <tr> <td> <table width="100%" border="0" cellspacing="0" cellpadding="0"> <tr> <td bgcolor="#0992A3" style="padding:10px 10px 10px 10px; font-size:22px; color:#FFFFFF">'+ev.name+'</td> </tr> <tr> <td style="padding:10px 10px 10px 10px; font-size:16px; color:#000"><p><img src="'+eventAvatar+'" style="padding:0px 15px 10px 0px; float:left" width="150" />'+ev.description+'</p></td> </tr> <tr> <td style="padding:10px 10px 10px 10px; font-size:20px; color:#FED298; text-align:center"><p>Dear Speaker, We have selected following questions for you to send a reply if you want.</p></td> </tr> <tr> <td> <table width="100%" border="0" cellspacing="0" cellpadding="0"> <tr> <td > '+commentHTML+'</td> </tr> </table> </td> </tr> </table> </td> </tr> <tr bgcolor="#542437"> <td style="color:#FFFFFF; padding:20px 10px;font-size:14px; text-align:center">Copyright &copy; 2015 <b>EventMost</b> | <a style=" color:#FFFFFF; text-decoration:none; " href="/contact">Contact us</a></td> </tr> </table> </td> </tr> </table> </body> </html>';
+					//var htmlcontent = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> <html xmlns="http://www.w3.org/1999/xhtml"> <head> <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> <title>newsletter</title> <link href="http://dev.eventmost.com/css/bootstrap-eventmost.css" rel="stylesheet" type="text/css" /> </head> <body style="font-family:Arial, Helvetica, sans-serif"> <table width="700" border="0" cellspacing="0" cellpadding="0" bgcolor="#F7F7F7" align="center" style="padding:5px 0px"> <tr> <td><table width="100%" border="0" cellspacing="0" cellpadding="0"> <tr> <td><img src="http://dev.eventmost.com/images/logo.svg" style="text-align:center ; margin:0px auto; display:block; margin-bottom:10px " /></td> </tr> <tr> <td><table width="100%" border="0" cellspacing="0" cellpadding="0"> <tr> <td bgcolor="#0992A3" style="padding:10px 10px 10px 10px; font-size:22px; color:#FFFFFF">'+ev.name+'</td> </tr> <tr> <td style="padding:10px 10px 10px 10px; font-size:16px; color:#000"><p><img src="'+eventAvatar+'" style="padding:0px 15px 10px 0px; float:left" width="150" />'+ev.description+'</p></td> </tr> <tr> <td style="padding:10px 10px 10px 10px; font-size:20px; color:#FED298; text-align:center"><p>Dear Speaker, We have selected following questions for you to send a reply if you want.</p></td> </tr> <tr> <td><table width="100%" border="0" cellspacing="0" cellpadding="0"> <tr> <td><table width="100%" border="0" cellspacing="0" cellpadding="0"> <tr> <td width="52%"><div style=" margin-left:10px; padding:0px 10px 0px 0px;border-radius:90px; margin-bottom:10px; margin-right:10px;"> <table width="100%" border="0" cellspacing="0" cellpadding="0"> <tr> <td width="40%" align="center" style="border-right: 1px solid #E6E7E8" ><img src="https://ci3.googleusercontent.com/proxy/czHPO9mlC-01QshTnxKt-srstPnnsE-33VjL2xNDNfznx8osRzvnklNKxtH12IP2yymjKRhXCrXpuEqTbCCfh66aYGzQ8OwR0swUAw8mCM0TITqmATZDNpBAJQ=s0-d-e1-ft#http://dev.eventmost.com/profileavatars/5550c9c66e346ed847dc379e.jpeg" height="90" max-width="100%" /></td> <td valign="middle" width="60%" background="" align="left" ><div style="background: #e6e7e8 0 0; border-radius: 0 90px 90px 0; float: left; margin: 0 0 0 20px; padding: 20px 10px; width: 78%;"> <div class="bold font-exception" style=" font-size:14px;">Haseeb</div> <div style="float:left;"> <div class=" font-exception" >Attendee</div> </div> <div class=" break font-change font-attendee font-exception" style="float:left; clear:both; font-size:14px"> Developer </div> </div></td> </tr> </table> </div></td> <td width="48%" ><div style=" margin-top:10px; padding-right:10px">This is a test question for speaker? This is a test question for speaker? This is a test question for speaker? This is a test question for speaker?</div> <div style=" margin-top:10px"><a href="#" style="color:#0992A3; font-weight:bold"><img src="reply.png" style="padding-right:10px " width="40" align="left"/> <div style="margin:10px 0px 0px 0px; float:left">Reply</div> </a></div></td> </tr> </table></td> </tr> </table></td> </tr> </table></td> </tr> <tr bgcolor="#542437"> <td style="color:#FFFFFF; padding:20px 10px;font-size:14px; text-align:center">Copyright &copy; 2015 <b>EventMost</b> | <a style=" color:#FFFFFF; text-decoration:none; " href="/contact">Contact us</a></td> </tr> </table></td> </tr> </table> </body> </html>';
+					var htmlcontent = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> <html xmlns="http://www.w3.org/1999/xhtml"> <head> <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> <title>newsletter</title> <link href="http://dev.eventmost.com/css/bootstrap-eventmost.css" rel="stylesheet" type="text/css" /> </head> <body style="font-family:Arial, Helvetica, sans-serif"> <table width="700" border="0" cellspacing="0" cellpadding="0" bgcolor="#F7F7F7" align="center" style="padding:5px 0px"> <tr> <td><table width="100%" border="0" cellspacing="0" cellpadding="0"> <tr> <td><img src="http://dev.eventmost.com/images/logo.svg" style="text-align:center ; margin:0px auto; display:block; margin-bottom:10px " /></td> </tr> <tr> <td><table width="100%" border="0" cellspacing="0" cellpadding="0"> <tr> <td bgcolor="#0992A3" style="padding:10px 10px 10px 10px; font-size:22px; color:#FFFFFF">SSCG Africa Annual Economic & Entrepreneurship Conference</td> </tr> <tr> <td style="padding:10px 10px 10px 10px; font-size:16px; color:#000"><p><img src="'+eventAvatar+'" style="padding:0px 15px 10px 0px; float:left" width="150" />'+ev.description+'</p></td> </tr> <tr> <td style="padding:10px 10px 10px 10px; font-size:20px; color:#FED298; text-align:center"><p>Dear Speaker, We have selected following questions for you to send a reply if you want.</p></td> </tr> '+commentHTML+' </table></td> </tr> <tr bgcolor="#542437"> <td style="color:#FFFFFF; padding:20px 10px;font-size:14px; text-align:center">Copyright &copy; 2015 <b>EventMost</b> | <a style=" color:#FFFFFF; text-decoration:none; " href="/contact">Contact us</a></td> </tr> </table></td> </tr> </table> </body> </html>';
 					var options = {
 							from: "EventMost <noreply@eventmost.com>",
 							to: " <"+email+">",
