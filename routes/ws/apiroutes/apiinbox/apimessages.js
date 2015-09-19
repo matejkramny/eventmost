@@ -291,8 +291,22 @@ function doNewMessageAPI(req, res) {
 
 exports.newMessage = newMessage = function(topicID,message,userid, res){
 
-    models.Topic.findOne({"_id": topicID})
-        .populate("users")
+      models.User.findById( userid, function(err, userModel){
+        console.log(userModel);
+        if(!userModel){
+            res.format({
+                        json: function () {
+                            res.send({
+                                status: 404,
+                                message: "User does not exists or deleted"
+                            })
+                        }
+                    })
+                    return;
+        }
+
+       models.Topic.findOne({"_id": topicID})
+       .select('users lastUpdated eventid')
         .exec(function (err, topic) {
 
             //Find Topic
@@ -311,7 +325,7 @@ exports.newMessage = newMessage = function(topicID,message,userid, res){
             //Find if User ID is allowed or exists in Topic to post
             var user;
             for (var i = 0; i < topic.users.length; i++) {
-                if (userid == topic.users[i]._id) {
+                if (userid == topic.users[i]) {
                     user = topic.users[i];
                     break;
                 }
@@ -327,8 +341,16 @@ exports.newMessage = newMessage = function(topicID,message,userid, res){
                 })
                 return;
             } else {
-                user.mailboxUnread++;
-                user.save();
+                //model.User.
+                //user.mailboxUnread++;
+                models.User.findOneAndUpdate(
+                    {_id: user}, 
+                    { $inc: { mailboxUnread: 1 }}, 
+                    {upsert:false},
+                    function(err, message){
+                        console.log(message);
+                    });
+                //user.save();
             }
 
             //Do the thing
@@ -356,8 +378,7 @@ exports.newMessage = newMessage = function(topicID,message,userid, res){
 
 
         });
-
-
+    });
 }
 
 function showMessagesAPI(req, res) {
