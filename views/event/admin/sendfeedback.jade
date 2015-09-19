@@ -28,7 +28,7 @@ block content
 			.pull-right.text-left.pad-left-ten
 				.right.iconsbox.spacerbig
 					div(data-toggle="tooltip", data-placement="top" title= "Newsletter will be sent to "+attendee.user.email)
-						a(href="/event/"+ev._id+"/admin/sendnewsletter/"+attendee.user.email, onclick="document.getElementById('loading').style.display='block'")
+						a(href="/event/"+ev._id+"/admin/sendnewsletter/#{attendee.user._id}/"+attendee.user.email, onclick="document.getElementById('loading').style.display='block'")
 							img.img-mess-smart(src="/images/send-feedback.png", style="width:100%;")
 					.nspacer
 		.clearfix
