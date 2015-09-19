@@ -1,0 +1,76 @@
+doctype
+html
+	head
+		meta(http-equiv="Content-Type" content="text/html; charset=utf-8;")
+		meta(name="_csrf" content="#{token}")
+		if (typeof ev !== "undefined")
+			meta(name="event_id" content="#{ev._id}")
+		meta(name="viewport" content="width=device-width, initial-scale=1.0")
+		block meta
+		title #{title}
+		link(href="/favicon.ico" type="image/x-icon" rel="icon")
+		link(href="/favicon.ico" type="image/x-icon" rel="shortcut icon")
+
+
+		
+		//- all css goes here
+		block css
+			link(rel="stylesheet" href="/css/all_combined.min.css?v=#{versionHash}")
+			link(type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500")
+			link(rel="stylesheet" href="/css/bootstrap-eventmost.css?v=#{versionHash}")
+			link(rel="stylesheet" href="/css/crop/jquery.Jcrop.min.css?v=#{versionHash}")
+			link(rel="stylesheet" href="/css/crop/jquery.cropbox.css")
+			link(rel="stylesheet" href="/css/landing.css?v=#{versionHash}")
+			link(rel="stylesheet" href="/css/bootstrap-timepicker.min.css?v=#{versionHash")
+
+			
+
+	body(ng-app="eventMost" onload="initialize()" )
+		//- main container
+		block container
+		header(id="header")
+			.container
+				.row
+					.pull-left.col-md-3.col-xs-3
+						a(href="/")
+							img.nspacer.logos(src="/images/logo.svg")
+					
+					
+		
+			.clearfix
+		
+		.container
+
+			
+			include inc/flash
+			.row(style="border:1px solid #eee; padding:20px 0px")
+				center
+					img(src="/images/loading.gif", id="loading", style="display:none")
+				center
+					h3#error(style="display:none; color:red")
+						| Sorry! Reply is missing
+				center
+					h2(id="thankyou", style="display:none")
+						| Thank you very much for your time.
+				div#questionbox
+					.col-md-10.col-lg-10.col-sm-10.col-xs-10
+						| Q: #{question}
+					br
+					br
+					br
+					.col-md-10.col-lg-10.col-sm-10.col-xs-10
+						textarea#inputMessage.form-control(required placeholder="Write Your Reply")
+						input#feedback_profile_id(type="hidden", value="#{feedback_profile_id}")
+						input#user_id(type="hidden", value="#{user_id}")
+					.col-md-2.col-lg-2.col-sm-2.col-xs-2(style="margin-top:18px;")
+						button.form-control.btn.btn-info(onclick="sendFeedback()") Send
+
+		.container
+				footer.col-xs-12.col-md-12.col-sm-12.col-lg-12
+					.text-center Copyright © 2015 <b>EventMost</b> | 
+						a.link-white(href="/contact") Contact us
+						small.pull-right v#{version} - ##{versionHash}
+		block js
+			script(src="/js/vendor/jquery.min.js?v=#{versionHash}" defer)
+			script(src="/js/reply_feedback.js?v=#{versionHash}" defer)
+		
