@@ -96,13 +96,8 @@ function postReplyFeedback(req, res){
 	    },
 
 	    function (callback){
-	    	models.User.find({"_id": mongoose.Types.ObjectId(user_id)}).exec(function (err, thisUser){
-	    		var mailboxUnread = thisUser.mailboxUnread;
-	    		thisUser.mailboxUnread = mailboxUnread++;
-	    		thisUser.save(function(err){
-	    			callback();
-	    		})
-	    	});
+	    	models.User.update({"_id": mongoose.Types.ObjectId(user_id)},{ $inc: { mailboxUnread: 1 } });
+	    	callback();
 	    }
 	], function (err) {
 	    // Here, results is an array of the value from each function
