@@ -183,7 +183,7 @@ function eventFeedbackProfile (req, res) {
 }
 
 function newFeedbackProfile (req, res) {
-	res.render('event/admin/editFeedback', { title: "Create a new Feedback Profile" });
+	res.render('event/admin/editFeedback', { title: "Create a new Feedback Profile", feedbackpage: true });
 }
 
 function getProfile (req, res, next) {
