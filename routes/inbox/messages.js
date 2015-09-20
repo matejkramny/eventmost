@@ -195,7 +195,7 @@ function postMessage (req, res) {
 					var user_id = req.user._id;
 					var user_category = '';
 					var user_position = req.user.position;
-					var replylink = '';
+					var replylink = 'http://dev.eventmost.com/reply-feedback-message/'+msg._id+'/'+req.user._id+'/'+otherUser._id;
 					var profileImg = ((req.user.avatar != '') ? 'http://dev.eventmost.com'+req.user.avatar : 'http://dev.eventmost.com/images/default_speaker-purple.png');
 
 					//commentString = '<div style="float:left; width:100%; margin-bottom:10px;" > <div style=" background:#E6E7E8; margin-left:10px; width:32%; float:left; padding:0px 10px 0px 0px;border-radius:110px; margin-bottom:10px; margin-right:10px;"> <div><div style="width:90px; height:90px !important; float:left"><img src="'+profileImg+'" width="90px" height="90px" style="border-radius:110px; max-width:100% !important; min-height: auto !important; display: block !important;" alt="'+username+'" title="'+username+'" /></div></div> <div style=" float:left ; margin:20px 0px 0px 20px"> <div class="font20a nspacer font-exception" style=" font-weight:bold">'+username+'</div> <div style="float:left; font-weight:bold"><div class="font20a nspacer font-exception" >'+user_category+'</div></div> <div class="bold break font-change font-attendee font-exception"> '+user_position+'</div> </div> </div> <div style=" margin-top:10px;">'+thisComment+'</div> <div style=" margin-top:10px"><a href="'+replylink+'" style="color:#0992A3; font-weight:bold"><img src="http://dev.eventmost.com/images/reply.png" style="padding-right:10px " width="40" align="left"/> <div style="margin:10px 0px 0px 0px; float:left">Reply</div></a></div> </div>';
