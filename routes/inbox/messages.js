@@ -193,7 +193,7 @@ function postMessage (req, res) {
 					var email = otherUser.email;
 					var username = req.user.name;
 					var user_id = req.user._id;
-					var user_category = req.category;
+					var user_category = req.user.category;
 					var user_position = req.user.position;
 					var replylink = '';
 					var profileImg = ((req.user.avatar != '') ? 'http://dev.eventmost.com'+req.user.avatar : 'http://dev.eventmost.com/images/default_speaker-purple.png');
