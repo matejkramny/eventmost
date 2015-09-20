@@ -17,8 +17,33 @@ exports.router = function (app) {
 		.get('/event/:id/admin/sendfeedback', sendfeedback)
 		.get('/reply-feedback/:message_id/:user_id/:feedback_profile_id', replyFeedback)
 		.post('/reply-feedback', postReplyFeedback)
+		.get('/reply-feedback-message/:message_id/:user_id/:feedback_profile_id', replyFeedbackMessage)
+		
 
 		feedbackinbox.router(app)
+}
+
+function replyFeedbackMessage(req, res){
+	var message_id = req.params.message_id;
+	var user_id = req.params.user_id;
+	var feedback_profile_id = req.params.feedback_profile_id;
+
+
+	models.Message.findOne({"_id": mongoose.Types.ObjectId(message_id)}).exec(function (err, message){
+		var data = {
+			feedbackpage : true,
+			message_id : message_id,
+			user_id : user_id,
+			feedback_profile_id : feedback_profile_id,
+			question : message.message
+		}
+
+		console.log(message);
+
+		res.render('reply_feedback', data);
+	});
+
+	
 }
 
 function postReplyFeedback(req, res){
