@@ -190,7 +190,7 @@ function postMessage (req, res) {
 					var commentHTML = '';
 					var feedbackEventId = otherUser.feedbackProfileEvent;
 					
-
+					var email = otherUser.email;
 					var username = req.user.name;
 					var user_id = req.user._id;
 					var user_category = req.category;
