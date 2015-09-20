@@ -202,7 +202,8 @@ function postMessage (req, res) {
 					commentString = '<tr> <td><table width="100%" border="0" cellspacing="0" cellpadding="0"> <tr> <td><table width="100%" border="0" cellspacing="0" cellpadding="0"> <tr> <td width="52%"><div style=" margin-left:10px; padding:0px 10px 0px 0px;border-radius:90px; margin-bottom:10px; margin-right:10px;"> <table width="100%" border="0" cellspacing="0" cellpadding="0"> <tr> <td width="40%" align="center" style="border-right: 1px solid #E6E7E8" ><img src="'+profileImg+'" height="90" max-width="100%" /></td> <td valign="middle" width="60%" background="" align="left" ><div style="background: #e6e7e8 0 0; border-radius: 0 90px 90px 0; float: left; margin: 0 0 0 20px; padding: 20px 10px; width: 78%;"> <div class="bold font-exception" style=" font-size:14px; font-weight:bold">'+username+'</div> <div style="float:left;"> <div class=" font-exception" >'+user_category+'</div> </div> <div class=" break font-change font-attendee font-exception" style="float:left; clear:both; font-size:14px"> '+user_position+' </div> </div></td> </tr> </table> </div></td> <td width="48%" ><div style=" margin-top:10px; padding-right:10px">'+text+'</div> <div style=" margin-top:10px"><a href="'+replylink+'" style="color:#0992A3; font-weight:bold"><img src="http://dev.eventmost.com/images/reply.png" style="padding-right:10px " width="40" align="left"/> <div style="margin:10px 0px 0px 0px; float:left">Reply</div> </a></div></td> </tr> </table></td> </tr> </table></td> </tr>'
 					commentHTML+= commentString;
 
-					models.Event.find({"_id": mongoose.Types.ObjectId(feedbackEventId)}, function (err, ev){
+					models.Event.find({"_id": mongoose.Types.ObjectId(feedbackEventId)}).populate("avatar").exec(function(err, ev) {
+						console.log(ev);
 						var eventAvatar = String(ev.avatar.url);
 					    eventAvatar = ((eventAvatar.indexOf("http") > -1) ? eventAvatar : 'http://dev.eventmost.com'+eventAvatar);
 					    
