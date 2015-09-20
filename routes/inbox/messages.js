@@ -113,6 +113,7 @@ function postMessage (req, res) {
 	}
 	
 	var message = res.locals.message;
+	var otherUser = null;
 	if (message) {
 		var isUser = false;
 		for (var i = 0; i < message.users.length; i++) {
@@ -136,8 +137,8 @@ function postMessage (req, res) {
 			if (u._id.equals(req.user._id)) continue;
 			
 			u.mailboxUnread++;
-			
 			u.save();
+			otherUser = u;
 		}
 
 		message.lastUpdated = Date.now();
@@ -179,6 +180,58 @@ function postMessage (req, res) {
 			function (cb) {
 				console.log("saving msg");
 				msg.save();
+				cb();
+			},
+			function (cb) {
+				
+				//Send email to Feedback Profile...
+
+				if(otherUser.isFeedbackProfile == true){
+					var commentHTML = '';
+					var feedbackEventId = otherUser.feedbackProfileEvent;
+					
+
+					var username = req.user.name;
+					var user_id = req.user._id;
+					var user_category = req.category;
+					var user_position = req.user.position;
+					var replylink = '';
+					var profileImg = ((req.user.avatar != '') ? 'http://dev.eventmost.com'+req.user.avatar : 'http://dev.eventmost.com/images/default_speaker-purple.png');
+
+					//commentString = '<div style="float:left; width:100%; margin-bottom:10px;" > <div style=" background:#E6E7E8; margin-left:10px; width:32%; float:left; padding:0px 10px 0px 0px;border-radius:110px; margin-bottom:10px; margin-right:10px;"> <div><div style="width:90px; height:90px !important; float:left"><img src="'+profileImg+'" width="90px" height="90px" style="border-radius:110px; max-width:100% !important; min-height: auto !important; display: block !important;" alt="'+username+'" title="'+username+'" /></div></div> <div style=" float:left ; margin:20px 0px 0px 20px"> <div class="font20a nspacer font-exception" style=" font-weight:bold">'+username+'</div> <div style="float:left; font-weight:bold"><div class="font20a nspacer font-exception" >'+user_category+'</div></div> <div class="bold break font-change font-attendee font-exception"> '+user_position+'</div> </div> </div> <div style=" margin-top:10px;">'+thisComment+'</div> <div style=" margin-top:10px"><a href="'+replylink+'" style="color:#0992A3; font-weight:bold"><img src="http://dev.eventmost.com/images/reply.png" style="padding-right:10px " width="40" align="left"/> <div style="margin:10px 0px 0px 0px; float:left">Reply</div></a></div> </div>';
+					commentString = '<tr> <td><table width="100%" border="0" cellspacing="0" cellpadding="0"> <tr> <td><table width="100%" border="0" cellspacing="0" cellpadding="0"> <tr> <td width="52%"><div style=" margin-left:10px; padding:0px 10px 0px 0px;border-radius:90px; margin-bottom:10px; margin-right:10px;"> <table width="100%" border="0" cellspacing="0" cellpadding="0"> <tr> <td width="40%" align="center" style="border-right: 1px solid #E6E7E8" ><img src="'+profileImg+'" height="90" max-width="100%" /></td> <td valign="middle" width="60%" background="" align="left" ><div style="background: #e6e7e8 0 0; border-radius: 0 90px 90px 0; float: left; margin: 0 0 0 20px; padding: 20px 10px; width: 78%;"> <div class="bold font-exception" style=" font-size:14px; font-weight:bold">'+username+'</div> <div style="float:left;"> <div class=" font-exception" >'+user_category+'</div> </div> <div class=" break font-change font-attendee font-exception" style="float:left; clear:both; font-size:14px"> '+user_position+' </div> </div></td> </tr> </table> </div></td> <td width="48%" ><div style=" margin-top:10px; padding-right:10px">'+text+'</div> <div style=" margin-top:10px"><a href="'+replylink+'" style="color:#0992A3; font-weight:bold"><img src="http://dev.eventmost.com/images/reply.png" style="padding-right:10px " width="40" align="left"/> <div style="margin:10px 0px 0px 0px; float:left">Reply</div> </a></div></td> </tr> </table></td> </tr> </table></td> </tr>'
+					commentHTML+= commentString;
+
+					models.Event.find({"_id": mongoose.Types.ObjectId(feedbackEventId)}, function (err, ev){
+						var eventAvatar = String(ev.avatar.url);
+					    eventAvatar = ((eventAvatar.indexOf("http") > -1) ? eventAvatar : 'http://dev.eventmost.com'+eventAvatar);
+					    
+
+					    
+						
+						var htmlcontent = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> <html xmlns="http://www.w3.org/1999/xhtml"> <head> <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> <title>newsletter</title> <link href="http://dev.eventmost.com/css/bootstrap-eventmost.css" rel="stylesheet" type="text/css" /> </head> <body style="font-family:Arial, Helvetica, sans-serif"> <table width="700" border="0" cellspacing="0" cellpadding="0" bgcolor="#F7F7F7" align="center" style="padding:5px 0px"> <tr> <td><table width="100%" border="0" cellspacing="0" cellpadding="0"> <tr> <td><img src="http://dev.eventmost.com/images/logo.png" style="text-align:center ; margin:0px auto; display:block; margin-bottom:10px " width="280px" height="58px" /></td> </tr> <tr> <td><table width="100%" border="0" cellspacing="0" cellpadding="0"> <tr> <td bgcolor="#0992A3" style="padding:10px 10px 10px 10px; font-size:22px; color:#FFFFFF">SSCG Africa Annual Economic & Entrepreneurship Conference</td> </tr> <tr> <td style="padding:10px 10px 10px 10px; font-size:16px; color:#000"><p><img src="'+eventAvatar+'" style="padding:0px 15px 10px 0px; float:left" width="150" />'+ev.description+'</p></td> </tr> <tr> <td style="padding:10px 10px 10px 10px; font-size:20px; color:#FED298; text-align:center"><p>Dear Speaker, We have selected following questions for you to send a reply if you want.</p></td> </tr> '+commentHTML+' </table></td> </tr> <tr bgcolor="#542437"> <td style="color:#FFFFFF; padding:20px 10px;font-size:14px; text-align:center">Copyright &copy; 2015 <b>EventMost</b> | <a style=" color:#FFFFFF; text-decoration:none; " href="/contact">Contact us</a></td> </tr> </table></td> </tr> </table> </body> </html>';
+						var options = {
+								from: "EventMost <noreply@eventmost.com>",
+								to: " <"+email+">",
+								subject: "Message From EventMost User",
+								html: htmlcontent
+							}
+
+
+
+						config.transport.sendMail(options, function(err, response) {
+							if (err) throw err;
+							
+							cb();
+						})
+					});
+
+					
+
+				}else{
+					cb();	
+				}
+				
 			}
 		], function(err) {
 			if (err) throw err;
