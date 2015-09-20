@@ -216,7 +216,7 @@ function editFeedbackProfile (req, res) {
 		return;
 	}
 	
-	res.render('event/admin/editFeedback', { title: "Edit Feedback Profile "+res.locals.feedbackProfile.user.getName() });
+	res.render('event/admin/editFeedback', { title: "Edit Feedback Profile "+res.locals.feedbackProfile.user.getName(), feedbackpage: true });
 }
 
 function doEditFeedbackProfile (req, res) {
