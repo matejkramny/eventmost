@@ -197,7 +197,7 @@ function showAttendee (req, res) {
 	res.locals.theUser = theAttendee.user;
 	res.locals.theAttendee = theAttendee;
 	res.locals.saved = false;
-	res.render('user', { title: theAttendee.user.getName() + " In " + res.locals.ev.name });
+	res.render('user', { title: theAttendee.user.getName() + " In " + res.locals.ev.name, feedbackpage: true });
 }
 
 function removeAttendee (req, res) {
