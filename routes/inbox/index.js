@@ -13,6 +13,7 @@ var fs = require('fs')
 exports.router = function (app) {
 	app.all('/inbox/*', util.authorized, populateInbox)
 		.get('/inbox', util.authorized, populateInbox, show)
+		//.get('/messages/*', util.authorized, populateInbox)
 		.get('/messages', util.authorized, populateInbox, show2)
 		.get('/takeProfile/:tid/:secret', getRequest, takeover)
 		.post('/takeProfile/:tid/:secret', getRequest, doTakeover)
@@ -65,7 +66,7 @@ function populateInbox (req, res, next) {
 		function(cb) {
 			u.populate('receivedCards.from receivedCards.card', function(err) {
 				if (err) throw err;
-				
+				res.locals.receivedCards = res.locals.user.receivedCards;
 				cb(null)
 			})
 		},
@@ -79,7 +80,7 @@ function populateInbox (req, res, next) {
 					res.locals.saversofprofile = saversofprofile;
 				}
 
-				res.locals.receivedCards = receivedCards;
+				//res.locals.receivedCards = receivedCards;
 				
 				cb(null)
 			});
@@ -92,7 +93,7 @@ function populateInbox (req, res, next) {
 				req.user.savedProfiles.forEach(function (savedId){
 					savedIds.push(mongoose.Types.ObjectId(savedId._id));
 				});
-				var savedQuery = { "_id": savedIds };
+				var savedQuery = { "_id": {$in : savedIds }};
 				models.User.find(savedQuery).exec(function(err, saved) {
 					res.locals.savedProfiles = saved;
 					
@@ -143,7 +144,8 @@ function show (req, res) {
 
 function show2 (req, res) {
 	console.log("show2 called");
-	console.log(res.locals);
+	//res.locals.receivedCards = res.locals.user.receivedCards;
+	//console.log(res.locals);
 	res.format({
 		html: function() {
 			res.locals.topics = res.locals.messages;
