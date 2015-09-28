@@ -425,7 +425,6 @@ exports.listNearEvents = function (req, res) {
 		.skip(limit * page)
 		.exec(function(err, geos) {
 			if (err) throw err;
-			console.log(geos);
 			if (geos) {
 				var events = [];
 				
