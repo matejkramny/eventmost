@@ -222,6 +222,10 @@ function countnear(req, res){
 }
 
 exports.listEvents = function (req, res) {
+	if(!req.user){
+		res.redirect('/');
+		return;
+	}
 	var skip = req.query.skip || 0;
 	var showPastEvents = req.query.pastEvents;
 	if (!showPastEvents || typeof showPastEvents === 'undefined') {
@@ -234,22 +238,40 @@ exports.listEvents = function (req, res) {
 		deleted: false,
 		privateEvent: {
 			$ne: true
+		},
+		start: {
+			$gte: new Date()
 		}
 	};
-	//if (!showPastEvents) {
-		query.start = { $gte: Date.now() };
-	//}
 	
 	models.Event.find(query)
 		.populate('avatar attendees.user')
-		.select('name start end address venue_name avatar source')
-		.sort('-created')
-		.limit(10)
+		.select('name description start end address venue_name avatar source')
+		.sort('start')
+		.limit(100)
 		.skip(skip)
 		.exec(function(err, evs) {
 		if (err) throw err;
 		if (evs) {
 			models.Event.find(query).count(function(err, total) {
+				evs.forEach(function(entry) {
+						
+					if((entry.description) && entry.description != ''){
+
+						//console.log(entry.description);
+						entry.description = entry.description.replace(/(<([^>]+)>)/ig,"");
+						entry.description = entry.description.trim();
+						entry.description = entry.description.replace(/(\r\n|\n|\r)/gm,"");
+						var totalLength = entry.description.length;
+						entry.description = entry.description.substr(0, 350);
+	    				var newLength = entry.description.length;
+	    				if(totalLength > 350){
+	    					entry.description = entry.description+" . . .";
+	    				}
+					}
+					
+				});
+
 				res.format({
 					html: function() {
 						res.locals.eventsTotal = total;
@@ -347,8 +369,14 @@ exports.listNearEvents = function (req, res) {
 		// render a blank page, and tell it to ask user for browser positioning
 		res.format({
 			html: function() {
-				res.locals.moment = moment;
-				res.render('search/results', { nearby: true, search: { results: [] }, moment:moment, title: "Events nearby" })
+				if(req.user){
+					res.locals.moment = moment;
+					res.render('event/list', { findNear: true, moment:moment, title: "Events nearby" })
+				}else{
+					
+					res.redirect('/');
+				}
+				
 			},
 			json: function() {
 				res.send({
@@ -362,7 +390,7 @@ exports.listNearEvents = function (req, res) {
 	}
 	
 	if (limit == NaN) {
-		limit = 10;
+		limit = 100;
 	}
 
 	/*
@@ -391,14 +419,13 @@ exports.listNearEvents = function (req, res) {
 			deleted: false,
 			privateEvent: {
 				$ne: true
-			},
-			start: { $gte: Date.now() }
-		},
+			}
+		}
 	}).limit(limit)
 		.skip(limit * page)
 		.exec(function(err, geos) {
 			if (err) throw err;
-			//console.log(geos);
+			console.log(geos);
 			if (geos) {
 				var events = [];
 				
@@ -430,6 +457,8 @@ exports.listNearEvents = function (req, res) {
 						
 					}
 				}
+
+				console.log(events);
 				
 				// May slow the app down.. Mongoose does not seem to support sub-document population (event.avatar)
 				async.each(geos, function(geo, cb) {
@@ -440,7 +469,7 @@ exports.listNearEvents = function (req, res) {
 				}, function(err) {
 					res.format({
 						html: function() {
-							res.render('search/results', { nearby: true, search: { results: events }, moment:moment, title: "Events nearby" })
+							res.render('event/list', { moment:moment, title: "Events nearby", events: events })
 						},
 						json: function() {
 							if (events.length > 0 && htmlIsEnabled) {

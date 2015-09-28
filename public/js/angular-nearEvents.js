@@ -7,9 +7,14 @@ try {
 }
 
 $(document).ready(function() {
+
+	
+
+	//$('#nearEventLink').attr('href','/events/near?lat='+coords.lat+'&lng='+coords.lng);
+
 	$placeholder = $("#nearbyEventsPlaceholder");
 	$placeholderText = $placeholder.find("p");
-	var limit = 10;
+	var limit = 100;
 	var page = 0;
 
 	$placeholder.on('click', 'a.ev-near.paging-page', function(ev) {
@@ -30,7 +35,7 @@ $(document).ready(function() {
 				$placeholder.show();
 				
 				$placeholder.html(json.html);
-
+				console.log(json);
 				if (json.events.length == 0) {
 					$placeholder.show();
 					$placeholderText.html(":-( No events near you.. Go ahead and <a href='/event/add'>create one</a>!");
@@ -91,6 +96,7 @@ $(document).ready(function() {
 				}
 				
 				window.lastCoords = coords;
+				console.log('calling getnear02');
 				getNear(coords);
 			}, function(err) {
 				var msg = Geo.errorMessage(err);
@@ -100,22 +106,23 @@ $(document).ready(function() {
 			$placeholderText.html("Geolocalization not supported by your browser");
 		}
 	}
+
 	var coordsSaved = parseInt(localStorage["coordsSaved"]);
 	
 	if (isNaN(coordsSaved) || Date.now() - (60 * 60 * 6 * 1000) > coordsSaved) {
+		console.log('calling loadnear01');
 		loadNear()
 		$("#tryAgainNearbyEvents").parent().addClass('hide');
 	} else if (isLocalStorageCapable && localStorage["didSaveCoords"]) {
 		var coords = JSON.parse(localStorage["coords"])
+		console.log('calling getnear01');
 		getNear(coords);
 		showNumNear(coords);
 		window.lastCoords = coords;
 		$("#tryAgainNearbyEvents").parent().addClass('hide');
 	} else if ($("#tryAgainNearbyEvents").length == 0) {
+		console.log('calling loadnear02');
 		loadNear()
 	}
-
-
-
 
 })
