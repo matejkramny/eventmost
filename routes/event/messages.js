@@ -25,6 +25,7 @@ function getComments (req, res) {
 }
 
 function likeComment (req, res) {
+	console.log('getting like request');
 	var cid = req.body.comment;
 	
 	try {
@@ -51,6 +52,7 @@ function likeComment (req, res) {
 			}
 			
 			if (found) {
+				console.log("found already like");
 				res.format({
 					html: function() {
 						res.redirect('/event/'+res.locals.ev._id);
@@ -63,10 +65,11 @@ function likeComment (req, res) {
 					}
 				})
 			} else {
+				console.log("saving like to db");
 				comment.likes.push(att._id);
 				comment.save();
 				
-				socket.notifyLike(res.locals.ev, comment, att)
+				//socket.notifyLike(res.locals.ev, comment, att)
 				
 				res.format({
 					html: function() {
