@@ -16,7 +16,7 @@ exports.display = function (req, res) {
 	};
 	var newEvs = [];
 	if(sort == 'recent'){
-		sort = '-start';
+		sort = {'start': -1};
 	}
 	
 	models.Event.find(query).limit(100).sort(sort).skip(skip).populate('avatar').exec(function(err, evs) {
