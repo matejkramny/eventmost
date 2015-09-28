@@ -3,8 +3,7 @@ extends ../responsive
 include inc/item
 
 append addonjs
-	if typeof findNear !== "undefined" && findNear
-		script(src="/js/angular-nearEvents.js?v=#{versionHash}" defer)
+	script(src="/js/angular-nearEvents.js?v=#{versionHash}" defer)
 
 block content
 	include inc/listnavbar
@@ -24,8 +23,8 @@ block content
 		mixin eventItem(event)
 	
 	if (events.length > 0)
-		- var pages = Math.ceil(eventsTotal / 10)
-		- var curpage = Math.ceil(eventsSkip / 10)
+		- var pages = Math.ceil(eventsTotal / 100)
+		- var curpage = Math.ceil(eventsSkip / 100)
 		- var start = curpage - 2;
 		- var end = curpage + 3;
 		if (start < 0)
@@ -39,7 +38,7 @@ block content
 						a(href=pageURL) «
 					- for (var i = start; i < end; i++)
 						li(class= curpage == i ? "active" : null)
-							a(href=pageURL+'?skip='+i*10)= i+1
+							a(href=pageURL+'?skip='+i*100)= i+1
 				
 					li
 						a(href=pageURL+'?skip='+((pages*10)-10)) »
