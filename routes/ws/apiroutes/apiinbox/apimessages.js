@@ -428,16 +428,14 @@ function deletetopicAPI(req,res){
     res.send(200);
 }
 
-function consolidatedAPI(req,res){
+function consolidatedAPI(req,res) {
     var userId = req.params.id;
     var query = {users: {$in: [userId]}};
 
-    var jsonTopicArray = [];
-    var jsonMainObject = {};
-    var jsonMainArray = [];
-    var consolidatedChats = [];
-    var eventIds = [];
-    var events;
+    var events = [];
+    var receivedBusinessCards = [];
+    var savedProfile = [];
+    var saverProfile = [];
     models.Attendee.find({ 'user': userId }, '_id', function(err, attendees) {
         var query = { 'attendees': { $in: attendees } };
 
@@ -447,84 +445,123 @@ function consolidatedAPI(req,res){
             .sort('-created')
             .exec(function(err, evs) {
                 if(err) throw err;
-                //jsonMainObject["events"] = evs;
-                evs.forEach(function(obj){
-                    //var obj1 = JSON.parse(obj);
-                    consolidatedChats = [];
-                    console.log("eventid: " + obj._id + " userId: " + userId);
-                    //obj = JSON.parse(JSON.stringify(obj));
-                    models.User.find({_id:userId,receivedCards:{$elemMatch:{eventid:obj._id}}})
-                        .populate('receivedCards.card receivedCards.from')
-                        .select('receivedCards.card receivedCards.from' )
-                        .exec(function(err, current_user){
-                            //console.log(current_user.receivedCards.length);
-                            console.log(current_user);
-                            //obj["consolidateChats"] = current_user;
-                        })
-                    //obj = JSON.stringify(obj1);
-                    jsonMainArray.push(obj);
-                })
-                /* jsonMainObject["events"] = jsonMainArray;
+                events = evs ;
 
-                 res.format({
-                 json: function () {
-                 res.send(jsonMainObject);
-                 }
-                 });*/
-            })
+                models.User.find({_id:userId})
+                    .populate('receivedCards.card receivedCards.from receivedCards.eventid')
+                    .select('receivedCards.card receivedCards.from receivedCards.eventid' )
+                    .exec(function(err, businessCard) {
+                        receivedBusinessCards = businessCard;
 
-
-    });
-    /*models.Topic.find(query)
-        .populate("users",'email')
-        .populate("eventid",'name')
-        .select('users eventid')
-        .exec(function (err, topics) {
-            jsonTopicArray.push(topics);
-            jsonMainObject["status"] = 200;
-            jsonMainObject["Topics"] = topics;
-
-            models.Attendee.find({ 'user': userId }, '_id', function(err, attendees) {
-                var query = { 'attendees': { $in: attendees } };
-
-                models.Event.find(query)
-                    .populate('attendees.user')
-                    .select('name start end address venue_name avatar source')
-                    .sort('-created')
-                    .exec(function(err, evs) {
-                        console.log("events: " + evs);
-                        if (err) throw err;
-                        if (evs) {
-                            jsonMainObject["Events"] = evs;
-                        }
-                        models.User.findOne({_id:userId} , function(err, current_user)
-                        {
-                            if(current_user){
-                                var query = {'_id': {$in: current_user.savedProfiles}};
-
-                                models.User.find(query)
-                                    .exec(function(err, savedprofiles) {
+                        models.User.findOne({_id: userId})
+                            .populate('savedProfiles._id')
+                            .exec(function (err, savedProfileUser) {
+                                if (savedProfileUser) {
+                                    var query = {'_id': {$in: savedProfileUser.savedProfiles}};
+                                    savedProfile = savedProfileUser.savedProfiles;
+                                }
+                                var saverQuery = {'savedProfiles._id': userId};
+                                models.User.find(saverQuery)
+                                    .exec(function(err, saverprofiles) {
                                         if (err) throw err;
-                                        if (savedprofiles) {
-                                            jsonMainObject["SavedProfiles"] = savedprofiles;
-                                        }
-                                        var query = {'savedProfiles._id': userId};
-                                        models.User.find(query)
-                                            .exec(function(err, savedprofiles) {
-                                                if (err) throw err;
-                                                if (savedprofiles) {
-                                                    jsonMainObject["SaverProfiles"] = savedprofiles;
-                                                }
-                                                res.format({
-                                                    json: function () {
-                                                        res.send(jsonMainObject);
-                                                    }
-                                                });
-                                            });
+                                        saverProfile = saverprofiles;
+                                        generateJSON(JSON.parse(JSON.stringify(events)),
+                                            JSON.parse(JSON.stringify(receivedBusinessCards)),
+                                            JSON.parse(JSON.stringify(savedProfile)),
+                                            JSON.parse(JSON.stringify(saverProfile)),req,res);
                                     });
-                            }
-                        });
+                            })
                     })
             })
-        })*/
+
+    });
 }
+
+var generateJSON = function (events,receivedBusinessCards,savedProfile,saverProfile,req,res) {
+    var jsonTopicArray = [];
+    var jsonMainObject = {};
+    var jsonEventArray = [];
+    var jsonEventObject = {};
+    var jsonConsolidatedChat = [];
+    var jsonConsolidatedCardObject = {};
+    var jsonConsolidatedSaverObject = {};
+    var jsonConsolidatedSavedProfileObject = {};
+    var jsonConsolidatedSaverProfileObject = {};
+
+    var eventIds = [];
+    for(var i=0;i<events.length;i++){
+        jsonConsolidatedCardObject = {};
+        jsonConsolidatedChat = [];
+        jsonConsolidatedSavedProfileObject = {};
+        jsonConsolidatedCardObject["card"] = [];
+        jsonConsolidatedCardObject["user"] = [];
+        jsonConsolidatedSaverProfileObject["user"] = [];
+        var cu = receivedBusinessCards[0];
+
+        if(cu.receivedCards.length == 0) {
+            jsonConsolidatedCardObject["type"] = 1;
+            jsonConsolidatedCardObject["lastActivity"] = cu.receivedCards[j].sent;
+            jsonConsolidatedCardObject["card"] = [];
+        } else {
+            for(var j=0;j<cu.receivedCards.length;j++) {
+
+                if(events[i]._id.toString() == cu.receivedCards[j].eventid._id.toString()) {
+                    jsonConsolidatedCardObject["type"] = 1;
+                    jsonConsolidatedCardObject["lastActivity"] = cu.receivedCards[j].sent;
+                    jsonConsolidatedCardObject["card"].push(cu.receivedCards[j].card);
+                    //jsonConsolidatedChat.push(jsonConsolidatedCardObject);
+                    //var obj = JSON.parse(JSON.stringify(events[i]));
+                    //obj["consolidatedChats"] = jsonConsolidatedChat;
+                    //jsonEventArray.push(obj);
+                    //console.log(obj);
+                }
+            }
+        }
+
+
+        if(savedProfile.length == 0) {
+            jsonConsolidatedCardObject["user"] = [];
+            jsonConsolidatedChat.push(jsonConsolidatedCardObject);
+        } else {
+            for(var k=0;k<savedProfile.length;k++) {
+                if(events[i]._id == savedProfile[k].eventid) {
+                    jsonConsolidatedCardObject["user"].push(savedProfile[k]);
+                    jsonConsolidatedChat.push(jsonConsolidatedCardObject);
+                    /*var obj = JSON.parse(JSON.stringify(events[i]));
+                     obj["consolidatedChats"] = jsonConsolidatedChat;
+                     jsonEventArray.push(obj);*/
+                }
+            }
+        }
+
+        if(saverProfile.length == 0) {
+            jsonConsolidatedSaverProfileObject["type"] = 2;
+            jsonConsolidatedSaverProfileObject["user"] = [];
+            jsonConsolidatedChat.push(jsonConsolidatedSaverProfileObject);
+            var obj = JSON.parse(JSON.stringify(events[i]));
+            obj["consolidatedChats"] = jsonConsolidatedChat;
+            jsonEventArray.push(obj);
+        } else {
+            for(var l=0;l<saverProfile.length;l++) {
+                if(events[i]._id == saverProfile[l].eventid) {
+                    jsonConsolidatedSaverProfileObject["type"] = 2;
+                    jsonConsolidatedSaverProfileObject["user"].push(savedProfile[k]);
+                    jsonConsolidatedChat.push(jsonConsolidatedSaverProfileObject);
+                    var obj = JSON.parse(JSON.stringify(events[i]));
+                    obj["consolidatedChats"] = jsonConsolidatedChat;
+                    jsonEventArray.push(obj);
+                }
+            }
+        }
+
+
+    }
+
+    jsonMainObject["events"] = jsonEventArray;
+
+    res.format({
+        json: function () {
+            res.send(jsonMainObject);
+        }
+    });
+};
