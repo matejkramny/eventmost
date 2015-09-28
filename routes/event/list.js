@@ -456,8 +456,6 @@ exports.listNearEvents = function (req, res) {
 						
 					}
 				}
-
-				console.log(events);
 				
 				// May slow the app down.. Mongoose does not seem to support sub-document population (event.avatar)
 				async.each(geos, function(geo, cb) {
