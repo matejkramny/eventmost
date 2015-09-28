@@ -3,6 +3,7 @@ var moment = require('moment')
 
 exports.display = function (req, res) {
 	var skip = req.query.skip || 0;
+	var sort = req.query.sort || 'start';
 	var firstDay = new Date();
 	var nextWeek = new Date(firstDay.getTime() + 7 * 24 * 60 * 60 * 1000);
 
@@ -14,8 +15,9 @@ exports.display = function (req, res) {
 		}
 	};
 	var newEvs = [];
+	console.log(sort);
 	
-	models.Event.find(query).limit(100).skip(skip).populate('avatar').sort('start').exec(function(err, evs) {
+	models.Event.find(query).limit(100).skip(skip).populate('avatar').sort(sort).exec(function(err, evs) {
 
 		//Cleaning up the description...
 		evs.forEach(function(entry) {
@@ -57,8 +59,7 @@ exports.display = function (req, res) {
 							myevents: newEvs || [],
 							myeventsTotal: total,
 							myeventsSkip: skip,
-							moment: moment,
-							totalnearEvents: 5
+							moment: moment
 						});
 					},
 					json: function() {
