@@ -15,7 +15,9 @@ exports.display = function (req, res) {
 		}
 	};
 	var newEvs = [];
-	console.log(sort);
+	if(sort == 'recent'){
+		sort = '-start';
+	}
 	
 	models.Event.find(query).limit(100).skip(skip).populate('avatar').sort(sort).exec(function(err, evs) {
 
