@@ -319,10 +319,6 @@ exports.listMyEvents = function (req, res) {
 	models.Attendee.find({ 'user': req.user._id }, '_id', function(err, attendees) {
 		var query = { 
 			'attendees': { $in: attendees },
-			description : { $exists: true },
-			start: {
-				$gte: new Date()
-			},
 			'source.meetup': false,
 			'source.facebook': false
 		 };
