@@ -22,6 +22,8 @@ exports.display = function (req, res) {
 	}else{
 		sort = {'start': 1};
 	}
+
+	console.log(sort);
 	
 	models.Event.find(query).sort(sort).limit(100).skip(skip).populate('avatar').exec(function(err, evs) {
 
