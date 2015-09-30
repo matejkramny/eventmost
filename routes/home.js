@@ -18,11 +18,11 @@ exports.display = function (req, res) {
 	var sortby = '';
 	if(sort == 'recent'){
 		//sortby = {start: -1};
-		sortby = {start: 'descending'};
+		sortby = {'start': -1};
 	}else if(sort == 'name'){
-		sortby = {name:1};
+		sortby = {'name':1};
 	}else{
-		sortby = {start:1};
+		sortby = {'start':1};
 	}
 
 	console.log(sortby);
