@@ -27,9 +27,10 @@ exports.display = function (req, res) {
 
 	console.log(sortby);
 	
-	models.Event.find(query).sort('-start').limit(100).skip(skip).populate('avatar').exec(function(err, evs) {
+	models.Event.find(query).sort(sortby).limit(100).skip(skip).populate('avatar').exec(function(err, evs) {
 
 		//Cleaning up the description...
+		console.log(evs);
 		evs.forEach(function(entry) {
 			entry.name = entry.name.replace(/(<([^>]+)>)/ig,"");
 
