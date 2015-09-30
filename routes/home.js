@@ -30,7 +30,7 @@ exports.display = function (req, res) {
 
 	console.log(sortby);
 	
-	models.Event.find(query).sort({'start': 'desc'}).limit(10).skip(skip).populate('avatar').exec(function(err, evs) {
+	models.Event.find(query).sort(sortby).limit(100).skip(skip).populate('avatar').exec(function(err, evs) {
 
 		//Cleaning up the description...
 		//console.log(evs);
