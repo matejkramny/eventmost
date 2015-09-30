@@ -27,15 +27,12 @@ exports.display = function (req, res) {
 	}else{
 		sortby = {'start':1};
 	}
-
-	console.log(sortby);
 	
 	models.Event.find(query).sort(sortby).limit(100).skip(skip).populate('avatar').exec(function(err, evs) {
 
 		//Cleaning up the description...
 		//console.log(evs);
 		evs.forEach(function(entry) {
-			console.log(entry);
 			entry.name = entry.name.replace(/(<([^>]+)>)/ig,"");
 
 			if((entry.source) && (entry.source.facebook == true || entry.source.meetup == true)){
@@ -54,12 +51,7 @@ exports.display = function (req, res) {
 					
 					newEvs.push(entry);
 				}
-			}
-
-			console.log('----------');
-			console.log(newEvs);
-
-			
+			}			
 		});
 		
 		models.Event.find(query).count(function(err, total) {
