@@ -17,14 +17,14 @@ exports.display = function (req, res) {
 	var newEvs = [];
 	var sortby = '';
 	if(sort == 'recent'){
-		sortby = '-start';
+		sortby = {'start':-1};
 	}else if(sort == 'name'){
-		sortby = 'name';
+		sortby = {'name':1};
 	}else{
-		sortby = 'start';
+		sortby = {'start':1};
 	}
 
-	console.log(sort);
+	console.log(sortby);
 	
 	models.Event.find(query).sort(sortby).limit(100).skip(skip).populate('avatar').exec(function(err, evs) {
 
