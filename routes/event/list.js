@@ -22,10 +22,14 @@ function loadsoonevents(req, res) {
 		deleted: false,
 		privateEvent: {
 			$ne: true
-		}
+		},
+		description : { $exists: true },
+		start: {
+			$gte: new Date()
+		},
+		'source.meetup': false,
+		'source.facebook': false
 	};
-	
-	query.start = { $gte: Date.now() };
 	
 	models.Event.find(query)
 		.populate('avatar attendees.user')
@@ -119,7 +123,12 @@ function loadnearevents(req, res) {
 			privateEvent: {
 				$ne: true
 			},
-			start: { $gte: Date.now() }
+			description : { $exists: true },
+			start: {
+				$gte: new Date()
+			},
+			'source.meetup': false,
+			'source.facebook': false
 		},
 	}).limit(limit)
 		.skip(limit * page)
@@ -197,7 +206,12 @@ function countnear(req, res){
 			privateEvent: {
 				$ne: true
 			},
-			start: { $gte: Date.now() }
+			description : { $exists: true },
+			start: {
+				$gte: new Date()
+			},
+			'source.meetup': false,
+			'source.facebook': false
 		}
 	}).exec(function(err, geos) {
 		if(geos){
@@ -239,9 +253,12 @@ exports.listEvents = function (req, res) {
 		privateEvent: {
 			$ne: true
 		},
+		description : { $exists: true },
 		start: {
 			$gte: new Date()
-		}
+		},
+		'source.meetup': false,
+		'source.facebook': false
 	};
 	
 	models.Event.find(query)
@@ -300,7 +317,15 @@ exports.listMyEvents = function (req, res) {
 	var skip = req.query.skip || 0;
 	
 	models.Attendee.find({ 'user': req.user._id }, '_id', function(err, attendees) {
-		var query = { 'attendees': { $in: attendees } };
+		var query = { 
+			'attendees': { $in: attendees },
+			description : { $exists: true },
+			start: {
+				$gte: new Date()
+			},
+			'source.meetup': false,
+			'source.facebook': false
+		 };
 		
 		models.Event.find(query)
 			.populate('avatar attendees.user')
@@ -419,7 +444,13 @@ exports.listNearEvents = function (req, res) {
 			deleted: false,
 			privateEvent: {
 				$ne: true
-			}
+			},
+			description : { $exists: true },
+			start: {
+				$gte: new Date()
+			},
+			'source.meetup': false,
+			'source.facebook': false
 		}
 	}).limit(limit)
 		.skip(limit * page)
@@ -528,9 +559,12 @@ exports.listNearLandingEvents = function (req, res) {
 					//name: new RegExp(q, 'i'),
 					//name: "Value in Healthcare Forum (ViHF): Hellish Decisions in Healthcare",
 					deleted: false,
+					description : { $exists: true },
 					start: {
 						$gte: new Date()
-					}
+					},
+					'source.meetup': false,
+					'source.facebook': false
 				};
 
 				/*
@@ -610,7 +644,12 @@ exports.listNearLandingEvents = function (req, res) {
 			/*privateEvent: {
 				$ne: true
 			},*/
-			start: { $gte: Date.now() }
+			description : { $exists: true },
+			start: {
+				$gte: new Date()
+			},
+			'source.meetup': false,
+			'source.facebook': false
 		},
 	}).limit(limit)
 		.skip(limit * page)
