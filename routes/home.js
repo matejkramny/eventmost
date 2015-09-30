@@ -27,7 +27,7 @@ exports.display = function (req, res) {
 
 	console.log(sortby);
 	
-	models.Event.find(query).limit(100).skip(skip).sort(sortby).populate('avatar').exec(function(err, evs) {
+	models.Event.find(query).sort('-start').limit(100).skip(skip).populate('avatar').exec(function(err, evs) {
 
 		//Cleaning up the description...
 		evs.forEach(function(entry) {
