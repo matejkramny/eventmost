@@ -13,7 +13,9 @@ exports.display = function (req, res) {
 		description : { $exists: true },
 		start: {
 			$gte: new Date()
-		}
+		},
+		source.meetup:false,
+		source.facebook:false
 	};
 	var newEvs = [];
 	var sortby = '';
