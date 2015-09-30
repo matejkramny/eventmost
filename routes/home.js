@@ -31,8 +31,9 @@ exports.display = function (req, res) {
 	models.Event.find(query).sort({'start': 'desc'}).limit(10).skip(skip).populate('avatar').exec(function(err, evs) {
 
 		//Cleaning up the description...
-		console.log(evs);
+		//console.log(evs);
 		evs.forEach(function(entry) {
+			console.log(entry);
 			entry.name = entry.name.replace(/(<([^>]+)>)/ig,"");
 
 			if((entry.source) && (entry.source.facebook == true || entry.source.meetup == true)){
