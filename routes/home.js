@@ -53,6 +53,9 @@ exports.display = function (req, res) {
 				}
 			}
 
+			console.log('----------');
+			console.log(newEvs);
+
 			
 		});
 		
