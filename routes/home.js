@@ -17,7 +17,8 @@ exports.display = function (req, res) {
 	var newEvs = [];
 	var sortby = '';
 	if(sort == 'recent'){
-		sortby = {start: 'desc'};
+		//sortby = {start: -1};
+		sortby = {start: 'descending'};
 	}else if(sort == 'name'){
 		sortby = {name:1};
 	}else{
