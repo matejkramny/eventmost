@@ -14,8 +14,8 @@ exports.display = function (req, res) {
 		start: {
 			$gte: new Date()
 		},
-		source.meetup:false,
-		source.facebook:false
+		'source.meetup': false,
+		'source.facebook': false
 	};
 	var newEvs = [];
 	var sortby = '';
