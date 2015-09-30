@@ -16,7 +16,11 @@ exports.display = function (req, res) {
 	};
 	var newEvs = [];
 	if(sort == 'recent'){
-		sort = {start: -1};
+		sort = {'start': -1};
+	}else if(sort == 'name'){
+		sort = {'name': 1};
+	}else{
+		sort = {'start': 1};
 	}
 	
 	models.Event.find(query).sort(sort).limit(100).skip(skip).populate('avatar').exec(function(err, evs) {
@@ -61,7 +65,8 @@ exports.display = function (req, res) {
 							myevents: newEvs || [],
 							myeventsTotal: total,
 							myeventsSkip: skip,
-							moment: moment
+							moment: moment,
+							sort: req.query.sort
 						});
 					},
 					json: function() {
@@ -69,7 +74,8 @@ exports.display = function (req, res) {
 							myeventsTotal: total,
 							myevents: newEvs || [],
 							title: "EventMost",
-							myeventsSkip: skip
+							myeventsSkip: skip,
+							sort: req.query.sort
 						})
 					}
 				});
