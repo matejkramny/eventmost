@@ -10,6 +10,7 @@ exports.display = function (req, res) {
 	var query = {
 		
 		deleted: false,
+		description : { $exists: true },
 		start: {
 			$gte: new Date()
 		}
