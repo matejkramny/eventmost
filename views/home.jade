@@ -204,14 +204,24 @@ append content
 		.nspacer
 			.pull-right(style='height:35px;')
 				ul.pagination
-					li
-						a(href='/') «
-					- for (var i = 0; i < pages; i++)
-						li(class= curpage == i ? "active" : null)
-							a(href='/?skip='+i*100)= i+1
-					
-					li
-						a(href='/?skip='+((pages*100)-100)) »
+					if(sort && sort != '')	
+						li
+							a(href='/?sort='+sort) «
+						- for (var i = 0; i < pages; i++)
+							li(class= curpage == i ? "active" : null)
+								a(href='/?sort='+sort+'&skip='+i*100)= i+1
+						
+						li
+							a(href='/?sort='+sort+'&skip='+((pages*100)-100)) »
+					else
+						li
+							a(href='/') «
+						- for (var i = 0; i < pages; i++)
+							li(class= curpage == i ? "active" : null)
+								a(href='/?skip='+i*100)= i+1
+						
+						li
+							a(href='/?skip='+((pages*100)-100)) »
 		.clearfix
 	
 	include modals/homemodals
