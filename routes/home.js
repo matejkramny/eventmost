@@ -15,17 +15,18 @@ exports.display = function (req, res) {
 		}
 	};
 	var newEvs = [];
+	var sortby = '';
 	if(sort == 'recent'){
-		sort = {'start': -1};
+		sortby = '-start';
 	}else if(sort == 'name'){
-		sort = {'name': 1};
+		sortby = 'name';
 	}else{
-		sort = {'start': 1};
+		sortby = 'start';
 	}
 
 	console.log(sort);
 	
-	models.Event.find({$query:query, $orderby:sort}).limit(100).skip(skip).populate('avatar').exec(function(err, evs) {
+	models.Event.find(query).sort(sortby).limit(100).skip(skip).populate('avatar').exec(function(err, evs) {
 
 		//Cleaning up the description...
 		evs.forEach(function(entry) {
