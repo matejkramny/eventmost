@@ -383,6 +383,17 @@ exports.newMessage = newMessage = function(topicID,message,userid, res){
 
 function showMessagesAPI(req, res) {
     var currentuser = req.body._id;
+    if(!currentuser){
+        res.format({
+                json: function () {
+                    res.send({
+                        status: 404,
+                        message: "User ID not sent: _id"
+                    })
+                }
+            });
+            return;
+    }
     var query = {users: {$in: [currentuser]}};
 
     // Fetch My Topics.
@@ -391,6 +402,29 @@ function showMessagesAPI(req, res) {
         .select('users lastUpdated eventid')
         .sort('lastUpdated')
         .exec(function (err, topics) {
+            
+            if(err){
+                res.format({
+                    json: function () {
+                        res.send({
+                            status: 404,
+                            message: err
+                        })
+                    }
+                });
+            }
+            
+            if(!topics){
+                res.format({
+                    json: function () {
+                        res.send({
+                            status: 404,
+                            message: "Unable to find any topic"
+                        })
+                    }
+                });    
+            }
+            
             res.format({
                 json: function () {
                     res.send({
