@@ -58,14 +58,14 @@ function newTopic(req, res) {
         return;
     }
 
-    models.User.findById( userid, function(err, userModel){
+    models.User.findById( req.body._id, function(err, userModel){
         if(err || !userModel){
             res.status(404).send({
             status: 404, message: "User ID " + _id + " Not Found"});
             return;
         }
             
-            models.User.findById( userid, function(err, userModel){
+            models.User.findById( req.body._to, function(err, userModel){
                 if(err || !userModel){
                     res.status(404).send({
                     status: 404, message: "User ID " + _id + " Not Found"});
