@@ -46,7 +46,7 @@ function getMessageAPI(req, res) {
 }
 
 function newTopic(req, res) {
-
+    
     if(!req.body || !req.body._id || !req.body._to || !req.body.eventid){
         res.status(404).send({
             status: 404, message: 'body item missing, either _id, _to or eventid'});
@@ -58,12 +58,22 @@ function newTopic(req, res) {
         return;
     }
 
-    if(req.body.eventid == null){
-        res.status(404).send("EventID is missing");
-        return;
-    }
-
-    checkNewTopic(req.body._id, req.body._to, res, req.body.eventid);
+    models.User.findById( userid, function(err, userModel){
+        if(err || !userModel){
+            res.status(404).send({
+            status: 404, message: "User ID " + _id + " Not Found"});
+            return;
+        }
+            
+            models.User.findById( userid, function(err, userModel){
+                if(err || !userModel){
+                    res.status(404).send({
+                    status: 404, message: "User ID " + _id + " Not Found"});
+                    return;
+                }
+                checkNewTopic(req.body._id, req.body._to, res, req.body.eventid);
+            })
+    })
 }
 
 exports.checkNewTopic = checkNewTopic = function (uid, to, res, eventtopic) {
