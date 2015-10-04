@@ -342,10 +342,13 @@ exports.newMessage = newMessage = function (topicID, message, userid, res) {
 
                 //Find if User ID is allowed or exists in Topic to post
                 var user;
+                var touser;
                 for (var i = 0; i < topic.users.length; i++) {
                     if (userid == topic.users[i]) {
                         user = topic.users[i];
                         break;
+                    } else {
+                        touser = topic.user[i];
                     }
                 }
                 if (!user) {
@@ -362,7 +365,7 @@ exports.newMessage = newMessage = function (topicID, message, userid, res) {
                     //model.User.
                     //user.mailboxUnread++;
                     models.User.findOneAndUpdate(
-                        { _id: user },
+                        { _id: touser },
                         { $inc: { mailboxUnread: 1 } },
                         { upsert: false },
                         function (err, message) {
