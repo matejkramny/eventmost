@@ -78,10 +78,11 @@ function newTopic(req, res) {
 
 exports.checkNewTopic = checkNewTopic = function (uid, to, res, eventtopic) {
     // Find if a topic exists between two.
-    var query = [
+    var query = { $and: 
+        [
         {users: {$all: [uid, to]}},
         {eventid: eventtopic}
-    ];
+    ] };
 
     // Fetch My Topics.
     models.Topic.find(query)
@@ -302,99 +303,99 @@ function doNewMessageAPI(req, res) {
         })
         return;
     }
-    newMessage(req.params.id, req.body._message, userid, res);
+    newMessage(req.params.id, req.body.message, userid, res);
 
 }
 
-exports.newMessage = newMessage = function(topicID,message,userid, res){
+exports.newMessage = newMessage = function (topicID, message, userid, res) {
 
-      models.User.findById( userid, function(err, userModel){
+    models.User.findById(userid, function (err, userModel) {
         console.log(userModel);
-        if(!userModel){
+        if (!userModel) {
             res.format({
+                json: function () {
+                    res.send({
+                        status: 404,
+                        message: "User does not exists or deleted"
+                    })
+                }
+            })
+            return;
+        }
+
+        models.Topic.findOne({ "_id": topicID })
+            .select('users lastUpdated eventid')
+            .exec(function (err, topic) {
+
+                //Find Topic
+                if (!topic) {
+                    res.format({
                         json: function () {
                             res.send({
                                 status: 404,
-                                message: "User does not exists or deleted"
+                                message: "Topic does not exist"
                             })
                         }
                     })
                     return;
-        }
-
-       models.Topic.findOne({"_id": topicID})
-       .select('users lastUpdated eventid')
-        .exec(function (err, topic) {
-
-            //Find Topic
-            if (!topic) {
-                res.format({
-                    json: function () {
-                        res.send({
-                            status: 404,
-                            message: "Topic does not exist"
-                        })
-                    }
-                })
-                return;
-            }
-
-            //Find if User ID is allowed or exists in Topic to post
-            var user;
-            for (var i = 0; i < topic.users.length; i++) {
-                if (userid == topic.users[i]) {
-                    user = topic.users[i];
-                    break;
                 }
-            }
-            if (!user) {
-                res.format({
-                    json: function () {
-                        res.send({
-                            status: 404,
-                            message: "Unautorized"
-                        })
+
+                //Find if User ID is allowed or exists in Topic to post
+                var user;
+                for (var i = 0; i < topic.users.length; i++) {
+                    if (userid == topic.users[i]) {
+                        user = topic.users[i];
+                        break;
                     }
+                }
+                if (!user) {
+                    res.format({
+                        json: function () {
+                            res.send({
+                                status: 404,
+                                message: "Unautorized"
+                            })
+                        }
+                    })
+                    return;
+                } else {
+                    //model.User.
+                    //user.mailboxUnread++;
+                    models.User.findOneAndUpdate(
+                        { _id: user },
+                        { $inc: { mailboxUnread: 1 } },
+                        { upsert: false },
+                        function (err, message) {
+                            console.log(message);
+                        });
+                    //user.save();
+                }
+
+                //Do the thing
+                var msg = new models.Message({
+                    topic: topicID,
+                    message: message,
+                    read: false,
+                    timeSent: Date.now(),
+                    sentBy: userid
                 })
-                return;
-            } else {
-                //model.User.
-                //user.mailboxUnread++;
-                models.User.findOneAndUpdate(
-                    {_id: user}, 
-                    { $inc: { mailboxUnread: 1 }}, 
-                    {upsert:false},
-                    function(err, message){
-                        console.log(message);
+
+                topic.lastUpdated = Date.now();
+                topic.save();
+
+                msg.save(function (err) {
+                    res.format({
+                        json: function () {
+                            res.send({
+                                status: 200,
+                                sent: true
+                            })
+                        }
                     });
-                //user.save();
-            }
-
-            //Do the thing
-            var msg = new models.Message({
-                topic: topicID,
-                message: message,
-                read: false,
-                timeSent: Date.now(),
-                sentBy: userid
-            })
-
-            topic.lastUpdated = Date.now();
-            topic.save();
-
-            msg.save(function (err) {
-                res.format({
-                    json: function () {
-                        res.send({
-                            status: 200,
-                            sent: true
-                        })
-                    }
                 });
+
+
             });
-
-
-        });
     });
 }
 
