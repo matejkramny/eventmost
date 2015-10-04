@@ -346,9 +346,9 @@ exports.newMessage = newMessage = function (topicID, message, userid, res) {
                 for (var i = 0; i < topic.users.length; i++) {
                     if (userid == topic.users[i]) {
                         user = topic.users[i];
-                        break;
-                    } else {
-                        touser = topic.user[i];
+                        
+                    }else {
+                        touser = topic.users[i];
                     }
                 }
                 if (!user) {
