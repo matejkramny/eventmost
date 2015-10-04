@@ -47,6 +47,11 @@ function getMessageAPI(req, res) {
 
 function newTopic(req, res) {
 
+    if(!req.body._id || !req.body._to || !req.body.eventid){
+        res.status(404).send({
+            status: 404, message: 'body item missing, either _id, _to or eventid'});
+    }
+    
     if (req.body._id == req.body._to) {
         res.status(404).send('To and From are same.');
         return;
