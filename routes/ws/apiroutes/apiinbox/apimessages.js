@@ -369,7 +369,11 @@ exports.newMessage = newMessage = function (topicID, message, userid, res) {
                         { $inc: { mailboxUnread: 1 } },
                         { upsert: false },
                         function (err, message) {
-                            console.log(message);
+                            //console.log(message);
+                            if(err){
+                                console.log(err);
+                            }
+                            
                         });
                     //user.save();
                 }
