@@ -50,6 +50,7 @@ function newTopic(req, res) {
     if(!req.body._id || !req.body._to || !req.body.eventid){
         res.status(404).send({
             status: 404, message: 'body item missing, either _id, _to or eventid'});
+            return;
     }
     
     if (req.body._id == req.body._to) {
@@ -59,6 +60,7 @@ function newTopic(req, res) {
 
     if(req.body.eventid == null){
         res.status(404).send("EventID is missing");
+        return;
     }
 
     checkNewTopic(req.body._id, req.body._to, res, req.body.eventid);
