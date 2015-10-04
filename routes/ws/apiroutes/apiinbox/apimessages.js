@@ -20,6 +20,11 @@ exports.router = function (app) {
 
 function getMessageAPI(req, res) {
     var id = req.params.id;
+    
+    if(!id){
+        res.send(404, {status: 404, message: "param id is missing"});
+    }
+    
     var query
     if (req.body.read == undefined) {
         query = {topic: req.params.id};
@@ -468,14 +473,14 @@ function readAPI(req,res){
     var query = {_id: messageid}
     models.Message.findOneAndUpdate(query, { $set: { read: true }}, {upsert:true},function(err, message){
         if(err) return res.send(500, {error: err})
-        return res.send(200)
+        return res.send(200, {status: 200})
     });
 }
 
 function deletemessageAPI(req,res){
     var query = {_id: req.params.id}
     models.Message.find(query).remove().exec();
-    res.send(200);
+    res.send(200, {status: 200});
 }
 
 function deletetopicAPI(req,res){
@@ -484,7 +489,7 @@ function deletetopicAPI(req,res){
 
     query = {topic: req.params.id}
     models.Message.find(query).remove().exec();
-    res.send(200);
+    res.send(200, {status: 200});
 }
 
 function consolidatedAPI(req,res) {
