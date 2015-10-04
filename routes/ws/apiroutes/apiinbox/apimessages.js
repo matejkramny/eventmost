@@ -487,6 +487,9 @@ function consolidatedAPI(req,res) {
     var receivedBusinessCards = [];
     var savedProfile = [];
     var saverProfile = [];
+    var topics = [];
+    var topicsArray = [];
+    var messages = [];
     models.Attendee.find({ 'user': userId }, '_id', function(err, attendees) {
         var query = { 'attendees': { $in: attendees } };
 
@@ -500,7 +503,7 @@ function consolidatedAPI(req,res) {
 
                 models.User.find({_id:userId})
                     .populate('receivedCards.card receivedCards.from receivedCards.eventid')
-                    .select('receivedCards.card receivedCards.from receivedCards.eventid' )
+                    .select('receivedCards.card receivedCards.from receivedCards.eventid receivedCards.sent' )
                     .exec(function(err, businessCard) {
                         receivedBusinessCards = businessCard;
 
@@ -516,11 +519,34 @@ function consolidatedAPI(req,res) {
                                     .exec(function(err, saverprofiles) {
                                         if (err) throw err;
                                         saverProfile = saverprofiles;
-                                        generateJSON(JSON.parse(JSON.stringify(events)),
-                                            JSON.parse(JSON.stringify(receivedBusinessCards)),
-                                            JSON.parse(JSON.stringify(savedProfile)),
-                                            JSON.parse(JSON.stringify(saverProfile)),req,res);
-                                    });
+                                        var query = [{users: {$all: [userId]}}];
+                                        models.Topic.find(query)
+                                            .populate('users')
+                                            .select('users lastUpdated eventid')
+                                            .sort('lastUpdated')
+                                            .exec(function (err, topicsUser) {
+                                                topics = topicsUser;
+                                                topicsUser.forEach(function(topic){
+                                                    topicsArray.push(topic._id);
+                                                });
+                                                var msgQuery;
+                                                msgQuery = {topic: {$in:topicsArray}};
+                                                models.Message.find(msgQuery)
+                                                    .populate({path: "sentBy", select: 'name'})
+                                                    .select('message timeSent sentBy topic')
+                                                    .sort({"timesent": 1})
+                                                    .exec(function (err, topicmessages) {
+                                                        messages = topicmessages;
+                                                        generateJSON(JSON.parse(JSON.stringify(events)),
+                                                            JSON.parse(JSON.stringify(receivedBusinessCards)),
+                                                            JSON.parse(JSON.stringify(savedProfile)),
+                                                            JSON.parse(JSON.stringify(saverProfile)),
+                                                            JSON.parse(JSON.stringify(topics)),
+                                                            JSON.parse(JSON.stringify(messages)),req, res, userId);
+                                                    })
+
+                                            })
+                                    })
                             })
                     })
             })
@@ -528,7 +554,7 @@ function consolidatedAPI(req,res) {
     });
 }
 
-var generateJSON = function (events,receivedBusinessCards,savedProfile,saverProfile,req,res) {
+var generateJSON = function (events,receivedBusinessCards,savedProfile,saverProfile,topics,messages,req,res,userId) {
     var jsonTopicArray = [];
     var jsonMainObject = {};
     var jsonEventArray = [];
@@ -538,20 +564,24 @@ var generateJSON = function (events,receivedBusinessCards,savedProfile,saverProf
     var jsonConsolidatedSaverObject = {};
     var jsonConsolidatedSavedProfileObject = {};
     var jsonConsolidatedSaverProfileObject = {};
-
+    var jsonConsolidatedMessageObject = {};
+    var flag = false;
     var eventIds = [];
     for(var i=0;i<events.length;i++){
         jsonConsolidatedCardObject = {};
         jsonConsolidatedChat = [];
         jsonConsolidatedSavedProfileObject = {};
+        jsonConsolidatedMessageObject = {};
         jsonConsolidatedCardObject["card"] = [];
         jsonConsolidatedCardObject["user"] = [];
         jsonConsolidatedSaverProfileObject["user"] = [];
+        jsonConsolidatedMessageObject["message"] = [];
+        jsonConsolidatedMessageObject["user"] = [];
         var cu = receivedBusinessCards[0];
 
         if(cu.receivedCards.length == 0) {
             jsonConsolidatedCardObject["type"] = 1;
-            jsonConsolidatedCardObject["lastActivity"] = cu.receivedCards[j].sent;
+            jsonConsolidatedCardObject["lastActivity"] = "";
             jsonConsolidatedCardObject["card"] = [];
         } else {
             for(var j=0;j<cu.receivedCards.length;j++) {
@@ -589,22 +619,76 @@ var generateJSON = function (events,receivedBusinessCards,savedProfile,saverProf
             jsonConsolidatedSaverProfileObject["type"] = 2;
             jsonConsolidatedSaverProfileObject["user"] = [];
             jsonConsolidatedChat.push(jsonConsolidatedSaverProfileObject);
-            var obj = JSON.parse(JSON.stringify(events[i]));
-            obj["consolidatedChats"] = jsonConsolidatedChat;
-            jsonEventArray.push(obj);
+            /*var obj = JSON.parse(JSON.stringify(events[i]));
+             obj["consolidatedChats"] = jsonConsolidatedChat;
+             jsonEventArray.push(obj);*/
         } else {
             for(var l=0;l<saverProfile.length;l++) {
                 if(events[i]._id == saverProfile[l].eventid) {
                     jsonConsolidatedSaverProfileObject["type"] = 2;
                     jsonConsolidatedSaverProfileObject["user"].push(savedProfile[k]);
                     jsonConsolidatedChat.push(jsonConsolidatedSaverProfileObject);
-                    var obj = JSON.parse(JSON.stringify(events[i]));
-                    obj["consolidatedChats"] = jsonConsolidatedChat;
-                    jsonEventArray.push(obj);
+                    /*var obj = JSON.parse(JSON.stringify(events[i]));
+                     obj["consolidatedChats"] = jsonConsolidatedChat;
+                     jsonEventArray.push(obj);*/
                 }
             }
         }
 
+        if(topics.length == 0) {
+            flag = false;
+        } else {
+            for(var m=0;m<topics.length;m++) {
+                if (events[i]._id == topics[m].eventid) {
+                    flag = true;
+                    jsonConsolidatedMessageObject["type"] = 3;
+                    jsonConsolidatedMessageObject["topicId"] = topics[m]._id;
+                    jsonConsolidatedMessageObject["lastActivity"] = topics[m].lastUpdated;
+                    if(messages.length == 0) {
+                        //flag = false;
+                        jsonConsolidatedMessageObject["message"];
+                        jsonConsolidatedChat.push(jsonConsolidatedMessageObject);
+                        var obj = JSON.parse(JSON.stringify(events[i]));
+                        obj["consolidatedChats"] = jsonConsolidatedChat;
+                        jsonEventArray.push(obj);
+                        flag = true;
+                    } else {
+                        for(var n=0;n<messages.length;n++) {
+                            if(topics[m]._id == messages[n].topic) {
+                                jsonConsolidatedMessageObject["message"].push(messages[n]);
+                            }
+                        }
+
+                        for(var o=0;o<topics[m].users.length;o++) {
+                            if(topics[m].users[o]._id != userId) {
+                                jsonConsolidatedMessageObject["user"] = topics[m].users[o];
+                            }
+                        }
+
+                        jsonConsolidatedChat.push(jsonConsolidatedMessageObject);
+                        var obj = JSON.parse(JSON.stringify(events[i]));
+                        obj["consolidatedChats"] = jsonConsolidatedChat;
+                        jsonEventArray.push(obj);
+                        flag = true;
+                    }
+
+                } else {
+                    flag = false;
+                }
+            }
+        }
+
+
+        if(flag == false) {
+            jsonConsolidatedMessageObject["type"] = 3;
+            jsonConsolidatedMessageObject["topicId"] = "";
+            jsonConsolidatedMessageObject["lastActivity"] = "";
+            jsonConsolidatedMessageObject["message"];
+            jsonConsolidatedChat.push(jsonConsolidatedMessageObject);
+            var obj = JSON.parse(JSON.stringify(events[i]));
+            obj["consolidatedChats"] = jsonConsolidatedChat;
+            jsonEventArray.push(obj);
+        }
 
     }
 
