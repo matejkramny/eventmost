@@ -892,7 +892,7 @@ function makeAdmin(req,res){
 	try{
 		query = {"_id": req.params.attendee}
 
-		models.Attendee.findOneAndUpdate(query, { $set: { admin: true }}, {upsert:true},function(err, message){
+		models.Attendee.findOneAndUpdate(query, { $set: { admin: true }}, {upsert:false},function(err, message){
 			if(err) return res.send(500, {error: err})
 			return res.send({ status: 200} )
 		});
@@ -905,7 +905,7 @@ function removeAdmin(req,res){
 	try{
 		query = {"_id": req.params.attendee}
 
-		models.Attendee.findOneAndUpdate(query, { $set: { admin: false }}, {upsert:true},function(err, message){
+		models.Attendee.findOneAndUpdate(query, { $set: { admin: false }}, {upsert:false},function(err, message){
 			if(err) return res.send(500, {error: err})
 			return res.send({ status: 200})
 		});

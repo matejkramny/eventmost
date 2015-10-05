@@ -20,6 +20,11 @@ exports.router = function (app) {
 
 function getMessageAPI(req, res) {
     var id = req.params.id;
+    
+    if(!id){
+        res.send(404, {status: 404, message: "param id is missing"});
+    }
+    
     var query
     if (req.body.read == undefined) {
         query = {topic: req.params.id};
@@ -46,25 +51,43 @@ function getMessageAPI(req, res) {
 }
 
 function newTopic(req, res) {
-
+    
+    if(!req.body || !req.body._id || !req.body._to || !req.body.eventid){
+        res.status(404).send({
+            status: 404, message: 'body item missing, either _id, _to or eventid'});
+            return;
+    }
+    
     if (req.body._id == req.body._to) {
         res.status(404).send('To and From are same.');
         return;
     }
 
-    if(req.body.eventid == null){
-        res.status(404).send("EventID is missing");
-    }
-
-    checkNewTopic(req.body._id, req.body._to, res, req.body.eventid);
+    models.User.findById( req.body._id, function(err, userModel){
+        if(err || !userModel){
+            res.status(404).send({
+            status: 404, message: "User ID " + req.body._id + " Not Found"});
+            return;
+        }
+            
+            models.User.findById( req.body._to, function(err, userModel){
+                if(err || !userModel){
+                    res.status(404).send({
+                    status: 404, message: "User ID " + req.body._to + " Not Found"});
+                    return;
+                }
+                checkNewTopic(req.body._id, req.body._to, res, req.body.eventid);
+            })
+    })
 }
 
 exports.checkNewTopic = checkNewTopic = function (uid, to, res, eventtopic) {
     // Find if a topic exists between two.
-    var query = [
+    var query = { $and: 
+        [
         {users: {$all: [uid, to]}},
         {eventid: eventtopic}
-    ];
+    ] };
 
     // Fetch My Topics.
     models.Topic.find(query)
@@ -285,83 +308,122 @@ function doNewMessageAPI(req, res) {
         })
         return;
     }
-    newMessage(req.params.id, req.body._message, userid, res);
+    newMessage(req.params.id, req.body.message, userid, res);
 
 }
 
-exports.newMessage = newMessage = function(topicID,message,userid, res){
+exports.newMessage = newMessage = function (topicID, message, userid, res) {
 
-    models.Topic.findOne({"_id": topicID})
-        .populate("users")
-        .exec(function (err, topic) {
-
-            //Find Topic
-            if (!topic) {
-                res.format({
-                    json: function () {
-                        res.send({
-                            status: 404,
-                            message: "Topic does not exist"
-                        })
-                    }
-                })
-                return;
-            }
-
-            //Find if User ID is allowed or exists in Topic to post
-            var user;
-            for (var i = 0; i < topic.users.length; i++) {
-                if (userid == topic.users[i]._id) {
-                    user = topic.users[i];
-                    break;
+    models.User.findById(userid, function (err, userModel) {
+        console.log(userModel);
+        if (!userModel) {
+            res.format({
+                json: function () {
+                    res.send({
+                        status: 404,
+                        message: "User does not exists or deleted"
+                    })
                 }
-            }
-            if (!user) {
-                res.format({
-                    json: function () {
-                        res.send({
-                            status: 404,
-                            message: "Unautorized"
-                        })
-                    }
-                })
-                return;
-            } else {
-                user.mailboxUnread++;
-                user.save();
-            }
-
-            //Do the thing
-            var msg = new models.Message({
-                topic: topicID,
-                message: message,
-                read: false,
-                timeSent: Date.now(),
-                sentBy: userid
             })
+            return;
+        }
 
-            topic.lastUpdated = Date.now();
-            topic.save();
+        models.Topic.findOne({ "_id": topicID })
+            .select('users lastUpdated eventid')
+            .exec(function (err, topic) {
 
-            msg.save(function (err) {
-                res.format({
-                    json: function () {
-                        res.send({
-                            status: 200,
-                            sent: true
-                        })
+                //Find Topic
+                if (!topic) {
+                    res.format({
+                        json: function () {
+                            res.send({
+                                status: 404,
+                                message: "Topic does not exist"
+                            })
+                        }
+                    })
+                    return;
+                }
+
+                //Find if User ID is allowed or exists in Topic to post
+                var user;
+                var touser;
+                for (var i = 0; i < topic.users.length; i++) {
+                    if (userid == topic.users[i]) {
+                        user = topic.users[i];
+                        
+                    }else {
+                        touser = topic.users[i];
                     }
+                }
+                if (!user) {
+                    res.format({
+                        json: function () {
+                            res.send({
+                                status: 404,
+                                message: "Unautorized"
+                            })
+                        }
+                    })
+                    return;
+                } else {
+                    //model.User.
+                    //user.mailboxUnread++;
+                    models.User.findOneAndUpdate(
+                        { _id: touser },
+                        { $inc: { mailboxUnread: 1 } },
+                        { upsert: false },
+                        function (err, message) {
+                            //console.log(message);
+                            if(err){
+                                console.log(err);
+                            }
+                            
+                        });
+                    //user.save();
+                }
+
+                //Do the thing
+                var msg = new models.Message({
+                    topic: topicID,
+                    message: message,
+                    read: false,
+                    timeSent: Date.now(),
+                    sentBy: userid
+                })
+
+                topic.lastUpdated = Date.now();
+                topic.save();
+
+                msg.save(function (err) {
+                    res.format({
+                        json: function () {
+                            res.send({
+                                status: 200,
+                                sent: true
+                            })
+                        }
+                    });
                 });
+
+
             });
-
-
-        });
-
-
+    });
 }
 
 function showMessagesAPI(req, res) {
     var currentuser = req.body._id;
+    if(!currentuser){
+        res.format({
+                json: function () {
+                    res.send({
+                        status: 404,
+                        message: "User ID not sent: _id"
+                    })
+                }
+            });
+            return;
+    }
     var query = {users: {$in: [currentuser]}};
 
     // Fetch My Topics.
@@ -370,6 +432,29 @@ function showMessagesAPI(req, res) {
         .select('users lastUpdated eventid')
         .sort('lastUpdated')
         .exec(function (err, topics) {
+            
+            if(err){
+                res.format({
+                    json: function () {
+                        res.send({
+                            status: 404,
+                            message: err
+                        })
+                    }
+                });
+            }
+            
+            if(!topics){
+                res.format({
+                    json: function () {
+                        res.send({
+                            status: 404,
+                            message: "Unable to find any topic"
+                        })
+                    }
+                });    
+            }
+            
             res.format({
                 json: function () {
                     res.send({
@@ -388,14 +473,14 @@ function readAPI(req,res){
     var query = {_id: messageid}
     models.Message.findOneAndUpdate(query, { $set: { read: true }}, {upsert:true},function(err, message){
         if(err) return res.send(500, {error: err})
-        return res.send(200)
+        return res.send(200, {status: 200})
     });
 }
 
 function deletemessageAPI(req,res){
     var query = {_id: req.params.id}
     models.Message.find(query).remove().exec();
-    res.send(200);
+    res.send(200, {status: 200});
 }
 
 function deletetopicAPI(req,res){
@@ -404,65 +489,227 @@ function deletetopicAPI(req,res){
 
     query = {topic: req.params.id}
     models.Message.find(query).remove().exec();
-    res.send(200);
+    res.send(200, {status: 200});
 }
 
-function consolidatedAPI(req,res){
+function consolidatedAPI(req,res) {
     var userId = req.params.id;
     var query = {users: {$in: [userId]}};
 
-    var jsonTopicArray = [];
-    var jsonMainObject = {};
-    models.Topic.find(query)
-        .populate("users",'email')
-        .populate("eventid",'name')
-        .select('users eventid')
-        .exec(function (err, topics) {
-            jsonTopicArray.push(topics);
-            jsonMainObject["status"] = 200;
-            jsonMainObject["Topics"] = topics;
+    var events = [];
+    var receivedBusinessCards = [];
+    var savedProfile = [];
+    var saverProfile = [];
+    var topics = [];
+    var topicsArray = [];
+    var messages = [];
+    models.Attendee.find({ 'user': userId }, '_id', function(err, attendees) {
+        var query = { 'attendees': { $in: attendees } };
 
-            models.Attendee.find({ 'user': userId }, '_id', function(err, attendees) {
-                var query = { 'attendees': { $in: attendees } };
+        models.Event.find(query)
+            .populate('attendees.user')
+            .select('name start end address venue_name avatar source description avatar')
+            .sort('-created')
+            .exec(function(err, evs) {
+                if(err) throw err;
+                events = evs ;
 
-                models.Event.find(query)
-                    .populate('attendees.user')
-                    .select('name start end address venue_name avatar source')
-                    .sort('-created')
-                    .exec(function(err, evs) {
-                        console.log("events: " + evs);
-                        if (err) throw err;
-                        if (evs) {
-                            jsonMainObject["Events"] = evs;
-                        }
-                        models.User.findOne({_id:userId} , function(err, current_user)
-                        {
-                            if(current_user){
-                                var query = {'_id': {$in: current_user.savedProfiles}};
+                models.User.find({_id:userId})
+                    .populate('receivedCards.card receivedCards.from receivedCards.eventid')
+                    .select('receivedCards.card receivedCards.from receivedCards.eventid receivedCards.sent' )
+                    .exec(function(err, businessCard) {
+                        receivedBusinessCards = businessCard;
 
-                                models.User.find(query)
-                                    .exec(function(err, savedprofiles) {
+                        models.User.findOne({_id: userId})
+                            .populate('savedProfiles._id')
+                            .exec(function (err, savedProfileUser) {
+                                if (savedProfileUser) {
+                                    var query = {'_id': {$in: savedProfileUser.savedProfiles}};
+                                    savedProfile = savedProfileUser.savedProfiles;
+                                }
+                                var saverQuery = {'savedProfiles._id': userId};
+                                models.User.find(saverQuery)
+                                    .exec(function(err, saverprofiles) {
                                         if (err) throw err;
-                                        if (savedprofiles) {
-                                            jsonMainObject["SavedProfiles"] = savedprofiles;
-                                        }
-                                        var query = {'savedProfiles._id': userId};
-                                        models.User.find(query)
-                                            .exec(function(err, savedprofiles) {
-                                                if (err) throw err;
-                                                if (savedprofiles) {
-                                                    jsonMainObject["SaverProfiles"] = savedprofiles;
-                                                }
-                                                res.format({
-                                                    json: function () {
-                                                        res.send(jsonMainObject);
-                                                    }
+                                        saverProfile = saverprofiles;
+                                        var query = [{users: {$all: [userId]}}];
+                                        models.Topic.find(query)
+                                            .populate('users')
+                                            .select('users lastUpdated eventid')
+                                            .sort('lastUpdated')
+                                            .exec(function (err, topicsUser) {
+                                                topics = topicsUser;
+                                                topicsUser.forEach(function(topic){
+                                                    topicsArray.push(topic._id);
                                                 });
-                                            });
-                                    });
-                            }
-                        });
+                                                var msgQuery;
+                                                msgQuery = {topic: {$in:topicsArray}};
+                                                models.Message.find(msgQuery)
+                                                    .populate({path: "sentBy", select: 'name'})
+                                                    .select('message timeSent sentBy topic')
+                                                    .sort({"timesent": 1})
+                                                    .exec(function (err, topicmessages) {
+                                                        messages = topicmessages;
+                                                        generateJSON(JSON.parse(JSON.stringify(events)),
+                                                            JSON.parse(JSON.stringify(receivedBusinessCards)),
+                                                            JSON.parse(JSON.stringify(savedProfile)),
+                                                            JSON.parse(JSON.stringify(saverProfile)),
+                                                            JSON.parse(JSON.stringify(topics)),
+                                                            JSON.parse(JSON.stringify(messages)),req, res, userId);
+                                                    })
+
+                                            })
+                                    })
+                            })
                     })
             })
-        })
+
+    });
 }
+
+var generateJSON = function (events,receivedBusinessCards,savedProfile,saverProfile,topics,messages,req,res,userId) {
+    var jsonTopicArray = [];
+    var jsonMainObject = {};
+    var jsonEventArray = [];
+    var jsonEventObject = {};
+    var jsonConsolidatedChat = [];
+    var jsonConsolidatedCardObject = {};
+    var jsonConsolidatedSaverObject = {};
+    var jsonConsolidatedSavedProfileObject = {};
+    var jsonConsolidatedSaverProfileObject = {};
+    var jsonConsolidatedMessageObject = {};
+    var flag = false;
+    var eventIds = [];
+    for(var i=0;i<events.length;i++){
+        jsonConsolidatedCardObject = {};
+        jsonConsolidatedChat = [];
+        jsonConsolidatedSavedProfileObject = {};
+        jsonConsolidatedMessageObject = {};
+        jsonConsolidatedCardObject["card"] = [];
+        jsonConsolidatedCardObject["user"] = [];
+        jsonConsolidatedSaverProfileObject["user"] = [];
+        jsonConsolidatedMessageObject["message"] = [];
+        jsonConsolidatedMessageObject["user"] = [];
+        var cu = receivedBusinessCards[0];
+
+        if(cu.receivedCards.length == 0) {
+            jsonConsolidatedCardObject["type"] = 1;
+            jsonConsolidatedCardObject["lastActivity"] = "";
+            jsonConsolidatedCardObject["card"] = [];
+        } else {
+            for(var j=0;j<cu.receivedCards.length;j++) {
+
+                if(events[i]._id.toString() == cu.receivedCards[j].eventid._id.toString()) {
+                    jsonConsolidatedCardObject["type"] = 1;
+                    jsonConsolidatedCardObject["lastActivity"] = cu.receivedCards[j].sent;
+                    jsonConsolidatedCardObject["card"].push(cu.receivedCards[j].card);
+                    //jsonConsolidatedChat.push(jsonConsolidatedCardObject);
+                    //var obj = JSON.parse(JSON.stringify(events[i]));
+                    //obj["consolidatedChats"] = jsonConsolidatedChat;
+                    //jsonEventArray.push(obj);
+                    //console.log(obj);
+                }
+            }
+        }
+
+
+        if(savedProfile.length == 0) {
+            jsonConsolidatedCardObject["user"] = [];
+            jsonConsolidatedChat.push(jsonConsolidatedCardObject);
+        } else {
+            for(var k=0;k<savedProfile.length;k++) {
+                if(events[i]._id == savedProfile[k].eventid) {
+                    jsonConsolidatedCardObject["user"].push(savedProfile[k]);
+                    jsonConsolidatedChat.push(jsonConsolidatedCardObject);
+                    /*var obj = JSON.parse(JSON.stringify(events[i]));
+                     obj["consolidatedChats"] = jsonConsolidatedChat;
+                     jsonEventArray.push(obj);*/
+                }
+            }
+        }
+
+        if(saverProfile.length == 0) {
+            jsonConsolidatedSaverProfileObject["type"] = 2;
+            jsonConsolidatedSaverProfileObject["user"] = [];
+            jsonConsolidatedChat.push(jsonConsolidatedSaverProfileObject);
+            /*var obj = JSON.parse(JSON.stringify(events[i]));
+             obj["consolidatedChats"] = jsonConsolidatedChat;
+             jsonEventArray.push(obj);*/
+        } else {
+            for(var l=0;l<saverProfile.length;l++) {
+                if(events[i]._id == saverProfile[l].eventid) {
+                    jsonConsolidatedSaverProfileObject["type"] = 2;
+                    jsonConsolidatedSaverProfileObject["user"].push(savedProfile[k]);
+                    jsonConsolidatedChat.push(jsonConsolidatedSaverProfileObject);
+                    /*var obj = JSON.parse(JSON.stringify(events[i]));
+                     obj["consolidatedChats"] = jsonConsolidatedChat;
+                     jsonEventArray.push(obj);*/
+                }
+            }
+        }
+
+        if(topics.length == 0) {
+            flag = false;
+        } else {
+            for(var m=0;m<topics.length;m++) {
+                if (events[i]._id == topics[m].eventid) {
+                    flag = true;
+                    jsonConsolidatedMessageObject["type"] = 3;
+                    jsonConsolidatedMessageObject["topicId"] = topics[m]._id;
+                    jsonConsolidatedMessageObject["lastActivity"] = topics[m].lastUpdated;
+                    if(messages.length == 0) {
+                        //flag = false;
+                        jsonConsolidatedMessageObject["message"];
+                        jsonConsolidatedChat.push(jsonConsolidatedMessageObject);
+                        var obj = JSON.parse(JSON.stringify(events[i]));
+                        obj["consolidatedChats"] = jsonConsolidatedChat;
+                        jsonEventArray.push(obj);
+                        flag = true;
+                    } else {
+                        for(var n=0;n<messages.length;n++) {
+                            if(topics[m]._id == messages[n].topic) {
+                                jsonConsolidatedMessageObject["message"].push(messages[n]);
+                            }
+                        }
+
+                        for(var o=0;o<topics[m].users.length;o++) {
+                            if(topics[m].users[o]._id != userId) {
+                                jsonConsolidatedMessageObject["user"] = topics[m].users[o];
+                            }
+                        }
+
+                        jsonConsolidatedChat.push(jsonConsolidatedMessageObject);
+                        var obj = JSON.parse(JSON.stringify(events[i]));
+                        obj["consolidatedChats"] = jsonConsolidatedChat;
+                        jsonEventArray.push(obj);
+                        flag = true;
+                    }
+
+                } else {
+                    flag = false;
+                }
+            }
+        }
+
+
+        if(flag == false) {
+            jsonConsolidatedMessageObject["type"] = 3;
+            jsonConsolidatedMessageObject["topicId"] = "";
+            jsonConsolidatedMessageObject["lastActivity"] = "";
+            jsonConsolidatedMessageObject["message"];
+            jsonConsolidatedChat.push(jsonConsolidatedMessageObject);
+            var obj = JSON.parse(JSON.stringify(events[i]));
+            obj["consolidatedChats"] = jsonConsolidatedChat;
+            jsonEventArray.push(obj);
+        }
+
+    }
+
+    jsonMainObject["events"] = jsonEventArray;
+
+    res.format({
+        json: function () {
+            res.send(jsonMainObject);
+        }
+    });
+};
