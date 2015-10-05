@@ -3,6 +3,7 @@ var models = require('../../models')
 	, socket = require('./socket')
 	, inbox = require('../inbox/index')
 	, async = require('async')
+	, mongoose = require('mongoose')
 
 exports.router = function (app) {
 	app.get('/event/:id/comments', getComments)
@@ -99,6 +100,7 @@ function likeComment (req, res) {
 function postComment (req, res) {
 	var message = req.body.message;
 	var inResponse = req.body.inResponse || "";
+	console.log(inResponse);
 	
 	if (!message) {
 		res.format({
@@ -122,6 +124,7 @@ function postComment (req, res) {
 	}
 	
 	if (inResponse != null) {
+		console.log("handling response...");
 		console.log(req.body)
 		models.EventMessage.findById(inResponse, function(err, msg) {
 			if (err || !msg) {
@@ -150,7 +153,7 @@ function postComment (req, res) {
 			message.save();
 			msg.save();
 			
-			socket.notifyComment(res.locals.ev, {
+			/*socket.notifyComment(res.locals.ev, {
 				_id: message._id,
 				attendee: {
 					user: {
@@ -191,7 +194,7 @@ function postComment (req, res) {
 						inbox.emailEventNotification(u, res.locals.ev, "event/"+res.locals.ev._id, messagePartial);
 					}
 				})
-			})
+			})*/
 			
 			res.format({
 				html: function() {
@@ -217,7 +220,7 @@ function postComment (req, res) {
 			ev.save()
 		});
 		
-		socket.notifyComment(res.locals.ev, {
+		/*socket.notifyComment(res.locals.ev, {
 			_id: msg._id,
 			attendee: {
 				user: {
@@ -255,7 +258,7 @@ function postComment (req, res) {
 					inbox.emailEventNotification(u, res.locals.ev, "event/"+res.locals.ev._id, messagePartial);
 				}
 			})
-		})
+		})*/
 		
 		res.format({
 			html: function() {
