@@ -46,7 +46,7 @@ block content
 				.clearfix
 			
 			//- other comments
-			div(ng-repeat="comment in comments | limitTo:commentLimit")
+			div(ng-repeat="comment in comments | limitTo:commentLimit", style="background: #dbeaf9 none repeat; scroll 0 0; float: left; margin-bottom: 5px; margin-top: 5px; margin-left: 16px; padding: 10px; width: 97%; box-shadow: 0 0 2px 2px #ccc;")
 				.nspacer
 				.underpost.pull-right.break
 					.pull-left(style="overflow:hidden; border-radius:30px; -webkit-border-radius: 30px; -moz-border-radius:30px;width:60px;height:60px;border:0px solid #542437;")
@@ -88,7 +88,8 @@ block content
 					.pull-right(ng-show="user == comment.attendee.user._id")
 						//- button only visible for creator and planner
 						button.btn.btn-primary.font14.pull-right.nspacer(type='submit', style="border-radius: 10px; padding:7px; padding-left:12px; padding-right:12px;")
-							a.link-white(href ng-click="deleteComment(comment)") delete
+							a.link-white(href ng-click="deleteComment(comment)")
+								span.glyphicon.glyphicon-trash
 				.clearfix
 
 				div(ng-repeat="subcomment in comment.comments")
@@ -122,7 +123,8 @@ block content
 						.pull-right(ng-show="user == subcomment.attendee.user._id")
 							//- button only visible for creator and planner
 							button.btn.btn-primary.font14.pull-right.nspacer(type='submit', style="border-radius: 10px; padding:7px; padding-left:12px; padding-right:12px;")
-								a.link-white(href ng-click="deleteComment(subcomment, comment)") delete
+								a.link-white(href ng-click="deleteComment(subcomment, comment)") 
+									span.glyphicon.glyphicon-trash
 					.clearfix
 				
 			
@@ -138,8 +140,9 @@ block content
 					.pull-left.pad-left-ten.width85.width85posts
 						.font14.font14sm.break.nspacer-small
 							input.search-input.width100.psev(type"text" placeholder="Write a reply..." ng-model="text" comment-form comment="comment")
-						button.btn.btn-default.font14.pull-right.nspacer(submit-comment style="border-radius: 10px; padding:7px; padding-left:12px; padding-right:12px;")
-							| Submit
+						//-
+							button.btn.btn-default.font14.pull-right.nspacer(submit-comment style="border-radius: 10px; padding:7px; padding-left:12px; padding-right:12px;")
+								| Submit
 					.clearfix
 		
 		.clearfix
