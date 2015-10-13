@@ -616,7 +616,7 @@ var generateJSON = function (events,receivedBusinessCards,savedProfile,saverProf
             for(var l=0;l<saverProfile.length;l++) {
                 if(events[i]._id == saverProfile[l].eventid) {
                     jsonConsolidatedSaverProfileObject["type"] = 2;
-                    jsonConsolidatedSaverProfileObject["user"].push(savedProfile[k]);
+                    jsonConsolidatedSaverProfileObject["user"].push(saverProfile[l]);
                     jsonConsolidatedChat.push(jsonConsolidatedSaverProfileObject);
                     /*var obj = JSON.parse(JSON.stringify(events[i]));
                      obj["consolidatedChats"] = jsonConsolidatedChat;
@@ -682,6 +682,7 @@ var generateJSON = function (events,receivedBusinessCards,savedProfile,saverProf
 
     }
 
+    jsonMainObject["status"] = 200;
     jsonMainObject["events"] = jsonEventArray;
 
     res.format({
