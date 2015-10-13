@@ -20,6 +20,11 @@ exports.router = function (app) {
 
 function getMessageAPI(req, res) {
     var id = req.params.id;
+    
+    if(!id){
+        res.send(404, {status: 404, message: "param id is missing"});
+    }
+    
     var query
     if (req.body.read == undefined) {
         query = {topic: req.params.id};
@@ -46,7 +51,7 @@ function getMessageAPI(req, res) {
 }
 
 function newTopic(req, res) {
-
+    
     if(!req.body || !req.body._id || !req.body._to || !req.body.eventid){
         res.status(404).send({
             status: 404, message: 'body item missing, either _id, _to or eventid'});
@@ -58,20 +63,31 @@ function newTopic(req, res) {
         return;
     }
 
-    if(req.body.eventid == null){
-        res.status(404).send("EventID is missing");
-        return;
-    }
-
-    checkNewTopic(req.body._id, req.body._to, res, req.body.eventid);
+    models.User.findById( req.body._id, function(err, userModel){
+        if(err || !userModel){
+            res.status(404).send({
+            status: 404, message: "User ID " + req.body._id + " Not Found"});
+            return;
+        }
+            
+            models.User.findById( req.body._to, function(err, userModel){
+                if(err || !userModel){
+                    res.status(404).send({
+                    status: 404, message: "User ID " + req.body._to + " Not Found"});
+                    return;
+                }
+                checkNewTopic(req.body._id, req.body._to, res, req.body.eventid);
+            })
+    })
 }
 
 exports.checkNewTopic = checkNewTopic = function (uid, to, res, eventtopic) {
     // Find if a topic exists between two.
-    var query = [
+    var query = { $and: 
+        [
         {users: {$all: [uid, to]}},
         {eventid: eventtopic}
-    ];
+    ] };
 
     // Fetch My Topics.
     models.Topic.find(query)
@@ -292,99 +308,106 @@ function doNewMessageAPI(req, res) {
         })
         return;
     }
-    newMessage(req.params.id, req.body._message, userid, res);
+    newMessage(req.params.id, req.body.message, userid, res);
 
 }
 
-exports.newMessage = newMessage = function(topicID,message,userid, res){
+exports.newMessage = newMessage = function (topicID, message, userid, res) {
 
-      models.User.findById( userid, function(err, userModel){
+    models.User.findById(userid, function (err, userModel) {
         console.log(userModel);
-        if(!userModel){
+        if (!userModel) {
             res.format({
+                json: function () {
+                    res.send({
+                        status: 404,
+                        message: "User does not exists or deleted"
+                    })
+                }
+            })
+            return;
+        }
+
+        models.Topic.findOne({ "_id": topicID })
+            .select('users lastUpdated eventid')
+            .exec(function (err, topic) {
+
+                //Find Topic
+                if (!topic) {
+                    res.format({
                         json: function () {
                             res.send({
                                 status: 404,
-                                message: "User does not exists or deleted"
+                                message: "Topic does not exist"
                             })
                         }
                     })
                     return;
-        }
-
-       models.Topic.findOne({"_id": topicID})
-       .select('users lastUpdated eventid')
-        .exec(function (err, topic) {
-
-            //Find Topic
-            if (!topic) {
-                res.format({
-                    json: function () {
-                        res.send({
-                            status: 404,
-                            message: "Topic does not exist"
-                        })
-                    }
-                })
-                return;
-            }
-
-            //Find if User ID is allowed or exists in Topic to post
-            var user;
-            for (var i = 0; i < topic.users.length; i++) {
-                if (userid == topic.users[i]) {
-                    user = topic.users[i];
-                    break;
                 }
-            }
-            if (!user) {
-                res.format({
-                    json: function () {
-                        res.send({
-                            status: 404,
-                            message: "Unautorized"
-                        })
+
+                //Find if User ID is allowed or exists in Topic to post
+                var user;
+                var touser;
+                for (var i = 0; i < topic.users.length; i++) {
+                    if (userid == topic.users[i]) {
+                        user = topic.users[i];
+                        
+                    }else {
+                        touser = topic.users[i];
                     }
+                }
+                if (!user) {
+                    res.format({
+                        json: function () {
+                            res.send({
+                                status: 404,
+                                message: "Unautorized"
+                            })
+                        }
+                    })
+                    return;
+                } else {
+                    //model.User.
+                    //user.mailboxUnread++;
+                    models.User.findOneAndUpdate(
+                        { _id: touser },
+                        { $inc: { mailboxUnread: 1 } },
+                        { upsert: false },
+                        function (err, message) {
+                            //console.log(message);
+                            if(err){
+                                console.log(err);
+                            }
+                            
+                        });
+                    //user.save();
+                }
+
+                //Do the thing
+                var msg = new models.Message({
+                    topic: topicID,
+                    message: message,
+                    read: false,
+                    timeSent: Date.now(),
+                    sentBy: userid
                 })
-                return;
-            } else {
-                //model.User.
-                //user.mailboxUnread++;
-                models.User.findOneAndUpdate(
-                    {_id: user}, 
-                    { $inc: { mailboxUnread: 1 }}, 
-                    {upsert:false},
-                    function(err, message){
-                        console.log(message);
+
+                topic.lastUpdated = Date.now();
+                topic.save();
+
+                msg.save(function (err) {
+                    res.format({
+                        json: function () {
+                            res.send({
+                                status: 200,
+                                sent: true
+                            })
+                        }
                     });
-                //user.save();
-            }
-
-            //Do the thing
-            var msg = new models.Message({
-                topic: topicID,
-                message: message,
-                read: false,
-                timeSent: Date.now(),
-                sentBy: userid
-            })
-
-            topic.lastUpdated = Date.now();
-            topic.save();
-
-            msg.save(function (err) {
-                res.format({
-                    json: function () {
-                        res.send({
-                            status: 200,
-                            sent: true
-                        })
-                    }
                 });
+
+
             });
-
-
-        });
     });
 }
 
@@ -450,14 +473,14 @@ function readAPI(req,res){
     var query = {_id: messageid}
     models.Message.findOneAndUpdate(query, { $set: { read: true }}, {upsert:true},function(err, message){
         if(err) return res.send(500, {error: err})
-        return res.send(200)
+        return res.send(200, {status: 200})
     });
 }
 
 function deletemessageAPI(req,res){
     var query = {_id: req.params.id}
     models.Message.find(query).remove().exec();
-    res.send(200);
+    res.send(200, {status: 200});
 }
 
 function deletetopicAPI(req,res){
@@ -466,7 +489,7 @@ function deletetopicAPI(req,res){
 
     query = {topic: req.params.id}
     models.Message.find(query).remove().exec();
-    res.send(200);
+    res.send(200, {status: 200});
 }
 
 function consolidatedAPI(req,res) {
