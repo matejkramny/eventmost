@@ -693,7 +693,7 @@ var generateJSON = function (events,receivedBusinessCards,savedProfile,saverProf
                     }
 
                 } else {
-                    flag = false;
+                   // flag = false;
                 }
             }
         }
