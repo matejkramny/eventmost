@@ -700,14 +700,14 @@ var generateJSON = function (events,receivedBusinessCards,savedProfile,saverProf
 
 
         if(flag == false) {
-            jsonConsolidatedMessageObject["type"] = 3;
+            /*jsonConsolidatedMessageObject["type"] = 3;
             jsonConsolidatedMessageObject["topicId"] = "";
             jsonConsolidatedMessageObject["lastActivity"] = "";
             jsonConsolidatedMessageObject["message"];
             jsonConsolidatedChat.push(jsonConsolidatedMessageObject);
             var obj = JSON.parse(JSON.stringify(events[i]));
             obj["consolidatedChats"] = jsonConsolidatedChat;
-            jsonEventArray.push(obj);
+            jsonEventArray.push(obj);*/
         }
 
     }
