@@ -19,8 +19,8 @@ exports.router = function (app) {
 function accessInbox (req, res) {
 	req.session.loggedin_as_user = req.user._id;
 	req.session.loggedin_as_user_referrer = req.get('referrer');
-	req.session.loggedin_as_user_restrict = new RegExp("^\/(inbox|search|event\/"+res.locals.ev._id+"\/admin\/feedback\/"+res.locals.feedbackProfile._id+"\/sendInbox)");
-	req.session.loggedin_as_user_redirect_restricted = "/inbox";
+	req.session.loggedin_as_user_restrict = new RegExp("^\/(inbox|messages|search|event\/"+res.locals.ev._id+"\/admin\/feedback\/"+res.locals.feedbackProfile._id+"\/sendInbox)");
+	req.session.loggedin_as_user_redirect_restricted = "/messages";
 	req.session.loggedin_as_user_locals = {
 		hide_bar_right: true,
 		loggedin_as_user_message: "<strong>"+res.locals.feedbackProfile.user.getName()+"</strong>'s Inbox",
@@ -30,7 +30,7 @@ function accessInbox (req, res) {
 	}
 	
 	req.login(res.locals.feedbackProfile.user, function(err) {
-		res.redirect('/inbox');
+		res.redirect('/messages');
 	})
 }
 
