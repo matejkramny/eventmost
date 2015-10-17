@@ -400,7 +400,8 @@ exports.newMessage = newMessage = function (topicID, message, userid, res) {
                         json: function () {
                             res.send({
                                 status: 200,
-                                sent: true
+                                sent: true,
+                                messagObject: msg
                             })
                         }
                     });
