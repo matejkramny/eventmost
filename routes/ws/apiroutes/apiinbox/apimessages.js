@@ -522,7 +522,7 @@ function consolidatedAPI(req,res) {
                         receivedBusinessCards = businessCard;
 
                         models.User.findOne({_id: userId})
-                            .populate('savedProfiles._id')
+                            .populate('savedProfiles._id','-receivedCards -savedProfiles')
                             .exec(function (err, savedProfileUser) {
                                 if (savedProfileUser) {
                                     var query = {'_id': {$in: savedProfileUser.savedProfiles}};
@@ -530,6 +530,7 @@ function consolidatedAPI(req,res) {
                                 }
                                 var saverQuery = {'savedProfiles._id': userId};
                                 models.User.find(saverQuery)
+                                    .select('-receivedCards')
                                     .exec(function(err, saverprofiles) {
                                         if (err) throw err;
                                         saverProfile = saverprofiles;
@@ -613,7 +614,6 @@ var generateJSON = function (events,receivedBusinessCards,savedProfile,saverProf
             }
         }
 
-
         if(savedProfile.length == 0) {
             jsonConsolidatedCardObject["user"] = [];
             jsonConsolidatedChat.push(jsonConsolidatedCardObject);
@@ -638,14 +638,19 @@ var generateJSON = function (events,receivedBusinessCards,savedProfile,saverProf
              jsonEventArray.push(obj);*/
         } else {
             for(var l=0;l<saverProfile.length;l++) {
-                if(events[i]._id == saverProfile[l].eventid) {
-                    jsonConsolidatedSaverProfileObject["type"] = 2;
-                    jsonConsolidatedSaverProfileObject["user"].push(savedProfile[k]);
-                    jsonConsolidatedChat.push(jsonConsolidatedSaverProfileObject);
-                    /*var obj = JSON.parse(JSON.stringify(events[i]));
-                     obj["consolidatedChats"] = jsonConsolidatedChat;
-                     jsonEventArray.push(obj);*/
+                for(var p=0;p<saverProfile[l].savedProfiles.length;p++) {
+                    console.log(saverProfile[l].savedProfiles.length);
+                    console.log(events[i]._id + " " + saverProfile[l].savedProfiles[p].eventid);
+                    if(events[i]._id == saverProfile[l].savedProfiles[p].eventid) {
+                        jsonConsolidatedSaverProfileObject["type"] = 2;
+                        jsonConsolidatedSaverProfileObject["user"].push(saverProfile[l]);
+                        jsonConsolidatedChat.push(jsonConsolidatedSaverProfileObject);
+                        /*var obj = JSON.parse(JSON.stringify(events[i]));
+                         obj["consolidatedChats"] = jsonConsolidatedChat;
+                         jsonEventArray.push(obj);*/
+                    }
                 }
+
             }
         }
 
@@ -675,6 +680,8 @@ var generateJSON = function (events,receivedBusinessCards,savedProfile,saverProf
 
                         for(var o=0;o<topics[m].users.length;o++) {
                             if(topics[m].users[o]._id != userId) {
+                                delete topics[m].users[o].savedProfiles;
+                                delete topics[m].users[o].receivedCards;
                                 jsonConsolidatedMessageObject["user"] = topics[m].users[o];
                             }
                         }
@@ -687,25 +694,26 @@ var generateJSON = function (events,receivedBusinessCards,savedProfile,saverProf
                     }
 
                 } else {
-                    flag = false;
+                   // flag = false;
                 }
             }
         }
 
 
         if(flag == false) {
-            jsonConsolidatedMessageObject["type"] = 3;
+            /*jsonConsolidatedMessageObject["type"] = 3;
             jsonConsolidatedMessageObject["topicId"] = "";
             jsonConsolidatedMessageObject["lastActivity"] = "";
             jsonConsolidatedMessageObject["message"];
             jsonConsolidatedChat.push(jsonConsolidatedMessageObject);
             var obj = JSON.parse(JSON.stringify(events[i]));
             obj["consolidatedChats"] = jsonConsolidatedChat;
-            jsonEventArray.push(obj);
+            jsonEventArray.push(obj);*/
         }
 
     }
 
+    jsonMainObject["status"] = 200;
     jsonMainObject["events"] = jsonEventArray;
 
     res.format({
