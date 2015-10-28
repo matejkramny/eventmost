@@ -120,9 +120,16 @@ html
 					.col-sm-8.col-md-8.col-lg-8
 						p.lead(style="font-weight: 500; margin-bottom:15px;")!= loggedin_as_user_message
 					.col-sm-4.col-md-4.col-lg-4
+						
+
 						a.pull-right.btn.btn-info(href="/auth/login/return")
 							i.fa.fa-sign-out.fa-fw
 							|  !{loggedin_as_user_return_message}
+						div(style="widht:20%")
+							|        
+						a.pull-right.btn.btn-info(href="javascript:window.open('/messages/preview','mywindowtitle','width=1000px,height=900px')", style="margin-right:5px")
+							i.fa.fa-envelope
+							|  Preview
 			.clearfix
 		
 		.container
