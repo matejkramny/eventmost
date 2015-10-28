@@ -1,0 +1,69 @@
+doctype
+html
+	head
+		meta(http-equiv="Content-Type" content="text/html; charset=utf-8;")
+		meta(name="viewport" content="width=device-width, initial-scale=1.0")
+		block meta
+		title 
+			| Newsletter Preview
+		link(href="/favicon.ico" type="image/x-icon" rel="icon")
+		link(href="/favicon.ico" type="image/x-icon" rel="shortcut icon")
+
+		//- all css goes here
+		block css
+			link(rel="stylesheet" href="/css/bootstrap-eventmost.css?v=#{versionHash}")
+		
+		include item
+	body(style="font-family:Arial, Helvetica, sans-serif")
+		table(width="700", border="0", cellspacing="0", cellpadding="0", bgcolor="#F7F7F7", align="center", style="padding:5px 0px")
+			tr
+				td
+					table(width="100%",border="0",cellspacing="0",cellpadding="0")
+						tr
+							td
+								img(src="http://dev.eventmost.com/images/logo.svg", style="text-align:center ; margin:0px auto;  display:block; margin-bottom:10px ")
+						tr
+							td
+								table(width="100%",border="0",cellspacing="0", cellpadding="0")
+									tr
+										td(bgcolor="#0992A3",style="padding:10px 10px 10px 10px; font-size:22px; color:#FFFFFF")
+											center
+												| Feedback from Attendees
+									tr
+										td(style="padding:10px 10px 10px 10px; font-size:20px; color:#FED298; text-align:center")
+											p
+												| Dear Speaker, We have selected following questions for you to send a reply if you want.
+									tr
+										td
+											table(width="100%",border="0",cellspacing="0", cellpadding="0")
+												for item in items
+													mixin newsletterItem(item)
+												if(business_cards)
+													tr
+															td
+																center
+																	h2
+																		| Business Cards
+													for card in business_cards
+														mixin newsletterItem(card)
+				tr
+					center
+						div(id="error", style="color: red; display:none")
+							| Email is missing or invlid!
+				tr
+					center
+						div(id="loading", style="display:none")
+							img(src="/images/loading.gif")
+				tr
+					center
+						div(id="success", style="display:none; color: #542437")
+							h2
+								| Newsletter has been sent successfully!
+				tr
+					center(id="emaildiv")
+						input(type="email", id="email" placeholder="Write email to send this newsletter", style="height: 50px; width: 500px; font-size: 18px; margin-right:25px")
+						button(style="text-align:center;" class="btn font-x", onclick="sendFeedback()")
+							| SEND
+		block js
+			script(src="/js/vendor/jquery.min.js?v=#{versionHash}" defer)
+			script(src="/js/preview.js?v=#{versionHash}" defer)
