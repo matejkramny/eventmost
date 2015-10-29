@@ -34,7 +34,7 @@ function getMessageAPI(req, res) {
 
     console.log(query)
     models.Message.find(query)
-        .populate({path: "sentBy", select: 'name'})
+        //.populate({path: "sentBy", select: 'name'})
         .select('message timeSent sentBy')
         .sort({"timesent": 1})
         .exec(function (err, topicmessages) {
@@ -400,7 +400,8 @@ exports.newMessage = newMessage = function (topicID, message, userid, res) {
                         json: function () {
                             res.send({
                                 status: 200,
-                                sent: true
+                                sent: true,
+                                messagObject: msg
                             })
                         }
                     });
