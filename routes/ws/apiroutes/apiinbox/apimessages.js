@@ -661,10 +661,13 @@ var generateJSON = function (events,receivedBusinessCards,savedProfile,saverProf
                 }
             }
 
-            jsonConsolidatedChat.push(jsonChatObject);
-            var obj = JSON.parse(JSON.stringify(events[i]));
-            obj["consolidatedChats"] = jsonConsolidatedChat;
-            jsonEventArray.push(obj);
+            if(flag == true) {
+                jsonConsolidatedChat.push(jsonChatObject);
+                var obj = JSON.parse(JSON.stringify(events[i]));
+                obj["consolidatedChats"] = jsonConsolidatedChat;
+                jsonEventArray.push(obj);
+            }
+
         }
 
 
