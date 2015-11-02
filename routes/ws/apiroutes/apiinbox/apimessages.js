@@ -629,11 +629,13 @@ var generateJSON = function (events,receivedBusinessCards,savedProfile,saverProf
                     if(messages.length == 0) {
                         jsonConsolidatedMessageObject["message"];
                         jsonChatObject["chats"].push(jsonConsolidatedMessageObject);
-                        flag = true;
+                        jsonConsolidatedMessageObject = {};
+                        jsonConsolidatedMessageObject["message"] = [];
                     } else {
                         for(var n=0;n<messages.length;n++) {
                             if(topics[m]._id == messages[n].topic) {
                                 jsonConsolidatedMessageObject["message"].push(messages[n]);
+                                flag = true;
                             }
                         }
 
@@ -643,6 +645,7 @@ var generateJSON = function (events,receivedBusinessCards,savedProfile,saverProf
                                 delete topics[m].users[o].receivedCards;
                                 jsonConsolidatedMessageObject["user"] = topics[m].users[o];
                                 jsonChatObject["chats"].push(jsonConsolidatedMessageObject);
+                                flag = true;
                             }
                         }
 
@@ -651,9 +654,11 @@ var generateJSON = function (events,receivedBusinessCards,savedProfile,saverProf
 
                 } else {
                 }
-                jsonConsolidatedMessageObject = {};
-                jsonConsolidatedMessageObject["message"] = [];
-                jsonConsolidatedMessageObject["user"] = [];
+                if(flag == true) {
+                    jsonConsolidatedMessageObject = {};
+                    jsonConsolidatedMessageObject["message"] = [];
+                    jsonConsolidatedMessageObject["user"] = [];
+                }
             }
 
             jsonConsolidatedChat.push(jsonChatObject);
@@ -665,10 +670,12 @@ var generateJSON = function (events,receivedBusinessCards,savedProfile,saverProf
 
         if(flag == false) {
             jsonConsolidatedMessageObject["message"];
-            jsonConsolidatedChat.push(jsonConsolidatedMessageObject);
+            jsonChatObject["chats"].push(jsonConsolidatedMessageObject);
+            jsonConsolidatedChat.push(jsonChatObject);
             var obj = JSON.parse(JSON.stringify(events[i]));
             obj["consolidatedChats"] = jsonConsolidatedChat;
             jsonEventArray.push(obj);
+
         }
 
     }
