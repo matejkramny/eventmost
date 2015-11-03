@@ -598,8 +598,10 @@ var generateJSON = function (events,receivedBusinessCards,savedProfile,saverProf
             jsonConsolidatedChat.push(jsonConsolidatedCardObject);
         } else {
             for(var j=0;j<cu.receivedCards.length;j++) {
-                if(events[i]._id.toString() == cu.receivedCards[j].eventid._id.toString()) {
-                    jsonConsolidatedCardObject["card"].push(cu.receivedCards[j].card);
+                if(typeof cu.receivedCards[j].eventid !== "undefined" && cu.receivedCards[j].eventid != null) {
+                    if (events[i]._id == cu.receivedCards[j].eventid._id) {
+                        jsonConsolidatedCardObject["card"].push(cu.receivedCards[j].card);
+                    }
                 }
             }
             jsonConsolidatedChat.push(jsonConsolidatedCardObject);
