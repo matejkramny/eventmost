@@ -14,7 +14,7 @@ exports.router = function (app) {
 
 exports.showSavedProfilesAPI = function (req, res) {
 	
-	models.User.findOne({_id:req.body._id,'savedProfiles.eventid':req.body.id} , function(err, current_user)
+	models.User.findOne({_id:req.body._id} , function(err, current_user)
 	{
 		if(current_user){
 			var query = {'_id': {$in: current_user.savedProfiles}};
@@ -38,7 +38,7 @@ exports.showSavedProfilesAPI = function (req, res) {
 				json: function() {
 					res.send({
 						status: 404,
-						message: "no user or eventid found"
+						message: "no user found"
 					});
 				}
 			});
@@ -55,7 +55,7 @@ exports.showSaverProfilesAPI = function (req, res) {
 		.exec(function(err, savedprofiles) {
 			if (err) throw err;
 			if (savedprofiles) {
-				
+
 				res.format({
 					json: function() {
 						res.send({
