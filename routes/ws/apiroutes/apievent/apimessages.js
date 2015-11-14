@@ -252,6 +252,7 @@ function postCommentAPICustom(req, res) {
 					status: 404,
 					message: err
 				})
+				return;
 			}
 
 			if(!event){
@@ -259,6 +260,7 @@ function postCommentAPICustom(req, res) {
 					status: 404,
 					message: "Event not found"
 				})
+				return;
 			}
 			// Found the Event. Now Found the Attendee Against the User ID.
 			console.log("Event ".red + event);
@@ -275,7 +277,7 @@ function postCommentAPICustom(req, res) {
 				}
 			}
 
-			if(inreplyto != undefined || inreplyto){
+			if(inreplyto != undefined && inreplyto){
 				found = false;
 				for(var mess = 0; mess < event.messages.length ; mess++){
 					if(event.messages[mess] == inreplyto){
