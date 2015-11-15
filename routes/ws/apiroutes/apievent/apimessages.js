@@ -295,7 +295,8 @@ function postCommentAPICustom(req, res) {
 			}
 			
 			// only attendee can comment
-			if (event.attendees.length > 0) {
+			console.log(event.attendees;)
+			if (event.attendees && event.attendees.length > 0) {
 				var message = req.body.comment;
 				var event_id = event._id;
 				var attendee_id = event.attendees[0]._id;
