@@ -236,7 +236,7 @@ function unlikeCommentAPI (req, res) {
 }
 
 function postCommentAPICustom(req, res) {
-	console.log("Post Comments ".red);
+	console.log("Post Comments ");
 	var user_id = req.body._id;
 	var inreplyto = req.body.inreplyto
 
@@ -247,27 +247,36 @@ function postCommentAPICustom(req, res) {
 			match: {user: user_id}
 		})
 		.exec(function (err, event) {
+			console.log("POSTCOMMENT: Event query executed.");
 			if(err){
+				console.log("POSTCOMMENT: ERR: " + err);
+				
 				res.send({
 					status: 404,
 					message: err
 				})
 				return;
 			}
+			
+			console.log("POSTCOMMENT: No Error found");
 
 			if(!event){
+				console.log("POSTCOMMENT: Event DNE");
 				res.send({
 					status: 404,
 					message: "Event not found"
 				})
 				return;
 			}
+			console.log("POSTCOMMENT: Event exists");
 			// Found the Event. Now Found the Attendee Against the User ID.
-			console.log("Event ".red + event);
+			//console.log("Event ".red + event);
 			
 			if (event.banned && event.banned.length > 0) {
+				console.log("POSTCOMMENT: Checking for banned IDS");
 				for (var i = 0; i <= event.banned.length; i++) {
 					if (event.banned[i] == user_id) {
+						console.log("POSTCOMMENT: Banned user");
 						res.send({
 							status: 412,
 							message: "UserID is banned from event"
@@ -277,7 +286,10 @@ function postCommentAPICustom(req, res) {
 				}
 			}
 
+			console.log("POSTCOMMENT: User not banned");
+			
 			if(inreplyto != undefined && inreplyto){
+				console.log("POSTCOMMENT: inreplyto value exists");
 				found = false;
 				for(var mess = 0; mess < event.messages.length ; mess++){
 					if(event.messages[mess] == inreplyto){
@@ -286,22 +298,24 @@ function postCommentAPICustom(req, res) {
 					}
 				}
 				if(!found){
+					console.log("POSTCOMMENT: inreplyto message not found");
 					res.send({
 							status: 404,
 							message: "in Reply to message not found"
 						});
 					return;
 				}
+				console.log("POSTCOMMENT: in reply to message found");
 			}
 			
 			console.log("###################");
 			// only attendee can comment
-			console.log(event.attendees)
+			console.log("POSTCOMMENT: attendees: " + event.attendees);
 			if (event.attendees && event.attendees.length > 0) {
 				var message = req.body.comment;
 				var event_id = event._id;
 				var attendee_id = event.attendees[0]._id;
-				console.log(attendee_id);
+				console.log("POSTCOMMENT: attendeeID: " + attendee_id);
 
 				var msg = new models.EventMessage({
 					attendee: attendee_id,
@@ -309,9 +323,11 @@ function postCommentAPICustom(req, res) {
 				});
 
 				msg.save();
-				console.log(msg)
+				console.log("POSTCOMMENT: Message saved");				
+				//console.log(msg)
 
 				if(inreplyto){
+					console.log("POSTCOMMENT: Updating in reply to");
 					models.EventMessage.findByIdAndUpdate(inreplyto, {$set: { isResponse: true }}, function (err, message){
 						if(err)
 							console.log(err);
@@ -321,6 +337,7 @@ function postCommentAPICustom(req, res) {
 								console.log(err)
 						});
 					});
+					console.log("POSTCOMMENT: Updated in reply to");					
 					res.format({
 					json: function () {
 							res.send({
@@ -329,11 +346,12 @@ function postCommentAPICustom(req, res) {
 							})
 						}
 					})
+					console.log("POSTCOMMENT: All done.");					
 					return;
 				}
 
-
-				console.log(msg);
+				//console.log(msg);
+				console.log("POSTCOMMENT: Event find by ID and update");
 
 				models.Event.findByIdAndUpdate(req.params.id, {$push: { messages: msg }}, function (err, message){
 					if(err)
@@ -344,6 +362,8 @@ function postCommentAPICustom(req, res) {
 				// 	ev.save()
 				// });
 
+				console.log("POSTCOMMENT: All done");
+				
 				res.format({
 					json: function () {
 						res.send({
@@ -357,6 +377,8 @@ function postCommentAPICustom(req, res) {
 
 			}
 			else {
+				console.log("POSTCOMMENT: Not an attendee ");
+				
 				res.format({
 					json: function () {
 						res.send({
