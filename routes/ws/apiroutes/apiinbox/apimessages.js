@@ -613,9 +613,7 @@ var generateJSON = function (events,receivedBusinessCards,savedProfile,saverProf
         } else {
             for(var l=0;l<saverProfile.length;l++) {
                 for(var p=0;p<saverProfile[l].savedProfiles.length;p++) {
-                    console.log(events[i]._id + " " + saverProfile[l].savedProfiles[p].eventid);
                     if(events[i]._id === saverProfile[l].savedProfiles[p].eventid) {
-                        console.log("in")
                         jsonConsolidatedSaverProfileObject["user"].push(saverProfile[l]);
                     }
                 }
