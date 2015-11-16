@@ -325,8 +325,8 @@ $(document).ready(function() {
 		form.append("w", avatar_coords.w);
 		form.append("h", avatar_coords.h);*/
 
-		form.append("x", $("#x1").val());
-		form.append("y", $("#y1").val());
+		form.append("x", $("#x").val());
+		form.append("y", $("#y").val());
 		form.append("w", $("#w").val());
 		form.append("h", $("#h").val());
 
@@ -382,7 +382,9 @@ $(document).ready(function() {
 		file = null;
 		avatarUploadRequest = null;
 		
-		$("#thumb").attr('src', '/images/upload.png');
+
+		//$("#thumb").attr('src', '/images/upload.png');
+		$('#profile_pic').hide();
 		$("#thumb").attr('style', '');
 		$("#file_browse1").attr("value", "");
 		$("#info-m").html("Avatar has been removed");
@@ -405,7 +407,7 @@ $(document).ready(function() {
 		$("#thumb2").attr('src', '/images/logo-avatar.svg');
 		$("#thumb2").attr('style', '');
 		$("#file_browse2").attr("value", "");
-		$("#info-m2").html("Avatar has been removed");
+		$("#info-m2").html("Cover has been removed");
 		jcrop_api2.destroy();
 		$("#image_div2").hide();
 		$.ajax({
@@ -424,12 +426,15 @@ $(document).ready(function() {
 		//alert(c_w+" "+c_h);
 		
 
-		if(c_w < 300 || c_h < 200){
+		/*if(c_w < 300 || c_h < 200){
 			alert("Sorry! You can not crop with this dimension.");
 		}else{
 			$("#image_div").hide();
 			uploadAvatar();
-		}
+		}*/
+
+		$("#image_div").hide();
+		uploadAvatar();
 		
 	});
 

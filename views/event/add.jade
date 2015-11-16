@@ -357,21 +357,36 @@ append content
 							|	Logo
 						.font.font-thin.nspacer.logo-text.dif2
 							| L<br />o<br />g<br />o
-					.col-lg-3-5(style="width:20.6%")
-						//- crop toll
-						div(style="float:left; height:160px; overflow:hidden; width:200px")
-							#profile_pic.profile_pic.uploadforcrop(style="height:158px; display:table-cell; float:none; margin:0; vertical-align:middle;")
-								img#thumb(src='/images/upload.png', width='107', height='105')
+					//-	
+						.col-lg-3-5(style="width:20.6%")
+							//- crop toll
+							div(style="float:left; height:160px; overflow:hidden; width:200px")
+								#profile_pic.profile_pic.uploadforcrop(style="height:158px; display:table-cell; float:none; margin:0; vertical-align:middle;")
+									img#thumb(src='/images/upload.png', width='107', height='105')
 
-						form#upload_form1(enctype='multipart/form-data', method='post', action='upload.php', onsubmit='return validateForm();')
+							form#upload_form1(enctype='multipart/form-data', method='post', action='upload.php', onsubmit='return validateForm();')
+								input#w(type='hidden', name='w')
+								input#h(type='hidden', name='h')
+								input#x(type='hidden', name='x')
+								input#y(type='hidden', name='y')
+								input#x2(type='hidden', name='x2')
+								input#y2(type='hidden', name='y2')
+
+					.col-lg-3-5(id="thumbParent", style="width:17%")
+						//- crop toll
+						#profile_pic.profile_pic.uploadforcrop(style="width:158px; height: 158px; display:none")
+								img#thumb
+
+						form#upload_form1(enctype='multipart/form-data', method='post', onsubmit='return validateForm();')
 							input#w(type='hidden', name='w')
 							input#h(type='hidden', name='h')
-							input#x1(type='hidden', name='x1')
-							input#y1(type='hidden', name='y1')
+							input#x(type='hidden', name='x')
+							input#y(type='hidden', name='y')
 							input#x2(type='hidden', name='x2')
 							input#y2(type='hidden', name='y2')
+
 					//- crop toll browse button
-					.pull-left.button-event
+					.pull-left.button-event(style="margin-left: 5px")
 						.bg-yellow-rounded
 							#file_browse_wrapper1.file_browse_wrapper
 								input#file_browse1.file_browse(type='file', name='avatar1')
@@ -431,6 +446,12 @@ append content
 								|	Back-ground photo
 							.font.font-thin.nspacer.logo-text.dif2
 								| L<br />o<br />g<br />o
+					.col-lg-1.col-md-1.col-xs-1.bg-yellow(ng-show="background")
+						.font-22.font-thin.nspacer.logo-text.dif.font-exception(style="padding-bottom:10px")
+							|	Cover
+						.font.font-thin.nspacer.logo-text.dif2
+							| L<br />o<br />g<br />o
+
 					.col-lg-3-5(ng-show="background")
 						//- crop toll
 						//- 
@@ -446,7 +467,7 @@ append content
 							input#y22(type='hidden', name='y22')		
 
 					//- crop toll browse button
-					.pull-left.button-event(ng-show="background")
+					.pull-left.button-event(ng-show="background", style="margin-left: 5px")
 						.bg-yellow-rounded
 							#file_browse_wrapper2.file_browse_wrapper
 								input#file_browse2.file_browse(type='file', style='', name='file_browse2')
@@ -507,7 +528,7 @@ append content
 							div(id="coverpreviewdiv")
 								img(id="coverpreview", src="/avatars/54b663ecd47bb8a740c15b71.jpeg")
 							div(style="margin-top:-70px; margin-left:20px; margin-bottom: 20px; float:left;", id="logopreviewdiv")
-								img(id="logopreview", src="/avatars/54b663ccd47bb8a740c15b70.jpeg", width="260")
+								img(id="logopreview", src="/avatars/54b663ccd47bb8a740c15b70.jpeg", width="200")
 					.clearfix			
 					.col-lg-10.col-md-10.col-xs-10.pad-left-zero
 						.container.bg-green.pad-top-zero.pad-right-zero(style="height:62px;")

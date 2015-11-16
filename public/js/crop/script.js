@@ -78,14 +78,15 @@ $(document).ready(function(){
 
                             // initialize Jcrop Plugin on the selected image
                             $('#load_img').Jcrop({
-                                minSize: [300, 200], // min crop size
-                                setSelect: [0,0,305,205],
-                                aspectRatio: 300/200,
+                                //minSize: [300, 200], // min crop size
+                                //setSelect: [0,0,158,158],
+                                aspectRatio: 1,
+                                trueSize: [selectImgWidth, selectImgHeight],
                                 //aspectRatio: 312/158, //keep aspect ratio
                                 bgFade: true, // use fade effect
                                 bgOpacity: .3, // fade opacity
-                                boxWidth : 800,
-                                boxHeight : 800,
+                                boxWidth: 600,   //Maximum width you want for your bigger images
+                                boxHeight: 400,
                                 onChange: showThumbnail,
                                 onSelect: showThumbnail
                             }, function(){
@@ -182,7 +183,7 @@ $(document).ready(function(){
                             selectImgHeight = previewId.naturalHeight;//set the global image height
                             
                             // Create variables (in this scope) to hold the Jcrop API and image size
-                           
+                            //$("#thumbParent").show();
                             
 
                             // initialize Jcrop Plugin on the selected image
@@ -223,20 +224,21 @@ $(document).ready(function(){
 
 function showThumbnail(e)
 {
+    
+    //console.log(e);
+    $('#profile_pic').show();
     window.setCoordinates(e);
-    var rx = 300 / e.w; //155 is the width of outer div of your profile pic
-    var ry = 150 / e.h; //190 is the height of outer div of your profile pic
-    $('#w').val(e.w);
-    $('#h').val(e.h);
-    //$('#w1').val(e.w);
-    //$('#h1').val(e.h);
-    $('#x1').val(e.x);
-    $('#y1').val(e.y);
+    var rx = 158 / e.w; //155 is the width of outer div of your profile pic
+    var ry = 158 / e.h; //190 is the height of outer div of your profile pic
+    $('#w').val(Math.round(e.w));
+    $('#h').val(Math.round(e.h));
+    $('#x').val(Math.round(e.x));
+    $('#y').val(Math.round(e.y));
     $('#x2').val(e.x2);
     $('#y2').val(e.y2);
     $('#thumb').css({
-        width: Math.round(rx * selectImgWidth) + 'px',
-        height: Math.round(ry * selectImgHeight) + 'px',
+        width: Math.round(rx * boundx) + 'px',
+        height: Math.round(ry * boundy) + 'px',
         marginLeft: '-' + Math.round(rx * e.x) + 'px',
         marginTop: '-' + Math.round(ry * e.y) + 'px'
     });
