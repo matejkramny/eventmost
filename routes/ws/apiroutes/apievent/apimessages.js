@@ -353,14 +353,15 @@ function postCommentAPICustom(req, res) {
 				//console.log(msg);
 				console.log("POSTCOMMENT: Event find by ID and update");
 
-				models.Event.findByIdAndUpdate(req.params.id, {$push: { messages: msg }}, function (err, message){
-					if(err)
-						console.log(err);
+				//models.Event.findByIdAndUpdate(req.params.id, {$push: { messages: msg._id }}, function (err, message){
+				//	if(err)
+				//		console.log(err);
+				//});
+				
+				models.Event.findById(req.params.id, function (err, ev) {
+				    ev.messages.push(msg._id);
+			     	ev.save()
 				});
-				// models.Event.findById(req.params.id, function (err, ev) {
-				// 	ev.messages.push(msg._id);
-				// 	ev.save()
-				// });
 
 				console.log("POSTCOMMENT: All done");
 				
