@@ -40,7 +40,7 @@ $(document).ready(function(){
 
         image.onload = function() {
 
-            if(this.width < 300 || this.height < 200){
+            if(this.width < 50 || this.height < 50){
                 $('#image_div').hide();
                 $('#info-m').hide();
                 thumbId.src = '';
@@ -222,11 +222,76 @@ $(document).ready(function(){
     });
 })
 
+function uploadDefault () {
+        if (typeof file === "undefined" || file == null) {
+            // opens the dialog
+            //$("input#file_browse1").trigger('click');
+            return;
+        }
+    
+        $("#info-m").html("Uploading..");
+        
+        var form = new FormData();
+        form.append("_csrf", $("head meta[name=_csrf]").attr('content'));
+        form.append("avatar", file);
+        form.append("background_image", background_image);
+        /*form.append("x", avatar_coords.x);
+        form.append("y", avatar_coords.y);
+        form.append("w", avatar_coords.w);
+        form.append("h", avatar_coords.h);*/
+
+        form.append("x", $("#x").val());
+        form.append("y", $("#y").val());
+        form.append("w", $("#w").val());
+        form.append("h", $("#h").val());
+
+        avatarUploadRequest = new XMLHttpRequest();
+        avatarUploadRequest.open("POST", "/event/add/avatar", true);
+        avatarUploadRequest.responseType = "json";
+        avatarUploadRequest.setRequestHeader("accept", "application/json");
+        avatarUploadRequest.onreadystatechange = xmlhttprequestResponse;
+        avatarUploadRequest.upload.addEventListener('progress', xmlUploadProgress, false)
+        avatarUploadRequest.send(form);
+
+        
+
+        
+    }
+
+function useFull(){
+    
+    $('#profile_pic').hide();
+    var source = $('#load_img').attr("src");
+
+    $('#thumbParent').css({
+        width: '21%'
+    })
+    $('#thumb_default').attr("src", source);
+    $('#thumb_default').css({
+        'max-width': '100%',
+        'max-height': '100%'
+    });
+    $('#profile_pic_default').show();
+    $('#profile_pic_default').css({
+        'display': 'table-cell'
+    });
+
+    //jcrop_api.destroy();
+    $("#image_div").hide();
+    uploadDefault();
+    //alert('hi');
+}
+
 function showThumbnail(e)
 {
     
     //console.log(e);
+    $('#thumbParent').css({
+        'width': '17%'
+    })
+    $("#image_div").show();
     $('#profile_pic').show();
+    $('#profile_pic_default').hide();
     window.setCoordinates(e);
     var rx = 158 / e.w; //155 is the width of outer div of your profile pic
     var ry = 158 / e.h; //190 is the height of outer div of your profile pic

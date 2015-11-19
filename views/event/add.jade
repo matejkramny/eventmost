@@ -377,6 +377,9 @@ append content
 						#profile_pic.profile_pic.uploadforcrop(style="width:158px; height: 158px; display:none")
 								img#thumb
 
+						#profile_pic_default.profile_pic.uploadforcrop(style=" display:none; vertical-align:middle; text-align:center; background:#fff")
+								img#thumb_default
+
 						form#upload_form1(enctype='multipart/form-data', method='post', onsubmit='return validateForm();')
 							input#w(type='hidden', name='w')
 							input#h(type='hidden', name='h')
@@ -416,12 +419,20 @@ append content
 								| 
 						.sourceimage
 							img#load_img(src='', height="100%", width="100%")
-						div(style="float:left; width:15%")
-							.a(id="cropButton1")
-								#crop_div(style='float: right; margin-right:10%')
+						div(style="float:left; width:20%")
+							div
+								.a#usedefault( style="cursor:pointer")
 									h3(style="float:left")
-										| Crop 
-										img(src='/images/crop.jpeg', width="30", heigth="30")
+										| Default
+										img(src='/images/default_image_icon.jpeg', width="30", heigth="30")
+							div
+								.a(id="cropButton1", style="cursor:pointer")
+									#crop_div(style='float: left; margin-right:10%')
+										h3(style="float:left")
+											| Crop 
+											img(src='/images/crop.jpeg', width="30", heigth="30")
+							
+								
 						div(style="clear:both")					
 					#error.error(style='display: none;')
 					.clearfix

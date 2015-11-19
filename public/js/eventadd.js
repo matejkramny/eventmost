@@ -385,9 +385,10 @@ $(document).ready(function() {
 
 		//$("#thumb").attr('src', '/images/upload.png');
 		$('#profile_pic').hide();
+		$('#profile_pic_default').hide();
 		$("#thumb").attr('style', '');
 		$("#file_browse1").attr("value", "");
-		$("#info-m").html("Avatar has been removed");
+		$("#info-m").html("Logo has been removed");
 		jcrop_api.destroy();
 		$("#image_div").hide();
 		
@@ -417,6 +418,53 @@ $(document).ready(function() {
 
 		allowcoverpreview = false;
 		updatepreview();
+	});
+
+	function useFull(){
+    
+	    $('#profile_pic').hide();
+	    var source = $('#load_img').attr("src");
+
+	    $('#thumbParent').css({
+	        width: '21%'
+	    })
+	    $('#thumb_default').attr("src", source);
+	    $('#thumb_default').css({
+	        'max-width': '100%',
+	        'max-height': '100%'
+	    });
+	    $('#profile_pic_default').show();
+	    $('#profile_pic_default').css({
+	        'display': 'table-cell'
+	    });
+
+	    //jcrop_api.destroy();
+	    $("#image_div").hide();
+	    uploadAvatar();
+	    //alert('hi');
+	}
+
+	$("#usedefault").click(function (){
+
+		$('#profile_pic').hide();
+	    var source = $('#load_img').attr("src");
+
+	    $('#thumbParent').css({
+	        width: '21%'
+	    })
+	    $('#thumb_default').attr("src", source);
+	    $('#thumb_default').css({
+	        'max-width': '100%',
+	        'max-height': '100%'
+	    });
+	    $('#profile_pic_default').show();
+	    $('#profile_pic_default').css({
+	        'display': 'table-cell'
+	    });
+
+		$("#image_div").hide();
+		uploadAvatar();
+		
 	});
 
 	$("#cropButton1").click(function (){
@@ -501,7 +549,7 @@ $(document).ready(function() {
 				} else {
 					// store the avatar id in the form.
 					avatar_id = result.id;
-					$("#info-m").html("Logo Cropped!");
+					$("#info-m").html("Logo Added!");
 					console.log("avatar_id:"+ avatar_id);
 					$.ajax({
 						url: "/eventavatar/"+avatar_id,
