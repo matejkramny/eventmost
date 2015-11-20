@@ -463,7 +463,7 @@ $(document).ready(function() {
 	    });
 
 		$("#image_div").hide();
-		//uploadAvatar();
+		uploadAvatar();
 		
 	});
 
