@@ -156,7 +156,7 @@ input[type=number]::-webkit-outer-spin-button {
   width:312px; height:158px;padding:0px;overflow:hidden!important; margin-left: -1px;
 }
 
-#profile_pic_default > img {
+/*#profile_pic_default > img {
 
     max-height: 100% !important;
 }
@@ -166,7 +166,7 @@ input[type=number]::-webkit-outer-spin-button {
   float: left;
   width: 200px !important;
 
-}
+}*/
 
 
 .error{
