@@ -156,6 +156,16 @@ input[type=number]::-webkit-outer-spin-button {
   width:312px; height:158px;padding:0px;overflow:hidden!important; margin-left: -1px;
 }
 
+#profile_pic_default > img {
+
+    width: 100%;
+    max-width: 100% !important;
+}
+
+.profile_pic_default {
+  height: 158px;
+}
+
 
 .error{
   width:400;padding:10px;margin:5px auto;border:1px solid #970F0F;border-radius:4px;background-color:#BA2222;color:#fff;

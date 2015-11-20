@@ -267,10 +267,10 @@ function useFull(){
         width: '21%'
     })
     $('#thumb_default').attr("src", source);
-    $('#thumb_default').css({
+    /*$('#thumb_default').css({
         'max-width': '100%',
         'max-height': '100%'
-    });
+    });*/
     $('#profile_pic_default').show();
     $('#profile_pic_default').css({
         'display': 'table-cell'
