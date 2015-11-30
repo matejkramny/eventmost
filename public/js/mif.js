@@ -252,6 +252,7 @@ angular.module('eventMost')
 				
 				var comment = $('textarea.postcommentarea11').val();
 				s.submitComment(comment);
+				$('textarea.postcommentarea11').val('');
 			})
 		}
 	}
