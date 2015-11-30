@@ -250,9 +250,8 @@ angular.module('eventMost')
 					elem = $('textarea.postcommentarea1');
 				}
 				
-				var scope = angular.element(elem).scope()
-				
-				scope.submitComment(scope.comment)
+				var comment = $('textarea.postcommentarea11').val();
+				s.submitComment(comment);
 			})
 		}
 	}
