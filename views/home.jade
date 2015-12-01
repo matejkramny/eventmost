@@ -190,7 +190,8 @@ append content
 	
 	.exc-spac
 	for event in myevents
-		mixin eventItem(event)
+		if((event.venue_name) && event.venue_name != '')
+			mixin eventItem(event)
 
 
 	if myevents.length == 0
