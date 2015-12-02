@@ -100,7 +100,7 @@ if (mode == "test") {
 }
 
 exports.db_config = credentials.db_config;
-exports.port = process.env.PORT || 3000;
+exports.port = 3333;
 
 exports.path = __dirname;
 
