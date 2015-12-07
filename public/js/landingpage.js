@@ -3,7 +3,7 @@ $(document).ready(function(){
 	$('#header').show();
 	
 	
-	var diff = $("#eventswrapper").offset().top - ($("#plane").offset().top + 200);
+	var diff = $("#eventswrapper").offset().top - ($("#plane").offset().top + 250);
 	if(navigator.platform == "Win32"){
 		diff = diff+30;
 	}
