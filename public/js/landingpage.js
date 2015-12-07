@@ -1,7 +1,21 @@
 var counter = 1;
 $(document).ready(function(){
 	$('#header').show();
-	var $el = $("#textbanner2"), text = $el.text(),
+	
+	
+	var diff = $("#eventswrapper").offset().top - ($("#plane").offset().top + 200);
+	if(navigator.platform == "Win32"){
+		diff = diff+30;
+	}
+
+	//console.log($("#plane").offset().top)
+	$('#eventswrapper').css({top: -diff});
+	
+	/*$('#eventswrapper').animate({top: -diff}, 1, 'swing', function(){
+	  //$('#header').show();
+	});*/
+
+	var $el = $("#textbanner2"), text = 'Search-events-below-or-create-your-own',
 	    words = text.split(""), html = "";
 
 	for (var i = 0; i < words.length; i++) {
@@ -17,18 +31,7 @@ $(document).ready(function(){
 	$el.html(html).children().hide().each(function(i){
 	  $(this).delay(i*5).fadeIn('fast');
 	});
-	
-	var diff = $("#eventswrapper").offset().top - ($("#plane").offset().top + 200);
-	if(navigator.platform == "Win32"){
-		diff = diff+30;
-	}
 
-	//console.log($("#plane").offset().top)
-	
-	
-	$('#eventswrapper').animate({top: -diff}, 10, 'swing', function(){
-	  //$('#header').show();
-	});
 	/*$('#header').css({"float": "left",
 				    "height": "85px",
 				    "position": "absolute",
