@@ -6,25 +6,25 @@
 			.container.ale
 					.textbanner(id="textbanner")(style="display:none; font-size:30px; top:50px; font-weight:bold")
 						| We are what the event attendees have been asking for:
-					.textbanner(id="textbanner2", style="display:none; font-size:30px; top:50px")
+					.textbanner(id="textbanner2", style="display:block; font-size:30px;")
 						| Search-events-below-or-create-your-own
 					.nspacer-awsome
-					.searchbanner(style="display:none; top:110px" id="searchbanner")
+					.searchbanner(style="display:block" id="searchbanner")
 						form(method="GET", accept-charset="utf-8", action="/search/")
 							input.pull-left.font-s.search-input.pad-left-ten.tempclass2(type="search", name="q", placeholder="search event by location, organizers, or key words", style=" height:50px; border-radius:0px; background-color:#f1f1f2;", value= typeof search !== "undefined" ? search.query : null)
 							input.gonew2.pull-left.header-links.tempclass3(type="submit", value="GO", style="width:10%;")
 					.searchbanner(style="width:500px; margin: 0px auto; left:35%; top:200px")
-						div(id="plane", style="display:none")
+						div(id="plane", style="display:block")
 							div
 								img(src="/images/social.png")
 							div
-								| One social network for all your events
-						div(id="plane2", style="display:none;")
+								| One social network
+						div(id="plane2", style="display:block;")
 							div
 								img(src="/images/dropbox.png")
 							div
 								| An Event Dropbox for sharing slideshows, photos etc
-						div(id="plane3", style="display:none;")
+						div(id="plane3", style="display:block;")
 							div
 								img(src="/images/feedback.png")
 							div
