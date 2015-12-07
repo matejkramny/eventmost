@@ -1,6 +1,35 @@
 var counter = 1;
 $(document).ready(function(){
-	$('#header').css({"float": "left",
+	$('#header').show();
+	var $el = $("#textbanner2"), text = $el.text(),
+	    words = text.split(""), html = "";
+
+	for (var i = 0; i < words.length; i++) {
+		var thisletter = words[i];
+		if(thisletter == '-'){
+			var newLetter = '&nbsp;';
+		}else{
+			var newLetter = thisletter;
+		}
+	    html += "<span style='margin: 0px'>" + newLetter + " </span>";
+	}
+
+	$el.html(html).children().hide().each(function(i){
+	  $(this).delay(i*5).fadeIn('fast');
+	});
+	
+	var diff = $("#eventswrapper").offset().top - ($("#plane").offset().top + 200);
+	if(navigator.platform == "Win32"){
+		diff = diff+30;
+	}
+
+	//console.log($("#plane").offset().top)
+	
+	
+	$('#eventswrapper').animate({top: -diff}, 10, 'swing', function(){
+	  //$('#header').show();
+	});
+	/*$('#header').css({"float": "left",
 				    "height": "85px",
 				    "position": "absolute",
 				    "width": "100%",
@@ -27,15 +56,17 @@ $(document).ready(function(){
 	$('#textbanner2').show();
 	$('#textbanner2').html('<span style="margin: 0px; display: inline;">S </span><span style="margin: 0px; display: inline;">e </span><span style="margin: 0px; display: inline;">a </span><span style="margin: 0px; display: inline;">r </span><span style="margin: 0px; display: inline;">c </span><span style="margin: 0px; display: inline;">h </span><span style="margin: 0px; display: inline;">&nbsp; </span><span style="margin: 0px; display: inline;">e </span><span style="margin: 0px; display: inline;">v </span><span style="margin: 0px; display: inline;">e </span><span style="margin: 0px; display: inline;">n </span><span style="margin: 0px; display: inline;">t </span><span style="margin: 0px; display: inline;">s </span><span style="margin: 0px; display: inline;">&nbsp; </span><span style="margin: 0px; display: inline;">b </span><span style="margin: 0px; display: inline;">e </span><span style="margin: 0px; display: inline;">l </span><span style="margin: 0px; display: inline;">o </span><span style="margin: 0px; display: inline;">w </span><span style="margin: 0px; display: inline;">&nbsp; </span><span style="margin: 0px; display: inline;">o </span><span style="margin: 0px; display: inline;">r </span><span style="margin: 0px; display: inline;">&nbsp; </span><span style="margin: 0px; display: inline;">c </span><span style="margin: 0px; display: inline;">r </span><span style="margin: 0px; display: inline;">e </span><span style="margin: 0px; display: inline;">a </span><span style="margin: 0px; display: inline;">t </span><span style="margin: 0px; display: inline;">e </span><span style="margin: 0px; display: inline;">&nbsp; </span><span style="margin: 0px; display: inline;">y </span><span style="margin: 0px; display: inline;">o </span><span style="margin: 0px; display: inline;">u </span><span style="margin: 0px; display: inline;">r </span><span style="margin: 0px; display: inline;">&nbsp; </span><span style="margin: 0px; display: inline;">o </span><span style="margin: 0px; display: inline;">w </span><span style="margin: 0px; display: inline;">n </span>');
 	$('#searchbanner').show();
-	var diff = $("#eventswrapper").offset().top - ($("#plane").offset().top + 100);
+	var diff = $("#eventswrapper").offset().top - ($("#plane").offset().top + 200);
 	if(navigator.platform == "Win32"){
 		diff = diff+30;
 	}
+
+	console.log($("#plane").offset().top)
 	
 	
 	$('#eventswrapper').animate({top: -diff}, 10, 'swing', function(){
 	  $('#header').show();
-	});
+	});*/
 	
 
 	setTimeout(function() {
@@ -172,7 +203,7 @@ function showForm(){
 		}
 
 		$el.html(html).children().hide().each(function(i){
-		  $(this).delay(i*20).fadeIn(20);
+		  $(this).delay(i*5).fadeIn('fast');
 		});
 
 		$( "#searchbanner" ).fadeIn( 10, function() {
