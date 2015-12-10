@@ -328,11 +328,14 @@ function postCommentAPICustom(req, res) {
 
 				if(inreplyto){
 					console.log("POSTCOMMENT: Updating in reply to");
+					
 					models.EventMessage.findByIdAndUpdate(inreplyto, {$set: { isResponse: true }}, function (err, message){
+						console.log("In Response set")
 						if(err)
 							console.log(err);
 
 						models.EventMessage.findByIdAndUpdate(inreplyto, {$push: {comments: msg}}, function(err){
+							console.log("comments set")
 							if(err)
 								console.log(err)
 						});

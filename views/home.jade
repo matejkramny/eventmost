@@ -29,9 +29,9 @@ append content
 				img(src="/images/other-icon.svg", alt="", class="create-e-img" )
 				.center other
 
-	.col-md-3.col-xs-3.nspacer.he1.hide-mini
+	.col-md-3.col-xs-3.nspacer.bg-ashen.he1.hide-mini
 		a(href="/profile")
-			img.img-responsive(src= user.avatar.length == 0 ? "/images/big-avatar.svg" : user.avatar, style="max-width:100%; height:100%; margin:auto; border-radius: 20%;")
+			img.img-responsive(src= user.avatar.length == 0 ? "/images/big-avatar.svg" : user.avatar, style="max-width:100%; height:100%; margin:auto; margin-top:10px")
 	a(href="/event/add")
 		.col-md-9.col-xs-9.nspacer.bg-purple.font-bigs.font-thin.center.he1.img-responsive.hide-mini
 			a.link-ashen.space(href="/event/add") Create event
@@ -118,8 +118,8 @@ append content
 	.clearfix.hide-all2
 
 	//- User card
-	.col-md-3.col-xs-3.nspacer.hide-mini(style="padding-left:0px")
-		.bg-ashen(style='height:312px;')
+	.col-md-3.col-xs-3.bg-ashen.hide-mini(style="padding-left:0px")
+		.bg-ashen(style='height:320px;')
 			p.break.font-e.center.font-thin2.pad-left-ten.pad-right-ten(style='padding-top:10px;')
 				a.link-purple(href="/user/"+user._id)= user.getName()
 			.pull-left.pad-left-ten
