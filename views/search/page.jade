@@ -1,7 +1,7 @@
 block css
 	link(rel="stylesheet" href="/css/landing.css?v=#{versionHash}")
 .header-image
-		.header_image
+		.header_image.hidden-xs
 			video(autoplay="autoplay", id="videoContainer", src="/timelaps.mp4", type="video/webm" loop="loop", style="height:100%; width:100%")
 			
 
@@ -16,20 +16,20 @@ block css
 							input.pull-left.font-s.search-input.pad-left-ten.tempclass2(type="search", name="q", placeholder="search event by location, organizers, or key words", style=" height:50px; border-radius:0px; background-color:#f1f1f2;", value= typeof search !== "undefined" ? search.query : null)
 							input.gonew2.pull-left.header-links.tempclass3(type="submit", value="GO", style="width:10%;")
 					.searchbanner(style="width:500px; margin: 0px auto; left:35%; top:200px")
-						div(id="plane", style="display:block")
+						.hidden-sm(id="plane", style="display:block")
 							div
 								img(src="/images/social.png")
-							div
+							.plan_font
 								| One social network
-						div(id="plane2", style="display:block;")
+						.hidden-sm(id="plane2", style="display:block;")
 							div
 								img(src="/images/dropbox.png")
-							div
+							.plan_font
 								| An Event Dropbox for sharing slideshows, photos etc
-						div(id="plane3", style="display:block;")
+						.hidden-sm(id="plane3", style="display:block;")
 							div
 								img(src="/images/feedback.png")
-							div
+							.plan_font
 								| Simple way to leave feedback for guest speakers
 
 			//-
