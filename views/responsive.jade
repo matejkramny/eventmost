@@ -114,19 +114,23 @@ html
 							img(src="/images/big-white-star.svg", style="height:15px; width=15px; vertical-align:initial")
 		
 		if (is_acting_user)
+			div(style="margin-bottom: 1%; margin-left: 20%;")
+				a(href="/auth/login/return",class="pull-left",style="font-size:20px",id="back-btn")
+					i(class="glyphicon glyphicon-arrow-left")
+					| &nbsp;Back to The Event
+			br
 			div(style="width:100%; background: #ACD90C; color: #000;")
 				.container
 					.nspacer
 					.col-sm-8.col-md-8.col-lg-8
 						p.lead(style="font-weight: 500; margin-bottom:15px;")!= loggedin_as_user_message
 					.col-sm-4.col-md-4.col-lg-4
-						
-
-						a.pull-right.btn.btn-info(href="/auth/login/return")
-							i.fa.fa-sign-out.fa-fw
-							|  !{loggedin_as_user_return_message}
-						div(style="widht:20%")
-							|        
+						//-
+							a.pull-right.btn.btn-info(href="/auth/login/return")
+								i.fa.fa-sign-out.fa-fw
+								|  !{loggedin_as_user_return_message}
+							div(style="widht:20%")
+								|        
 						a.pull-right.btn.btn-info(href="javascript:window.open('/messages/preview','mywindowtitle','width=1000px,height=900px')", style="margin-right:5px")
 							i.fa.fa-envelope
 							|  Preview
