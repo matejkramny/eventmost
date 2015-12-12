@@ -30,18 +30,19 @@ block content
 
 	.col-md-12.col-lg-12.col-sm-12
 		if (ev.backgroundImage)
-			.row(style="position:absolute; margin-top:40px; z-index:99999")
-				.col-md-12.col-xs-12.col-sm-12
-						.pull-left.pad-left-zero.left.inline.nspacer-small.font-exception(type='submit', style="")
-							a(href=base, class="color-green no-decoration" style="font-size: 25px; padding: 10px 0 10px 10px; background-color: #fff; text-decoration:none")
-								if (typeof hideArrow === "undefined" || hideArrow == false)
-									| &#8592
-								else
-									
-								| #{ev.name}&nbsp;&nbsp;&nbsp;
-								br
-								br
-					.pull-right
+			//-
+				.row(style="position:absolute; margin-top:40px; z-index:99999")
+					.col-md-12.col-xs-12.col-sm-12
+							.pull-left.pad-left-zero.left.inline.nspacer-small.font-exception(type='submit', style="")
+								a(href=base, class="color-green no-decoration" style="font-size: 25px; padding: 10px 0 10px 10px; background-color: #fff; text-decoration:none")
+									if (typeof hideArrow === "undefined" || hideArrow == false)
+										| &#8592
+									else
+										
+									| #{ev.name}&nbsp;&nbsp;&nbsp;
+									br
+									br
+						.pull-right
 		else
 			.col-md-12.col-xs-12.col-sm-12
 				.pull-left.pad-left-zero.left.inline.nspacer-small.font-exception(type='submit', style="")
@@ -106,10 +107,12 @@ block content
 						.map-area
 							iframe(frameborder='0', scrolling='no', marginheight='0', marginwidth='0', src="http://maps.google.com/maps?q=" + ev.address +"&output=embed")
 			.col-md-3.col-lg-3.col-sm-3.font16
-				.inline
-					img(src="/images/organizer.svg" alt=""  )
-				.font16.inline.color-green.semi-bold
-					| ORGANIZER
+				for attendee in locals.ev.attendees
+					if (attendee.admin && attendee.isAttending)
+						.inline
+							img(src="/images/organizer.svg" alt=""  )
+						.font16.inline.color-green.semi-bold
+							| ORGANIZER
 				.clearfix
 				.font16.inline(style="word-break:break-all; ")
 					for attendee in locals.ev.attendees

@@ -113,12 +113,18 @@ block content
 			if (eventadmin == true && theAttendee.user.isFeedbackProfile == true && ev._id.equals(theAttendee.user.feedbackProfileEvent))
 				.clearfix
 				br
-				.col-md-offset-10.col-xs-offset-10.col-sm-offset-10.col-md-2.col-xs-2.col-sm-2.lower.hide-mini3-except-smart
-					.right.iconsbox.spacerbig
+				.col-md-offset-8.col-xs-offset-8.col-sm-offset-8.col-md-4.col-xs-4.col-sm-4.lower.hide-mini3-except-smart
+					.right.iconsbox.spacerbig.pull-right
 						a(href="/event/#{ev._id}/admin/feedback/#{theAttendee._id}", class="link1")
-							button.btn.btn-primary.font-x(style="width:100%; padding:10px; padding-left:25px; padding-right:35px; margin-right:20px; text-align:center;")
-								| Edit feedback<br/>profile
+							button.btn.btn-primary.font-x(style="margin-right:20px; text-align:center; background-color: #FDD093 !important; color:#000; border-color: #FDD093")
+								| Edit Profile
 							.nspacer-small
+					.right.iconsbox.spacerbig.pull-right
+						a(href="/event/#{ev._id}/admin/feedback/#{theAttendee._id}/accessInbox", class="link1")
+							button.btn.btn-primary.font-x(style="margin-right:20px; text-align:center; background-color: #FDD093 !important; color:#000; border-color: #FDD093")
+								| View Inbox
+							.nspacer-small
+
 				.col-md-offset-10.col-xs-offset-10.col-sm-offset-10.col-md-2.col-xs-2.col-sm-2.lower-hide.hide-except-smart
 					.right.iconsbox.spacerbig
 						a(href="/event/#{ev._id}/admin/feedback/#{theAttendee._id}", class="link1")

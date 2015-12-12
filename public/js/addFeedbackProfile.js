@@ -1,5 +1,4 @@
 var file;
-
 angular.module('eventMost')
 .controller('feedbackProfileController', function($scope) {
 	$scope.profile = {
@@ -15,9 +14,12 @@ angular.module('eventMost')
 	$scope.progress = 0;
 	
 	$scope.init = function (profile, categories) {
+
+		
 		$scope.profile = profile.user;
 		$scope.profile._id = profile._id;
-		$scope.categories = categories;		
+		$scope.profile.category = profile.category;
+		$scope.categories = categories;
 		$('.avatar-upload-image').attr('src', $scope.profile.avatar || "/images/big-avatar-blue.svg");
 	}
 	
@@ -37,10 +39,10 @@ angular.module('eventMost')
 			{
 				errmsg += 'Name is missing.';
 			}
-			if( name == 'email' && ($scope.profile[name] == '' || $scope.profile[name] == null) )
-			{
-				errmsg += 'Email is invalid or missing.';
-			}
+			// if( name == 'email' && ($scope.profile[name] == '' || $scope.profile[name] == null) )
+			// {
+			// 	errmsg += 'Email is invalid or missing.';
+			// }
 
 			if( name == 'category' && ($scope.profile[name] == '' || $scope.profile[name] == null) )
 			{

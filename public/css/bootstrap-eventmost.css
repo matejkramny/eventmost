@@ -4172,3 +4172,7 @@ background-image:url("../images/glyphicons-halflings-white.png")
    
    #messages .nav > li > a:hover, .nav > li > a:focus{ background: none !important}
    .form-control{float:left !important;}     textarea.form-control{ min-height:70px !important}
+a#back-btn:hover {
+    text-decoration: none;
+    color: #fdd093;
+}
