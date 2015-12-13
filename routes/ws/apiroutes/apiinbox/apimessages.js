@@ -534,9 +534,9 @@ function consolidatedAPI(req,res) {
                                     .exec(function(err, saverprofiles) {
                                         if (err) throw err;
                                         saverProfile = saverprofiles;
-                                        var query = [{users: {$all: [userId]}}];
+                                        var query = {users: {$in: [userId]}};
                                         models.Topic.find(query)
-                                            .populate('users')
+                                            .populate({path: "users", match: {_id: {$ne: userId}}})
                                             .select('users lastUpdated eventid')
                                             .sort('lastUpdated')
                                             .exec(function (err, topicsUser) {
