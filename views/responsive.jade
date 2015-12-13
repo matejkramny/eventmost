@@ -114,10 +114,11 @@ html
 							img(src="/images/big-white-star.svg", style="height:15px; width=15px; vertical-align:initial")
 		
 		if (is_acting_user)
-			div(style="margin-bottom: 1%; margin-left: 20%;")
-				a(href="/auth/login/return",class="pull-left",style="font-size:20px",id="back-btn")
-					i(class="glyphicon glyphicon-arrow-left")
-					| &nbsp;Back to The Event
+			.container
+				div(style="margin-bottom: 1%")
+					a(href="/auth/login/return",class="pull-left",style="font-size:20px",id="back-btn")
+						i(class="glyphicon glyphicon-arrow-left")
+						| &nbsp;Back to The Event
 			br
 			div(style="width:100%; background: #ACD90C; color: #000;")
 				.container
