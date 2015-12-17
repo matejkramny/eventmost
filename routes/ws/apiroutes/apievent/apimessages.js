@@ -334,7 +334,10 @@ function postCommentAPICustom(req, res) {
 						if(err)
 							console.log(err);
 
-						models.EventMessage.findByIdAndUpdate(inreplyto, {$push: {comments: msg}}, function(err){
+						models.EventMessage.findById(inreplyto, function(err, evmsg){
+							evmsg.push(msg);
+							evmsg.markModified('messages');
+							evmsg.save();
 							console.log("comments set")
 							if(err)
 								console.log(err)
