@@ -15,7 +15,7 @@ var schema = mongoose.Schema
 
 var scheme = schema({
 	deleted: { type: Boolean, default: false },
-	name: { type: String, required: true },
+	name: { type: String, required: true, index: true },
 	venue_name: { type: String, required: false },
 	created: { type: Date, default: Date.now },
 	start: { type: Date, required: true },
@@ -25,7 +25,7 @@ var scheme = schema({
 		ref: 'Attendee'
 	}],
 	geo: {}, // don't store anything here. - temporary placeholder when the event is loaded
-	description: String,
+	description: { type: String, index:true},
 	avatar: {
 		type: ObjectId,
 		ref: 'Avatar'
@@ -99,6 +99,8 @@ var scheme = schema({
 		id: String
 	}
 })
+
+//scheme.index({name: 'text', description: 'text'});
 
 scheme.methods.arrangeFunctionAlphabetical = function (a, b) {
 	var aName = a.user.getName().toLowerCase();

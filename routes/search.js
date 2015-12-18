@@ -6,7 +6,27 @@ var fs = require('fs'),
 	, list = require('./event/list')
 
 exports.router = function (app) {
-	app.get('/search/', search)
+	app.get('/search/', search),
+	app.get('/searchtest/', searchtest)
+}
+
+function searchtest(req, res){
+	var q = req.query.q;
+	console.log(q);
+	models.Event.find({ 
+		"$text" : { "$search" : q } 
+	}).exec(function(err, evs) {
+		if (err) throw err
+		res.format({
+			json: function() {
+				res.send({
+					events: evs,
+					err: err
+				})
+			}
+		})
+	});
+	
 }
 
 exports.search = search;
