@@ -12,7 +12,7 @@ block css
 						| 
 					.nspacer-awsome
 					.searchbanner(style="display:block" id="searchbanner")
-						form(method="GET", accept-charset="utf-8", action="/search/")
+						form(method="GET", accept-charset="utf-8", action="/search/results/")
 							input.pull-left.font-s.search-input.pad-left-ten.tempclass2(type="search", name="q", placeholder="search event by location, organizers, or key words", style=" height:50px; border-radius:0px; background-color:#f1f1f2;", value= typeof search !== "undefined" ? search.query : null)
 							input.gonew2.pull-left.header-links.tempclass3(type="submit", value="GO", style="width:10%;")
 					.searchbanner(style="width:500px; margin: 0px auto; left:35%; top:200px")
@@ -39,7 +39,7 @@ block css
 						| <br /><br /> <b>Find any event here or create your own!</b>
 					.nspacer-awsome
 					.searchbanner
-						form(method="GET", accept-charset="utf-8", action="/search/")
+						form(method="GET", accept-charset="utf-8", action="/search/results/")
 							input.pull-left.font-s.search-input.pad-left-ten.tempclass2(type="search", name="q", placeholder="search event by location, organizers, or key words", style=" height:50px; border-radius:0px; background-color:#f1f1f2;", value= typeof search !== "undefined" ? search.query : null)
 							input.gonew2.pull-left.header-links.tempclass3(type="submit", value="GO", style="width:10%;")
 
@@ -50,7 +50,7 @@ block css
 
 				//.col-sm-8.col-md-8.col-lg-8.pad-left-zero
 					.nspacer
-					form(method="GET", accept-charset="utf-8", action="/search/")
+					form(method="GET", accept-charset="utf-8", action="/search/results/")
 						input.pull-left.font-s.search-input.pad-left-ten.header-links(type="search", name="q", placeholder="search event by location, organizers, or key words", style="width:75%; height:50px; border-radius:0px; background-color:#f1f1f2;", value= typeof search !== "undefined" ? search.query : null)
 						input.gonew2.pull-left.header-links(type="submit", value="GO", style="width:10%;")
 			//.nspacer
