@@ -77,7 +77,6 @@ $(document).ready(function(){
     }, 12000);
 
     $("#loadSoonEvents").click(function (){
-  		alert('soon')
   		//var soonRes = '<div class="nspacer"></div><div>This is a test</div>';
         //$('#fetchedEvents').html(soonRes);
         $('#successmsg').html('<div style="margin-top:10px"><center><img src="../images/loading.gif" /></center></div>');
@@ -94,7 +93,6 @@ $(document).ready(function(){
   	});
 
   	$("#loadNearestEvents").click(function (){
-  		alert('near')
   		console.log(window.lastCoords);
   		var coords = window.lastCoords;
   		$('#successmsg').html('<div style="margin-top:10px"><center><img src="../images/loading.gif" /></center></div>');
