@@ -6,7 +6,75 @@ var fs = require('fs'),
 	, list = require('./event/list')
 
 exports.router = function (app) {
-	app.get('/search/', search)
+	app.get('/search/', search),
+	app.get('/search/results', searchresults)
+}
+
+function searchresults(req, res){
+	var q = req.query.q;
+	if(q && q !== ''){
+		
+		var query = { 
+			"$text" : { "$search" : q } 
+		};
+		models.Event.find(query).limit(50).populate('avatar').exec(function(err, evs) {
+			if (err) throw err
+
+			evs.forEach(function(entry) {
+						
+				if((entry.description) && entry.description != ''){
+
+					//console.log(entry.description);
+					entry.description = entry.description.replace(/(<([^>]+)>)/ig,"");
+					entry.description = entry.description.trim();
+					entry.description = entry.description.replace(/(\r\n|\n|\r)/gm,"");
+					var totalLength = entry.description.length;
+					entry.description = entry.description.substr(0, 350);
+					var newLength = entry.description.length;
+					if(totalLength > 350){
+						entry.description = entry.description+" . . .";
+					}
+				}
+				
+			});
+			if(req.user){
+				res.format({
+				
+					html: function() {
+						res.locals.search = {
+							query: q,
+							results: evs
+						};
+						res.render('home', {
+							title: "EventMost",
+							myevents: evs || [],
+							moment: moment,
+							sort: req.query.sort
+						});
+					},
+					json: function() {
+						res.send({
+							events: evs,
+							err: err
+						})
+					}
+				})
+			}else{
+				res.locals.search = {
+					query: q,
+					results: evs,
+					type: 'events'
+				}
+				res.locals.moment = moment;
+				res.render('search/results')
+			}
+			
+		});
+	}else{
+		res.redirect('/');
+	}
+	
+	
 }
 
 exports.search = search;

@@ -82,7 +82,7 @@ html
 									a.font-e.link-purple.header-links(href="/event/"+recentEvent) Return to Event: #{recentEventName}
 							.clearfix
 							.nspacer.hide-mini
-								form(method="GET", accept-charset="utf-8", action="/search/")
+								form(method="GET", accept-charset="utf-8", action="/search/results/")
 									input.pull-left.font-s.search-input.pad-left-ten.header-links(type="search", name="q", placeholder="Search for Events or People on EventMost", style="width:75%;", value= typeof search !== "undefined" ? search.query : null)
 									input.gonew2.pull-left.header-links(type="submit", value="GO", style="width:10%; height:36px; border-top-right-radius:10px;  border-bottom-right-radius:10px;")
 					else
