@@ -25,7 +25,12 @@ block content
 					- if (!card) continue;
 
 					
-					img.img-responsive.col-sm-4.col-md-4.col-lg-4(src="/businesscards/"+card._id+".png", style= card.primary ? "border-right:1px black solid; border-left:1px black solid;" : null)
+					div
+						a(href="/cards/remove/"+card._id, title="Delete Card")
+							i(class="glyphicon glyphicon-trash")
+
+						img.img-responsive.col-sm-4.col-md-4.col-lg-4(src="/businesscards/"+card._id+".png", style= card.primary ? "border-right:1px black solid; border-left:1px black solid;" : null)
+						
 			br.hidden-xs
 		if (locals.cards.length == 0)
 			h3.text-center No Business Cards Added

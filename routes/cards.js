@@ -18,10 +18,36 @@ exports.router = function (app) {
 		.get('/cards/choosePrimary/:id', doChoosePrimary)
 		.get('/cards/upload', uploadCard)
 		.post('/cards/upload', uploadCardImage)
+		.get('/cards/remove/:id', remove)
 }
 
 function uploadCard(req, res){
 	res.render('profile/uploadcard', { title: "Upload Card" });
+}
+
+function remove(req, res){
+	var id = req.params.id;
+
+	models.Card.findOne({ _id: id }, function(err, card) {
+		if (card) {
+			if(String(req.user._id) == String(card.user)){
+				
+
+				card.remove();
+				req.session.message = "Card Deleted Successfully!";
+				res.redirect('/cards');
+			}else{
+				req.session.message = "You are not authorized!";
+				res.redirect('/cards');
+			}
+		} else {
+			req.session.message = "Card Not Found!";
+			res.redirect('/cards');
+		}
+	})
+
+	
+
 }
 
 function uploadCardImage(req, res){
