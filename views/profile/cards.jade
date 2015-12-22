@@ -17,7 +17,7 @@ block content
 				br.visible-xs
 		
 		- for(var i = 0; i < locals.cards.length;)
-			.row
+			.row(style="margin-bottom 20px")
 				- for(var x = 0; x < 3; x++)
 					- var index = i++;
 					
@@ -25,7 +25,11 @@ block content
 					- if (!card) continue;
 
 					
-					img.img-responsive.col-sm-4.col-md-4.col-lg-4(src="/businesscards/"+card._id+".png", style= card.primary ? "border-right:1px black solid; border-left:1px black solid;" : null)
+					a(href="/cards/remove/"+card._id, title="Delete", style="position:absolute; margin-left: -10px")
+						i(class="glyphicon glyphicon-trash")
+
+					img.img-responsive.col-sm-4.col-md-4.col-lg-4(src="/businesscards/"+card._id+".png", style= card.primary ? "border-bottom:1px black solid; padding-bottom:5px" : null)
+						
 			br.hidden-xs
 		if (locals.cards.length == 0)
 			h3.text-center No Business Cards Added
