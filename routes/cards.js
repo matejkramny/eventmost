@@ -32,7 +32,7 @@ function remove(req, res){
 		if (card) {
 			if(String(req.user._id) == String(card.user)){
 				
-
+				fs.unlink(config.path + "/public/businesscards/" + card._id + ".png");
 				card.remove();
 				req.session.message = "Card Deleted Successfully!";
 				res.redirect('/cards');
