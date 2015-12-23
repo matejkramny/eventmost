@@ -28,7 +28,7 @@ block content
 					a(href="/cards/remove/"+card._id, title="Delete", style="position:absolute; margin-left: -10px")
 						i(class="glyphicon glyphicon-trash")
 
-					img.img-responsive.col-sm-4.col-md-4.col-lg-4(src="/businesscards/"+card._id+".png", style= card.primary ? "border-bottom:1px black solid; padding-bottom:5px" : null)
+					img.img-responsive.col-sm-4.col-md-4.col-lg-4(src="/businesscards/"+card._id+".png", style= card.primary ? "border-bottom:1px black solid; padding-bottom:5px; width:350px; height: 200px" : "width:350px; height: 200px")
 						
 			br.hidden-xs
 		if (locals.cards.length == 0)
