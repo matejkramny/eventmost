@@ -334,7 +334,10 @@ function postCommentAPICustom(req, res) {
 						if(err)
 							console.log(err);
 
-						models.EventMessage.findByIdAndUpdate(inreplyto, {$push: {comments: msg}}, function(err){
+						models.EventMessage.findById(inreplyto, function(err, evmsg){
+							evmsg.comments.push(msg);
+							evmsg.markModified('messages');
+							evmsg.save();
 							console.log("comments set")
 							if(err)
 								console.log(err)
@@ -361,9 +364,15 @@ function postCommentAPICustom(req, res) {
 				//		console.log(err);
 				//});
 				
-				models.Event.findById(req.params.id, function (err, ev) {
-				    ev.messages.push(msg._id);
-			     	ev.save()
+				models.Event.findById(req.params.id).populate("messages").exec(function (err, ev) {
+				    ev.messages.push(msg);
+					ev.markModified('messages');
+			     	ev.save(function(err, updatedEvent){
+						 console.info("Event Saved");
+						 if(err)
+						 	console.error(err);
+					 });
+					ev.markModified('messages');
 				});
 
 				console.log("POSTCOMMENT: All done");
@@ -372,7 +381,8 @@ function postCommentAPICustom(req, res) {
 					json: function () {
 						res.send({
 							status: 200,
-							comment: message
+							comment: message,
+							id: msg._id
 						})
 					}
 				})
