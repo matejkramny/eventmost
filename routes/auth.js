@@ -301,7 +301,7 @@ function performPasswordReset (req, res) {
 				from: "EventMost <notifications@eventmost.com>",
 				to: reset.user.getName()+" <"+reset.user.email+">",
 				subject: "Password Reset Notification",
-				html: "<img src=\"http://eventmost.com/images/logo.svg\">\
+				html: "<img src=\"http://eventmost.com/images/logo.png\">\
 		<br/><br/><p><strong>Hi "+reset.user.getName()+",</strong><br/><br/>Your password was reset at "+moment().format('DD/MM/YYYY HH:mm:ss')+".<br/>If you have not authorised this, please contact us <strong>IMMEDIATELY</strong> at <a href='mailto:support@eventmost.com'>support@eventmost.com</a>"
 			}
 			if (!config.transport_enabled) {
