@@ -543,7 +543,7 @@ scheme.methods.edit = function (body, user, files, cb) {
 	}
 	
 	// Validate the data
-	this.validate(function(errors) {
+	this.validateInput(function(errors) {
 		if (errors && errors.length > 0) {
 			// has errors
 			cb(errors);
@@ -559,7 +559,7 @@ scheme.methods.edit = function (body, user, files, cb) {
 	//console.log(this);
 }
 
-scheme.methods.validate = function (cb) {
+scheme.methods.validateInput = function (cb) {
 	var errs = [];
 	if (!this.name || this.name.length == 0) {
 		errs.push("Event Name must not be blank")
