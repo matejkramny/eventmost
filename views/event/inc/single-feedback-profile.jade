@@ -5,7 +5,7 @@ mixin feedbackProfile(attendee, feedbackProfile)
 	if (attendee.user.isFeedbackProfile)
 			.col-sm-4.col-xs-4.col-md-4.nspacer.attendee-hover
 				div(class= attendee.admin ? "grey-rounded-box" : null data-toggle= feedbackProfile ? "tooltip" : null data-placement="top" title= feedbackProfile ? "Newsletter will be sent to "+attendee.user.email : null)
-					.pull-left.circle-avatar-new(style= feedbackProfile == false ? null : "border-radius:0;-webkit-border-radius:0;-moz-border-radius:0;")
+					.pull-left.circle-avatar-new(style= feedbackProfile == false ? null : "")
 						img(class="image-circle-avatar-new", src= attendee.user.avatar.length == 0 ? "/images/default_speaker-purple.svg" : attendee.user.avatar+"-116x116.png")
 					.pull-left.center.font-exception-thin.width-attendees.pad-left-ten
 						.font20a.nspacer.font-exception
