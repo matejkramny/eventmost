@@ -305,7 +305,7 @@ exports.emailMessageNotification = function (person, from, link, body) {
 		from: "EventMost <notifications@eventmost.com>",
 		to: person.getName()+" <"+person.email+">",
 		subject: from.getName()+" via EventMost",
-		html: "<img src=\"http://eventmost.com/images/logo.svg\">\
+		html: "<img src=\"http://eventmost.com/images/logo.png\">\
 <br/><br/><p><strong>Hi "+person.getName()+",</strong><br/><br/>We're sorry to interrupt you, but "+from.getName()+" sent you a message on EventMost.<br/>\
 <br />Click <a href='http://eventmost.com/"+link+"'>here</a> to view the message.\
 <br />"+body+"<br />\
@@ -345,7 +345,7 @@ exports.emailEventNotification = function (person, event, link, body) {
 		from: "EventMost <notifications@eventmost.com>",
 		to: person.getName()+" <"+person.email+">",
 		subject: event.name+" Event via EventMost",
-		html: "<img src=\"http://eventmost.com/images/logo.svg\">\
+		html: "<img src=\"http://eventmost.com/images/logo.png\">\
 <br/><br/><p><strong>Hi "+person.getName()+",</strong><br/><br/>We're sorry to interrupt you, but \
 people are posting comments for your event, "+event.name+": <a href='http://eventmost.com/"+link+"'>"+body+"</a>\
 </p><br/>You can turn off email notifications in your settings.<br/>\
@@ -387,7 +387,7 @@ exports.emailNotification = function (person, link) {
 		from: "EventMost <notifications@eventmost.com>",
 		to: person.getName()+" <"+person.email+">",
 		subject: "Notifications Pending on EventMost ",
-		html: "<img src=\"http://eventmost.com/images/logo.svg\">\
+		html: "<img src=\"http://eventmost.com/images/logo.png\">\
 <br/><br/><p><strong>Hi "+person.getName()+",</strong><br/><br/>We're sorry to interrupt you, but you have some notifications pending on EventMost.<br/>\
 <br />Click <a href='http://eventmost.com/"+link+"'>here</a> to view your all your notifications.\
 <br /><br />Note: No more emails will be sent until you view the notifications.\
