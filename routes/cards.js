@@ -178,7 +178,7 @@ function sendCard (req, res) {
 			
 			if (user) {
 				if (user.notification.email.businessCards) {
-					inbox.emailNotification(user, "inbox")
+					inbox.emailNotification(user, "messages")
 				}
 				user.mailboxUnread++;
 				
