@@ -336,6 +336,7 @@ function performPasswordReset (req, res) {
 }
 
 function authSuccess (req, res) {
+	console.log(req.session);
 	if (req.session.socialRedirect) {
 		var evid = req.session.socialRedirect;
 		req.session.socialRedirect = null;
