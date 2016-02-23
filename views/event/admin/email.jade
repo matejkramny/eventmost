@@ -10,77 +10,80 @@ block content
 	+navbar
 	
 	.clearfix
-	form#newMessage(action="", method="POST")
-	input(type="hidden", name="_csrf", value=token)
-	.nspacer
-	.col-lg-12.col-md-12.col-xs-12.display
-		button.btn.btn-info.font-x1.pull-left(type='button', style="height:55px; margin-right:10px; border:10px; padding:10px; padding-left:15px; padding-right:15px;")
-			| Send
-			br
-			| by category
-		button.btn.btn-primary.font-x1.pull-left(type='button', style="height:55px; border:10px; padding:10px; padding-left:15px; padding-right:15px;")
-			| All
-			br
-			| attendees
-		.clearfix
+	form#newMessage(action="", method="POST", name="newmessage")
+		input(type="hidden", name="_csrf", value=token)
+		//-
+			.nspacer
+			.col-lg-12.col-md-12.col-xs-12.display
+				button.btn.btn-info.font-x1.pull-left(type='button', style="height:55px; margin-right:10px; border:10px; padding:10px; padding-left:15px; padding-right:15px;")
+					| Send
+					br
+					| by category
+				button.btn.btn-primary.font-x1.pull-left(type='button', style="height:55px; border:10px; padding:10px; padding-left:15px; padding-right:15px;")
+					| All
+					br
+					| attendees
+				.clearfix
 
-	.nspacer.display
-	.col-lg-12.col-md-12.col-xs-12.display
-		.container.bg-purple.pad-top-zero.pad-right-zero(style="height:55px;")
-			.pull-left.subject
-				.font-evente.logo-text.nspacer-medium2.send-text
-					| SEND TO:
-			.pull-left.subject-input
-					input.input-grey(name="login", type="search", placeholder="search",style="height:43px;")
+			.nspacer.display
+			.col-lg-12.col-md-12.col-xs-12.display
+				.container.bg-purple.pad-top-zero.pad-right-zero(style="height:55px;")
+					.pull-left.subject
+						.font-evente.logo-text.nspacer-medium2.send-text
+							| SEND TO:
+					.pull-left.subject-input
+							input.input-grey(name="login", type="search", placeholder="search",style="height:43px;")
 
-	.col-lg-9.col-md-9.col-xs-8.dont-display
-		.container.bg-purple.pad-top-zero.pad-right-zero(style="height:55px;")
-			.pull-left.send-to
-				.font-evente.logo-text.nspacer-medium2.send-text
-					| SEND TO:
-			.pull-left.send-to-input
-					input.input-grey(name="login", type="search", placeholder="search",style="height:43px;")
-		.clearfix
-	.col-lg-3.col-md-3.col-xs-4.pad-left-zero.dont-display
-		button.btn.btn-info.font-x1.pull-right(type='button', style="height:55px; border:10px; padding:10px; padding-left:15px; padding-right:15px;")
-			| Send
-			br
-			| by category
-		button.btn.btn-primary.font-x1.pull-right.butt-mar(type='button', style="height:55px; border:10px; padding:10px; padding-left:15px; padding-right:15px;")
-			| All
-			br
-			| attendees
-	.clearfix
-	.nspacer-small
-	.col-lg-12.col-md-12.col-xs-12
-		.container.bg-purple.pad-top-zero.pad-right-zero(style="height:55px;")
-			.pull-left.subject
-				.font-evente.logo-text.nspacer-medium2.send-text
-					| SUBJECT:
-			.pull-left.subject-input
-					input.input-grey(name="subject", type="text", style="height:43px;")
-		.clearfix
-
-	.col-lg-12.col-md-12.col-xs-12.no-float				
-		.nspacer-small
-		.bg-green
-			.pull-left
-				img.psev(src="/images/pencil.svg")
-			.pull-left.font2.font-thin.nspacer-small
-				| Message
-			.pull-right.pad-right-ten.nspacer
-				img(src="/images/optional-white.svg")
+			.col-lg-9.col-md-9.col-xs-8.dont-display
+				.container.bg-purple.pad-top-zero.pad-right-zero(style="height:55px;")
+					.pull-left.send-to
+						.font-evente.logo-text.nspacer-medium2.send-text
+							| SEND TO:
+					.pull-left.send-to-input
+							input.input-grey(name="login", type="search", placeholder="search",style="height:43px;")
+				.clearfix
+			.col-lg-3.col-md-3.col-xs-4.pad-left-zero.dont-display
+				button.btn.btn-info.font-x1.pull-right(type='button', style="height:55px; border:10px; padding:10px; padding-left:15px; padding-right:15px;")
+					| Send
+					br
+					| by category
+				button.btn.btn-primary.font-x1.pull-right.butt-mar(type='button', style="height:55px; border:10px; padding:10px; padding-left:15px; padding-right:15px;")
+					| All
+					br
+					| attendees
 			.clearfix
-		.clearfix
-
-		textarea#tinyeditor(style="height: 200px; width:1000px;", name="message", placeholder="Message...")
-	
-		.clearfix
+			
 		.nspacer-small
 		.col-lg-12.col-md-12.col-xs-12
-			//-button.btn.btn-primary.font.pull-left(type='button', style="font-size:22px; margin-right:10px; height:55px; border:10px; padding:10px; padding-left:15px; padding-right:15px;")
-			//-	| Add file...
-			button.btn.btn-warning.font.pull-right(type='submit', onclick="$('#newMessage').submit()" style="font-size:22px; height:55px; border:10px; padding:10px; padding-left:15px; padding-right:15px;")
-				| SEND
-		.clearfix
+			| Message will be delievered to all attendees.
+			.container.bg-purple.pad-top-zero.pad-right-zero(style="height:55px;")
+				.pull-left.subject
+					.font-evente.logo-text.nspacer-medium2.send-text
+						| SUBJECT:
+				.pull-left.subject-input
+						input.input-grey(name="subject", type="text", required, style="height:43px;")
+			.clearfix
+
+		.col-lg-12.col-md-12.col-xs-12.no-float				
+			.nspacer-small
+			.bg-green
+				.pull-left
+					img.psev(src="/images/pencil.svg")
+				.pull-left.font2.font-thin.nspacer-small
+					| Message
+				.pull-right.pad-right-ten.nspacer
+					img(src="/images/optional-white.svg")
+				.clearfix
+			.clearfix
+
+			textarea#tinyeditor(style="height: 200px; width:1000px;", required, name="message", placeholder="Message...")
+		
+			.clearfix
+			.nspacer-small
+			.col-lg-12.col-md-12.col-xs-12
+				//-button.btn.btn-primary.font.pull-left(type='button', style="font-size:22px; margin-right:10px; height:55px; border:10px; padding:10px; padding-left:15px; padding-right:15px;")
+				//-	| Add file...
+				button.btn.btn-warning.font.pull-right(type='submit', value='submit', onclick="if(document.getElementById('newMessage').checkValidity() == true) $('#newMessage').submit()", style="font-size:22px; height:55px; border:10px; padding:10px; padding-left:15px; padding-right:15px;")
+					| SEND
+			.clearfix
 	
