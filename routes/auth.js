@@ -336,14 +336,14 @@ function performPasswordReset (req, res) {
 }
 
 function authSuccess (req, res) {
-	console.log(req.session);
+	/*console.log(req.session);
 	if (req.session.socialRedirect) {
 		var evid = req.session.socialRedirect;
 		req.session.socialRedirect = null;
 		
 		res.redirect('/event/'+evid+"/registrationpage/edit");
 		return;
-	}
+	}*/
 	
 	if (req.session.redirectAfterLogin) {
 		var redirect = req.session.redirectAfterLogin
