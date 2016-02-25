@@ -19,6 +19,7 @@ function view (req, res) {
 	if (!res.locals.eventattending) {
 		res.format({
 			html: function() {
+				req.session.flash.push("Dropbox is available for Attendees")
 				res.redirect('/event/'+res.locals.ev._id);
 			},
 			json: function() {
