@@ -8,6 +8,7 @@ var models = require('../../models')
 exports.router = function (app) {
 	app.get('/events', exports.listEvents)
 		.get('/events/my', util.authorized, exports.listMyEvents)
+		.get('/events/my/passed', util.authorized, exports.listMyPassedEvents)
 		.get('/events/near', exports.listNearEvents)
 		.get('/events/nearlanding', exports.listNearLandingEvents)
 		.get('/events/countnear/:lat/:lng', countnear)
@@ -320,13 +321,25 @@ exports.listMyEvents = function (req, res) {
 		var query = { 
 			'attendees': { $in: attendees },
 			'source.meetup': false,
-			'source.facebook': false
+			'source.facebook': false,
+			'start':{
+				$gte : new Date()
+			},
+			'end': {
+				$gt: new Date()
+			}
 		 };
+
+		//console.log(query);
 		
+		/*
+		- Display Events happening very very soon -> near future
+
+		*/
 		models.Event.find(query)
 			.populate('avatar attendees.user')
 			.select('name description start end address venue_name avatar source')
-			.sort('-end')
+			.sort({'start':1})
 			.skip(skip)
 			.exec(function(err, evs) {
 			if (err) throw err;
@@ -357,9 +370,85 @@ exports.listMyEvents = function (req, res) {
 							res.locals.eventsTotal = total;
 							res.locals.eventsSkip = skip;
 							res.locals.pageURL = '/events/my';
+							res.locals.datenow = new Date();
 						
 							res.locals.moment = moment;
 							res.render('event/list', { events: evs, pagename: "My Events", title: "My Events" });
+						},
+						json: function() {
+							res.send({
+								events: evs,
+								total: total,
+								skip: skip,
+								pagename: "My Events"
+							})
+						}
+					})
+				});
+			}
+		})
+	})
+}
+
+exports.listMyPassedEvents = function (req, res) {
+	var skip = Number(req.query.skip) || 0;
+	console.log(skip);
+	models.Attendee.find({ 'user': req.user._id }, '_id', function(err, attendees) {
+		var query = { 
+			'attendees': { $in: attendees },
+			'source.meetup': false,
+			'source.facebook': false,
+			'end': {
+				$not : {
+					$gt: new Date()
+				}
+			}
+		 };
+
+		//console.log(query);
+		
+		/*
+		- Display Events happening very very soon -> near future
+
+		*/
+		models.Event.find(query)
+			.populate('avatar attendees.user')
+			.select('name description start end address venue_name avatar source')
+			.sort({'start':-1})
+			.skip(skip)
+			.exec(function(err, evs) {
+			if (err) throw err;
+			if (evs) {
+				
+				models.Event.find(query).count(function(err, total) {
+
+					evs.forEach(function(entry) {
+						
+						if((entry.description) && entry.description != ''){
+
+							//console.log(entry.description);
+							entry.description = entry.description.replace(/(<([^>]+)>)/ig,"");
+							entry.description = entry.description.trim();
+							entry.description = entry.description.replace(/(\r\n|\n|\r)/gm,"");
+							var totalLength = entry.description.length;
+							entry.description = entry.description.substr(0, 350);
+		    				var newLength = entry.description.length;
+		    				if(totalLength > 350){
+		    					entry.description = entry.description+" . . .";
+		    				}
+						}
+						
+					});
+
+					res.format({
+						html: function() {
+							res.locals.eventsTotal = total;
+							res.locals.eventsSkip = skip;
+							res.locals.pageURL = '/events/my/passed';
+							res.locals.datenow = new Date();
+						
+							res.locals.moment = moment;
+							res.render('event/list', { events: evs, pagename: "My Passed Events", title: "My Passed Events" });
 						},
 						json: function() {
 							res.send({
