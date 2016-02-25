@@ -23,7 +23,6 @@ html
 			
 			link(rel="stylesheet" href="/css/bootstrap-timepicker.min.css?v=#{versionHash")
 
-			
 
 	body(ng-app="eventMost" onload="initialize()" )
 		//- main container
@@ -38,10 +37,16 @@ html
 						//- Only displayed when user is logged in		
 
 						.pull-right.width7(ng-controller="inboxNotifications")
-							a.image(href="/event/#{ev._id}/dropbox")
-								img.mail.pull-right.img-mess-smart(src="/images/small-dropbox-icon.svg" alt="" style="width:100%;")
-							.font-header-icon.center.drop-icon-text
-								| Event <br />dropbox
+							if (typeof ev !== "undefined")
+								a.image(href="/event/#{ev._id}/dropbox")
+									img.mail.pull-right.img-mess-smart(src="/images/small-dropbox-icon.svg" alt="" style="width:100%;")
+								.font-header-icon.center.drop-icon-text
+									| Event <br />dropbox
+							else
+								a.image(href="/event/my")
+									img.mail.pull-right.img-mess-smart(src="/images/small-dropbox-icon.svg" alt="" style="width:100%;")
+								.font-header-icon.center.drop-icon-text
+									| Event <br />dropbox
 								
 						.pull-right.width7(ng-controller="inboxNotifications")
 							a.image(href="/user/"+user._id)
