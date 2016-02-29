@@ -19,9 +19,10 @@ $(document).ready(function() {
 			$.ajax({
 				url: "/search/users/?q="+input_val,
 				beforeSend: function( xhr ) {
+					$('#loading').show();
 				}
 			}).done(function( data ) {
-				
+				$('#loading').hide();
 				data.forEach(function(this_user){
 					
 					var this_user_name = this_user.name+" "+this_user.surname;
@@ -33,6 +34,7 @@ $(document).ready(function() {
 				$('#searchresults').html(resultHTML);
 				
 			}).fail(function(){
+				$('#loading').hide();
 				console.log("fail");
 				$('#searchresults').html('');
 			});
