@@ -4,6 +4,7 @@ include inc/navbar
 include inc/attendee
 include inc/message
 
+
 append addonjs
 	script(src="/js/eventLandingPage.js?v=#{versionHash}" defer)
 	script(src="/js/drops.js?v=#{versionHash}" defer)
@@ -195,4 +196,5 @@ block content
 	
 	.clearfix
 	.nspacer
+	include ../modals/make-admin
 	

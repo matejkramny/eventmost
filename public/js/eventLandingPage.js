@@ -1,4 +1,53 @@
 $(document).ready(function() {
+	$("#username").on("input", function(){
+		/*
+		
+		*** Fix HTML with Make Admin Button
+		*** Create Loop with HTML piece.
+		*** Filter Already Planners from search Results
+		- Route for Make Admin
+			- add user as attendee
+			- add him admin
+
+		*/
+
+		var resultHTML = '';
+		var eventId = $('#eventid').val();
+		var img_src = "/profileavatars/540a02239643993c198d7b1d.jpeg";
+		var input_val = $("#username").val();
+		if(input_val != ''){
+			$.ajax({
+				url: "/search/users/?q="+input_val,
+				beforeSend: function( xhr ) {
+				}
+			}).done(function( data ) {
+				
+				data.forEach(function(this_user){
+					
+					var this_user_name = this_user.name+" "+this_user.surname;
+					var this_user_avatar = (this_user.avatar == '' ? '/images/default_speaker-purple.svg':this_user.avatar);
+					var this_user_link = '/event/'+eventId+'/admin/addUserAsAdmin/'+this_user._id;
+					resultHTML = resultHTML+'<div class="pop-input center"><a href="'+this_user_link+'"><div style="width:15%; float:left"><img src="'+this_user_avatar+'" style="max-height:50px; max-width:50px"></div><div style="float:left"><span>'+this_user_name+'</span></div></a></div><div class="clearfix"></div>';
+				})
+				
+				$('#searchresults').html(resultHTML);
+				
+			}).fail(function(){
+				console.log("fail");
+				$('#searchresults').html('');
+			});
+		}else{
+			$('#searchresults').html('');
+
+		}
+	});
+
+
+
+
+
+
+
 	$accessEvent = $("#accessEvent")
 	$createOwnCategory = $("#createOwnCategory")
 	$eventCategoryList = $("#eventCategoryList")

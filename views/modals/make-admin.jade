@@ -1,0 +1,19 @@
+#makeAdminModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="", aria-hidden="true")
+	.modal-dialog
+		.modal-content
+			.modal-body.reveal-modal
+				h1 Choose new Planner
+				form#makeadmin(action="", method="POST")
+					.formStatus.center
+					.pop-input.center(style=)
+						input#username(name="username", value="" type="text", placeholder="Type a name" autocomplete="false", style="width:60%")
+						input#eventid(type="hidden", value="#{ev._id}")
+
+					#searchresults
+
+					//-
+						.pop-input.center#adminBtn(style="display:none")
+							button.btn.btn-primary.font.font-ah(type='button')
+								| Make Admin
+						.clearfix
+				.clearfix

@@ -8,6 +8,7 @@ var fs = require('fs'),
 exports.router = function (app) {
 	app.get('/search/', search),
 	app.get('/search/results', searchresults)
+	app.get('/search/users', searchUser)
 }
 
 function searchresults(req, res){
@@ -144,6 +145,8 @@ function searchEvents(req, res, q) {
 	/*------------------------ End Normal Events ----------------------- */
 }
 
+
+
 function searchPeople(req, res, q) {
 	var split = q.split(' ');
 	var query = {
@@ -183,4 +186,41 @@ function searchPeople(req, res, q) {
 			res.render('login')
 		}
 	});
+}
+
+function searchUser(req, res) {
+	
+	var q = req.query.q;
+	var split = q.split(' ');
+	var query = {
+		_id: {$ne: req.user._id},
+		isFeedbackProfile: false,
+		disabled: false
+	};
+
+	if (split.length > 0 && split[0].length > 0) {
+		query.name = {'$regex':split[0]}
+	}
+	if (split.length > 1 && split[1].length > 0) {
+		query.surname = {'$regex':split[1]};
+	}
+	
+	models.User.find(query).select('name surname avatar')
+	.exec(function(err, people) {
+		if (err) throw err; 
+		if (people && people.length > 0) {
+				//console.log(people)
+				res.format({
+					json: function() {
+						res.send(people)
+					}
+				});
+		}else{
+			res.format({
+					json: function() {
+						res.send(404)
+					}
+				});
+		}
+	})
 }
