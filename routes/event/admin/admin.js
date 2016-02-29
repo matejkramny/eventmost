@@ -7,6 +7,7 @@ var fs = require('fs'),
 	, summary = require('./summary')
 	, email = require('./email')
 	, register = require('./register')
+	, attendees = require('../attendees')
 
 exports.router = function (app) {
 	app.get('/event/:id/admin', util.authorized, event.attending, mustBeAdmin, eventAdmin)
@@ -18,11 +19,63 @@ exports.router = function (app) {
 		.get('/event/:id/admin/logos', eventLogo)
 		.get('/event/:id/admin/panel', eventPanel)
 		.get('/event/:id/admin/addAdmin/:attendee', addAdmin)
+		.get('/event/:id/admin/addUserAsAdmin/:user', addUserAsAdmin)
 	
 	email.router(app)
 	summary.router(app)
 	feedback.router(app)
 	register.router(app)
+}
+
+function addUserAsAdmin(req, res){
+	
+	var user = {
+		"_id" : mongoose.Types.ObjectId(req.params.user)
+	}
+
+	var ev = res.locals.ev;
+
+	attendees.isReallyAttending(ev, user, function(err, existingAttendee) {
+		if(existingAttendee == null){
+			console.log('null');
+			/*
+				- add user as attendee
+				- res.redirect('/event/'+ev._id+'/admin/addAdmin/'+existingAttendee._id);
+			*/
+
+			var attendee = new models.Attendee({
+				
+				isAttending: true,
+				user: user._id,
+				admin: true,
+				category: 'Planner',
+
+			});
+
+			attendee.save();
+			
+			models.Event.findById(ev._id, function(err, event) {
+				event.attendees.push(attendee._id);
+				event.save(function(err){
+					req.session.flash = ["New admin added successfully"];
+					res.redirect('/event/'+res.locals.ev._id)
+				});
+
+				
+			});
+
+		}else{
+			if(existingAttendee.admin == true){
+				req.session.flash = ["This user is already an admin"];
+				res.redirect('/event/'+res.locals.ev._id)
+			}else{
+				//console.log(existingAttendee._id);
+				res.redirect('/event/'+ev._id+'/admin/addAdmin/'+existingAttendee._id);
+			}
+			
+		}
+
+	})
 }
 
 function mustBeAdmin (req, res, next) {
@@ -69,7 +122,9 @@ function addAdmin (req, res) {
 		if (attendee._id.equals(att)) {
 			attendee.admin = true;
 			attendee.save()
-			req.session.flash = ["\""+attendee.user.getName()+"\" was Made Admin"];
+			//req.session.flash = ["\""+attendee.user.getName()+"\" was Made Admin"];
+			req.session.flash = ["New admin added successfully"];
+			
 			break;
 		}
 	}
