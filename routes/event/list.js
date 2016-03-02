@@ -207,7 +207,6 @@ function countnear(req, res){
 			privateEvent: {
 				$ne: true
 			},
-			description : { $exists: true },
 			start: {
 				$gte: new Date()
 			},
@@ -255,7 +254,10 @@ exports.listEvents = function (req, res) {
 			$ne: true
 		},
 		description : { $exists: true },
-		start: {
+		start:{
+			$gte : new Date()
+		},
+		end: {
 			$gte: new Date()
 		},
 		'source.meetup': false,
@@ -265,7 +267,7 @@ exports.listEvents = function (req, res) {
 	models.Event.find(query)
 		.populate('avatar attendees.user')
 		.select('name description start end address venue_name avatar source')
-		.sort('start')
+		.sort({'start':1})
 		.limit(100)
 		.skip(skip)
 		.exec(function(err, evs) {
@@ -322,12 +324,6 @@ exports.listMyEvents = function (req, res) {
 			'attendees': { $in: attendees },
 			'source.meetup': false,
 			'source.facebook': false,
-			'start':{
-				$gte : new Date()
-			},
-			'end': {
-				$gt: new Date()
-			}
 		 };
 
 		//console.log(query);
@@ -339,7 +335,7 @@ exports.listMyEvents = function (req, res) {
 		models.Event.find(query)
 			.populate('avatar attendees.user')
 			.select('name description start end address venue_name avatar source')
-			.sort({'start':1})
+			.sort({'start':-1})
 			.skip(skip)
 			.exec(function(err, evs) {
 			if (err) throw err;
@@ -491,7 +487,7 @@ exports.listNearEvents = function (req, res) {
 			json: function() {
 				res.send({
 					events: [],
-					pagename: "Events near you"
+					pagename: "Events nearby"
 					// no lat&lng supplied!
 				})
 			}
@@ -530,13 +526,11 @@ exports.listNearEvents = function (req, res) {
 			privateEvent: {
 				$ne: true
 			},
-			description : { $exists: true },
-			start: {
-				$gte: new Date()
-			},
 			'source.meetup': false,
 			'source.facebook': false
-		}
+		},
+		options: { sort: { 'start': 1 } }
+		
 	}).limit(limit)
 		.skip(limit * page)
 		.exec(function(err, geos) {
@@ -582,7 +576,7 @@ exports.listNearEvents = function (req, res) {
 				}, function(err) {
 					res.format({
 						html: function() {
-							res.render('event/list', { moment:moment, title: "Events nearby", events: events })
+							res.render('event/list', { moment:moment, title: "Events nearby", events: events, pagename: "Events nearby" })
 						},
 						json: function() {
 							if (events.length > 0 && htmlIsEnabled) {
@@ -591,12 +585,12 @@ exports.listNearEvents = function (req, res) {
 										moment: moment,
 										events: events,
 										eventsTotal: count,
-										eventsSkip: limit * page
+										eventsSkip: limit * page,
+										pagename: "Events nearby"
 									});
 
 									res.send({
 										html: html,
-										pagename: "Events near you",
 										events: events
 									});
 								})
@@ -605,8 +599,7 @@ exports.listNearEvents = function (req, res) {
 							}
 
 							res.send({
-								events: events,
-								pagename: "Events near you"
+								events: events
 							})
 						}
 					})

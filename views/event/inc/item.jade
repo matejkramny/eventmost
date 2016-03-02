@@ -10,7 +10,7 @@ mixin eventItem(event)
 	if (foreign && !loggedIn)
 		- link = '';
 	
-	if (pagename == 'My Events')
+	if (pagename == 'My Events' || pagename == 'Events nearby')
 		a.link-purple(href=link target="_blank" class= foreign && !loggedIn ? "openEvent" : null data-event=event.id)
 				div.wwrap.color.padd
 					div.img-none(style="float:left; width:215px; border-right:1px solid #ccc; height: 180px; overflow:hidden")
