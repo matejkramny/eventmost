@@ -124,7 +124,6 @@ function loadnearevents(req, res) {
 			privateEvent: {
 				$ne: true
 			},
-			description : { $exists: true },
 			start: {
 				$gte: new Date()
 			},
@@ -178,7 +177,7 @@ function loadnearevents(req, res) {
 					res.format({
 						html: function() {
 							res.locals.moment = moment;
-							res.render('event/inc/single', {events: events})
+							res.render('event/inc/single', {events: events,pagename: "Events nearby"})
 						}
 					})
 				})
@@ -528,8 +527,7 @@ exports.listNearEvents = function (req, res) {
 			},
 			'source.meetup': false,
 			'source.facebook': false
-		},
-		options: { sort: { 'start': 1 } }
+		}
 		
 	}).limit(limit)
 		.skip(limit * page)
