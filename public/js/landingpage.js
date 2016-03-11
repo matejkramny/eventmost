@@ -1,20 +1,25 @@
 var counter = 1;
 $(document).ready(function(){
-	$('#header').show();
+	//$('#header').show();
 	
 	
+	//--------------  Moving Events Wrapper Up --------------
 	var diff = $("#eventswrapper").offset().top - ($("#plane").offset().top + 250);
 	if(navigator.platform == "Win32"){
 		diff = diff+30;
 	}
-
 	//console.log($("#plane").offset().top)
 	$('#eventswrapper').css({top: -diff});
+	//--------------  Moving Events Wrapper Up --------------
+
+	
 	
 	/*$('#eventswrapper').animate({top: -diff}, 1, 'swing', function(){
 	  //$('#header').show();
 	});*/
 
+	/*
+	//--------------  Fading Search Text --------------
 	var $el = $("#textbanner2"), text = 'Search-events-below-or-create-your-own',
 	    words = text.split(""), html = "";
 
@@ -31,6 +36,8 @@ $(document).ready(function(){
 	$el.html(html).children().hide().each(function(i){
 	  $(this).delay(i*5).fadeIn('fast');
 	});
+	//--------------  Fading Search Text --------------
+	*/
 
 	/*$('#header').css({"float": "left",
 				    "height": "85px",
