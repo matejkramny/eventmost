@@ -102,24 +102,28 @@ $(document).ready(function(){
   	$("#loadNearestEvents").click(function (){
   		console.log(window.lastCoords);
   		var coords = window.lastCoords;
-  		$('#successmsg').html('<div style="margin-top:10px"><center><img src="../images/loading.gif" /></center></div>');
-  		$.ajax({
-		  method: "GET",
-		  url: "/events/loadnearevents/"+coords.lat+"/"+coords.lng
-		  //data: { name: "John", location: "Boston" }
-		}).done(function( msg ) {
-			if(msg == ''){
-				console.log("msg is empty");
-				$('#successmsg').html('<div><center><h3>No Event Happening Around You!</h3></center></div>');
-				setTimeout(function(){
+  		if(coords === undefined){
+  			$('#successmsg').html('<div><center><h3>Your Location Information is not available!</h3></center></div>');
+  		}else{
+  			$('#successmsg').html('<div style="margin-top:10px"><center><img src="../images/loading.gif" /></center></div>');
+	  		$.ajax({
+			  method: "GET",
+			  url: "/events/loadnearevents/"+coords.lat+"/"+coords.lng
+			  //data: { name: "John", location: "Boston" }
+			}).done(function( msg ) {
+				if(msg == ''){
+					console.log("msg is empty");
+					$('#successmsg').html('<div><center><h3>No Event Happening Around You!</h3></center></div>');
+					setTimeout(function(){
+						$('#successmsg').html('');
+					}, '3000');
+				}else{
 					$('#successmsg').html('');
-				}, '3000');
-			}else{
-				$('#successmsg').html('');
-				$('#fetchedEvents').html(msg);	
-			}
-		    
-		  });
+					$('#fetchedEvents').html(msg);	
+				}
+			    
+			  });
+  		}
   	});
 });
 
