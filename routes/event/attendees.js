@@ -342,6 +342,15 @@ function joinEvent (req, res) {
 				})
 				return;*/
 			}
+
+
+			//add the newly added category to event categories...
+			if(!foundCategory){
+				ev.categories.push(category);
+				models.Event.update({'_id': mongoose.Types.ObjectId(ev._id)}, {$set: {categories: ev.categories} }, function(err){
+					console.log('new category:'+category);
+				});
+			}
 		}
 		
 		if (!attendee.category) {
