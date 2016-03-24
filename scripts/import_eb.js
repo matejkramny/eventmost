@@ -191,6 +191,7 @@ function download (city, download_finished) {
 
 
 		async.reject(evs, function(evn, cb) {
+			console.log(evn);
 			models.Event.findOne({
 				"source.eventbrite": true,
 				"source.id": evn.id
