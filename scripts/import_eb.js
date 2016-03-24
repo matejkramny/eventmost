@@ -204,7 +204,8 @@ function download (city, download_finished) {
 				}
 			})
 		}, function(filtered) {
-			console.log('Parsing: ', filtered.length, 'events');
+			console.log(filtered);
+			//console.log('Parsing: ', filtered.length, 'events');
 			
 			async.eachSeries(filtered, self.parseEvent, function(err) {
 				if (err) throw err;
