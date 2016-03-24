@@ -196,12 +196,10 @@ function download (city, download_finished) {
 				"source.id": evn.id
 			}, function(err, ev) {
 				if (err) throw err;
-				console.log(ev);
+				
 				if (ev == null) {
-					console.log('cb false');
-					cb(false)
+					cb(true)
 				} else {
-					console.log('cb true');
 					cb(true)
 				}
 			})
