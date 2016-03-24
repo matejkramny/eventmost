@@ -198,8 +198,10 @@ function download (city, download_finished) {
 				if (err) throw err;
 				
 				if (ev == null) {
+					console.log('cb false');
 					cb(false)
 				} else {
+					console.log('cb true');
 					cb(true)
 				}
 			})
