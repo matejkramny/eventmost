@@ -364,7 +364,7 @@ block css
 						#successmsg
 						#fetchedEvents
 							for e in search.results
-								if((e.venue_name) && e.venue_name != '')
+								if(((e.venue_name) && e.venue_name != '') || ((e.address) && e.address != ''))
 									mixin eventItem(e)
 
 block js
