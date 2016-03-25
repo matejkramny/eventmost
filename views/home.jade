@@ -191,7 +191,7 @@ append content
 	
 	.exc-spac
 	for event in myevents
-		if((event.venue_name) && event.venue_name != '')
+		if(((event.venue_name) && event.venue_name != '') || ((event.address) && event.address != ''))
 			mixin eventItem(event)
 
 
