@@ -173,7 +173,7 @@ block content
 	.clearfix
 	.nspacer-bigger
 
-	- var attendees = locals.attendees.length
+	- var attendees = locals.ev.attendees.length
 	- for (var i = 0; i < attendees; i++)
 		if(locals.ev.attendees[i].user.isFeedbackProfile)
 			.row
