@@ -187,7 +187,7 @@ function saveDropbox (req, res) {
 		}
 		ev.save()
 	
-		req.session.flash = ["Dropbox Settings Updated"]
+		req.session.flash = ["Dropbox Updated"]
 		res.format({
 			html: function() {
 				res.redirect('back')
