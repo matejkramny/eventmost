@@ -103,7 +103,7 @@ $(document).ready(function(){
   		console.log(window.lastCoords);
   		var coords = window.lastCoords;
   		if(coords === undefined){
-  			$('#successmsg').html('<div><center><h3>Your Location Information is not available!</h3></center></div>');
+  			$('#successmsg').html('<div><center><h3>You must allow general location ability to use this feature.</h3></center></div>');
   		}else{
   			$('#successmsg').html('<div style="margin-top:10px"><center><img src="../images/loading.gif" /></center></div>');
 	  		$.ajax({
