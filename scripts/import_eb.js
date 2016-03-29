@@ -197,18 +197,16 @@ function download (city, download_finished) {
 			}, function(err, ev) {
 				if (err) throw err;
 				
-				//console.log(ev);
-				if (ev && ev !== null) {
-					cb(err, true)
-				}else{
-					cb(err, false)
+				if (ev == null) {
+					cb(false)
+				} else {
+					cb(true)
 				}
 			})
-		}, function(filteredEvents) {
-			console.log(filteredEvents);
-			console.log('Parsing: ', filteredEvents.length, 'events');
+		}, function(filtered) {
+			console.log('Parsing: ', filtered.length, 'events');
 			
-			async.eachSeries(filteredEvents, self.parseEvent, function(err) {
+			async.eachSeries(filtered, self.parseEvent, function(err) {
 				if (err) throw err;
 				
 				cb()
