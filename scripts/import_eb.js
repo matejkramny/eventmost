@@ -198,14 +198,13 @@ function download (city, download_finished) {
 				if (err) throw err;
 				
 				if (ev == null) {
-					cb(true)
+					cb(false)
 				} else {
 					cb(true)
 				}
 			})
 		}, function(filtered) {
-			console.log(filtered);
-			//console.log('Parsing: ', filtered.length, 'events');
+			console.log('Parsing: ', filtered.length, 'events');
 			
 			async.eachSeries(filtered, self.parseEvent, function(err) {
 				if (err) throw err;
