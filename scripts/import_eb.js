@@ -199,8 +199,6 @@ function download (city, download_finished) {
 				
 				if (ev && ev !== null) {
 					cb(true)
-				} else {
-					cb(false)
 				}
 			})
 		}, function(filteredEvents) {
