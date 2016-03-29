@@ -197,7 +197,7 @@ function download (city, download_finished) {
 			}, function(err, ev) {
 				if (err) throw err;
 				
-				console.log(ev);
+				//console.log(ev);
 				if (ev && ev !== null) {
 					cb(err, true)
 				}
