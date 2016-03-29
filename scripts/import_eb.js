@@ -198,12 +198,15 @@ function download (city, download_finished) {
 				if (err) throw err;
 				
 				if (ev) {
+					console.log('event exist');
+					console.log(ev);
 					cb(false)
 				} else {
 					cb(true)
 				}
 			})
 		}, function(filtered) {
+			console.log(filtered);
 			console.log('Parsing: ', filtered.length, 'events');
 			
 			async.eachSeries(filtered, self.parseEvent, function(err) {
@@ -332,8 +335,8 @@ function download (city, download_finished) {
 		], function (err, result) {
 		    
 		    console.log("Inserted Eventbrite event "+result._id);
-			//download_finished();
-			cb(null);
+			download_finished();
+			//cb(null);
 		});
 	}
 
