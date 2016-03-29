@@ -180,24 +180,24 @@ block content
 		.row
 			.col-md-12.col-xs-12.col-sm-12
 				.font-tw
-					b Business cards received
+					b People that Saved Your Profile
 				.line-purple
 		.nspacer
-
-		//- business
-		.row
-			if (locals.receivedCards.length == 0)
-				p.text-center No cards received
-			div
-				- var i = 0;
-				for card in locals.receivedCards
-					+card(card)
-					if (i % 2 == 1)
-						.clearfix
-					- i++;
-				.clearfix
-		.nspacer-big
-		//- end business
+	
+		//- savers
+		if (locals.saversofprofile.length == 0)
+			p.text-center No one has saved your profile yet. 
+			.clearfix
+			.nspacer
+		else
+			.row
+				.col-md-12.col-xs-12.col-sm-12
+					.center
+						for saverofprofile in locals.saversofprofile
+							+savedProfile(saverofprofile)
+					.clearfix
+					.nspacer
+		//- end people saved your profile
 		
 		.row
 			.col-md-12.col-xs-12.col-sm-12
@@ -218,25 +218,26 @@ block content
 						+savedProfile(saver)
 				.clearfix
 				.nspacer
-			
+		//- end your saved profile
+		
 		.row
 			.col-md-12.col-xs-12.col-sm-12
 				.font-tw
-					b People that Saved Your Profile
+					b Business cards received
 				.line-purple
 		.nspacer
-	
-		//- savers
-		if (locals.saversofprofile.length == 0)
-			p.text-center No one has saved your profile yet. 
-			.clearfix
-			.nspacer
-		else
-			.row
-				.col-md-12.col-xs-12.col-sm-12
-					.center
-						for saverofprofile in locals.saversofprofile
-							+savedProfile(saverofprofile)
-					.clearfix
-					.nspacer
-	
+
+		//- business
+		.row
+			if (locals.receivedCards.length == 0)
+				p.text-center No cards received
+			div
+				- var i = 0;
+				for card in locals.receivedCards
+					+card(card)
+					if (i % 2 == 1)
+						.clearfix
+					- i++;
+				.clearfix
+		.nspacer-big
+		//- end business
