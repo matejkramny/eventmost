@@ -204,9 +204,9 @@ function download (city, download_finished) {
 				}
 			})
 		}, function(filtered) {
-			console.log('Parsing: ', evs.length, 'events');
+			//console.log('Parsing: ', filtered.length, 'events');
 			
-			async.eachSeries(evs, self.parseEvent, function(err) {
+			async.eachSeries(filtered, self.parseEvent, function(err) {
 				if (err) throw err;
 				
 				cb()
