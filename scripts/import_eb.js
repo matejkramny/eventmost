@@ -200,6 +200,8 @@ function download (city, download_finished) {
 				//console.log(ev);
 				if (ev && ev !== null) {
 					cb(err, true)
+				}else{
+					cb(err, false)
 				}
 			})
 		}, function(filteredEvents) {
