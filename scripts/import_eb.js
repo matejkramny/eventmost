@@ -197,8 +197,9 @@ function download (city, download_finished) {
 			}, function(err, ev) {
 				if (err) throw err;
 				
+				console.log(ev);
 				if (ev && ev !== null) {
-					cb(true)
+					cb(err, true)
 				}
 			})
 		}, function(filteredEvents) {
