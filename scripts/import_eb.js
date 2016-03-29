@@ -190,14 +190,14 @@ function download (city, download_finished) {
 		// Filter existing events..
 
 
-		async.reject(evs, function(evn, cb) {
+		async.filter(evs, function(evn, cb) {
 			models.Event.findOne({
 				"source.eventbrite": true,
 				"source.id": evn.id
 			}, function(err, ev) {
 				if (err) throw err;
 				
-				if (ev == null) {
+				if (ev !== null) {
 					cb(false)
 				} else {
 					cb(true)
