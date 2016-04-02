@@ -330,6 +330,10 @@ function doNewMessage (req, res) {
         			//Topic already exist...
         			console.log("topic exist");
         			isTopicExist = true;
+        			topics[x].lastUpdated = Date.now();
+        			topics[x].save(function (err){
+        				console.log('topic updated');
+        			});
         			break;
         		}
         	}
