@@ -40,7 +40,7 @@ mixin textarea(text, id, name, required, value)
 			textarea.input-grey.textarea-grey(id="LoginUser#{id}", ng-model=name, ng-init="#{name}='#{value}'", name=name, type="textarea", required= required ? "required" : null, rows="4", cols="50", style="padding-top:5px; min-height:102px;")= value
 
 block content
-	form#profileForm(action="/profile/save", method="POST", enctype="multipart/form-data")
+	form#profileForm(action="/profile/save", method="POST", enctype="multipart/form-data", style="clear:both")
 		input(type="hidden", name="_csrf", value=token)
 		input.hide#avatar(type="file", name="avatar")
 		.col-lg-12.col-md-12.col-xs-12.center.nspacer.font
