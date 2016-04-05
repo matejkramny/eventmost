@@ -17,6 +17,10 @@ $(document).ready(function() {
 		$("#profileForm input").each(function() {
 			formData[$(this).attr('name')] = $(this).val();
 		})
+
+		$("#profileForm textarea").each(function() {
+			formData[$(this).attr('name')] = $(this).val();
+		})
 		
 		var form = new FormData();
 		//form.append("_csrf", $("head meta[name=_csrf]").attr('content'));

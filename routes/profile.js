@@ -219,7 +219,7 @@ function saveUser (req, res) {
 exports.doEditProfile = doEditProfile = function (req, res) {
 	// this works as incremental form submission.. some fields may save, some may not. It saves nevertheless (the valid ones)
 	// the requirements are very lenient
-	
+	console.log(req.body)
 	console.log("PS19 # Going to edit profile".red);
 	var errors = [];
 	var u = req.user;
@@ -341,8 +341,8 @@ exports.doEditProfile = doEditProfile = function (req, res) {
 	if (typeof req.body.location !== 'undefined') {
 		u.location = req.body.location;
 	}
-	if (typeof req.body.interest !== 'undefined') {
-		u.interests = req.body.interest;
+	if (typeof req.body.interests !== 'undefined') {
+		u.interests = req.body.interests;
 	}
 	if (typeof req.body.website !== 'undefined') {
 		u.website = req.body.website;
@@ -352,10 +352,12 @@ exports.doEditProfile = doEditProfile = function (req, res) {
 	}
 	if (typeof req.body.desc !== 'undefined') {
 		u.desc = req.body.desc;
+	}else{
+		u.desc="Hardcode description";
 	}
-	u.desc="Hardcode description";
 	
-	console.log("Description ".red + req.body.desc);
+	
+	//console.log("Description ".red + req.body.desc);
 	
 	if (req.body.password && req.body.password.length > 0) {
 		// user wants to change/create a password
