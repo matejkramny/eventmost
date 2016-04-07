@@ -33,7 +33,7 @@ exports.doContact = function (req, res) {
 	cont.save(function(err) {
 		var options = {
 			from: "EventMost <noreply@eventmost.com>",
-			to: "haseebkhilji@gmail.com",
+			to: "haseebkhilji+burrrk@gmail.com",
 			subject: "Contact form submitted "+cont.subject,
 			html: "Contact form has been submitted on <strong>EventMost</strong>.<br /><strong>Subject:</strong> "+cont.subject+"<br/><strong>Message:</strong>"+cont.message+"<br/><br/>EventMost"
 		}
