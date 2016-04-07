@@ -1,6 +1,7 @@
 var models = require('../models'),
 	contact = models.Contact,
-	transport
+	config = require('../config'),
+	transport = config.transport
 
 exports.contactus = function (req, res) {
 	res.render('contact', { title: "Contact us" })
@@ -32,12 +33,12 @@ exports.doContact = function (req, res) {
 	cont.save(function(err) {
 		var options = {
 			from: "EventMost <noreply@eventmost.com>",
-			to: "matej+eventmost@matej.me",
+			to: "haseebkhilji@gmail.com",
 			subject: "Contact form submitted "+cont.subject,
 			html: "Contact form has been submitted on <strong>EventMost</strong>.<br /><strong>Subject:</strong> "+cont.subject+"<br/><strong>Message:</strong>"+cont.message+"<br/><br/>EventMost"
 		}
 		
-		if (!transport) {
+		/*if (!transport) {
 			console.log("Getting transport")
 			transport = require('../app').getTransport()
 		}
@@ -45,7 +46,7 @@ exports.doContact = function (req, res) {
 			console.log("Transport not enabled!")
 			console.log(options);
 			return;
-		}
+		}*/
 		
 		transport.sendMail(options, function(err, response) {
 			if (err) throw err;
