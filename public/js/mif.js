@@ -1,3 +1,12 @@
+function loadSubComment(message, name, profile, avatarSrc, posted){
+		
+		$('#subcommentMessage').html(message);
+		$('#subcommentUsername').html(name);
+		$('#subcommentAvatar').attr('src', avatarSrc);
+		$('#subcommentPosted').html("posted "+posted);
+		$('#subcommentProfile').attr('href', profile);
+}
+
 angular.module('eventMost')
 .controller('commentsController', function($scope, $http, $filter) {
 	$scope.comments = [];

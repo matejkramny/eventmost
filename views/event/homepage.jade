@@ -100,7 +100,8 @@ block content
 						.pull-left.pad-left-ten.width85.width85posts
 							.font14.font14sm.break.font-exception.small-post
 								a.link-green(href="/user/{{subcomment.attendee.user._id}}" target="_blank"): span.font16.bold {{ subcomment.attendee.user.name }} {{ subcomment.attendee.user.surname }}
-								|  {{ subcomment.message }}
+								a(data-toggle="modal", href="#showCommentModal", style="text-decoration:none", onclick="loadSubComment('{{ subcomment.message }}', '{{ subcomment.attendee.user.name }} {{ subcomment.attendee.user.surname }}', '/user/{{subcomment.attendee.user._id}}', '{{subcomment.attendee.user.avatar}}', '{{subcomment.postedAgo}}')")
+									|  {{ subcomment.message }}
 							.pull-left.font14.font14md.color-green.pad-left-five.font-exception(title="{{subcomment.postedFormatted}}")
 								| posted {{subcomment.postedAgo}}	|
 							.pull-left.font14.font14md.color-green.pad-left-five.font-exception
@@ -197,4 +198,5 @@ block content
 	.clearfix
 	.nspacer
 	include ../modals/make-admin
+	include ../modals/show-comment
 	
