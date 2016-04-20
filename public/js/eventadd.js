@@ -919,7 +919,9 @@ $(document).ready(function() {
 		// avatar
 		if (ev.avatar) {
 			avatar_id = ev.avatar._id;
-			$(".avatar_preview").attr('src', ev.avatar.url);
+			//$(".avatar_preview").attr('src', ev.avatar.url);
+			$("#profile_pic").show();
+			$("#thumb").attr('src', ev.avatar.url);
 		}
 		
 		// name
