@@ -922,6 +922,7 @@ $(document).ready(function() {
 			//$(".avatar_preview").attr('src', ev.avatar.url);
 			$("#profile_pic").show();
 			$("#thumb").attr('src', ev.avatar.url);
+			$("#thumb").addClass('img-thumbnail');
 		}
 		
 		// name
