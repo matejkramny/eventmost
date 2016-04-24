@@ -389,13 +389,24 @@ $(document).ready(function() {
 		$("#thumb").attr('style', '');
 		$("#file_browse1").attr("value", "");
 		$("#info-m").html("Logo has been removed");
-		jcrop_api.destroy();
+		if(jcrop_api){
+			jcrop_api.destroy();
+		}
 		$("#image_div").hide();
+		console.log('delete avatar from eventadd.js');
+		if(ev.avatar && ev.avatar.url == '/images/event-avatar-new.svg'){
+			//No need to delete anything... Because it is the default logo
+		}else{
+			$.ajax({
+				url: "/event/"+avatar_id+"/avatar/remove",
+				type: "GET"
+			}).done(function(res){
+				avatar_id = "";
+			})
+		}
 		
-		$.ajax({
-			url: "/event/"+avatar_id+"/avatar/remove",
-			type: "GET"
-		})
+		
+
 		allowlogopreview = false;
 		updatepreview();
 	});
@@ -409,13 +420,29 @@ $(document).ready(function() {
 		$("#thumb2").attr('style', '');
 		$("#file_browse2").attr("value", "");
 		$("#info-m2").html("Cover has been removed");
-		jcrop_api2.destroy();
+		//jcrop_api2.destroy();
+		if(jcrop_api2){
+			jcrop_api2.destroy();
+		}
 		$("#image_div2").hide();
-		$.ajax({
-			url: "/event/"+avatar_id+"/avatar/remove",
-			type: "GET"
-		})
+		if(ev.backgroundImage){
 
+			$.ajax({
+				url: "/event/"+ev.backgroundImage._id+"/avatar/remove",
+				type: "GET"
+			}).done(function(res){
+				backgroundImage_id = "";
+			})
+
+		}else{
+			$.ajax({
+				url: "/event/"+backgroundImage_id+"/avatar/remove",
+				type: "GET"
+			}).done(function(res){
+				backgroundImage_id = "";
+			})
+		}
+		
 		allowcoverpreview = false;
 		updatepreview();
 	});
@@ -843,7 +870,7 @@ $(document).ready(function() {
 				if (!eventid) {
 					eventid = data.id;
 				} else {
-					window.location = '/event/'+eventid;
+					//window.location = '/event/'+eventid;
 				}
 				
 				$("#invitationLink").html("<input size='' id='event_id_field' style='width:100%' value='" +"eventmost.com/event/"+eventid+"'></input>");
@@ -923,6 +950,29 @@ $(document).ready(function() {
 			$("#profile_pic").show();
 			$("#thumb").attr('src', ev.avatar.url);
 			$("#thumb").addClass('img-thumbnail');
+			$("#logopreview").attr('src', ev.avatar.url);
+			allowlogopreview = true;
+
+			
+			if(ev.backgroundImage && ev.backgroundImage.backgroundFlag == true){
+				/*
+				- Show cover if available
+					- mark checkbox ***
+					- show preview ***
+					- Update event on delete avatar ***
+				*/
+				allowcoverpreview = true;
+				console.log("show preview");
+				allowlogopreview = true;
+				allowcoverpreview = true;
+				$("#previewphotos").removeClass('hide');
+				$("#logopreview").attr('src', ev.avatar.url);
+				$("#coverpreview").attr('src', ev.backgroundImage.url);
+				$('#creditcardsmaller23').attr('ng-init', 'background=true');
+				$('#desktop').find('[ng-show="background"]').show();
+
+			}
+			console.log(ev);
 		}
 		
 		// name
