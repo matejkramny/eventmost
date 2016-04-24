@@ -947,7 +947,14 @@ $(document).ready(function() {
 		if (ev.avatar) {
 			avatar_id = ev.avatar._id;
 			//$(".avatar_preview").attr('src', ev.avatar.url);
-			$("#profile_pic").show();
+			//$("#profile_pic").show();
+			$("#profile_pic").css({
+				"vertical-align": "middle",
+				"text-align": "center",
+				"background": "#fff",
+				"max-width": "200px",
+				"display": "table-cell"
+			});
 			$("#thumb").attr('src', ev.avatar.url);
 			$("#thumb").addClass('img-thumbnail');
 			$("#logopreview").attr('src', ev.avatar.url);
