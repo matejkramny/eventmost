@@ -159,7 +159,7 @@ function removeAvatar (req, res) {
 		}, function(err, avatar) {
 			if (err) throw err;
 			
-			if (avatar) {
+			if (avatar && avatar.url != '/images/event-avatar-new.svg') {
 				if (avatar.url && avatar.url.indexOf("http") == -1) {
 					fs.unlink(config.path + "/public" + avatar.url)
 					fs.unlink(config.path + "/public" + avatar.url+"-285x148.png")
