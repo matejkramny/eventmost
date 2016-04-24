@@ -1,7 +1,8 @@
 var models = require('../../models'),
 	fs = require('fs'),
 	util = require('../../util'),
-	config = require('../../config')
+	config = require('../../config'),
+	mongoose = require('mongoose')
 
 exports.router = function (app) {
 	app.get('/event/add', util.authorized, addEvent)
@@ -161,6 +162,8 @@ function removeAvatar (req, res) {
 			if (avatar) {
 				if (avatar.url && avatar.url.indexOf("http") == -1) {
 					fs.unlink(config.path + "/public" + avatar.url)
+					fs.unlink(config.path + "/public" + avatar.url+"-285x148.png")
+					fs.unlink(config.path + "/public" + avatar.url+"-116x116.png")
 					if (config.knox) {
 						config.knox.deleteFile('/public'+avatar.url, function(err, res) {
 							if (err) throw err;
