@@ -844,7 +844,7 @@ $(document).ready(function() {
 			type: "POST",
 			data: data,
 			success: function(res, status, xhr) {
-				
+
 				isLoading = false;				
 				if (res.status != 200) {
 					if(res.err){
@@ -874,7 +874,7 @@ $(document).ready(function() {
 				window.scrollTo(0,0);
 				
 				if (!eventid) {
-					eventid = data.id;
+					eventid = res.id;
 				} else {
 					//window.location = '/event/'+eventid;
 				}
@@ -974,6 +974,9 @@ $(document).ready(function() {
 					- show preview ***
 					- Update event on delete avatar ***
 				*/
+				//console.log(ev.backgroundImage._id);
+				backgroundimage_id = ev.backgroundImage._id;
+
 				allowcoverpreview = true;
 				console.log("show preview");
 				allowlogopreview = true;
