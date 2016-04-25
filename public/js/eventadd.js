@@ -847,12 +847,10 @@ $(document).ready(function() {
 
 				isLoading = false;				
 				if (res.status != 200) {
-					console.log(res);
-					console.log(status);
-					if(res.err){
+					if(res.message){
 						var errs = "<ul style='list-style:none;'>";
-						for (var i = 0; i < res.err.length; i++) {
-							errs += "<li>"+res.err[i]+"</li>";
+						for (var i = 0; i < res.message.length; i++) {
+							errs += "<li>"+res.message[i]+"</li>";
 						}
 						errs += "</ul>";
 					}else{
