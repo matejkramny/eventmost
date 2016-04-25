@@ -843,13 +843,14 @@ $(document).ready(function() {
 			url: editingEvent == null ? "/event/add" : "/event/"+eventid+"/edit",
 			type: "POST",
 			data: data,
-			success: function(data, status, xhr) {
+			success: function(res, status, xhr) {
+				
 				isLoading = false;				
-				if (data.status != 200) {
-					if(data.err){
+				if (res.status != 200) {
+					if(res.err){
 						var errs = "<ul style='list-style:none;'>";
-						for (var i = 0; i < data.err.length; i++) {
-							errs += "<li>"+data.err[i]+"</li>";
+						for (var i = 0; i < res.err.length; i++) {
+							errs += "<li>"+res.err[i]+"</li>";
 						}
 						errs += "</ul>";
 					}else{
