@@ -847,6 +847,8 @@ $(document).ready(function() {
 
 				isLoading = false;				
 				if (res.status != 200) {
+					console.log(res);
+					console.log(status);
 					if(res.err){
 						var errs = "<ul style='list-style:none;'>";
 						for (var i = 0; i < res.err.length; i++) {
