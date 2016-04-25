@@ -846,11 +846,16 @@ $(document).ready(function() {
 			success: function(data, status, xhr) {
 				isLoading = false;				
 				if (data.status != 200) {
-					var errs = "<ul style='list-style:none;'>";
-					for (var i = 0; i < data.err.length; i++) {
-						errs += "<li>"+data.err[i]+"</li>";
+					if(data.err){
+						var errs = "<ul style='list-style:none;'>";
+						for (var i = 0; i < data.err.length; i++) {
+							errs += "<li>"+data.err[i]+"</li>";
+						}
+						errs += "</ul>";
+					}else{
+						var errs = '';
 					}
-					errs += "</ul>";
+					
 					$("#submitStatus").html("Sorry, the event could not be created due to the following errors:<br/>"+errs);
 					return;
 				}
