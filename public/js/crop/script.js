@@ -92,6 +92,12 @@ $(document).ready(function(){
                             }, function(){
 
                                 // use the Jcrop API to get the real image size
+                                $('#thumb').removeClass('img-thumbnail');
+                                $('#profile_pic').css({
+                                    "width": "158px",
+                                    "height": "158px",
+                                    "display": "block"
+                                });
                                 var bounds = this.getBounds();
                                 boundx = bounds[0];
                                 boundy = bounds[1];
@@ -201,6 +207,7 @@ $(document).ready(function(){
                             }, function(){
 
                                 // use the Jcrop API to get the real image size
+                                $('#thumb').removeClass('img-thumbnail');
                                 var bounds = this.getBounds();
                                 boundx = bounds[0];
                                 boundy = bounds[1];
