@@ -758,10 +758,40 @@ $(document).ready(function() {
 		return $(selector).val();
 	}
 
+	function convertTime(time) {
+
+	    var hours = Number(time.match(/^(\d\d?)/)[1]);
+	    var minutes = Number(time.match(/:(\d\d?)/)[1]);
+	    var AMPM = time.match(/\s(.AM|PM)$/i)[1];
+
+	    if (AMPM == 'PM' || AMPM == 'pm' && hours<12) 
+	    {
+	        hours = hours+12;
+	    }
+	    else if (AMPM == 'AM' || AMPM == "am" && hours==12)
+	    {
+	        hours = hours-12;
+	    }
+
+	    var sHours = hours.toString();
+	    var sMinutes = minutes.toString();
+
+	    if(hours<10)
+	    {
+	        sHours = "0" + sHours;
+	    }
+	    else if(minutes<10) {
+	        sMinutes = "0" + sMinutes;
+	    }
+
+	    return sHours + ":" + sMinutes; 
+
+	}
 	
 	function getTime (datepicker) {
 		var dpicker = $(datepicker);
 		var time = dpicker.parent().find("input[type=text]").val();
+		time = convertTime(time);
 		//var dTime = dpicker.parent().find("select").val();
 		//console.log(dTime);
 		var split = time.split(':')
@@ -1004,15 +1034,27 @@ $(document).ready(function() {
 		
 		// Dates
 		var date = new Date(ev.start);
-		var time = ('0' + date.getHours()).slice(-2) + ":" + ('0' + date.getMinutes()).slice(-2);
-		$('#fromDateMobile, #fromDateDesktop').parent().find('input[type=text]').val(time);
-		$('#fromDateMobile, #fromDateDesktop').datepicker("setDate", date);
+		var h =  date.getHours(), m = date.getMinutes();
+		m = (m == 0)? '00' : m;
+	    var _time = (h > 12) ? (h-12 + ':' + m +' PM') : (h + ':' + m +' AM');
+
+		//var time = ('0' + date.getHours()).slice(-2) + ":" + ('0' + date.getMinutes()).slice(-2);
+		$('#fromDateMobile, #fromDateDesktop').parent().find('input[type=text]').val(_time);
+		$('#fromDateDesktop').datepicker();
+		$('#fromDateDesktop').datepicker("setDate", date);
 		
-		date = new Date(ev.end)
-		time = ('0' + date.getHours()).slice(-2) + ":" + ('0' + date.getMinutes()).slice(-2);
-		$('#toDateMobile, #toDateDesktop').parent().find('input[type=text]').val(time)
-		$('#toDateMobile, #toDateDesktop').datepicker("setDate", date);
+		date = new Date(ev.end);
+		var h =  date.getHours(), m = date.getMinutes();
+		m = (m == 0)? '00' : m;
+	    var _time = (h > 12) ? (h-12 + ':' + m +' PM') : (h + ':' + m +' AM');
 		
+		//time = ('0' + date.getHours()).slice(-2) + ":" + ('0' + date.getMinutes()).slice(-2);
+		$('#toDateMobile, #toDateDesktop').parent().find('input[type=text]').val(_time)
+		$('#toDateDesktop').datepicker();
+		$('#toDateDesktop').datepicker("setDate", date);
+		//-----------------------------------
+		
+
 		// Description
 		$(editor.i.contentWindow.document.body)[0].innerHTML = ev.description || ""
 		$(editor1.i.contentWindow.document.body)[0].innerHTML = ev.description || ""
