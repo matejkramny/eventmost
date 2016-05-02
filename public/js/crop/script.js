@@ -3,7 +3,7 @@ var selectImgWidth,selectImgHeight,selectImgWidth2,selectImgHeight2,jcrop_api, j
 window.URL = window.URL || window.webkitURL;
 $(document).ready(function(){
     $("#file_browse1").change(function(){
-
+        $('#profile_pic_default').hide();
         if (typeof jcrop_api != 'undefined'){
             jcrop_api.destroy();
             $('#load_img').replaceWith('<img id="load_img" />');

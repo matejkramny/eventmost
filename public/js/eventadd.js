@@ -598,7 +598,9 @@ $(document).ready(function() {
 				}
 			} else {
 				// Not ok
-				alert(avatarUploadRequest.statusText);
+				if(avatarUploadRequest.statusText != ''){
+					alert(avatarUploadRequest.statusText);
+				}
 			}
 		}
 	}
