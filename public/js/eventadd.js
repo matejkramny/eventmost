@@ -12,8 +12,14 @@ $(document).ready(function() {
 	} catch (e) {
 	}
 
-	$('.timepicker-default').timepicker({
-		minuteStep: 5
+	$('#toTime').timepicker({
+		minuteStep: 5,
+		timeFormat: 'hh:mm p'
+	});
+
+	$('#fromTime').timepicker({
+		minuteStep: 5,
+		timeFormat: 'hh:mm p'
 	});
 
 	$('.timepicker-default').click(function() {
@@ -152,9 +158,11 @@ $(document).ready(function() {
 	$(".datepickerWrapper .nowButton").click(function(ev) {
 		ev.preventDefault();
 		
-		var now = new Date();
-		var time = ('0' + now.getHours()).slice(-2) + ":" + ('0' + now.getMinutes()).slice(-2);
-		$(this).parent().parent().parent().find('input[type=text]').val(time)
+		var date = new Date();
+		var h =  date.getHours(), m = date.getMinutes();
+		m = (m == 0)? '00' : m;
+	    var _time = (h > 12) ? (h-12 + ':' + m +' PM') : (h + ':' + m +' AM');
+		$(this).parent().parent().parent().find('input[type=text]').val(_time)
 		
 		return false;
 	})
@@ -760,15 +768,21 @@ $(document).ready(function() {
 
 	function convertTime(time) {
 
+		/*
+			- get time from input.
+			- call getTime which return date with time.
+			- get time will call convertTime.
+				- Convert Time to 24 Hours
+		*/
 	    var hours = Number(time.match(/^(\d\d?)/)[1]);
 	    var minutes = Number(time.match(/:(\d\d?)/)[1]);
 	    var AMPM = time.match(/\s(.AM|PM)$/i)[1];
 
-	    if (AMPM == 'PM' || AMPM == 'pm' && hours<12) 
+	    if ((AMPM == 'PM' || AMPM == 'pm') && hours<12) 
 	    {
 	        hours = hours+12;
 	    }
-	    else if (AMPM == 'AM' || AMPM == "am" && hours==12)
+	    else if ((AMPM == 'AM' || AMPM == "am") && hours==12)
 	    {
 	        hours = hours-12;
 	    }
@@ -791,7 +805,9 @@ $(document).ready(function() {
 	function getTime (datepicker) {
 		var dpicker = $(datepicker);
 		var time = dpicker.parent().find("input[type=text]").val();
+		console.log(time);
 		time = convertTime(time);
+		console.log(time);
 		//var dTime = dpicker.parent().find("select").val();
 		//console.log(dTime);
 		var split = time.split(':')
@@ -808,6 +824,7 @@ $(document).ready(function() {
 		date.setMinutes(minutes)
 		return date.getTime();
 	}
+
 	function buildFormData($form) {
 		var allowCreateCategories = false;
 		if ($form.find(".allowAttendeesToCreateTheirOwnCategories").is(':checked')) {
@@ -874,13 +891,18 @@ $(document).ready(function() {
 			type: "POST",
 			data: data,
 			success: function(res, status, xhr) {
-
 				isLoading = false;				
 				if (res.status != 200) {
 					if(res.message){
 						var errs = "<ul style='list-style:none;'>";
 						for (var i = 0; i < res.message.length; i++) {
 							errs += "<li>"+res.message[i]+"</li>";
+						}
+						errs += "</ul>";
+					}else if(res.err){
+						var errs = "<ul style='list-style:none;'>";
+						for (var i = 0; i < res.err.length; i++) {
+							errs += "<li>"+res.err[i]+"</li>";
 						}
 						errs += "</ul>";
 					}else{
@@ -1116,8 +1138,8 @@ $(document).ready(function() {
 	} else {
 		addCategory("Guest Speaker");
 		
-		$('#fromDateMobile, #fromDateDesktop').parent().find('input[type=text]').val('00:00');
-		$('#toDateMobile, #toDateDesktop').parent().find('input[type=text]').val('23:59');
+		/*$('#fromDateMobile, #fromDateDesktop').parent().find('input[type=text]').val('00:00');
+		$('#toDateMobile, #toDateDesktop').parent().find('input[type=text]').val('23:59');*/
 	}
  
  	var cnt = 0;
