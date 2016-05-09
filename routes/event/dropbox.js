@@ -320,7 +320,7 @@ function doUpload (req, res) {
 					}
 				})
 			} else if (ext == 'pdf') {
-				gm(config.path+"/public"+file.file+"[0]").adjoin().gravity('Center').thumb(205, 154, config.path+"/public"+file.fileThumb, 100, function(err) {
+				/*gm(config.path+"/public"+file.file+"[0]").adjoin().gravity('Center').thumb(205, 154, config.path+"/public"+file.fileThumb, 100, function(err) {
 					if (err) throw err;
 					
 					if (config.knox) {
@@ -331,7 +331,7 @@ function doUpload (req, res) {
 							res.resume();
 						});
 					}
-				})
+				})*/
 			}
 		
 			if (ev.files == null) {
