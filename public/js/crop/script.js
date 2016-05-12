@@ -207,7 +207,7 @@ $(document).ready(function(){
                             }, function(){
 
                                 // use the Jcrop API to get the real image size
-                                $('#thumb').removeClass('img-thumbnail');
+                                //$('#thumb').removeClass('img-thumbnail');
                                 var bounds = this.getBounds();
                                 boundx = bounds[0];
                                 boundy = bounds[1];
