@@ -275,6 +275,9 @@ scheme.statics.getHash = function (password) {
 scheme.statics.authenticatePassword = function (email, password, cb, extra) {
 	exports.User.findOne({
 		email: email,
+		twitter : { "$exists" : false },
+		facebook : { "$exists" : false },
+		linkedin : { "$exists" : false },
 		disabled: false
 	}, function(err, user) {
 		if (err) throw err;
