@@ -562,20 +562,53 @@ exports.loginsettings = loginsettings = function (req, res) {
 		var query = {_id: req.params.id};
 		var setvalue = {};
 
-		if (req.body.name != undefined)
+		/*if (req.body.name != undefined)
 			setvalue.name = req.body.name;
 
 		if (req.body.surname != undefined)
 			setvalue.surname = req.body.surname;
 
 		if (req.body.company != undefined)
-			setvalue.company = req.body.company;
+			setvalue.company = req.body.company;*/
+		if (req.body.email != undefined)
+			setvalue.email = req.body.email;
+		if(req.body.oldPassword != undefined) {
+			//exports.User.getHash(req.body.oldPassword);
+			models.User.findOne({_id:req.params.id} , function(err, u) {
+				if(u.password == models.User.getHash(req.body.oldPassword)) {
+					if(err) throw err;
+					setvalue.password = models.User.getHash(req.body.newPassword);
+					models.User.findOneAndUpdate(query, {$set: setvalue}, {upsert: false}, function (err, user) {
+						if (err | !user) return res.send(404, {error: err})
+						//res.send(200);
+						res.format({
+							json: function() {
+								res.json({
+									status: 200,
+									message: "login settings are updated."
+								})
+							}
+						});
+					})
+				} else {
+					res.format({
+						json: function() {
+							res.json({
+								status: 200,
+								message: "old password does not match."
+							})
+						}
+					});
+				}
 
-		models.User.findOneAndUpdate(query, {$set: setvalue}, {upsert: false}, function (err, user) {
-			if (err | !user) return res.send(404, {error: err})
-			res.send(200);
+				/*models.User.findOneAndUpdate(query, {$set: setvalue}, {upsert: false}, function (err, user) {
+					if (err | !user) return res.send(404, {error: err})
+					res.send(200);
 
-		})
+				})*/
+			})
+		}
+
 	} catch (err) {
 		console.log(err);
 	}
