@@ -585,7 +585,7 @@ exports.loginsettings = loginsettings = function (req, res) {
 							json: function() {
 								res.json({
 									status: 200,
-									message: "login settings are updated."
+									message: "Login settings are updated."
 								})
 							}
 						});
