@@ -39,7 +39,7 @@ function countUnReadMessages(req, res) {
                 json: function () {
                     res.send({
                         status: 200,
-                        count: m
+                        message: m
                     })
                 }
             })
