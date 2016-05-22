@@ -10,21 +10,59 @@ exports.router = function (app) {
         .post('/api/inbox/messages/:id/new', doNewMessageAPI)
         .post('/api/inbox/topic/:id', getMessageAPI)
         .post('/api/inbox/topics/new', newTopic)
-        .post('/api/inbox/read/:id',readAPI)
+        .post('/api/inbox/read/:id', readAPI)
         .post('/api/inbox/delete/message/:id', deletemessageAPI)
         .post('/api/inbox/delete/topic/:id', deletetopicAPI)
-        .post('/api/inbox/consolidatedAPI/:id',consolidatedAPI)
+        .post('/api/inbox/consolidatedAPI/:id', consolidatedAPI)
+        .post('/api/inbox/unreadMessages/:id', countUnReadMessages)
     //.get('/api/inbox/message/:id', getMessageAPI, showMessageAPI)
     //.post('/api/inbox/message/:id', getMessageAPI, postMessageAPI)
 }
 
+function countUnReadMessages(req, res) {
+    var topicId = req.params.id;
+
+    if (!topicId) {
+        res.format({
+            json: function () {
+                res.send({
+                    status: 404,
+                    message: "Param id is missing"
+                })
+            }
+        })
+    }
+
+    models.Message.find({'topic': topicId, 'read': false}).count(function (err, m) {
+        if (m) {
+            res.format({
+                json: function () {
+                    res.send({
+                        status: 200,
+                        count: m
+                    })
+                }
+            })
+        } else {
+            res.format({
+                json: function () {
+                    res.send({
+                        status: 404,
+                        message: "No unread messages found"
+                    })
+                }
+            })
+        }
+    });
+}
+
 function getMessageAPI(req, res) {
     var id = req.params.id;
-    
-    if(!id){
+
+    if (!id) {
         res.send(404, {status: 404, message: "param id is missing"});
     }
-    
+
     var query
     if (req.body.read == undefined) {
         query = {topic: req.params.id};
@@ -51,43 +89,47 @@ function getMessageAPI(req, res) {
 }
 
 function newTopic(req, res) {
-    
-    if(!req.body || !req.body._id || !req.body._to || !req.body.eventid){
+
+    if (!req.body || !req.body._id || !req.body._to || !req.body.eventid) {
         res.status(404).send({
-            status: 404, message: 'body item missing, either _id, _to or eventid'});
-            return;
+            status: 404, message: 'body item missing, either _id, _to or eventid'
+        });
+        return;
     }
-    
+
     if (req.body._id == req.body._to) {
         res.status(404).send('To and From are same.');
         return;
     }
 
-    models.User.findById( req.body._id, function(err, userModel){
-        if(err || !userModel){
+    models.User.findById(req.body._id, function (err, userModel) {
+        if (err || !userModel) {
             res.status(404).send({
-            status: 404, message: "User ID " + req.body._id + " Not Found"});
+                status: 404, message: "User ID " + req.body._id + " Not Found"
+            });
             return;
         }
-            
-            models.User.findById( req.body._to, function(err, userModel){
-                if(err || !userModel){
-                    res.status(404).send({
-                    status: 404, message: "User ID " + req.body._to + " Not Found"});
-                    return;
-                }
-                checkNewTopic(req.body._id, req.body._to, res, req.body.eventid);
-            })
+
+        models.User.findById(req.body._to, function (err, userModel) {
+            if (err || !userModel) {
+                res.status(404).send({
+                    status: 404, message: "User ID " + req.body._to + " Not Found"
+                });
+                return;
+            }
+            checkNewTopic(req.body._id, req.body._to, res, req.body.eventid);
+        })
     })
 }
 
 exports.checkNewTopic = checkNewTopic = function (uid, to, res, eventtopic) {
     // Find if a topic exists between two.
-    var query = { $and: 
-        [
-        {users: {$all: [uid, to]}},
-        {eventid: eventtopic}
-    ] };
+    var query = {
+        $and: [
+            {users: {$all: [uid, to]}},
+            {eventid: eventtopic}
+        ]
+    };
 
     // Fetch My Topics.
     models.Topic.find(query)
@@ -104,7 +146,7 @@ exports.checkNewTopic = checkNewTopic = function (uid, to, res, eventtopic) {
                                 status: 200,
                                 message: "Topic Already created",
                                 topic: topics[0]._id,
-                                eventId:topics[0].eventid
+                                eventId: topics[0].eventid
                             });
                         }
                     });
@@ -131,7 +173,7 @@ exports.checkNewTopic = checkNewTopic = function (uid, to, res, eventtopic) {
                                     status: 200,
                                     sent: true,
                                     topic: newtopic._id,
-                                    eventId:newtopic.eventid
+                                    eventId: newtopic.eventid
                                 });
                             }
                         });
@@ -169,7 +211,7 @@ function showMessageAPI(req, res) {
     // })
 }
 
- function postMessageAPI(req, res) {
+function postMessageAPI(req, res) {
 
     var id = req.params.id;
     var text = req.body.message;
@@ -328,7 +370,7 @@ exports.newMessage = newMessage = function (topicID, message, userid, res) {
             return;
         }
 
-        models.Topic.findOne({ "_id": topicID })
+        models.Topic.findOne({"_id": topicID})
             .select('users lastUpdated eventid')
             .exec(function (err, topic) {
 
@@ -351,8 +393,8 @@ exports.newMessage = newMessage = function (topicID, message, userid, res) {
                 for (var i = 0; i < topic.users.length; i++) {
                     if (userid == topic.users[i]) {
                         user = topic.users[i];
-                        
-                    }else {
+
+                    } else {
                         touser = topic.users[i];
                     }
                 }
@@ -370,15 +412,15 @@ exports.newMessage = newMessage = function (topicID, message, userid, res) {
                     //model.User.
                     //user.mailboxUnread++;
                     models.User.findOneAndUpdate(
-                        { _id: touser },
-                        { $inc: { mailboxUnread: 1 } },
-                        { upsert: false },
+                        {_id: touser},
+                        {$inc: {mailboxUnread: 1}},
+                        {upsert: false},
                         function (err, message) {
                             //console.log(message);
-                            if(err){
+                            if (err) {
                                 console.log(err);
                             }
-                            
+
                         });
                     //user.save();
                 }
@@ -414,16 +456,16 @@ exports.newMessage = newMessage = function (topicID, message, userid, res) {
 
 function showMessagesAPI(req, res) {
     var currentuser = req.body._id;
-    if(!currentuser){
+    if (!currentuser) {
         res.format({
-                json: function () {
-                    res.send({
-                        status: 404,
-                        message: "User ID not sent: _id"
-                    })
-                }
-            });
-            return;
+            json: function () {
+                res.send({
+                    status: 404,
+                    message: "User ID not sent: _id"
+                })
+            }
+        });
+        return;
     }
     var query = {users: {$in: [currentuser]}};
 
@@ -433,8 +475,8 @@ function showMessagesAPI(req, res) {
         .select('users lastUpdated eventid')
         .sort('lastUpdated')
         .exec(function (err, topics) {
-            
-            if(err){
+
+            if (err) {
                 res.format({
                     json: function () {
                         res.send({
@@ -444,8 +486,8 @@ function showMessagesAPI(req, res) {
                     }
                 });
             }
-            
-            if(!topics){
+
+            if (!topics) {
                 res.format({
                     json: function () {
                         res.send({
@@ -453,9 +495,9 @@ function showMessagesAPI(req, res) {
                             message: "Unable to find any topic"
                         })
                     }
-                });    
+                });
             }
-            
+
             res.format({
                 json: function () {
                     res.send({
@@ -468,23 +510,23 @@ function showMessagesAPI(req, res) {
         });
 }
 
-function readAPI(req,res){
+function readAPI(req, res) {
     messageid = req.params.id;
 
     var query = {_id: messageid}
-    models.Message.findOneAndUpdate(query, { $set: { read: true }}, {upsert:true},function(err, message){
-        if(err) return res.send(500, {error: err})
+    models.Message.findOneAndUpdate(query, {$set: {read: true}}, {upsert: true}, function (err, message) {
+        if (err) return res.send(500, {error: err})
         return res.send(200, {status: 200})
     });
 }
 
-function deletemessageAPI(req,res){
+function deletemessageAPI(req, res) {
     var query = {_id: req.params.id}
     models.Message.find(query).remove().exec();
     res.send(200, {status: 200});
 }
 
-function deletetopicAPI(req,res){
+function deletetopicAPI(req, res) {
     var query = {_id: req.params.id};
     models.Topic.find(query).remove().exec();
 
@@ -493,7 +535,7 @@ function deletetopicAPI(req,res){
     res.send(200, {status: 200});
 }
 
-function consolidatedAPI(req,res) {
+function consolidatedAPI(req, res) {
     var userId = req.params.id;
     var query = {users: {$in: [userId]}};
 
@@ -504,25 +546,25 @@ function consolidatedAPI(req,res) {
     var topics = [];
     var topicsArray = [];
     var messages = [];
-    models.Attendee.find({ 'user': userId }, '_id', function(err, attendees) {
-        var query = { 'attendees': { $in: attendees } };
+    models.Attendee.find({'user': userId}, '_id', function (err, attendees) {
+        var query = {'attendees': {$in: attendees}};
 
         models.Event.find(query)
             .populate('attendees.user')
             .select('name start end address venue_name avatar source description avatar')
             .sort('-created')
-            .exec(function(err, evs) {
-                if(err) throw err;
-                events = evs ;
+            .exec(function (err, evs) {
+                if (err) throw err;
+                events = evs;
 
-                models.User.find({_id:userId})
+                models.User.find({_id: userId})
                     .populate('receivedCards.card receivedCards.from receivedCards.eventid')
-                    .select('receivedCards.card receivedCards.from receivedCards.eventid receivedCards.sent' )
-                    .exec(function(err, businessCard) {
+                    .select('receivedCards.card receivedCards.from receivedCards.eventid receivedCards.sent')
+                    .exec(function (err, businessCard) {
                         receivedBusinessCards = businessCard;
 
                         models.User.findOne({_id: userId})
-                            .populate('savedProfiles._id','-receivedCards -savedProfiles')
+                            .populate('savedProfiles._id', '-receivedCards -savedProfiles')
                             .exec(function (err, savedProfileUser) {
                                 if (savedProfileUser) {
                                     var query = {'_id': {$in: savedProfileUser.savedProfiles}};
@@ -531,7 +573,7 @@ function consolidatedAPI(req,res) {
                                 var saverQuery = {'savedProfiles._id': userId};
                                 models.User.find(saverQuery)
                                     .select('-receivedCards')
-                                    .exec(function(err, saverprofiles) {
+                                    .exec(function (err, saverprofiles) {
                                         if (err) throw err;
                                         saverProfile = saverprofiles;
                                         var query = {users: {$in: [userId]}};
@@ -541,11 +583,11 @@ function consolidatedAPI(req,res) {
                                             .sort('lastUpdated')
                                             .exec(function (err, topicsUser) {
                                                 topics = topicsUser;
-                                                topicsUser.forEach(function(topic){
+                                                topicsUser.forEach(function (topic) {
                                                     topicsArray.push(topic._id);
                                                 });
                                                 var msgQuery;
-                                                msgQuery = {topic: {$in:topicsArray}};
+                                                msgQuery = {topic: {$in: topicsArray}};
                                                 models.Message.find(msgQuery)
                                                     .populate({path: "sentBy", select: 'name'})
                                                     .select('message timeSent sentBy topic')
@@ -557,7 +599,7 @@ function consolidatedAPI(req,res) {
                                                             JSON.parse(JSON.stringify(savedProfile)),
                                                             JSON.parse(JSON.stringify(saverProfile)),
                                                             JSON.parse(JSON.stringify(topics)),
-                                                            JSON.parse(JSON.stringify(messages)),req, res, userId);
+                                                            JSON.parse(JSON.stringify(messages)), req, res, userId);
                                                     })
 
                                             })
@@ -569,7 +611,7 @@ function consolidatedAPI(req,res) {
     });
 }
 
-var generateJSON = function (events,receivedBusinessCards,savedProfile,saverProfile,topics,messages,req,res,userId) {
+var generateJSON = function (events, receivedBusinessCards, savedProfile, saverProfile, topics, messages, req, res, userId) {
     var jsonMainObject = {};
     var jsonEventArray = [];
     var jsonConsolidatedChat = [];
@@ -580,7 +622,7 @@ var generateJSON = function (events,receivedBusinessCards,savedProfile,saverProf
     var jsonChatObject = {};
     var flag = false;
     var eventIds = [];
-    for(var i=0;i<events.length;i++){
+    for (var i = 0; i < events.length; i++) {
         jsonConsolidatedCardObject = {};
         jsonConsolidatedChat = [];
         jsonConsolidatedSavedProfileObject = {};
@@ -593,12 +635,12 @@ var generateJSON = function (events,receivedBusinessCards,savedProfile,saverProf
         jsonConsolidatedMessageObject["user"] = [];
         var cu = receivedBusinessCards[0];
 
-        if(cu.receivedCards.length == 0) {
+        if (cu.receivedCards.length == 0) {
             jsonConsolidatedCardObject["card"] = [];
             jsonConsolidatedChat.push(jsonConsolidatedCardObject);
         } else {
-            for(var j=0;j<cu.receivedCards.length;j++) {
-                if(typeof cu.receivedCards[j].eventid !== "undefined" && cu.receivedCards[j].eventid != null) {
+            for (var j = 0; j < cu.receivedCards.length; j++) {
+                if (typeof cu.receivedCards[j].eventid !== "undefined" && cu.receivedCards[j].eventid != null) {
                     if (events[i]._id == cu.receivedCards[j].eventid._id) {
                         jsonConsolidatedCardObject["card"].push(cu.receivedCards[j].card);
                     }
@@ -607,13 +649,13 @@ var generateJSON = function (events,receivedBusinessCards,savedProfile,saverProf
             jsonConsolidatedChat.push(jsonConsolidatedCardObject);
         }
 
-        if(saverProfile.length == 0) {
+        if (saverProfile.length == 0) {
             jsonConsolidatedSaverProfileObject["user"] = [];
             jsonConsolidatedChat.push(jsonConsolidatedSaverProfileObject);
         } else {
-            for(var l=0;l<saverProfile.length;l++) {
-                for(var p=0;p<saverProfile[l].savedProfiles.length;p++) {
-                    if(events[i]._id === saverProfile[l].savedProfiles[p].eventid) {
+            for (var l = 0; l < saverProfile.length; l++) {
+                for (var p = 0; p < saverProfile[l].savedProfiles.length; p++) {
+                    if (events[i]._id === saverProfile[l].savedProfiles[p].eventid) {
                         jsonConsolidatedSaverProfileObject["user"].push(saverProfile[l]);
                     }
                 }
@@ -621,28 +663,28 @@ var generateJSON = function (events,receivedBusinessCards,savedProfile,saverProf
             jsonConsolidatedChat.push(JSON.parse(JSON.stringify(jsonConsolidatedSaverProfileObject)));
         }
 
-        if(topics.length == 0) {
+        if (topics.length == 0) {
             flag = false;
         } else {
-            for(var m=0;m<topics.length;m++) {
+            for (var m = 0; m < topics.length; m++) {
                 if (events[i]._id == topics[m].eventid) {
                     flag = true;
                     jsonConsolidatedMessageObject["topicId"] = topics[m]._id;
-                    if(messages.length == 0) {
+                    if (messages.length == 0) {
                         jsonConsolidatedMessageObject["message"];
                         jsonChatObject["chats"].push(jsonConsolidatedMessageObject);
                         jsonConsolidatedMessageObject = {};
                         jsonConsolidatedMessageObject["message"] = [];
                     } else {
-                        for(var n=0;n<messages.length;n++) {
-                            if(topics[m]._id == messages[n].topic) {
+                        for (var n = 0; n < messages.length; n++) {
+                            if (topics[m]._id == messages[n].topic) {
                                 jsonConsolidatedMessageObject["message"].push(messages[n]);
                                 flag = true;
                             }
                         }
 
-                        for(var o=0;o<topics[m].users.length;o++) {
-                            if(topics[m].users[o]._id != userId) {
+                        for (var o = 0; o < topics[m].users.length; o++) {
+                            if (topics[m].users[o]._id != userId) {
                                 delete topics[m].users[o].savedProfiles;
                                 delete topics[m].users[o].receivedCards;
                                 jsonConsolidatedMessageObject["user"] = topics[m].users[o];
@@ -656,14 +698,14 @@ var generateJSON = function (events,receivedBusinessCards,savedProfile,saverProf
 
                 } else {
                 }
-                if(flag == true) {
+                if (flag == true) {
                     jsonConsolidatedMessageObject = {};
                     jsonConsolidatedMessageObject["message"] = [];
                     jsonConsolidatedMessageObject["user"] = [];
                 }
             }
 
-            if(flag == true) {
+            if (flag == true) {
                 jsonConsolidatedChat.push(jsonChatObject);
                 var obj = JSON.parse(JSON.stringify(events[i]));
                 obj["consolidatedChats"] = jsonConsolidatedChat;
@@ -673,7 +715,7 @@ var generateJSON = function (events,receivedBusinessCards,savedProfile,saverProf
         }
 
 
-        if(flag == false) {
+        if (flag == false) {
             jsonConsolidatedMessageObject["message"];
             jsonChatObject["chats"].push(jsonConsolidatedMessageObject);
             jsonConsolidatedChat.push(jsonChatObject);
