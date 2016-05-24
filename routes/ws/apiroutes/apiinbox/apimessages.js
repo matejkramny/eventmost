@@ -36,27 +36,38 @@ function countUnReadMessages(req, res) {
     models.Topic.find({users:userId})
         .select('topic')
         .exec(function (err, topics) {
-            models.Message.find({'topic': {$in: topics}, 'read': false, 'sentBy':userId}).count(function (err, m) {
-                if (m) {
-                    res.format({
-                        json: function () {
-                            res.send({
-                                status: 200,
-                                message: m
-                            })
-                        }
-                    })
-                } else {
-                    res.format({
-                        json: function () {
-                            res.send({
-                                status: 404,
-                                message: "No unread messages found"
-                            })
-                        }
-                    })
-                }
-            });
+            if(typeof topics != 'undefined') {
+                models.Message.find({'topic': {$in: topics}, 'read': false, 'sentBy':userId}).count(function (err, m) {
+                    if (m) {
+                        res.format({
+                            json: function () {
+                                res.send({
+                                    status: 200,
+                                    message: m
+                                })
+                            }
+                        })
+                    } else {
+                        res.format({
+                            json: function () {
+                                res.send({
+                                    status: 404,
+                                    message: "No unread messages found"
+                                })
+                            }
+                        })
+                    }
+                });
+            } else {
+                res.format({
+                    json: function () {
+                        res.send({
+                            status: 404,
+                            message: "No Topics found against this user"
+                        })
+                    }
+                })
+            }
         });
 }
 
