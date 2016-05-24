@@ -36,7 +36,7 @@ function countUnReadMessages(req, res) {
     models.Topic.find({users:userId})
         .select('topic')
         .exec(function (err, topics) {
-            models.Message.find({'topic': {$in: topics}, 'read': false}).count(function (err, m) {
+            models.Message.find({'topic': {$in: topics}, 'read': false, 'sentBy':userId}).count(function (err, m) {
                 if (m) {
                     res.format({
                         json: function () {
