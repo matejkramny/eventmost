@@ -20,9 +20,9 @@ exports.router = function (app) {
 }
 
 function countUnReadMessages(req, res) {
-    var topicId = req.params.id;
+    var userId = req.params.id;
 
-    if (!topicId) {
+    if (!userId) {
         res.format({
             json: function () {
                 res.send({
@@ -33,27 +33,31 @@ function countUnReadMessages(req, res) {
         })
     }
 
-    models.Message.find({'topic': topicId, 'read': false}).count(function (err, m) {
-        if (m) {
-            res.format({
-                json: function () {
-                    res.send({
-                        status: 200,
-                        message: m
+    models.Topic.find({users:userId})
+        .select('topic')
+        .exec(function (err, topics) {
+            models.Message.find({'topic': {$in: topics}, 'read': false}).count(function (err, m) {
+                if (m) {
+                    res.format({
+                        json: function () {
+                            res.send({
+                                status: 200,
+                                message: m
+                            })
+                        }
+                    })
+                } else {
+                    res.format({
+                        json: function () {
+                            res.send({
+                                status: 404,
+                                message: "No unread messages found"
+                            })
+                        }
                     })
                 }
-            })
-        } else {
-            res.format({
-                json: function () {
-                    res.send({
-                        status: 404,
-                        message: "No unread messages found"
-                    })
-                }
-            })
-        }
-    });
+            });
+        });
 }
 
 function getMessageAPI(req, res) {
