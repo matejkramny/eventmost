@@ -31,7 +31,7 @@ function viewDropboxAPI(req, res) {
             ev.files.forEach(function (thisFile) {
                 models.User.findOne({"_id": thisFile.user}, function (err, user) {
 
-                    if (thisFile.extension != '.png') {
+                    if (thisFile.extension != 'png') {
                         fileExtList = returnExtentionArray(thisFile.extension, thisFile);
                         fileslist.push(fileExtList);
                     }  else {
