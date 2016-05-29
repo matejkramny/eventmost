@@ -27,8 +27,8 @@ function sendIOSPush(senderId, receiverId, message) {
                 console.log(token);
                 var options = {
                     //"pfx": "E:/software/iOS Push certificate/aps_development.p12",
-                    "pfx": "public/certificate/aps_development.p12",
-                    "passphrase": "eventmost",
+                    "pfx": "public/certificate/EM_APNS.p12",
+                    //"passphrase": "eventmost",
                     "gateway": "gateway.sandbox.push.apple.com",
                     "port": 2195,
                     "enhanced": true,
@@ -206,8 +206,8 @@ exports.sendIOSPushNotificationToAtendees = function(senderId, regIds, message) 
                 console.log("IOS regIds: " + regIds);
                 var options = {
                     //"pfx": "E:/software/iOS Push certificate/aps_development.p12",
-                    "pfx": "public/certificate/aps_development.p12",
-                    "passphrase": "eventmost",
+                    "pfx": "public/certificate/EM_APNS.p12",
+                    //"passphrase": "eventmost",
                     "gateway": "gateway.sandbox.push.apple.com",
                     "port": 2195,
                     "enhanced": true,
