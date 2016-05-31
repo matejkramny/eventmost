@@ -31,7 +31,7 @@ function viewDropboxAPI(req, res) {
             ev.files.forEach(function (thisFile) {
                 models.User.findOne({"_id": thisFile.user}, function (err, user) {
 
-                    if (thisFile.extension != 'png') {
+                    if (thisFile.extension != 'png' && thisFile.extension != 'jpg') {
                         fileExtList = returnExtentionArray(thisFile.extension, thisFile,user);
                         fileslist.push(fileExtList);
                     }  else {
@@ -99,7 +99,7 @@ function returnExtentionArray(ext, thisFile,user) {
     var filesListObj;
     filesListObj = {
         file: thisFile.file,
-        fileThumb: config.path + '/public/images/dropbox/' + ext + '.png',
+        fileThumb: 'http://eventmost.com/images/dropbox/' + ext + '.png',
         extension: thisFile.extension,
         user: {
             id: user._id,
