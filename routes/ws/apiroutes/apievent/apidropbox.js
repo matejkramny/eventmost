@@ -32,7 +32,7 @@ function viewDropboxAPI(req, res) {
                 models.User.findOne({"_id": thisFile.user}, function (err, user) {
 
                     if (thisFile.extension != 'png') {
-                        fileExtList = returnExtentionArray(thisFile.extension, thisFile);
+                        fileExtList = returnExtentionArray(thisFile.extension, thisFile,user);
                         fileslist.push(fileExtList);
                     }  else {
                         fileslist.push({
@@ -95,7 +95,7 @@ function viewDropboxAPI(req, res) {
 
     });
 }
-function returnExtentionArray(ext, thisFile) {
+function returnExtentionArray(ext, thisFile,user) {
     var filesListObj;
     filesListObj = {
         file: thisFile.file,
