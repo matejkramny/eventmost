@@ -29,6 +29,7 @@ exports.router = function(app) {
 		.get('/logout.json', logoutJSON)
 		.get('/loggedin', isloggedin)
 		.post('/emailavailable', emailAvailable)
+		.get('/patari/app', goToPatari)
 	
 	if (config.testroutes) {
 		app.get('/testroute*', testRoute)
@@ -133,4 +134,15 @@ function render404 (req, res) {
 }
 function render500 (req, res) {
 	res.render('500', { title: "Server Error" })
+}
+
+function goToPatari(req, res){
+	var useragent = String(req.headers['user-agent']);
+	if(useragent.indexOf("Android") > -1){
+		res.redirect('https://play.google.com/store/apps/details?id=com.centsol.csongs');
+	}else if(useragent.indexOf("iPhone") > -1){
+		res.redirect('https://appsto.re/us/xgwt8.i');
+	}else{
+		res.redirect('http://patari.pk');
+	}
 }
