@@ -1,3 +1,17 @@
+$('.dropdownoptions').click(function(e){
+	e.stopPropagation();
+})
+
+/*
+For stopping dropdown hide completely.
+
+$('.dropdown').on('hide.bs.dropdown', function () {
+	return false;
+});
+
+*/
+
+
 angular.module('eventMost')
 .controller('dropboxSharingController', function($scope, $http, $filter) {
 	$scope.file = null;
