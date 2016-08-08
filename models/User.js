@@ -470,6 +470,7 @@ scheme.statics.createWithFacebook = function (meta, accessToken, accessTokenSecr
 }
 scheme.statics.createWithLinkedIn = function (meta, accessToken, accessTokenSecret, cb) {
 	var _meta = meta._json;
+	console.log(_meta);
 	var user = new exports.User({
 		linkedin: {
 			userid: meta.id
