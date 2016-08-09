@@ -43,7 +43,8 @@
     "stripe": "latest",
     "knox": "latest",
     "apn": "~1.7.4",
-    "node-gcm": "~0.11.0"
+    "node-gcm": "~0.11.0",
+    "passport-linkedin-oauth2": "~1.4.1"
   },
   "devDependencies": {
     "should": "latest",

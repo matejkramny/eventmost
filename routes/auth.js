@@ -4,7 +4,7 @@ var mongoose = require('mongoose')
 	, https = require('https')
 	, FacebookStrategy = require('passport-facebook').Strategy
 	, TwitterStrategy = require('passport-twitter').Strategy
-	, LinkedinStrategy = require('passport-linkedin').Strategy
+	, LinkedinStrategy = require('passport-linkedin-oauth2').Strategy
 	, util = require('../util')
 	, config = require('../config')
 	, transport = config.transport
@@ -35,8 +35,8 @@ passport.use(new TwitterStrategy({
 }, models.User.authenticateTwitter))
 
 passport.use(new LinkedinStrategy({
-	consumerKey: config.credentials.social.linkedin.key,
-	consumerSecret: config.credentials.social.linkedin.secret,
+	clientID: config.credentials.social.linkedin.key,
+	clientSecret: config.credentials.social.linkedin.secret,
 	callbackURL: 'http://'+config.host+'/auth/linkedin/callback',
 	scope: ['r_emailaddress', 'r_basicprofile']
 }, models.User.authenticateLinkedIn));
