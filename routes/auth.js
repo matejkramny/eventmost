@@ -25,20 +25,20 @@ passport.deserializeUser(function(id, done) {
 passport.use(new FacebookStrategy({
 	clientID: config.credentials.social.fb.key,
 	clientSecret: config.credentials.social.fb.secret,
-	callbackURL: 'http://'+config.host+'/auth/facebook/callback'
+	callbackURL: 'https://'+config.host+'/auth/facebook/callback'
 }, models.User.authenticateFacebook ));
 
 passport.use(new TwitterStrategy({
 	consumerKey: config.credentials.social.tw.key,
 	consumerSecret: config.credentials.social.tw.secret,
-	callbackURL: 'http://'+config.host+'/auth/twitter/callback'
+	callbackURL: 'https://'+config.host+'/auth/twitter/callback'
 }, models.User.authenticateTwitter))
 
 passport.use(new LinkedinStrategy({
 	clientID: config.credentials.social.linkedin.key,
 	clientSecret: config.credentials.social.linkedin.secret,
-	callbackURL: 'http://'+config.host+'/auth/linkedin/callback',
-	scope: ['r_emailaddress', 'r_basicprofile']
+	callbackURL: 'https://'+config.host+'/auth/linkedin/callback',
+	scope: ['r_basicprofile']
 }, models.User.authenticateLinkedIn));
 
 exports.router = function (app) {
@@ -57,7 +57,7 @@ exports.router = function (app) {
 		.get('/auth/facebook/callback', passport.authenticate('facebook', socialRoute('Facebook')))
 		.get('/auth/twitter', saveSocialRedirect, passport.authenticate('twitter'))
 		.get('/auth/twitter/callback', passport.authenticate('twitter', socialRoute('Twitter')))
-		.get('/auth/linkedin', saveSocialRedirect, passport.authenticate('linkedin', { scope: ['r_basicprofile', 'r_emailaddress'] }))
+		.get('/auth/linkedin', saveSocialRedirect, passport.authenticate('linkedin'))
 		.get('/auth/linkedin/callback', passport.authenticate('linkedin', socialRoute('LinkedIn')))
 		
 		.get('/auth/success', util.authorized, authSuccess)
