@@ -490,19 +490,17 @@ scheme.statics.createWithLinkedIn = function (meta, accessToken, accessTokenSecr
 		desc: _meta.summary
 	})
 	
-	user.createThumbnails(function() {
-		user.save(function(err) {
-			var smeta = new SocialMetadata({
-				type: "linkedin",
-				meta: meta,
-				accessToken: accessToken,
-				accessSecret: accessTokenSecret,
-				user: user._id
-			})
-			smeta.save();
-		
-			cb(err, user);
+	user.save(function(err) {
+		var smeta = new SocialMetadata({
+			type: "linkedin",
+			meta: meta,
+			accessToken: accessToken,
+			accessSecret: accessTokenSecret,
+			user: user._id
 		})
+		smeta.save();
+	
+		cb(err, user);
 	})
 }
 
