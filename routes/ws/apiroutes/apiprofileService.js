@@ -234,24 +234,25 @@ function saveUserAPI(req, res) {
     models.User.findById(id, function (err, user) {
         if (err) throw err;
         if (user) {
-            var query = {'savedProfiles._id': req.params.id, 'savedProfiles.eventid': req.body.eventId};
-            models.User.find(query).exec(function (err, findProfile) {
-                console.log(findProfile.length);
+            //var query = {'savedProfiles._id': req.params.id, 'savedProfiles.eventid': req.body.eventId};
+            models.User.find({_id:req.body._id, savedProfiles:{$elemMatch: {_id:req.params.id,eventid:req.body.eventId}}}).exec(function (err, findProfile) {
+                //console.log(findProfile)
+                //console.log(findProfile.length);
                 if (findProfile.length > 0) {
                     res.format({
                         json: function () {
                             res.send({
                                 status: 404,
-                                message: "Profile has already been shared."
+                                message: "Profile has already been saved."
                             })
                         }
                     })
                 } else {
                     console.log("user found");
-                    //if (user.notification.email.businessCards) {
-                    //	inbox.emailNotification(user, "inbox")
-                    //}
-                    //user.mailboxUnread++;
+                    if (user.notification.email.businessCards) {
+                    	inbox.emailNotification(user, "inbox")
+                    }
+                    user.mailboxUnread++;
                     if (user.notification.mobile.savedProfile) {
                         console.log("user notification found");
                         deviceUsers.findOne({deviceUser: id}).select({deviceType: 1}).exec(function (err, type) {
