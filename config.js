@@ -20,16 +20,16 @@ var credentials = exports.credentials = {
 	},
 	social: {
 		fb: {
-			key: process.env.SOCIAL_FB_KEY || "fakekey",
-			secret: process.env.SOCIAL_FB_SECRET || "fakesecret"
+			key: process.env.SOCIAL_FB_KEY || "988355187919986",
+			secret: process.env.SOCIAL_FB_SECRET || "381b4a7ac485314be5924caef98ffcb5"
 		},
 		tw: {
 			key: process.env.SOCIAL_TW_KEY || "fakekey",
 			secret: process.env.SOCIAL_TW_SECRET || "fakesecret"
 		},
 		linkedin: {
-			key: process.env.SOCIAL_LINKEDIN_KEY || "fakekey",
-			secret: process.env.SOCIAL_LINKEDIN_SECRET || "fakekey"
+			key: process.env.SOCIAL_LINKEDIN_KEY || "8166nt2jt7dasc",
+			secret: process.env.SOCIAL_LINKEDIN_SECRET || "AIhaXqPdqzdeiu7s"
 		}
 	},
 	session_secret: process.env.SESSION_SECRET || "KeyboardCat",
