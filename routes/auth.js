@@ -34,19 +34,10 @@ passport.use(new TwitterStrategy({
 	callbackURL: 'https://'+config.host+'/auth/twitter/callback'
 }, models.User.authenticateTwitter))
 
-
-var linkedinCallbackUR;
-
-if(typeof(process.env.HOST) === "undefined"){
-	linkedinCallbackURL = "http://localhost:3000/auth/linkedin/callback";
-}else{
-	linkedinCallbackURL = "https://"+config.host+"/auth/linkedin/callback";
-}
-
 passport.use(new LinkedinStrategy({
 	clientID:     config.credentials.social.linkedin.key,
     clientSecret: config.credentials.social.linkedin.secret,
-    callbackURL: linkedinCallbackURL,
+    callbackURL: 'https://'+config.host+'/auth/linkedin/callback',
     scope:        [ 'r_basicprofile', 'r_emailaddress'],
     passReqToCallback: true
 }, models.User.authenticateLinkedIn));
