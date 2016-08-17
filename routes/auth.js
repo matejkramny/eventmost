@@ -34,11 +34,21 @@ passport.use(new TwitterStrategy({
 	callbackURL: 'https://'+config.host+'/auth/twitter/callback'
 }, models.User.authenticateTwitter))
 
+
+var linkedinCallbackUR;
+
+if(typeof(process.env.HOST) === "undefined"){
+	linkedinCallbackURL = "http://localhost:3000/auth/linkedin/callback";
+}else{
+	linkedinCallbackURL = "https://"+config.host+"/auth/linkedin/callback";
+}
+
 passport.use(new LinkedinStrategy({
-	clientID: config.credentials.social.linkedin.key,
-	clientSecret: config.credentials.social.linkedin.secret,
-	callbackURL: 'https://'+config.host+'/auth/linkedin/callback',
-	scope: ['r_basicprofile']
+	clientID:     config.credentials.social.linkedin.key,
+    clientSecret: config.credentials.social.linkedin.secret,
+    callbackURL: linkedinCallbackURL,
+    scope:        [ 'r_basicprofile', 'r_emailaddress'],
+    passReqToCallback: true
 }, models.User.authenticateLinkedIn));
 
 exports.router = function (app) {
@@ -57,9 +67,8 @@ exports.router = function (app) {
 		.get('/auth/facebook/callback', passport.authenticate('facebook', socialRoute('Facebook')))
 		.get('/auth/twitter', saveSocialRedirect, passport.authenticate('twitter'))
 		.get('/auth/twitter/callback', passport.authenticate('twitter', socialRoute('Twitter')))
-		.get('/auth/linkedin', saveSocialRedirect, passport.authenticate('linkedin'))
+		.get('/auth/linkedin', passport.authenticate('linkedin', { state: 'HI STATE', response_type: 'code' }))
 		.get('/auth/linkedin/callback', passport.authenticate('linkedin', socialRoute('LinkedIn')))
-		
 		.get('/auth/success', util.authorized, authSuccess)
 		.get('/auth/login/:uid', util.authorized, doLogin)
 		

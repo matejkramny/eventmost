@@ -349,7 +349,9 @@ scheme.statics.authenticateFacebook = function (accessToken, accessSecret, meta,
 		cb(["Facebook account already linked"])
 	});
 }
-scheme.statics.authenticateLinkedIn = function (accessToken, accessSecret, meta, cb) {
+scheme.statics.authenticateLinkedIn = function (req, accessToken, refreshToken, meta, cb) {
+	console.log(meta);
+	console.log(meta._json.pictureUrls);
 	var query = {
 		'linkedin.userid': meta.id,
 		disabled: false
@@ -364,7 +366,7 @@ scheme.statics.authenticateLinkedIn = function (accessToken, accessSecret, meta,
 		} else if (users.length == 0) {
 			// Create a profile
 			// Create user
-			exports.User.createWithLinkedIn(meta, accessToken, accessSecret, function(err, aUser) {
+			exports.User.createWithLinkedIn(meta, accessToken, refreshToken, function(err, aUser) {
 				cb(null, aUser);
 			});
 			return;
@@ -468,16 +470,13 @@ scheme.statics.createWithFacebook = function (meta, accessToken, accessTokenSecr
 		})
 	})
 }
-scheme.statics.createWithLinkedIn = function (meta, accessToken, accessTokenSecret, cb) {
-	console.log(meta);
+scheme.statics.createWithLinkedIn = function (meta, accessToken, refreshToken, cb) {
 	var _meta = meta._json;
-	console.log(_meta);
-
 	var user = new exports.User({
 		linkedin: {
 			userid: meta.id
 		},
-		avatar: _meta.pictureUrl,
+		avatar: _meta.pictureUrls.values[0],
 		email: _meta.emailAddress,
 		created: Date.now(),
 		name: _meta.firstName,
@@ -495,7 +494,7 @@ scheme.statics.createWithLinkedIn = function (meta, accessToken, accessTokenSecr
 			type: "linkedin",
 			meta: meta,
 			accessToken: accessToken,
-			accessSecret: accessTokenSecret,
+			refreshToken: refreshToken,
 			user: user._id
 		})
 		smeta.save();
