@@ -32,12 +32,12 @@ passport.use(new TwitterStrategy({
 	callbackURL: 'http://'+config.host+'/auth/twitter/callback'
 }, models.User.authenticateTwitter))
 
-passport.use(new LinkedinStrategy({
+/*passport.use(new LinkedinStrategy({
 	consumerKey: config.credentials.social.linkedin.key,
 	consumerSecret: config.credentials.social.linkedin.secret,
 	callbackURL: 'http://'+config.host+'/auth/linkedin/callback',
 	profileFields: ['id', 'first-name', 'picture-url', 'last-name', 'email-address', 'location', 'publicProfileUrl', 'industry', 'headline', 'summary']
-}, models.User.authenticateLinkedIn));
+}, models.User.authenticateLinkedIn));*/
 
 exports.router = function (app) {
 	function socialRoute(serviceName) {
@@ -59,8 +59,8 @@ exports.router = function (app) {
 		.get('/api/auth/facebook/callback', passport.authenticate('facebook', socialRoute('Facebook')))
 		.post('/api/auth/twitter', saveSocialRedirect, passport.authenticate('twitter'))
 		.get('/api/auth/twitter/callback', passport.authenticate('twitter', socialRoute('Twitter')))
-		.get('/api/auth/linkedin', saveSocialRedirect, passport.authenticate('linkedin', { scope: ['r_network', 'r_basicprofile', 'r_fullprofile', 'r_contactinfo', 'rw_nus', 'r_emailaddress'] }))
-		.get('/api/auth/linkedin/callback', passport.authenticate('linkedin', socialRoute('LinkedIn')))
+		//.get('/api/auth/linkedin', saveSocialRedirect, passport.authenticate('linkedin', { scope: ['r_network', 'r_basicprofile', 'r_fullprofile', 'r_contactinfo', 'rw_nus', 'r_emailaddress'] }))
+		//.get('/api/auth/linkedin/callback', passport.authenticate('linkedin', socialRoute('LinkedIn')))
 		.get('/api/auth/success', util.authorized, authSuccess) 
 		.get('/api/auth/login/:uid', util.authorized, doLogin) 
 		
